@@ -5,6 +5,13 @@ contentType: "buying-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]
 relatedBusinesses: ["jurrens-plumbing", "605-drain-solutions"]
+embeddedFaqs:
+  - question: "Can I ask to physically see a plumber's license before they start?"
+    answer: "Yes, and a licensed plumber should have no issue showing it. If they hesitate or can't produce it on the spot, that's worth pausing on."
+  - question: "Should I get multiple quotes for a big job like repiping?"
+    answer: "For anything beyond a routine repair, yes. A repiping job or major line replacement is worth at least two quotes, since scope and pricing can vary significantly between companies."
+  - question: "Does a longer warranty always mean better work?"
+    answer: "Not necessarily, but a plumber with no warranty at all — or who gets evasive when asked — is a bigger concern than one offering an average-length warranty. Ask directly and compare the answer to their competitors."
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true

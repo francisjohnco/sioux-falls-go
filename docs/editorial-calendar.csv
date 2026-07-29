@@ -6,36 +6,32 @@ publishedAt,phase,category_slug,category_name,contentType,title
 2023-12-17,1,plumbers,Plumbers,cost-guide,How Much Does It Cost to Hire a plumber in Sioux Falls?
 2024-01-14,1,plumbers,Plumbers,buying-guide,How to Choose a Plumber in Sioux Falls
 2024-01-17,1,plumbers,Plumbers,seasonal-guide,Plumbers and South Dakota Winters: What Every Homeowner Should Know
-2024-01-19,1,plumbers,Plumbers,faq,Plumbers FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-01-22,1,painters,Painters,cost-guide,How Much Does It Cost to Hire a painting contractor in Sioux Falls?
-2024-01-27,1,painters,Painters,buying-guide,How to Choose a Painting Contractor in Sioux Falls
-2024-02-10,1,painters,Painters,seasonal-guide,Painters and South Dakota Winters: What Every Homeowner Should Know
-2024-02-18,1,painters,Painters,faq,Painters FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-02-20,1,flooring,Flooring,cost-guide,How Much Does It Cost to Hire a flooring contractor in Sioux Falls?
-2024-03-11,1,flooring,Flooring,buying-guide,How to Choose a Flooring Contractor in Sioux Falls
-2024-03-20,1,flooring,Flooring,seasonal-guide,Flooring and South Dakota Winters: What Every Homeowner Should Know
-2024-03-21,1,flooring,Flooring,faq,Flooring FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-03-22,1,lawn-care,Lawn Care,cost-guide,How Much Does It Cost to Hire a lawn care company in Sioux Falls?
-2024-03-24,1,lawn-care,Lawn Care,buying-guide,How to Choose a Lawn Care Company in Sioux Falls
-2024-03-29,1,lawn-care,Lawn Care,seasonal-guide,Lawn Care and South Dakota Winters: What Every Homeowner Should Know
-2024-04-04,1,lawn-care,Lawn Care,faq,Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-04-19,1,home-services,Home Services,cost-guide,How Much Does It Cost to Hire a home services contractor in Sioux Falls?
-2024-04-21,1,home-services,Home Services,buying-guide,How to Choose a Home Services Contractor in Sioux Falls
-2024-05-21,1,home-services,Home Services,seasonal-guide,Home Services and South Dakota Winters: What Every Homeowner Should Know
-2024-05-23,1,home-services,Home Services,faq,Home Services FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-05-25,1,cleaning-services,Cleaning Services,cost-guide,How Much Does It Cost to Hire a cleaning service in Sioux Falls?
-2024-06-01,1,cleaning-services,Cleaning Services,buying-guide,How to Choose a Cleaning Service in Sioux Falls
-2024-06-12,1,cleaning-services,Cleaning Services,seasonal-guide,Cleaning Services and South Dakota Winters: What Every Homeowner Should Know
-2024-07-02,1,cleaning-services,Cleaning Services,faq,Cleaning Services FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-07-04,1,real-estate-agents,Real Estate Agents,cost-guide,How Much Does It Cost to Hire a real estate agent in Sioux Falls?
-2024-07-17,1,real-estate-agents,Real Estate Agents,buying-guide,How to Choose a Real Estate Agent in Sioux Falls
-2024-08-15,1,real-estate-agents,Real Estate Agents,seasonal-guide,Real Estate Agents and South Dakota Winters: What Every Homeowner Should Know
-2024-09-05,1,real-estate-agents,Real Estate Agents,faq,Real Estate Agents FAQ: Sioux Falls Homeowners' Most Common Questions
-2024-09-13,1,consumer-guide,Consumer Guide,local-resource,Consumer Guide: Where to Start as a Sioux Falls Resident
-2024-09-27,1,consumer-guide,Consumer Guide,local-resource,Sioux Falls Homeowner Basics: What Every New Resident Should Know
-2024-09-28,1,consumer-guide,Consumer Guide,seasonal-guide,Getting Your Sioux Falls Home Ready for Winter
-2024-10-04,1,consumer-guide,Consumer Guide,local-resource,Understanding Permits and Licensing for Sioux Falls Homeowners
-2024-10-05,1,for-locals,For Locals,local-resource,For Locals: Where to Start as a Sioux Falls Resident
+2024-01-22,1,plumbers,Plumbers,faq,Plumbers FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-01-27,1,painters,Painters,cost-guide,How Much Does It Cost to Hire a painting contractor in Sioux Falls?
+2024-02-10,1,painters,Painters,buying-guide,How to Choose a Painting Contractor in Sioux Falls
+2024-02-18,1,painters,Painters,seasonal-guide,Painters and South Dakota Winters: What Every Homeowner Should Know
+2024-02-20,1,painters,Painters,faq,Painters FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-03-11,1,flooring,Flooring,cost-guide,How Much Does It Cost to Hire a flooring contractor in Sioux Falls?
+2024-03-20,1,flooring,Flooring,buying-guide,How to Choose a Flooring Contractor in Sioux Falls
+2024-03-21,1,flooring,Flooring,seasonal-guide,Flooring and South Dakota Winters: What Every Homeowner Should Know
+2024-03-22,1,flooring,Flooring,faq,Flooring FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-03-24,1,lawn-care,Lawn Care,cost-guide,How Much Does It Cost to Hire a lawn care company in Sioux Falls?
+2024-03-29,1,lawn-care,Lawn Care,buying-guide,How to Choose a Lawn Care Company in Sioux Falls
+2024-04-04,1,lawn-care,Lawn Care,seasonal-guide,Lawn Care and South Dakota Winters: What Every Homeowner Should Know
+2024-04-19,1,lawn-care,Lawn Care,faq,Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-04-21,1,cleaning-services,Cleaning Services,cost-guide,How Much Does It Cost to Hire a cleaning service in Sioux Falls?
+2024-05-21,1,cleaning-services,Cleaning Services,buying-guide,How to Choose a Cleaning Service in Sioux Falls
+2024-05-23,1,cleaning-services,Cleaning Services,seasonal-guide,Cleaning Services and South Dakota Winters: What Every Homeowner Should Know
+2024-06-12,1,cleaning-services,Cleaning Services,faq,Cleaning Services FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-07-02,1,real-estate-agents,Real Estate Agents,cost-guide,How Much Does It Cost to Hire a real estate agent in Sioux Falls?
+2024-07-04,1,real-estate-agents,Real Estate Agents,buying-guide,How to Choose a Real Estate Agent in Sioux Falls
+2024-07-17,1,real-estate-agents,Real Estate Agents,seasonal-guide,Real Estate Agents and South Dakota Winters: What Every Homeowner Should Know
+2024-08-15,1,real-estate-agents,Real Estate Agents,faq,Real Estate Agents FAQ: Sioux Falls Homeowners' Most Common Questions
+2024-09-05,1,consumer-guide,Consumer Guide,local-resource,Consumer Guide: Where to Start as a Sioux Falls Resident
+2024-09-13,1,consumer-guide,Consumer Guide,local-resource,Sioux Falls Homeowner Basics: What Every New Resident Should Know
+2024-09-27,1,consumer-guide,Consumer Guide,seasonal-guide,Getting Your Sioux Falls Home Ready for Winter
+2024-09-28,1,consumer-guide,Consumer Guide,local-resource,Understanding Permits and Licensing for Sioux Falls Homeowners
+2024-10-04,1,for-locals,For Locals,local-resource,For Locals: Where to Start as a Sioux Falls Resident
 2024-10-23,1,for-locals,For Locals,local-resource,Sioux Falls Homeowner Basics: What Every New Resident Should Know
 2024-10-28,1,for-locals,For Locals,seasonal-guide,Getting Your Sioux Falls Home Ready for Winter
 2024-11-11,1,for-locals,For Locals,local-resource,Understanding Permits and Licensing for Sioux Falls Homeowners
@@ -47,39 +43,35 @@ publishedAt,phase,category_slug,category_name,contentType,title
 2025-01-27,2,home-watch-services,Home Watch Services,cost-guide,How Much Does It Cost to Hire a home watch company in Sioux Falls?
 2025-01-28,2,home-watch-services,Home Watch Services,buying-guide,How to Choose a Home Watch Company in Sioux Falls
 2025-02-09,2,home-watch-services,Home Watch Services,seasonal-guide,Home Watch Services and South Dakota Winters: What Every Homeowner Should Know
-2025-02-10,2,home-watch-services,Home Watch Services,faq,Home Watch Services FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-02-14,2,local-tree-services,Local Tree Services,cost-guide,How Much Does It Cost to Hire a tree service in Sioux Falls?
+2025-02-14,2,home-watch-services,Home Watch Services,faq,Home Watch Services FAQ: Sioux Falls Homeowners' Most Common Questions
+2025-02-23,2,local-tree-services,Local Tree Services,cost-guide,How Much Does It Cost to Hire a tree service in Sioux Falls?
 2025-02-25,2,local-tree-services,Local Tree Services,buying-guide,How to Choose a Tree Service in Sioux Falls
 2025-03-09,2,local-tree-services,Local Tree Services,seasonal-guide,Local Tree Services and South Dakota Winters: What Every Homeowner Should Know
 2025-03-29,2,local-tree-services,Local Tree Services,faq,Local Tree Services FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-04-02,2,window-cleaning,Window Cleaning,cost-guide,How Much Does It Cost to Hire a window cleaning company in Sioux Falls?
-2025-04-13,2,window-cleaning,Window Cleaning,buying-guide,How to Choose a Window Cleaning Company in Sioux Falls
-2025-04-22,2,window-cleaning,Window Cleaning,seasonal-guide,Window Cleaning and South Dakota Winters: What Every Homeowner Should Know
-2025-05-01,2,window-cleaning,Window Cleaning,faq,Window Cleaning FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-05-04,2,appliance-repair-service,Appliance Repair Service,cost-guide,How Much Does It Cost to Hire an appliance repair company in Sioux Falls?
-2025-05-10,2,appliance-repair-service,Appliance Repair Service,buying-guide,How to Choose an Appliance Repair Company in Sioux Falls
-2025-05-20,2,appliance-repair-service,Appliance Repair Service,seasonal-guide,Appliance Repair Service and South Dakota Winters: What Every Homeowner Should Know
-2025-05-21,2,appliance-repair-service,Appliance Repair Service,faq,Appliance Repair Service FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-05-27,2,marketing-agencies,Marketing Agencies,cost-guide,How Much Does It Cost to Hire a marketing agency in Sioux Falls?
-2025-06-02,2,marketing-agencies,Marketing Agencies,buying-guide,How to Choose a Marketing Agency in Sioux Falls
-2025-06-04,2,marketing-agencies,Marketing Agencies,seasonal-guide,Marketing Agencies and South Dakota Winters: What Every Homeowner Should Know
-2025-07-05,2,marketing-agencies,Marketing Agencies,faq,Marketing Agencies FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-07-09,2,professional-services,Professional Services,cost-guide,How Much Does It Cost to Hire a professional services firm in Sioux Falls?
-2025-07-10,2,professional-services,Professional Services,buying-guide,How to Choose a Professional Services Firm in Sioux Falls
-2025-07-13,2,professional-services,Professional Services,seasonal-guide,Professional Services and South Dakota Winters: What Every Homeowner Should Know
-2025-07-17,2,professional-services,Professional Services,faq,Professional Services FAQ: Sioux Falls Homeowners' Most Common Questions
-2025-07-18,2,coffee-shops,Coffee Shops,local-resource,Best Coffee Shops in Sioux Falls
-2025-08-25,2,coffee-shops,Coffee Shops,local-resource,Coffee Shops in Sioux Falls: A Local's Guide
-2025-08-28,2,coffee-shops,Coffee Shops,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Coffee Shops
-2025-08-29,2,coffee-shops,Coffee Shops,local-resource,Coffee Shops by Neighborhood: Where Sioux Falls Locals Actually Go
-2025-10-05,2,coffee-shops,Coffee Shops,seasonal-guide,The Best Coffee Shops for a Sioux Falls Winter Day
-2025-10-06,2,restaurants-dining,Restaurants & Dining,local-resource,Best Restaurants & Dining in Sioux Falls
-2025-10-14,2,restaurants-dining,Restaurants & Dining,local-resource,Restaurants & Dining in Sioux Falls: A Local's Guide
-2025-10-27,2,restaurants-dining,Restaurants & Dining,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Restaurants & Dining
-2025-11-12,2,restaurants-dining,Restaurants & Dining,local-resource,Restaurants & Dining by Neighborhood: Where Sioux Falls Locals Actually Go
-2025-11-17,2,restaurants-dining,Restaurants & Dining,seasonal-guide,The Best Restaurants & Dining for a Sioux Falls Winter Day
-2025-11-22,2,shopping-retail,Shopping & Retail,local-resource,Best Shopping & Retail in Sioux Falls
-2025-11-26,2,shopping-retail,Shopping & Retail,local-resource,Shopping & Retail in Sioux Falls: A Local's Guide
-2025-12-02,2,shopping-retail,Shopping & Retail,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Shopping & Retail
+2025-04-13,2,window-cleaning,Window Cleaning,cost-guide,How Much Does It Cost to Hire a window cleaning company in Sioux Falls?
+2025-04-22,2,window-cleaning,Window Cleaning,buying-guide,How to Choose a Window Cleaning Company in Sioux Falls
+2025-05-01,2,window-cleaning,Window Cleaning,seasonal-guide,Window Cleaning and South Dakota Winters: What Every Homeowner Should Know
+2025-05-04,2,window-cleaning,Window Cleaning,faq,Window Cleaning FAQ: Sioux Falls Homeowners' Most Common Questions
+2025-05-20,2,appliance-repair-service,Appliance Repair Service,cost-guide,How Much Does It Cost to Hire an appliance repair company in Sioux Falls?
+2025-05-27,2,appliance-repair-service,Appliance Repair Service,buying-guide,How to Choose an Appliance Repair Company in Sioux Falls
+2025-06-02,2,appliance-repair-service,Appliance Repair Service,seasonal-guide,Appliance Repair Service and South Dakota Winters: What Every Homeowner Should Know
+2025-06-04,2,appliance-repair-service,Appliance Repair Service,faq,Appliance Repair Service FAQ: Sioux Falls Homeowners' Most Common Questions
+2025-06-30,2,marketing-agencies,Marketing Agencies,cost-guide,How Much Does It Cost to Hire a marketing agency in Sioux Falls?
+2025-07-05,2,marketing-agencies,Marketing Agencies,buying-guide,How to Choose a Marketing Agency in Sioux Falls
+2025-07-07,2,marketing-agencies,Marketing Agencies,seasonal-guide,Marketing Agencies and South Dakota Winters: What Every Homeowner Should Know
+2025-07-09,2,marketing-agencies,Marketing Agencies,faq,Marketing Agencies FAQ: Sioux Falls Homeowners' Most Common Questions
+2025-07-10,2,coffee-shops,Coffee Shops,local-resource,Best Coffee Shops in Sioux Falls
+2025-07-13,2,coffee-shops,Coffee Shops,local-resource,Coffee Shops in Sioux Falls: A Local's Guide
+2025-07-17,2,coffee-shops,Coffee Shops,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Coffee Shops
+2025-07-18,2,coffee-shops,Coffee Shops,local-resource,Coffee Shops by Neighborhood: Where Sioux Falls Locals Actually Go
+2025-08-25,2,coffee-shops,Coffee Shops,seasonal-guide,The Best Coffee Shops for a Sioux Falls Winter Day
+2025-08-28,2,restaurants-dining,Restaurants & Dining,local-resource,Best Restaurants & Dining in Sioux Falls
+2025-10-06,2,restaurants-dining,Restaurants & Dining,local-resource,Restaurants & Dining in Sioux Falls: A Local's Guide
+2025-10-14,2,restaurants-dining,Restaurants & Dining,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Restaurants & Dining
+2025-10-27,2,restaurants-dining,Restaurants & Dining,local-resource,Restaurants & Dining by Neighborhood: Where Sioux Falls Locals Actually Go
+2025-11-10,2,restaurants-dining,Restaurants & Dining,seasonal-guide,The Best Restaurants & Dining for a Sioux Falls Winter Day
+2025-11-17,2,shopping-retail,Shopping & Retail,local-resource,Best Shopping & Retail in Sioux Falls
+2025-11-22,2,shopping-retail,Shopping & Retail,local-resource,Shopping & Retail in Sioux Falls: A Local's Guide
+2025-11-26,2,shopping-retail,Shopping & Retail,visitor-guide,Visiting Sioux Falls? Here's Where to Find Great Shopping & Retail
 2025-12-09,2,shopping-retail,Shopping & Retail,local-resource,Shopping & Retail by Neighborhood: Where Sioux Falls Locals Actually Go
 2025-12-14,2,shopping-retail,Shopping & Retail,seasonal-guide,The Best Shopping & Retail for a Sioux Falls Winter Day

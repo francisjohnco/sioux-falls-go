@@ -5,6 +5,13 @@ contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]
 relatedBusinesses: ["jurrens-plumbing", "605-drain-solutions"]
+embeddedFaqs:
+  - question: "Is a plumbing estimate usually free, or do I pay just for someone to look?"
+    answer: "Most Sioux Falls plumbers charge the standard $85-$150 service call fee even for an estimate, since diagnosing the problem is itself the work. Some will waive it if you move forward with the repair — ask upfront."
+  - question: "Do plumbers charge more for evenings, weekends, or emergencies?"
+    answer: "Yes, after-hours and emergency rates are standard across the industry, not unique to any one company. Ask what the emergency rate looks like before you're in an actual emergency."
+  - question: "If I hire the plumber, does the service call fee count toward the total?"
+    answer: "It depends on the company — some roll the diagnostic fee into the repair cost, others charge it separately regardless. Ask this specifically before they start work, not after."
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true

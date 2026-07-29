@@ -5,6 +5,13 @@ contentType: "seasonal-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "how-to-choose-a-plumber-in-sioux-falls"]
 relatedBusinesses: ["605-drain-solutions"]
+embeddedFaqs:
+  - question: "How cold does it actually need to get before pipes are at risk?"
+    answer: "Risk rises fast once temperatures stay below the mid-20s for multiple days in a row, especially overnight — it's sustained cold, not a single cold hour, that actually freezes a pipe."
+  - question: "Is leaving a faucet dripping enough to prevent a freeze?"
+    answer: "It helps on faucets connected to exposed or exterior-wall piping, since moving water resists freezing better than standing water — but it's a supplement to insulation, not a replacement for it on a genuinely vulnerable line."
+  - question: "What's the very first thing I should do if a pipe has already burst?"
+    answer: "Shut off the main water supply immediately, before you do anything else — including before you call a plumber. Stopping the water is what limits the damage; everything else can wait a few minutes."
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true

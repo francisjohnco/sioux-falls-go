@@ -18,10 +18,14 @@ SERVICE_CATEGORIES_PHASE1 = [
     ("painters", "Painters"),
     ("flooring", "Flooring"),
     ("lawn-care", "Lawn Care"),
-    ("home-services", "Home Services"),
     ("cleaning-services", "Cleaning Services"),
     ("real-estate-agents", "Real Estate Agents"),
 ]
+# NOTE: "home-services" is deliberately excluded — it's a parent/umbrella
+# category (covers Electricians, Plumbers, Painters, Lawn Care, Cleaning
+# Services, etc. in the real taxonomy). Writing "how much does Home Services
+# cost" style articles for an umbrella category is redundant and meaningless
+# — content belongs on the specific trade categories instead.
 
 SERVICE_CATEGORIES_PHASE2 = [
     ("home-watch-services", "Home Watch Services"),
@@ -29,8 +33,12 @@ SERVICE_CATEGORIES_PHASE2 = [
     ("window-cleaning", "Window Cleaning"),
     ("appliance-repair-service", "Appliance Repair Service"),
     ("marketing-agencies", "Marketing Agencies"),
-    ("professional-services", "Professional Services"),
 ]
+# NOTE: "professional-services" is deliberately excluded for the same reason
+# as "home-services" above — it's an umbrella category (covers Marketing
+# Agencies, Attorneys, Accountants, Insurance Agents, Financial Advisors,
+# Web Design, IT Services, etc.). Marketing Agencies gets its own dedicated
+# articles since it's an actual specific trade, not the umbrella.
 
 DUAL_CATEGORIES_PHASE2 = [
     ("coffee-shops", "Coffee Shops"),

@@ -36,7 +36,25 @@ const relatedBusinesses = await Promise.all(
   (article.data.relatedBusinesses ?? []).map((ref) => getEntry(ref))
 );
 
-const schema = {
+const schema = article.data.embeddedFaqs.length > 0 ? [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.data.title,
+    datePublished: article.data.publishedAt.toISOString(),
+    dateModified: article.data.updatedAt.toISOString(),
+    author: { '@type': 'Person', name: article.data.author },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: article.data.embeddedFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  },
+] : {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.data.title,
@@ -71,6 +89,18 @@ const schema = {
     <div class="prose">
       <Content />
     </div>
+
+    {article.data.embeddedFaqs.length > 0 && (
+      <section class="embedded-faqs">
+        <h2>Frequently Asked Questions</h2>
+        {article.data.embeddedFaqs.map((faq) => (
+          <details class="faq-item">
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </section>
+    )}
 
     <div class="resource-cta card">
       <h3>Keep exploring {category.data.name.toLowerCase()} in Sioux Falls</h3>
@@ -122,6 +152,14 @@ const schema = {
   }
   .prose { margin-top: var(--space-3); }
   .prose :global(h2) { margin-top: var(--space-4); }
+
+  .embedded-faqs { margin-top: var(--space-4); }
+  .faq-item {
+    background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2); margin-bottom: 0.5rem;
+  }
+  .faq-item summary { cursor: pointer; font-weight: 600; color: var(--color-navy); }
+  .faq-item p { margin: var(--space-1) 0 0; font-size: 0.9375rem; color: var(--color-navy-light); }
 
   .resource-cta {
     margin-top: var(--space-4);

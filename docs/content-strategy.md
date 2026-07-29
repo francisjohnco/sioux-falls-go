@@ -11,8 +11,10 @@ Two content types, never confused:
 
 ## Category classification and launch article count
 
-**Service categories (14) — 4 articles each, fixed template:**
-appliance-repair-service, cleaning-services, electricians, flooring, home-services, home-watch-services, lawn-care, local-tree-services, marketing-agencies, painters, plumbers, professional-services, real-estate-agents, window-cleaning
+**Service categories (12) — 4 articles each, fixed template:**
+appliance-repair-service, cleaning-services, electricians, flooring, home-watch-services, lawn-care, local-tree-services, marketing-agencies, painters, plumbers, real-estate-agents, window-cleaning
+
+**Never write dedicated category articles for parent/umbrella categories.** `home-services` and `professional-services` are umbrella categories in the real taxonomy — Home Services covers Electricians, Plumbers, Painters, Lawn Care, Cleaning Services, etc.; Professional Services covers Marketing Agencies, Attorneys, Accountants, Financial Advisors, etc. A "how much does Home Services cost" article is meaningless — that content belongs on the specific trade category instead. If a business is tagged to a parent category with no more specific match, it still gets listed there, but the category doesn't get its own 4-article set. Watch for this pattern before adding any new category to the launch matrix — check whether it's actually an umbrella for categories that already exist.
 
 Each gets exactly these four, one per intent (never two articles competing for the same intent — that's cannibalization):
 1. **Cost guide** — "How much does [X] cost in Sioux Falls?" (informational/highest search volume)
@@ -50,6 +52,7 @@ consumer-guide, for-locals — broad resident-interest pieces, not tied to one s
 3. **A resource-style CTA, never a sales CTA** — every article ends with a link to the category page (browse the directory) or another article. Never "buy now" / "call today" language in the CTA itself — that belongs on business profile pages, not editorial content.
 4. **Business chips when relevant** — if the article names specific businesses, link them via `relatedBusinesses` so they render as clickable chips.
 5. **Real Sioux Falls specificity in at least one paragraph** — a named place, a real climate/soil/water fact, a real local regulation. Generic content that could describe any city fails review.
+6. **3 embedded FAQs per article** (`embeddedFaqs` field), distinct from the category's dedicated FAQ article — these should answer narrower questions specific to that article's angle (e.g. the cost guide's FAQs are about pricing mechanics, not general category questions already covered elsewhere). This renders as a visible FAQ section on the page and generates real `FAQPage` schema alongside the `Article` schema — do not duplicate questions already covered in the category's dedicated FAQ article.
 
 ## Two-phase launch split
 

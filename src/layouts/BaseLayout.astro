@@ -6,7 +6,7 @@ interface Props {
   description: string;
   canonicalPath: string; // e.g. "/things-to-do/falls-park"
   ogImage?: string;
-  schema?: Record<string, unknown>; // JSON-LD object, page-specific
+  schema?: Record<string, unknown> | Record<string, unknown>[]; // JSON-LD, single object or multiple
 }
 
 const {
@@ -44,7 +44,9 @@ const canonicalURL = new URL(canonicalPath, site).toString();
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     {schema && (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      Array.isArray(schema)
+        ? schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)
+        : <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     )}
   </head>
   <body>

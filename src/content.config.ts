@@ -140,6 +140,7 @@ const articles = defineCollection({
     relatedNeighborhoods: z.array(reference('neighborhoods')).default([]),
     relatedArticles: z.array(reference('articles')).default([]),
     relatedBusinesses: z.array(reference('businesses')).default([]),
+    embeddedFaqs: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
     evergreen: z.boolean().default(true),
     author: z.string(),
     reviewedBy: z.string().optional(), // human editorial review — required if aiAssisted
