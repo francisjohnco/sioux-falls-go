@@ -14,6 +14,12 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { Content } = await render(article);
+
+// For splitting content around the sponsor banner, get the raw rendered HTML
+const rawHtml = article.rendered?.html ?? '';
+const firstParaEnd = rawHtml.indexOf('</p>');
+const introHtml = firstParaEnd !== -1 ? rawHtml.slice(0, firstParaEnd + 4) : '';
+const restHtml = firstParaEnd !== -1 ? rawHtml.slice(firstParaEnd + 4) : rawHtml;
 const category = await getEntry(article.data.category);
 
 // Resolve explicit relatedArticles references first
@@ -93,29 +99,33 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
       <img src={article.data.heroImage} alt={article.data.title} class="article-hero-img" />
     )}
 
-    {sponsor && (
-      <a href={`/businesses/${sponsor.id}`} class="sponsor-banner">
-        <span class="sponsor-label">Sponsored</span>
-        <div class="sponsor-content">
-          <div
-            class="sponsor-logo"
-            style={sponsor.data.heroImage ? `background-image: url(${sponsor.data.heroImage});` : undefined}
-          >
-            {!sponsor.data.heroImage && sponsor.data.name.slice(0, 2).toUpperCase()}
-          </div>
-          <div>
-            <p class="sponsor-text">
-              This article is made possible by <strong>{sponsor.data.name}</strong>. They serve Sioux Falls with
-              excellence, and their support helps us keep bringing free, local content to our community.
-            </p>
-            <span class="sponsor-link">Read more about {sponsor.data.name} →</span>
-          </div>
-        </div>
-      </a>
-    )}
-
     <div class="prose">
-      <Content />
+      {sponsor ? (
+        <>
+          <Fragment set:html={introHtml} />
+          <a href={`/businesses/${sponsor.id}`} class="sponsor-banner">
+            <span class="sponsor-label">Sponsored</span>
+            <div class="sponsor-content">
+              <div
+                class="sponsor-logo"
+                style={sponsor.data.heroImage ? `background-image: url(${sponsor.data.heroImage});` : undefined}
+              >
+                {!sponsor.data.heroImage && sponsor.data.name.slice(0, 2).toUpperCase()}
+              </div>
+              <div>
+                <p class="sponsor-text">
+                  This article is made possible by <strong>{sponsor.data.name}</strong>. They serve Sioux Falls with
+                  excellence, and their support helps us keep bringing free, local content to our community.
+                </p>
+                <span class="sponsor-link">Read more about {sponsor.data.name} →</span>
+              </div>
+            </div>
+          </a>
+          <Fragment set:html={restHtml} />
+        </>
+      ) : (
+        <Content />
+      )}
     </div>
 
     {article.data.embeddedFaqs.length > 0 && (
