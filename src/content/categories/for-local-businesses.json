@@ -1,0 +1,18 @@
+{
+  "name": "For Local Businesses",
+  "slug": "for-local-businesses",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "For Local Businesses in Sioux Falls",
+    "description": "For Local Businesses \u2014 local Sioux Falls content and resources."
+  }
+}

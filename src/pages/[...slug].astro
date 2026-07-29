@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { slug: page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<BaseLayout
+  title={page.data.seo.title}
+  description={page.data.seo.description}
+  canonicalPath={`/${page.id}`}
+>
+  <SiteHeader slot="header" />
+
+  <article class="container page-content">
+    <h1>{page.data.title}</h1>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page-content { padding-block: var(--space-4) var(--space-6); max-width: 42rem; }
+  .prose :global(h2) { margin-top: var(--space-4); }
+  .prose :global(p) { margin-bottom: var(--space-2); }
+</style>

@@ -1,0 +1,138 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const hubs = await getCollection('hubs');
+  return hubs.map((hub) => ({
+    params: { hub: hub.data.slug },
+    props: { hub },
+  }));
+}
+
+const { hub } = Astro.props;
+
+const allFaqs = await getCollection('faqs');
+const allCategories = await getCollection('categories');
+
+// Canonical dedup: drop any entry that points elsewhere, then only keep
+// entries tagged for this hub and marked featured (the "5-10 questions" cut).
+const eligible = allFaqs.filter(
+  (faq) => !faq.data.canonicalOf && faq.data.hub.includes(hub.data.slug) && faq.data.featured
+);
+
+// Group by category, pre-render each FAQ's markdown answer, and resolve
+// related businesses — all before the template, since Astro can't await
+// inside a .map() in the markup.
+const groups = await Promise.all(
+  allCategories.map(async (category) => {
+    const faqsInCategory = eligible
+      .filter((faq) => faq.data.category.id === category.id)
+      .slice(0, hub.data.featuredPerCategory);
+
+    const renderedFaqs = await Promise.all(
+      faqsInCategory.map(async (faq) => {
+        const { Content } = await render(faq);
+        return { faq, Content };
+      })
+    );
+
+    const businessRefs = faqsInCategory.flatMap((f) => f.data.relatedBusinesses);
+    const businesses = await Promise.all(businessRefs.map((ref) => getEntry(ref)));
+
+    return { category, renderedFaqs, businesses };
+  })
+);
+const nonEmptyGroups = groups.filter((g) => g.renderedFaqs.length > 0);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: eligible.map((faq) => ({
+    '@type': 'Question',
+    name: faq.data.question,
+  })),
+};
+---
+<BaseLayout
+  title={hub.data.title}
+  description={hub.data.description}
+  canonicalPath={`/faqs/${hub.data.slug}`}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page">
+    <span class="eyebrow">Knowledge Hub</span>
+    <h1>{hub.data.title}</h1>
+    <p class="page-sub">{hub.data.description}</p>
+
+    {nonEmptyGroups.map((group) => (
+      <section class="category-group" aria-labelledby={`hub-${group.category.data.slug}`}>
+        <div class="group-header">
+          <h2 id={`hub-${group.category.data.slug}`}>{group.category.data.name}</h2>
+          <a href={`/${group.category.data.slug}#faqs`}>View all {group.category.data.name} FAQs →</a>
+        </div>
+
+        <div class="faq-list">
+          {group.renderedFaqs.map(({ faq, Content }) => (
+            <details class="faq-item">
+              <summary>{faq.data.question}</summary>
+              <div class="faq-answer">
+                <Content />
+              </div>
+            </details>
+          ))}
+        </div>
+
+        {group.businesses.length > 0 && (
+          <p class="group-businesses">
+            Related: {group.businesses.map((b, i) => (
+              <>
+                <a href={`/businesses/${b.id}`}>{b.data.name}</a>
+                {i < group.businesses.length - 1 ? ', ' : ''}
+              </>
+            ))}
+          </p>
+        )}
+      </section>
+    ))}
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .page-sub { max-width: 52ch; color: var(--color-river-light); }
+  .category-group { margin-top: var(--space-5); }
+  .category-group:first-of-type { margin-top: var(--space-4); }
+  .group-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--color-line);
+    padding-bottom: var(--space-1);
+  }
+  .group-header h2 { margin: 0; }
+  .group-header a { font-size: 0.9375rem; white-space: nowrap; }
+  .faq-list { margin-top: var(--space-2); display: flex; flex-direction: column; gap: 0.5rem; }
+  .faq-item {
+    background: var(--color-frost);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: var(--space-2);
+  }
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-river);
+  }
+  .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; }
+  .faq-answer :global(p) { margin: 0; }
+  .group-businesses { margin-top: var(--space-1); font-size: 0.875rem; color: var(--color-river-light); }
+</style>

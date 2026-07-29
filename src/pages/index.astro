@@ -1,0 +1,112 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const articles = await getCollection('articles');
+const categories = await getCollection('categories');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Sioux Falls Go',
+  url: 'https://siouxfallsgo.com',
+};
+---
+<BaseLayout
+  title="The Homepage for Living in Sioux Falls"
+  description="Sioux Falls Go is the local guide to things to do, businesses, and events in Sioux Falls, South Dakota."
+  canonicalPath="/"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Est. as a river-cut foundation, 2026</p>
+      <h1>The homepage for living in Sioux Falls.</h1>
+      <p class="hero-sub">
+        Local discovery, business tools, and an AI concierge that knows this city —
+        built on Sioux Falls' own knowledge, not the open web.
+      </p>
+      <div class="hero-actions">
+        <a class="button" href="/things-to-do">Explore Things to Do</a>
+        <a class="button button--ghost" href="/businesses">Browse the Directory</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="contour-rule" role="presentation"></div>
+
+    <section aria-labelledby="categories-heading">
+      <span class="eyebrow">Browse by category</span>
+      <h2 id="categories-heading">Start where you live</h2>
+      <div class="grid">
+        {categories.map((cat) => (
+          <a class="card category-card" href={`/${cat.data.slug}`}>
+            <h3>{cat.data.name}</h3>
+            <p>{cat.data.seo.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="contour-rule" role="presentation"></div>
+
+    <section aria-labelledby="guides-heading">
+      <span class="eyebrow">From the knowledge base</span>
+      <h2 id="guides-heading">Local guides, written to actually help</h2>
+      <div class="grid">
+        {articles.map((article) => (
+          <a class="card" href={`/guides/${article.id}`}>
+            <h3>{article.data.title}</h3>
+            <p>{article.data.seo.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero {
+    background: var(--color-river);
+    color: var(--color-bluff);
+    padding-block: var(--space-6) var(--space-5);
+  }
+  .hero .eyebrow { color: var(--color-prairie); }
+  .hero h1 {
+    color: var(--color-bluff);
+    max-width: 18ch;
+    margin-block: var(--space-2);
+  }
+  .hero-sub {
+    max-width: 42ch;
+    color: var(--color-frost);
+    font-size: 1.0625rem;
+  }
+  .hero-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .hero-actions .button--ghost {
+    color: var(--color-bluff);
+    border-color: var(--color-river-light);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  .category-card { text-decoration: none; }
+  .card h3 { margin-bottom: var(--space-1); }
+  .card p { margin: 0; font-size: 0.9375rem; color: var(--color-river-light); }
+</style>

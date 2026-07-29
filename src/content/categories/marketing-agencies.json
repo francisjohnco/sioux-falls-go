@@ -1,0 +1,21 @@
+{
+  "name": "Marketing Agencies",
+  "slug": "marketing-agencies",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Marketing Agencies in Sioux Falls",
+    "description": "Find trusted marketing agencies in Sioux Falls, plus local guides and resources."
+  }
+}

@@ -1,0 +1,125 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import BusinessCard from '../components/BusinessCard.astro';
+
+export async function getStaticPaths() {
+  const categories = await getCollection('categories');
+  return categories.map((category) => ({
+    params: { category: category.data.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+const allBusinesses = await getCollection('businesses');
+const businesses = allBusinesses.filter((b) => b.data.category.id === category.id);
+
+const allArticles = await getCollection('articles');
+const articles = allArticles.filter((a) => a.data.category.id === category.id);
+
+const allFaqs = await getCollection('faqs');
+const categoryFaqs = allFaqs.filter(
+  (faq) => !faq.data.canonicalOf && faq.data.category.id === category.id
+);
+const renderedFaqs = await Promise.all(
+  categoryFaqs.map(async (faq) => ({ faq, Content: (await render(faq)).Content }))
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: category.data.seo.title,
+};
+---
+<BaseLayout
+  title={category.data.seo.title}
+  description={category.data.seo.description}
+  canonicalPath={`/${category.data.slug}`}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page">
+    <span class="eyebrow">Category</span>
+    <h1>{category.data.name}</h1>
+    <p class="page-sub">{category.data.seo.description}</p>
+
+    {businesses.length > 0 && (
+      <section aria-labelledby="biz-heading">
+        <h2 id="biz-heading">Businesses</h2>
+        <div class="grid">
+          {businesses.map((business) => <BusinessCard business={business} />)}
+        </div>
+      </section>
+    )}
+
+    {articles.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section aria-labelledby="guides-heading">
+          <h2 id="guides-heading">Guides &amp; resources</h2>
+          <div class="grid">
+            {articles.map((article) => (
+              <a class="card" href={`/guides/${article.id}`}>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+
+    {renderedFaqs.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section id="faqs" aria-labelledby="faqs-heading">
+          <h2 id="faqs-heading">Frequently asked questions</h2>
+          <div class="faq-list">
+            {renderedFaqs.map(({ faq, Content }) => (
+              <details class="faq-item">
+                <summary>{faq.data.question}</summary>
+                <div class="faq-answer"><Content /></div>
+              </details>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+
+    {businesses.length === 0 && articles.length === 0 && renderedFaqs.length === 0 && (
+      <p class="empty-state">
+        This category is set up but doesn't have content yet — add businesses,
+        articles, or FAQs referencing <code>{category.data.slug}</code> and they'll appear here automatically.
+      </p>
+    )}
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .page-sub { max-width: 42ch; color: var(--color-river-light); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  .faq-list { margin-top: var(--space-3); display: flex; flex-direction: column; gap: 0.5rem; }
+  .faq-item {
+    background: var(--color-frost);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius);
+    padding: var(--space-2);
+  }
+  .faq-item summary { cursor: pointer; font-weight: 600; color: var(--color-river); }
+  .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; }
+  .faq-answer :global(p) { margin: 0; }
+  .empty-state { color: var(--color-river-light); margin-top: var(--space-3); }
+</style>

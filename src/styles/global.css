@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ── Color: drawn from the falls themselves ──
+     Quartzite is the actual pink-rose bedrock the Big Sioux River
+     cuts through at Falls Park — that's where "rose", not the usual
+     AI-default orange-terracotta, comes from. */
+  --color-quartzite: #A4574F;      /* weathered quartzite rock, headlines/accent */
+  --color-quartzite-dark: #7C3F39; /* hover/active state */
+  --color-river: #22434A;          /* Big Sioux River in shade, primary ink/nav */
+  --color-river-light: #3D6169;    /* secondary text on dark */
+  --color-prairie: #C99A2E;        /* harvest wheat gold, secondary accent */
+  --color-bluff: #F3EEE5;          /* limestone bluff, page background */
+  --color-frost: #ECEFEA;          /* card background, cool and quiet */
+  --color-ink: #1C221F;            /* near-black body text, warmed slightly */
+  --color-line: #D8D0C0;           /* hairline rule on bluff */
+
+  /* ── Type ── */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
+  --step-3: clamp(2.25rem, 1.8rem + 2.25vw, 3.75rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6rem;
+
+  --radius: 3px; /* quartzite is cut stone, not soft — kept nearly square */
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--color-bluff);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-river);
+  margin: 0 0 var(--space-2);
+}
+
+h1 { font-size: var(--step-3); font-weight: 500; }
+h2 { font-size: var(--step-2); }
+h3 { font-size: var(--step-1); }
+
+a { color: var(--color-quartzite); text-decoration-thickness: 1.5px; }
+a:hover { color: var(--color-quartzite-dark); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-river-light);
+}
+
+.container {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--space-3);
+}
+
+/* ── Signature element: the contour rule ──
+   A single wavy line standing in for the river / quartzite strata.
+   Used sparingly — once per major section break, never as decoration. */
+.contour-rule {
+  width: 100%;
+  height: 12px;
+  margin-block: var(--space-4);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q 15 0, 30 6 T 60 6 T 90 6 T 120 6' fill='none' stroke='%23D8D0C0' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 120px 12px;
+}
+
+.button {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  background: var(--color-river);
+  color: var(--color-bluff);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.button:hover { background: var(--color-quartzite-dark); color: var(--color-bluff); }
+.button--ghost {
+  background: transparent;
+  color: var(--color-river);
+  border: 1.5px solid var(--color-line);
+}
+.button--ghost:hover { border-color: var(--color-quartzite); color: var(--color-quartzite); }
+
+.card {
+  background: var(--color-frost);
+  border-radius: var(--radius);
+  padding: var(--space-3);
+  border: 1px solid var(--color-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-prairie);
+  outline-offset: 2px;
+}

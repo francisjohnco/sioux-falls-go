@@ -1,0 +1,21 @@
+{
+  "name": "Professional Services",
+  "slug": "professional-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Professional Services in Sioux Falls",
+    "description": "Find trusted professional services in Sioux Falls, plus local guides and resources."
+  }
+}

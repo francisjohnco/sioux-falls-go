@@ -1,0 +1,21 @@
+{
+  "name": "Flooring",
+  "slug": "flooring",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Flooring in Sioux Falls",
+    "description": "Find trusted flooring in Sioux Falls, plus local guides and resources."
+  }
+}

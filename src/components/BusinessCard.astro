@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
+
+interface Props {
+  business: CollectionEntry<'businesses'>;
+}
+const { business } = Astro.props;
+const category = await getEntry(business.data.category);
+---
+<a class="card biz-card" href={`/businesses/${business.id}`}>
+  <div class="biz-card-top">
+    <h3>{business.data.name}</h3>
+    {business.data.claimed && <span class="badge">Claimed</span>}
+  </div>
+  <p class="eyebrow">{category.data.name}</p>
+  <p class="biz-address">{business.data.address}</p>
+  {business.data.phone && <p class="biz-phone">{business.data.phone}</p>}
+</a>
+
+<style>
+  .biz-card { display: block; text-decoration: none; }
+  .biz-card-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-1); }
+  .biz-card h3 { margin: 0; font-size: 1.125rem; }
+  .badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-river);
+    background: var(--color-prairie);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .biz-card .eyebrow { margin: var(--space-1) 0 0.25rem; }
+  .biz-address, .biz-phone { margin: 0.15rem 0 0; font-size: 0.9375rem; color: var(--color-ink); }
+</style>

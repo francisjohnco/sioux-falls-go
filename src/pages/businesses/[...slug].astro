@@ -1,0 +1,134 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const businesses = await getCollection('businesses');
+  return businesses.map((business) => ({
+    params: { slug: business.id },
+    props: { business },
+  }));
+}
+
+const { business } = Astro.props;
+const { Content } = await render(business);
+const category = await getEntry(business.data.category);
+const neighborhood = business.data.neighborhood ? await getEntry(business.data.neighborhood) : null;
+
+// Related articles: same category as this business (Content Engine relationship)
+const allArticles = await getCollection('articles');
+const relatedArticles = allArticles.filter((a) => a.data.category.id === business.data.category.id);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: business.data.name,
+  address: business.data.address,
+  telephone: business.data.phone,
+  url: business.data.website,
+};
+---
+<BaseLayout
+  title={business.data.name}
+  description={`${business.data.name} — ${category.data.name} in Sioux Falls. Hours, contact info, and services.`}
+  canonicalPath={`/businesses/${business.id}`}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
+    </nav>
+
+    <div class="profile-header">
+      <div>
+        <span class="eyebrow">{category.data.name}</span>
+        <h1>{business.data.name}</h1>
+        {business.data.claimed
+          ? <span class="badge">Claimed listing</span>
+          : <a class="claim-link" href="/businesses/claim">Is this your business? Claim it →</a>}
+      </div>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-main prose">
+        <Content />
+      </div>
+
+      <aside class="profile-side card">
+        <dl>
+          <dt>Address</dt>
+          <dd>{business.data.address}</dd>
+          {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
+          {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
+          {business.data.hours && <><dt>Hours</dt><dd>{business.data.hours}</dd></>}
+          {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
+        </dl>
+      </aside>
+    </div>
+
+    {relatedArticles.length > 0 && (
+      <section class="related">
+        <div class="contour-rule" role="presentation"></div>
+        <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
+        <div class="grid">
+          {relatedArticles.map((article) => (
+            <a class="card" href={`/guides/${article.id}`}>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.seo.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .breadcrumbs { font-size: 0.8125rem; color: var(--color-river-light); margin-bottom: var(--space-2); }
+  .breadcrumbs a { color: var(--color-river-light); }
+  .profile-header h1 { margin-top: 0.25rem; }
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: var(--color-river);
+    background: var(--color-prairie);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+  }
+  .claim-link { font-size: 0.9375rem; }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 18rem;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+  }
+  @media (max-width: 45rem) {
+    .profile-grid { grid-template-columns: 1fr; }
+  }
+  .profile-side dl { margin: 0; }
+  .profile-side dt {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    color: var(--color-river-light);
+    margin-top: var(--space-2);
+  }
+  .profile-side dt:first-child { margin-top: 0; }
+  .profile-side dd { margin: 0.2rem 0 0; }
+  .related { margin-top: var(--space-4); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+</style>

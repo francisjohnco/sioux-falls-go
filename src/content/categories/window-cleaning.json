@@ -1,0 +1,21 @@
+{
+  "name": "Window Cleaning",
+  "slug": "window-cleaning",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Window Cleaning in Sioux Falls",
+    "description": "Find trusted window cleaning in Sioux Falls, plus local guides and resources."
+  }
+}

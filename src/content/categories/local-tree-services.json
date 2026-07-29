@@ -1,0 +1,21 @@
+{
+  "name": "Local Tree Services",
+  "slug": "local-tree-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Local Tree Services in Sioux Falls",
+    "description": "Find trusted local tree services in Sioux Falls, plus local guides and resources."
+  }
+}

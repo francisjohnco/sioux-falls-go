@@ -1,0 +1,18 @@
+{
+  "name": "Spotlight Giveaways",
+  "slug": "spotlight-giveaways",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "Spotlight Giveaways in Sioux Falls",
+    "description": "Spotlight Giveaways \u2014 local Sioux Falls content and resources."
+  }
+}

@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import BusinessCard from '../../components/BusinessCard.astro';
+
+const businesses = await getCollection('businesses');
+const categories = await getCollection('categories');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Sioux Falls Business Directory',
+};
+---
+<BaseLayout
+  title="Business Directory"
+  description="Browse trusted Sioux Falls businesses by category — verified hours, contact info, and services."
+  canonicalPath="/businesses"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page">
+    <span class="eyebrow">Directory</span>
+    <h1>Find a business in Sioux Falls</h1>
+    <p class="page-sub">{businesses.length} businesses, verified and organized by category.</p>
+
+    <div class="filter-row" role="group" aria-label="Filter by category">
+      <a href="/businesses" class="chip chip--active">All</a>
+      {categories.map((cat) => (
+        <a href={`/${cat.data.slug}`} class="chip">{cat.data.name}</a>
+      ))}
+    </div>
+
+    <div class="grid">
+      {businesses.map((business) => <BusinessCard business={business} />)}
+    </div>
+
+    <div class="claim-cta card">
+      <div>
+        <h3>Own one of these businesses?</h3>
+        <p>Claim your listing to update hours, add photos, and respond to reviews.</p>
+      </div>
+      <a class="button" href="/businesses/claim">Claim your listing</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .page-sub { color: var(--color-river-light); }
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    margin-block: var(--space-3);
+  }
+  .chip {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-river);
+    border: 1.5px solid var(--color-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+  }
+  .chip:hover { border-color: var(--color-quartzite); color: var(--color-quartzite); }
+  .chip--active { background: var(--color-river); color: var(--color-bluff); border-color: var(--color-river); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-3);
+  }
+  .claim-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    margin-top: var(--space-5);
+    background: var(--color-river);
+    border-color: var(--color-river);
+  }
+  .claim-cta h3, .claim-cta p { color: var(--color-bluff); margin: 0; }
+  .claim-cta p { margin-top: 0.25rem; }
+</style>

@@ -1,0 +1,18 @@
+{
+  "name": "Community Spotlight",
+  "slug": "community-spotlight",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "Community Spotlight in Sioux Falls",
+    "description": "Community Spotlight \u2014 local Sioux Falls content and resources."
+  }
+}

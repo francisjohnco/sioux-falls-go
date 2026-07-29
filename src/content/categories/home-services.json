@@ -1,0 +1,21 @@
+{
+  "name": "Home Services",
+  "slug": "home-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Home Services in Sioux Falls",
+    "description": "Find trusted home services in Sioux Falls, plus local guides and resources."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Shopping & Retail",
+  "slug": "shopping-retail",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Shopping & Retail in Sioux Falls",
+    "description": "Find trusted shopping & retail in Sioux Falls, plus local guides and resources."
+  }
+}

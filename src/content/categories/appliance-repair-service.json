@@ -1,0 +1,21 @@
+{
+  "name": "Appliance Repair Service",
+  "slug": "appliance-repair-service",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Appliance Repair Service in Sioux Falls",
+    "description": "Find trusted appliance repair service in Sioux Falls, plus local guides and resources."
+  }
+}

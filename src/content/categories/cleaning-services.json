@@ -1,0 +1,21 @@
+{
+  "name": "Cleaning Services",
+  "slug": "cleaning-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Cleaning Services in Sioux Falls",
+    "description": "Find trusted cleaning services in Sioux Falls, plus local guides and resources."
+  }
+}

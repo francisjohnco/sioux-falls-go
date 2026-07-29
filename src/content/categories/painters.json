@@ -1,0 +1,21 @@
+{
+  "name": "Painters",
+  "slug": "painters",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Painters in Sioux Falls",
+    "description": "Find trusted painters in Sioux Falls, plus local guides and resources."
+  }
+}

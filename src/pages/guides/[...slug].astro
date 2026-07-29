@@ -1,0 +1,70 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const category = await getEntry(article.data.category);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.data.title,
+  datePublished: article.data.publishedAt.toISOString(),
+  dateModified: article.data.updatedAt.toISOString(),
+  author: { '@type': 'Person', name: article.data.author },
+};
+---
+<BaseLayout
+  title={article.data.seo.title}
+  description={article.data.seo.description}
+  canonicalPath={`/guides/${article.id}`}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <article class="container article">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{article.data.title}</span>
+    </nav>
+
+    <span class="eyebrow">{article.data.contentType.replace('-', ' ')}</span>
+    <h1>{article.data.title}</h1>
+
+    {article.data.aiAssisted && (
+      <p class="review-note">
+        AI-assisted draft, reviewed by {article.data.reviewedBy ?? 'a local editor'} before publishing.
+      </p>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .article { padding-block: var(--space-4) var(--space-6); max-width: 42rem; }
+  .breadcrumbs { font-size: 0.8125rem; color: var(--color-river-light); margin-bottom: var(--space-2); }
+  .breadcrumbs a { color: var(--color-river-light); }
+  .review-note {
+    font-size: 0.875rem;
+    color: var(--color-river-light);
+    border-left: 3px solid var(--color-prairie);
+    padding-left: var(--space-2);
+  }
+  .prose { margin-top: var(--space-3); }
+  .prose :global(h2) { margin-top: var(--space-4); }
+</style>

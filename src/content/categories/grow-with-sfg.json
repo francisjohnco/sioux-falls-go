@@ -1,0 +1,20 @@
+{
+  "name": "Grow with Sioux Falls Go",
+  "slug": "grow-with-sfg",
+  "aliases": [
+    "Grow with SFG"
+  ],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "Grow with Sioux Falls Go in Sioux Falls",
+    "description": "Grow with Sioux Falls Go \u2014 local Sioux Falls content and resources."
+  }
+}

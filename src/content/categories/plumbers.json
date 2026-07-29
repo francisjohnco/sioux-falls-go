@@ -1,0 +1,24 @@
+{
+  "name": "Plumbers",
+  "slug": "plumbers",
+  "aliases": [
+    "Plumber",
+    "Plumbing"
+  ],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Plumbers in Sioux Falls",
+    "description": "Find trusted plumbers in Sioux Falls, plus local guides and resources."
+  }
+}

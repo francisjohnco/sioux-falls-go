@@ -1,0 +1,35 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>&copy; {year} Sioux Falls Go — the homepage for living in Sioux Falls.</p>
+    <nav aria-label="Footer">
+      <a href="/about">About</a>
+      <a href="/businesses/claim">Claim Your Business</a>
+      <a href="/contact">Contact</a>
+      <a href="/faq">FAQ</a>
+      <a href="/privacy-policy">Privacy</a>
+      <a href="/terms-of-use">Terms</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-ink);
+    color: var(--color-frost);
+    padding-block: var(--space-4);
+    margin-top: var(--space-6);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: 0.875rem;
+  }
+  .footer-inner nav { display: flex; gap: var(--space-3); }
+  .footer-inner a { color: var(--color-frost); opacity: 0.85; }
+  .footer-inner a:hover { opacity: 1; color: var(--color-prairie); }
+</style>

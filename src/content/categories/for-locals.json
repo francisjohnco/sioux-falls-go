@@ -1,0 +1,18 @@
+{
+  "name": "For Locals",
+  "slug": "for-locals",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "For Locals in Sioux Falls",
+    "description": "For Locals \u2014 local Sioux Falls content and resources."
+  }
+}

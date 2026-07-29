@@ -1,0 +1,21 @@
+{
+  "name": "Electricians",
+  "slug": "electricians",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Electricians in Sioux Falls",
+    "description": "Find trusted electricians in Sioux Falls, plus local guides and resources."
+  }
+}

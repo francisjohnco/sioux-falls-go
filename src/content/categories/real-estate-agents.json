@@ -1,0 +1,21 @@
+{
+  "name": "Real Estate Agents",
+  "slug": "real-estate-agents",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Real Estate Agents in Sioux Falls",
+    "description": "Find trusted real estate agents in Sioux Falls, plus local guides and resources."
+  }
+}

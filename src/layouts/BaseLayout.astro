@@ -1,0 +1,74 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath: string; // e.g. "/things-to-do/falls-park"
+  ogImage?: string;
+  schema?: Record<string, unknown>; // JSON-LD object, page-specific
+}
+
+const {
+  title,
+  description,
+  canonicalPath,
+  ogImage = '/images/og-default.jpg',
+  schema,
+} = Astro.props;
+
+const site = 'https://siouxfallsgo.com'; // placeholder — set real prod domain before launch
+const canonicalURL = new URL(canonicalPath, site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Sioux Falls Go</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={new URL(ogImage, site).toString()} />
+    <meta property="og:site_name" content="Sioux Falls Go" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {schema && (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot name="header" />
+    <main id="main">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--color-river);
+    color: var(--color-bluff);
+    padding: 0.75rem 1.25rem;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: var(--space-2);
+    top: var(--space-2);
+  }
+</style>

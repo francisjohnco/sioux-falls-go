@@ -1,0 +1,18 @@
+{
+  "name": "Explore Sioux Falls",
+  "slug": "explore-sioux-falls",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "local context"
+    ],
+    "contentTypes": [
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "Explore Sioux Falls in Sioux Falls",
+    "description": "Explore Sioux Falls \u2014 local Sioux Falls content and resources."
+  }
+}

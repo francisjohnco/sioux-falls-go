@@ -1,0 +1,21 @@
+{
+  "name": "Coffee Shops",
+  "slug": "coffee-shops",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Coffee Shops in Sioux Falls",
+    "description": "Find trusted coffee shops in Sioux Falls, plus local guides and resources."
+  }
+}
