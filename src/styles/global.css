@@ -1,38 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* ── Color: drawn from the falls themselves ──
-     Quartzite is the actual pink-rose bedrock the Big Sioux River
-     cuts through at Falls Park — that's where "rose", not the usual
-     AI-default orange-terracotta, comes from. */
-  --color-quartzite: #A4574F;      /* weathered quartzite rock, headlines/accent */
-  --color-quartzite-dark: #7C3F39; /* hover/active state */
-  --color-river: #22434A;          /* Big Sioux River in shade, primary ink/nav */
-  --color-river-light: #3D6169;    /* secondary text on dark */
-  --color-prairie: #C99A2E;        /* harvest wheat gold, secondary accent */
-  --color-bluff: #F3EEE5;          /* limestone bluff, page background */
-  --color-frost: #ECEFEA;          /* card background, cool and quiet */
-  --color-ink: #1C221F;            /* near-black body text, warmed slightly */
-  --color-line: #D8D0C0;           /* hairline rule on bluff */
+  /* ── Color: matched to the real site, not invented ──
+     Confirmed from the live site's own search-widget config
+     ("input_border":"orange","btn_bg":"orange") — orange is the real,
+     already-in-use accent and CTA color. Paired with a clean white/light
+     background (Kadence default) rather than a dark editorial palette,
+     matching the warm "community rewards" tone of the real copy. */
+  --color-orange: #F07E23;         /* primary accent + CTAs — confirmed real */
+  --color-orange-dark: #D3660F;    /* hover/active state */
+  --color-navy: #1B2A4A;           /* nav bar + headings — trustworthy, not moody */
+  --color-navy-light: #445070;     /* secondary text on dark */
+  --color-gold: #F5B429;           /* badges, "Verified"/"Community Champ" accents */
+  --color-bg: #FFFFFF;             /* page background — clean, not tinted */
+  --color-surface: #F7F8FA;        /* card background */
+  --color-ink: #22262E;            /* body text */
+  --color-line: #E4E7EC;           /* hairline rule */
+  --color-success: #2E9E5B;        /* "Verified" / open-hours state */
 
-  /* ── Type ── */
-  --font-display: 'Fraunces', Georgia, serif;
+  /* ── Type: rounded, friendly sans — matches a community/rewards platform,
+     not an editorial knowledge-hub. Poppins for headings (the rounded,
+     approachable geometry Kadence sites commonly pair with this kind of
+     copy), Inter for body. ── */
+  --font-display: 'Poppins', -apple-system, sans-serif;
   --font-body: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-mono: 'Inter', monospace;
 
-  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
   --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --step-2: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
-  --step-3: clamp(2.25rem, 1.8rem + 2.25vw, 3.75rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.125rem);
+  --step-3: clamp(2rem, 1.7rem + 1.75vw, 3rem);
 
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
-  --space-6: 6rem;
+  --space-6: 5.5rem;
 
-  --radius: 3px; /* quartzite is cut stone, not soft — kept nearly square */
+  --radius: 10px; /* rounded — friendly, matches badges/pill buttons on the real site */
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 3px rgba(27, 42, 74, 0.08), 0 1px 2px rgba(27, 42, 74, 0.06);
+  --shadow-hover: 0 4px 14px rgba(27, 42, 74, 0.12);
 }
 
 * { box-sizing: border-box; }
@@ -40,80 +49,86 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--color-bluff);
+  background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.1;
-  color: var(--color-river);
+  line-height: 1.2;
+  color: var(--color-navy);
   margin: 0 0 var(--space-2);
 }
 
-h1 { font-size: var(--step-3); font-weight: 500; }
+h1 { font-size: var(--step-3); font-weight: 700; }
 h2 { font-size: var(--step-2); }
 h3 { font-size: var(--step-1); }
 
-a { color: var(--color-quartzite); text-decoration-thickness: 1.5px; }
-a:hover { color: var(--color-quartzite-dark); }
+a { color: var(--color-orange); text-decoration-thickness: 1.5px; }
+a:hover { color: var(--color-orange-dark); }
 
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-river-light);
+  color: var(--color-orange);
 }
 
 .container {
-  max-width: 72rem;
+  max-width: 75rem;
   margin-inline: auto;
   padding-inline: var(--space-3);
-}
-
-/* ── Signature element: the contour rule ──
-   A single wavy line standing in for the river / quartzite strata.
-   Used sparingly — once per major section break, never as decoration. */
-.contour-rule {
-  width: 100%;
-  height: 12px;
-  margin-block: var(--space-4);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='12' viewBox='0 0 120 12'%3E%3Cpath d='M0 6 Q 15 0, 30 6 T 60 6 T 90 6 T 120 6' fill='none' stroke='%23D8D0C0' stroke-width='2'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-size: 120px 12px;
 }
 
 .button {
   display: inline-block;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9375rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  background: var(--color-river);
-  color: var(--color-bluff);
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-orange);
+  color: #fff;
   text-decoration: none;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
-.button:hover { background: var(--color-quartzite-dark); color: var(--color-bluff); }
+.button:hover { background: var(--color-orange-dark); color: #fff; transform: translateY(-1px); }
 .button--ghost {
   background: transparent;
-  color: var(--color-river);
+  color: var(--color-navy);
   border: 1.5px solid var(--color-line);
 }
-.button--ghost:hover { border-color: var(--color-quartzite); color: var(--color-quartzite); }
+.button--ghost:hover { border-color: var(--color-orange); color: var(--color-orange); transform: none; }
 
 .card {
-  background: var(--color-frost);
+  background: #fff;
   border-radius: var(--radius);
   padding: var(--space-3);
   border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+.badge--verified { background: #E7F6ED; color: var(--color-success); }
+.badge--champion { background: #FEF3E2; color: var(--color-orange-dark); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -121,6 +136,6 @@ a:hover { color: var(--color-quartzite-dark); }
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-prairie);
+  outline: 3px solid var(--color-orange);
   outline-offset: 2px;
 }

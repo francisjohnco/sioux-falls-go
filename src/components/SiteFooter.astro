@@ -1,35 +1,78 @@
 ---
 const year = new Date().getFullYear();
+const columns = [
+  {
+    title: 'Sioux Falls Go',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: '/guides', label: 'Blog' },
+      { href: '/sioux-falls-top-picks-trusted-local-businesses-by-category-2', label: 'Top Picks' },
+      { href: '/contact', label: 'Contact' },
+      { href: '/privacy-policy', label: 'Privacy Policy' },
+      { href: '/terms-of-use', label: 'Terms of Use' },
+    ],
+  },
+  {
+    title: 'Community',
+    links: [
+      { href: '/spotlight-giveaway', label: 'Spotlight Giveaway' },
+      { href: '/local-deals', label: 'Local Deals' },
+      { href: '/businesses', label: 'Directory' },
+      { href: '/guides', label: 'Resources' },
+      { href: '/faqs/local-service-faqs', label: 'Local Service FAQs' },
+    ],
+  },
+  {
+    title: 'Service Providers',
+    links: [
+      { href: '/get-featured', label: 'Get Featured' },
+      { href: '/badges', label: 'Banners & Badges' },
+      { href: '/earn-badges', label: 'Earn Your Badge' },
+      { href: '/become-a-partner', label: 'Become A Partner' },
+    ],
+  },
+];
 ---
 <footer class="site-footer">
-  <div class="container footer-inner">
+  <div class="container footer-grid">
+    {columns.map((col) => (
+      <div class="footer-col">
+        <h4>{col.title}</h4>
+        <nav>
+          {col.links.map((l) => <a href={l.href}>{l.label}</a>)}
+        </nav>
+      </div>
+    ))}
+  </div>
+  <div class="container footer-bottom">
     <p>&copy; {year} Sioux Falls Go — the homepage for living in Sioux Falls.</p>
-    <nav aria-label="Footer">
-      <a href="/about">About</a>
-      <a href="/businesses/claim">Claim Your Business</a>
-      <a href="/contact">Contact</a>
-      <a href="/faq">FAQ</a>
-      <a href="/privacy-policy">Privacy</a>
-      <a href="/terms-of-use">Terms</a>
-    </nav>
+    <div class="social">
+      <a href="https://www.facebook.com/SiouxFallsGo" rel="noopener" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/siouxfallsgo/" rel="noopener" target="_blank">Instagram</a>
+    </div>
   </div>
 </footer>
 
 <style>
-  .site-footer {
-    background: var(--color-ink);
-    color: var(--color-frost);
-    padding-block: var(--space-4);
-    margin-top: var(--space-6);
+  .site-footer { background: var(--color-navy); color: #fff; padding-top: var(--space-5); margin-top: var(--space-6); }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-4);
+    padding-bottom: var(--space-4);
   }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    font-size: 0.875rem;
+  .footer-col h4 { color: #fff; font-size: 0.9375rem; margin-bottom: var(--space-2); }
+  .footer-col nav { display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-col a { color: rgba(255,255,255,0.75); font-size: 0.875rem; text-decoration: none; }
+  .footer-col a:hover { color: var(--color-orange); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);
+    border-top: 1px solid rgba(255,255,255,0.12);
+    padding-block: var(--space-3);
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.6);
   }
-  .footer-inner nav { display: flex; gap: var(--space-3); }
-  .footer-inner a { color: var(--color-frost); opacity: 0.85; }
-  .footer-inner a:hover { opacity: 1; color: var(--color-prairie); }
+  .social { display: flex; gap: var(--space-2); }
+  .social a { color: rgba(255,255,255,0.75); text-decoration: none; }
+  .social a:hover { color: var(--color-orange); }
 </style>

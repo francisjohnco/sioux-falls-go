@@ -3,9 +3,10 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import BusinessCard from '../components/BusinessCard.astro';
 
-const articles = await getCollection('articles');
-const categories = await getCollection('categories');
+const businesses = (await getCollection('businesses')).slice(0, 4);
+const articles = (await getCollection('articles')).slice(0, 3);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -15,8 +16,8 @@ const schema = {
 };
 ---
 <BaseLayout
-  title="The Homepage for Living in Sioux Falls"
-  description="Sioux Falls Go is the local guide to things to do, businesses, and events in Sioux Falls, South Dakota."
+  title="Win Prizes, Shop Local, Grow Your Business"
+  description="Sioux Falls Go is a community-driven platform that helps local residents discover trusted businesses, explore special offers, and enjoy fun giveaways."
   canonicalPath="/"
   schema={schema}
 >
@@ -24,40 +25,54 @@ const schema = {
 
   <section class="hero">
     <div class="container hero-inner">
-      <p class="eyebrow">Est. as a river-cut foundation, 2026</p>
-      <h1>The homepage for living in Sioux Falls.</h1>
+      <h1>Bringing Sioux Falls Businesses &amp; Neighbors Together</h1>
       <p class="hero-sub">
-        Local discovery, business tools, and an AI concierge that knows this city —
-        built on Sioux Falls' own knowledge, not the open web.
+        <strong>Businesses gain</strong> visibility and community support.
+        <strong>Locals discover</strong> trusted companies and earn rewards.
+        Together, we build a stronger Sioux Falls.
       </p>
       <div class="hero-actions">
-        <a class="button" href="/things-to-do">Explore Things to Do</a>
-        <a class="button button--ghost" href="/businesses">Browse the Directory</a>
+        <a class="button" href="/businesses">Explore the Directory</a>
+        <a class="button button--ghost" href="/get-featured">Get Listed — Free</a>
       </div>
     </div>
   </section>
 
   <div class="container">
-    <div class="contour-rule" role="presentation"></div>
-
-    <section aria-labelledby="categories-heading">
-      <span class="eyebrow">Browse by category</span>
-      <h2 id="categories-heading">Start where you live</h2>
+    <section aria-labelledby="spotlight-heading" class="section">
+      <span class="eyebrow">Our Latest Spotlight</span>
+      <h2 id="spotlight-heading">Check out these hometown favorites</h2>
       <div class="grid">
-        {categories.map((cat) => (
-          <a class="card category-card" href={`/${cat.data.slug}`}>
-            <h3>{cat.data.name}</h3>
-            <p>{cat.data.seo.description}</p>
-          </a>
-        ))}
+        {businesses.map((business) => <BusinessCard business={business} />)}
+      </div>
+      <a class="view-all" href="/businesses">View all businesses →</a>
+    </section>
+
+    <section aria-labelledby="locals-heading" class="section locals-section">
+      <h2 id="locals-heading">For Locals</h2>
+      <p class="section-sub">Supporting Local Made Fun &amp; Rewarding</p>
+      <div class="locals-grid">
+        <div class="locals-item">
+          <h3>🎁 Enter Giveaways</h3>
+          <p>Enter to win free prizes from top-rated businesses in Sioux Falls — no strings attached.</p>
+          <a href="/spotlight-giveaway">Check our giveaways →</a>
+        </div>
+        <div class="locals-item">
+          <h3>🔍 Explore Directory</h3>
+          <p>Discover community-first businesses across every category in Sioux Falls.</p>
+          <a href="/businesses">Browse the directory →</a>
+        </div>
+        <div class="locals-item">
+          <h3>⭐ Become a Local Legend</h3>
+          <p>Join free to access exclusive and limited-time deals from trusted local businesses.</p>
+          <a href="#legend">Join the community →</a>
+        </div>
       </div>
     </section>
 
-    <div class="contour-rule" role="presentation"></div>
-
-    <section aria-labelledby="guides-heading">
-      <span class="eyebrow">From the knowledge base</span>
-      <h2 id="guides-heading">Local guides, written to actually help</h2>
+    <section aria-labelledby="guides-heading" class="section">
+      <span class="eyebrow">Business Resources</span>
+      <h2 id="guides-heading">Tips and advice for local businesses</h2>
       <div class="grid">
         {articles.map((article) => (
           <a class="card" href={`/guides/${article.id}`}>
@@ -67,46 +82,50 @@ const schema = {
         ))}
       </div>
     </section>
+
+    <section id="legend" class="legend-cta">
+      <h2>Become a Local Legend</h2>
+      <p>Join <strong>Local Legend VIP</strong> for gift cards, prizes, and exclusive deals from top Sioux Falls businesses. 100% free — no strings attached.</p>
+      <form class="legend-form" onsubmit="event.preventDefault()">
+        <input type="text" placeholder="Name" aria-label="Name" />
+        <input type="email" placeholder="Email" aria-label="Email" required />
+        <button type="submit" class="button">Start Winning</button>
+      </form>
+    </section>
   </div>
 
   <SiteFooter slot="footer" />
 </BaseLayout>
 
 <style>
-  .hero {
-    background: var(--color-river);
-    color: var(--color-bluff);
-    padding-block: var(--space-6) var(--space-5);
-  }
-  .hero .eyebrow { color: var(--color-prairie); }
-  .hero h1 {
-    color: var(--color-bluff);
-    max-width: 18ch;
-    margin-block: var(--space-2);
-  }
-  .hero-sub {
-    max-width: 42ch;
-    color: var(--color-frost);
-    font-size: 1.0625rem;
-  }
-  .hero-actions {
-    display: flex;
-    gap: var(--space-2);
-    margin-top: var(--space-3);
-    flex-wrap: wrap;
-  }
-  .hero-actions .button--ghost {
-    color: var(--color-bluff);
-    border-color: var(--color-river-light);
-  }
+  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-6) var(--space-5); }
+  .hero h1 { color: #fff; max-width: 20ch; margin-block: 0 var(--space-2); }
+  .hero-sub { max-width: 46ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; }
+  .hero-actions { display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap; }
+  .hero-actions .button--ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--space-3);
-    margin-top: var(--space-3);
+  .section { padding-block: var(--space-5) 0; }
+  .section-sub { color: var(--color-navy-light); margin-top: -0.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .view-all { display: inline-block; margin-top: var(--space-3); font-weight: 700; }
+
+  .locals-section { background: var(--color-surface); margin-inline: calc(-1 * var(--space-3)); padding: var(--space-5) var(--space-3); border-radius: var(--radius); }
+  .locals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .locals-item h3 { font-size: 1.125rem; }
+  .locals-item p { color: var(--color-navy-light); font-size: 0.9375rem; }
+
+  .legend-cta {
+    margin: var(--space-6) 0;
+    background: linear-gradient(135deg, var(--color-orange), var(--color-orange-dark));
+    color: #fff; border-radius: var(--radius); padding: var(--space-4);
+    text-align: center;
   }
-  .category-card { text-decoration: none; }
-  .card h3 { margin-bottom: var(--space-1); }
-  .card p { margin: 0; font-size: 0.9375rem; color: var(--color-river-light); }
+  .legend-cta h2 { color: #fff; }
+  .legend-cta p { max-width: 40ch; margin: 0 auto var(--space-3); }
+  .legend-form { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+  .legend-form input {
+    padding: 0.7rem 1rem; border-radius: var(--radius-pill); border: none; font-size: 0.9375rem; min-width: 12rem;
+  }
+  .legend-form .button { background: var(--color-navy); }
+  .legend-form .button:hover { background: #0e1830; }
 </style>

@@ -9,30 +9,42 @@ const { business } = Astro.props;
 const category = await getEntry(business.data.category);
 ---
 <a class="card biz-card" href={`/businesses/${business.id}`}>
-  <div class="biz-card-top">
-    <h3>{business.data.name}</h3>
-    {business.data.claimed && <span class="badge">Claimed</span>}
+  <div class="biz-card-media">
+    <button class="favorite-btn" aria-label="Save to favorites" onclick="event.preventDefault()">♡</button>
+    <span class="ribbon">{category.data.name}</span>
   </div>
-  <p class="eyebrow">{category.data.name}</p>
-  <p class="biz-address">{business.data.address}</p>
-  {business.data.phone && <p class="biz-phone">{business.data.phone}</p>}
+  <div class="biz-card-body">
+    <h3>{business.data.name}</h3>
+    {business.data.claimed && <span class="badge badge--verified">✓ Verified</span>}
+    {business.data.hours
+      ? <p class="biz-hours">{business.data.hours}</p>
+      : <p class="biz-hours biz-hours--pending">Hours coming soon</p>}
+  </div>
 </a>
 
 <style>
-  .biz-card { display: block; text-decoration: none; }
-  .biz-card-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-1); }
-  .biz-card h3 { margin: 0; font-size: 1.125rem; }
-  .badge {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-river);
-    background: var(--color-prairie);
-    padding: 0.15rem 0.5rem;
-    border-radius: 999px;
-    white-space: nowrap;
+  .biz-card { display: block; text-decoration: none; padding: 0; overflow: hidden; }
+  .biz-card-media {
+    position: relative;
+    height: 6.5rem;
+    background: linear-gradient(135deg, var(--color-navy), var(--color-navy-light));
+    border-radius: var(--radius) var(--radius) 0 0;
   }
-  .biz-card .eyebrow { margin: var(--space-1) 0 0.25rem; }
-  .biz-address, .biz-phone { margin: 0.15rem 0 0; font-size: 0.9375rem; color: var(--color-ink); }
+  .favorite-btn {
+    position: absolute; top: 0.5rem; right: 0.5rem;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    background: rgba(255,255,255,0.9); border: none;
+    font-size: 1.1rem; line-height: 1; color: var(--color-orange);
+    cursor: pointer;
+  }
+  .ribbon {
+    position: absolute; bottom: 0.5rem; left: 0.5rem;
+    background: var(--color-orange); color: #fff;
+    font-size: 0.6875rem; font-weight: 700;
+    padding: 0.2rem 0.65rem; border-radius: var(--radius-pill);
+  }
+  .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
+  .biz-card h3 { margin: 0 0 0.35rem; font-size: 1.0625rem; }
+  .biz-hours { margin: 0.3rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); }
+  .biz-hours--pending { font-style: italic; opacity: 0.7; }
 </style>
