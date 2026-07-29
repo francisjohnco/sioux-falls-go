@@ -1,0 +1,192 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Get Featured on Sioux Falls Go',
+};
+
+const benefits = [
+  {
+    number: '01',
+    title: "We're In Your Corner",
+    body: "National chains can buy their way to the top of a search result. You can't — you earn your reputation one customer at a time. Sioux Falls Go exists to make sure that reputation actually shows up when someone's looking for help, instead of getting buried under ad budgets you'll never match.",
+  },
+  {
+    number: '02',
+    title: 'A Real Interview, Not a Form',
+    body: "Your profile isn't a template you fill out. If you're a fit, we'll set up a short call to actually talk — what you do, what makes you different, what you're proud of. That conversation becomes your profile, written the way you'd describe your own business to a neighbor.",
+  },
+  {
+    number: '03',
+    title: 'We Promote You For Free',
+    body: "Your profile lives in the directory, gets surfaced in relevant guides and FAQs, and gets shared across our channels. It's a real page you can link from your own site and point customers to — not a locked listing you have to pay to keep visible.",
+  },
+  {
+    number: '04',
+    title: "What's In It For Us?",
+    body: "Sioux Falls Go is run by SAJMedia, a local marketing agency. Every once in a while, a business we feature ends up becoming a client. Most of the time we just write your spotlight, promote it, and that's the whole relationship. If we spot something that could clearly help you grow, we'll mention it — but your spotlight runs whether you ever hire us or not.",
+  },
+];
+---
+<BaseLayout
+  title="Get Featured"
+  description="Sioux Falls Go is invite-only. Apply for consideration if your business is locally owned, highly rated, and gives back to the community."
+  canonicalPath="/get-featured"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">Apply for Consideration</span>
+      <h1>Get Featured on Sioux Falls Go</h1>
+      <p class="hero-sub">
+        We don't list every business in Sioux Falls. We recommend the ones
+        that have earned their community's trust — and we build every
+        profile from a real conversation, not a form you fill out alone.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page">
+    <section class="benefits-section">
+      <span class="eyebrow">Here's What You Get</span>
+      <div class="benefits-list">
+        {benefits.map((b) => (
+          <div class="benefit-row">
+            <span class="benefit-number">{b.number}</span>
+            <div>
+              <h3>{b.title}</h3>
+              <p>{b.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="qualify-section">
+      <span class="eyebrow">Before You Apply</span>
+      <h2>To be eligible, your business must be:</h2>
+      <div class="qualify-grid">
+        <div class="qualify-item card">
+          <h3>📍 Locally Owned</h3>
+          <p>Serving the Sioux Falls area. Online-only businesses aren't eligible.</p>
+        </div>
+        <div class="qualify-item card">
+          <h3>⭐ Highly Rated</h3>
+          <p>An active Google Business Profile at <strong>4.8 stars or higher</strong> — a real qualification, not a suggestion.</p>
+        </div>
+        <div class="qualify-item card">
+          <h3>🤝 Willing to Give Back</h3>
+          <p>Open to participating in up to two community giveaways a year, when it fits both sides.</p>
+        </div>
+        <div class="qualify-item card">
+          <h3>✅ Ready for New Customers</h3>
+          <p>Actively open and able to take on more clients right now.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="apply-section">
+      <span class="eyebrow">Tell Us About Your Business</span>
+      <h2>Apply Now</h2>
+      <p class="apply-sub">
+        If it looks like a fit, we'll reach out to set up a quick call and
+        get your spotlight started.
+      </p>
+
+      <form name="get-featured" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="apply-form">
+        <input type="hidden" name="form-name" value="get-featured" />
+        <p class="honeypot-field">
+          <label>Don't fill this out if you're human: <input name="not_human" /></label>
+        </p>
+
+        <div class="form-row">
+          <label>
+            First name *
+            <input type="text" name="first_name" required />
+          </label>
+          <label>
+            Last name *
+            <input type="text" name="last_name" required />
+          </label>
+        </div>
+        <label>
+          Business name *
+          <input type="text" name="business_name" required />
+        </label>
+        <div class="form-row">
+          <label>
+            Email *
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Phone (optional)
+            <input type="tel" name="phone" />
+          </label>
+        </div>
+        <label>
+          Website URL (optional)
+          <input type="url" name="website" placeholder="https://" />
+        </label>
+        <button type="submit" class="button">Apply Now</button>
+      </form>
+
+      <p class="privacy-note">
+        Your information stays private. We'll never spam you or sell your
+        details. See our <a href="/privacy-policy">privacy policy</a>.
+        We reply to every submission — but due to volume, getting featured
+        isn't guaranteed.
+      </p>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-5); }
+  .hero .eyebrow { color: var(--color-orange); }
+  .hero h1 { color: #fff; margin-block: var(--space-1) var(--space-2); }
+  .hero-sub { max-width: 46ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; }
+
+  .page { padding-block: var(--space-5) var(--space-6); }
+
+  .benefits-list { margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-3); }
+  .benefit-row { display: grid; grid-template-columns: 3.5rem 1fr; gap: var(--space-2); }
+  .benefit-number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-orange); line-height: 1; }
+  .benefit-row h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+  .benefit-row p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; max-width: 60ch; }
+
+  .qualify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .qualify-item h3 { font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .qualify-item p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  .contour-divider { height: 1px; background: var(--color-line); margin-block: var(--space-5); }
+
+  .apply-sub { max-width: 55ch; color: var(--color-navy-light); }
+  .apply-form { max-width: 30rem; margin-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); }
+  .honeypot-field { position: absolute; left: -9999px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .apply-form label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy); }
+  .apply-form input {
+    font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400;
+    padding: 0.65rem 0.85rem; border: 1.5px solid var(--color-line); border-radius: var(--radius);
+  }
+  .apply-form input:focus { border-color: var(--color-orange); outline: none; }
+  .apply-form button { align-self: flex-start; margin-top: var(--space-1); }
+  .privacy-note { max-width: 30rem; font-size: 0.8125rem; color: var(--color-navy-light); margin-top: var(--space-2); }
+
+  @media (max-width: 32rem) {
+    .form-row { grid-template-columns: 1fr; }
+    .benefit-row { grid-template-columns: 2.5rem 1fr; }
+  }
+</style>

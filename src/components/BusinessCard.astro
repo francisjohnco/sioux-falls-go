@@ -10,7 +10,7 @@ const category = await getEntry(business.data.category);
 const tier = business.data.partnershipTier;
 ---
 <a class="card biz-card" href={`/businesses/${business.id}`}>
-  <div class="biz-card-media">
+  <div class="biz-card-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage}); background-size: cover; background-position: center;` : undefined}>
     <button class="favorite-btn" aria-label="Save to favorites" onclick="event.preventDefault()">♡</button>
     <span class="ribbon">{category.data.name}</span>
   </div>

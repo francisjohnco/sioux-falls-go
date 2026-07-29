@@ -38,6 +38,10 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
+  {business.data.heroImage && (
+    <div class="profile-hero" style={`background-image: url(${business.data.heroImage});`}></div>
+  )}
+
   <div class="container page">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
@@ -97,6 +101,12 @@ const schema = {
 
 <style>
   .page { padding-block: var(--space-4) var(--space-6); }
+  .profile-hero {
+    height: 16rem;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-navy);
+  }
   .breadcrumbs { font-size: 0.8125rem; color: var(--color-river-light); margin-bottom: var(--space-2); }
   .breadcrumbs a { color: var(--color-river-light); }
   .profile-header h1 { margin-top: 0.25rem; }
