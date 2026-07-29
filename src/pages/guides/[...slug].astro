@@ -16,6 +16,26 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 const category = await getEntry(article.data.category);
 
+// Resolve explicit relatedArticles references first
+const explicitRelated = await Promise.all(
+  (article.data.relatedArticles ?? []).map((ref) => getEntry(ref))
+);
+
+// Fill out to 3 with same-category articles if the author didn't set enough explicit links
+let related = [...explicitRelated];
+if (related.length < 3) {
+  const allArticles = await getCollection('articles');
+  const sameCategory = allArticles.filter(
+    (a) => a.data.category.id === category.id && a.id !== article.id && !related.some((r) => r.id === a.id)
+  );
+  related = [...related, ...sameCategory.slice(0, 3 - related.length)];
+}
+
+// Resolve related businesses for the "find a pro" resource CTA
+const relatedBusinesses = await Promise.all(
+  (article.data.relatedBusinesses ?? []).map((ref) => getEntry(ref))
+);
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -40,6 +60,7 @@ const schema = {
 
     <span class="eyebrow">{article.data.contentType.replace('-', ' ')}</span>
     <h1>{article.data.title}</h1>
+    <p class="byline">By {article.data.author} · Updated {article.data.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
 
     {article.data.aiAssisted && (
       <p class="review-note">
@@ -50,6 +71,39 @@ const schema = {
     <div class="prose">
       <Content />
     </div>
+
+    <div class="resource-cta card">
+      <h3>Keep exploring {category.data.name.toLowerCase()} in Sioux Falls</h3>
+      <p>See every {category.data.name.toLowerCase()} business we recommend, plus more local guides like this one.</p>
+      <a class="button" href={`/${category.data.slug}`}>Browse {category.data.name} →</a>
+    </div>
+
+    {relatedBusinesses.length > 0 && (
+      <div class="business-links">
+        <span class="eyebrow">Mentioned in this guide</span>
+        <div class="business-chip-row">
+          {relatedBusinesses.map((b) => (
+            <a class="business-chip" href={`/businesses/${b.id}`}>{b.data.name} →</a>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {related.length > 0 && (
+      <section class="related-block">
+        <div class="contour-rule" role="presentation"></div>
+        <h2>You might also want to read</h2>
+        <div class="related-grid">
+          {related.map((r) => (
+            <a class="related-card" href={`/guides/${r.id}`}>
+              <span class="related-tag">{r.data.contentType.replace('-', ' ')}</span>
+              <h3>{r.data.title}</h3>
+              <p>{r.data.seo.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 
   <SiteFooter slot="footer" />
@@ -57,14 +111,44 @@ const schema = {
 
 <style>
   .article { padding-block: var(--space-4) var(--space-6); max-width: 42rem; }
-  .breadcrumbs { font-size: 0.8125rem; color: var(--color-river-light); margin-bottom: var(--space-2); }
-  .breadcrumbs a { color: var(--color-river-light); }
+  .breadcrumbs { font-size: 0.8125rem; color: var(--color-navy-light); margin-bottom: var(--space-2); }
+  .breadcrumbs a { color: var(--color-navy-light); }
+  .byline { font-size: 0.875rem; color: var(--color-navy-light); margin-top: -0.25rem; }
   .review-note {
     font-size: 0.875rem;
-    color: var(--color-river-light);
-    border-left: 3px solid var(--color-prairie);
+    color: var(--color-navy-light);
+    border-left: 3px solid var(--color-orange);
     padding-left: var(--space-2);
   }
   .prose { margin-top: var(--space-3); }
   .prose :global(h2) { margin-top: var(--space-4); }
+
+  .resource-cta {
+    margin-top: var(--space-4);
+    background: var(--color-surface);
+    text-align: center;
+  }
+  .resource-cta p { color: var(--color-navy-light); margin: 0.4rem 0 var(--space-2); }
+
+  .business-links { margin-top: var(--space-3); }
+  .business-chip-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  .business-chip {
+    font-size: 0.875rem; font-weight: 600; text-decoration: none;
+    background: #fff; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill);
+    padding: 0.4rem 0.9rem; color: var(--color-navy);
+  }
+  .business-chip:hover { border-color: var(--color-orange); color: var(--color-orange); }
+
+  .related-block { margin-top: var(--space-5); }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .related-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2); text-decoration: none;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .related-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .related-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
+  .related-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
+  .related-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
 </style>
