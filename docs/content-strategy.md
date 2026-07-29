@@ -61,6 +61,15 @@ Splitting ~80 articles into two phases, both backdated as if they'd been publish
 - **Phase 1 (dated Dec 2023 – Dec 2024):** the highest-demand service categories first — Electricians, Plumbers, Painters, Flooring, Lawn Care, Home Services, Cleaning Services, Real Estate Agents — plus the two resident-general categories and Explore Sioux Falls. Roughly half the total matrix.
 - **Phase 2 (dated Jan 2025 – Dec 2025):** the remaining service categories (Home Watch, Local Tree Services, Window Cleaning, Appliance Repair, Marketing Agencies, Professional Services) plus the three dual local+visitor categories (Coffee Shops, Restaurants & Dining, Shopping & Retail).
 
+## Article Sponsorship (Community Champion perk)
+
+Any article can carry a `sponsoredBy` field (a business reference) — this renders a clearly-labeled "Sponsored" banner between the byline and the article body, pulling the sponsor's image, name, and a link back to their profile. **Only Community Champion tier businesses are eligible to sponsor** — this is a paid-tier benefit, not something available to Community Listing (free) businesses.
+
+Default copy (editable per placement if needed):
+> "This article is made possible by [Business Name]. They serve Sioux Falls with excellence, and their support helps us keep bringing free, local content to our community."
+
+The banner is intentionally styled distinctly from organic content — orange border, an explicit "SPONSORED" eyebrow label — so it's never mistaken for editorial endorsement. A sponsor doesn't need to be topically related to the article; sponsorship is about supporting the platform, not implying the article is about their specific service.
+
 ## Before writing any category's articles — check existing content first
 
 **Real lesson from production:** Local Tree Services already had 5 substantial migrated articles (cost, winter prep, when-to-remove, emergency removal, general guide) before this launch batch started. Writing a fresh 4-article set blind would have cannibalized real existing content. The fix: before planning or writing a category's articles, run `grep -l "category: \"CATEGORY-SLUG\"" src/content/articles/*.md` to see what already exists, and only fill genuine gaps. For Local Tree Services, that meant adding just a choose/hire guide and a consolidated FAQ, then cross-linking all 7 articles together — not writing a redundant cost or seasonal piece.

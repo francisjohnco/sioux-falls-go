@@ -141,6 +141,7 @@ const articles = defineCollection({
     relatedArticles: z.array(reference('articles')).default([]),
     relatedBusinesses: z.array(reference('businesses')).default([]),
     embeddedFaqs: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
+    sponsoredBy: reference('businesses').optional(), // Community Champion perk — sponsor banner rendered on the article
     evergreen: z.boolean().default(true),
     author: z.string(),
     reviewedBy: z.string().optional(), // human editorial review — required if aiAssisted

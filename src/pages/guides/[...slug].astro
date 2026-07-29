@@ -36,6 +36,9 @@ const relatedBusinesses = await Promise.all(
   (article.data.relatedBusinesses ?? []).map((ref) => getEntry(ref))
 );
 
+// Resolve sponsor — Community Champion perk
+const sponsor = article.data.sponsoredBy ? await getEntry(article.data.sponsoredBy) : null;
+
 const schema = article.data.embeddedFaqs.length > 0 ? [
   {
     '@context': 'https://schema.org',
@@ -84,6 +87,31 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
       <p class="review-note">
         AI-assisted draft, reviewed by {article.data.reviewedBy ?? 'a local editor'} before publishing.
       </p>
+    )}
+
+    {article.data.heroImage && (
+      <img src={article.data.heroImage} alt={article.data.title} class="article-hero-img" />
+    )}
+
+    {sponsor && (
+      <a href={`/businesses/${sponsor.id}`} class="sponsor-banner">
+        <span class="sponsor-label">Sponsored</span>
+        <div class="sponsor-content">
+          <div
+            class="sponsor-logo"
+            style={sponsor.data.heroImage ? `background-image: url(${sponsor.data.heroImage});` : undefined}
+          >
+            {!sponsor.data.heroImage && sponsor.data.name.slice(0, 2).toUpperCase()}
+          </div>
+          <div>
+            <p class="sponsor-text">
+              This article is made possible by <strong>{sponsor.data.name}</strong>. They serve Sioux Falls with
+              excellence, and their support helps us keep bringing free, local content to our community.
+            </p>
+            <span class="sponsor-link">Read more about {sponsor.data.name} →</span>
+          </div>
+        </div>
+      </a>
     )}
 
     <div class="prose">
@@ -150,6 +178,33 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
     border-left: 3px solid var(--color-orange);
     padding-left: var(--space-2);
   }
+
+  .article-hero-img {
+    width: 100%; height: 20rem; object-fit: cover;
+    border-radius: var(--radius); margin-top: var(--space-2);
+  }
+
+  .sponsor-banner {
+    display: block; text-decoration: none; margin-top: var(--space-3);
+    background: #FFF8F0; border: 1.5px solid var(--color-orange); border-radius: var(--radius);
+    padding: var(--space-2); position: relative;
+    transition: box-shadow 0.15s ease;
+  }
+  .sponsor-banner:hover { box-shadow: 0 4px 14px rgba(240,126,35,0.18); }
+  .sponsor-label {
+    display: inline-block; font-size: 0.625rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; color: #fff; background: var(--color-orange);
+    padding: 0.15rem 0.55rem; border-radius: var(--radius-pill); margin-bottom: 0.6rem;
+  }
+  .sponsor-content { display: flex; gap: var(--space-2); align-items: center; }
+  .sponsor-logo {
+    width: 3.5rem; height: 3.5rem; border-radius: 50%; flex-shrink: 0;
+    background: var(--color-navy); background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: 700; font-size: 0.9375rem;
+  }
+  .sponsor-text { margin: 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.5; }
+  .sponsor-link { font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); }
   .prose { margin-top: var(--space-3); }
   .prose :global(h2) { margin-top: var(--space-4); }
 

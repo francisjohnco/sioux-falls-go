@@ -5,6 +5,7 @@ contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-an-electrician-in-sioux-falls", "electricians-faq-sioux-falls"]
 relatedBusinesses: ["redstone-electric"]
+sponsoredBy: "sajmedia-marketing"
 embeddedFaqs:
   - question: "Does the service call fee count toward the repair cost if I hire them?"
     answer: "It varies by electrician — some apply the diagnostic fee to the final bill, others charge it separately no matter what. Ask before they start."
