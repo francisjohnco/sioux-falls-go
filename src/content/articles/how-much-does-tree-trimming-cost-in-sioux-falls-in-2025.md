@@ -3,8 +3,8 @@ title: "How Much Does Tree Trimming Cost in Sioux Falls in 2025"
 category: "local-tree-services"
 contentType: "local-resource"
 relatedNeighborhoods: []
-relatedArticles: []
-relatedBusinesses: []
+relatedArticles: ["how-to-choose-a-tree-service-in-sioux-falls", "preparing-your-trees-for-south-dakota-winter-and-ice-storms", "how-to-know-when-a-tree-needs-to-come-down-in-south-dakota"]
+relatedBusinesses: ["american-tree-service"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false

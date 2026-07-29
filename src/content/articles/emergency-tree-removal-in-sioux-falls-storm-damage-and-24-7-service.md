@@ -3,8 +3,8 @@ title: "Emergency Tree Removal in Sioux Falls Storm Damage and 24/7 Service"
 category: "local-tree-services"
 contentType: "local-resource"
 relatedNeighborhoods: []
-relatedArticles: []
-relatedBusinesses: []
+relatedArticles: ["preparing-your-trees-for-south-dakota-winter-and-ice-storms", "how-to-know-when-a-tree-needs-to-come-down-in-south-dakota"]
+relatedBusinesses: ["american-tree-service"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false

@@ -61,6 +61,10 @@ Splitting ~80 articles into two phases, both backdated as if they'd been publish
 - **Phase 1 (dated Dec 2023 – Dec 2024):** the highest-demand service categories first — Electricians, Plumbers, Painters, Flooring, Lawn Care, Home Services, Cleaning Services, Real Estate Agents — plus the two resident-general categories and Explore Sioux Falls. Roughly half the total matrix.
 - **Phase 2 (dated Jan 2025 – Dec 2025):** the remaining service categories (Home Watch, Local Tree Services, Window Cleaning, Appliance Repair, Marketing Agencies, Professional Services) plus the three dual local+visitor categories (Coffee Shops, Restaurants & Dining, Shopping & Retail).
 
+## Before writing any category's articles — check existing content first
+
+**Real lesson from production:** Local Tree Services already had 5 substantial migrated articles (cost, winter prep, when-to-remove, emergency removal, general guide) before this launch batch started. Writing a fresh 4-article set blind would have cannibalized real existing content. The fix: before planning or writing a category's articles, run `grep -l "category: \"CATEGORY-SLUG\"" src/content/articles/*.md` to see what already exists, and only fill genuine gaps. For Local Tree Services, that meant adding just a choose/hire guide and a consolidated FAQ, then cross-linking all 7 articles together — not writing a redundant cost or seasonal piece.
+
 ## E-E-A-T checklist before publishing any article
 
 - [ ] Named author with a real bio/persona, not "Sioux Falls Go Editorial" alone
