@@ -1,0 +1,190 @@
+{
+  "generatedAt": "2026-07-29T23:26:51.847Z",
+  "categories": [
+    {
+      "slug": "explore-sioux-falls",
+      "name": "Explore Sioux Falls",
+      "articleCount": 2,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": -10,
+      "reasons": []
+    },
+    {
+      "slug": "appliance-repair-service",
+      "name": "Appliance Repair Service",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "cleaning-services",
+      "name": "Cleaning Services",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "electricians",
+      "name": "Electricians",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "home-watch-services",
+      "name": "Home Watch Services",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "lawn-care",
+      "name": "Lawn Care",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "local-tree-services",
+      "name": "Local Tree Services",
+      "articleCount": 8,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [
+        "cost-guide",
+        "seasonal-guide"
+      ],
+      "priorityScore": -20,
+      "reasons": [
+        "Missing article types: cost-guide, seasonal-guide"
+      ]
+    },
+    {
+      "slug": "painters",
+      "name": "Painters",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "plumbers",
+      "name": "Plumbers",
+      "articleCount": 4,
+      "businessCount": 2,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "real-estate-agents",
+      "name": "Real Estate Agents",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "window-cleaning",
+      "name": "Window Cleaning",
+      "articleCount": 4,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -20,
+      "reasons": []
+    },
+    {
+      "slug": "coffee-shops",
+      "name": "Coffee Shops",
+      "articleCount": 5,
+      "businessCount": 1,
+      "categoryType": "dual",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "consumer-guide",
+      "name": "Consumer Guide",
+      "articleCount": 5,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "flooring",
+      "name": "Flooring",
+      "articleCount": 5,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "marketing-agencies",
+      "name": "Marketing Agencies",
+      "articleCount": 5,
+      "businessCount": 1,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "restaurants-dining",
+      "name": "Restaurants & Dining",
+      "articleCount": 5,
+      "businessCount": 1,
+      "categoryType": "dual",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "shopping-retail",
+      "name": "Shopping & Retail",
+      "articleCount": 5,
+      "businessCount": 1,
+      "categoryType": "dual",
+      "missingTypes": [],
+      "priorityScore": -25,
+      "reasons": []
+    },
+    {
+      "slug": "for-locals",
+      "name": "For Locals",
+      "articleCount": 8,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": -40,
+      "reasons": []
+    }
+  ]
+}

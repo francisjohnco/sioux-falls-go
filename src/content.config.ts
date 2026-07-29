@@ -14,7 +14,8 @@ const categories = defineCollection({
     name: z.string(),
     slug: z.string(),
     parentCategory: reference('categories').optional(),
-    aliases: z.array(z.string()).default([]), // canonical merge targets
+    aliases: z.array(z.string()).default([]),
+    createdAt: z.coerce.date().optional(), // when this category was added — new categories get content priority // canonical merge targets
     playbook: z.object({
       topics: z.array(z.string()), // e.g. hiring, pricing, permits, seasonal concerns
       contentTypes: z.array(

@@ -70,6 +70,45 @@ Default copy (editable per placement if needed):
 
 The banner is intentionally styled distinctly from organic content — orange border, an explicit "SPONSORED" eyebrow label — so it's never mistaken for editorial endorsement. A sponsor doesn't need to be topically related to the article; sponsorship is about supporting the platform, not implying the article is about their specific service.
 
+## Phase 2 — Real Search Demand Data (Google Search Console)
+
+Once connected, the Content Engine layers real search performance on top of
+the static Phase 1 gap analysis: queries with meaningful impressions but a
+weak average position (page 2+) are genuine evidence that people are
+searching for something the site doesn't yet answer well — a real content
+gap, not an inferred one.
+
+**Connecting is one click from the admin dashboard** ("Connect Search
+Console" button in the Content Engine tab) — but that button only works
+after a one-time setup step in Google Cloud Console, which has to be done
+with your own Google account. There's no way around this part; Google
+requires the app's own OAuth credentials, the same way GitHub required its
+own personal access token earlier. Once these two values are in Netlify,
+every future connect (or reconnect) really is just one click and a Google
+login.
+
+### One-time setup (you, ~10 minutes)
+
+1. Go to [console.cloud.google.com](https://console.cloud.google.com), create a new project (any name, e.g. "Sioux Falls Go").
+2. In the sidebar: **APIs & Services → Library**, search for **"Google Search Console API"**, click **Enable**.
+3. **APIs & Services → OAuth consent screen**: choose **External**, fill in the required fields (app name, your email), add your email as a test user. You don't need Google's verification for this — a single-admin internal tool stays in "Testing" mode indefinitely.
+4. **APIs & Services → Credentials → Create Credentials → OAuth client ID**:
+   - Application type: **Web application**
+   - Authorized redirect URI: `https://YOUR-SITE-DOMAIN/api/gsc-auth-callback` (use your real deployed domain)
+   - Click Create — Google shows you a **Client ID** and **Client Secret**. Copy both.
+5. In **Netlify → Site settings → Environment variables**, add:
+   - `GOOGLE_CLIENT_ID` = the Client ID from step 4
+   - `GOOGLE_CLIENT_SECRET` = the Client Secret from step 4
+   - `GSC_SITE_PROPERTY` = your property exactly as it appears in Search Console (e.g. `sc-domain:siouxfallsgo.com` for a domain property, or `https://siouxfallsgo.com/` for a URL-prefix property)
+6. Redeploy. From then on, "Connect Search Console" in the admin dashboard is genuinely one click.
+
+### What happens after connecting
+
+- Your refresh token is stored server-side only (Netlify Blobs), never sent to the browser.
+- The dashboard shows your top search opportunity live.
+- `netlify/functions/gsc-fetch-opportunities.mts` pulls the last 90 days of query data on demand.
+- Disconnecting (also one click) deletes the stored token immediately.
+
 ## Before writing any category's articles — check existing content first
 
 **Real lesson from production:** Local Tree Services already had 5 substantial migrated articles (cost, winter prep, when-to-remove, emergency removal, general guide) before this launch batch started. Writing a fresh 4-article set blind would have cannibalized real existing content. The fix: before planning or writing a category's articles, run `grep -l "category: \"CATEGORY-SLUG\"" src/content/articles/*.md` to see what already exists, and only fill genuine gaps. For Local Tree Services, that meant adding just a choose/hire guide and a consolidated FAQ, then cross-linking all 7 articles together — not writing a redundant cost or seasonal piece.

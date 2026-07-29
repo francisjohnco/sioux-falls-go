@@ -7,13 +7,15 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/generate-redirects.mjs && astro build",
+    "build": "node scripts/generate-redirects.mjs && node scripts/generate-content-index.mjs && astro build",
     "redirects": "node scripts/generate-redirects.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "@astrojs/sitemap": "^3.7.3",
+    "@netlify/blobs": "^10.7.11",
     "astro": "^7.1.5"
   }
 }

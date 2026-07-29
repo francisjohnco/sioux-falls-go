@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Admin Login" description="Sioux Falls Go admin login." canonicalPath="/login">
+  <div class="login-shell">
+    <form id="login-form" class="login-card">
+      <h1>Sioux Falls <span>Go</span></h1>
+      <p class="login-sub">Admin access</p>
+      <label>
+        Password
+        <input type="password" id="password" required autofocus />
+      </label>
+      <p id="login-error" class="login-error" hidden>Incorrect password. Try again.</p>
+      <button type="submit" class="button">Log In</button>
+    </form>
+  </div>
+</BaseLayout>
+
+<style>
+  .login-shell { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--color-surface); padding: var(--space-2); }
+  .login-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-4); width: 100%; max-width: 22rem; box-shadow: 0 2px 12px rgba(27,42,74,0.08); }
+  .login-card h1 { font-size: 1.375rem; text-align: center; margin-bottom: 0.2rem; }
+  .login-card h1 span { color: var(--color-orange); }
+  .login-sub { text-align: center; color: var(--color-navy-light); margin: 0 0 var(--space-3); font-size: 0.9375rem; }
+  .login-card label { display: block; font-weight: 600; font-size: 0.9375rem; margin-bottom: var(--space-2); }
+  .login-card input { width: 100%; margin-top: 0.35rem; padding: 0.65rem 0.85rem; border: 1.5px solid var(--color-line); border-radius: var(--radius); font-size: 0.9375rem; }
+  .login-card .button { width: 100%; margin-top: var(--space-1); }
+  .login-error { color: #C0392B; font-size: 0.875rem; margin: 0 0 var(--space-2); }
+</style>
+
+<script>
+  const form = document.getElementById('login-form') as HTMLFormElement;
+  const errorEl = document.getElementById('login-error')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorEl.setAttribute('hidden', '');
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password }),
+    });
+
+    if (res.ok) {
+      window.location.href = '/admin';
+    } else {
+      errorEl.removeAttribute('hidden');
+    }
+  });
+</script>

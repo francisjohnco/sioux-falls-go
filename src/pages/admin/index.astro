@@ -68,7 +68,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <!-- ── CONTENT AI ENGINE ── -->
       <section class="tab-panel" id="panel-content-engine">
         <h1>Content Engine</h1>
-        <p class="panel-sub">Turn interview answers into a finished profile.</p>
+        <p class="panel-sub">Turn interview answers into a finished profile — or generate the next highest-priority guide.</p>
+
+        <div class="gsc-widget" id="gsc-widget">
+          <div class="gsc-widget-header">
+            <h3>Google Search Console <span class="live-tag" id="gsc-status-tag" hidden>CONNECTED</span></h3>
+            <button class="button" id="gsc-connect-btn">Connect Search Console</button>
+            <button class="button button--ghost" id="gsc-disconnect-btn" hidden>Disconnect</button>
+          </div>
+          <p class="gap-note" id="gsc-status-note">Not connected — content priority is currently based on site coverage only. Connect to add real search demand data.</p>
+        </div>
+
+        <div class="gap-queue-section">
+          <h3>Content Gap Priority Queue <span class="live-tag">LIVE</span></h3>
+          <p class="gap-note">Recomputed on every deploy from real site data — new categories with listings and no content jump to the top automatically.</p>
+          <div id="gap-queue-list" class="gap-queue-list">
+            <p class="empty-note">Loading...</p>
+          </div>
+        </div>
 
         <div class="engine-layout">
           <div class="engine-queue">
@@ -106,7 +123,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <div class="engine-controls">
               <label class="engine-select">
                 Prompt template
-                <select>
+                <select id="prompt-template-select">
                   <option>Service Business — Founder Story</option>
                   <option>Restaurant — Local Favorite</option>
                   <option>Retail — Product Spotlight</option>
@@ -116,21 +133,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <button class="button" id="generate-btn">✨ Generate Draft</button>
             </div>
             <p class="spotlight-note">Spotlight/press-release drafts publish as articles and automatically appear under "Latest from [Business]" on that business's profile — Champion tier only.</p>
+            <p class="engine-error" id="engine-error" hidden></p>
 
             <div class="engine-output" id="engine-output" hidden>
               <div class="output-header">
                 <h4>Generated Draft</h4>
                 <span class="badge badge--giveback">AI-assisted — needs review</span>
               </div>
-              <div class="output-text">
-                <p><strong>Drain Cleaning Help in Sioux Falls That Saves You Time, Stress, and Money</strong></p>
-                <p>A serious drain clog can throw your entire day off... <em>(full draft would render here, generated from the answers above against the selected prompt template)</em></p>
-              </div>
+              <div class="output-text" id="output-text"></div>
               <div class="output-actions">
-                <button class="button">Approve &amp; Publish</button>
+                <button class="button" id="approve-btn">Approve &amp; Publish</button>
                 <button class="button button--ghost">Edit Draft</button>
                 <button class="button button--ghost" id="regenerate-btn">Regenerate</button>
               </div>
+              <p class="engine-error" id="publish-error" hidden></p>
+              <p class="publish-success" id="publish-success" hidden></p>
             </div>
           </div>
         </div>
@@ -295,6 +312,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .activity-list time { margin-left: auto; font-size: 0.8125rem; color: var(--color-navy-light); white-space: nowrap; }
 
   /* Content Engine */
+  .gsc-widget { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-top: var(--space-2); }
+  .gsc-widget-header { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+  .gsc-widget-header h3 { font-size: 0.9375rem; margin: 0; flex: 1; display: flex; align-items: center; gap: 0.5rem; }
+  .gap-queue-section { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-top: var(--space-2); }
+  .gap-queue-section h3 { font-size: 0.9375rem; margin-bottom: 0.2rem; }
+  .gap-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
+  .gap-queue-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .gap-item { display: grid; grid-template-columns: 1.75rem 1fr auto; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--color-surface); border-radius: var(--radius); }
+  .gap-rank { font-family: var(--font-display); font-weight: 700; color: var(--color-orange); text-align: center; }
+  .gap-item p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .engine-error { color: #C0392B; font-size: 0.875rem; margin-top: var(--space-1); }
+  .publish-success { color: var(--color-success); font-size: 0.875rem; margin-top: var(--space-1); font-weight: 600; }
   .engine-layout { display: grid; grid-template-columns: 16rem 1fr; gap: var(--space-3); margin-top: var(--space-2); align-items: start; }
   .engine-queue { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); display: flex; flex-direction: column; gap: 0.4rem; }
   .engine-queue h3 { font-size: 0.9375rem; margin-bottom: 0.3rem; }
@@ -396,7 +425,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
   });
 
-  // Content engine queue selection (mock)
+  // Content engine queue selection
   document.querySelectorAll('.queue-item').forEach((item) => {
     item.addEventListener('click', () => {
       document.querySelectorAll('.queue-item').forEach((i) => i.classList.remove('is-active'));
@@ -408,12 +437,183 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     });
   });
 
-  // Mock AI generation
-  document.getElementById('generate-btn')?.addEventListener('click', () => {
-    document.getElementById('engine-output')?.removeAttribute('hidden');
+  // Google Search Console connection
+  async function refreshGscStatus() {
+    const res = await fetch('/api/gsc-status');
+    const data = await res.json();
+    const tag = document.getElementById('gsc-status-tag')!;
+    const note = document.getElementById('gsc-status-note')!;
+    const connectBtn = document.getElementById('gsc-connect-btn')!;
+    const disconnectBtn = document.getElementById('gsc-disconnect-btn')!;
+
+    if (data.connected) {
+      tag.removeAttribute('hidden');
+      connectBtn.setAttribute('hidden', '');
+      disconnectBtn.removeAttribute('hidden');
+      note.textContent = `Connected since ${new Date(data.connectedAt).toLocaleDateString()}. Real search demand data is now factored into content priority below.`;
+      loadSearchOpportunities();
+    } else {
+      tag.setAttribute('hidden', '');
+      connectBtn.removeAttribute('hidden');
+      disconnectBtn.setAttribute('hidden', '');
+      note.textContent = 'Not connected — content priority is currently based on site coverage only. Connect to add real search demand data.';
+    }
+  }
+
+  async function loadSearchOpportunities() {
+    try {
+      const res = await fetch('/api/gsc-fetch-opportunities');
+      const data = await res.json();
+      if (!res.ok) return;
+      if (data.opportunities?.length) {
+        const note = document.getElementById('gsc-status-note')!;
+        note.textContent += ` Top search opportunity right now: "${data.opportunities[0].query}" (${data.opportunities[0].impressions} impressions, position ${data.opportunities[0].position}).`;
+      }
+    } catch {
+      // Search Console fetch failing shouldn't break the rest of the dashboard
+    }
+  }
+
+  document.getElementById('gsc-connect-btn')?.addEventListener('click', () => {
+    window.location.href = '/api/gsc-auth-start';
   });
+  document.getElementById('gsc-disconnect-btn')?.addEventListener('click', async () => {
+    await fetch('/api/gsc-disconnect', { method: 'POST' });
+    refreshGscStatus();
+  });
+
+  // Show a one-time confirmation if we just came back from the OAuth flow
+  const gscParam = new URLSearchParams(window.location.search).get('gsc');
+  if (gscParam === 'connected') {
+    activateTab('content-engine');
+  }
+
+  refreshGscStatus();
+
+
+  let latestGaps: any[] = [];
+  fetch('/content-gaps.json')
+    .then((r) => r.json())
+    .then((data) => {
+      latestGaps = data.categories.filter((c: any) => c.priorityScore > 0);
+      const list = document.getElementById('gap-queue-list')!;
+      if (latestGaps.length === 0) {
+        list.innerHTML = '<p class="empty-note">No urgent gaps right now — everything\'s covered. New categories with listings will jump here automatically.</p>';
+        return;
+      }
+      list.innerHTML = latestGaps
+        .slice(0, 5)
+        .map(
+          (g: any, i: number) => `
+        <div class="gap-item">
+          <span class="gap-rank">${i + 1}</span>
+          <div>
+            <strong>${g.name}</strong>
+            <p>${g.reasons.join(' · ')}</p>
+          </div>
+          <button class="button button--ghost gap-generate-btn" data-slug="${g.slug}" data-name="${g.name}" data-type="${g.missingTypes?.[0] || 'local-resource'}">Generate</button>
+        </div>`
+        )
+        .join('');
+
+      document.querySelectorAll('.gap-generate-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const el = btn as HTMLElement;
+          generateDraft({
+            categorySlug: el.dataset.slug!,
+            categoryName: el.dataset.name!,
+            contentType: el.dataset.type!,
+          });
+        });
+      });
+    })
+    .catch(() => {
+      document.getElementById('gap-queue-list')!.innerHTML = '<p class="empty-note">Could not load gap report.</p>';
+    });
+
+  let currentDraft: any = null;
+
+  async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string }) {
+    const errorEl = document.getElementById('engine-error')!;
+    const outputEl = document.getElementById('engine-output')!;
+    errorEl.setAttribute('hidden', '');
+    outputEl.setAttribute('hidden', '');
+
+    const genBtn = document.getElementById('generate-btn') as HTMLButtonElement;
+    if (genBtn) { genBtn.disabled = true; genBtn.textContent = 'Generating...'; }
+
+    try {
+      const res = await fetch('/api/generate-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          categoryName: opts.categoryName,
+          categorySlug: opts.categorySlug,
+          contentType: opts.contentType,
+          promptTemplate: (document.getElementById('prompt-template-select') as HTMLSelectElement)?.value,
+          interviewAnswers: opts.interviewAnswers,
+          businessName: opts.businessName,
+          existingArticleTitles: [],
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error + (data.detail ? `: ${data.detail}` : ''));
+
+      currentDraft = { draft: data.draft, categorySlug: opts.categorySlug, contentType: opts.contentType };
+      document.getElementById('output-text')!.innerHTML = `
+        <p><strong>${data.draft.title}</strong></p>
+        <div>${data.draft.bodyMarkdown.slice(0, 400).replace(/\n/g, '<br>')}...</div>
+      `;
+      outputEl.removeAttribute('hidden');
+    } catch (err: any) {
+      errorEl.textContent = `Generation failed: ${err.message}`;
+      errorEl.removeAttribute('hidden');
+    } finally {
+      if (genBtn) { genBtn.disabled = false; genBtn.textContent = '✨ Generate Draft'; }
+    }
+  }
+
+  document.getElementById('generate-btn')?.addEventListener('click', () => {
+    generateDraft({
+      categorySlug: 'plumbers', // demo default when generating from the interview panel, not the gap queue
+      categoryName: 'Plumbers',
+      contentType: 'business-spotlight',
+      businessName: document.getElementById('engine-business-name')?.textContent || undefined,
+      interviewAnswers: Array.from(document.querySelectorAll('.engine-field')).map((f) => ({
+        question: f.textContent?.split('\n')[0]?.trim(),
+        answer: (f.querySelector('textarea') as HTMLTextAreaElement)?.value,
+      })),
+    });
+  });
+
   document.getElementById('regenerate-btn')?.addEventListener('click', () => {
-    // In the real version, this re-calls the AI with the same inputs
-    alert('Would regenerate with the same interview answers and prompt template.');
+    if (currentDraft) generateDraft({ categorySlug: currentDraft.categorySlug, categoryName: currentDraft.categorySlug, contentType: currentDraft.contentType });
+  });
+
+  document.getElementById('approve-btn')?.addEventListener('click', async () => {
+    if (!currentDraft) return;
+    const errorEl = document.getElementById('publish-error')!;
+    const successEl = document.getElementById('publish-success')!;
+    errorEl.setAttribute('hidden', '');
+    successEl.setAttribute('hidden', '');
+    try {
+      const res = await fetch('/api/publish-draft', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          draft: currentDraft.draft,
+          categorySlug: currentDraft.categorySlug,
+          contentType: currentDraft.contentType,
+          author: 'Sioux Falls Go Editorial',
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error + (data.detail ? `: ${data.detail}` : ''));
+      successEl.textContent = `Published! Committed to ${data.path} — site will rebuild automatically.`;
+      successEl.removeAttribute('hidden');
+    } catch (err: any) {
+      errorEl.textContent = `Publish failed: ${err.message}`;
+      errorEl.removeAttribute('hidden');
+    }
   });
 </script>
