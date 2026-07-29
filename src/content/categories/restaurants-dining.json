@@ -1,0 +1,13 @@
+{
+  "name": "Restaurants & Dining",
+  "slug": "restaurants-dining",
+  "aliases": [],
+  "playbook": {
+    "topics": ["cuisine", "atmosphere", "parking", "reservations", "family friendliness"],
+    "contentTypes": ["visitor-guide", "local-resource", "faq"]
+  },
+  "seo": {
+    "title": "Restaurants & Dining in Sioux Falls",
+    "description": "Find locally owned restaurants and dining spots in Sioux Falls, recommended by the community."
+  }
+}

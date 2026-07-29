@@ -2,8 +2,13 @@
 name: "Jurrens Plumbing"
 category: "plumbers"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/jurrens-plumbing/"
+address: "527 N Indiana Ave, Sioux Falls, South Dakota 57103"
+phone: "605-351-6998"
+hours: "Mon-Fri 9am-5pm"
+latitude: 43.552929
+longitude: -96.715781
 ---
 
 ## Jurrens Plumbing in Sioux Falls: Clear, Reliable Plumbing for Homes and Commercial Projects

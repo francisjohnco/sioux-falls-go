@@ -2,8 +2,13 @@
 name: "Thorson Construction"
 category: "home-services"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/thorson-construction/"
+address: "608 N Blue Bell Ln, Sioux Falls, South Dakota 57107"
+phone: "(605) 728-8533"
+hours: "Mon-Sun 6am-9pm"
+latitude: 43.553307
+longitude: -96.813775
 ---
 
 ## Thorson Construction – Sioux Falls Custom Home Building Expertise

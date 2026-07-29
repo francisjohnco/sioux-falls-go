@@ -2,9 +2,15 @@
 name: "SAJMedia Marketing"
 category: "marketing-agencies"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 partnershipTier: "community-champion"
+pullQuote: "It's not about doing more for the sake of it, but about doing the right things that actually move your business forward."
 sourceUrl: "https://siouxfallsgo.com/places/sajmedia-marketing/"
+address: "2301 S. Willow Ave., Sioux Falls, South Dakota 57105"
+phone: "6057997953"
+hours: "Mon-Fri 9am-5pm"
+latitude: 43.524902
+longitude: -96.750074
 ---
 
 ## **Marketing Services in Sioux Falls That Help Your Business Get Found and Grow**

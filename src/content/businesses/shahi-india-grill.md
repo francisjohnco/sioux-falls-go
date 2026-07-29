@@ -1,0 +1,13 @@
+---
+name: "Shahi India Grill"
+category: "restaurants-dining"
+verifiedAt: 2026-07-29
+claimed: false
+address: "2527 S Shirley Ave, Sioux Falls, South Dakota 57106"
+phone: "605 361 5050"
+latitude: 43.522416
+longitude: -96.776332
+sourceUrl: "https://siouxfallsgo.com/places/shahi-india-grill/"
+---
+
+Shahi India Grill was born out of a deep love for real food that is fresh, healthy, and authentic. Shahi India Grill uses farm fresh halal chicken, fresh vegetables, fresh fish, and Australian lamb.

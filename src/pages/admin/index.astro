@@ -1,0 +1,419 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Admin — Sioux Falls Go"
+  description="Internal admin dashboard."
+  canonicalPath="/admin"
+>
+  <div class="admin-shell">
+    <!-- Desktop sidebar / mobile top bar -->
+    <header class="admin-topbar">
+      <span class="admin-logo">Sioux Falls <span>Go</span> <em>Admin</em></span>
+      <button class="admin-avatar" aria-label="Account">FJ</button>
+    </header>
+
+    <aside class="admin-sidebar">
+      <nav>
+        <button class="nav-item is-active" data-tab="dashboard">
+          <span class="nav-icon">⌂</span> Dashboard
+        </button>
+        <button class="nav-item" data-tab="content-engine">
+          <span class="nav-icon">✎</span> Content Engine
+        </button>
+        <button class="nav-item" data-tab="directory">
+          <span class="nav-icon">▤</span> Directory
+        </button>
+        <button class="nav-item" data-tab="giveaways">
+          <span class="nav-icon">🎁</span> Giveaways
+        </button>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- ── DASHBOARD ── -->
+      <section class="tab-panel is-active" id="panel-dashboard">
+        <h1>Dashboard</h1>
+        <p class="panel-sub">What needs your attention today.</p>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-number">3</span>
+            <span class="stat-label">New Applications</span>
+          </div>
+          <div class="stat-card stat-card--accent">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Drafts Awaiting Review</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">17</span>
+            <span class="stat-label">Businesses Live</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">1</span>
+            <span class="stat-label">Active Giveaway</span>
+          </div>
+        </div>
+
+        <h2 class="section-heading">Recent Activity</h2>
+        <ul class="activity-list">
+          <li><span class="activity-dot"></span> <strong>605 Drain Solutions</strong> interview completed — draft ready for review <time>2h ago</time></li>
+          <li><span class="activity-dot activity-dot--new"></span> New application: <strong>Uptown Nail Studio</strong> <time>5h ago</time></li>
+          <li><span class="activity-dot"></span> <strong>Spring Giveaway</strong> passed 100 entries <time>1d ago</time></li>
+          <li><span class="activity-dot"></span> <strong>SAJMedia Marketing</strong> profile updated <time>2d ago</time></li>
+        </ul>
+      </section>
+
+      <!-- ── CONTENT AI ENGINE ── -->
+      <section class="tab-panel" id="panel-content-engine">
+        <h1>Content Engine</h1>
+        <p class="panel-sub">Turn interview answers into a finished profile.</p>
+
+        <div class="engine-layout">
+          <div class="engine-queue">
+            <h3>Queue</h3>
+            <button class="queue-item is-active" data-business="605 Drain Solutions">
+              <strong>605 Drain Solutions</strong>
+              <span class="queue-status queue-status--ready">Ready to draft</span>
+            </button>
+            <button class="queue-item" data-business="Uptown Nail Studio">
+              <strong>Uptown Nail Studio</strong>
+              <span class="queue-status queue-status--pending">Awaiting interview</span>
+            </button>
+            <button class="queue-item" data-business="Dakota Elite Flooring">
+              <strong>Dakota Elite Flooring</strong>
+              <span class="queue-status queue-status--draft">Draft in review</span>
+            </button>
+          </div>
+
+          <div class="engine-workspace">
+            <h3>Interview Answers — <span id="engine-business-name">605 Drain Solutions</span></h3>
+
+            <label class="engine-field">
+              What made you start this business?
+              <textarea rows="2">Jeff and his wife wanted to help people avoid overpriced emergency plumbing calls by renting out pro-grade drain equipment.</textarea>
+            </label>
+            <label class="engine-field">
+              What makes you different from others in this category?
+              <textarea rows="2">We walk people through the whole process — videos, phone support, and the right equipment for the actual clog, not a one-size-fits-all rental.</textarea>
+            </label>
+            <label class="engine-field">
+              Anything you want customers to know?
+              <textarea rows="2">Same-day rentals, online booking, and we genuinely want people to save money over calling a plumber for something they can do themselves.</textarea>
+            </label>
+
+            <div class="engine-controls">
+              <label class="engine-select">
+                Prompt template
+                <select>
+                  <option>Service Business — Founder Story</option>
+                  <option>Restaurant — Local Favorite</option>
+                  <option>Retail — Product Spotlight</option>
+                  <option>★ Business Spotlight / Press Release (Champion tier)</option>
+                </select>
+              </label>
+              <button class="button" id="generate-btn">✨ Generate Draft</button>
+            </div>
+            <p class="spotlight-note">Spotlight/press-release drafts publish as articles and automatically appear under "Latest from [Business]" on that business's profile — Champion tier only.</p>
+
+            <div class="engine-output" id="engine-output" hidden>
+              <div class="output-header">
+                <h4>Generated Draft</h4>
+                <span class="badge badge--giveback">AI-assisted — needs review</span>
+              </div>
+              <div class="output-text">
+                <p><strong>Drain Cleaning Help in Sioux Falls That Saves You Time, Stress, and Money</strong></p>
+                <p>A serious drain clog can throw your entire day off... <em>(full draft would render here, generated from the answers above against the selected prompt template)</em></p>
+              </div>
+              <div class="output-actions">
+                <button class="button">Approve &amp; Publish</button>
+                <button class="button button--ghost">Edit Draft</button>
+                <button class="button button--ghost" id="regenerate-btn">Regenerate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── DIRECTORY ── -->
+      <section class="tab-panel" id="panel-directory">
+        <div class="panel-header-row">
+          <div>
+            <h1>Directory</h1>
+            <p class="panel-sub">17 businesses live.</p>
+          </div>
+          <button class="button">+ Add Business</button>
+        </div>
+
+        <input type="search" class="search-input" placeholder="Search businesses..." />
+
+        <div class="biz-table">
+          <div class="biz-row biz-row--header">
+            <span>Business</span><span>Category</span><span>Tier</span><span>Status</span>
+          </div>
+          <div class="biz-row">
+            <span class="biz-name">605 Drain Solutions</span>
+            <span>Plumbers</span>
+            <span><span class="badge badge--giveback">Give Back</span></span>
+            <span class="status status--live">Live</span>
+          </div>
+          <div class="biz-row">
+            <span class="biz-name">SAJMedia Marketing</span>
+            <span>Marketing Agencies</span>
+            <span><span class="badge badge--champion">★ Champion</span></span>
+            <span class="status status--live">Live</span>
+          </div>
+          <div class="biz-row">
+            <span class="biz-name">Dakota Elite Flooring</span>
+            <span>Flooring</span>
+            <span>—</span>
+            <span class="status status--draft">Draft</span>
+          </div>
+          <div class="biz-row">
+            <span class="biz-name">Redstone Electric</span>
+            <span>Electricians</span>
+            <span>—</span>
+            <span class="status status--live">Live</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── GIVEAWAYS ── -->
+      <section class="tab-panel" id="panel-giveaways">
+        <div class="panel-header-row">
+          <div>
+            <h1>Giveaways</h1>
+            <p class="panel-sub">1 active, 1 draft.</p>
+          </div>
+          <button class="button">+ New Giveaway</button>
+        </div>
+
+        <div class="giveaway-cards">
+          <div class="card giveaway-card">
+            <div class="giveaway-card-top">
+              <h3>Spring Local Legend Giveaway</h3>
+              <span class="status status--live">Active</span>
+            </div>
+            <p>Sponsored by <strong>La Luna Café</strong> — $50 gift card</p>
+            <div class="giveaway-meta">
+              <span>127 entries</span>
+              <span>Ends in 6 days</span>
+            </div>
+          </div>
+          <div class="card giveaway-card">
+            <div class="giveaway-card-top">
+              <h3>Home Services Bundle</h3>
+              <span class="status status--draft">Draft</span>
+            </div>
+            <p>Sponsored by <strong>605 Drain Solutions</strong> + <strong>Redstone Electric</strong></p>
+            <div class="giveaway-meta">
+              <span>Not yet published</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Mobile bottom nav -->
+    <nav class="admin-bottomnav">
+      <button class="bottomnav-item is-active" data-tab="dashboard">
+        <span>⌂</span> Home
+      </button>
+      <button class="bottomnav-item" data-tab="content-engine">
+        <span>✎</span> Content
+      </button>
+      <button class="bottomnav-item" data-tab="directory">
+        <span>▤</span> Directory
+      </button>
+      <button class="bottomnav-item" data-tab="giveaways">
+        <span>🎁</span> Giveaways
+      </button>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .admin-shell {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "topbar topbar" "sidebar main";
+    min-height: 100vh;
+    background: var(--color-surface);
+  }
+  .admin-topbar {
+    grid-area: topbar;
+    background: var(--color-navy);
+    color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem var(--space-3);
+  }
+  .admin-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; }
+  .admin-logo span { color: var(--color-orange); }
+  .admin-logo em { font-style: normal; opacity: 0.6; font-weight: 400; margin-left: 0.4rem; font-size: 0.875rem; }
+  .admin-avatar {
+    width: 2.2rem; height: 2.2rem; border-radius: 50%;
+    background: var(--color-orange); color: #fff; border: none;
+    font-weight: 700; font-size: 0.8125rem; cursor: pointer;
+  }
+
+  .admin-sidebar { grid-area: sidebar; background: #fff; border-right: 1px solid var(--color-line); padding: var(--space-2); }
+  .admin-sidebar nav { display: flex; flex-direction: column; gap: 0.25rem; }
+  .nav-item, .queue-item, .bottomnav-item { font-family: var(--font-body); }
+  .nav-item {
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.7rem 0.85rem; border-radius: var(--radius);
+    background: none; border: none; text-align: left;
+    font-size: 0.9375rem; font-weight: 600; color: var(--color-navy-light);
+    cursor: pointer;
+  }
+  .nav-item:hover { background: var(--color-surface); }
+  .nav-item.is-active { background: #FEF3E2; color: var(--color-orange-dark); }
+  .nav-icon { font-size: 1.1rem; width: 1.2rem; text-align: center; }
+
+  .admin-main { grid-area: main; padding: var(--space-3) var(--space-4) var(--space-6); overflow-x: hidden; }
+  .admin-main h1 { margin-bottom: 0.2rem; }
+  .panel-sub { color: var(--color-navy-light); margin: 0 0 var(--space-3); }
+  .panel-header-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-2); }
+
+  .tab-panel { display: none; }
+  .tab-panel.is-active { display: block; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); }
+  .stat-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); display: flex; flex-direction: column; }
+  .stat-card--accent { border-color: var(--color-orange); border-width: 2px; }
+  .stat-number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-navy); }
+  .stat-label { font-size: 0.8125rem; color: var(--color-navy-light); }
+
+  .section-heading { margin-top: var(--space-4); font-size: 1.1875rem; }
+  .activity-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .activity-list li { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.75rem 1rem; font-size: 0.9375rem; display: flex; align-items: center; gap: 0.6rem; }
+  .activity-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-line); flex-shrink: 0; }
+  .activity-dot--new { background: var(--color-orange); }
+  .activity-list time { margin-left: auto; font-size: 0.8125rem; color: var(--color-navy-light); white-space: nowrap; }
+
+  /* Content Engine */
+  .engine-layout { display: grid; grid-template-columns: 16rem 1fr; gap: var(--space-3); margin-top: var(--space-2); align-items: start; }
+  .engine-queue { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); display: flex; flex-direction: column; gap: 0.4rem; }
+  .engine-queue h3 { font-size: 0.9375rem; margin-bottom: 0.3rem; }
+  .queue-item { display: flex; flex-direction: column; gap: 0.25rem; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius); padding: 0.6rem 0.7rem; cursor: pointer; }
+  .queue-item:hover { background: var(--color-surface); }
+  .queue-item.is-active { background: #FEF3E2; border-color: var(--color-orange); }
+  .queue-status { font-size: 0.75rem; font-weight: 600; }
+  .queue-status--ready { color: var(--color-success); }
+  .queue-status--pending { color: var(--color-navy-light); }
+  .queue-status--draft { color: var(--color-orange-dark); }
+
+  .engine-workspace { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
+  .engine-workspace h3 { font-size: 1.0625rem; margin-bottom: var(--space-2); }
+  .engine-field { display: flex; flex-direction: column; gap: 0.3rem; font-weight: 600; font-size: 0.875rem; color: var(--color-navy); margin-bottom: var(--space-2); }
+  .engine-field textarea { font-family: var(--font-body); font-weight: 400; font-size: 0.9375rem; padding: 0.6rem 0.75rem; border: 1.5px solid var(--color-line); border-radius: var(--radius); resize: vertical; }
+  .engine-controls { display: flex; align-items: flex-end; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2); }
+  .spotlight-note { font-size: 0.8125rem; color: var(--color-navy-light); font-style: italic; margin-top: var(--space-1); }
+  .engine-select { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.875rem; font-weight: 600; color: var(--color-navy); flex: 1; min-width: 12rem; }
+  .engine-select select { padding: 0.6rem 0.75rem; border-radius: var(--radius); border: 1.5px solid var(--color-line); font-family: var(--font-body); }
+
+  .engine-output { margin-top: var(--space-3); border-top: 1px solid var(--color-line); padding-top: var(--space-3); }
+  .output-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); flex-wrap: wrap; }
+  .output-header h4 { margin: 0; }
+  .output-text { background: var(--color-surface); border-radius: var(--radius); padding: var(--space-2); font-size: 0.9375rem; }
+  .output-actions { display: flex; gap: 0.5rem; margin-top: var(--space-2); flex-wrap: wrap; }
+
+  /* Directory */
+  .search-input { width: 100%; max-width: 24rem; padding: 0.65rem 0.9rem; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); margin: var(--space-2) 0; font-family: var(--font-body); }
+  .biz-table { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden; }
+  .biz-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.8fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
+  .biz-row:last-child { border-bottom: none; }
+  .biz-row--header { background: var(--color-surface); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-navy-light); }
+  .biz-name { font-weight: 600; color: var(--color-navy); }
+  .status { font-size: 0.8125rem; font-weight: 700; }
+  .status--live { color: var(--color-success); }
+  .status--draft { color: var(--color-navy-light); }
+
+  /* Giveaways */
+  .giveaway-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--space-2); margin-top: var(--space-2); }
+  .giveaway-card-top { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+  .giveaway-card-top h3 { font-size: 1.0625rem; margin: 0; }
+  .giveaway-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0.4rem 0; }
+  .giveaway-meta { display: flex; gap: 1rem; font-size: 0.8125rem; color: var(--color-navy-light); font-weight: 600; }
+
+  /* Mobile bottom nav — hidden on desktop */
+  .admin-bottomnav { display: none; }
+
+  /* ── MOBILE: completely restructured, not just shrunk ── */
+  @media (max-width: 48rem) {
+    .admin-shell {
+      grid-template-columns: 1fr;
+      grid-template-areas: "topbar" "main";
+      padding-bottom: 4.5rem; /* room for bottom nav */
+    }
+    .admin-sidebar { display: none; }
+    .admin-main { padding: var(--space-2) var(--space-2) var(--space-4); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .engine-layout { grid-template-columns: 1fr; }
+    .engine-queue { display: flex; flex-direction: row; overflow-x: auto; gap: 0.5rem; }
+    .queue-item { min-width: 10rem; flex-shrink: 0; }
+    .biz-row { grid-template-columns: 1fr; gap: 0.2rem; }
+    .biz-row--header { display: none; }
+    .biz-row { border: 1px solid var(--color-line); border-radius: var(--radius); margin-bottom: 0.5rem; }
+    .panel-header-row .button { width: 100%; }
+
+    .admin-bottomnav {
+      display: flex;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--color-line);
+      padding: 0.4rem 0.25rem calc(0.4rem + env(safe-area-inset-bottom));
+      z-index: 20;
+    }
+    .bottomnav-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+      background: none; border: none; font-size: 0.6875rem; font-weight: 600;
+      color: var(--color-navy-light); padding: 0.3rem 0;
+    }
+    .bottomnav-item span { font-size: 1.15rem; }
+    .bottomnav-item.is-active { color: var(--color-orange); }
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll('[data-tab]');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  function activateTab(tabName: string) {
+    panels.forEach((p) => p.classList.toggle('is-active', p.id === `panel-${tabName}`));
+    document.querySelectorAll('.nav-item, .bottomnav-item').forEach((el) => {
+      el.classList.toggle('is-active', (el as HTMLElement).dataset.tab === tabName);
+    });
+  }
+
+  const urlTab = new URLSearchParams(window.location.search).get('tab');
+  if (urlTab) activateTab(urlTab);
+
+  tabs.forEach((btn) => {
+    if (!btn.classList.contains('nav-item') && !btn.classList.contains('bottomnav-item')) return;
+    btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
+  });
+
+  // Content engine queue selection (mock)
+  document.querySelectorAll('.queue-item').forEach((item) => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.queue-item').forEach((i) => i.classList.remove('is-active'));
+      item.classList.add('is-active');
+      const name = (item as HTMLElement).dataset.business;
+      const label = document.getElementById('engine-business-name');
+      if (label && name) label.textContent = name;
+      document.getElementById('engine-output')?.setAttribute('hidden', '');
+    });
+  });
+
+  // Mock AI generation
+  document.getElementById('generate-btn')?.addEventListener('click', () => {
+    document.getElementById('engine-output')?.removeAttribute('hidden');
+  });
+  document.getElementById('regenerate-btn')?.addEventListener('click', () => {
+    // In the real version, this re-calls the AI with the same inputs
+    alert('Would regenerate with the same interview answers and prompt template.');
+  });
+</script>

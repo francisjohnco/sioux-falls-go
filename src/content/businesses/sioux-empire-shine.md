@@ -2,8 +2,13 @@
 name: "Sioux Empire Shine"
 category: "window-cleaning"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/sioux-empire-shine/"
+address: "7220 W PRAIRIE ROSE ST, Sioux Falls, South Dakota 57107"
+phone: "1-605-215-6127"
+hours: "Mon-Fri 7am-9pm; Sat 7am-5pm; Sun 7am-9pm"
+latitude: 43.552829
+longitude: -96.81339
 ---
 
 ## Window Cleaning Services in Sioux Falls That Help You See Your Home More Clearly

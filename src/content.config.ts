@@ -66,6 +66,8 @@ const businesses = defineCollection({
     category: reference('categories'),
     neighborhood: reference('neighborhoods').optional(),
     address: z.string().optional(), // not always available at import — see migration report
+    latitude: z.number().optional(),
+    longitude: z.number().optional(),
     phone: z.string().optional(),
     website: z.string().url().optional(),
     hours: z.string().optional(),
@@ -88,6 +90,7 @@ const businesses = defineCollection({
     // not a self-submitted form. These fields track that provenance.
     interviewDate: z.date().optional(),
     interviewedBy: z.string().optional(),
+    pullQuote: z.string().optional(), // curated quote for premium editorial layout
   }),
 });
 
@@ -132,6 +135,7 @@ const articles = defineCollection({
       'comparison',
       'safety-information',
       'maintenance-guide',
+      'business-spotlight', // premium-tier feature: written by us about a Community Champion
     ]),
     relatedNeighborhoods: z.array(reference('neighborhoods')).default([]),
     relatedArticles: z.array(reference('articles')).default([]),

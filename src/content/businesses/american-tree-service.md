@@ -2,8 +2,13 @@
 name: "American Tree Service"
 category: "local-tree-services"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/american-tree-service/"
+address: "4112 S Harmony Dr,, Sioux Falls, South Dakota 57110"
+phone: "(605) 254-7996"
+hours: "Mon-Sat 12am-12am"
+latitude: 43.507465
+longitude: -96.662124
 ---
 
 ## **American Tree Service** \- Tree removal, trimming & Stump Grinding that goes beyond finished job.

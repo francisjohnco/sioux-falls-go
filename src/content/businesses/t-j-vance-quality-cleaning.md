@@ -2,8 +2,13 @@
 name: "T & J Vance Quality Cleaning"
 category: "cleaning-services"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/t-j-vance-quality-cleaning/"
+address: "6005 South Cliff Avenue, Sioux Falls, South Dakota 57108"
+phone: "(605) 857-3559"
+hours: "Mon-Wed 5pm-11pm; Thu 5pm-11am; Fri, Sat 5pm-11pm; Sun 5:11am-5pm"
+latitude: 43.490874
+longitude: -96.707801
 ---
 
 ## T & J Vance Quality Cleaning --providing cleaning services in Sioux Falls that goes further than deep cleaning

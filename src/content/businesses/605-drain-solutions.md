@@ -2,11 +2,16 @@
 name: "605 Drain Solutions"
 category: "plumbers"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 partnershipTier: "community-listing"
 googleRating: 4.9
 googleReviewCount: 47
 sourceUrl: "https://siouxfallsgo.com/places/605-drain-solutions/"
+address: "2308 S. Crestwood Rd, Sioux Falls, South Dakota 57105"
+phone: "(605) 534-7363"
+hours: "Mon-Sat 7:30am-5:30pm; Sun 2pm-5:30pm"
+latitude: 43.523859
+longitude: -96.70505
 ---
 
 # Drain Cleaning Help in Sioux Falls That Saves You Time, Stress, and Money

@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'What Community Champion Means',
+};
+---
+<BaseLayout
+  title="Community Champion"
+  description="What the Community Champion badge means on Sioux Falls Go — and why it's earned, not bought."
+  canonicalPath="/community-champion"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <img src="/images/community-champion-badge.png" alt="Sioux Falls Go Community Champion badge" class="badge-img" />
+      <div>
+        <span class="eyebrow">What This Badge Means</span>
+        <h1>Community Champion</h1>
+        <p class="hero-sub">
+          When you see this badge on a business's profile, it means they've
+          gone beyond meeting our standards — they've chosen to invest back
+          into Sioux Falls.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container page">
+    <section>
+      <h2>What it takes to earn it</h2>
+      <p>Every business on Sioux Falls Go already meets our baseline: locally owned, a 4.8+ Google rating, and willing to give back. Community Champions go further — they invest directly in the platform and the community, which funds the spotlights, giveaways, and free knowledge base every resident uses.</p>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section>
+      <h2>What Champions get, and why it matters to you</h2>
+      <div class="benefit-grid">
+        <div class="card">
+          <h3>📰 Spotlights &amp; Press Releases</h3>
+          <p>We write and publish real features about Champion businesses — not paid ads, actual stories about what makes them worth recommending.</p>
+        </div>
+        <div class="card">
+          <h3>⭐ Live Google Reviews</h3>
+          <p>Their rating and recent reviews stay current automatically, so you're seeing what customers are saying right now.</p>
+        </div>
+        <div class="card">
+          <h3>🎁 Bigger Community Investment</h3>
+          <p>Champions fund larger giveaways and community initiatives beyond the standard two-per-year commitment every listed business makes.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="cta-section">
+      <h2>Own a business that gives back like this?</h2>
+      <p>We'd love to hear from you.</p>
+      <a class="button" href="/get-featured">Apply for Consideration</a>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-5); }
+  .hero-inner { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+  .badge-img { width: 9rem; height: 9rem; flex-shrink: 0; }
+  .hero .eyebrow { color: var(--color-orange); }
+  .hero h1 { color: #fff; margin-block: 0.3rem 0.5rem; }
+  .hero-sub { max-width: 40ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; margin: 0; }
+
+  .page { padding-block: var(--space-5) var(--space-6); }
+  .page h2 { margin-bottom: var(--space-2); }
+  .page > section > p { max-width: 60ch; color: var(--color-navy-light); }
+  .contour-divider { height: 1px; background: var(--color-line); margin-block: var(--space-4); }
+
+  .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .benefit-grid h3 { font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .benefit-grid p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  .cta-section { text-align: center; background: var(--color-surface); border-radius: var(--radius); padding: var(--space-4); }
+  .cta-section p { margin: 0 0 var(--space-2); color: var(--color-navy-light); }
+</style>

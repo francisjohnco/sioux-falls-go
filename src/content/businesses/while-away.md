@@ -2,8 +2,13 @@
 name: "While Away"
 category: "home-watch-services"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/while-away/"
+address: "3001 S. West Ave, Sioux Falls, South Dakota 57105"
+phone: "(605) 360-1018"
+hours: "Mon-Fri 8am-5pm"
+latitude: 43.518413
+longitude: -96.74625
 ---
 
 ## While Away: Trusted Home Watch and Concierge Services in Sioux Falls Designed for Your Peace of Mind

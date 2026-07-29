@@ -2,8 +2,13 @@
 name: "Positive Painting"
 category: "painters"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/positive-painting/"
+address: "1409 E 17th St, Sioux Falls, South Dakota 57104"
+phone: "(605) 214-2677"
+hours: "Mon-Fri 8am-4pm"
+latitude: 43.537452
+longitude: -96.708601
 ---
 
 ## Interior Painting & Wallcoverings in Sioux Falls That Elevate the Feel of Your Home

@@ -2,8 +2,13 @@
 name: "Redstone Electric"
 category: "electricians"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/redstone-electric/"
+address: "728 S West Ave, Sioux Falls, South Dakota 57104"
+phone: "605-759-8822"
+hours: "Mon-Fri 9am-5pm"
+latitude: 43.539806
+longitude: -96.746124
 ---
 
 # Reliable Electrical Work in Sioux Falls That Prioritizes Safety and Clear Communication

@@ -2,8 +2,13 @@
 name: "The Appliance Doc"
 category: "appliance-repair-service"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/the-appliance-doc/"
+address: "2500 S. Glendale Ave., Sioux Falls, South Dakota 57105"
+phone: "(605) 681-5222"
+hours: "Mon-Fri 7am-6pm"
+latitude: 43.523052
+longitude: -96.747299
 ---
 
 ## Dependable Appliance Repair Service in Sioux Falls for Homes and Businesses

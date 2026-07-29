@@ -2,8 +2,13 @@
 name: "Robert's Property Care"
 category: "lawn-care"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/roberts-property-care/"
+address: "2313 S. Jefferson Ave., Sioux Falls, South Dakota 57105"
+phone: "605.403.7906"
+hours: "Mon 8:05pm-4pm; Tue-Fri 8am-4pm"
+latitude: 43.524747
+longitude: -96.752549
 ---
 
 ## Concrete, Landscaping, and Hardscaping in Sioux Falls That Focus on Long Term Quality

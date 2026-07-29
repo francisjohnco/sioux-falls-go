@@ -2,8 +2,12 @@
 name: "Animalwisedco"
 category: "shopping-retail"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/animalwisedco/"
+address: "4301 E 28th, Sioux Falls, South Dakota 57103"
+hours: "Mon-Fri 9am-5pm"
+latitude: 43.527403
+longitude: -96.674519
 ---
 
 ## Handmade Pet Accessories in Sioux Falls That Let Your Pet’s Personality Shine

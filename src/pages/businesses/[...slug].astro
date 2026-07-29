@@ -16,10 +16,23 @@ const { business } = Astro.props;
 const { Content } = await render(business);
 const category = await getEntry(business.data.category);
 const neighborhood = business.data.neighborhood ? await getEntry(business.data.neighborhood) : null;
+const isChampion = business.data.partnershipTier === 'community-champion';
 
-// Related articles: same category as this business (Content Engine relationship)
+// Related guides: same category
 const allArticles = await getCollection('articles');
-const relatedArticles = allArticles.filter((a) => a.data.category.id === business.data.category.id);
+const relatedGuides = allArticles.filter(
+  (a) => a.data.category.id === business.data.category.id && a.data.contentType !== 'business-spotlight'
+);
+
+// Spotlights written about this specific business — premium feature
+const spotlights = allArticles.filter(
+  (a) =>
+    a.data.contentType === 'business-spotlight' &&
+    a.data.relatedBusinesses.some((ref) => ref.id === business.id)
+);
+
+// "Verified" = we've confirmed this business's info recently — distinct from partnership tier
+const isVerified = !!business.data.verifiedAt;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -38,115 +51,224 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  {business.data.heroImage && (
-    <div class="profile-hero" style={`background-image: url(${business.data.heroImage});`}></div>
-  )}
+  {isChampion ? (
+    <>
+      <div
+        class="champion-hero"
+        style={business.data.heroImage ? `background-image: linear-gradient(rgba(27,42,74,0.15),rgba(27,42,74,0.8)), url(${business.data.heroImage});` : undefined}
+      >
+        <div class="container champion-hero-inner">
+          <a href="/community-champion" class="champion-badge-link">
+            <img src="/images/community-champion-badge.png" alt="Community Champion badge — click to learn what this means" class="champion-badge-img" />
+          </a>
+          <div>
+            <div class="hero-badges">
+              {isVerified && <span class="badge badge--verified">✓ Verified</span>}
+              <span class="badge badge--champion-solid">★ Community Champion</span>
+            </div>
+            <h1>{business.data.name}</h1>
+            <div class="hero-meta">
+              {business.data.googleRating && (
+                <span class="rating-pill">★ {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews) <span class="live-tag">LIVE</span></span>
+              )}
+              <span>{category.data.name}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="container page">
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
-    </nav>
+      <div class="container page">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
+        </nav>
 
-    <div class="profile-header">
-      <div>
-        <span class="eyebrow">{category.data.name}</span>
-        <h1>{business.data.name}</h1>
-        {business.data.partnershipTier === 'community-champion' && (
-          <span class="badge badge--champion">★ Community Champion</span>
+        <div class="tabs" role="tablist">
+          <button class="tab is-active" data-tab="story" role="tab">Story</button>
+          <button class="tab" data-tab="photos" role="tab">Photos</button>
+          <button class="tab" data-tab="specials" role="tab">Specials</button>
+          <button class="tab" data-tab="reviews" role="tab">Reviews</button>
+        </div>
+
+        <div class="champion-grid">
+          <div class="champion-main">
+            <div class="tab-panel is-active" data-panel="story">
+              {business.data.pullQuote && <blockquote class="pull-quote">"{business.data.pullQuote}"</blockquote>}
+              <div class="prose"><Content /></div>
+            </div>
+
+            <div class="tab-panel" data-panel="photos">
+              <p class="empty-note">Photo gallery coming soon — will pull from the business's uploaded media.</p>
+            </div>
+
+            <div class="tab-panel" data-panel="specials">
+              <p class="empty-note">No active specials right now. Champions can offer exclusive discounts here.</p>
+            </div>
+
+            <div class="tab-panel" data-panel="reviews">
+              <p class="empty-note">Live Google reviews will render here once the Places API is connected.</p>
+            </div>
+          </div>
+
+          <aside class="champion-side">
+            <div class="card contact-card">
+              <dl>
+                {business.data.address && <><dt>Address</dt><dd>{business.data.address}</dd></>}
+                {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
+                {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
+                {business.data.hours && <><dt>Hours</dt><dd>{business.data.hours}</dd></>}
+                {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
+              </dl>
+              <a class="button contact-cta" href="#">Contact Business</a>
+            </div>
+
+            {spotlights.length > 0 && (
+              <div class="spotlight-block">
+                <h3>Latest from {business.data.name}</h3>
+                {spotlights.map((s) => (
+                  <a class="spotlight-card" href={`/guides/${s.id}`}>
+                    <span class="spotlight-tag">Spotlight</span>
+                    <h4>{s.data.title}</h4>
+                  </a>
+                ))}
+              </div>
+            )}
+          </aside>
+        </div>
+
+        {relatedGuides.length > 0 && (
+          <section class="related">
+            <div class="contour-rule" role="presentation"></div>
+            <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
+            <div class="grid">
+              {relatedGuides.map((article) => (
+                <a class="card" href={`/guides/${article.id}`}>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.seo.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
         )}
-        {business.data.partnershipTier === 'community-listing' && (
-          <span class="badge badge--giveback">Give Back Partner</span>
-        )}
+      </div>
+    </>
+  ) : (
+    <div class="container page">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
+      </nav>
+
+      <div class="simple-card card">
+        <div class="simple-header">
+          <div>
+            <span class="eyebrow">{category.data.name}</span>
+            <h1>{business.data.name}</h1>
+            <div class="hero-badges">
+              {isVerified && <span class="badge badge--verified">✓ Verified</span>}
+              {business.data.partnershipTier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+            </div>
+          </div>
+        </div>
+
         {business.data.googleRating && (
-          <p class="google-rating">★ {business.data.googleRating.toFixed(1)} on Google{business.data.googleReviewCount && ` (${business.data.googleReviewCount} reviews)`}</p>
+          <p class="static-rating">★ {business.data.googleRating.toFixed(1)} <span class="static-rating-note">(as of {business.data.verifiedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })})</span></p>
         )}
-      </div>
-    </div>
 
-    <div class="profile-grid">
-      <div class="profile-main prose">
-        <Content />
-      </div>
+        <div class="prose"><Content /></div>
 
-      <aside class="profile-side card">
-        <dl>
-          <dt>Address</dt>
-          <dd>{business.data.address}</dd>
-          {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
+        <dl class="simple-info">
+          {business.data.address && <><dt>Address</dt><dd>{business.data.address}</dd></>}
           {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
           {business.data.hours && <><dt>Hours</dt><dd>{business.data.hours}</dd></>}
-          {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
         </dl>
-      </aside>
-    </div>
 
-    {relatedArticles.length > 0 && (
-      <section class="related">
-        <div class="contour-rule" role="presentation"></div>
-        <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
-        <div class="grid">
-          {relatedArticles.map((article) => (
-            <a class="card" href={`/guides/${article.id}`}>
-              <h3>{article.data.title}</h3>
-              <p>{article.data.seo.description}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
-  </div>
+        {business.data.website && <a class="button" href={business.data.website} rel="nofollow noopener" target="_blank">Visit Website</a>}
+      </div>
+
+      {relatedGuides.length > 0 && (
+        <section class="related">
+          <div class="contour-rule" role="presentation"></div>
+          <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
+          <div class="grid">
+            {relatedGuides.map((article) => (
+              <a class="card" href={`/guides/${article.id}`}>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  )}
 
   <SiteFooter slot="footer" />
 </BaseLayout>
 
 <style>
   .page { padding-block: var(--space-4) var(--space-6); }
-  .profile-hero {
-    height: 16rem;
-    background-size: cover;
-    background-position: center;
-    background-color: var(--color-navy);
-  }
-  .breadcrumbs { font-size: 0.8125rem; color: var(--color-river-light); margin-bottom: var(--space-2); }
-  .breadcrumbs a { color: var(--color-river-light); }
-  .profile-header h1 { margin-top: 0.25rem; }
-  .badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    color: var(--color-river);
-    background: var(--color-prairie);
-    padding: 0.15rem 0.6rem;
-    border-radius: 999px;
-  }
+  .breadcrumbs { font-size: 0.8125rem; color: var(--color-navy-light); margin-bottom: var(--space-2); }
+  .breadcrumbs a { color: var(--color-navy-light); }
+
+  .badge--verified { background: #E7F6ED; color: var(--color-success); }
   .badge--giveback { background: #E7F6ED; color: var(--color-success); }
-  .google-rating { font-weight: 700; font-size: 0.9375rem; margin: 0.35rem 0 0; }
-  .claim-link { font-size: 0.9375rem; }
-  .profile-grid {
-    display: grid;
-    grid-template-columns: 1fr 18rem;
-    gap: var(--space-4);
-    margin-top: var(--space-3);
-  }
-  @media (max-width: 45rem) {
-    .profile-grid { grid-template-columns: 1fr; }
-  }
-  .profile-side dl { margin: 0; }
-  .profile-side dt {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    color: var(--color-river-light);
-    margin-top: var(--space-2);
-  }
-  .profile-side dt:first-child { margin-top: 0; }
-  .profile-side dd { margin: 0.2rem 0 0; }
+  .badge--champion-solid { background: var(--color-orange); color: #fff; }
+  .hero-badges { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+
+  /* Champion hero */
+  .champion-hero { background: var(--color-navy); background-size: cover; background-position: center; padding-block: var(--space-5); }
+  .champion-hero-inner { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+  .champion-badge-link { flex-shrink: 0; }
+  .champion-badge-img { width: 6rem; height: 6rem; display: block; }
+  .champion-hero h1 { color: #fff; margin: 0 0 0.4rem; }
+  .hero-meta { display: flex; gap: 1rem; color: rgba(255,255,255,0.85); font-size: 0.9375rem; flex-wrap: wrap; }
+  .rating-pill { background: rgba(255,255,255,0.15); padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); font-weight: 700; }
+  .live-tag { font-size: 0.625rem; background: #E7F6ED; color: var(--color-success); padding: 0.1rem 0.4rem; border-radius: var(--radius-pill); font-weight: 700; margin-left: 0.3rem; }
+
+  .tabs { display: flex; gap: 1.5rem; border-bottom: 2px solid var(--color-line); margin-top: var(--space-3); overflow-x: auto; }
+  .tab { background: none; border: none; padding-bottom: 0.65rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy-light); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
+  .tab.is-active { color: var(--color-orange); border-bottom-color: var(--color-orange); }
+  .tab-panel { display: none; }
+  .tab-panel.is-active { display: block; }
+  .empty-note { color: var(--color-navy-light); font-style: italic; }
+
+  .champion-grid { display: grid; grid-template-columns: 1fr 18rem; gap: var(--space-4); margin-top: var(--space-3); }
+  @media (max-width: 45rem) { .champion-grid { grid-template-columns: 1fr; } }
+
+  .pull-quote { font-family: var(--font-display); font-size: 1.25rem; color: var(--color-navy); border-left: 4px solid var(--color-orange); padding-left: 1rem; margin: 0 0 var(--space-2); font-weight: 500; }
+
+  .contact-card dl { margin: 0; }
+  .contact-card dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
+  .contact-card dt:first-child { margin-top: 0; }
+  .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
+  .contact-cta { display: block; text-align: center; margin-top: var(--space-2); }
+
+  .spotlight-block { margin-top: var(--space-3); }
+  .spotlight-block h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .spotlight-card { display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.85rem; margin-bottom: 0.5rem; text-decoration: none; }
+  .spotlight-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: var(--color-orange); }
+  .spotlight-card h4 { margin: 0.25rem 0 0; font-size: 0.9375rem; color: var(--color-navy); }
+
   .related { margin-top: var(--space-4); }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--space-3);
-    margin-top: var(--space-3);
-  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+
+  /* Simple/free profile */
+  .simple-card { max-width: 40rem; }
+  .simple-header h1 { margin: 0.2rem 0 0.4rem; }
+  .static-rating { font-weight: 700; color: var(--color-navy); margin: 0.5rem 0; }
+  .static-rating-note { font-weight: 400; color: var(--color-navy-light); font-size: 0.875rem; }
+  .simple-info { margin: var(--space-2) 0; }
+  .simple-info dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: 0.6rem; }
+  .simple-info dd { margin: 0.15rem 0 0; font-weight: 600; }
 </style>
+
+<script>
+  document.querySelectorAll('.tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.tab;
+      document.querySelectorAll('.tab').forEach((t) => t.classList.remove('is-active'));
+      document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      document.querySelector(`[data-panel="${target}"]`)?.classList.add('is-active');
+    });
+  });
+</script>

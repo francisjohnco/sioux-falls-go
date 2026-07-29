@@ -2,8 +2,13 @@
 name: "Daniel Brunz Realtor"
 category: "real-estate-agents"
 verifiedAt: 2026-07-29
-claimed: false
+claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/daniel-brunz-realtor/"
+address: "6225 S Minnesota Ave, Sioux Falls, South Dakota 57108"
+phone: "(605) 321-8622"
+hours: "Mon-Sat 8am-8pm"
+latitude: 43.487534
+longitude: -96.728957
 ---
 
 ## Real Estate Guidance in Sioux Falls That Helps You Move Forward with Clarity

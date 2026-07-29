@@ -16,8 +16,11 @@ const tier = business.data.partnershipTier;
   </div>
   <div class="biz-card-body">
     <h3>{business.data.name}</h3>
-    {tier === 'community-champion' && <span class="badge badge--champion">★ Community Champion</span>}
-    {tier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+    <div class="badge-row">
+      {business.data.verifiedAt && <span class="badge badge--verified">✓ Verified</span>}
+      {tier === 'community-champion' && <span class="badge badge--champion-solid">★ Champion</span>}
+      {tier === 'community-listing' && <span class="badge badge--giveback">Give Back</span>}
+    </div>
     {business.data.googleRating && (
       <p class="biz-rating">★ {business.data.googleRating.toFixed(1)} {business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</p>
     )}
@@ -50,6 +53,9 @@ const tier = business.data.partnershipTier;
   }
   .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
   .biz-card h3 { margin: 0 0 0.35rem; font-size: 1.0625rem; }
+  .badge-row { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+  .badge--verified { background: #E7F6ED; color: var(--color-success); }
+  .badge--champion-solid { background: var(--color-orange); color: #fff; }
   .badge--giveback { background: #E7F6ED; color: var(--color-success); }
   .biz-rating { margin: 0.35rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); font-weight: 600; }
   .biz-hours { margin: 0.3rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); }
