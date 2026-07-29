@@ -3,6 +3,7 @@ name: "SAJMedia Marketing"
 category: "marketing-agencies"
 verifiedAt: 2026-07-29
 claimed: false
+partnershipTier: "community-champion"
 sourceUrl: "https://siouxfallsgo.com/places/sajmedia-marketing/"
 ---
 

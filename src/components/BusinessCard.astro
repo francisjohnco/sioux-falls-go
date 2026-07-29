@@ -7,6 +7,7 @@ interface Props {
 }
 const { business } = Astro.props;
 const category = await getEntry(business.data.category);
+const tier = business.data.partnershipTier;
 ---
 <a class="card biz-card" href={`/businesses/${business.id}`}>
   <div class="biz-card-media">
@@ -15,7 +16,11 @@ const category = await getEntry(business.data.category);
   </div>
   <div class="biz-card-body">
     <h3>{business.data.name}</h3>
-    {business.data.claimed && <span class="badge badge--verified">✓ Verified</span>}
+    {tier === 'community-champion' && <span class="badge badge--champion">★ Community Champion</span>}
+    {tier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+    {business.data.googleRating && (
+      <p class="biz-rating">★ {business.data.googleRating.toFixed(1)} {business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</p>
+    )}
     {business.data.hours
       ? <p class="biz-hours">{business.data.hours}</p>
       : <p class="biz-hours biz-hours--pending">Hours coming soon</p>}
@@ -45,6 +50,8 @@ const category = await getEntry(business.data.category);
   }
   .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
   .biz-card h3 { margin: 0 0 0.35rem; font-size: 1.0625rem; }
+  .badge--giveback { background: #E7F6ED; color: var(--color-success); }
+  .biz-rating { margin: 0.35rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); font-weight: 600; }
   .biz-hours { margin: 0.3rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); }
   .biz-hours--pending { font-style: italic; opacity: 0.7; }
 </style>

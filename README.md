@@ -54,7 +54,38 @@ Sioux Falls Go platform, built to the "Foundation and Knowledge Engine" spec.
       real related-article links automatically
 - [x] SEO foundation — canonical, OG, Twitter, JSON-LD, sitemap generation
 
+## Business Partnership Model (invite-only, not self-serve)
+
+Sioux Falls Go is not an open directory — this is now enforced in the schema,
+not just the copy:
+
+- **No self-serve "add your business" flow.** The old "Claim your listing"
+  CTAs are gone. The directory and business pages now point to
+  `/get-featured` (a real migrated page describing the actual qualification
+  criteria: locally owned, ethical, available for new customers).
+- **`partnershipTier`** (`community-listing` | `community-champion`) replaces
+  the old generic `claimed` boolean for display purposes. Community Listing
+  shows a "Give Back Partner" badge; Community Champion shows a star badge —
+  matching the real site's actual "Community Champ" badge (confirmed on the
+  live SAJMedia Marketing page).
+- **`googleRating` / `googleReviewCount`** — the 4.8+ Google rating
+  qualification gate is now a real field, not just a policy statement.
+  Sample data on 605 Drain Solutions (4.9, 47 reviews) is a **placeholder**,
+  not real Google data — needs a real Google Business Profile pull to
+  populate for all businesses.
+- **`interviewDate` / `interviewedBy`** — tracks that a profile's narrative
+  came from an actual interview, not a self-submitted form. None of the
+  migrated content has this filled in yet (it predates this model), but new
+  businesses onboarded going forward should have it set.
+
+**Still open:** the actual interview → profile workflow (how interview
+answers get turned into the narrative body content) is a process decision,
+not a code one — happy to help draft an interview script or template once
+you've run a few and know what questions actually produce good copy.
+
 ## Definition of Done — Phase 2 (Migration + MVP Launch)
+
+
 
 - [x] Business Directory MVP — listing page with category filter chips,
       single business profile page with map-ready address/hours/contact

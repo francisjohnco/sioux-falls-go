@@ -3,6 +3,9 @@ name: "605 Drain Solutions"
 category: "plumbers"
 verifiedAt: 2026-07-29
 claimed: false
+partnershipTier: "community-listing"
+googleRating: 4.9
+googleReviewCount: 47
 sourceUrl: "https://siouxfallsgo.com/places/605-drain-solutions/"
 ---
 

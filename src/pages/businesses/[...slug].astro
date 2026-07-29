@@ -47,9 +47,15 @@ const schema = {
       <div>
         <span class="eyebrow">{category.data.name}</span>
         <h1>{business.data.name}</h1>
-        {business.data.claimed
-          ? <span class="badge">Claimed listing</span>
-          : <a class="claim-link" href="/businesses/claim">Is this your business? Claim it →</a>}
+        {business.data.partnershipTier === 'community-champion' && (
+          <span class="badge badge--champion">★ Community Champion</span>
+        )}
+        {business.data.partnershipTier === 'community-listing' && (
+          <span class="badge badge--giveback">Give Back Partner</span>
+        )}
+        {business.data.googleRating && (
+          <p class="google-rating">★ {business.data.googleRating.toFixed(1)} on Google{business.data.googleReviewCount && ` (${business.data.googleReviewCount} reviews)`}</p>
+        )}
       </div>
     </div>
 
@@ -104,6 +110,8 @@ const schema = {
     padding: 0.15rem 0.6rem;
     border-radius: 999px;
   }
+  .badge--giveback { background: #E7F6ED; color: var(--color-success); }
+  .google-rating { font-weight: 700; font-size: 0.9375rem; margin: 0.35rem 0 0; }
   .claim-link { font-size: 0.9375rem; }
   .profile-grid {
     display: grid;

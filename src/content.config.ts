@@ -73,6 +73,21 @@ const businesses = defineCollection({
     claimed: z.boolean().default(false),
     heroImage: z.string().optional(),
     sourceUrl: z.string().optional(), // original WP URL, for migration traceability
+
+    // ── Invite-only partnership model ──
+    // A business appearing in the directory at all implies it passed
+    // qualification — there is no self-serve "add your business" path.
+    partnershipTier: z.enum(['community-listing', 'community-champion']).optional(),
+    googleRating: z.number().min(1).max(5).optional(), // qualification gate: 4.8+ required
+    googleReviewCount: z.number().optional(),
+    giveawaysPerYear: z.number().default(0), // up to 2 for Community Listing, more allowed for Champion
+    onboardedAt: z.date().optional(), // when approved, distinct from verifiedAt (data freshness)
+
+    // ── Interview-sourced profile ──
+    // Profile narrative comes from an actual interview with the business,
+    // not a self-submitted form. These fields track that provenance.
+    interviewDate: z.date().optional(),
+    interviewedBy: z.string().optional(),
   }),
 });
 
