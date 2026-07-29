@@ -1,6 +1,6 @@
 ---
 title: "Community Spotlight: SiouxFallsFlooring.com \u2014 Helping Homeowners Make Confident Flooring Decisions"
-category: "community-spotlight"
+category: "flooring"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
