@@ -1,0 +1,111 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'How Visibility Works on Sioux Falls Go',
+};
+
+const layers = [
+  {
+    title: 'Your Directory Profile',
+    body: "Every recommended business gets a real profile — not a locked listing you have to pay to see. Community Listing businesses get the essentials. Community Champions get the full page: photos, live reviews, specials, and more.",
+  },
+  {
+    title: 'Category Pages',
+    body: "Your profile lives on the category page real Sioux Falls residents actually search — \"Electricians,\" \"Coffee Shops,\" \"Flooring\" — right alongside the local guides we write for that same category.",
+  },
+  {
+    title: 'Business Spotlights',
+    body: "A real feature written about your business, not a paid ad — published as its own guide, shared across the site, and permanently linked from your profile's \"Latest from\" section.",
+  },
+  {
+    title: 'Sponsored Guides',
+    body: "Community Champions can sponsor the local guides residents are already reading — a clearly-labeled banner inside the article itself, with your name and a link back to your profile. You're not interrupting the content; you're funding it.",
+  },
+  {
+    title: 'Live Google Reviews',
+    body: "Champion profiles show your real, current rating and recent reviews — not a static number that goes stale.",
+  },
+  {
+    title: 'The Community Champion Badge',
+    body: "A visible signal, on your profile and in the directory, that tells residents you're not just listed here — you're invested in this platform staying free and useful for the whole community.",
+  },
+];
+---
+<BaseLayout
+  title="How Visibility Works"
+  description="How businesses actually get seen on Sioux Falls Go — directory profiles, category pages, spotlights, sponsored guides, and more."
+  canonicalPath="/how-visibility-works"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">How It Actually Works</span>
+      <h1>Visibility on Sioux Falls Go</h1>
+      <p class="hero-sub">
+        We're not an ad platform. Every way a business gets seen here is
+        tied to something genuinely useful to the resident reading it —
+        that's on purpose.
+      </p>
+    </div>
+  </section>
+
+  <div class="container page">
+    <section class="layers-section">
+      <div class="layers-list">
+        {layers.map((l, i) => (
+          <div class="layer-row">
+            <span class="layer-number">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{l.title}</h3>
+              <p>{l.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="cta-section">
+      <h2>Every layer beyond the basics is a Community Champion benefit</h2>
+      <p>Community Listing is free and gets you found. Community Champion is how you actually stand out — and it's earned by giving back, not just paying for placement.</p>
+      <div class="cta-actions">
+        <a class="button" href="/get-featured">Apply for Consideration</a>
+        <a class="button button--ghost" href="/community-champion">What Community Champion Means</a>
+      </div>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-5); }
+  .hero .eyebrow { color: var(--color-orange); }
+  .hero h1 { color: #fff; margin-block: var(--space-1) var(--space-2); }
+  .hero-sub { max-width: 44ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; }
+
+  .page { padding-block: var(--space-5) var(--space-6); }
+  .layers-list { display: flex; flex-direction: column; gap: var(--space-3); }
+  .layer-row { display: grid; grid-template-columns: 3.5rem 1fr; gap: var(--space-2); }
+  .layer-number { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--color-orange); line-height: 1.2; }
+  .layer-row h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+  .layer-row p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; max-width: 58ch; }
+
+  .contour-divider { height: 1px; background: var(--color-line); margin-block: var(--space-5); }
+
+  .cta-section { background: var(--color-surface); border-radius: var(--radius); padding: var(--space-4); text-align: center; }
+  .cta-section p { max-width: 46ch; margin: var(--space-1) auto var(--space-3); color: var(--color-navy-light); }
+  .cta-actions { display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 32rem) {
+    .layer-row { grid-template-columns: 2.5rem 1fr; }
+  }
+</style>

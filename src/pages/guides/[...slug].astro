@@ -124,7 +124,22 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
           <Fragment set:html={restHtml} />
         </>
       ) : (
-        <Content />
+        <>
+          <Fragment set:html={introHtml} />
+          <a href="/how-visibility-works" class="sponsor-banner sponsor-banner--open">
+            <span class="sponsor-label sponsor-label--open">Open Spot</span>
+            <div class="sponsor-content">
+              <div class="sponsor-logo sponsor-logo--open">+</div>
+              <div>
+                <p class="sponsor-text">
+                  Community Champion businesses can claim this spot free. Find out how visibility works on Sioux Falls Go.
+                </p>
+                <span class="sponsor-link">See how it works →</span>
+              </div>
+            </div>
+          </a>
+          <Fragment set:html={restHtml} />
+        </>
       )}
     </div>
 
@@ -215,6 +230,18 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
   }
   .sponsor-text { margin: 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.5; }
   .sponsor-link { font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); }
+
+  .sponsor-banner--open {
+    background: var(--color-surface); border: 1.5px dashed var(--color-line);
+  }
+  .sponsor-banner--open:hover { border-color: var(--color-navy-light); box-shadow: 0 4px 14px rgba(27,42,74,0.1); }
+  .sponsor-label--open { background: var(--color-navy-light); }
+  .sponsor-logo--open {
+    background: #fff; border: 1.5px dashed var(--color-line); color: var(--color-navy-light);
+    font-size: 1.5rem; font-weight: 400;
+  }
+  .sponsor-banner--open .sponsor-text { color: var(--color-navy-light); }
+  .sponsor-banner--open .sponsor-link { color: var(--color-navy); }
   .prose { margin-top: var(--space-3); }
   .prose :global(h2) { margin-top: var(--space-4); }
 
