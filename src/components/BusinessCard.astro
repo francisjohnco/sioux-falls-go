@@ -8,6 +8,21 @@ interface Props {
 const { business } = Astro.props;
 const category = await getEntry(business.data.category);
 const tier = business.data.partnershipTier;
+
+// Real excerpt from the business's own body content — strip markdown syntax,
+// take the first real sentence(s), truncate to a card-friendly length.
+function makeExcerpt(markdown: string, maxLen = 110): string {
+  const plain = markdown
+    .replace(/^#{1,6}\s+.*/gm, '')      // strip headings
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links -> just the text
+    .replace(/[*_`>#-]/g, '')            // strip remaining markdown symbols
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (plain.length <= maxLen) return plain;
+  const cut = plain.slice(0, maxLen);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+}
+const excerpt = makeExcerpt(business.body ?? '');
 ---
 <a class="biz-card" href={`/businesses/${business.id}`}>
   <div class="biz-card-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage}); background-size: cover; background-position: center;` : undefined}>
@@ -34,6 +49,8 @@ const tier = business.data.partnershipTier;
     {business.data.hours
       ? <p class="biz-hours">{business.data.hours}</p>
       : <p class="biz-hours biz-hours--pending">Hours coming soon</p>}
+    {excerpt && <p class="biz-excerpt">{excerpt}</p>}
+    <span class="biz-read-more">Read more →</span>
   </div>
 </a>
 
@@ -81,4 +98,10 @@ const tier = business.data.partnershipTier;
   .biz-rating { margin: 0.35rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); font-weight: 600; }
   .biz-hours { margin: 0.3rem 0 0; font-size: 0.875rem; color: var(--color-navy-light); }
   .biz-hours--pending { font-style: italic; opacity: 0.7; }
+  .biz-excerpt { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--color-ink); line-height: 1.5; }
+  .biz-read-more {
+    display: inline-block; margin-top: 0.6rem; font-size: 0.8125rem; font-weight: 700;
+    color: var(--color-orange-dark);
+  }
+  .biz-card:hover .biz-read-more { text-decoration: underline; }
 </style>
