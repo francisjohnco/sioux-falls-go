@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const categories = (await getCollection('categories')).slice(0, 6);
+---
+<BaseLayout
+  title="Page Not Found"
+  description="This page doesn't exist on Sioux Falls Go."
+  canonicalPath="/404"
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page">
+    <span class="eyebrow">404</span>
+    <h1>We couldn't find that page</h1>
+    <p class="page-sub">It may have moved, or the link might be out of date. Here's how to get back on track:</p>
+
+    <div class="quick-links">
+      <a class="button" href="/">Go to Homepage</a>
+      <a class="button button--ghost" href="/businesses">Browse the Directory</a>
+      <a class="button button--ghost" href="/guides">Visit The Loop</a>
+    </div>
+
+    <div class="contour-rule" role="presentation"></div>
+
+    <h2>Or start with a popular category</h2>
+    <div class="grid">
+      {categories.map((cat) => (
+        <a class="category-card" href={`/${cat.data.slug}`}>
+          <span class="category-icon">{cat.data.icon}</span>
+          <strong>{cat.data.name}</strong>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-5) var(--space-6); text-align: center; }
+  .page-sub { max-width: 40ch; margin: 0 auto var(--space-3); color: var(--color-navy-light); }
+  .quick-links { display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-4); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-2); margin-top: var(--space-3); max-width: 40rem; margin-inline: auto; }
+  .category-card {
+    display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+    background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2); text-decoration: none;
+  }
+  .category-card:hover { border-color: var(--color-orange); }
+  .category-icon { font-size: 1.5rem; }
+  .category-card strong { font-size: 0.9375rem; color: var(--color-navy); }
+</style>

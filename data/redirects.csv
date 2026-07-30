@@ -53,3 +53,68 @@ old_url,new_url,status,notes
 /places/redstone-electric/,/businesses/redstone-electric,301,migrated business listing
 /contact-2/,/contact,301,migrated page
 /sioux-falls-top-picks/,/sioux-falls-top-picks-trusted-local-businesses-by-category-2,301,migrated page
+/category/appliance-repair-service/,/appliance-repair-service,301,category archive
+/category/cleaning-services/,/cleaning-services,301,category archive
+/category/coffee-shops/,/coffee-shops,301,category archive
+/category/consumer-guide/,/consumer-guide,301,category archive
+/category/electricians/,/electricians,301,category archive
+/category/flooring/,/flooring,301,category archive
+/category/for-local-businesses/,/for-local-businesses,301,category archive
+/category/for-locals/,/for-locals,301,category archive
+/category/grow-with-sioux-falls-go/,/grow-with-sfg,301,category archive
+/category/home-services/,/home-services,301,category archive
+/category/home-watch-services/,/home-watch-services,301,category archive
+/category/lawn-care/,/lawn-care,301,category archive
+/category/local-spotlights/,/local-spotlights,301,category archive
+/category/local-tree-services/,/local-tree-services,301,category archive
+/category/marketing-agencies/,/marketing-agencies,301,category archive
+/category/marketing-tips-insights/,/marketing-tips-insights,301,category archive
+/category/painters/,/painters,301,category archive
+/category/plumber/,/plumbers,301,category archive
+/category/plumbing/,/plumbers,301,category archive
+/category/professional-services/,/professional-services,301,category archive
+/category/real-estate-agents/,/real-estate-agents,301,category archive
+/category/restaurants-dining/,/restaurants-dining,301,category archive
+/category/shopping-retail/,/shopping-retail,301,category archive
+/category/window-cleaning/,/window-cleaning,301,category archive
+/category/community-spotlight/,/community-spotlight,301,category archive
+/category/explore-sioux-falls/,/explore-sioux-falls,301,category archive
+/category/activities/,/guides,301,category archive
+/category/events-in-sioux-falls/,/guides,301,category archive
+/category/family-fun/,/guides,301,category archive
+/category/featured/,/guides,301,category archive
+/category/guardian-expert-advice/,/guides,301,category archive
+/category/guardian-expert-advice-2/,/guides,301,category archive
+/category/living-in-sioux-falls/,/guides,301,category archive
+/category/sioux-falls-in-the-news/,/guides,301,category archive
+/category/sioux-falls-stories/,/guides,301,category archive
+/category/spotlight-giveaways/,/spotlight-giveaways,301,category archive
+/category/uncategorized/,/guides,301,category archive
+/category/visiting-sioux-falls/,/explore-sioux-falls,301,category archive
+/category/for-local-businesses/grow-with-sioux-falls-go/,/grow-with-sfg,301,nested category archive
+/category/for-local-businesses/guardian-expert-advice/,/guides,301,nested category archive
+/category/for-locals/local-spotlights/,/local-spotlights,301,nested category archive
+/category/for-local-businesses/marketing-tips-insights/,/marketing-tips-insights,301,nested category archive
+/category/for-locals/sioux-falls-stories/,/guides,301,nested category archive
+/category/for-locals/community-spotlight/,/community-spotlight,301,nested category archive
+/category/for-locals/explore-sioux-falls/,/explore-sioux-falls,301,nested category archive
+/directory/,/businesses,301,"WP infrastructure page, not content"
+/add-listing/,/get-featured,301,"WP infrastructure page, not content"
+/search/,/businesses,301,"WP infrastructure page, not content"
+/location/,/businesses,301,"WP infrastructure page, not content"
+/register/,/get-featured,301,"WP infrastructure page, not content"
+/login/,/,301,"WP infrastructure page, not content"
+/account/,/,301,"WP infrastructure page, not content"
+/forgot-password/,/,301,"WP infrastructure page, not content"
+/reset-password/,/,301,"WP infrastructure page, not content"
+/change-password/,/,301,"WP infrastructure page, not content"
+/profile/,/,301,"WP infrastructure page, not content"
+/users/,/businesses,301,"WP infrastructure page, not content"
+/checkout/,/,301,"WP infrastructure page, not content"
+/my-invoices/,/,301,"WP infrastructure page, not content"
+/payment-confirmation/,/,301,"WP infrastructure page, not content"
+/transaction-failed/,/,301,"WP infrastructure page, not content"
+/my-subscriptions/,/,301,"WP infrastructure page, not content"
+/advertising-dashboard/,/,301,"WP infrastructure page, not content"
+/terms-and-conditions/,/terms-of-use,301,"WP infrastructure page, not content"
+/blog/,/guides,301,"WP infrastructure page, not content"
