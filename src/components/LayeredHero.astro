@@ -7,10 +7,16 @@ interface Props {
   photoCredit?: string;
   compact?: boolean;
   centered?: boolean;
+  divider?: 'diamond-lattice';
 }
-const { eyebrow, title, subtitle, photoUrl, photoCredit, compact = false, centered = false } = Astro.props;
+const { eyebrow, title, subtitle, photoUrl, photoCredit, compact = false, centered = false, divider } = Astro.props;
 ---
 <section class={`layered-hero ${compact ? 'layered-hero--compact' : ''} ${centered ? 'layered-hero--centered' : ''}`}>
+  {divider === 'diamond-lattice' && (
+    <svg class="hero-divider" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,70 L0,45 L30,25 L60,45 L90,25 L120,45 L150,25 L180,45 L210,25 L240,45 L270,25 L300,45 L330,25 L360,45 L390,25 L420,45 L450,25 L480,45 L510,25 L540,45 L570,25 L600,45 L630,25 L660,45 L690,25 L720,45 L750,25 L780,45 L810,25 L840,45 L870,25 L900,45 L930,25 L960,45 L990,25 L1020,45 L1050,25 L1080,45 L1110,25 L1140,45 L1170,25 L1200,45 L1200,70 Z" fill="#fff" />
+    </svg>
+  )}
   {photoUrl ? (
     <>
       <div class="hero-photo" style={`background-image: url(${photoUrl});`}></div>
@@ -93,6 +99,10 @@ const { eyebrow, title, subtitle, photoUrl, photoCredit, compact = false, center
   @media (prefers-reduced-motion: reduce) { .drift-slow { animation: none; } }
 
   .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .hero-divider {
+    position: absolute; bottom: -1px; left: 0; width: 100%; height: 3.5rem;
+    z-index: 3; display: block;
+  }
   .hero-photo-overlay {
     position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(13,23,48,0.35) 0%, rgba(13,23,48,0.82) 100%);
