@@ -63,14 +63,14 @@ Description**: Expert repair, installations, openers; backed by live 24/7 suppor
 **[Open Slot] | ZIP Code: [Insert]**  
 **Description** : [Business info will go here once verified.]  
 **Why We Love It** : [Placeholder for impact statement]  
-• ✅ Check Latest Special • 🔗 Visit Business Page
+• Check Latest Special • Visit Business Page
 
 _**Have other trusted recommendations? Want us to update this list with contact info or fill the open spot? Just let me know!**_
 
 ## How We Built the List
 
   * **Community Nominations** : Top suggestions from Sioux Falls residents & Local Legends.
-  * **Verified Reviews** : Only businesses with consistent 4.5⭐+ ratings on Google, Facebook, Yelp.
+  * **Verified Reviews** : Only businesses with consistent 4.5+ ratings on Google, Facebook, Yelp.
   * **Local Presence** : Each significant ZIP code represented—ensuring neighborhood coverage.
   * **Collaboration & Vibe**: We checked each company’s community engagement, responsiveness, and presence.
 

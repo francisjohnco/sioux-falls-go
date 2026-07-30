@@ -61,9 +61,7 @@ Every choice supports local jobs, families, and dreams. When you support these b
 
 ## Join the movement
 
-We’re giving away **gift cards, prizes, and exclusive deals** from top local businesses in Sioux Falls! 🎉
-
-Join **Local Legend VIP** and be the first to know about our next big giveaway. **It’s 100% free—no strings attached!**
+We’re giving away **gift cards, prizes, and exclusive deals** from top local businesses in Sioux Falls! Join **Local Legend VIP** and be the first to know about our next big giveaway. **It’s 100% free—no strings attached!**
 
 _**Giveaways starting soon**_
 

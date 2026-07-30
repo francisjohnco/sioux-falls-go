@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import LayeredHero from '../../components/LayeredHero.astro';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   const businesses = await getCollection('businesses');
@@ -64,13 +65,13 @@ const schema = {
           </a>
           <div>
             <div class="hero-badges">
-              {isVerified && <span class="badge badge--verified">✓ Verified</span>}
-              <span class="badge badge--champion-solid">★ Community Champion</span>
+              {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
+              <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>
             </div>
             <h1>{business.data.name}</h1>
             <div class="hero-meta">
               {business.data.googleRating && (
-                <span class="rating-pill">★ {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews) <span class="live-tag">LIVE</span></span>
+                <span class="rating-pill"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews) <span class="live-tag">LIVE</span></span>
               )}
               <span>{category.data.name}</span>
             </div>
@@ -142,7 +143,7 @@ const schema = {
   ) : (
     <>
       <LayeredHero
-        eyebrow={`${category.data.icon} ${category.data.name}`}
+        eyebrow={category.data.name}
         title={business.data.name}
         photoUrl={business.data.heroImage}
         compact
@@ -151,18 +152,18 @@ const schema = {
           <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
         </nav>
         <div class="hero-badges">
-          {isVerified && <span class="badge badge--verified">✓ Verified</span>}
+          {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
           {business.data.partnershipTier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
-          {business.data.googleRating && <span class="hero-rating-pill">★ {business.data.googleRating.toFixed(1)}</span>}
+          {business.data.googleRating && <span class="hero-rating-pill"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)}</span>}
         </div>
       </LayeredHero>
 
       <div class="container page">
         <div class="quick-actions-bar">
-          {business.data.phone && <a href={`tel:${business.data.phone}`} class="quick-action-btn">📞 Call</a>}
-          {business.data.website && <a href={business.data.website} target="_blank" rel="nofollow noopener" class="quick-action-btn">🌐 Website</a>}
-          {business.data.address && <a href={`https://maps.google.com/?q=${encodeURIComponent(business.data.address)}`} target="_blank" rel="noopener" class="quick-action-btn">📍 Directions</a>}
-          <button class="quick-action-btn quick-action-btn--ghost" onclick="navigator.share ? navigator.share({title: document.title, url: location.href}) : navigator.clipboard.writeText(location.href)">↗ Share</button>
+          {business.data.phone && <a href={`tel:${business.data.phone}`} class="quick-action-btn"><Icon name="phone" size={16} /> Call</a>}
+          {business.data.website && <a href={business.data.website} target="_blank" rel="nofollow noopener" class="quick-action-btn"><Icon name="globe" size={16} /> Website</a>}
+          {business.data.address && <a href={`https://maps.google.com/?q=${encodeURIComponent(business.data.address)}`} target="_blank" rel="noopener" class="quick-action-btn"><Icon name="pin" size={16} /> Directions</a>}
+          <button class="quick-action-btn quick-action-btn--ghost" onclick="navigator.share ? navigator.share({title: document.title, url: location.href}) : navigator.clipboard.writeText(location.href)"><Icon name="share" size={16} /> Share</button>
         </div>
 
         <div class="simple-layout">
@@ -174,23 +175,23 @@ const schema = {
             <div class="card contact-card">
               <h3>Contact &amp; Info</h3>
               <dl>
-                {business.data.address && <><dt>📍 Address</dt><dd>{business.data.address}</dd></>}
+                {business.data.address && <><dt><Icon name="pin" size={13} /> Address</dt><dd>{business.data.address}</dd></>}
                 {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
-                {business.data.phone && <><dt>📞 Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
+                {business.data.phone && <><dt><Icon name="phone" size={13} /> Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
                 {business.data.hours
-                  ? <><dt>🕐 Hours</dt><dd>{business.data.hours}</dd></>
-                  : <><dt>🕐 Hours</dt><dd class="data-pending">Not listed yet</dd></>}
-                {business.data.website && <><dt>🌐 Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
+                  ? <><dt><Icon name="clock" size={13} /> Hours</dt><dd>{business.data.hours}</dd></>
+                  : <><dt><Icon name="clock" size={13} /> Hours</dt><dd class="data-pending">Not listed yet</dd></>}
+                {business.data.website && <><dt><Icon name="globe" size={13} /> Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site →</a></dd></>}
               </dl>
             </div>
 
             <div class="card trust-card">
               <h3>Why we recommend them</h3>
               <ul class="trust-list">
-                <li>✓ Locally owned &amp; operated</li>
-                {business.data.googleRating && <li>✓ {business.data.googleRating.toFixed(1)}+ rating on Google</li>}
-                {isVerified && <li>✓ Info confirmed by our team</li>}
-                {business.data.partnershipTier === 'community-listing' && <li>✓ Committed to giving back to Sioux Falls</li>}
+                <li><Icon name="check" size={14} /> Locally owned &amp; operated</li>
+                {business.data.googleRating && <li><Icon name="check" size={14} /> {business.data.googleRating.toFixed(1)}+ rating on Google</li>}
+                {isVerified && <li><Icon name="check" size={14} /> Info confirmed by our team</li>}
+                {business.data.partnershipTier === 'community-listing' && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
               </ul>
             </div>
           </aside>
@@ -263,7 +264,7 @@ const schema = {
 
   .contact-card { box-shadow: 0 2px 8px rgba(27,42,74,0.06); }
   .contact-card dl { margin: 0; }
-  .contact-card dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
+  .contact-card dt { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
   .contact-card dt:first-child { margin-top: 0; }
   .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
   .data-pending { font-weight: 400; font-style: italic; color: var(--color-navy-light); }
@@ -309,7 +310,7 @@ const schema = {
   .simple-side { display: flex; flex-direction: column; gap: var(--space-2); }
   .contact-card h3, .trust-card h3 { font-size: 1rem; margin-bottom: var(--space-2); }
   .contact-card dl { margin: 0; }
-  .contact-card dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
+  .contact-card dt { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
   .contact-card dt:first-child { margin-top: 0; }
   .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
   .trust-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -318,6 +319,11 @@ const schema = {
     background: rgba(255,255,255,0.15); color: #fff; font-weight: 700; font-size: 0.8125rem;
     padding: 0.2rem 0.7rem; border-radius: var(--radius-pill);
   }
+
+  .badge--verified, .badge--champion-solid { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .rating-pill, .hero-rating-pill { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .trust-list li { display: flex; align-items: center; gap: 0.4rem; }
+  .filled-star { fill: currentColor; }
 </style>
 
 <script>

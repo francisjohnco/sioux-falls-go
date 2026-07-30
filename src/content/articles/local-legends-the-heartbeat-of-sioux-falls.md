@@ -73,9 +73,7 @@ There’s no cost. No membership card. Just a commitment to choose local first �
 
 ## **Join the movement**
 
-We’re giving away **gift cards, prizes, and exclusive deals** from top local businesses in Sioux Falls! 🎉
-
-Join **Local Legend VIP** and be the first to know about our next big giveaway. **It’s 100% free—no strings attached!**
+We’re giving away **gift cards, prizes, and exclusive deals** from top local businesses in Sioux Falls! Join **Local Legend VIP** and be the first to know about our next big giveaway. **It’s 100% free—no strings attached!**
 
 _**Giveaways starting soon**_
 

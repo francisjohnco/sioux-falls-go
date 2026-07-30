@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import BusinessCard from '../components/BusinessCard.astro';
+import Icon from '../components/Icon.astro';
 
 const businesses = (await getCollection('businesses')).slice(0, 4);
 const articles = (await getCollection('articles')).slice(0, 3);
@@ -53,17 +54,17 @@ const schema = {
       <p class="section-sub">Supporting Local Made Fun &amp; Rewarding</p>
       <div class="locals-grid">
         <div class="locals-item">
-          <h3>🎁 Enter Giveaways</h3>
+          <h3><Icon name="gift" size={20} /> Enter Giveaways</h3>
           <p>Enter to win free prizes from top-rated businesses in Sioux Falls — no strings attached.</p>
           <a href="/spotlight-giveaway">Check our giveaways →</a>
         </div>
         <div class="locals-item">
-          <h3>🔍 Explore Directory</h3>
+          <h3><Icon name="search" size={20} /> Explore Directory</h3>
           <p>Discover community-first businesses across every category in Sioux Falls.</p>
           <a href="/businesses">Browse the directory →</a>
         </div>
         <div class="locals-item">
-          <h3>⭐ Become a Local Legend</h3>
+          <h3><Icon name="star" size={20} /> Become a Local Legend</h3>
           <p>Join free to access exclusive and limited-time deals from trusted local businesses.</p>
           <a href="#legend">Join the community →</a>
         </div>
@@ -111,7 +112,8 @@ const schema = {
 
   .locals-section { background: var(--color-surface); margin-inline: calc(-1 * var(--space-3)); padding: var(--space-5) var(--space-3); border-radius: var(--radius); }
   .locals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .locals-item h3 { font-size: 1.125rem; }
+  .locals-item h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; }
+  .locals-item h3 :global(svg) { color: var(--color-orange-dark); flex-shrink: 0; }
   .locals-item p { color: var(--color-navy-light); font-size: 0.9375rem; }
 
   .legend-cta {

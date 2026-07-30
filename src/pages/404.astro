@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
 
 const categories = (await getCollection('categories')).slice(0, 6);
 ---
@@ -30,7 +31,7 @@ const categories = (await getCollection('categories')).slice(0, 6);
     <div class="grid">
       {categories.map((cat) => (
         <a class="category-card" href={`/${cat.data.slug}`}>
-          <span class="category-icon">{cat.data.icon}</span>
+          <Icon name={cat.data.icon} size={24} class="category-icon" />
           <strong>{cat.data.name}</strong>
         </a>
       ))}
@@ -51,6 +52,6 @@ const categories = (await getCollection('categories')).slice(0, 6);
     padding: var(--space-2); text-decoration: none;
   }
   .category-card:hover { border-color: var(--color-orange); }
-  .category-icon { font-size: 1.5rem; }
+  .category-icon { color: var(--color-orange-dark); }
   .category-card strong { font-size: 0.9375rem; color: var(--color-navy); }
 </style>

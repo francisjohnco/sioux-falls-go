@@ -121,6 +121,6 @@ Our curation process is built on transparency, reputation, and local trust:
   * ZIP Code Representation to cover the whole Sioux Falls area
   * Business Integrity & Responsiveness in community service and customer care
 
-**❤️ Why These Lists Matter**
+**️ Why These Lists Matter**
 
 This isn’t just about top rankings — it’s about community trust. Supporting these local businesses means reinvesting in Sioux Falls and ensuring that our neighborhoods remain strong, connected, and thriving.

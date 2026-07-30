@@ -7,5 +7,9 @@ export default defineConfig({
   // TODO: set the real production domain before launch — sitemap, canonical
   // URLs, and OG tags in BaseLayout.astro all depend on this being correct.
   site: 'https://siouxfallsgo.com',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/admin') && !page.includes('/login'),
+    }),
+  ],
 });

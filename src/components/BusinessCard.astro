@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { getEntry } from 'astro:content';
+import Icon from './Icon.astro';
 
 interface Props {
   business: CollectionEntry<'businesses'>;
@@ -32,26 +33,26 @@ const excerpt = makeExcerpt(business.body ?? '');
           <polygon points="0,160 0,120 110,105 220,130 300,110 300,160" fill="#ffffff" opacity="0.08" />
         </svg>
       )}
-      {!business.data.heroImage && <span class="media-icon">{category.data.icon}</span>}
+      {!business.data.heroImage && <Icon name={category.data.icon} size={32} class="media-icon" />}
     </div>
   </a>
   <div class="biz-card-body">
-    <span class="biz-category-tag">{category.data.icon} {category.data.name}</span>
+    <span class="biz-category-tag"><Icon name={category.data.icon} size={14} /> {category.data.name}</span>
     <a href={`/businesses/${business.id}`} class="biz-card-name-link">
       <h3>
         {business.data.name}
-        {business.data.verifiedAt && <span class="verified-check" title="Verified by Sioux Falls Go">✓</span>}
+        {business.data.verifiedAt && <span class="verified-check" title="Verified by Sioux Falls Go"><Icon name="check" size={11} /></span>}
       </h3>
     </a>
-    {tier === 'community-champion' && <span class="badge badge--champion-solid">★ Community Champion</span>}
+    {tier === 'community-champion' && <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>}
     {tier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
     {business.data.googleRating && (
-      <p class="biz-rating">★ {business.data.googleRating.toFixed(1)} <span class="biz-rating-count">{business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</span></p>
+      <p class="biz-rating"><Icon name="star" size={13} class="rating-star" /> {business.data.googleRating.toFixed(1)} <span class="biz-rating-count">{business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</span></p>
     )}
     {excerpt && <p class="biz-excerpt">{excerpt}</p>}
     <div class="biz-card-footer">
       <a href={`/businesses/${business.id}`} class="read-more-link">Read more →</a>
-      {business.data.phone && <a href={`tel:${business.data.phone}`} class="call-link">📞 Call</a>}
+      {business.data.phone && <a href={`tel:${business.data.phone}`} class="call-link"><Icon name="phone" size={13} /> Call</a>}
     </div>
   </div>
 </div>
@@ -73,12 +74,12 @@ const excerpt = makeExcerpt(business.body ?? '');
   .biz-card--compact .biz-card-media { height: 7rem; }
   .media-pattern { position: absolute; inset: 0; width: 100%; height: 100%; }
   .media-icon {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 2.5rem; opacity: 0.9; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: #fff; opacity: 0.9; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
   }
 
   .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); flex: 1; display: flex; flex-direction: column; }
-  .biz-category-tag { font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.02em; }
+  .biz-category-tag { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.02em; }
   .biz-card-name-link { text-decoration: none; }
   .biz-card h3 { margin: 0.35rem 0 0; font-size: 1.125rem; color: var(--color-navy); display: flex; align-items: center; gap: 0.4rem; }
   .verified-check {
@@ -86,9 +87,11 @@ const excerpt = makeExcerpt(business.body ?? '');
     width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--color-success);
     color: #fff; font-size: 0.625rem; font-weight: 700; flex-shrink: 0;
   }
-  .badge--champion-solid { background: var(--color-orange); color: #fff; display: inline-block; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
+  .badge--champion-solid { background: var(--color-orange); color: #fff; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
+  .badge--champion-solid .icon { fill: currentColor; }
   .badge--giveback { background: #E7F6ED; color: var(--color-success); display: inline-block; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
-  .biz-rating { margin: 0.4rem 0 0; font-size: 0.875rem; color: var(--color-navy); font-weight: 700; }
+  .biz-rating { display: flex; align-items: center; gap: 0.3rem; margin: 0.4rem 0 0; font-size: 0.875rem; color: var(--color-navy); font-weight: 700; }
+  .rating-star { fill: #F5B429; color: #F5B429; }
   .biz-rating-count { color: var(--color-navy-light); font-weight: 400; }
   .biz-excerpt { margin: 0.5rem 0 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.55; flex: 1; }
 
@@ -98,6 +101,6 @@ const excerpt = makeExcerpt(business.body ?? '');
   }
   .read-more-link { font-size: 0.9375rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
   .read-more-link:hover { text-decoration: underline; }
-  .call-link { font-size: 0.8125rem; color: var(--color-navy-light); text-decoration: none; font-weight: 600; }
+  .call-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: var(--color-navy-light); text-decoration: none; font-weight: 600; }
   .call-link:hover { color: var(--color-navy); }
 </style>

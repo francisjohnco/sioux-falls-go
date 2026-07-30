@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -44,19 +45,19 @@ const schema = {
       <h2>What Champions get, and why it matters to you</h2>
       <div class="benefit-grid">
         <div class="card">
-          <h3>📰 Spotlights &amp; Press Releases</h3>
+          <h3><Icon name="newspaper" size={20} /> Spotlights &amp; Press Releases</h3>
           <p>We write and publish real features about Champion businesses — not paid ads, actual stories about what makes them worth recommending.</p>
         </div>
         <div class="card">
-          <h3>⭐ Live Google Reviews</h3>
+          <h3><Icon name="star" size={20} /> Live Google Reviews</h3>
           <p>Their rating and recent reviews stay current automatically, so you're seeing what customers are saying right now.</p>
         </div>
         <div class="card">
-          <h3>🎁 Bigger Community Investment</h3>
+          <h3><Icon name="gift" size={20} /> Bigger Community Investment</h3>
           <p>Champions fund larger giveaways and community initiatives beyond the standard two-per-year commitment every listed business makes.</p>
         </div>
         <div class="card">
-          <h3>📖 Sponsor Local Guides</h3>
+          <h3><Icon name="book" size={20} /> Sponsor Local Guides</h3>
           <p>Champions can sponsor guides across the site — a clearly-labeled banner on the article, linking back to their profile, supporting the free local content every resident reads.</p>
         </div>
       </div>
@@ -88,7 +89,8 @@ const schema = {
   .contour-divider { height: 1px; background: var(--color-line); margin-block: var(--space-4); }
 
   .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .benefit-grid h3 { font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .benefit-grid h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .benefit-grid h3 :global(svg) { color: var(--color-orange-dark); flex-shrink: 0; }
   .benefit-grid p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
 
   .cta-section { text-align: center; background: var(--color-surface); border-radius: var(--radius); padding: var(--space-4); }

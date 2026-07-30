@@ -5,6 +5,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import BusinessCard from '../../components/BusinessCard.astro';
 import LayeredHero from '../../components/LayeredHero.astro';
+import Icon from '../../components/Icon.astro';
 
 const businesses = await getCollection('businesses');
 const categories = await getCollection('categories');
@@ -65,7 +66,7 @@ const schema = {
   <div class="container category-pills-row">
     {popularCategories.slice(0, 6).map(({ cat }) => (
       <a href={`/${cat.data.slug}`} class="category-pill">
-        <span class="category-pill-icon">{cat.data.icon}</span>
+        <span class="category-pill-icon"><Icon name={cat.data.icon} size={22} /></span>
         <span>{cat.data.name}</span>
       </a>
     ))}
@@ -73,9 +74,9 @@ const schema = {
 
   <div class="container page">
     <div class="hero-trust-row hero-trust-row--static">
-      <span>✓ 4.8+ rating required</span>
-      <span>✓ Real local businesses only</span>
-      <span>✓ No pay-to-rank listings</span>
+      <span><Icon name="check" size={13} /> 4.8+ rating required</span>
+      <span><Icon name="check" size={13} /> Real local businesses only</span>
+      <span><Icon name="check" size={13} /> No pay-to-rank listings</span>
     </div>
 
     {giveBack.length > 0 && (
@@ -84,7 +85,7 @@ const schema = {
         <section aria-labelledby="giveback-heading" class="giveback-list-section">
           <div class="section-header-row">
             <div>
-              <span class="eyebrow">🤝 Give Back Partners</span>
+              <span class="eyebrow"><Icon name="handshake" size={13} /> Give Back Partners</span>
               <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
             </div>
             <a href="/businesses?tier=community-listing" class="see-all-link">See all →</a>
@@ -95,13 +96,13 @@ const schema = {
               return (
                 <a href={`/businesses/${business.id}`} class="giveback-row">
                   <div class="giveback-thumb" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
-                    {!business.data.heroImage && <span>{cat.data.icon}</span>}
+                    {!business.data.heroImage && <Icon name={cat.data.icon} size={20} class="giveback-thumb-icon" />}
                   </div>
                   <div class="giveback-info">
                     <strong>{business.data.name}</strong>
                     <span class="giveback-meta">{cat.data.name}</span>
                   </div>
-                  {business.data.googleRating && <span class="giveback-rating">★ {business.data.googleRating.toFixed(1)}</span>}
+                  {business.data.googleRating && <span class="giveback-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)}</span>}
                 </a>
               );
             })}
@@ -135,7 +136,7 @@ const schema = {
           </select>
           <select id="filter-tier" aria-label="Filter by partnership tier">
             <option value="">All Businesses</option>
-            <option value="community-champion">★ Champions Only</option>
+            <option value="community-champion">Champions Only</option>
             <option value="community-listing">Give Back Partners</option>
           </select>
         </div>
@@ -198,7 +199,7 @@ const schema = {
   .category-pill:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(240,126,35,0.22); }
   .category-pill-icon {
     width: 2.75rem; height: 2.75rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; background: linear-gradient(135deg, #fff3e8, #ffe4cc);
+    color: var(--color-orange-dark); background: linear-gradient(135deg, #fff3e8, #ffe4cc);
   }
   .category-pill span:last-child { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-align: center; }
 
@@ -219,7 +220,7 @@ const schema = {
   .giveback-row:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(13,23,48,0.1); border-color: transparent; }
   .giveback-thumb {
     width: 3.25rem; height: 3.25rem; border-radius: var(--radius); flex-shrink: 0; background-size: cover; background-position: center;
-    background-color: var(--color-navy); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+    background-color: var(--color-navy); display: flex; align-items: center; justify-content: center; color: #fff;
   }
   .giveback-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   .giveback-info strong { font-size: 0.9375rem; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -322,6 +323,11 @@ const schema = {
     .featured-card--large { grid-column: span 2; grid-row: span 1; }
     .featured-card--large .featured-media { min-height: 10rem; }
   }
+
+  .hero-trust-row span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .giveback-list .eyebrow { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .giveback-rating { display: inline-flex; align-items: center; gap: 0.3rem; }
+  .filled-star { fill: currentColor; }
 </style>
 
 <script>

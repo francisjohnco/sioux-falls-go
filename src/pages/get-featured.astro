@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -75,19 +76,19 @@ const benefits = [
       <h2>To be eligible, your business must be:</h2>
       <div class="qualify-grid">
         <div class="qualify-item card">
-          <h3>📍 Locally Owned</h3>
+          <h3><Icon name="pin" size={20} /> Locally Owned</h3>
           <p>Serving the Sioux Falls area. Online-only businesses aren't eligible.</p>
         </div>
         <div class="qualify-item card">
-          <h3>⭐ Highly Rated</h3>
+          <h3><Icon name="star" size={20} /> Highly Rated</h3>
           <p>An active Google Business Profile at <strong>4.8 stars or higher</strong> — a real qualification, not a suggestion.</p>
         </div>
         <div class="qualify-item card">
-          <h3>🤝 Willing to Give Back</h3>
+          <h3><Icon name="handshake" size={20} /> Willing to Give Back</h3>
           <p>Open to participating in up to two community giveaways a year, when it fits both sides.</p>
         </div>
         <div class="qualify-item card">
-          <h3>✅ Ready for New Customers</h3>
+          <h3><Icon name="check" size={20} /> Ready for New Customers</h3>
           <p>Actively open and able to take on more clients right now.</p>
         </div>
       </div>
@@ -167,7 +168,8 @@ const benefits = [
   .benefit-row p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; max-width: 60ch; }
 
   .qualify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .qualify-item h3 { font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .qualify-item h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.0625rem; margin-bottom: 0.4rem; }
+  .qualify-item h3 :global(svg) { color: var(--color-orange-dark); flex-shrink: 0; }
   .qualify-item p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
 
   .contour-divider { height: 1px; background: var(--color-line); margin-block: var(--space-5); }

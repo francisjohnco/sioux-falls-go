@@ -7,6 +7,7 @@ interface Props {
   canonicalPath: string; // e.g. "/things-to-do/falls-park"
   ogImage?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[]; // JSON-LD, single object or multiple
+  noindex?: boolean; // for private pages like /admin, /login — keeps them out of Google entirely
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   canonicalPath,
   ogImage = '/images/og-default.jpg',
   schema,
+  noindex = false,
 } = Astro.props;
 
 const site = 'https://siouxfallsgo.com'; // placeholder — set real prod domain before launch
@@ -28,6 +30,7 @@ const canonicalURL = new URL(canonicalPath, site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | Sioux Falls Go</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalURL} />
 
     <meta property="og:type" content="website" />

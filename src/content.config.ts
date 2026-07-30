@@ -40,7 +40,7 @@ const categories = defineCollection({
       description: z.string(),
     }),
     heroImage: z.string().optional(), // real photo, once available — falls back to a CSS-layered design
-    icon: z.string().default('📍'), // simple emoji icon for category highlight cards
+    icon: z.string().default('pin'), // semantic icon name, rendered via the Icon component — no emoji
   }),
 });
 

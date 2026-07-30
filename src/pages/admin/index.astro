@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
 ---
 <BaseLayout
   title="Admin — Sioux Falls Go"
   description="Internal admin dashboard."
   canonicalPath="/admin"
+  noindex
 >
   <div class="admin-shell">
     <!-- Desktop sidebar / mobile top bar -->
@@ -16,16 +18,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <aside class="admin-sidebar">
       <nav>
         <button class="nav-item is-active" data-tab="dashboard">
-          <span class="nav-icon">⌂</span> Dashboard
+          <span class="nav-icon"><Icon name="dashboard" size={18} /></span> Dashboard
         </button>
         <button class="nav-item" data-tab="content-engine">
-          <span class="nav-icon">✎</span> Content Engine
+          <span class="nav-icon"><Icon name="edit" size={18} /></span> Content Engine
         </button>
         <button class="nav-item" data-tab="directory">
-          <span class="nav-icon">▤</span> Directory
+          <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
         </button>
         <button class="nav-item" data-tab="giveaways">
-          <span class="nav-icon">🎁</span> Giveaways
+          <span class="nav-icon"><Icon name="gift" size={18} /></span> Giveaways
         </button>
       </nav>
     </aside>
@@ -127,10 +129,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                   <option>Service Business — Founder Story</option>
                   <option>Restaurant — Local Favorite</option>
                   <option>Retail — Product Spotlight</option>
-                  <option>★ Business Spotlight / Press Release (Champion tier)</option>
+                  <option>Business Spotlight / Press Release (Champion tier)</option>
                 </select>
               </label>
-              <button class="button" id="generate-btn">✨ Generate Draft</button>
+              <button class="button" id="generate-btn"><Icon name="sparkles" size={16} /> Generate Draft</button>
             </div>
             <p class="spotlight-note">Spotlight/press-release drafts publish as articles and automatically appear under "Latest from [Business]" on that business's profile — Champion tier only.</p>
             <p class="engine-error" id="engine-error" hidden></p>
@@ -178,7 +180,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <div class="biz-row">
             <span class="biz-name">SAJMedia Marketing</span>
             <span>Marketing Agencies</span>
-            <span><span class="badge badge--champion">★ Champion</span></span>
+            <span><span class="badge badge--champion"><Icon name="star" size={11} /> Champion</span></span>
             <span class="status status--live">Live</span>
           </div>
           <div class="biz-row">
@@ -236,16 +238,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <!-- Mobile bottom nav -->
     <nav class="admin-bottomnav">
       <button class="bottomnav-item is-active" data-tab="dashboard">
-        <span>⌂</span> Home
+        <span><Icon name="dashboard" size={20} /></span> Home
       </button>
       <button class="bottomnav-item" data-tab="content-engine">
-        <span>✎</span> Content
+        <span><Icon name="edit" size={20} /></span> Content
       </button>
       <button class="bottomnav-item" data-tab="directory">
-        <span>▤</span> Directory
+        <span><Icon name="folder" size={20} /></span> Directory
       </button>
       <button class="bottomnav-item" data-tab="giveaways">
-        <span>🎁</span> Giveaways
+        <span><Icon name="gift" size={20} /></span> Giveaways
       </button>
     </nav>
   </div>
@@ -569,7 +571,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       errorEl.textContent = `Generation failed: ${err.message}`;
       errorEl.removeAttribute('hidden');
     } finally {
-      if (genBtn) { genBtn.disabled = false; genBtn.textContent = '✨ Generate Draft'; }
+      if (genBtn) { genBtn.disabled = false; genBtn.innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg> Generate Draft'; }
     }
   }
 

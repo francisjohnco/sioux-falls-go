@@ -77,7 +77,7 @@ Choosing a local handyman isn’t just about repairs—it’s about investing in
 
 Ready to be rewarded for shopping local? Join our Local Legends VIP for exclusive perks, giveaways, and a voice in which businesses get featured next.
 
-**👥 Contact Emails for Featured Businesses**
+**Contact Emails for Featured Businesses**
 
   * Borrowed Husband Handyman Services: Not publicly listed
   * The Sioux Falls Handyman: thesiouxfallshandyman@gmail.com

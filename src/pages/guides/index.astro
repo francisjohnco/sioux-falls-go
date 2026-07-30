@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import LayeredHero from '../../components/LayeredHero.astro';
+import Icon from '../../components/Icon.astro';
 
 const allArticles = await getCollection('articles');
 
@@ -64,7 +65,7 @@ const schema = {
           {serviceWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
               <div class="loop-card-media">
-                <span class="loop-card-icon">{category.data.icon}</span>
+                <Icon name={category.data.icon} size={28} class="loop-card-icon" />
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category.data.name}</span>
@@ -87,7 +88,7 @@ const schema = {
             {localsWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
                 <div class="loop-card-media">
-                  <span class="loop-card-icon">{category.data.icon}</span>
+                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -112,7 +113,7 @@ const schema = {
             {visitorWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
                 <div class="loop-card-media">
-                  <span class="loop-card-icon">{category.data.icon}</span>
+                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -137,7 +138,7 @@ const schema = {
             {businessWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
                 <div class="loop-card-media">
-                  <span class="loop-card-icon">{category.data.icon}</span>
+                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -173,7 +174,7 @@ const schema = {
     height: 5.5rem; display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
   }
-  .loop-card-icon { font-size: 1.75rem; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .loop-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
   .loop-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
   .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }

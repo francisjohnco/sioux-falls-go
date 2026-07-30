@@ -67,7 +67,7 @@ Why We Love It: Friendly professionals and clear pricing set them apart.
 Our selections are based on:
 
   * **Community nominations:** Trusted by locals and business owners alike
-  * **Recent reviews:** Only plumbers with 4.7★+ on Google, Facebook, Yelp
+  * **Recent reviews:** Only plumbers with 4.7+ on Google, Facebook, Yelp
   * **ZIP representation:** Covering key Sioux Falls areas
   * **Vibe & collaboration:** Active in community events and business partnerships
 
