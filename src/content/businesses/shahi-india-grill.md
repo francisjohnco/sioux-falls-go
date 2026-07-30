@@ -3,6 +3,7 @@ name: "Shahi India Grill"
 category: "restaurants-dining"
 verifiedAt: 2026-07-29
 claimed: false
+heroImage: "/images/businesses/shahi-india-grill.jpeg"
 address: "2527 S Shirley Ave, Sioux Falls, South Dakota 57106"
 phone: "605 361 5050"
 latitude: 43.522416

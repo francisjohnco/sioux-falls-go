@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -39,20 +39,39 @@ const schema = {
 
   <LayeredHero
     eyebrow="Invite-Only Directory"
-    title="Find a business Sioux Falls actually trusts"
+    title="Discover trusted local businesses in Sioux Falls"
     subtitle={`${businesses.length} businesses, personally vetted for a 4.8+ Google rating and real community involvement — not the highest bidder.`}
+    photoUrl="/images/scenic/falls-park-2.jpg"
   >
     <div class="hero-search">
-      <input type="search" id="hero-search-input" placeholder="Search businesses or categories..." aria-label="Search businesses" />
+      <input type="search" id="hero-search-input" placeholder="Search businesses, services, or categories..." aria-label="Search businesses" />
+      <button class="hero-search-btn" aria-label="Search">🔍</button>
     </div>
-    <div class="hero-trust-row">
+    <p class="hero-popular-searches">
+      Popular: {popularCategories.slice(0, 4).map((c, i) => (
+        <>
+          <a href={`/${c.cat.data.slug}`}>{c.cat.data.name}</a>{i < 3 ? ' · ' : ''}
+        </>
+      ))}
+    </p>
+  </LayeredHero>
+
+  <div class="container category-pills-row">
+    {popularCategories.slice(0, 6).map(({ cat }) => (
+      <a href={`/${cat.data.slug}`} class="category-pill">
+        <span class="category-pill-icon">{cat.data.icon}</span>
+        <span>{cat.data.name}</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="container page">
+    <div class="hero-trust-row hero-trust-row--static">
       <span>✓ 4.8+ rating required</span>
       <span>✓ Real local businesses only</span>
       <span>✓ No pay-to-rank listings</span>
     </div>
-  </LayeredHero>
 
-  <div class="container page">
     {champions.length > 0 && (
       <section aria-labelledby="champions-heading" class="featured-section">
         <span class="eyebrow">★ Community Champions</span>
@@ -79,11 +98,30 @@ const schema = {
     {giveBack.length > 0 && (
       <>
         <div class="contour-rule" role="presentation"></div>
-        <section aria-labelledby="giveback-heading">
-          <span class="eyebrow">🤝 Give Back Partners</span>
-          <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
-          <div class="grid">
-            {giveBack.slice(0, 4).map((business) => <BusinessCard business={business} />)}
+        <section aria-labelledby="giveback-heading" class="giveback-list-section">
+          <div class="section-header-row">
+            <div>
+              <span class="eyebrow">🤝 Give Back Partners</span>
+              <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
+            </div>
+            <a href="/businesses?tier=community-listing" class="see-all-link">See all →</a>
+          </div>
+          <div class="giveback-list">
+            {giveBack.slice(0, 5).map(async (business) => {
+              const cat = await getEntry(business.data.category);
+              return (
+                <a href={`/businesses/${business.id}`} class="giveback-row">
+                  <div class="giveback-thumb" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
+                    {!business.data.heroImage && <span>{cat.data.icon}</span>}
+                  </div>
+                  <div class="giveback-info">
+                    <strong>{business.data.name}</strong>
+                    <span class="giveback-meta">{cat.data.name}</span>
+                  </div>
+                  {business.data.googleRating && <span class="giveback-rating">★ {business.data.googleRating.toFixed(1)}</span>}
+                </a>
+              );
+            })}
           </div>
         </section>
       </>
@@ -196,13 +234,65 @@ const schema = {
 </BaseLayout>
 
 <style>
-  .hero-search { max-width: 26rem; margin-top: var(--space-3); }
+  .hero-search { max-width: 32rem; margin-top: var(--space-3); display: flex; gap: 0.5rem; }
   .hero-search input {
-    width: 100%; padding: 0.9rem 1.2rem; border-radius: var(--radius-pill); border: none;
+    flex: 1; padding: 0.95rem 1.3rem; border-radius: var(--radius-pill); border: none;
     font-size: 0.9375rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   }
-  .hero-trust-row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2); }
-  .hero-trust-row span { font-size: 0.8125rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .hero-search-btn {
+    width: 3.2rem; height: 3.2rem; border-radius: 50%; border: none; flex-shrink: 0;
+    background: var(--color-orange); color: #fff; font-size: 1.1rem; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(240,126,35,0.4);
+  }
+  .hero-popular-searches { margin-top: var(--space-2); font-size: 0.8125rem; color: rgba(255,255,255,0.85); }
+  .hero-popular-searches a { color: #fff; font-weight: 700; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); }
+
+  .category-pills-row {
+    display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;
+    margin-top: -2.75rem; position: relative; z-index: 2; padding-bottom: var(--space-2);
+  }
+  .category-pill {
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    background: #fff; border-radius: var(--radius); padding: var(--space-2) var(--space-2);
+    text-decoration: none; min-width: 6.5rem;
+    box-shadow: 0 8px 20px rgba(13,23,48,0.15);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease;
+  }
+  .category-pill:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(240,126,35,0.22); }
+  .category-pill-icon {
+    width: 2.75rem; height: 2.75rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; background: linear-gradient(135deg, #fff3e8, #ffe4cc);
+  }
+  .category-pill span:last-child { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-align: center; }
+
+  .hero-trust-row--static { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; padding-block: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-3); font-size: 0.8125rem; font-weight: 600; }
+  .hero-trust-row--static span { color: var(--color-navy-light); }
+
+  .section-header-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-2); }
+  .see-all-link { font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; white-space: nowrap; }
+  .see-all-link:hover { text-decoration: underline; }
+
+  .giveback-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-3); }
+  .giveback-row {
+    display: flex; align-items: center; gap: var(--space-2); text-decoration: none;
+    background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-1) var(--space-2);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .giveback-row:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(13,23,48,0.1); border-color: transparent; }
+  .giveback-thumb {
+    width: 3.25rem; height: 3.25rem; border-radius: var(--radius); flex-shrink: 0; background-size: cover; background-position: center;
+    background-color: var(--color-navy); display: flex; align-items: center; justify-content: center; font-size: 1.25rem;
+  }
+  .giveback-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .giveback-info strong { font-size: 0.9375rem; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .giveback-meta { font-size: 0.8125rem; color: var(--color-navy-light); }
+  .giveback-rating { font-weight: 700; color: var(--color-navy); font-size: 0.875rem; white-space: nowrap; }
+
+  @media (max-width: 40rem) {
+    .category-pills-row { margin-top: -1.5rem; }
+    .category-pill { min-width: 5rem; padding: var(--space-1); }
+  }
 
   .page { padding-block: var(--space-4) var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }

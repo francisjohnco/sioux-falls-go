@@ -3,6 +3,7 @@ name: "SAJMedia Marketing"
 category: "marketing-agencies"
 verifiedAt: 2026-07-29
 claimed: true
+heroImage: "/images/businesses/sajmedia-marketing.png"
 partnershipTier: "community-champion"
 pullQuote: "It's not about doing more for the sake of it, but about doing the right things that actually move your business forward."
 sourceUrl: "https://siouxfallsgo.com/places/sajmedia-marketing/"

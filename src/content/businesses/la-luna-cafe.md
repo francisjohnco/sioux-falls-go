@@ -3,6 +3,7 @@ name: "La Luna Caf\u00e9"
 category: "coffee-shops"
 verifiedAt: 2026-07-29
 claimed: false
+heroImage: "/images/businesses/la-luna-cafe.jpg"
 sourceUrl: "https://siouxfallsgo.com/places/la-luna-cafe/"
 address: "701 North Phillips Avenue Suite 125, Sioux Falls, South Dakota 57104"
 phone: "(605) 275-6700"
