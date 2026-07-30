@@ -9,12 +9,14 @@ import LayeredHero from '../../components/LayeredHero.astro';
 const businesses = await getCollection('businesses');
 const categories = await getCollection('categories');
 const champions = businesses.filter((b) => b.data.partnershipTier === 'community-champion');
+const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing');
+
+const newlyVerified = [...businesses]
+  .sort((a, b) => b.data.verifiedAt.getTime() - a.data.verifiedAt.getTime())
+  .slice(0, 4);
 
 const categoryCounts = categories
-  .map((cat) => ({
-    cat,
-    count: businesses.filter((b) => b.data.category.id === cat.id).length,
-  }))
+  .map((cat) => ({ cat, count: businesses.filter((b) => b.data.category.id === cat.id).length }))
   .filter((c) => c.count > 0)
   .sort((a, b) => b.count - a.count);
 
@@ -36,12 +38,17 @@ const schema = {
   <SiteHeader slot="header" />
 
   <LayeredHero
-    eyebrow="Directory"
+    eyebrow="Invite-Only Directory"
     title="Find a business Sioux Falls actually trusts"
-    subtitle={`${businesses.length} verified businesses, recommended by the community — not the highest bidder.`}
+    subtitle={`${businesses.length} businesses, personally vetted for a 4.8+ Google rating and real community involvement — not the highest bidder.`}
   >
     <div class="hero-search">
       <input type="search" id="hero-search-input" placeholder="Search businesses or categories..." aria-label="Search businesses" />
+    </div>
+    <div class="hero-trust-row">
+      <span>✓ 4.8+ rating required</span>
+      <span>✓ Real local businesses only</span>
+      <span>✓ No pay-to-rank listings</span>
     </div>
   </LayeredHero>
 
@@ -68,6 +75,29 @@ const schema = {
         </div>
       </section>
     )}
+
+    {giveBack.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section aria-labelledby="giveback-heading">
+          <span class="eyebrow">🤝 Give Back Partners</span>
+          <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
+          <div class="grid">
+            {giveBack.slice(0, 4).map((business) => <BusinessCard business={business} />)}
+          </div>
+        </section>
+      </>
+    )}
+
+    <div class="contour-rule" role="presentation"></div>
+
+    <section aria-labelledby="new-heading">
+      <span class="eyebrow">🆕 Newly Verified</span>
+      <h2 id="new-heading">Recently confirmed by our team</h2>
+      <div class="grid">
+        {newlyVerified.map((business) => <BusinessCard business={business} compact />)}
+      </div>
+    </section>
 
     <div class="contour-rule" role="presentation"></div>
 
@@ -121,16 +151,36 @@ const schema = {
     <div class="contour-rule" role="presentation"></div>
 
     <section aria-labelledby="all-biz-heading">
-      <span class="eyebrow">Every Business</span>
-      <h2 id="all-biz-heading">All {businesses.length} businesses</h2>
+      <div class="all-biz-header">
+        <div>
+          <span class="eyebrow">Every Business</span>
+          <h2 id="all-biz-heading">All {businesses.length} businesses</h2>
+        </div>
+        <div class="filter-bar" role="group" aria-label="Filter businesses">
+          <select id="filter-category" aria-label="Filter by category">
+            <option value="">All Categories</option>
+            {categoryCounts.map(({ cat }) => <option value={cat.id}>{cat.data.name}</option>)}
+          </select>
+          <select id="filter-tier" aria-label="Filter by partnership tier">
+            <option value="">All Businesses</option>
+            <option value="community-champion">★ Champions Only</option>
+            <option value="community-listing">Give Back Partners</option>
+          </select>
+        </div>
+      </div>
       <div class="grid" id="business-grid">
         {businesses.map((business) => (
-          <div class="business-grid-item" data-search={`${business.data.name} ${business.data.category.id}`.toLowerCase()}>
+          <div
+            class="business-grid-item"
+            data-search={`${business.data.name} ${business.data.category.id}`.toLowerCase()}
+            data-category={business.data.category.id}
+            data-tier={business.data.partnershipTier || ''}
+          >
             <BusinessCard business={business} />
           </div>
         ))}
       </div>
-      <p id="no-results" class="empty-note" hidden>No businesses match your search.</p>
+      <p id="no-results" class="empty-note" hidden>No businesses match your filters.</p>
     </section>
 
     <div class="claim-cta card">
@@ -151,11 +201,12 @@ const schema = {
     width: 100%; padding: 0.9rem 1.2rem; border-radius: var(--radius-pill); border: none;
     font-size: 0.9375rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   }
+  .hero-trust-row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2); }
+  .hero-trust-row span { font-size: 0.8125rem; color: rgba(255,255,255,0.85); font-weight: 600; }
 
   .page { padding-block: var(--space-4) var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
 
-  /* Featured Champions bento */
   .featured-section { margin-bottom: var(--space-2); }
   .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin-top: var(--space-3); }
   .featured-card {
@@ -183,9 +234,8 @@ const schema = {
   }
   .featured-body strong { color: #fff; font-size: 0.9375rem; }
   .featured-card--large .featured-body strong { font-size: 1.25rem; }
-  .featured-rating { color: var(--color-prairie, #F5B429); font-weight: 700; font-size: 0.8125rem; white-space: nowrap; }
+  .featured-rating { color: #F5B429; font-weight: 700; font-size: 0.8125rem; white-space: nowrap; }
 
-  /* Popular categories */
   .category-highlight-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: var(--space-2);
     margin-top: var(--space-3);
@@ -223,6 +273,13 @@ const schema = {
   .how-step h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.4rem; }
   .how-step p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
 
+  .all-biz-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-2); }
+  .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .filter-bar select {
+    padding: 0.5rem 0.75rem; border-radius: var(--radius-pill); border: 1.5px solid var(--color-line);
+    font-size: 0.875rem; background: #fff; color: var(--color-navy);
+  }
+
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
 
@@ -241,18 +298,31 @@ const schema = {
 </style>
 
 <script>
-  const input = document.getElementById('hero-search-input') as HTMLInputElement;
+  const searchInput = document.getElementById('hero-search-input') as HTMLInputElement;
+  const categoryFilter = document.getElementById('filter-category') as HTMLSelectElement;
+  const tierFilter = document.getElementById('filter-tier') as HTMLSelectElement;
   const items = Array.from(document.querySelectorAll('.business-grid-item'));
   const noResults = document.getElementById('no-results')!;
 
-  input?.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
+  function applyFilters() {
+    const q = searchInput?.value.trim().toLowerCase() || '';
+    const cat = categoryFilter?.value || '';
+    const tier = tierFilter?.value || '';
     let visibleCount = 0;
+
     items.forEach((item) => {
-      const match = !q || (item as HTMLElement).dataset.search?.includes(q);
-      (item as HTMLElement).style.display = match ? '' : 'none';
+      const el = item as HTMLElement;
+      const matchesSearch = !q || el.dataset.search?.includes(q);
+      const matchesCategory = !cat || el.dataset.category === cat;
+      const matchesTier = !tier || el.dataset.tier === tier;
+      const match = matchesSearch && matchesCategory && matchesTier;
+      el.style.display = match ? '' : 'none';
       if (match) visibleCount++;
     });
     noResults.hidden = visibleCount > 0;
-  });
+  }
+
+  searchInput?.addEventListener('input', applyFilters);
+  categoryFilter?.addEventListener('change', applyFilters);
+  tierFilter?.addEventListener('change', applyFilters);
 </script>
