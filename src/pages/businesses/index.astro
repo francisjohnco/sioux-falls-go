@@ -8,9 +8,8 @@ import LayeredHero from '../../components/LayeredHero.astro';
 
 const businesses = await getCollection('businesses');
 const categories = await getCollection('categories');
+const champions = businesses.filter((b) => b.data.partnershipTier === 'community-champion');
 
-// Popular categories = the ones with real businesses, ranked by count —
-// no more dumping all 25 categories flat in front of every visitor.
 const categoryCounts = categories
   .map((cat) => ({
     cat,
@@ -47,13 +46,38 @@ const schema = {
   </LayeredHero>
 
   <div class="container page">
+    {champions.length > 0 && (
+      <section aria-labelledby="champions-heading" class="featured-section">
+        <span class="eyebrow">★ Community Champions</span>
+        <h2 id="champions-heading">Businesses that give back</h2>
+        <div class="featured-grid">
+          {champions.map((business, i) => (
+            <a href={`/businesses/${business.id}`} class={`featured-card ${i === 0 ? 'featured-card--large' : ''}`}>
+              <div class="featured-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
+                <svg class="media-pattern" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                  <polygon points="0,220 0,120 130,80 260,130 400,70 400,220" fill="#fff" opacity="0.07" />
+                </svg>
+                <span class="featured-badge">★ Champion</span>
+              </div>
+              <div class="featured-body">
+                <strong>{business.data.name}</strong>
+                {business.data.googleRating && <span class="featured-rating">★ {business.data.googleRating.toFixed(1)}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="contour-rule" role="presentation"></div>
+
     <section aria-labelledby="popular-heading" class="popular-section">
       <span class="eyebrow">Browse by Category</span>
       <h2 id="popular-heading">Popular categories</h2>
       <div class="category-highlight-grid">
         {popularCategories.map(({ cat, count }) => (
           <a href={`/${cat.data.slug}`} class="category-highlight-card">
-            <span class="category-icon">{cat.data.icon}</span>
+            <span class="category-icon-badge">{cat.data.icon}</span>
             <strong>{cat.data.name}</strong>
             <span class="category-count">{count} business{count === 1 ? '' : 'es'}</span>
           </a>
@@ -124,26 +148,61 @@ const schema = {
 <style>
   .hero-search { max-width: 26rem; margin-top: var(--space-3); }
   .hero-search input {
-    width: 100%; padding: 0.85rem 1.1rem; border-radius: var(--radius-pill); border: none;
-    font-size: 0.9375rem; box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    width: 100%; padding: 0.9rem 1.2rem; border-radius: var(--radius-pill); border: none;
+    font-size: 0.9375rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
   }
 
   .page { padding-block: var(--space-4) var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
 
+  /* Featured Champions bento */
+  .featured-section { margin-bottom: var(--space-2); }
+  .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin-top: var(--space-3); }
+  .featured-card {
+    position: relative; display: block; text-decoration: none; border-radius: var(--radius); overflow: hidden;
+    grid-column: span 1; box-shadow: 0 1px 3px rgba(13,23,48,0.08);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease;
+  }
+  .featured-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.18); }
+  .featured-card--large { grid-column: span 2; grid-row: span 2; }
+  .featured-media {
+    position: relative; height: 8rem; background-size: cover; background-position: center;
+    background: linear-gradient(135deg, #16233d, #2c3f61 60%, #F07E23 140%);
+  }
+  .featured-card--large .featured-media { height: 100%; min-height: 17rem; }
+  .media-pattern { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .featured-badge {
+    position: absolute; top: 0.6rem; left: 0.6rem;
+    background: var(--color-orange); color: #fff; font-size: 0.6875rem; font-weight: 700;
+    padding: 0.25rem 0.7rem; border-radius: var(--radius-pill);
+  }
+  .featured-body {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-2);
+    background: linear-gradient(0deg, rgba(13,23,48,0.85), transparent);
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 0.5rem;
+  }
+  .featured-body strong { color: #fff; font-size: 0.9375rem; }
+  .featured-card--large .featured-body strong { font-size: 1.25rem; }
+  .featured-rating { color: var(--color-prairie, #F5B429); font-weight: 700; font-size: 0.8125rem; white-space: nowrap; }
+
+  /* Popular categories */
   .category-highlight-grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: var(--space-2);
     margin-top: var(--space-3);
   }
   .category-highlight-card {
-    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.35rem;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem;
     background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-2) var(--space-1); text-decoration: none;
-    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    padding: var(--space-3) var(--space-1); text-decoration: none;
+    box-shadow: 0 1px 2px rgba(13,23,48,0.05);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
   }
-  .category-highlight-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
-  .category-icon { font-size: 1.75rem; }
+  .category-highlight-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(240,126,35,0.18); border-color: transparent; }
+  .category-icon-badge {
+    display: flex; align-items: center; justify-content: center;
+    width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.5rem;
+    background: linear-gradient(135deg, #fff3e8, #ffe4cc);
+  }
   .category-highlight-card strong { font-size: 0.9375rem; color: var(--color-navy); }
   .category-count { font-size: 0.75rem; color: var(--color-navy-light); }
 
@@ -173,6 +232,12 @@ const schema = {
   }
   .claim-cta h3, .claim-cta p { color: #fff; margin: 0; }
   .claim-cta p { margin-top: 0.25rem; }
+
+  @media (max-width: 45rem) {
+    .featured-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-card--large { grid-column: span 2; grid-row: span 1; }
+    .featured-card--large .featured-media { min-height: 10rem; }
+  }
 </style>
 
 <script>

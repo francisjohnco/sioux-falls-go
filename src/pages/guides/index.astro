@@ -63,9 +63,14 @@ const schema = {
         <div class="loop-grid">
           {serviceWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
-              <span class="loop-tag">{category.data.name}</span>
-              <h3>{article.data.title}</h3>
-              <p>{article.data.seo.description}</p>
+              <div class="loop-card-media">
+                <span class="loop-card-icon">{category.data.icon}</span>
+              </div>
+              <div class="loop-card-body">
+                <span class="loop-tag">{category.data.name}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </div>
             </a>
           ))}
         </div>
@@ -81,9 +86,14 @@ const schema = {
           <div class="loop-grid">
             {localsWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <span class="loop-tag">{category.data.name}</span>
-                <h3>{article.data.title}</h3>
-                <p>{article.data.seo.description}</p>
+                <div class="loop-card-media">
+                  <span class="loop-card-icon">{category.data.icon}</span>
+                </div>
+                <div class="loop-card-body">
+                  <span class="loop-tag">{category.data.name}</span>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.seo.description}</p>
+                </div>
               </a>
             ))}
           </div>
@@ -101,9 +111,14 @@ const schema = {
           <div class="loop-grid">
             {visitorWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <span class="loop-tag">{category.data.name}</span>
-                <h3>{article.data.title}</h3>
-                <p>{article.data.seo.description}</p>
+                <div class="loop-card-media">
+                  <span class="loop-card-icon">{category.data.icon}</span>
+                </div>
+                <div class="loop-card-body">
+                  <span class="loop-tag">{category.data.name}</span>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.seo.description}</p>
+                </div>
               </a>
             ))}
           </div>
@@ -121,9 +136,14 @@ const schema = {
           <div class="loop-grid">
             {businessWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <span class="loop-tag">{category.data.name}</span>
-                <h3>{article.data.title}</h3>
-                <p>{article.data.seo.description}</p>
+                <div class="loop-card-media">
+                  <span class="loop-card-icon">{category.data.icon}</span>
+                </div>
+                <div class="loop-card-body">
+                  <span class="loop-tag">{category.data.name}</span>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.seo.description}</p>
+                </div>
               </a>
             ))}
           </div>
@@ -144,11 +164,17 @@ const schema = {
   .loop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .loop-card {
     display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-2); text-decoration: none;
-    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    text-decoration: none; overflow: hidden;
+    box-shadow: 0 1px 2px rgba(13,23,48,0.06);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
   }
-  .loop-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .loop-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.16); border-color: transparent; }
+  .loop-card-media {
+    height: 5.5rem; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
+  }
+  .loop-card-icon { font-size: 1.75rem; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .loop-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
   .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .loop-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
