@@ -108,7 +108,7 @@ const schema = {
           <span class="eyebrow">From the Knowledge Base</span>
           <h2 id="guides-heading">Helpful guides for {category.data.name.toLowerCase()}</h2>
           <div class="grid">
-            {articles.map((article) => (
+            {articles.slice(0, 3).map((article) => (
               <a class="guide-card" href={`/guides/${article.id}`}>
                 <span class="guide-tag">{article.data.contentType.replace('-', ' ')}</span>
                 <h3>{article.data.title}</h3>

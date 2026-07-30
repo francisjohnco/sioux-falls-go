@@ -10,7 +10,7 @@ const { business, compact = false } = Astro.props;
 const category = await getEntry(business.data.category);
 const tier = business.data.partnershipTier;
 
-function makeExcerpt(markdown: string, maxLen = 110): string {
+function makeExcerpt(markdown: string, maxLen = 130): string {
   const plain = markdown
     .replace(/^#{1,6}\s+.*/gm, '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
@@ -24,7 +24,7 @@ function makeExcerpt(markdown: string, maxLen = 110): string {
 const excerpt = makeExcerpt(business.body ?? '');
 ---
 <div class={`biz-card ${compact ? 'biz-card--compact' : ''}`}>
-  <a href={`/businesses/${business.id}`} class="biz-card-link">
+  <a href={`/businesses/${business.id}`} class="biz-card-photo-link">
     <div class="biz-card-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage}); background-size: cover; background-position: center;` : undefined}>
       {!business.data.heroImage && (
         <svg class="media-pattern" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -32,39 +32,27 @@ const excerpt = makeExcerpt(business.body ?? '');
           <polygon points="0,160 0,120 110,105 220,130 300,110 300,160" fill="#ffffff" opacity="0.08" />
         </svg>
       )}
-      <span class="media-icon">{category.data.icon}</span>
-      <button class="favorite-btn" aria-label="Save to favorites" onclick="event.preventDefault(); event.stopPropagation();">♡</button>
-      {tier === 'community-champion' ? (
-        <span class="ribbon ribbon--champion">★ Community Champion</span>
-      ) : tier === 'community-listing' ? (
-        <span class="ribbon ribbon--giveback">Give Back Partner</span>
-      ) : (
-        <span class="ribbon">{category.data.name}</span>
-      )}
-    </div>
-    <div class="biz-card-body">
-      <div class="biz-card-title-row">
-        <h3>{business.data.name}</h3>
-        {business.data.verifiedAt && <span class="verified-check" title="Verified by Sioux Falls Go">✓</span>}
-      </div>
-      <p class="biz-category-line">{category.data.icon} {category.data.name}</p>
-      {business.data.googleRating && (
-        <p class="biz-rating">★ {business.data.googleRating.toFixed(1)} <span class="biz-rating-count">{business.data.googleReviewCount && `(${business.data.googleReviewCount} reviews)`}</span></p>
-      )}
-      {excerpt && <p class="biz-excerpt">{excerpt}</p>}
-      {business.data.hours
-        ? <p class="biz-hours">🕐 {business.data.hours}</p>
-        : <p class="biz-hours biz-hours--pending">Hours coming soon</p>}
+      {!business.data.heroImage && <span class="media-icon">{category.data.icon}</span>}
     </div>
   </a>
-  <div class="biz-card-actions">
-    {business.data.phone && (
-      <a href={`tel:${business.data.phone}`} class="quick-action" onclick="event.stopPropagation();">📞 Call</a>
+  <div class="biz-card-body">
+    <span class="biz-category-tag">{category.data.icon} {category.data.name}</span>
+    <a href={`/businesses/${business.id}`} class="biz-card-name-link">
+      <h3>
+        {business.data.name}
+        {business.data.verifiedAt && <span class="verified-check" title="Verified by Sioux Falls Go">✓</span>}
+      </h3>
+    </a>
+    {tier === 'community-champion' && <span class="badge badge--champion-solid">★ Community Champion</span>}
+    {tier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+    {business.data.googleRating && (
+      <p class="biz-rating">★ {business.data.googleRating.toFixed(1)} <span class="biz-rating-count">{business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</span></p>
     )}
-    {business.data.website && (
-      <a href={business.data.website} target="_blank" rel="nofollow noopener" class="quick-action" onclick="event.stopPropagation();">🌐 Website</a>
-    )}
-    <a href={`/businesses/${business.id}`} class="quick-action quick-action--primary">Read more →</a>
+    {excerpt && <p class="biz-excerpt">{excerpt}</p>}
+    <div class="biz-card-footer">
+      <a href={`/businesses/${business.id}`} class="read-more-link">Read more →</a>
+      {business.data.phone && <a href={`tel:${business.data.phone}`} class="call-link">📞 Call</a>}
+    </div>
   </div>
 </div>
 
@@ -76,64 +64,40 @@ const excerpt = makeExcerpt(business.body ?? '');
     transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .biz-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.16); border-color: transparent; }
-  .biz-card-link { text-decoration: none; color: inherit; display: block; }
+  .biz-card-photo-link { display: block; }
 
   .biz-card-media {
-    position: relative; height: 8.5rem; overflow: hidden;
+    position: relative; height: 10.5rem; overflow: hidden;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 55%, #1B2A4A 100%);
   }
-  .biz-card--compact .biz-card-media { height: 6rem; }
+  .biz-card--compact .biz-card-media { height: 7rem; }
   .media-pattern { position: absolute; inset: 0; width: 100%; height: 100%; }
   .media-icon {
     position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    font-size: 2.25rem; opacity: 0.9; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    font-size: 2.5rem; opacity: 0.9; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
   }
-  .favorite-btn {
-    position: absolute; top: 0.6rem; right: 0.6rem; z-index: 2;
-    width: 2.1rem; height: 2.1rem; border-radius: 50%;
-    background: rgba(255,255,255,0.92); border: none;
-    font-size: 1.1rem; line-height: 1; color: var(--color-orange);
-    cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    transition: transform 0.15s ease;
-  }
-  .favorite-btn:hover { transform: scale(1.1); }
-  .ribbon {
-    position: absolute; bottom: 0.6rem; left: 0.6rem; z-index: 2;
-    background: var(--color-orange); color: #fff;
-    font-size: 0.6875rem; font-weight: 700;
-    padding: 0.25rem 0.7rem; border-radius: var(--radius-pill);
-    box-shadow: 0 2px 6px rgba(240,126,35,0.35);
-  }
-  .ribbon--champion { background: linear-gradient(135deg, var(--color-orange), #F5B429); }
-  .ribbon--giveback { background: var(--color-success); box-shadow: 0 2px 6px rgba(46,158,91,0.35); }
 
-  .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-1); flex: 1; }
-  .biz-card-title-row { display: flex; align-items: center; gap: 0.4rem; }
-  .biz-card h3 { margin: 0; font-size: 1.0625rem; }
+  .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); flex: 1; display: flex; flex-direction: column; }
+  .biz-category-tag { font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.02em; }
+  .biz-card-name-link { text-decoration: none; }
+  .biz-card h3 { margin: 0.35rem 0 0; font-size: 1.125rem; color: var(--color-navy); display: flex; align-items: center; gap: 0.4rem; }
   .verified-check {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--color-success);
-    color: #fff; font-size: 0.6875rem; font-weight: 700; flex-shrink: 0;
+    width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--color-success);
+    color: #fff; font-size: 0.625rem; font-weight: 700; flex-shrink: 0;
   }
-  .biz-category-line { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .badge--champion-solid { background: var(--color-orange); color: #fff; display: inline-block; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
+  .badge--giveback { background: #E7F6ED; color: var(--color-success); display: inline-block; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
   .biz-rating { margin: 0.4rem 0 0; font-size: 0.875rem; color: var(--color-navy); font-weight: 700; }
   .biz-rating-count { color: var(--color-navy-light); font-weight: 400; }
-  .biz-excerpt { margin: 0.5rem 0 0; font-size: 0.875rem; color: var(--color-ink); line-height: 1.5; }
-  .biz-hours { margin: 0.5rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
-  .biz-hours--pending { font-style: italic; opacity: 0.7; }
+  .biz-excerpt { margin: 0.5rem 0 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.55; flex: 1; }
 
-  .biz-card-actions {
-    display: flex; gap: 0.5rem; padding: var(--space-2) var(--space-3) var(--space-3);
-    border-top: 1px solid var(--color-line); margin-top: var(--space-1);
+  .biz-card-footer {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+    margin-top: var(--space-2); padding-top: var(--space-1); border-top: 1px solid var(--color-line);
   }
-  .quick-action {
-    flex: 1; text-align: center; text-decoration: none; font-size: 0.8125rem; font-weight: 700;
-    padding: 0.5rem 0.5rem; border-radius: var(--radius-pill);
-    background: var(--color-surface); color: var(--color-navy);
-    border: 1px solid var(--color-line);
-    transition: background 0.15s ease, border-color 0.15s ease;
-  }
-  .quick-action:hover { border-color: var(--color-orange); color: var(--color-orange-dark); }
-  .quick-action--primary { background: var(--color-navy); color: #fff; border-color: var(--color-navy); }
-  .quick-action--primary:hover { background: var(--color-orange); border-color: var(--color-orange); color: #fff; }
+  .read-more-link { font-size: 0.9375rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
+  .read-more-link:hover { text-decoration: underline; }
+  .call-link { font-size: 0.8125rem; color: var(--color-navy-light); text-decoration: none; font-weight: 600; }
+  .call-link:hover { color: var(--color-navy); }
 </style>
