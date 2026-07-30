@@ -1,0 +1,155 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import LayeredHero from '../../components/LayeredHero.astro';
+
+const allArticles = await getCollection('articles');
+
+// Real category groupings, matching how the original site segmented "The Loop"
+const LOCALS_CATEGORIES = ['consumer-guide', 'for-locals', 'community-spotlight', 'local-spotlights'];
+const VISITOR_CATEGORIES = ['explore-sioux-falls'];
+const BUSINESS_CATEGORIES = ['for-local-businesses', 'grow-with-sfg', 'marketing-tips-insights'];
+
+function sortByDateDesc(articles: typeof allArticles) {
+  return [...articles].sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+}
+
+const localsArticles = sortByDateDesc(allArticles.filter((a) => LOCALS_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
+const visitorArticles = sortByDateDesc(allArticles.filter((a) => VISITOR_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
+const businessArticles = sortByDateDesc(allArticles.filter((a) => BUSINESS_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
+
+// Everything else — the real service-category guides (Electricians, Plumbers, etc.)
+// gets its own "Service Guides" section, since that's the bulk of real content now
+// and didn't really exist as a "Loop" concept on the old site.
+const segmentedIds = new Set(
+  [...LOCALS_CATEGORIES, ...VISITOR_CATEGORIES, ...BUSINESS_CATEGORIES]
+);
+const serviceGuides = sortByDateDesc(allArticles.filter((a) => !segmentedIds.has(a.data.category.id))).slice(0, 8);
+
+async function withCategory(articles: typeof allArticles) {
+  return Promise.all(
+    articles.map(async (a) => ({ article: a, category: await getEntry(a.data.category) }))
+  );
+}
+
+const localsWithCat = await withCategory(localsArticles);
+const visitorWithCat = await withCategory(visitorArticles);
+const businessWithCat = await withCategory(businessArticles);
+const serviceWithCat = await withCategory(serviceGuides);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'The Loop — Sioux Falls Go',
+};
+---
+<BaseLayout
+  title="The Loop"
+  description="Stay in The Loop — stories, business highlights, local guides, and community gems from Sioux Falls Go."
+  canonicalPath="/guides"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero eyebrow="The Loop" title="Stay in The Loop" subtitle="Stories, local guides, community gems, and local wins — for the people who live here and the people just visiting." />
+
+  <div class="container page">
+    {serviceWithCat.length > 0 && (
+      <section aria-labelledby="service-heading" class="loop-section">
+        <span class="eyebrow">Local Guides</span>
+        <h2 id="service-heading">Guides for homeowners</h2>
+        <div class="loop-grid">
+          {serviceWithCat.map(({ article, category }) => (
+            <a class="loop-card" href={`/guides/${article.id}`}>
+              <span class="loop-tag">{category.data.name}</span>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.seo.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {localsWithCat.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section aria-labelledby="locals-heading" class="loop-section">
+          <span class="eyebrow">Locals</span>
+          <h2 id="locals-heading">Discover local gems</h2>
+          <div class="loop-grid">
+            {localsWithCat.map(({ article, category }) => (
+              <a class="loop-card" href={`/guides/${article.id}`}>
+                <span class="loop-tag">{category.data.name}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+
+    {visitorWithCat.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section aria-labelledby="visitors-heading" class="loop-section">
+          <span class="eyebrow">Visitors</span>
+          <h2 id="visitors-heading">Explore Sioux Falls</h2>
+          <p class="section-sub">Maximize your visit — explore, experience, and discover Sioux Falls.</p>
+          <div class="loop-grid">
+            {visitorWithCat.map(({ article, category }) => (
+              <a class="loop-card" href={`/guides/${article.id}`}>
+                <span class="loop-tag">{category.data.name}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+
+    {businessWithCat.length > 0 && (
+      <>
+        <div class="contour-rule" role="presentation"></div>
+        <section aria-labelledby="business-heading" class="loop-section">
+          <span class="eyebrow">For Business Owners</span>
+          <h2 id="business-heading">Grow your business</h2>
+          <p class="section-sub">Tactics, marketing tools, and strategies from Sioux Falls Go.</p>
+          <div class="loop-grid">
+            {businessWithCat.map(({ article, category }) => (
+              <a class="loop-card" href={`/guides/${article.id}`}>
+                <span class="loop-tag">{category.data.name}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+      </>
+    )}
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
+  .loop-section { padding-block: var(--space-2); }
+  .section-sub { color: var(--color-navy-light); margin-top: -0.3rem; }
+
+  .loop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .loop-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2); text-decoration: none;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .loop-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
+  .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
+  .loop-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+</style>
