@@ -21,7 +21,6 @@ const categoryCounts = categories
   .sort((a, b) => b.count - a.count);
 
 const popularCategories = categoryCounts.slice(0, 8);
-const remainingCategories = categoryCounts.slice(8);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -42,6 +41,7 @@ const schema = {
     title="Discover trusted local businesses in Sioux Falls"
     subtitle={`${businesses.length} businesses, personally vetted for a 4.8+ Google rating and real community involvement — not the highest bidder.`}
     photoUrl="/images/scenic/falls-park-2.jpg"
+    centered
   >
     <div class="hero-search">
       <input type="search" id="hero-search-input" placeholder="Search businesses, services, or categories..." aria-label="Search businesses" />
@@ -71,29 +71,6 @@ const schema = {
       <span>✓ Real local businesses only</span>
       <span>✓ No pay-to-rank listings</span>
     </div>
-
-    {champions.length > 0 && (
-      <section aria-labelledby="champions-heading" class="featured-section">
-        <span class="eyebrow">★ Community Champions</span>
-        <h2 id="champions-heading">Businesses that give back</h2>
-        <div class="featured-grid">
-          {champions.map((business, i) => (
-            <a href={`/businesses/${business.id}`} class={`featured-card ${i === 0 ? 'featured-card--large' : ''}`}>
-              <div class="featured-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
-                <svg class="media-pattern" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                  <polygon points="0,220 0,120 130,80 260,130 400,70 400,220" fill="#fff" opacity="0.07" />
-                </svg>
-                <span class="featured-badge">★ Champion</span>
-              </div>
-              <div class="featured-body">
-                <strong>{business.data.name}</strong>
-                {business.data.googleRating && <span class="featured-rating">★ {business.data.googleRating.toFixed(1)}</span>}
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
 
     {giveBack.length > 0 && (
       <>
@@ -133,56 +110,7 @@ const schema = {
       <span class="eyebrow">🆕 Newly Verified</span>
       <h2 id="new-heading">Recently confirmed by our team</h2>
       <div class="grid">
-        {newlyVerified.map((business) => <BusinessCard business={business} compact />)}
-      </div>
-    </section>
-
-    <div class="contour-rule" role="presentation"></div>
-
-    <section aria-labelledby="popular-heading" class="popular-section">
-      <span class="eyebrow">Browse by Category</span>
-      <h2 id="popular-heading">Popular categories</h2>
-      <div class="category-highlight-grid">
-        {popularCategories.map(({ cat, count }) => (
-          <a href={`/${cat.data.slug}`} class="category-highlight-card">
-            <span class="category-icon-badge">{cat.data.icon}</span>
-            <strong>{cat.data.name}</strong>
-            <span class="category-count">{count} business{count === 1 ? '' : 'es'}</span>
-          </a>
-        ))}
-      </div>
-      {remainingCategories.length > 0 && (
-        <details class="more-categories">
-          <summary>Browse all {categoryCounts.length} categories →</summary>
-          <div class="more-categories-list">
-            {remainingCategories.map(({ cat, count }) => (
-              <a href={`/${cat.data.slug}`}>{cat.data.icon} {cat.data.name} ({count})</a>
-            ))}
-          </div>
-        </details>
-      )}
-    </section>
-
-    <div class="contour-rule" role="presentation"></div>
-
-    <section aria-labelledby="how-heading" class="how-section">
-      <h2 id="how-heading">How Sioux Falls Go works</h2>
-      <div class="how-grid">
-        <div class="how-step">
-          <span class="how-number">01</span>
-          <h3>Browse a category</h3>
-          <p>Find the kind of business you need — every one already vetted for real local reputation.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-number">02</span>
-          <h3>Compare with confidence</h3>
-          <p>Real ratings, real hours, real local guides — not a paid listing pretending to be a recommendation.</p>
-        </div>
-        <div class="how-step">
-          <span class="how-number">03</span>
-          <h3>Contact directly</h3>
-          <p>No middleman, no lead-gen markup — you reach the business the same way a neighbor would.</p>
-        </div>
+        {newlyVerified.slice(0, 3).map((business) => <BusinessCard business={business} compact />)}
       </div>
     </section>
 
