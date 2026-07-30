@@ -39,6 +39,8 @@ const categories = defineCollection({
       title: z.string(),
       description: z.string(),
     }),
+    heroImage: z.string().optional(), // real photo, once available — falls back to a CSS-layered design
+    icon: z.string().default('📍'), // simple emoji icon for category highlight cards
   }),
 });
 

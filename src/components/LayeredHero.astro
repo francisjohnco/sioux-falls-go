@@ -1,0 +1,56 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  photoUrl?: string;
+  compact?: boolean; // smaller version for category pages vs. the full directory hub
+}
+const { eyebrow, title, subtitle, photoUrl, compact = false } = Astro.props;
+---
+<section class={`layered-hero ${compact ? 'layered-hero--compact' : ''}`}>
+  {photoUrl ? (
+    <div class="hero-photo" style={`background-image: url(${photoUrl});`}></div>
+  ) : (
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none" class="hero-svg">
+        <!-- Layered "terraces" evoking Falls Park's quartzite ledges and the river below -->
+        <polygon points="0,400 0,180 300,120 650,200 1000,110 1200,160 1200,400" fill="#16233d" opacity="0.5" />
+        <polygon points="0,400 0,240 400,190 750,250 1200,190 1200,400" fill="#1B2A4A" opacity="0.7" />
+        <polygon points="0,400 0,300 350,270 800,310 1200,270 1200,400" fill="#22314f" opacity="0.9" />
+        <path d="M0,400 Q150,340 300,360 T600,350 T900,365 T1200,350 L1200,400 Z" fill="#F07E23" opacity="0.18" />
+      </svg>
+    </div>
+  )}
+  <div class="hero-overlay"></div>
+  <div class="container hero-inner">
+    <span class="eyebrow">{eyebrow}</span>
+    <h1>{title}</h1>
+    {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .layered-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #101c33 0%, #1B2A4A 60%, #22314f 100%);
+    padding-block: var(--space-6) var(--space-5);
+    min-height: 22rem; display: flex; align-items: flex-end;
+  }
+  .layered-hero--compact { min-height: 14rem; padding-block: var(--space-4) var(--space-3); }
+
+  .hero-art { position: absolute; inset: 0; }
+  .hero-svg { width: 100%; height: 100%; }
+  .hero-photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(16,28,51,0.25) 0%, rgba(16,28,51,0.75) 100%);
+  }
+
+  .hero-inner { position: relative; z-index: 1; color: #fff; }
+  .layered-hero .eyebrow { color: var(--color-orange); }
+  .layered-hero h1 { color: #fff; margin-block: 0.3rem 0.5rem; }
+  .layered-hero--compact h1 { font-size: var(--step-2); }
+  .hero-subtitle { max-width: 44ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; margin: 0; }
+</style>

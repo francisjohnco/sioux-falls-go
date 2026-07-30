@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import BusinessCard from '../components/BusinessCard.astro';
+import LayeredHero from '../components/LayeredHero.astro';
 
 export async function getStaticPaths() {
   const categories = await getCollection('categories');
@@ -17,6 +18,8 @@ const { category } = Astro.props;
 
 const allBusinesses = await getCollection('businesses');
 const businesses = allBusinesses.filter((b) => b.data.category.id === category.id);
+const champions = businesses.filter((b) => b.data.partnershipTier === 'community-champion');
+const others = businesses.filter((b) => b.data.partnershipTier !== 'community-champion');
 
 const allArticles = await getCollection('articles');
 const articles = allArticles.filter((a) => a.data.category.id === category.id);
@@ -43,16 +46,37 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  <div class="container page">
-    <span class="eyebrow">Category</span>
-    <h1>{category.data.name}</h1>
-    <p class="page-sub">{category.data.seo.description}</p>
-
+  <LayeredHero
+    eyebrow={`${category.data.icon} Category`}
+    title={category.data.name}
+    subtitle={category.data.seo.description}
+    photoUrl={category.data.heroImage}
+    compact
+  >
+    <nav class="hero-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/businesses">Directory</a> / <span>{category.data.name}</span>
+    </nav>
     {businesses.length > 0 && (
-      <section aria-labelledby="biz-heading">
-        <h2 id="biz-heading">Businesses</h2>
+      <p class="hero-stats">{businesses.length} business{businesses.length === 1 ? '' : 'es'} · {articles.length} local guide{articles.length === 1 ? '' : 's'}</p>
+    )}
+  </LayeredHero>
+
+  <div class="container page">
+    {champions.length > 0 && (
+      <section aria-labelledby="champions-heading" class="champions-section">
+        <span class="eyebrow">★ Community Champions</span>
+        <h2 id="champions-heading">Top-rated {category.data.name.toLowerCase()} in Sioux Falls</h2>
         <div class="grid">
-          {businesses.map((business) => <BusinessCard business={business} />)}
+          {champions.map((business) => <BusinessCard business={business} />)}
+        </div>
+      </section>
+    )}
+
+    {others.length > 0 && (
+      <section aria-labelledby="biz-heading">
+        <h2 id="biz-heading">{champions.length > 0 ? 'More businesses' : `${category.data.name} businesses`}</h2>
+        <div class="grid">
+          {others.map((business) => <BusinessCard business={business} />)}
         </div>
       </section>
     )}
@@ -61,10 +85,12 @@ const schema = {
       <>
         <div class="contour-rule" role="presentation"></div>
         <section aria-labelledby="guides-heading">
-          <h2 id="guides-heading">Guides &amp; resources</h2>
+          <span class="eyebrow">From the Knowledge Base</span>
+          <h2 id="guides-heading">Helpful guides for {category.data.name.toLowerCase()}</h2>
           <div class="grid">
             {articles.map((article) => (
-              <a class="card" href={`/guides/${article.id}`}>
+              <a class="guide-card" href={`/guides/${article.id}`}>
+                <span class="guide-tag">{article.data.contentType.replace('-', ' ')}</span>
                 <h3>{article.data.title}</h3>
                 <p>{article.data.seo.description}</p>
               </a>
@@ -92,10 +118,10 @@ const schema = {
     )}
 
     {businesses.length === 0 && articles.length === 0 && renderedFaqs.length === 0 && (
-      <p class="empty-state">
-        This category is set up but doesn't have content yet — add businesses,
-        articles, or FAQs referencing <code>{category.data.slug}</code> and they'll appear here automatically.
-      </p>
+      <div class="empty-state">
+        <p>This category is set up but doesn't have content yet.</p>
+        <a class="button" href="/get-featured">Know a great {category.data.name.toLowerCase()} business? Suggest them →</a>
+      </div>
     )}
   </div>
 
@@ -103,23 +129,40 @@ const schema = {
 </BaseLayout>
 
 <style>
+  .hero-breadcrumbs { font-size: 0.8125rem; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+  .hero-breadcrumbs a { color: rgba(255,255,255,0.7); }
+  .hero-breadcrumbs a:hover { color: #fff; }
+  .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+
   .page { padding-block: var(--space-4) var(--space-6); }
-  .page-sub { max-width: 42ch; color: var(--color-river-light); }
+  .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
+
+  .champions-section { margin-bottom: var(--space-5); }
+
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     gap: var(--space-3);
     margin-top: var(--space-3);
   }
-  .faq-list { margin-top: var(--space-3); display: flex; flex-direction: column; gap: 0.5rem; }
-  .faq-item {
-    background: var(--color-frost);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius);
-    padding: var(--space-2);
+
+  .guide-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2); text-decoration: none;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .faq-item summary { cursor: pointer; font-weight: 600; color: var(--color-river); }
+  .guide-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .guide-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
+  .guide-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
+  .guide-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  .faq-list { margin-top: var(--space-3); display: flex; flex-direction: column; gap: 0.5rem; }
+  .faq-item { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); }
+  .faq-item summary { cursor: pointer; font-weight: 600; color: var(--color-navy); }
   .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; }
   .faq-answer :global(p) { margin: 0; }
-  .empty-state { color: var(--color-river-light); margin-top: var(--space-3); }
+
+  .empty-state { text-align: center; padding: var(--space-5) 0; color: var(--color-navy-light); }
+  .empty-state .button { margin-top: var(--space-2); }
 </style>

@@ -4,9 +4,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import BusinessCard from '../../components/BusinessCard.astro';
+import LayeredHero from '../../components/LayeredHero.astro';
 
 const businesses = await getCollection('businesses');
 const categories = await getCollection('categories');
+
+// Popular categories = the ones with real businesses, ranked by count —
+// no more dumping all 25 categories flat in front of every visitor.
+const categoryCounts = categories
+  .map((cat) => ({
+    cat,
+    count: businesses.filter((b) => b.data.category.id === cat.id).length,
+  }))
+  .filter((c) => c.count > 0)
+  .sort((a, b) => b.count - a.count);
+
+const popularCategories = categoryCounts.slice(0, 8);
+const remainingCategories = categoryCounts.slice(8);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -22,21 +36,78 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
+  <LayeredHero
+    eyebrow="Directory"
+    title="Find a business Sioux Falls actually trusts"
+    subtitle={`${businesses.length} verified businesses, recommended by the community — not the highest bidder.`}
+  >
+    <div class="hero-search">
+      <input type="search" id="hero-search-input" placeholder="Search businesses or categories..." aria-label="Search businesses" />
+    </div>
+  </LayeredHero>
+
   <div class="container page">
-    <span class="eyebrow">Directory</span>
-    <h1>Find a business in Sioux Falls</h1>
-    <p class="page-sub">{businesses.length} businesses, verified and organized by category.</p>
+    <section aria-labelledby="popular-heading" class="popular-section">
+      <span class="eyebrow">Browse by Category</span>
+      <h2 id="popular-heading">Popular categories</h2>
+      <div class="category-highlight-grid">
+        {popularCategories.map(({ cat, count }) => (
+          <a href={`/${cat.data.slug}`} class="category-highlight-card">
+            <span class="category-icon">{cat.data.icon}</span>
+            <strong>{cat.data.name}</strong>
+            <span class="category-count">{count} business{count === 1 ? '' : 'es'}</span>
+          </a>
+        ))}
+      </div>
+      {remainingCategories.length > 0 && (
+        <details class="more-categories">
+          <summary>Browse all {categoryCounts.length} categories →</summary>
+          <div class="more-categories-list">
+            {remainingCategories.map(({ cat, count }) => (
+              <a href={`/${cat.data.slug}`}>{cat.data.icon} {cat.data.name} ({count})</a>
+            ))}
+          </div>
+        </details>
+      )}
+    </section>
 
-    <div class="filter-row" role="group" aria-label="Filter by category">
-      <a href="/businesses" class="chip chip--active">All</a>
-      {categories.map((cat) => (
-        <a href={`/${cat.data.slug}`} class="chip">{cat.data.name}</a>
-      ))}
-    </div>
+    <div class="contour-rule" role="presentation"></div>
 
-    <div class="grid">
-      {businesses.map((business) => <BusinessCard business={business} />)}
-    </div>
+    <section aria-labelledby="how-heading" class="how-section">
+      <h2 id="how-heading">How Sioux Falls Go works</h2>
+      <div class="how-grid">
+        <div class="how-step">
+          <span class="how-number">01</span>
+          <h3>Browse a category</h3>
+          <p>Find the kind of business you need — every one already vetted for real local reputation.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-number">02</span>
+          <h3>Compare with confidence</h3>
+          <p>Real ratings, real hours, real local guides — not a paid listing pretending to be a recommendation.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-number">03</span>
+          <h3>Contact directly</h3>
+          <p>No middleman, no lead-gen markup — you reach the business the same way a neighbor would.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="contour-rule" role="presentation"></div>
+
+    <section aria-labelledby="all-biz-heading">
+      <span class="eyebrow">Every Business</span>
+      <h2 id="all-biz-heading">All {businesses.length} businesses</h2>
+      <div class="grid" id="business-grid">
+        {businesses.map((business) => (
+          <div class="business-grid-item" data-search={`${business.data.name} ${business.data.category.id}`.toLowerCase()}>
+            <BusinessCard business={business} />
+          </div>
+        ))}
+      </div>
+      <p id="no-results" class="empty-note" hidden>No businesses match your search.</p>
+    </section>
 
     <div class="claim-cta card">
       <div>
@@ -51,40 +122,72 @@ const schema = {
 </BaseLayout>
 
 <style>
+  .hero-search { max-width: 26rem; margin-top: var(--space-3); }
+  .hero-search input {
+    width: 100%; padding: 0.85rem 1.1rem; border-radius: var(--radius-pill); border: none;
+    font-size: 0.9375rem; box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  }
+
   .page { padding-block: var(--space-4) var(--space-6); }
-  .page-sub { color: var(--color-river-light); }
-  .filter-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-1);
-    margin-block: var(--space-3);
+  .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
+
+  .category-highlight-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: var(--space-2);
+    margin-top: var(--space-3);
   }
-  .chip {
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--color-river);
-    border: 1.5px solid var(--color-line);
-    border-radius: 999px;
-    padding: 0.4rem 0.9rem;
+  .category-highlight-card {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.35rem;
+    background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-2) var(--space-1); text-decoration: none;
+    box-shadow: 0 1px 3px rgba(27,42,74,0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .chip:hover { border-color: var(--color-quartzite); color: var(--color-quartzite); }
-  .chip--active { background: var(--color-river); color: var(--color-bluff); border-color: var(--color-river); }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: var(--space-3);
+  .category-highlight-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .category-icon { font-size: 1.75rem; }
+  .category-highlight-card strong { font-size: 0.9375rem; color: var(--color-navy); }
+  .category-count { font-size: 0.75rem; color: var(--color-navy-light); }
+
+  .more-categories { margin-top: var(--space-3); }
+  .more-categories summary { cursor: pointer; font-weight: 600; color: var(--color-orange-dark); font-size: 0.9375rem; }
+  .more-categories-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-2); }
+  .more-categories-list a {
+    font-size: 0.875rem; text-decoration: none; color: var(--color-navy);
+    background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-pill);
+    padding: 0.35rem 0.85rem;
   }
+  .more-categories-list a:hover { border-color: var(--color-orange); color: var(--color-orange-dark); }
+
+  .how-section { padding-block: var(--space-2); }
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .how-step { text-align: center; }
+  .how-number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-orange); }
+  .how-step h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.4rem; }
+  .how-step p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
+
   .claim-cta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    margin-top: var(--space-5);
-    background: var(--color-river);
-    border-color: var(--color-river);
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;
+    margin-top: var(--space-5); background: var(--color-navy); border-color: var(--color-navy);
   }
-  .claim-cta h3, .claim-cta p { color: var(--color-bluff); margin: 0; }
+  .claim-cta h3, .claim-cta p { color: #fff; margin: 0; }
   .claim-cta p { margin-top: 0.25rem; }
 </style>
+
+<script>
+  const input = document.getElementById('hero-search-input') as HTMLInputElement;
+  const items = Array.from(document.querySelectorAll('.business-grid-item'));
+  const noResults = document.getElementById('no-results')!;
+
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let visibleCount = 0;
+    items.forEach((item) => {
+      const match = !q || (item as HTMLElement).dataset.search?.includes(q);
+      (item as HTMLElement).style.display = match ? '' : 'none';
+      if (match) visibleCount++;
+    });
+    noResults.hidden = visibleCount > 0;
+  });
+</script>
