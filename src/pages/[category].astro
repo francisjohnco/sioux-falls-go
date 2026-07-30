@@ -59,6 +59,10 @@ const schema = {
     {businesses.length > 0 && (
       <p class="hero-stats">{businesses.length} business{businesses.length === 1 ? '' : 'es'} · {articles.length} local guide{articles.length === 1 ? '' : 's'}</p>
     )}
+    <div class="hero-trust-row">
+      <span>✓ 4.8+ rating required</span>
+      <span>✓ Real local businesses only</span>
+    </div>
   </LayeredHero>
 
   <div class="container page">
@@ -133,6 +137,8 @@ const schema = {
   .hero-breadcrumbs a { color: rgba(255,255,255,0.7); }
   .hero-breadcrumbs a:hover { color: #fff; }
   .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .hero-trust-row { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: 0.5rem; }
+  .hero-trust-row span { font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 600; }
 
   .page { padding-block: var(--space-4) var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }

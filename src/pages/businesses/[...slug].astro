@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import LayeredHero from '../../components/LayeredHero.astro';
 
 export async function getStaticPaths() {
   const businesses = await getCollection('businesses');
@@ -139,57 +140,80 @@ const schema = {
       </div>
     </>
   ) : (
-    <div class="container page">
-      <nav class="breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
-      </nav>
+    <>
+      <LayeredHero
+        eyebrow={`${category.data.icon} ${category.data.name}`}
+        title={business.data.name}
+        photoUrl={business.data.heroImage}
+        compact
+      >
+        <nav class="hero-breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> / <a href="/businesses">Directory</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{business.data.name}</span>
+        </nav>
+        <div class="hero-badges">
+          {isVerified && <span class="badge badge--verified">✓ Verified</span>}
+          {business.data.partnershipTier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+          {business.data.googleRating && <span class="hero-rating-pill">★ {business.data.googleRating.toFixed(1)}</span>}
+        </div>
+      </LayeredHero>
 
-      <div class="simple-card card">
-        <div class="simple-header">
-          <div>
-            <span class="eyebrow">{category.data.name}</span>
-            <h1>{business.data.name}</h1>
-            <div class="hero-badges">
-              {isVerified && <span class="badge badge--verified">✓ Verified</span>}
-              {business.data.partnershipTier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
-            </div>
-          </div>
+      <div class="container page">
+        <div class="quick-actions-bar">
+          {business.data.phone && <a href={`tel:${business.data.phone}`} class="quick-action-btn">📞 Call</a>}
+          {business.data.website && <a href={business.data.website} target="_blank" rel="nofollow noopener" class="quick-action-btn">🌐 Website</a>}
+          {business.data.address && <a href={`https://maps.google.com/?q=${encodeURIComponent(business.data.address)}`} target="_blank" rel="noopener" class="quick-action-btn">📍 Directions</a>}
+          <button class="quick-action-btn quick-action-btn--ghost" onclick="navigator.share ? navigator.share({title: document.title, url: location.href}) : navigator.clipboard.writeText(location.href)">↗ Share</button>
         </div>
 
-        {business.data.googleRating && (
-          <p class="static-rating">★ {business.data.googleRating.toFixed(1)} <span class="static-rating-note">(as of {business.data.verifiedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })})</span></p>
-        )}
-
-        <div class="prose"><Content /></div>
-
-        <dl class="simple-info">
-          {business.data.address && <><dt>Address</dt><dd>{business.data.address}</dd></>}
-          {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
-          {business.data.hours
-            ? <><dt>Hours</dt><dd>{business.data.hours}</dd></>
-            : <><dt>Hours</dt><dd class="data-pending">Not listed yet</dd></>}
-        </dl>
-
-        {business.data.website && <a class="button" href={business.data.website} rel="nofollow noopener" target="_blank">Visit Website</a>}
-      </div>
-
-      {relatedGuides.length > 0 && (
-        <section class="guides-section">
-          <div class="contour-rule" role="presentation"></div>
-          <span class="eyebrow">From the Knowledge Base</span>
-          <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
-          <div class="guides-grid">
-            {relatedGuides.map((article) => (
-              <a class="guide-card" href={`/guides/${article.id}`}>
-                <span class="guide-tag">Guide</span>
-                <h3>{article.data.title}</h3>
-                <p>{article.data.seo.description}</p>
-              </a>
-            ))}
+        <div class="simple-layout">
+          <div class="simple-main">
+            <div class="prose"><Content /></div>
           </div>
-        </section>
-      )}
-    </div>
+
+          <aside class="simple-side">
+            <div class="card contact-card">
+              <h3>Contact &amp; Info</h3>
+              <dl>
+                {business.data.address && <><dt>📍 Address</dt><dd>{business.data.address}</dd></>}
+                {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
+                {business.data.phone && <><dt>📞 Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
+                {business.data.hours
+                  ? <><dt>🕐 Hours</dt><dd>{business.data.hours}</dd></>
+                  : <><dt>🕐 Hours</dt><dd class="data-pending">Not listed yet</dd></>}
+                {business.data.website && <><dt>🌐 Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
+              </dl>
+            </div>
+
+            <div class="card trust-card">
+              <h3>Why we recommend them</h3>
+              <ul class="trust-list">
+                <li>✓ Locally owned &amp; operated</li>
+                {business.data.googleRating && <li>✓ {business.data.googleRating.toFixed(1)}+ rating on Google</li>}
+                {isVerified && <li>✓ Info confirmed by our team</li>}
+                {business.data.partnershipTier === 'community-listing' && <li>✓ Committed to giving back to Sioux Falls</li>}
+              </ul>
+            </div>
+          </aside>
+        </div>
+
+        {relatedGuides.length > 0 && (
+          <section class="guides-section">
+            <div class="contour-rule" role="presentation"></div>
+            <span class="eyebrow">From the Knowledge Base</span>
+            <h2>Helpful guides for {category.data.name.toLowerCase()}</h2>
+            <div class="guides-grid">
+              {relatedGuides.map((article) => (
+                <a class="guide-card" href={`/guides/${article.id}`}>
+                  <span class="guide-tag">Guide</span>
+                  <h3>{article.data.title}</h3>
+                  <p>{article.data.seo.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </>
   )}
 
   <SiteFooter slot="footer" />
@@ -269,13 +293,31 @@ const schema = {
   .guide-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
 
   /* Simple/free profile */
-  .simple-card { max-width: 40rem; }
-  .simple-header h1 { margin: 0.2rem 0 0.4rem; }
-  .static-rating { font-weight: 700; color: var(--color-navy); margin: 0.5rem 0; }
-  .static-rating-note { font-weight: 400; color: var(--color-navy-light); font-size: 0.875rem; }
-  .simple-info { margin: var(--space-2) 0; }
-  .simple-info dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: 0.6rem; }
-  .simple-info dd { margin: 0.15rem 0 0; font-weight: 600; }
+  .quick-actions-bar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: var(--space-3); }
+  .quick-action-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none;
+    background: var(--color-navy); color: #fff; font-weight: 700; font-size: 0.875rem;
+    padding: 0.65rem 1.1rem; border-radius: var(--radius-pill); border: none; cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .quick-action-btn:hover { background: var(--color-orange); transform: translateY(-2px); }
+  .quick-action-btn--ghost { background: #fff; color: var(--color-navy); border: 1.5px solid var(--color-line); }
+  .quick-action-btn--ghost:hover { background: var(--color-surface); }
+
+  .simple-layout { display: grid; grid-template-columns: 1fr 18rem; gap: var(--space-4); margin-top: var(--space-3); }
+  @media (max-width: 45rem) { .simple-layout { grid-template-columns: 1fr; } }
+  .simple-side { display: flex; flex-direction: column; gap: var(--space-2); }
+  .contact-card h3, .trust-card h3 { font-size: 1rem; margin-bottom: var(--space-2); }
+  .contact-card dl { margin: 0; }
+  .contact-card dt { font-size: 0.6875rem; text-transform: uppercase; font-weight: 700; color: var(--color-navy-light); margin-top: var(--space-2); }
+  .contact-card dt:first-child { margin-top: 0; }
+  .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
+  .trust-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .trust-list li { font-size: 0.875rem; color: var(--color-navy); font-weight: 600; }
+  .hero-rating-pill {
+    background: rgba(255,255,255,0.15); color: #fff; font-weight: 700; font-size: 0.8125rem;
+    padding: 0.2rem 0.7rem; border-radius: var(--radius-pill);
+  }
 </style>
 
 <script>
