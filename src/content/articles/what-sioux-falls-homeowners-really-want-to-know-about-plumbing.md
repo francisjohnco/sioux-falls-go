@@ -13,7 +13,7 @@ updatedAt: 2025-05-22
 seo:
   title: "Sioux Falls Plumbing FAQ"
   description: "Find answers to common plumbing questions in Sioux Falls, including cost expectations, when to call a pro, emergency services, and tips for maintaining your hom"
-sourceUrl: "https://siouxfallsgo.com/sioux-falls-plumbing-faq/"
+sourceUrl: "/guides/what-sioux-falls-homeowners-really-want-to-know-about-plumbing"
 ---
 
 Find answers to common plumbing questions in Sioux Falls, including cost expectations, when to call a pro, emergency services, and tips for maintaining your home plumbing.

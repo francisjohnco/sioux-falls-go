@@ -13,7 +13,7 @@ updatedAt: 2024-09-26
 seo:
   title: "Top 10 Reasons Sioux Falls Should Be on Your Must-Visit List"
   description: "Top 10 Reasons Sioux Falls Should Be on Your Must-Visit List \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/top-10-reasons-to-visit-sioux-falls-south-dakotas-hidden-gem/"
+sourceUrl: "/guides/top-10-reasons-sioux-falls-should-be-on-your-must-visit-list"
 ---
 
 **Top 10 Reasons Sioux Falls Should Be on Your Must-Visit List**
@@ -34,11 +34,11 @@ Downtown Sioux Falls transforms into a massive open-air gallery with **Sculpture
 
 Step back in time as you wander through the **Cathedral Historic District** , where you’ll find beautifully preserved architecture, brick-paved streets, and landmarks like **St. Joseph Cathedral** and the **Old Courthouse Museum**.
 
-![falls park in Sioux Falls, sd](https://siouxfallsgo.com/wp-content/uploads/2024/02/SFG-Sioux-Falls-pics-3-768x432.jpg)
+![falls park in Sioux Falls, sd](/explore-sioux-falls)
 
-[EXPLORE SIOUX FALLS](https://siouxfallsgo.com/category/for-locals/explore-sioux-falls/)
+[EXPLORE SIOUX FALLS](/explore-sioux-falls)
 
-## [The Best Free Things To Do In Sioux Falls](https://siouxfallsgo.com/the-best-free-things-to-do-in-sioux-falls/)
+## [The Best Free Things To Do In Sioux Falls](/guides/the-best-free-things-to-do-in-sioux-falls)
 
 **4\. The Washington Pavilion – Culture, Creativity, and Curiosity**
 
@@ -72,7 +72,7 @@ From the **Sioux Empire Fair** and **JazzFest** to **First Fridays** , farmers m
 
 ## **Plan Your Visit. Find Local Favorites.**
 
-![](https://siouxfallsgo.com/wp-content/uploads/2024/09/storyblocks-great-selfie-in-the-entertainment-club_rwQ8uaC_5z-scaled.jpg)
+![](/explore-sioux-falls)
 
 Whether you’re here for a weekend or a new adventure, **SiouxFallsGo.com** is your insider guide to everything local. Find hidden gems, upcoming events, and businesses that go above and beyond to make this city shine.
 

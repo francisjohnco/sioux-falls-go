@@ -13,7 +13,7 @@ updatedAt: 2025-06-15
 seo:
   title: "How Getting Featured on Sioux Falls Go Works (For Business Owners)"
   description: "How Getting Featured on Sioux Falls Go Works (For Business Owners) \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/how-getting-featured-on-sioux-falls-go-works/"
+sourceUrl: "/guides/how-getting-featured-on-sioux-falls-go-works-for-business-owners"
 ---
 
 Sioux Falls Go was built to spotlight the businesses that are truly making a difference in our community. Not through ads. Not through big budgets. But through real service, real excellence, and real heart.

@@ -13,7 +13,7 @@ updatedAt: 2025-05-20
 seo:
   title: "How to shop Local (and Make every Dollar count)"
   description: "Discover how Sioux Falls Go makes shopping local exciting, impactful, and easy. Support varified, high-integrity businesses that invest in our community."
-sourceUrl: "https://siouxfallsgo.com/how-to-shop-local-the-siouxfallsgo-way/"
+sourceUrl: "/guides/how-to-shop-local-and-make-every-dollar-count"
 ---
 
 **Sioux Falls Go. Where Your Dollars Build Community**

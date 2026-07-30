@@ -13,7 +13,7 @@ updatedAt: 2025-04-30
 seo:
   title: "The Best Free Things to Do in Sioux Falls"
   description: "Discover the best free things to do in Sioux Falls\u2014from water falls and sculpture walks to museums and concerts. Explore BIG fun without spending a dime."
-sourceUrl: "https://siouxfallsgo.com/the-best-free-things-to-do-in-sioux-falls/"
+sourceUrl: "/guides/the-best-free-things-to-do-in-sioux-falls"
 ---
 
 **The Best Free Things to Do in Sioux Falls**
@@ -142,7 +142,7 @@ If you’re not signed up for the **Local Legends VIP list** , you’re missing 
 
 • Receive a free weekly update of things to do, explore, and win—all curated by locals
 
-[[**Join the Local Legends VIP list here**]](https://siouxfallsgo.com/local-legends-the-heartbeat-of-sioux-falls/)
+[[**Join the Local Legends VIP list here**]](/guides/local-legends-the-heartbeat-of-sioux-falls)
 
 It’s free. It’s fun. It’s how locals live like legends.
 

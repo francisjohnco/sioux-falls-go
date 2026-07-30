@@ -13,7 +13,7 @@ updatedAt: 2025-03-23
 seo:
   title: "Local Legends \u2013 The Heartbeat of Sioux Falls"
   description: "Local Legends \u2013 The Heartbeat of Sioux Falls \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/local-legends-the-heartbeat-of-sioux-falls/"
+sourceUrl: "/guides/local-legends-the-heartbeat-of-sioux-falls"
 ---
 
 In every thriving city, there’s an unsung group of heroes — people who believe in more than just good prices or convenience. 

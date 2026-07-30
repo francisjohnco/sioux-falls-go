@@ -8,16 +8,38 @@ const links = [
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="wordmark">Sioux Falls <span>Go</span></a>
-    <nav aria-label="Primary">
+    <a href="/" class="wordmark">
+      <img src="/images/sfg-logo.png" alt="Sioux Falls Go" class="wordmark-logo" />
+      <span class="wordmark-text">Sioux Falls <span class="wordmark-accent">Go</span></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary">
       <ul>
         {links.map((link) => (
           <li><a href={link.href}>{link.label}</a></li>
         ))}
       </ul>
     </nav>
-    <a href="/get-featured" class="button header-cta">Get Listed</a>
+    <a href="/get-featured" class="button header-cta desktop-cta">Get Listed</a>
+
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Mobile primary">
+      <ul>
+        {links.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <a href="/get-featured" class="button mobile-menu-cta">Get Listed</a>
+  </div>
+  <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
 </header>
 
 <style>
@@ -27,7 +49,7 @@ const links = [
     padding-block: var(--space-2);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 30;
   }
   .header-inner {
     display: flex;
@@ -37,14 +59,17 @@ const links = [
     gap: var(--space-2);
   }
   .wordmark {
+    display: flex; align-items: center; gap: 0.5rem;
     font-family: var(--font-display);
     font-size: 1.375rem;
     font-weight: 700;
     color: var(--color-navy);
     text-decoration: none;
   }
-  .wordmark span { color: var(--color-orange); }
-  nav ul {
+  .wordmark-logo { height: 2.1rem; width: auto; display: block; }
+  .wordmark-accent { color: var(--color-orange); }
+
+  .desktop-nav ul {
     display: flex;
     gap: var(--space-3);
     list-style: none;
@@ -52,12 +77,85 @@ const links = [
     padding: 0;
     flex-wrap: wrap;
   }
-  nav a {
+  .desktop-nav a {
     color: var(--color-navy);
     font-weight: 600;
     font-size: 0.9375rem;
     text-decoration: none;
   }
-  nav a:hover { color: var(--color-orange); }
+  .desktop-nav a:hover { color: var(--color-orange); }
   .header-cta { padding: 0.6rem 1.4rem; font-size: 0.875rem; }
+
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem; height: 2.5rem;
+    background: none; border: none; cursor: pointer;
+    padding: 0;
+  }
+  .hamburger-btn span {
+    display: block; height: 2px; width: 100%;
+    background: var(--color-navy); border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+  .hamburger-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .hamburger-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    position: fixed; top: 0; right: 0; height: 100vh; width: 80%; max-width: 20rem;
+    background: #fff; z-index: 40;
+    box-shadow: -8px 0 24px rgba(13,23,48,0.15);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+    display: flex; flex-direction: column;
+    padding: 5rem var(--space-3) var(--space-3);
+  }
+  .mobile-menu.is-open { transform: translateX(0); }
+  .mobile-menu nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+  .mobile-menu nav a {
+    display: block; padding: var(--space-2) 0; font-size: 1.125rem; font-weight: 700;
+    color: var(--color-navy); text-decoration: none; border-bottom: 1px solid var(--color-line);
+  }
+  .mobile-menu nav a:hover { color: var(--color-orange); }
+  .mobile-menu-cta { margin-top: auto; text-align: center; }
+
+  .mobile-menu-backdrop {
+    position: fixed; inset: 0; background: rgba(13,23,48,0.4); z-index: 35;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .mobile-menu-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+  @media (max-width: 52rem) {
+    .desktop-nav, .desktop-cta { display: none; }
+    .hamburger-btn { display: flex; }
+  }
 </style>
+
+<script>
+  const btn = document.getElementById('hamburger-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const backdrop = document.getElementById('mobile-menu-backdrop')!;
+
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  function openMenu() {
+    menu.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    isOpen ? closeMenu() : openMenu();
+  });
+  backdrop.addEventListener('click', closeMenu);
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+</script>

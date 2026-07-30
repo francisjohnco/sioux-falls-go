@@ -13,7 +13,7 @@ updatedAt: 2026-02-01
 seo:
   title: "Sioux Falls Flooring: Helping Homeowners Make Confident Flooring Choic"
   description: "Discover how Sioux Falls Flooring helps homeowners navigate flooring repairs, installations, and contractor choices with honest, local guidance and expert insig"
-sourceUrl: "https://siouxfallsgo.com/community-spotlight-sioux-falls-flooring/"
+sourceUrl: "/guides/community-spotlight-siouxfallsflooring-com-helping-homeowners-make-confident-flo"
 ---
 
 **A Local Guide for Better Flooring Choices**

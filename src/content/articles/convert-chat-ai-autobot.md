@@ -13,7 +13,7 @@ updatedAt: 2024-01-14
 seo:
   title: "Convert Chat AI-AutoBot"
   description: "Convert Chat AI-AutoBot \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/convert-chat-ai-autobot/"
+sourceUrl: "/guides/convert-chat-ai-autobot"
 ---
 
 _Content pending — this page relied on a dynamic shortcode not captured in the export. See migration report._

@@ -13,7 +13,7 @@ updatedAt: 2025-06-02
 seo:
   title: "What Is Sioux Falls Go? (And Why It Matters)"
   description: "What Is Sioux Falls Go? (And Why It Matters) \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/what-is-sioux-falls-go-and-why-it-matters/"
+sourceUrl: "/guides/what-is-sioux-falls-go-and-why-it-matters"
 ---
 
 _A new way to support local—and build a stronger Sioux Falls._

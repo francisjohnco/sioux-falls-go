@@ -13,7 +13,7 @@ updatedAt: 2025-06-14
 seo:
   title: "Top 10 Landscaping Companies %sep% %sitename%"
   description: "Discover the top 10 landscaping companies in Sioux Falls -rated 4.7+ for their quality, community focus, and seasonal specials."
-sourceUrl: "https://siouxfallsgo.com/top-landscaping-companies-sioux-falls/"
+sourceUrl: "/guides/top-10-landscaping-companies-in-sioux-falls-2025"
 ---
 
 Coming soon

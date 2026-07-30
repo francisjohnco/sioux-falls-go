@@ -13,7 +13,7 @@ updatedAt: 2025-05-27
 seo:
   title: "Two Paths to Local Market Dominance with Sioux Falls Go"
   description: "Two Paths to Local Market Dominance with Sioux Falls Go \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/two-paths-to-local-market-dominance-with-sioux-falls-go/"
+sourceUrl: "/guides/two-paths-to-local-market-dominance-with-sioux-falls-go"
 ---
 
 **Sioux Falls GO**  is a _community-powered marketing platform_  built to elevate the most trusted, high-rated local businesses in our city.

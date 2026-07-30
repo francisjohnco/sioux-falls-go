@@ -72,7 +72,12 @@ const schema = {
   <div class="container search-section">
     <div class="category-search">
       <input type="search" id="category-search-input" placeholder={`Search ${category.data.name.toLowerCase()}...`} aria-label={`Search ${category.data.name}`} />
-      <button class="category-search-btn" aria-label="Search">🔍</button>
+      <button class="category-search-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
     </div>
   </div>
 
@@ -155,8 +160,11 @@ const schema = {
   }
   .category-search-btn {
     width: 2.9rem; height: 2.9rem; border-radius: 50%; border: none; flex-shrink: 0;
-    background: var(--color-orange); color: #fff; font-size: 1rem; cursor: pointer;
+    background: var(--color-orange); color: #fff; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s ease, transform 0.15s ease;
   }
+  .category-search-btn:hover { background: var(--color-orange-dark); transform: scale(1.05); }
 
   .page { padding-block: 0 var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }

@@ -13,15 +13,15 @@ updatedAt: 2025-07-28
 seo:
   title: "Sioux Falls Go Roadmap"
   description: "Sioux Falls Go Roadmap \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/roadmap/"
+sourceUrl: "/guides/sioux-falls-go-roadmap"
 ---
 
-We're building something unique. Get in on [the action](https://siouxfallsgo.com/start-here/) at the ground level. Here is our roadmap**:**
+We're building something unique. Get in on [the action](/for-local-businesses) at the ground level. Here is our roadmap**:**
 
 ## Phase 1 – Build the Foundation
 
   * Soft launch Sioux Falls Go for service providers
-  * [Curate Top 10 lists in major local industries](https://siouxfallsgo.com/sioux-falls-top-picks/)
+  * [Curate Top 10 lists in major local industries](/sioux-falls-top-picks-trusted-local-businesses-by-category-2)
   * Begin qualifying businesses for greater exposure
   * Populate the directory with top-rated businesses (4.7+ stars)
   * Engage community nomination for featured spots

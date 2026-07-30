@@ -13,7 +13,7 @@ updatedAt: 2025-02-10
 seo:
   title: "Sioux Falls Digital Marketing Spotlight"
   description: "SAJMedia Marketing: Grow with Visibility, Authority, & Optimize Onboarding Process \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/sajmedia-marketing-sioux-falls/"
+sourceUrl: "/guides/sajmedia-marketing-grow-with-visibility-authority-optimize-onboarding-process"
 ---
 
 **Community Spotlight: SAJMedia Marketing**

@@ -13,10 +13,10 @@ updatedAt: 2025-08-13
 seo:
   title: "Breakthrough Opportunity Incoming- Don\u2019t Miss Out!"
   description: "Breakthrough Opportunity Incoming- Don\u2019t Miss Out! \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/breakthrough-opportunity/"
+sourceUrl: "/guides/breakthrough-opportunity-incoming-dont-miss-out"
 ---
 
-[Sioux Falls Go](https://siouxfallsgo.com/what-is-sioux-falls-go-and-why-it-matters/) is changing how locals discover and choose trusted, locally owned businesses — and the first few to step forward will own the spotlight.
+[Sioux Falls Go](/guides/what-is-sioux-falls-go-and-why-it-matters) is changing how locals discover and choose trusted, locally owned businesses — and the first few to step forward will own the spotlight.
 
 Only a select group will lock in benefits no one else will ever get, for FREE.
 
@@ -28,4 +28,4 @@ And that’s just the start. More exclusive perks will be revealed soon, includi
 
 Stay tuned — your chance to secure the city’s most valuable local business advantage is almost here.
 
-Want to know where we're going? Check out [our roadmap.](https://siouxfallsgo.com/road-map/)
+Want to know where we're going? Check out [our roadmap.](/for-local-businesses)

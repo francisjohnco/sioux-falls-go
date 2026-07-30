@@ -13,7 +13,7 @@ updatedAt: 2025-12-05
 seo:
   title: "How Sioux Falls Go Is Changing the Way Locals Support Local"
   description: "How Sioux Falls Go Is Changing the Way Locals Support Local \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/how-sioux-falls-go-is-changing-the-way-locals-support-local/"
+sourceUrl: "/guides/how-sioux-falls-go-is-changing-the-way-locals-support-local"
 ---
 
 **When Every Dollar Counts...We help stretch it.**

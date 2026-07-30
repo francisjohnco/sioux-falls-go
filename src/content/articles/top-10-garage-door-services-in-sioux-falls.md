@@ -13,7 +13,7 @@ updatedAt: 2025-06-18
 seo:
   title: "Top 10 Garage Door Services in Sioux Falls"
   description: "Discover the top-rated garage door repair and installation services in Sioux Falls. Trusted by locals, backed by reviews, and community-approved in 2025."
-sourceUrl: "https://siouxfallsgo.com/top-garage-door-services-in-sioux-falls/"
+sourceUrl: "/guides/top-10-garage-door-services-in-sioux-falls"
 ---
 
 **2025 Local Favorite garage door repair and installation services in Sioux Falls**

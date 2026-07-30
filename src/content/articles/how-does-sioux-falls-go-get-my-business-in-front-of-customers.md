@@ -13,7 +13,7 @@ updatedAt: 2026-02-26
 seo:
   title: "How Sioux Falls Go Gets You In Front of Local Customers"
   description: "Sioux Falls Go get your business in front of customers in few different ways. Here are 7 ways we positions your business to be front and center of local search."
-sourceUrl: "https://siouxfallsgo.com/how-sioux-falls-go-gets-your-business-in-front-of-customers/"
+sourceUrl: "/guides/how-does-sioux-falls-go-get-my-business-in-front-of-customers"
 ---
 
 That’s a fair question.
@@ -204,4 +204,4 @@ If you’re curious how your business would be positioned on Sioux Falls Go, we 
 
 **Want in on this unfair advantage?**
 
-Check out [the requirements](https://siouxfallsgo.com/get-featured/).
+Check out [the requirements](/for-local-businesses).

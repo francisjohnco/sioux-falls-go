@@ -13,7 +13,7 @@ updatedAt: 2026-07-22
 seo:
   title: "What to Do When a Tree Falls on Your House in Sioux Falls"
   description: "What to Do When a Tree Falls on Your House in Sioux Falls \u2014 local guidance from Sioux Falls Go."
-sourceUrl: "https://siouxfallsgo.com/tree-falls-on-house-sioux-falls-emergency-steps/"
+sourceUrl: "/guides/what-to-do-when-a-tree-falls-on-your-house-in-sioux-falls"
 ---
 
 # What to Do When a Tree Falls on Your House in Sioux Falls
@@ -47,7 +47,7 @@ Look for these specific hazards from outside:
   * Water or natural gas hissing sounds
   * Structural walls visibly bowed or displaced
 
-If you see significant roof penetration and rain is imminent (checking KSFY or KELO weather radar), understand that water damage compounds quickly. This is where [emergency tree removal services in Sioux Falls](https://siouxfallsgo.com/emergency-tree-removal-sioux-falls-2/) become essential since many offer tarping services to prevent secondary water damage while the tree is being removed.
+If you see significant roof penetration and rain is imminent (checking KSFY or KELO weather radar), understand that water damage compounds quickly. This is where [emergency tree removal services in Sioux Falls](/guides/emergency-tree-removal-in-sioux-falls-storm-damage-and-24-7-service) become essential since many offer tarping services to prevent secondary water damage while the tree is being removed.
 
 ## Contacting Your Insurance Company and What to Expect
 
@@ -76,17 +76,17 @@ Ask specifically: "Do I need to wait for an adjuster before authorizing emergenc
 
 A tree on your house requires professional removal, not a neighbor with a chainsaw and good intentions. The stakes are too high. An inexperienced cut can shift thousands of pounds of weight, cause the tree to roll, or drop sections through already-weakened roof areas.
 
-When searching for [tree services in Sioux Falls](https://siouxfallsgo.com/tree-services-sioux-falls-guide/), prioritize these factors for emergency situations:
+When searching for [tree services in Sioux Falls](/local-tree-services), prioritize these factors for emergency situations:
 
 **24/7 availability:** True emergencies don't wait for business hours. Reputable Sioux Falls tree companies offer round-the-clock emergency response, especially during storm season from May through September.
 
 **Crane capability:** Many tree-on-house situations require crane-assisted removal to lift sections away from the structure rather than dragging them across your roof. Ask specifically if they have crane access or subcontract for it.
 
-**Insurance and licensing:** This is not the time to cut corners. Verify current liability insurance (minimum $1 million) and workers' compensation coverage. South Dakota doesn't require tree service licensing, which makes your verification even more important. Our guide on [how to choose a tree service company in Sioux Falls](https://siouxfallsgo.com/how-to-choose-tree-service-sioux-falls/) covers this in detail.
+**Insurance and licensing:** This is not the time to cut corners. Verify current liability insurance (minimum $1 million) and workers' compensation coverage. South Dakota doesn't require tree service licensing, which makes your verification even more important. Our guide on [how to choose a tree service company in Sioux Falls](/local-tree-services) covers this in detail.
 
 **Written estimates:** Even in emergencies, reputable companies provide written estimates before starting work. Emergency rates are legitimately higher than standard removal, often 50 to 100 percent more, but you should still know the number before authorizing work.
 
-Understanding [tree removal costs in Sioux Falls](https://siouxfallsgo.com/tree-removal-cost-sioux-falls-2/) helps you recognize reasonable emergency pricing versus price gouging that unfortunately happens after major storms.
+Understanding [tree removal costs in Sioux Falls](/local-tree-services) helps you recognize reasonable emergency pricing versus price gouging that unfortunately happens after major storms.
 
 ## Temporary Protection While Waiting for Removal
 
@@ -110,7 +110,7 @@ While dealing with the immediate crisis, you might wonder why this happened. Und
 
 **Root failure:** Saturated soils during spring snowmelt or after heavy rains (like we often see in May and June) reduce root anchoring. A tree that stood for 50 years can topple when root ball integrity fails.
 
-**Disease and decay:** Dutch elm disease, emerald ash borer (now confirmed in South Dakota), and various fungal infections weaken trees over years. By the time external symptoms appear, internal structure may be severely compromised. Regular inspection, covered in our [complete guide to professional tree care](https://siouxfallsgo.com/professional-tree-care-sioux-falls-complete-guide-3/), helps identify these risks before failure.
+**Disease and decay:** Dutch elm disease, emerald ash borer (now confirmed in South Dakota), and various fungal infections weaken trees over years. By the time external symptoms appear, internal structure may be severely compromised. Regular inspection, covered in our [complete guide to professional tree care](/guides/complete-guide-to-professional-tree-care-in-sioux-falls), helps identify these risks before failure.
 
 **Age and species:** Sioux Falls has many silver maples and Siberian elms planted decades ago. These species are prone to branch failure, especially when mature. Cottonwoods along the Big Sioux River corridor also pose elevated risk due to their brittle wood and massive size.
 
@@ -122,7 +122,7 @@ Once emergency removal is complete and your home is temporarily protected, the r
 
 **Address structural repairs first:** Before any cosmetic work, ensure roof framing, wall studs, and foundational elements are properly repaired. Consider hiring an independent structural engineer for significant impacts, especially if the tree struck a load-bearing wall or caused visible foundation cracking.
 
-**Evaluate remaining trees:** After experiencing a tree emergency, most homeowners look at their remaining trees differently. Having a certified arborist assess other mature trees on your property is wise. Understanding the [best time to trim trees in South Dakota](https://siouxfallsgo.com/best-time-trim-trees-south-dakota/) helps you plan proactive maintenance that reduces future risks.
+**Evaluate remaining trees:** After experiencing a tree emergency, most homeowners look at their remaining trees differently. Having a certified arborist assess other mature trees on your property is wise. Understanding the [best time to trim trees in South Dakota](/local-tree-services) helps you plan proactive maintenance that reduces future risks.
 
 **Consider stump removal:** The remaining stump from the fallen tree is typically a separate charge. You can leave it, have it ground down, or have it fully removed. Grinding is most common and allows replanting nearby if desired.
 
@@ -154,9 +154,9 @@ Emergency tree-on-house removal typically ranges from $1,500 to $5,000 or more d
 
 ## Related Guides for Sioux Falls Homeowners
 
-  * [Tree Services in Sioux Falls: Complete Guide to Local Tree Care](https://siouxfallsgo.com/tree-services-sioux-falls-guide/)
-  * [Tree Removal Cost in Sioux Falls: 2024 Local Pricing Guide](https://siouxfallsgo.com/tree-removal-cost-sioux-falls-2/)
-  * [How to Choose a Tree Service Company in Sioux Falls](https://siouxfallsgo.com/how-to-choose-tree-service-sioux-falls/)
-  * [Emergency Tree Removal in Sioux Falls: Storm Damage & 24/7 Service](https://siouxfallsgo.com/emergency-tree-removal-sioux-falls-2/)
-  * [Best Time to Trim Trees in South Dakota: Seasonal Tree Care Guide](https://siouxfallsgo.com/best-time-trim-trees-south-dakota/)
-  * [Complete Guide to Professional Tree Care in Sioux Falls](https://siouxfallsgo.com/professional-tree-care-sioux-falls-complete-guide-3/)
+  * [Tree Services in Sioux Falls: Complete Guide to Local Tree Care](/local-tree-services)
+  * [Tree Removal Cost in Sioux Falls: 2024 Local Pricing Guide](/local-tree-services)
+  * [How to Choose a Tree Service Company in Sioux Falls](/local-tree-services)
+  * [Emergency Tree Removal in Sioux Falls: Storm Damage & 24/7 Service](/guides/emergency-tree-removal-in-sioux-falls-storm-damage-and-24-7-service)
+  * [Best Time to Trim Trees in South Dakota: Seasonal Tree Care Guide](/local-tree-services)
+  * [Complete Guide to Professional Tree Care in Sioux Falls](/guides/complete-guide-to-professional-tree-care-in-sioux-falls)

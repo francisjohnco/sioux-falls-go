@@ -13,7 +13,7 @@ updatedAt: 2026-02-19
 seo:
   title: "How Sioux Falls Go Helps Local Businesses Get Chosen More Often"
   description: "Learn how Sioux Falls Go helps local businesses become known, trusted, and recommended by the community \u2014 before customers even start searching."
-sourceUrl: "https://siouxfallsgo.com/how-sioux-falls-go-supports-local-businesses/"
+sourceUrl: "/guides/how-sioux-falls-go-supports-local-businesses"
 ---
 
 Running a local business in Sioux Falls today isn’t simple.
@@ -109,4 +109,4 @@ There’s no pressure and no complicated setup.
 
 Just tell us about your business and we’ll walk you through how it works.
 
-[Schedule a quick intro →](https://siouxfallsgo.com/spotlight/)
+[Schedule a quick intro →](/for-local-businesses)
