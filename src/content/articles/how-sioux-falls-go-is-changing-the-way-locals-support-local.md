@@ -1,6 +1,7 @@
 ---
 title: "How Sioux Falls Go Is Changing the Way Locals Support Local"
 category: "for-local-businesses"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

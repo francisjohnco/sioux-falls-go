@@ -1,13 +1,25 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import BusinessCard from '../components/BusinessCard.astro';
 import Icon from '../components/Icon.astro';
 
-const businesses = (await getCollection('businesses')).slice(0, 4);
-const articles = (await getCollection('articles')).slice(0, 3);
+const businesses = await getCollection('businesses');
+const spotlightBusinesses = businesses.filter((b) => b.data.heroImage).slice(0, 3);
+const spotlightWithCat = await Promise.all(
+  spotlightBusinesses.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
+);
+
+const resourceSlugs = [
+  'how-does-sioux-falls-go-get-my-business-in-front-of-customers',
+  'how-sioux-falls-go-supports-local-businesses',
+  'how-sioux-falls-go-is-changing-the-way-locals-support-local',
+];
+const allArticles = await getCollection('articles');
+const resourceArticles = resourceSlugs
+  .map((slug) => allArticles.find((a) => a.id === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -17,21 +29,20 @@ const schema = {
 };
 ---
 <BaseLayout
-  title="Win Prizes, Shop Local, Grow Your Business"
-  description="Sioux Falls Go is a community-driven platform that helps local residents discover trusted businesses, explore special offers, and enjoy fun giveaways."
+  title="Sioux Falls Go — The Homepage for Living in Sioux Falls"
+  description="Bringing Sioux Falls businesses and neighbors together. Discover trusted local businesses, enter giveaways, and support the community that supports you."
   canonicalPath="/"
   schema={schema}
 >
   <SiteHeader slot="header" />
 
   <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
     <div class="container hero-inner">
+      <span class="hero-eyebrow-text">Welcome to Sioux Falls Go</span>
       <h1>Bringing Sioux Falls Businesses &amp; Neighbors Together</h1>
-      <p class="hero-sub">
-        <strong>Businesses gain</strong> visibility and community support.
-        <strong>Locals discover</strong> trusted companies and earn rewards.
-        Together, we build a stronger Sioux Falls.
-      </p>
+      <p class="hero-sub"><strong>Businesses gain</strong> visibility and community support. <strong>Locals discover</strong> trusted companies and earn rewards. Together, we build a stronger Sioux Falls.</p>
       <div class="hero-actions">
         <a class="button" href="/businesses">Explore the Directory</a>
         <a class="button button--ghost" href="/get-featured">Get Listed — Free</a>
@@ -40,94 +51,236 @@ const schema = {
   </section>
 
   <div class="container">
-    <section aria-labelledby="spotlight-heading" class="section">
+    <section class="section">
       <span class="eyebrow">Our Latest Spotlight</span>
-      <h2 id="spotlight-heading">Check out these hometown favorites</h2>
-      <div class="grid">
-        {businesses.map((business) => <BusinessCard business={business} />)}
-      </div>
-      <a class="view-all" href="/businesses">View all businesses →</a>
-    </section>
-
-    <section aria-labelledby="locals-heading" class="section locals-section">
-      <h2 id="locals-heading">For Locals</h2>
-      <p class="section-sub">Supporting Local Made Fun &amp; Rewarding</p>
-      <div class="locals-grid">
-        <div class="locals-item">
-          <h3><Icon name="gift" size={20} /> Enter Giveaways</h3>
-          <p>Enter to win free prizes from top-rated businesses in Sioux Falls — no strings attached.</p>
-          <a href="/spotlight-giveaway">Check our giveaways →</a>
-        </div>
-        <div class="locals-item">
-          <h3><Icon name="search" size={20} /> Explore Directory</h3>
-          <p>Discover community-first businesses across every category in Sioux Falls.</p>
-          <a href="/businesses">Browse the directory →</a>
-        </div>
-        <div class="locals-item">
-          <h3><Icon name="star" size={20} /> Become a Local Legend</h3>
-          <p>Join free to access exclusive and limited-time deals from trusted local businesses.</p>
-          <a href="#legend">Join the community →</a>
-        </div>
-      </div>
-    </section>
-
-    <section aria-labelledby="guides-heading" class="section">
-      <span class="eyebrow">Business Resources</span>
-      <h2 id="guides-heading">Tips and advice for local businesses</h2>
-      <div class="grid">
-        {articles.map((article) => (
-          <a class="card" href={`/guides/${article.id}`}>
-            <h3>{article.data.title}</h3>
-            <p>{article.data.seo.description}</p>
+      <h2>Check out these hometown favorites</h2>
+      <div class="spotlight-grid">
+        {spotlightWithCat.map(({ business, category }) => (
+          <a class="spot-card" href={`/businesses/${business.id}`}>
+            <div class="spot-media" style={`background-image: url(${business.data.heroImage})`}>
+              <span class="spot-badge">
+                {business.data.partnershipTier === 'community-champion' ? <><Icon name="star" size={12} /> Community Champion</> : category.data.name}
+              </span>
+            </div>
+            <div class="spot-body">
+              <h3>{business.data.name}</h3>
+              {business.data.googleRating && <p class="spot-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)} {business.data.googleReviewCount && `(${business.data.googleReviewCount} reviews)`}</p>}
+            </div>
           </a>
         ))}
       </div>
-    </section>
-
-    <section id="legend" class="legend-cta">
-      <h2>Become a Local Legend</h2>
-      <p>Join <strong>Local Legend VIP</strong> for gift cards, prizes, and exclusive deals from top Sioux Falls businesses. 100% free — no strings attached.</p>
-      <form class="legend-form" onsubmit="event.preventDefault()">
-        <input type="text" placeholder="Name" aria-label="Name" />
-        <input type="email" placeholder="Email" aria-label="Email" required />
-        <button type="submit" class="button">Start Winning</button>
-      </form>
+      <a class="view-all" href="/businesses">View all businesses →</a>
     </section>
   </div>
+
+  <section class="locals-section">
+    <div class="container">
+      <div class="locals-head">
+        <span class="eyebrow">For Locals</span>
+        <h2>This Is Your Sioux Falls</h2>
+        <p>The people who make this city home — this whole platform exists for you.</p>
+      </div>
+      <div class="locals-bento">
+        <a href="#legend" class="locals-hero-card">
+          <div class="locals-hero-overlay"></div>
+          <div class="locals-hero-content">
+            <span class="locals-hero-badge"><Icon name="sparkles" size={14} /> 100% Free Forever</span>
+            <h3>Become a Local Legend</h3>
+            <p>Exclusive deals, gift cards, and prizes from the businesses that make Sioux Falls, Sioux Falls.</p>
+            <span class="button">Join the Community →</span>
+          </div>
+        </a>
+        <a href="/spotlight-giveaway" class="locals-small-card">
+          <div class="icon-badge"><Icon name="gift" size={22} /></div>
+          <h3>Enter Giveaways</h3>
+          <p>Free prizes from top-rated Sioux Falls businesses. No strings attached.</p>
+          <span class="locals-link">Check our giveaways →</span>
+        </a>
+        <a href="/businesses" class="locals-small-card">
+          <div class="icon-badge"><Icon name="search" size={22} /></div>
+          <h3>Explore the Directory</h3>
+          <p>Community-first businesses across every category in Sioux Falls.</p>
+          <span class="locals-link">Browse the directory →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {resourceArticles.length > 0 && (
+    <div class="container">
+      <section class="section">
+        <span class="eyebrow">Business Resources</span>
+        <h2>Tips and advice for local businesses</h2>
+        <div class="resource-grid">
+          {resourceArticles.map((article) => (
+            <a class="resource-card" href={`/guides/${article.id}`}>
+              {article.data.heroImage && <div class="resource-media" style={`background-image: url(${article.data.heroImage})`}></div>}
+              <div class="resource-body">
+                <span class="resource-tag">{article.data.contentType.replace('-', ' ')}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  )}
+
+  <section class="about-section">
+    <div class="container about-inner">
+      <div class="about-copy">
+        <span class="eyebrow">About Sioux Falls Go</span>
+        <h2>Built by neighbors, for neighbors</h2>
+        <p>Sioux Falls Go isn't a database, and it isn't ad space for the highest bidder. It's a real, curated recommendation from people who live here — connecting the businesses that show up for this community with the residents who want to support them.</p>
+      </div>
+      <div class="about-ctas">
+        <a href="/businesses" class="about-cta-card about-cta-card--locals">
+          <div class="icon-badge"><Icon name="heart" size={20} /></div>
+          <h3>I'm a Local</h3>
+          <p>Find trusted businesses, enter giveaways, and support the neighbors building this city.</p>
+          <span class="button">Explore as a Local →</span>
+        </a>
+        <a href="/get-featured" class="about-cta-card about-cta-card--business">
+          <div class="icon-badge"><Icon name="briefcase" size={20} /></div>
+          <h3>I Own a Business</h3>
+          <p>Get real visibility with a community that actually wants to shop local first.</p>
+          <span class="button button--navy">Get Featured →</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <SiteFooter slot="footer" />
 </BaseLayout>
 
 <style>
-  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-6) var(--space-5); }
-  .hero h1 { color: #fff; max-width: 20ch; margin-block: 0 var(--space-2); }
-  .hero-sub { max-width: 46ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; }
-  .hero-actions { display: flex; gap: var(--space-2); margin-top: var(--space-3); flex-wrap: wrap; }
+  .section { padding-block: 3.5rem; }
+  .section h2 { font-size: 1.9rem; margin-top: 0.3rem; }
+  .eyebrow { display: block; }
+
+  /* HERO */
+  .hero { position: relative; min-height: 32rem; display: flex; align-items: center; overflow: hidden; }
+  .hero-photo {
+    position: absolute; inset: -2%; width: 104%; height: 104%;
+    background: url('/images/scenic/falls-park-2.jpg') center/cover;
+    animation: hero-kenburns 24s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes hero-kenburns {
+    0%   { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.09) translate(-1.5%, -1%); }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.94) 0%, rgba(13,23,48,0.85) 45%, rgba(13,23,48,0.3) 75%, rgba(13,23,48,0.05) 100%); }
+  .hero-inner { position: relative; z-index: 1; padding-block: 4rem; padding-left: 11.1rem; color: #fff; max-width: 52rem; margin-right: auto; }
+  .hero-eyebrow-text { display: block; font-weight: 700; font-size: 0.9375rem; color: var(--color-prairie, #F5B429); text-transform: uppercase; letter-spacing: 0.01em; margin-bottom: 0.6rem; }
+  .hero h1 { font-size: 2.75rem; max-width: 20ch; line-height: 1.12; color: #fff; margin: 0; }
+  .hero-sub { max-width: 66ch; color: rgba(255,255,255,0.9); font-size: 1.125rem; margin-top: 1rem; }
+  .hero-actions { display: flex; gap: 0.9rem; margin-top: 1.8rem; flex-wrap: wrap; }
   .hero-actions .button--ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
+  @media (max-width: 60rem) { .hero-inner { padding-left: var(--space-2); max-width: 100%; } }
 
-  .section { padding-block: var(--space-5) 0; }
-  .section-sub { color: var(--color-navy-light); margin-top: -0.5rem; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .view-all { display: inline-block; margin-top: var(--space-3); font-weight: 700; }
+  /* SPOTLIGHT */
+  .spotlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
+  @media (max-width: 50rem) { .spotlight-grid { grid-template-columns: 1fr; } }
+  .spot-card { display: block; text-decoration: none; border-radius: 1rem; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(13,23,48,0.08); border: 1px solid var(--color-line); transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease; }
+  .spot-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(13,23,48,0.18); }
+  .spot-media { height: 12rem; background-size: cover; background-position: center; position: relative; }
+  .spot-badge { display: inline-flex; align-items: center; gap: 0.3rem; position: absolute; top: 0.8rem; left: 0.8rem; background: var(--color-orange); color: #fff; font-size: 0.6875rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; }
+  .spot-body { padding: 1.3rem; }
+  .spot-body h3 { font-size: 1.1875rem; margin: 0; }
+  .spot-rating { display: flex; align-items: center; gap: 0.3rem; color: var(--color-navy); font-weight: 700; font-size: 0.875rem; margin-top: 0.6rem; }
+  .filled-star { fill: #F5B429; color: #F5B429; }
+  .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 
-  .locals-section { background: var(--color-surface); margin-inline: calc(-1 * var(--space-3)); padding: var(--space-5) var(--space-3); border-radius: var(--radius); }
-  .locals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .locals-item h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; }
-  .locals-item h3 :global(svg) { color: var(--color-orange-dark); flex-shrink: 0; }
-  .locals-item p { color: var(--color-navy-light); font-size: 0.9375rem; }
-
-  .legend-cta {
-    margin: var(--space-6) 0;
-    background: linear-gradient(135deg, var(--color-orange), var(--color-orange-dark));
-    color: #fff; border-radius: var(--radius); padding: var(--space-4);
-    text-align: center;
+  /* FOR LOCALS */
+  .locals-section { background: linear-gradient(180deg, #0d1730 0%, #1B2A4A 100%); padding-block: 5rem; position: relative; overflow: hidden; }
+  .locals-section::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(245,180,41,0.5) 1.5px, transparent 1.5px);
+    background-size: 34px 34px; opacity: 0.25; animation: drift-bg 22s linear infinite;
   }
-  .legend-cta h2 { color: #fff; }
-  .legend-cta p { max-width: 40ch; margin: 0 auto var(--space-3); }
-  .legend-form { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
-  .legend-form input {
-    padding: 0.7rem 1rem; border-radius: var(--radius-pill); border: none; font-size: 0.9375rem; min-width: 12rem;
+  @keyframes drift-bg { from { background-position: 0 0; } to { background-position: 200px 200px; } }
+  @media (prefers-reduced-motion: reduce) { .locals-section::before { animation: none; } }
+  .locals-head { position: relative; z-index: 1; text-align: center; margin-bottom: 3rem; }
+  .locals-head .eyebrow { color: var(--color-prairie, #F5B429); }
+  .locals-head h2 { color: #fff; font-size: 2.3rem; margin-top: 0.4rem; }
+  .locals-head p { color: rgba(255,255,255,0.75); font-size: 1.0625rem; max-width: 40ch; margin: 0.8rem auto 0; }
+
+  .locals-bento { position: relative; z-index: 1; display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: 1.4rem; }
+  @media (max-width: 55rem) { .locals-bento { grid-template-columns: 1fr; } }
+  .locals-hero-card {
+    grid-row: span 2; border-radius: 1.4rem; overflow: hidden; position: relative; text-decoration: none;
+    background: url('/images/scenic/downtown-1.jpg') center/cover;
+    min-height: 26rem; display: flex; align-items: flex-end;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
   }
-  .legend-form .button { background: var(--color-navy); }
-  .legend-form .button:hover { background: #0e1830; }
+  .locals-hero-card:hover { transform: scale(1.015); }
+  .locals-hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,23,48,0.92) 10%, rgba(13,23,48,0.15) 65%); }
+  .locals-hero-content { position: relative; z-index: 1; padding: 2.2rem; }
+  .locals-hero-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem; background: var(--color-prairie, #F5B429); color: #1B2A4A;
+    font-weight: 800; font-size: 0.8125rem; padding: 0.4rem 1rem; border-radius: 999px; margin-bottom: 1rem;
+    animation: badge-float 3s ease-in-out infinite;
+  }
+  @keyframes badge-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @media (prefers-reduced-motion: reduce) { .locals-hero-badge { animation: none; } }
+  .locals-hero-content h3 { color: #fff; font-size: 1.9rem; margin-bottom: 0.6rem; }
+  .locals-hero-content p { color: rgba(255,255,255,0.85); font-size: 1.0625rem; max-width: 30ch; margin-bottom: 1.4rem; }
+
+  .locals-small-card {
+    display: flex; flex-direction: column; gap: 0.7rem; text-decoration: none;
+    border-radius: 1.2rem; background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.12); padding: 1.6rem;
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), background 0.3s ease, border-color 0.3s ease;
+  }
+  .locals-small-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.1); border-color: rgba(245,180,41,0.5); }
+  .locals-small-card .icon-badge {
+    width: 3.2rem; height: 3.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--color-orange), var(--color-prairie, #F5B429)); flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(240,126,35,0.4); color: #fff;
+  }
+  .locals-small-card h3 { color: #fff; font-size: 1.15rem; margin: 0; }
+  .locals-small-card p { color: rgba(255,255,255,0.7); font-size: 0.9375rem; margin: 0; }
+  .locals-link { color: var(--color-prairie, #F5B429); font-weight: 700; font-size: 0.875rem; margin-top: auto; }
+
+  /* BUSINESS RESOURCES */
+  .resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
+  @media (max-width: 50rem) { .resource-grid { grid-template-columns: 1fr; } }
+  .resource-card { display: block; border-radius: 1rem; overflow: hidden; text-decoration: none; background: #fff; border: 1px solid var(--color-line); box-shadow: 0 1px 3px rgba(13,23,48,0.06); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(13,23,48,0.14); }
+  .resource-media { height: 9rem; background-size: cover; background-position: center; }
+  .resource-body { padding: 1.2rem; }
+  .resource-tag { color: var(--color-orange-dark); font-weight: 700; font-size: 0.6875rem; text-transform: uppercase; }
+  .resource-body h3 { font-size: 1.0625rem; margin-top: 0.4rem; color: var(--color-navy); }
+  .resource-body p { color: var(--color-navy-light); font-size: 0.875rem; margin-top: 0.4rem; }
+
+  /* ABOUT + DUAL CTA */
+  .about-section { background: var(--color-surface); padding-block: 4.5rem; border-top: 1px solid var(--color-line); }
+  .about-inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 55rem) { .about-inner { grid-template-columns: 1fr; } }
+  .about-copy h2 { font-size: 2rem; margin-top: 0.5rem; color: var(--color-navy); }
+  .about-copy p { font-size: 1.0625rem; color: var(--color-navy-light); margin-top: 1rem; line-height: 1.6; max-width: 34ch; }
+  .about-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+  @media (max-width: 55rem) { .about-ctas { grid-template-columns: 1fr; } }
+  .about-cta-card {
+    display: block; text-decoration: none;
+    background: #fff; border-radius: 1.1rem; padding: 1.8rem; border: 1px solid var(--color-line);
+    box-shadow: 0 1px 3px rgba(13,23,48,0.06);
+    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .about-cta-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(13,23,48,0.14); }
+  .about-cta-card--locals:hover { border-color: var(--color-orange); }
+  .about-cta-card--business:hover { border-color: var(--color-navy); }
+  .about-cta-card .icon-badge {
+    width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: #fff;
+  }
+  .about-cta-card--locals .icon-badge { background: linear-gradient(135deg, var(--color-orange), var(--color-prairie, #F5B429)); }
+  .about-cta-card--business .icon-badge { background: linear-gradient(135deg, var(--color-navy), #2c3f61); }
+  .about-cta-card h3 { font-size: 1.1875rem; color: var(--color-navy); margin: 0; }
+  .about-cta-card p { font-size: 0.9375rem; color: var(--color-navy-light); margin: 0.5rem 0 1.2rem; }
+  .about-cta-card .button { font-size: 0.875rem; padding: 0.65rem 1.2rem; }
+  .button--navy { background: var(--color-navy); }
 </style>

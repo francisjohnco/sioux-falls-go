@@ -1,6 +1,7 @@
 ---
 title: "How Does Sioux Falls Go Get My Business in Front of Customers?"
 category: "for-local-businesses"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
