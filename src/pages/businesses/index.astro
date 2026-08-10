@@ -84,16 +84,6 @@ const schema = {
     </div>
   </section>
 
-  <!-- CATEGORY PILLS -->
-  <div class="container category-pills-row">
-    {popularCategories.map(({ cat }) => (
-      <a href={`/${cat.data.slug}`} class="category-pill">
-        <span class="category-pill-icon"><Icon name={cat.data.icon} size={22} /></span>
-        <span>{cat.data.name}</span>
-      </a>
-    ))}
-  </div>
-
   <div class="container page">
     <div class="hero-trust-row">
       <span><Icon name="check" size={13} /> 4.8+ rating required</span>
