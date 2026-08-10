@@ -15,6 +15,7 @@ interface EventCategory {
   subtitle: string;
   icon: string;
   iconClass: string;
+  seeAllUrl: string;
   events: EventItem[];
 }
 
@@ -22,6 +23,7 @@ interface EventCategory {
 const categories: EventCategory[] = [
   {
     id: 'family', label: 'Family', subtitle: 'Fairs & kid-friendly', icon: 'heart', iconClass: 'tab-icon--family',
+    seeAllUrl: 'https://www.experiencesiouxfalls.com/events',
     events: [
       { month: 'Jul', day: '31', title: 'Sioux Empire Fair', description: 'Rides, fair food, livestock shows, and nightly entertainment at the Fairgrounds.', sourceName: 'Sioux Empire Fair', sourceUrl: 'https://en.wikipedia.org/wiki/Sioux_Empire_Fair' },
       { month: 'Aug', day: '14', title: 'Heartland Corn Maze Opening Weekend', description: 'An 11-acre maze shaped like an eagle, with clues to find along the way.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend' },
@@ -30,6 +32,7 @@ const categories: EventCategory[] = [
   },
   {
     id: 'downtown', label: 'Downtown', subtitle: 'Markets & street fests', icon: 'home', iconClass: 'tab-icon--downtown',
+    seeAllUrl: 'https://dtsf.com/events/',
     events: [
       { month: 'Aug', day: '7', title: 'Downtown Open Streets', description: 'Phillips Avenue goes car-free for a day of vendors and family activities.', sourceName: 'Downtown Sioux Falls, Inc.', sourceUrl: 'https://dtsf.com/' },
       { month: 'Aug', day: '21', title: 'Four Winds Music & Art Fest', description: 'Local, regional, and national bands across several downtown venues.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend' },
@@ -38,6 +41,7 @@ const categories: EventCategory[] = [
   },
   {
     id: 'music', label: 'Live Music', subtitle: 'Concerts & shows', icon: 'mic', iconClass: 'tab-icon--music',
+    seeAllUrl: 'https://www.travelsouthdakota.com/things-to-do/events',
     events: [
       { month: 'Aug', day: '6', title: 'Levitt at the Falls: The Fretliners', description: 'Free outdoor concert series right at Falls Park.', sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events' },
       { month: 'Thru', day: 'Sep', title: 'Municipal Band Summer Concerts', description: "Sioux Falls's own municipal band, playing free shows through September.", sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events' },
@@ -70,7 +74,7 @@ const categories: EventCategory[] = [
             <div class="event-grid">
               {cat.events.map((ev) => (
                 <div class="event-card">
-                  <a class="event-card-link" href="#">
+                  <a class="event-card-link" href={ev.sourceUrl} target="_blank" rel="noopener">
                     <div class="event-card-top">
                       <div class="event-date"><span class="month">{ev.month}</span><span class="day">{ev.day}</span></div>
                       <div class="event-body"><h4>{ev.title}</h4><p>{ev.description}</p></div>
@@ -80,7 +84,7 @@ const categories: EventCategory[] = [
                 </div>
               ))}
             </div>
-            <div class="see-all-row"><a class="see-all-btn" href="#">See all {cat.label} events →</a></div>
+            <div class="see-all-row"><a class="see-all-btn" href={cat.seeAllUrl} target="_blank" rel="noopener">See all {cat.label} events →</a></div>
           </div>
         ))}
       </div>
