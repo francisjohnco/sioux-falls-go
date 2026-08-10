@@ -69,6 +69,7 @@ const businesses = defineCollection({
     category: reference('categories'),
     neighborhood: reference('neighborhoods').optional(),
     address: z.string().optional(), // not always available at import — see migration report
+    showAddress: z.boolean().default(false), // per-business privacy toggle — most businesses keep their street address private
     latitude: z.number().optional(),
     longitude: z.number().optional(),
     phone: z.string().optional(),

@@ -39,10 +39,11 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
+    <div class="hero-timelapse"></div>
     <div class="hero-overlay"></div>
     <div class="container hero-inner">
       <span class="hero-eyebrow-text">Welcome to Sioux Falls Go</span>
-      <h1>Bringing Sioux Falls Businesses &amp; Neighbors Together</h1>
+      <h1>Discover and Support Local Businesses in Sioux Falls, SD</h1>
       <p class="hero-sub"><strong>Businesses gain</strong> visibility and community support. <strong>Locals discover</strong> trusted companies and earn rewards. Together, we build a stronger Sioux Falls.</p>
       <div class="hero-actions">
         <a class="button" href="/businesses">Explore the Directory</a>
@@ -163,19 +164,26 @@ const schema = {
   .eyebrow { display: block; }
 
   /* HERO */
-  .hero { position: relative; min-height: 42rem; display: flex; align-items: center; overflow: hidden; }
+  .hero { position: relative; min-height: 46rem; display: flex; align-items: center; overflow: hidden; }
   .hero-photo {
     position: absolute; inset: -2%; width: 104%; height: 104%;
-    background: url('/images/scenic/falls-park-2.jpg') center/cover;
-    animation: hero-kenburns 24s ease-in-out infinite alternate;
+    background: url('/images/scenic/downtown-1.jpg') center/cover;
+    animation: hero-kenburns 30s ease-in-out infinite alternate;
     will-change: transform;
   }
   @keyframes hero-kenburns {
     0%   { transform: scale(1) translate(0, 0); }
-    100% { transform: scale(1.09) translate(-1.5%, -1%); }
+    100% { transform: scale(1.1) translate(-1.5%, -1%); }
   }
   @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.94) 0%, rgba(13,23,48,0.85) 45%, rgba(13,23,48,0.3) 75%, rgba(13,23,48,0.05) 100%); }
+  .hero-timelapse { position: absolute; inset: 0; animation: hero-timelapse 10s ease-in-out infinite alternate; }
+  @keyframes hero-timelapse {
+    0%   { background: linear-gradient(100deg, rgba(20,30,50,0.6) 0%, rgba(20,30,50,0.32) 50%, rgba(255,150,80,0.14) 100%); }
+    50%  { background: linear-gradient(100deg, rgba(10,14,28,0.88) 0%, rgba(10,14,28,0.6) 50%, rgba(46,111,158,0.24) 100%); }
+    100% { background: linear-gradient(100deg, rgba(6,9,20,0.94) 0%, rgba(6,9,20,0.72) 50%, rgba(245,180,41,0.12) 100%); }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-timelapse { animation: none; background: rgba(10,14,28,0.8); } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.7) 0%, rgba(13,23,48,0.5) 45%, rgba(13,23,48,0.15) 75%); }
   .hero-inner { position: relative; z-index: 1; padding-block: 4rem; padding-left: 4rem; color: #fff; max-width: 700px; margin-left: 0; margin-right: auto; }
   .hero-eyebrow-text { display: block; font-weight: 700; font-size: 0.9375rem; color: var(--color-prairie, #F5B429); text-transform: uppercase; letter-spacing: 0.01em; margin-bottom: 0.6rem; }
   .hero h1 { font-size: 2.75rem; max-width: 20ch; line-height: 1.12; color: #fff; margin: 0; }

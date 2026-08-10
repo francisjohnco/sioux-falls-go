@@ -1,6 +1,7 @@
 ---
 name: "La Luna Caf\u00e9"
 category: "coffee-shops"
+showAddress: true
 verifiedAt: 2026-07-29
 claimed: false
 heroImage: "/images/businesses/la-luna-cafe.jpg"
