@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -12,7 +12,7 @@ const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-
 
 const newlyVerified = [...businesses]
   .sort((a, b) => b.data.verifiedAt.getTime() - a.data.verifiedAt.getTime())
-  .slice(0, 3);
+  .slice(0, 6);
 
 const categoryCounts = categories
   .map((cat) => ({ cat, count: businesses.filter((b) => b.data.category.id === cat.id).length }))
@@ -20,6 +20,14 @@ const categoryCounts = categories
   .sort((a, b) => b.count - a.count);
 
 const popularCategories = categoryCounts.slice(0, 6);
+
+// Real stats for the closing section — computed from actual data, not made up
+const ratedBusinesses = businesses.filter((b) => b.data.googleRating);
+const avgRating = ratedBusinesses.length
+  ? (ratedBusinesses.reduce((sum, b) => sum + (b.data.googleRating || 0), 0) / ratedBusinesses.length).toFixed(1)
+  : null;
+const givingBackCount = businesses.filter((b) => b.data.partnershipTier === 'community-champion' || b.data.partnershipTier === 'community-listing').length;
+const givingBackPct = businesses.length ? Math.round((givingBackCount / businesses.length) * 100) : 0;
 
 const schema = {
   '@context': 'https://schema.org',
@@ -94,31 +102,21 @@ const schema = {
     </div>
 
     {giveBack.length > 0 && (
-      <section aria-labelledby="giveback-heading" class="giveback-list-section">
+      <section aria-labelledby="giveback-heading" class="giveback-section">
         <div class="section-header-row">
           <div>
             <span class="eyebrow"><Icon name="handshake" size={13} /> Give Back Partners</span>
             <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
           </div>
-          <a href="/businesses?tier=community-listing" class="see-all-link">See all →</a>
         </div>
-        <div class="giveback-list">
-          {giveBack.slice(0, 5).map(async (business) => {
-            const cat = await getEntry(business.data.category);
-            return (
-              <a href={`/businesses/${business.id}`} class="giveback-row">
-                <div class="giveback-thumb" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
-                  {!business.data.heroImage && <Icon name={cat.data.icon} size={20} class="giveback-thumb-icon" />}
-                </div>
-                <div class="giveback-info">
-                  <strong>{business.data.name}</strong>
-                  <span class="giveback-meta">{cat.data.name}</span>
-                </div>
-                {business.data.googleRating && <span class="giveback-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)}</span>}
-              </a>
-            );
-          })}
+        <div class="grid" id="giveback-grid">
+          {giveBack.map((business, i) => (
+            <div class="reveal-item" data-index={i} hidden={i >= 6}><BusinessCard business={business} /></div>
+          ))}
         </div>
+        {giveBack.length > 6 && (
+          <div class="see-more-wrap"><button class="see-more-btn" data-target="giveback-grid">See more ({giveBack.length - 6} more)</button></div>
+        )}
       </section>
     )}
   </div>
@@ -153,9 +151,11 @@ const schema = {
         </div>
       </div>
       <div class="grid" id="business-grid">
-        {businesses.map((business) => (
+        {businesses.map((business, i) => (
           <div
-            class="business-grid-item"
+            class="business-grid-item reveal-item"
+            data-index={i}
+            hidden={i >= 6}
             data-search={`${business.data.name} ${business.data.category.id}`.toLowerCase()}
             data-category={business.data.category.id}
             data-tier={business.data.partnershipTier || ''}
@@ -165,6 +165,55 @@ const schema = {
         ))}
       </div>
       <p id="no-results" class="empty-note" hidden>No businesses match your filters.</p>
+      {businesses.length > 6 && (
+        <div class="see-more-wrap"><button class="see-more-btn" data-target="business-grid">See more ({businesses.length - 6} more)</button></div>
+      )}
+    </section>
+
+    <section class="stats-band" aria-label="Directory stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <strong>{businesses.length}</strong>
+          <span>Vetted businesses</span>
+        </div>
+        {avgRating && (
+          <div class="stat-item">
+            <strong><Icon name="star" size={20} class="filled-star" /> {avgRating}</strong>
+            <span>Average rating</span>
+          </div>
+        )}
+        <div class="stat-item">
+          <strong>{givingBackPct}%</strong>
+          <span>Giving back to Sioux Falls</span>
+        </div>
+        <div class="stat-item">
+          <strong>{categoryCounts.length}</strong>
+          <span>Categories covered</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="dir-faq" aria-labelledby="dir-faq-heading">
+      <span class="eyebrow">Questions</span>
+      <h2 id="dir-faq-heading">How the directory works</h2>
+      <div class="dir-faq-list">
+        <details class="dir-faq-item">
+          <summary>How does a business get listed here?</summary>
+          <p>Every business is personally vetted before it's added — a 4.8+ Google rating is required, along with a real, ongoing presence in the Sioux Falls community. We don't accept paid listings.</p>
+        </details>
+        <details class="dir-faq-item">
+          <summary>What does "Verified" mean?</summary>
+          <p>Our team has personally confirmed the business's contact info, hours, and standing — not an automated check, an actual review.</p>
+        </details>
+        <details class="dir-faq-item">
+          <summary>What's the difference between Give Back Partners and Community Champions?</summary>
+          <p>Both tiers meet the same 4.8+ rating bar. Give Back Partners commit to at least two community giveaways a year. Community Champions go further, with deeper community investment and additional visibility on the platform.</p>
+        </details>
+        <details class="dir-faq-item">
+          <summary>Is this free for residents to use?</summary>
+          <p>Completely. Sioux Falls Go makes money from businesses that choose to invest in the platform, never from residents.</p>
+        </details>
+      </div>
     </section>
 
     <div class="claim-cta">
@@ -286,6 +335,29 @@ const schema = {
 
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
+  .see-more-wrap { text-align: center; margin-top: var(--space-3); }
+  .see-more-btn {
+    background: #fff; border: 1.5px solid var(--color-river); color: var(--color-river);
+    font-weight: 700; font-size: 0.9375rem; padding: 0.7rem 1.6rem; border-radius: var(--radius-pill); cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .see-more-btn:hover { background: var(--color-river); color: #fff; }
+  .giveback-section { margin-bottom: var(--space-5); }
+
+  .stats-band {
+    margin-top: var(--space-5); padding: var(--space-4); border-radius: var(--radius);
+    background: linear-gradient(120deg, var(--color-navy) 0%, var(--color-river) 100%);
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-3); text-align: center; }
+  .stat-item { display: flex; flex-direction: column; gap: 0.3rem; }
+  .stat-item strong { display: flex; align-items: center; justify-content: center; gap: 0.4rem; font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; color: #fff; }
+  .stat-item span { font-size: 0.8125rem; color: rgba(255,255,255,0.8); font-weight: 600; }
+
+  .dir-faq { margin-top: var(--space-5); }
+  .dir-faq-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-3); }
+  .dir-faq-item { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); }
+  .dir-faq-item summary { cursor: pointer; font-weight: 700; color: var(--color-navy); }
+  .dir-faq-item p { margin: var(--space-1) 0 0; font-size: 0.9375rem; color: var(--color-navy-light); }
 
   .all-biz-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-2); }
   .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
@@ -304,16 +376,29 @@ const schema = {
 </style>
 
 <script>
+  // See More buttons — reveal the rest of a capped grid
+  document.querySelectorAll('.see-more-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = (btn as HTMLElement).dataset.target!;
+      document.querySelectorAll(`#${targetId} .reveal-item`).forEach((item) => {
+        (item as HTMLElement).hidden = false;
+      });
+      (btn as HTMLElement).style.display = 'none';
+    });
+  });
+
   const searchInput = document.getElementById('hero-search-input') as HTMLInputElement;
   const categoryFilter = document.getElementById('filter-category') as HTMLSelectElement;
   const tierFilter = document.getElementById('filter-tier') as HTMLSelectElement;
   const items = Array.from(document.querySelectorAll('.business-grid-item'));
   const noResults = document.getElementById('no-results')!;
+  const businessSeeMoreBtn = document.querySelector('.see-more-btn[data-target="business-grid"]') as HTMLElement;
 
   function applyFilters() {
     const q = searchInput?.value.trim().toLowerCase() || '';
     const cat = categoryFilter?.value || '';
     const tier = tierFilter?.value || '';
+    const filtering = !!(q || cat || tier);
     let visibleCount = 0;
 
     items.forEach((item) => {
@@ -322,10 +407,19 @@ const schema = {
       const matchesCategory = !cat || el.dataset.category === cat;
       const matchesTier = !tier || el.dataset.tier === tier;
       const match = matchesSearch && matchesCategory && matchesTier;
-      el.style.display = match ? '' : 'none';
-      if (match) visibleCount++;
+      // While actively filtering, show every match regardless of the 6-cap.
+      // With no filter active, respect whatever the See More button has already revealed.
+      if (filtering) {
+        el.hidden = !match;
+      } else if (!match) {
+        el.hidden = true;
+      } else {
+        el.hidden = Number(el.dataset.index) >= 6 && businessSeeMoreBtn?.style.display !== 'none';
+      }
+      if (match && !el.hidden) visibleCount++;
     });
     noResults.hidden = visibleCount > 0;
+    if (businessSeeMoreBtn) businessSeeMoreBtn.style.display = filtering ? 'none' : '';
   }
 
   searchInput?.addEventListener('input', applyFilters);
