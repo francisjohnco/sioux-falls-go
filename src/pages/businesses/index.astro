@@ -4,24 +4,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import BusinessCard from '../../components/BusinessCard.astro';
-import LayeredHero from '../../components/LayeredHero.astro';
 import Icon from '../../components/Icon.astro';
 
 const businesses = await getCollection('businesses');
 const categories = await getCollection('categories');
-const champions = businesses.filter((b) => b.data.partnershipTier === 'community-champion');
 const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing');
 
 const newlyVerified = [...businesses]
   .sort((a, b) => b.data.verifiedAt.getTime() - a.data.verifiedAt.getTime())
-  .slice(0, 4);
+  .slice(0, 3);
 
 const categoryCounts = categories
   .map((cat) => ({ cat, count: businesses.filter((b) => b.data.category.id === cat.id).length }))
   .filter((c) => c.count > 0)
   .sort((a, b) => b.count - a.count);
 
-const popularCategories = categoryCounts.slice(0, 8);
+const popularCategories = categoryCounts.slice(0, 6);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -37,34 +35,50 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  <LayeredHero
-    eyebrow="Sioux Falls Local Guide"
-    title="Discover and Support Local Businesses in Sioux Falls, SD"
-    subtitle="Real ratings, real recommendations — businesses that earn their spot, not buy it."
-    photoUrl="/images/scenic/falls-park-2.jpg"
-    centered
-    divider="diamond-lattice"
-  >
-    <div class="hero-search">
-      <input type="search" id="hero-search-input" placeholder="Search businesses, services, or categories..." aria-label="Search businesses" />
-      <button class="hero-search-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="7" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-      </button>
-    </div>
-    <p class="hero-popular-searches">
-      Popular: {popularCategories.slice(0, 4).map((c, i) => (
-        <>
-          <a href={`/${c.cat.data.slug}`}>{c.cat.data.name}</a>{i < 3 ? ' · ' : ''}
-        </>
-      ))}
-    </p>
-  </LayeredHero>
+  <!-- HERO — same copy, new warm editorial treatment -->
+  <section class="dir-hero">
+    <div class="container dir-hero-inner">
+      <div class="dir-hero-copy">
+        <span class="eyebrow">Sioux Falls Local Guide</span>
+        <h1>Discover and Support Local Businesses in Sioux Falls, SD</h1>
+        <p class="dir-hero-sub">Real ratings, real recommendations — businesses that earn their spot, not buy it.</p>
 
+        <div class="hero-search">
+          <span class="hero-search-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+          </span>
+          <input type="search" id="hero-search-input" placeholder="Search businesses, services, or categories..." aria-label="Search businesses" />
+        </div>
+        <button class="search-place-btn" id="search-place-btn">Search Place</button>
+
+        <p class="hero-popular-searches">
+          Popular: {popularCategories.slice(0, 4).map((c, i) => (
+            <>
+              <a href={`/${c.cat.data.slug}`}>{c.cat.data.name}</a>{i < 3 ? ' · ' : ''}
+            </>
+          ))}
+        </p>
+      </div>
+
+      <div class="dir-hero-collage">
+        <div class="collage-photo collage-photo--main" style="background-image: url(/images/scenic/falls-park-1.jpg)"></div>
+        <div class="collage-photo collage-photo--sub" style="background-image: url(/images/scenic/downtown-2.jpg)"></div>
+        <div class="collage-badge">
+          <svg viewBox="0 0 120 120" class="collage-badge-ring">
+            <defs><path id="badgeCircle" d="M 60,60 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" /></defs>
+            <text font-size="10.3" font-weight="700" letter-spacing="1.5" fill="#fff">
+              <textPath href="#badgeCircle" startOffset="0%">YOUR SIOUX FALLS GUIDE • YOUR SIOUX FALLS GUIDE •</textPath>
+            </text>
+          </svg>
+          <span class="collage-badge-center"><Icon name="pin" size={22} /></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORY PILLS -->
   <div class="container category-pills-row">
-    {popularCategories.slice(0, 6).map(({ cat }) => (
+    {popularCategories.map(({ cat }) => (
       <a href={`/${cat.data.slug}`} class="category-pill">
         <span class="category-pill-icon"><Icon name={cat.data.icon} size={22} /></span>
         <span>{cat.data.name}</span>
@@ -73,56 +87,53 @@ const schema = {
   </div>
 
   <div class="container page">
-    <div class="hero-trust-row hero-trust-row--static">
+    <div class="hero-trust-row">
       <span><Icon name="check" size={13} /> 4.8+ rating required</span>
       <span><Icon name="check" size={13} /> Real local businesses only</span>
       <span><Icon name="check" size={13} /> No pay-to-rank listings</span>
     </div>
 
     {giveBack.length > 0 && (
-      <>
-        <div class="contour-rule" role="presentation"></div>
-        <section aria-labelledby="giveback-heading" class="giveback-list-section">
-          <div class="section-header-row">
-            <div>
-              <span class="eyebrow"><Icon name="handshake" size={13} /> Give Back Partners</span>
-              <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
-            </div>
-            <a href="/businesses?tier=community-listing" class="see-all-link">See all →</a>
+      <section aria-labelledby="giveback-heading" class="giveback-list-section">
+        <div class="section-header-row">
+          <div>
+            <span class="eyebrow"><Icon name="handshake" size={13} /> Give Back Partners</span>
+            <h2 id="giveback-heading">Businesses investing in Sioux Falls</h2>
           </div>
-          <div class="giveback-list">
-            {giveBack.slice(0, 5).map(async (business) => {
-              const cat = await getEntry(business.data.category);
-              return (
-                <a href={`/businesses/${business.id}`} class="giveback-row">
-                  <div class="giveback-thumb" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
-                    {!business.data.heroImage && <Icon name={cat.data.icon} size={20} class="giveback-thumb-icon" />}
-                  </div>
-                  <div class="giveback-info">
-                    <strong>{business.data.name}</strong>
-                    <span class="giveback-meta">{cat.data.name}</span>
-                  </div>
-                  {business.data.googleRating && <span class="giveback-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)}</span>}
-                </a>
-              );
-            })}
-          </div>
-        </section>
-      </>
+          <a href="/businesses?tier=community-listing" class="see-all-link">See all →</a>
+        </div>
+        <div class="giveback-list">
+          {giveBack.slice(0, 5).map(async (business) => {
+            const cat = await getEntry(business.data.category);
+            return (
+              <a href={`/businesses/${business.id}`} class="giveback-row">
+                <div class="giveback-thumb" style={business.data.heroImage ? `background-image: url(${business.data.heroImage});` : undefined}>
+                  {!business.data.heroImage && <Icon name={cat.data.icon} size={20} class="giveback-thumb-icon" />}
+                </div>
+                <div class="giveback-info">
+                  <strong>{business.data.name}</strong>
+                  <span class="giveback-meta">{cat.data.name}</span>
+                </div>
+                {business.data.googleRating && <span class="giveback-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)}</span>}
+              </a>
+            );
+          })}
+        </div>
+      </section>
     )}
+  </div>
 
-    <div class="contour-rule" role="presentation"></div>
-
-    <section aria-labelledby="new-heading">
-      <span class="eyebrow">🆕 Newly Verified</span>
-      <h2 id="new-heading">Recently confirmed by our team</h2>
+  <section class="verified-band">
+    <div class="container">
+      <span class="eyebrow"><Icon name="sparkles" size={13} /> Newly Verified</span>
+      <h2>Recently confirmed by our team</h2>
       <div class="grid">
-        {newlyVerified.slice(0, 3).map((business) => <BusinessCard business={business} compact />)}
+        {newlyVerified.map((business) => <BusinessCard business={business} compact />)}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <div class="contour-rule" role="presentation"></div>
-
+  <div class="container page">
     <section aria-labelledby="all-biz-heading">
       <div class="all-biz-header">
         <div>
@@ -156,7 +167,7 @@ const schema = {
       <p id="no-results" class="empty-note" hidden>No businesses match your filters.</p>
     </section>
 
-    <div class="claim-cta card">
+    <div class="claim-cta">
       <div>
         <h3>Sioux Falls Go is invite-only.</h3>
         <p>We don't list every business — we recommend the ones that earn a 4.8+ Google rating and give back to the community. Think your business qualifies?</p>
@@ -169,47 +180,89 @@ const schema = {
 </BaseLayout>
 
 <style>
-  .hero-search { max-width: 40rem; margin-top: var(--space-3); display: flex; gap: 0.5rem; }
-  .hero-search input {
-    flex: 1; padding: 0.95rem 1.3rem; border-radius: var(--radius-pill); border: none;
-    font-size: 0.9375rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  /* HERO */
+  .dir-hero { background: #FBF3E7; overflow: hidden; }
+  .dir-hero-inner {
+    display: grid; grid-template-columns: 700px 1fr; gap: 3rem; align-items: center;
+    padding-block: 4rem; min-height: 34rem;
   }
-  .hero-search-btn {
-    width: 3.2rem; height: 3.2rem; border-radius: 50%; border: none; flex-shrink: 0;
-    background: var(--color-orange); color: #fff; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(240,126,35,0.4);
-    transition: background 0.15s ease, transform 0.15s ease;
-  }
-  .hero-search-btn:hover { background: var(--color-orange-dark); transform: scale(1.05); }
-  .hero-popular-searches { margin-top: var(--space-2); font-size: 0.8125rem; color: rgba(255,255,255,0.85); }
-  .hero-popular-searches a { color: #fff; font-weight: 700; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); }
+  @media (max-width: 65rem) { .dir-hero-inner { grid-template-columns: 1fr; padding-block: 3rem; } }
 
-  .category-pills-row {
-    display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center;
-    margin-top: -2.75rem; position: relative; z-index: 2; padding-bottom: var(--space-2);
+  .dir-hero-copy .eyebrow { color: var(--color-orange-dark); }
+  .dir-hero h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-style: italic;
+    font-size: 2.75rem; line-height: 1.15; color: var(--color-navy); margin: 0.5rem 0 1rem; max-width: 18ch;
   }
+  .dir-hero-sub { font-size: 1.0625rem; color: var(--color-navy-light); max-width: 44ch; margin-bottom: 1.8rem; }
+
+  .hero-search {
+    display: flex; align-items: center; gap: 0.6rem; background: #fff; border-radius: 1rem;
+    padding: 0.9rem 1.2rem; box-shadow: 0 8px 24px rgba(27,42,74,0.08); max-width: 30rem;
+  }
+  .hero-search-icon { color: var(--color-navy-light); flex-shrink: 0; }
+  .hero-search input { border: none; outline: none; flex: 1; font-size: 0.9375rem; font-family: var(--font-body); }
+  .search-place-btn {
+    display: block; margin-top: 0.8rem; background: var(--color-gold); color: var(--color-navy); border: none;
+    font-weight: 700; font-size: 0.9375rem; padding: 0.9rem 1.6rem; border-radius: 1rem; cursor: pointer;
+    max-width: 30rem; width: 100%; transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .search-place-btn:hover { background: #ffc857; transform: translateY(-1px); }
+  .hero-popular-searches { margin-top: 1.1rem; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .hero-popular-searches a { color: var(--color-orange-dark); font-weight: 700; text-decoration: none; }
+
+  .dir-hero-collage { position: relative; height: 22rem; }
+  @media (max-width: 65rem) { .dir-hero-collage { display: none; } }
+  .collage-photo { position: absolute; background-size: cover; background-position: center; box-shadow: 0 20px 44px rgba(27,42,74,0.22); }
+  .collage-photo--main {
+    top: 0; right: 2rem; width: 78%; height: 60%; border-radius: 1.5rem;
+    clip-path: polygon(12% 0, 100% 0, 88% 100%, 0% 100%);
+  }
+  .collage-photo--sub {
+    bottom: 0; left: 0; width: 62%; height: 46%; border-radius: 1.5rem;
+    clip-path: polygon(0 0, 100% 0, 88% 100%, 0% 100%);
+  }
+  .collage-badge {
+    position: absolute; bottom: 18%; left: -1.5rem; width: 6.5rem; height: 6.5rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .collage-badge-ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: badge-spin 16s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { .collage-badge-ring { animation: none; } }
+  @keyframes badge-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .collage-badge-center {
+    position: relative; z-index: 1; width: 3rem; height: 3rem; border-radius: 50%;
+    background: var(--color-orange); color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 16px rgba(240,126,35,0.4);
+  }
+  .collage-badge::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--color-navy);
+  }
+
+  /* CATEGORY PILLS */
+  .category-pills-row { display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center; padding-block: var(--space-3); }
   .category-pill {
     display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-    background: #fff; border-radius: var(--radius); padding: var(--space-2) var(--space-2);
-    text-decoration: none; min-width: 6.5rem;
-    box-shadow: 0 8px 20px rgba(13,23,48,0.15);
-    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease;
+    background: #fff; border-radius: var(--radius); padding: var(--space-2); text-decoration: none; min-width: 6.5rem;
+    box-shadow: 0 2px 10px rgba(13,23,48,0.06); border: 1px solid var(--color-line);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
   }
-  .category-pill:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(240,126,35,0.22); }
+  .category-pill:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(46,111,158,0.18); border-color: var(--color-river); }
   .category-pill-icon {
     width: 2.75rem; height: 2.75rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    color: var(--color-orange-dark); background: linear-gradient(135deg, #fff3e8, #ffe4cc);
+    color: var(--color-river); background: var(--color-river-light);
   }
   .category-pill span:last-child { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-align: center; }
 
-  .hero-trust-row--static { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; padding-block: var(--space-2) var(--space-3); border-bottom: 1px solid var(--color-line); margin-bottom: var(--space-3); font-size: 0.8125rem; font-weight: 600; }
-  .hero-trust-row--static span { color: var(--color-navy-light); }
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .page .eyebrow, section .eyebrow { display: inline-flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem; }
+
+  .hero-trust-row { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; padding: var(--space-2); background: var(--color-river-light); border-radius: var(--radius); margin-bottom: var(--space-4); font-size: 0.8125rem; font-weight: 600; }
+  .hero-trust-row span { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--color-navy); }
 
   .section-header-row { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-2); }
   .see-all-link { font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; white-space: nowrap; }
   .see-all-link:hover { text-decoration: underline; }
 
+  .giveback-list-section { margin-bottom: var(--space-5); }
   .giveback-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-3); }
   .giveback-row {
     display: flex; align-items: center; gap: var(--space-2); text-decoration: none;
@@ -217,7 +270,7 @@ const schema = {
     padding: var(--space-1) var(--space-2);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .giveback-row:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(13,23,48,0.1); border-color: transparent; }
+  .giveback-row:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(46,111,158,0.14); border-color: var(--color-river); }
   .giveback-thumb {
     width: 3.25rem; height: 3.25rem; border-radius: var(--radius); flex-shrink: 0; background-size: cover; background-position: center;
     background-color: var(--color-navy); display: flex; align-items: center; justify-content: center; color: #fff;
@@ -225,81 +278,14 @@ const schema = {
   .giveback-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   .giveback-info strong { font-size: 0.9375rem; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .giveback-meta { font-size: 0.8125rem; color: var(--color-navy-light); }
-  .giveback-rating { font-weight: 700; color: var(--color-navy); font-size: 0.875rem; white-space: nowrap; }
+  .giveback-rating { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 700; color: var(--color-navy); font-size: 0.875rem; white-space: nowrap; }
+  .filled-star { fill: var(--color-gold); color: var(--color-gold); }
 
-  @media (max-width: 40rem) {
-    .category-pills-row { margin-top: -1.5rem; }
-    .category-pill { min-width: 5rem; padding: var(--space-1); }
-  }
+  /* NEWLY VERIFIED — its own blue band for depth */
+  .verified-band { background: linear-gradient(180deg, var(--color-river-light) 0%, #fff 100%); padding-block: var(--space-5); }
 
-  .page { padding-block: var(--space-4) var(--space-6); }
-  .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
-
-  .featured-section { margin-bottom: var(--space-2); }
-  .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin-top: var(--space-3); }
-  .featured-card {
-    position: relative; display: block; text-decoration: none; border-radius: var(--radius); overflow: hidden;
-    grid-column: span 1; box-shadow: 0 1px 3px rgba(13,23,48,0.08);
-    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease;
-  }
-  .featured-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.18); }
-  .featured-card--large { grid-column: span 2; grid-row: span 2; }
-  .featured-media {
-    position: relative; height: 8rem; background-size: cover; background-position: center;
-    background: linear-gradient(135deg, #16233d, #2c3f61 60%, #F07E23 140%);
-  }
-  .featured-card--large .featured-media { height: 100%; min-height: 17rem; }
-  .media-pattern { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .featured-badge {
-    position: absolute; top: 0.6rem; left: 0.6rem;
-    background: var(--color-orange); color: #fff; font-size: 0.6875rem; font-weight: 700;
-    padding: 0.25rem 0.7rem; border-radius: var(--radius-pill);
-  }
-  .featured-body {
-    position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-2);
-    background: linear-gradient(0deg, rgba(13,23,48,0.85), transparent);
-    display: flex; justify-content: space-between; align-items: flex-end; gap: 0.5rem;
-  }
-  .featured-body strong { color: #fff; font-size: 0.9375rem; }
-  .featured-card--large .featured-body strong { font-size: 1.25rem; }
-  .featured-rating { color: #F5B429; font-weight: 700; font-size: 0.8125rem; white-space: nowrap; }
-
-  .category-highlight-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: var(--space-2);
-    margin-top: var(--space-3);
-  }
-  .category-highlight-card {
-    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem;
-    background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-3) var(--space-1); text-decoration: none;
-    box-shadow: 0 1px 2px rgba(13,23,48,0.05);
-    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
-  }
-  .category-highlight-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(240,126,35,0.18); border-color: transparent; }
-  .category-icon-badge {
-    display: flex; align-items: center; justify-content: center;
-    width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.5rem;
-    background: linear-gradient(135deg, #fff3e8, #ffe4cc);
-  }
-  .category-highlight-card strong { font-size: 0.9375rem; color: var(--color-navy); }
-  .category-count { font-size: 0.75rem; color: var(--color-navy-light); }
-
-  .more-categories { margin-top: var(--space-3); }
-  .more-categories summary { cursor: pointer; font-weight: 600; color: var(--color-orange-dark); font-size: 0.9375rem; }
-  .more-categories-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-2); }
-  .more-categories-list a {
-    font-size: 0.875rem; text-decoration: none; color: var(--color-navy);
-    background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-pill);
-    padding: 0.35rem 0.85rem;
-  }
-  .more-categories-list a:hover { border-color: var(--color-orange); color: var(--color-orange-dark); }
-
-  .how-section { padding-block: var(--space-2); }
-  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .how-step { text-align: center; }
-  .how-number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-orange); }
-  .how-step h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.4rem; }
-  .how-step p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
 
   .all-biz-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-2); }
   .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; }
@@ -308,26 +294,13 @@ const schema = {
     font-size: 0.875rem; background: #fff; color: var(--color-navy);
   }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
-  .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
-
   .claim-cta {
     display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;
-    margin-top: var(--space-5); background: var(--color-navy); border-color: var(--color-navy);
+    margin-top: var(--space-5); padding: var(--space-4); border-radius: var(--radius);
+    background: linear-gradient(120deg, var(--color-navy) 0%, var(--color-river) 100%);
   }
   .claim-cta h3, .claim-cta p { color: #fff; margin: 0; }
-  .claim-cta p { margin-top: 0.25rem; }
-
-  @media (max-width: 45rem) {
-    .featured-grid { grid-template-columns: repeat(2, 1fr); }
-    .featured-card--large { grid-column: span 2; grid-row: span 1; }
-    .featured-card--large .featured-media { min-height: 10rem; }
-  }
-
-  .hero-trust-row span { display: inline-flex; align-items: center; gap: 0.3rem; }
-  .giveback-list .eyebrow { display: inline-flex; align-items: center; gap: 0.3rem; }
-  .giveback-rating { display: inline-flex; align-items: center; gap: 0.3rem; }
-  .filled-star { fill: currentColor; }
+  .claim-cta p { margin-top: 0.25rem; max-width: 44ch; }
 </style>
 
 <script>
@@ -358,4 +331,7 @@ const schema = {
   searchInput?.addEventListener('input', applyFilters);
   categoryFilter?.addEventListener('change', applyFilters);
   tierFilter?.addEventListener('change', applyFilters);
+  document.getElementById('search-place-btn')?.addEventListener('click', () => {
+    document.getElementById('business-grid')?.scrollIntoView({ behavior: 'smooth' });
+  });
 </script>

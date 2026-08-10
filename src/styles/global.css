@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 :root {
   /* ── Color: matched to the real site, not invented ──
@@ -12,6 +12,8 @@
   --color-navy: #1B2A4A;           /* nav bar + headings — trustworthy, not moody */
   --color-navy-light: #445070;     /* secondary text on dark */
   --color-gold: #F5B429;           /* badges, "Verified"/"Community Champ" accents */
+  --color-river: #2E6F9E;          /* secondary accent — the Big Sioux River blue, balances the orange */
+  --color-river-light: #EAF2F8;    /* pale blue tint for section backgrounds */
   --color-bg: #FFFFFF;             /* page background — clean, not tinted */
   --color-surface: #F7F8FA;        /* card background */
   --color-ink: #22262E;            /* body text */

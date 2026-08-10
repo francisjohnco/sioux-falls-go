@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
+import EventsSection from '../components/EventsSection.astro';
 
 const businesses = await getCollection('businesses');
 const spotlightBusinesses = businesses.filter((b) => b.data.heroImage).slice(0, 3);
@@ -106,6 +107,8 @@ const schema = {
     </div>
   </section>
 
+  <EventsSection />
+
   {resourceArticles.length > 0 && (
     <div class="container">
       <section class="section">
@@ -173,7 +176,7 @@ const schema = {
   }
   @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
   .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.94) 0%, rgba(13,23,48,0.85) 45%, rgba(13,23,48,0.3) 75%, rgba(13,23,48,0.05) 100%); }
-  .hero-inner { position: relative; z-index: 1; padding-block: 4rem; padding-left: 4rem; color: #fff; max-width: 52rem; margin-left: 0; margin-right: auto; }
+  .hero-inner { position: relative; z-index: 1; padding-block: 4rem; padding-left: 4rem; color: #fff; max-width: 700px; margin-left: 0; margin-right: auto; }
   .hero-eyebrow-text { display: block; font-weight: 700; font-size: 0.9375rem; color: var(--color-prairie, #F5B429); text-transform: uppercase; letter-spacing: 0.01em; margin-bottom: 0.6rem; }
   .hero h1 { font-size: 2.75rem; max-width: 20ch; line-height: 1.12; color: #fff; margin: 0; }
   .hero-sub { max-width: 66ch; color: rgba(255,255,255,0.9); font-size: 1.125rem; margin-top: 1rem; }
@@ -258,7 +261,7 @@ const schema = {
   .resource-body p { color: var(--color-navy-light); font-size: 0.875rem; margin-top: 0.4rem; }
 
   /* ABOUT + DUAL CTA */
-  .about-section { background: var(--color-surface); padding-block: 4.5rem; border-top: 1px solid var(--color-line); }
+  .about-section { background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-river-light) 100%); padding-block: 4.5rem; border-top: 1px solid var(--color-line); }
   .about-inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 3rem; align-items: center; }
   @media (max-width: 55rem) { .about-inner { grid-template-columns: 1fr; } }
   .about-copy h2 { font-size: 2rem; margin-top: 0.5rem; color: var(--color-navy); }
