@@ -1,6 +1,7 @@
 ---
 name: "American Tree Service"
 category: "local-tree-services"
+heroImage: "/images/businesses/american-tree-service.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/american-tree-service/"

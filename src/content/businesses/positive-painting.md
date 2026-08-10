@@ -1,6 +1,7 @@
 ---
 name: "Positive Painting"
 category: "painters"
+heroImage: "/images/businesses/positive-painting.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/positive-painting/"

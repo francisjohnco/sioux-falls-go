@@ -1,6 +1,7 @@
 ---
 name: "Jurrens Plumbing"
 category: "plumbers"
+heroImage: "/images/businesses/jurrens-plumbing.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/jurrens-plumbing/"

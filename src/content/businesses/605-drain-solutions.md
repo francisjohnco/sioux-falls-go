@@ -1,6 +1,7 @@
 ---
 name: "605 Drain Solutions"
 category: "plumbers"
+heroImage: "/images/businesses/605-drain-solutions.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 partnershipTier: "community-listing"

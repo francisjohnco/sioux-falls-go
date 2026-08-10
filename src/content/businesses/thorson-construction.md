@@ -1,6 +1,7 @@
 ---
 name: "Thorson Construction"
 category: "home-services"
+heroImage: "/images/businesses/thorson-construction.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/thorson-construction/"

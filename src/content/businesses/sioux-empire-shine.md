@@ -1,6 +1,7 @@
 ---
 name: "Sioux Empire Shine"
 category: "window-cleaning"
+heroImage: "/images/businesses/sioux-empire-shine.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/sioux-empire-shine/"

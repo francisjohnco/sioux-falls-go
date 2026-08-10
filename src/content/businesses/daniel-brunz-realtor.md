@@ -1,6 +1,7 @@
 ---
 name: "Daniel Brunz Realtor"
 category: "real-estate-agents"
+heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/daniel-brunz-realtor/"

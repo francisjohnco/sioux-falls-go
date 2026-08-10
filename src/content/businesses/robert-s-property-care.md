@@ -1,6 +1,7 @@
 ---
 name: "Robert's Property Care"
 category: "lawn-care"
+heroImage: "/images/businesses/robert-s-property-care.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/roberts-property-care/"

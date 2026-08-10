@@ -1,6 +1,7 @@
 ---
 name: "Animalwisedco"
 category: "shopping-retail"
+heroImage: "/images/businesses/animalwisedco.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/animalwisedco/"

@@ -1,6 +1,7 @@
 ---
 name: "Redstone Electric"
 category: "electricians"
+heroImage: "/images/businesses/redstone-electric.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/redstone-electric/"

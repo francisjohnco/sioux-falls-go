@@ -1,6 +1,7 @@
 ---
 name: "T & J Vance Quality Cleaning"
 category: "cleaning-services"
+heroImage: "/images/businesses/t-j-vance-quality-cleaning.jpg"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/t-j-vance-quality-cleaning/"
