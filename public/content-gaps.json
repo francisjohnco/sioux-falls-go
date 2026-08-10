@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10T21:47:02.703Z",
+  "generatedAt": "2026-08-10T21:57:18.886Z",
   "categories": [
     {
       "slug": "explore-sioux-falls",
@@ -179,11 +179,11 @@
     {
       "slug": "for-locals",
       "name": "For Locals",
-      "articleCount": 8,
+      "articleCount": 9,
       "businessCount": 0,
       "categoryType": "other",
       "missingTypes": [],
-      "priorityScore": -40,
+      "priorityScore": -45,
       "reasons": []
     }
   ]
