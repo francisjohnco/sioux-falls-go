@@ -333,7 +333,9 @@ const schema = {
   /* NEWLY VERIFIED — its own blue band for depth */
   .verified-band { background: linear-gradient(180deg, var(--color-river-light) 0%, #fff 100%); padding-block: var(--space-5); }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3); }
+  @media (max-width: 55rem) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .grid { grid-template-columns: 1fr; } }
   .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
   .see-more-wrap { text-align: center; margin-top: var(--space-3); }
   .see-more-btn {
