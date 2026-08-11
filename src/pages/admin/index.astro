@@ -178,7 +178,7 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
             <button class="button" id="reviews-sync-btn">Sync Reviews Now</button>
           </div>
           <p class="gap-note">
-            Pulls real reviews from each business's Google Place ID (max 5 per business — that's Google's own limit, not a choice made here). Set each business's Place ID in the table below. Runs automatically every Monday, or trigger it manually.
+            Pulls real reviews from each business's Google Place ID (max 5 per business — that's Google's own limit, not a choice made here). Set each business's Place ID in the table below — need to look one up? <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" target="_blank" rel="noopener">Open the Place ID Finder →</a> Runs automatically every Monday, or trigger it manually.
           </p>
           <p class="gap-note" id="reviews-sync-status" hidden></p>
         </div>
@@ -187,7 +187,7 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
 
         <div class="biz-table">
           <div class="biz-row biz-row--header">
-            <span>Business</span><span>Category</span><span>Tier</span><span>Address</span><span>Claimed</span><span>Google Place ID</span>
+            <span>Business</span><span>Category</span><span>Tier</span><span>Address</span><span>Claimed</span><span>Google Place ID <a href="https://developers.google.com/maps/documentation/places/web-service/place-id" target="_blank" rel="noopener" class="find-id-link">(find one)</a></span>
           </div>
           {businessesWithCategory.map(({ business, category }) => (
             <div class="biz-row" data-search={business.data.name.toLowerCase()} data-slug={business.id}>
@@ -388,6 +388,7 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
   .biz-row { display: grid; grid-template-columns: 1.3fr 0.9fr 0.9fr 0.6fr 0.6fr 1.3fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
   .biz-row:last-child { border-bottom: none; }
   .biz-row--header { background: var(--color-surface); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-navy-light); }
+  .find-id-link { text-transform: none; font-weight: 600; color: var(--color-orange-dark); text-decoration: underline; }
   .biz-name { font-weight: 600; color: var(--color-navy); }
 
   .save-note { font-size: 0.8125rem; color: var(--color-navy-light); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.6rem 0.9rem; margin-bottom: var(--space-2); }
