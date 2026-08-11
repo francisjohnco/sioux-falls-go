@@ -172,11 +172,22 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
         </div>
         <p class="save-note">Changes here commit directly to your live site's content and go live on the next deploy (usually under a minute).</p>
 
+        <div class="gsc-widget" id="reviews-sync-widget">
+          <div class="gsc-widget-header">
+            <h3>Google Reviews Sync</h3>
+            <button class="button" id="reviews-sync-btn">Sync Reviews Now</button>
+          </div>
+          <p class="gap-note">
+            Pulls real reviews from each business's Google Place ID (max 5 per business — that's Google's own limit, not a choice made here). Set each business's Place ID in the table below. Runs automatically every Monday, or trigger it manually.
+          </p>
+          <p class="gap-note" id="reviews-sync-status" hidden></p>
+        </div>
+
         <input type="search" class="search-input" id="directory-search" placeholder="Search businesses..." />
 
         <div class="biz-table">
           <div class="biz-row biz-row--header">
-            <span>Business</span><span>Category</span><span>Tier</span><span>Address</span><span>Claimed</span>
+            <span>Business</span><span>Category</span><span>Tier</span><span>Address</span><span>Claimed</span><span>Google Place ID</span>
           </div>
           {businessesWithCategory.map(({ business, category }) => (
             <div class="biz-row" data-search={business.data.name.toLowerCase()} data-slug={business.id}>
@@ -200,6 +211,16 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
                   <input type="checkbox" data-field="claimed" data-slug={business.id} checked={business.data.claimed} />
                   <span class="toggle-slider"></span>
                 </label>
+              </span>
+              <span>
+                <input
+                  type="text"
+                  class="place-id-input"
+                  data-field="placeId"
+                  data-slug={business.id}
+                  value={business.data.placeId || ''}
+                  placeholder="ChIJ..."
+                />
               </span>
             </div>
           ))}
@@ -364,7 +385,7 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
   /* Directory */
   .search-input { width: 100%; max-width: 24rem; padding: 0.65rem 0.9rem; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); margin: var(--space-2) 0; font-family: var(--font-body); }
   .biz-table { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden; }
-  .biz-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.7fr 0.7fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
+  .biz-row { display: grid; grid-template-columns: 1.3fr 0.9fr 0.9fr 0.6fr 0.6fr 1.3fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
   .biz-row:last-child { border-bottom: none; }
   .biz-row--header { background: var(--color-surface); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-navy-light); }
   .biz-name { font-weight: 600; color: var(--color-navy); }
@@ -391,6 +412,10 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
   .toggle-switch input:checked + .toggle-slider { background: var(--color-success); }
   .toggle-switch input:checked + .toggle-slider::before { transform: translateX(1rem); }
   .is-saving { opacity: 0.5; pointer-events: none; }
+  .place-id-input {
+    width: 100%; padding: 0.4rem 0.6rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line);
+    font-size: 0.75rem; font-family: monospace; background: #fff; color: var(--color-navy);
+  }
   .status { font-size: 0.8125rem; font-weight: 700; }
   .status--live { color: var(--color-success); }
   .status--draft { color: var(--color-navy-light); }
@@ -517,6 +542,40 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
       const field = el.dataset.field!;
       saveBusinessField(slug, field, el.checked, el);
     });
+  });
+
+  // Place ID — save on blur, not every keystroke, and only if it actually changed
+  document.querySelectorAll('.place-id-input').forEach((input) => {
+    const el = input as HTMLInputElement;
+    const originalValue = el.value;
+    el.addEventListener('blur', () => {
+      if (el.value === originalValue) return;
+      const slug = el.dataset.slug!;
+      saveBusinessField(slug, 'placeId', el.value.trim() || null, el);
+    });
+  });
+
+  // Google Reviews sync — on-demand trigger
+  const reviewsSyncBtn = document.getElementById('reviews-sync-btn');
+  const reviewsSyncStatus = document.getElementById('reviews-sync-status');
+  reviewsSyncBtn?.addEventListener('click', async () => {
+    reviewsSyncBtn.setAttribute('disabled', 'true');
+    reviewsSyncBtn.textContent = 'Syncing…';
+    if (reviewsSyncStatus) { reviewsSyncStatus.hidden = false; reviewsSyncStatus.textContent = 'Contacting Google — this can take a moment for 18 businesses...'; }
+    try {
+      const res = await fetch('/api/sync-google-reviews', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Sync failed');
+      const { summary } = data;
+      if (reviewsSyncStatus) {
+        reviewsSyncStatus.textContent = `Done — ${summary.updated} updated, ${summary.skipped} skipped (no Place ID), ${summary.errors.length} errors.`;
+      }
+    } catch (err: any) {
+      if (reviewsSyncStatus) reviewsSyncStatus.textContent = `Sync failed: ${err.message}`;
+    } finally {
+      reviewsSyncBtn.removeAttribute('disabled');
+      reviewsSyncBtn.textContent = 'Sync Reviews Now';
+    }
   });
 
   // Content engine queue selection

@@ -70,6 +70,7 @@ const businesses = defineCollection({
     neighborhood: reference('neighborhoods').optional(),
     address: z.string().optional(), // not always available at import — see migration report
     showAddress: z.boolean().default(false), // per-business privacy toggle — most businesses keep their street address private
+    placeId: z.string().optional(), // Google Place ID — required for the automated review sync to work for this business
     latitude: z.number().optional(),
     longitude: z.number().optional(),
     phone: z.string().optional(),

@@ -10,7 +10,7 @@
 // the whole file back with everything else — body text, other fields —
 // left exactly as it was.
 
-const EDITABLE_FIELDS = ['partnershipTier', 'showAddress', 'claimed', 'verifiedAt'] as const;
+const EDITABLE_FIELDS = ['partnershipTier', 'showAddress', 'claimed', 'verifiedAt', 'placeId'] as const;
 type EditableField = (typeof EDITABLE_FIELDS)[number];
 
 function parseFrontmatter(raw: string): { frontmatter: string; body: string } {
