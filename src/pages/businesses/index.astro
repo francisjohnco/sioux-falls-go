@@ -22,12 +22,23 @@ const categoryCounts = categories
 const popularCategories = categoryCounts.slice(0, 6);
 
 // Real stats for the closing section — computed from actual data, not made up
-const ratedBusinesses = businesses.filter((b) => b.data.googleRating);
-const avgRating = ratedBusinesses.length
-  ? (ratedBusinesses.reduce((sum, b) => sum + (b.data.googleRating || 0), 0) / ratedBusinesses.length).toFixed(1)
-  : null;
 const givingBackCount = businesses.filter((b) => b.data.partnershipTier === 'community-champion' || b.data.partnershipTier === 'community-listing').length;
 const givingBackPct = businesses.length ? Math.round((givingBackCount / businesses.length) * 100) : 0;
+
+// Local Insights — a hand-picked set of real, useful guides, not an
+// algorithmic "latest articles" dump
+const insightSlugs = [
+  'how-to-shop-local-and-make-every-dollar-count',
+  'how-to-choose-a-plumber-in-sioux-falls',
+  'how-to-choose-a-flooring-contractor-in-sioux-falls',
+  'how-to-choose-a-real-estate-agent-in-sioux-falls',
+  'how-to-choose-a-tree-service-in-sioux-falls',
+  'how-to-choose-a-painting-contractor-in-sioux-falls',
+];
+const allArticles = await getCollection('articles');
+const localInsights = insightSlugs
+  .map((slug) => allArticles.find((a) => a.id === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -122,56 +133,12 @@ const schema = {
   </section>
 
   <div class="container page">
-    <section aria-labelledby="all-biz-heading">
-      <div class="all-biz-header">
-        <div>
-          <span class="eyebrow">Every Business</span>
-          <h2 id="all-biz-heading">All {businesses.length} businesses</h2>
-        </div>
-        <div class="filter-bar" role="group" aria-label="Filter businesses">
-          <select id="filter-category" aria-label="Filter by category">
-            <option value="">All Categories</option>
-            {categoryCounts.map(({ cat }) => <option value={cat.id}>{cat.data.name}</option>)}
-          </select>
-          <select id="filter-tier" aria-label="Filter by partnership tier">
-            <option value="">All Businesses</option>
-            <option value="community-champion">Champions Only</option>
-            <option value="community-listing">Give Back Partners</option>
-          </select>
-        </div>
-      </div>
-      <div class="grid" id="business-grid">
-        {businesses.map((business, i) => (
-          <div
-            class="business-grid-item reveal-item"
-            data-index={i}
-            hidden={i >= 6}
-            data-search={`${business.data.name} ${business.data.category.id}`.toLowerCase()}
-            data-category={business.data.category.id}
-            data-tier={business.data.partnershipTier || ''}
-          >
-            <BusinessCard business={business} />
-          </div>
-        ))}
-      </div>
-      <p id="no-results" class="empty-note" hidden>No businesses match your filters.</p>
-      {businesses.length > 6 && (
-        <div class="see-more-wrap"><button class="see-more-btn" data-target="business-grid">See more ({businesses.length - 6} more)</button></div>
-      )}
-    </section>
-
     <section class="stats-band" aria-label="Directory stats">
       <div class="stats-grid">
         <div class="stat-item">
-          <strong>{businesses.length}</strong>
-          <span>Vetted businesses</span>
+          <strong>4.8+</strong>
+          <span>Google rating required to get listed</span>
         </div>
-        {avgRating && (
-          <div class="stat-item">
-            <strong><Icon name="star" size={20} class="filled-star" /> {avgRating}</strong>
-            <span>Average rating</span>
-          </div>
-        )}
         <div class="stat-item">
           <strong>{givingBackPct}%</strong>
           <span>Giving back to Sioux Falls</span>
@@ -180,6 +147,44 @@ const schema = {
           <strong>{categoryCounts.length}</strong>
           <span>Categories covered</span>
         </div>
+      </div>
+    </section>
+
+    {localInsights.length > 0 && (
+      <section class="insights-section">
+        <div class="contour-rule" role="presentation"></div>
+        <span class="eyebrow">Local Insights</span>
+        <h2>Resources and Tips to Shop and Hire Smarter in Sioux Falls</h2>
+        <div class="insights-grid">
+          {localInsights.map((article) => (
+            <a class="insight-card" href={`/guides/${article.id}`}>
+              <span class="insight-tag">{article.data.contentType.replace('-', ' ')}</span>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.seo.description}</p>
+              <span class="insight-link">Read more →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="legend-section">
+      <div class="legend-card">
+        <div class="legend-copy">
+          <span class="legend-eyebrow"><Icon name="heart" size={13} /> Already Shop Local?</span>
+          <h2>Become a Local Legend</h2>
+          <p>We're giving away gift cards, prizes, and exclusive deals from top local businesses in Sioux Falls! <Icon name="sparkles" size={18} class="legend-sparkle" /></p>
+          <p class="legend-sub">Join Local Legend VIP and be the first to know about our next big giveaway. It's 100% free — no strings attached!</p>
+          <span class="legend-badge"><Icon name="gift" size={13} /> Giveaways starting soon</span>
+        </div>
+        <form name="local-legend-vip" method="POST" data-netlify="true" class="legend-form">
+          <input type="hidden" name="form-name" value="local-legend-vip" />
+          <label for="legend-name">Name</label>
+          <input type="text" id="legend-name" name="name" placeholder="Name" />
+          <label for="legend-email">Email*</label>
+          <input type="email" id="legend-email" name="email" placeholder="Email" required />
+          <button type="submit" class="button legend-submit">Start Winning</button>
+        </form>
       </div>
     </section>
 
@@ -345,6 +350,46 @@ const schema = {
   .stat-item strong { display: flex; align-items: center; justify-content: center; gap: 0.4rem; font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; color: #fff; }
   .stat-item span { font-size: 0.8125rem; color: rgba(255,255,255,0.8); font-weight: 600; }
 
+  .insights-section { margin-top: var(--space-5); }
+  .insights-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3); }
+  @media (max-width: 55rem) { .insights-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .insights-grid { grid-template-columns: 1fr; } }
+  .insight-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-3); text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .insight-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(46,111,158,0.14); border-color: var(--color-river); }
+  .insight-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange-dark); }
+  .insight-card h3 { font-size: 1.0625rem; margin: 0.4rem 0 0.4rem; color: var(--color-navy); }
+  .insight-card p { font-size: 0.875rem; color: var(--color-navy-light); margin: 0 0 0.8rem; }
+  .insight-link { font-size: 0.8125rem; font-weight: 700; color: var(--color-river); }
+
+  .legend-section { margin-top: var(--space-5); }
+  .legend-card {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-4); align-items: center;
+    background: linear-gradient(120deg, var(--color-navy) 0%, #2c3f61 55%, var(--color-orange) 160%);
+    border-radius: var(--radius); padding: var(--space-5); color: #fff; position: relative; overflow: hidden;
+  }
+  @media (max-width: 50rem) { .legend-card { grid-template-columns: 1fr; padding: var(--space-4); } }
+  .legend-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--color-gold); font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  .legend-copy h2 { color: #fff; font-size: 2rem; margin: 0.5rem 0 0.9rem; }
+  .legend-copy p { color: rgba(255,255,255,0.9); font-size: 1.0625rem; margin: 0 0 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+  .legend-sparkle { color: var(--color-gold); flex-shrink: 0; }
+  .legend-sub { font-size: 0.9375rem !important; color: rgba(255,255,255,0.78) !important; }
+  .legend-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--space-2);
+    background: rgba(255,255,255,0.15); font-size: 0.8125rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: var(--radius-pill);
+  }
+  .legend-form {
+    background: rgba(255,255,255,0.97); border-radius: var(--radius); padding: var(--space-3);
+    display: flex; flex-direction: column; gap: 0.5rem; position: relative; z-index: 1;
+  }
+  .legend-form label { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-transform: uppercase; letter-spacing: 0.02em; }
+  .legend-form input {
+    padding: 0.75rem 1rem; border-radius: 0.6rem; border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: 0.9375rem;
+  }
+  .legend-submit { margin-top: 0.5rem; background: var(--color-orange); border: none; }
+
   .dir-faq { margin-top: var(--space-5); }
   .dir-faq-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-3); }
   .dir-faq-item { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); }
@@ -368,7 +413,7 @@ const schema = {
 </style>
 
 <script>
-  // See More buttons — reveal the rest of a capped grid
+  // See More buttons — reveal the rest of a capped grid (still used by Give Back Partners)
   document.querySelectorAll('.see-more-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       const targetId = (btn as HTMLElement).dataset.target!;
@@ -379,45 +424,24 @@ const schema = {
     });
   });
 
+  // Hero search — routes to the category page if the query matches one,
+  // otherwise scrolls to Give Back Partners. The full filterable "All
+  // Businesses" grid was removed from this page.
   const searchInput = document.getElementById('hero-search-input') as HTMLInputElement;
-  const categoryFilter = document.getElementById('filter-category') as HTMLSelectElement;
-  const tierFilter = document.getElementById('filter-tier') as HTMLSelectElement;
-  const items = Array.from(document.querySelectorAll('.business-grid-item'));
-  const noResults = document.getElementById('no-results')!;
-  const businessSeeMoreBtn = document.querySelector('.see-more-btn[data-target="business-grid"]') as HTMLElement;
-
-  function applyFilters() {
-    const q = searchInput?.value.trim().toLowerCase() || '';
-    const cat = categoryFilter?.value || '';
-    const tier = tierFilter?.value || '';
-    const filtering = !!(q || cat || tier);
-    let visibleCount = 0;
-
-    items.forEach((item) => {
-      const el = item as HTMLElement;
-      const matchesSearch = !q || el.dataset.search?.includes(q);
-      const matchesCategory = !cat || el.dataset.category === cat;
-      const matchesTier = !tier || el.dataset.tier === tier;
-      const match = matchesSearch && matchesCategory && matchesTier;
-      // While actively filtering, show every match regardless of the 6-cap.
-      // With no filter active, respect whatever the See More button has already revealed.
-      if (filtering) {
-        el.hidden = !match;
-      } else if (!match) {
-        el.hidden = true;
-      } else {
-        el.hidden = Number(el.dataset.index) >= 6 && businessSeeMoreBtn?.style.display !== 'none';
-      }
-      if (match && !el.hidden) visibleCount++;
-    });
-    noResults.hidden = visibleCount > 0;
-    if (businessSeeMoreBtn) businessSeeMoreBtn.style.display = filtering ? 'none' : '';
+  function runHeroSearch() {
+    const q = searchInput?.value.trim().toLowerCase();
+    if (!q) {
+      document.querySelector('.giveback-section')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    const categoryLinks = Array.from(document.querySelectorAll('.hero-popular-searches a')) as HTMLAnchorElement[];
+    const match = categoryLinks.find((a) => a.textContent?.toLowerCase().includes(q));
+    if (match) {
+      window.location.href = match.href;
+    } else {
+      document.querySelector('.giveback-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
   }
-
-  searchInput?.addEventListener('input', applyFilters);
-  categoryFilter?.addEventListener('change', applyFilters);
-  tierFilter?.addEventListener('change', applyFilters);
-  document.getElementById('search-place-btn')?.addEventListener('click', () => {
-    document.getElementById('business-grid')?.scrollIntoView({ behavior: 'smooth' });
-  });
+  document.getElementById('search-place-btn')?.addEventListener('click', runHeroSearch);
+  searchInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') runHeroSearch(); });
 </script>
