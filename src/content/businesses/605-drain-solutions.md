@@ -2,9 +2,18 @@
 name: "605 Drain Solutions"
 category: "plumbers"
 heroImage: "/images/businesses/605-drain-solutions.jpg"
+hoursSchedule:
+  mon: "7:30 AM - 5:30 PM"
+  tue: "7:30 AM - 5:30 PM"
+  wed: "7:30 AM - 5:30 PM"
+  thu: "7:30 AM - 5:30 PM"
+  fri: "7:30 AM - 5:30 PM"
+  sat: "7:30 AM - 5:30 PM"
+  sun: "2:00 PM - 5:30 PM"
+gallery: ["/images/businesses/605-drain-solutions.jpg"]
 verifiedAt: 2026-07-29
 claimed: true
-partnershipTier: "community-listing"
+partnershipTier: "community-champion"
 googleRating: 4.9
 googleReviewCount: 47
 sourceUrl: "https://siouxfallsgo.com/places/605-drain-solutions/"

@@ -9,6 +9,14 @@ sourceUrl: "https://siouxfallsgo.com/places/sajmedia-marketing/"
 address: "2301 S. Willow Ave., Sioux Falls, South Dakota 57105"
 phone: "6057997953"
 hours: "Mon-Fri 9am-5pm"
+hoursSchedule:
+  mon: "9:00 AM - 5:00 PM"
+  tue: "9:00 AM - 5:00 PM"
+  wed: "9:00 AM - 5:00 PM"
+  thu: "9:00 AM - 5:00 PM"
+  fri: "9:00 AM - 5:00 PM"
+  sat: "Closed"
+  sun: "Closed"
 latitude: 43.524902
 longitude: -96.750074
 ---

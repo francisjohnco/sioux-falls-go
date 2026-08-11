@@ -1,9 +1,19 @@
 ---
 name: "While Away"
 category: "home-watch-services"
+partnershipTier: "community-champion"
 verifiedAt: 2026-07-29
 claimed: true
 heroImage: "/images/businesses/while-away.jpg"
+hoursSchedule:
+  mon: "8:00 AM - 5:00 PM"
+  tue: "8:00 AM - 5:00 PM"
+  wed: "8:00 AM - 5:00 PM"
+  thu: "8:00 AM - 5:00 PM"
+  fri: "8:00 AM - 5:00 PM"
+  sat: "Closed"
+  sun: "Closed"
+gallery: ["/images/businesses/while-away.jpg"]
 sourceUrl: "https://siouxfallsgo.com/places/while-away/"
 address: "3001 S. West Ave, Sioux Falls, South Dakota 57105"
 phone: "(605) 360-1018"

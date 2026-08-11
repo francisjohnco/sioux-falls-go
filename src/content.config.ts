@@ -95,6 +95,30 @@ const businesses = defineCollection({
     interviewDate: z.date().optional(),
     interviewedBy: z.string().optional(),
     pullQuote: z.string().optional(), // curated quote for premium editorial layout
+
+    // ── Profile enhancements ──
+    gallery: z.array(z.string()).default([]), // additional photos beyond heroImage — Champion tier only, gated in the template
+    hoursSchedule: z
+      .object({
+        mon: z.string().optional(),
+        tue: z.string().optional(),
+        wed: z.string().optional(),
+        thu: z.string().optional(),
+        fri: z.string().optional(),
+        sat: z.string().optional(),
+        sun: z.string().optional(),
+      })
+      .optional(), // structured day-by-day hours, e.g. "9:00 AM - 5:00 PM" or "Closed" — powers the live open/closed indicator
+    reviews: z
+      .array(
+        z.object({
+          author: z.string(),
+          rating: z.number().min(1).max(5),
+          text: z.string(),
+          date: z.string().optional(),
+        })
+      )
+      .default([]), // short real review excerpts, not the full Google review feed
   }),
 });
 

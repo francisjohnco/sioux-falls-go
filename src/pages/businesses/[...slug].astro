@@ -36,6 +36,23 @@ const spotlights = allArticles.filter(
 // "Verified" = we've confirmed this business's info recently — distinct from partnership tier
 const isVerified = !!business.data.verifiedAt;
 
+// Related businesses — same category, excluding this one. Free tier only,
+// per the product decision: Champion profiles don't route attention away.
+const allBusinesses = await getCollection('businesses');
+const relatedBusinesses = allBusinesses
+  .filter((b) => b.id !== business.id && b.data.category.id === business.data.category.id)
+  .slice(0, 3);
+
+const daysOfWeek: Array<{ key: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun'; label: string }> = [
+  { key: 'mon', label: 'Monday' },
+  { key: 'tue', label: 'Tuesday' },
+  { key: 'wed', label: 'Wednesday' },
+  { key: 'thu', label: 'Thursday' },
+  { key: 'fri', label: 'Friday' },
+  { key: 'sat', label: 'Saturday' },
+  { key: 'sun', label: 'Sunday' },
+];
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -254,6 +271,103 @@ const schema = {
     </>
   )}
 
+  <div class="container page-extras">
+    {business.data.hoursSchedule && (
+      <section class="hours-section">
+        <div class="contour-rule" role="presentation"></div>
+        <h2>Hours</h2>
+        <div class="hours-table" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)}>
+          {daysOfWeek.map(({ key, label }) => (
+            <div class="hours-row" data-day={key}>
+              <span class="hours-day">{label}</span>
+              <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
+            </div>
+          ))}
+        </div>
+        <p class="open-now-indicator" id="open-now-indicator" hidden></p>
+      </section>
+    )}
+
+    {isChampion && business.data.gallery.length > 0 && (
+      <section class="gallery-section">
+        <div class="contour-rule" role="presentation"></div>
+        <span class="eyebrow">Gallery</span>
+        <h2>More from {business.data.name}</h2>
+        <div class="gallery-grid">
+          {business.data.gallery.map((img) => (
+            <div class="gallery-item" style={`background-image: url(${img})`}></div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {business.data.reviews.length > 0 && (
+      <section class="reviews-section">
+        <div class="contour-rule" role="presentation"></div>
+        <span class="eyebrow">What People Are Saying</span>
+        <h2>Reviews</h2>
+        <div class="reviews-grid">
+          {business.data.reviews.map((review) => (
+            <div class="review-card">
+              <div class="review-stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Icon name="star" size={14} class={i < review.rating ? 'star-filled' : 'star-empty'} />
+                ))}
+              </div>
+              <p class="review-text">"{review.text}"</p>
+              <p class="review-author">— {review.author}{review.date && `, ${review.date}`}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {isChampion && (
+      <section class="quote-section">
+        <div class="contour-rule" role="presentation"></div>
+        <div class="quote-card">
+          <div>
+            <span class="eyebrow">Get In Touch</span>
+            <h2>Request a Quote from {business.data.name}</h2>
+            <p>Send a few details and they'll follow up directly — no account needed.</p>
+          </div>
+          <form name={`quote-${business.id}`} method="POST" data-netlify="true" class="quote-form">
+            <input type="hidden" name="form-name" value={`quote-${business.id}`} />
+            <input type="hidden" name="business" value={business.data.name} />
+            <div class="quote-form-row">
+              <input type="text" name="name" placeholder="Your name" required />
+              <input type="tel" name="phone" placeholder="Phone number" required />
+            </div>
+            <input type="email" name="email" placeholder="Email address" required />
+            <textarea name="message" placeholder={`What do you need from ${business.data.name}?`} rows="3" required></textarea>
+            <button type="submit" class="button">Send Request</button>
+          </form>
+        </div>
+      </section>
+    )}
+
+    {!isChampion && relatedBusinesses.length > 0 && (
+      <section class="related-section">
+        <div class="contour-rule" role="presentation"></div>
+        <span class="eyebrow">Keep Browsing</span>
+        <h2>Other {category.data.name} in Sioux Falls</h2>
+        <div class="related-grid">
+          {relatedBusinesses.map((rb) => (
+            <a href={`/businesses/${rb.id}`} class="related-card">
+              <div class="related-media" style={rb.data.heroImage ? `background-image: url(${rb.data.heroImage})` : undefined}>
+                {!rb.data.heroImage && <Icon name={category.data.icon} size={24} />}
+              </div>
+              <div class="related-body">
+                <strong>{rb.data.name}</strong>
+                {rb.data.googleRating && <span class="related-rating"><Icon name="star" size={12} class="filled-star" /> {rb.data.googleRating.toFixed(1)}</span>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+
   <SiteFooter slot="footer" />
 </BaseLayout>
 
@@ -390,6 +504,58 @@ const schema = {
   .share-btn--linkedin { background: #0A66C2; }
   .share-btn--instagram { background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF); }
   .share-btn--copy { background: var(--color-navy); }
+
+  /* Shared page-extras sections */
+  .page-extras { padding-block: 0 var(--space-5); }
+  .page-extras .eyebrow { display: block; margin-bottom: 0.2rem; }
+
+  .hours-section { max-width: 28rem; }
+  .hours-table { margin-top: var(--space-2); border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden; }
+  .hours-row { display: flex; justify-content: space-between; padding: 0.65rem var(--space-2); font-size: 0.9375rem; border-bottom: 1px solid var(--color-line); }
+  .hours-row:last-child { border-bottom: none; }
+  .hours-row.is-today { background: var(--color-surface); font-weight: 700; }
+  .hours-day { color: var(--color-navy); }
+  .hours-time { color: var(--color-navy-light); }
+  .open-now-indicator { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--space-2); font-weight: 700; font-size: 0.875rem; padding: 0.4rem 0.9rem; border-radius: var(--radius-pill); }
+  .open-now-indicator.is-open { background: #E7F6ED; color: var(--color-success); }
+  .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
+
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
+  .gallery-item { height: 9rem; border-radius: var(--radius); background-size: cover; background-position: center; background-color: var(--color-surface); }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .review-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
+  .review-stars { display: flex; gap: 0.15rem; margin-bottom: 0.6rem; }
+  .star-filled { fill: var(--color-gold); color: var(--color-gold); }
+  .star-empty { fill: none; color: var(--color-line); }
+  .review-text { font-size: 0.9375rem; color: var(--color-ink); font-style: italic; margin: 0; }
+  .review-author { font-size: 0.8125rem; color: var(--color-navy-light); font-weight: 600; margin: 0.6rem 0 0; }
+
+  .quote-card {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); align-items: start;
+    background: linear-gradient(120deg, var(--color-navy) 0%, var(--color-river) 100%);
+    border-radius: var(--radius); padding: var(--space-4); color: #fff;
+  }
+  @media (max-width: 45rem) { .quote-card { grid-template-columns: 1fr; } }
+  .quote-card .eyebrow { color: var(--color-gold); }
+  .quote-card h2 { color: #fff; margin: 0.3rem 0 0.6rem; }
+  .quote-card p { color: rgba(255,255,255,0.85); margin: 0; }
+  .quote-form { display: flex; flex-direction: column; gap: 0.7rem; }
+  .quote-form-row { display: flex; gap: 0.7rem; }
+  .quote-form-row input, .quote-form input, .quote-form textarea {
+    width: 100%; padding: 0.75rem 1rem; border-radius: 0.6rem; border: none; font-family: var(--font-body); font-size: 0.9375rem;
+  }
+  .quote-form textarea { resize: vertical; }
+  .quote-form .button { align-self: flex-start; background: var(--color-gold); color: var(--color-navy); border: none; }
+
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3); }
+  @media (max-width: 45rem) { .related-grid { grid-template-columns: 1fr; } }
+  .related-card { display: block; text-decoration: none; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--color-line); background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .related-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(13,23,48,0.12); }
+  .related-media { height: 7rem; background-size: cover; background-position: center; background: linear-gradient(135deg, #16233d, #2c3f61); display: flex; align-items: center; justify-content: center; color: #fff; }
+  .related-body { padding: var(--space-2); display: flex; justify-content: space-between; align-items: center; }
+  .related-body strong { font-size: 0.9375rem; color: var(--color-navy); }
+  .related-rating { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
 </style>
 
 <script>
@@ -410,4 +576,46 @@ const schema = {
     copyBtn.innerHTML = 'Copied!';
     setTimeout(() => { copyBtn.innerHTML = original; }, 1800);
   });
+
+  // Live open/closed indicator, computed from the real hoursSchedule data
+  const hoursTable = document.getElementById('hours-table');
+  const indicator = document.getElementById('open-now-indicator');
+  if (hoursTable && indicator) {
+    const schedule = JSON.parse(hoursTable.dataset.hours || '{}');
+    const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    const now = new Date();
+    const todayKey = dayKeys[now.getDay()];
+    const todayRow = hoursTable.querySelector(`[data-day="${todayKey}"]`);
+    todayRow?.classList.add('is-today');
+
+    const todayHours = schedule[todayKey];
+    function parseTime(str: string, base: Date): Date | null {
+      const m = str.trim().match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+      if (!m) return null;
+      let h = parseInt(m[1], 10);
+      const min = parseInt(m[2], 10);
+      const isPM = m[3].toUpperCase() === 'PM';
+      if (isPM && h !== 12) h += 12;
+      if (!isPM && h === 12) h = 0;
+      const d = new Date(base);
+      d.setHours(h, min, 0, 0);
+      return d;
+    }
+
+    if (!todayHours || /closed/i.test(todayHours)) {
+      indicator.textContent = 'Closed today';
+      indicator.classList.add('is-closed');
+      indicator.hidden = false;
+    } else {
+      const [openStr, closeStr] = todayHours.split('-').map((s: string) => s.trim());
+      const openTime = parseTime(openStr, now);
+      const closeTime = parseTime(closeStr, now);
+      if (openTime && closeTime) {
+        const isOpen = now >= openTime && now <= closeTime;
+        indicator.textContent = isOpen ? `Open now — closes ${closeStr}` : `Closed now — opens ${openStr}`;
+        indicator.classList.add(isOpen ? 'is-open' : 'is-closed');
+        indicator.hidden = false;
+      }
+    }
+  }
 </script>
