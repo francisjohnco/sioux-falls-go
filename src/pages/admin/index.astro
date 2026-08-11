@@ -1,6 +1,13 @@
 ---
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+
+const businesses = await getCollection('businesses');
+const businessesWithCategory = await Promise.all(
+  businesses.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
+);
+businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.business.data.name));
 ---
 <BaseLayout
   title="Admin — Sioux Falls Go"
@@ -160,42 +167,44 @@ import Icon from '../../components/Icon.astro';
         <div class="panel-header-row">
           <div>
             <h1>Directory</h1>
-            <p class="panel-sub">17 businesses live.</p>
+            <p class="panel-sub">{businesses.length} businesses live.</p>
           </div>
-          <button class="button">+ Add Business</button>
         </div>
+        <p class="save-note">Changes here commit directly to your live site's content and go live on the next deploy (usually under a minute).</p>
 
-        <input type="search" class="search-input" placeholder="Search businesses..." />
+        <input type="search" class="search-input" id="directory-search" placeholder="Search businesses..." />
 
         <div class="biz-table">
           <div class="biz-row biz-row--header">
-            <span>Business</span><span>Category</span><span>Tier</span><span>Status</span>
+            <span>Business</span><span>Category</span><span>Tier</span><span>Address</span><span>Claimed</span>
           </div>
-          <div class="biz-row">
-            <span class="biz-name">605 Drain Solutions</span>
-            <span>Plumbers</span>
-            <span><span class="badge badge--giveback">Give Back</span></span>
-            <span class="status status--live">Live</span>
-          </div>
-          <div class="biz-row">
-            <span class="biz-name">SAJMedia Marketing</span>
-            <span>Marketing Agencies</span>
-            <span><span class="badge badge--champion"><Icon name="star" size={11} /> Champion</span></span>
-            <span class="status status--live">Live</span>
-          </div>
-          <div class="biz-row">
-            <span class="biz-name">Dakota Elite Flooring</span>
-            <span>Flooring</span>
-            <span>—</span>
-            <span class="status status--draft">Draft</span>
-          </div>
-          <div class="biz-row">
-            <span class="biz-name">Redstone Electric</span>
-            <span>Electricians</span>
-            <span>—</span>
-            <span class="status status--live">Live</span>
-          </div>
+          {businessesWithCategory.map(({ business, category }) => (
+            <div class="biz-row" data-search={business.data.name.toLowerCase()} data-slug={business.id}>
+              <span class="biz-name">{business.data.name}</span>
+              <span>{category.data.name}</span>
+              <span>
+                <select class="tier-select" data-field="partnershipTier" data-slug={business.id}>
+                  <option value="" selected={!business.data.partnershipTier}>None</option>
+                  <option value="community-listing" selected={business.data.partnershipTier === 'community-listing'}>Give Back</option>
+                  <option value="community-champion" selected={business.data.partnershipTier === 'community-champion'}>Champion</option>
+                </select>
+              </span>
+              <span>
+                <label class="toggle-switch">
+                  <input type="checkbox" data-field="showAddress" data-slug={business.id} checked={business.data.showAddress} />
+                  <span class="toggle-slider"></span>
+                </label>
+              </span>
+              <span>
+                <label class="toggle-switch">
+                  <input type="checkbox" data-field="claimed" data-slug={business.id} checked={business.data.claimed} />
+                  <span class="toggle-slider"></span>
+                </label>
+              </span>
+            </div>
+          ))}
         </div>
+        <p class="save-status" id="directory-save-status" hidden></p>
       </section>
 
       <!-- ── GIVEAWAYS ── -->
@@ -355,10 +364,33 @@ import Icon from '../../components/Icon.astro';
   /* Directory */
   .search-input { width: 100%; max-width: 24rem; padding: 0.65rem 0.9rem; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); margin: var(--space-2) 0; font-family: var(--font-body); }
   .biz-table { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden; }
-  .biz-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.8fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
+  .biz-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.7fr 0.7fr; gap: 0.5rem; padding: 0.85rem 1rem; align-items: center; border-bottom: 1px solid var(--color-line); font-size: 0.9375rem; }
   .biz-row:last-child { border-bottom: none; }
   .biz-row--header { background: var(--color-surface); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-navy-light); }
   .biz-name { font-weight: 600; color: var(--color-navy); }
+
+  .save-note { font-size: 0.8125rem; color: var(--color-navy-light); background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.6rem 0.9rem; margin-bottom: var(--space-2); }
+  .save-status { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; padding: 0.7rem 1.2rem; border-radius: var(--radius-pill); font-size: 0.875rem; font-weight: 700; box-shadow: 0 8px 24px rgba(13,23,48,0.2); }
+  .save-status.is-success { background: var(--color-navy); color: #fff; }
+  .save-status.is-error { background: #C0392B; color: #fff; }
+
+  .tier-select {
+    width: 100%; padding: 0.4rem 0.6rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line);
+    font-size: 0.8125rem; background: #fff; color: var(--color-navy);
+  }
+  .toggle-switch { position: relative; display: inline-block; width: 2.4rem; height: 1.4rem; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider {
+    position: absolute; cursor: pointer; inset: 0; background: var(--color-line);
+    border-radius: 999px; transition: background 0.2s ease;
+  }
+  .toggle-slider::before {
+    content: ''; position: absolute; height: 1.05rem; width: 1.05rem; left: 0.175rem; bottom: 0.175rem;
+    background: #fff; border-radius: 50%; transition: transform 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .toggle-switch input:checked + .toggle-slider { background: var(--color-success); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(1rem); }
+  .is-saving { opacity: 0.5; pointer-events: none; }
   .status { font-size: 0.8125rem; font-weight: 700; }
   .status--live { color: var(--color-success); }
   .status--draft { color: var(--color-navy-light); }
@@ -425,6 +457,66 @@ import Icon from '../../components/Icon.astro';
   tabs.forEach((btn) => {
     if (!btn.classList.contains('nav-item') && !btn.classList.contains('bottomnav-item')) return;
     btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
+  });
+
+  // ── Directory: search filter ──
+  const directorySearch = document.getElementById('directory-search') as HTMLInputElement;
+  const bizRows = document.querySelectorAll('#panel-directory .biz-row:not(.biz-row--header)');
+  directorySearch?.addEventListener('input', () => {
+    const q = directorySearch.value.trim().toLowerCase();
+    bizRows.forEach((row) => {
+      const el = row as HTMLElement;
+      el.hidden = !!q && !el.dataset.search?.includes(q);
+    });
+  });
+
+  // ── Directory: real save-to-GitHub on every field change ──
+  const saveStatus = document.getElementById('directory-save-status');
+
+  function showSaveStatus(message: string, isError = false) {
+    if (!saveStatus) return;
+    saveStatus.textContent = message;
+    saveStatus.hidden = false;
+    saveStatus.classList.toggle('is-error', isError);
+    saveStatus.classList.toggle('is-success', !isError);
+    if (!isError) setTimeout(() => { saveStatus.hidden = true; }, 3000);
+  }
+
+  async function saveBusinessField(slug: string, field: string, value: unknown, el: HTMLElement) {
+    el.classList.add('is-saving');
+    showSaveStatus(`Saving ${field}…`);
+    try {
+      const res = await fetch('/api/update-business', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug, updates: { [field]: value } }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      showSaveStatus(`Saved — this will go live on the next deploy.`);
+    } catch (err: any) {
+      showSaveStatus(`Couldn't save: ${err.message}. Check that GITHUB_TOKEN is configured in Netlify.`, true);
+    } finally {
+      el.classList.remove('is-saving');
+    }
+  }
+
+  document.querySelectorAll('#panel-directory .tier-select').forEach((select) => {
+    select.addEventListener('change', () => {
+      const el = select as HTMLSelectElement;
+      const slug = el.dataset.slug!;
+      const value = el.value || null; // empty string means "None" — clear the field
+      saveBusinessField(slug, 'partnershipTier', value, el);
+    });
+  });
+
+  document.querySelectorAll('#panel-directory .toggle-switch input[type="checkbox"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const el = input as HTMLInputElement;
+      const slug = el.dataset.slug!;
+      const field = el.dataset.field!;
+      saveBusinessField(slug, field, el.checked, el);
+    });
   });
 
   // Content engine queue selection
