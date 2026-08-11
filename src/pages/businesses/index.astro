@@ -177,13 +177,13 @@ const schema = {
           <p class="legend-sub">Join Local Legend VIP and be the first to know about our next big giveaway. It's 100% free — no strings attached!</p>
           <span class="legend-badge"><Icon name="gift" size={13} /> Giveaways starting soon</span>
         </div>
-        <form name="local-legend-vip" method="POST" data-netlify="true" class="legend-form">
-          <input type="hidden" name="form-name" value="local-legend-vip" />
+        <form id="legend-form" class="legend-form">
           <label for="legend-name">Name</label>
           <input type="text" id="legend-name" name="name" placeholder="Name" />
           <label for="legend-email">Email*</label>
           <input type="email" id="legend-email" name="email" placeholder="Email" required />
-          <button type="submit" class="button legend-submit">Start Winning</button>
+          <button type="submit" class="button legend-submit" id="legend-submit-btn">Start Winning</button>
+          <p class="legend-form-status" id="legend-form-status" hidden></p>
         </form>
       </div>
     </section>
@@ -389,6 +389,9 @@ const schema = {
     padding: 0.75rem 1rem; border-radius: 0.6rem; border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: 0.9375rem;
   }
   .legend-submit { margin-top: 0.5rem; background: var(--color-orange); border: none; }
+  .legend-form-status { font-size: 0.8125rem; font-weight: 600; margin: 0.4rem 0 0; }
+  .legend-form-status.is-success { color: var(--color-success); }
+  .legend-form-status.is-error { color: #C0392B; }
 
   .dir-faq { margin-top: var(--space-5); }
   .dir-faq-list { display: flex; flex-direction: column; gap: 0.6rem; margin-top: var(--space-3); }
@@ -413,6 +416,49 @@ const schema = {
 </style>
 
 <script>
+  // Local Legend VIP signup — real MailerLite subscription, not a static form
+  const legendForm = document.getElementById('legend-form') as HTMLFormElement;
+  const legendStatus = document.getElementById('legend-form-status');
+  const legendBtn = document.getElementById('legend-submit-btn') as HTMLButtonElement;
+
+  legendForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById('legend-name') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('legend-email') as HTMLInputElement).value.trim();
+
+    legendBtn.disabled = true;
+    legendBtn.textContent = 'Joining…';
+    if (legendStatus) { legendStatus.hidden = true; }
+
+    try {
+      const res = await fetch('/api/subscribe-local-legend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+
+      legendForm.reset();
+      if (legendStatus) {
+        legendStatus.textContent = `You're in! Watch your inbox for the next giveaway.`;
+        legendStatus.classList.remove('is-error');
+        legendStatus.classList.add('is-success');
+        legendStatus.hidden = false;
+      }
+    } catch (err: any) {
+      if (legendStatus) {
+        legendStatus.textContent = `Couldn't sign you up: ${err.message}`;
+        legendStatus.classList.remove('is-success');
+        legendStatus.classList.add('is-error');
+        legendStatus.hidden = false;
+      }
+    } finally {
+      legendBtn.disabled = false;
+      legendBtn.textContent = 'Start Winning';
+    }
+  });
+
   // See More buttons — reveal the rest of a capped grid (still used by Give Back Partners)
   document.querySelectorAll('.see-more-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
