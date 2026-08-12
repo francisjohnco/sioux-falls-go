@@ -17,7 +17,7 @@
 
 <style>
   .sfg-cf-outer {
-    position: absolute; top: 50%; right: 2vw; transform: translateY(-50%);
+    position: absolute; top: 50%; right: calc(2vw + 3rem); transform: translateY(-50%);
     z-index: 2;
   }
   @media (max-width: 60rem) {
@@ -49,7 +49,7 @@
   :global(.sfg-cf-item) {
     display: flex; align-items: center; gap: 0.9rem;
     min-height: 4.6rem; padding-inline: 0.5rem; padding-block: 0.5rem;
-    color: #fff; font-family: var(--font-display, 'Poppins', sans-serif); font-weight: 700; font-size: 0.9375rem;
+    color: #fff; font-family: var(--font-display, 'Poppins', sans-serif); font-weight: 700; font-size: 0.8125rem;
     white-space: normal; line-height: 1.3;
     transform-origin: left center;
     will-change: transform, opacity, filter;
@@ -122,7 +122,7 @@
     // item can ever be pushed past the wrap's edge regardless of viewport
     // size or how long its text is — safer than guessing a fixed max scale.
     const wrapWidth = wrap.getBoundingClientRect().width;
-    let maxSafeScale = 1.1;
+    let maxSafeScale = 1.35;
     oneSetItems.forEach((el) => {
       const naturalWidth = el.getBoundingClientRect().width;
       if (naturalWidth > 0) {
@@ -130,8 +130,8 @@
         if (safeScale < maxSafeScale) maxSafeScale = safeScale;
       }
     });
-    maxSafeScale = Math.max(1.0, Math.min(1.1, maxSafeScale));
-    const minScale = maxSafeScale - 0.32;
+    maxSafeScale = Math.max(1.0, Math.min(1.35, maxSafeScale));
+    const minScale = maxSafeScale - 0.55;
 
     let offset = SET_HEIGHT;
     const SPEED = 14;

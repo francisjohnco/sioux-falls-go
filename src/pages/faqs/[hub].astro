@@ -16,6 +16,7 @@ const { hub } = Astro.props;
 
 const allFaqs = await getCollection('faqs');
 const allCategories = await getCollection('categories');
+const allArticles = await getCollection('articles');
 
 // Canonical dedup: drop any entry that points elsewhere, then only keep
 // entries tagged for this hub and marked featured (the "5-10 questions" cut).
@@ -40,9 +41,21 @@ const groups = await Promise.all(
     );
 
     const businessRefs = faqsInCategory.flatMap((f) => f.data.relatedBusinesses);
-    const businesses = await Promise.all(businessRefs.map((ref) => getEntry(ref)));
+    const uniqueBusinessRefs = businessRefs.filter(
+      (ref, i, arr) => arr.findIndex((r) => r.id === ref.id) === i
+    );
+    const businesses = await Promise.all(uniqueBusinessRefs.map((ref) => getEntry(ref)));
 
-    return { category, renderedFaqs, businesses };
+    // Most relevant article for this category — prefer the dedicated FAQ
+    // companion piece (it directly answers the same questions), falling
+    // back to the "How to Choose" buying guide if no FAQ article exists.
+    const categoryArticles = allArticles.filter((a) => a.data.category.id === category.id);
+    const relatedArticle =
+      categoryArticles.find((a) => a.data.contentType === 'faq') ||
+      categoryArticles.find((a) => a.data.contentType === 'buying-guide') ||
+      categoryArticles[0];
+
+    return { category, renderedFaqs, businesses, relatedArticle };
   })
 );
 const nonEmptyGroups = groups.filter((g) => g.renderedFaqs.length > 0);
@@ -86,6 +99,12 @@ const schema = {
             </details>
           ))}
         </div>
+
+        {group.relatedArticle && (
+          <p class="group-article-link">
+            Want the full picture? Read <a href={`/guides/${group.relatedArticle.id}`}>{group.relatedArticle.data.title}</a>.
+          </p>
+        )}
 
         {group.businesses.length > 0 && (
           <p class="group-businesses">
@@ -134,5 +153,7 @@ const schema = {
   }
   .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; }
   .faq-answer :global(p) { margin: 0; }
+  .group-article-link { margin-top: var(--space-2); font-size: 0.9375rem; color: var(--color-navy); font-weight: 600; }
+  .group-article-link a { color: var(--color-orange-dark); }
   .group-businesses { margin-top: var(--space-1); font-size: 0.875rem; color: var(--color-river-light); }
 </style>
