@@ -93,12 +93,6 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
     <h1>{article.data.title}</h1>
     <p class="byline">By {article.data.author} · Updated {article.data.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
 
-    {article.data.aiAssisted && (
-      <p class="review-note">
-        AI-assisted draft, reviewed by {article.data.reviewedBy ?? 'a local editor'} before publishing.
-      </p>
-    )}
-
     {article.data.heroImage && (
       <img src={article.data.heroImage} alt={article.data.title} class="article-hero-img" />
     )}
@@ -175,10 +169,11 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
         </div>
       </div>
     )}
+  </article>
 
-    {related.length > 0 && (
+  {related.length > 0 && (
+    <div class="container related-wrap">
       <section class="related-block">
-        <div class="contour-rule" role="presentation"></div>
         <h2>You might also want to read</h2>
         <div class="related-grid">
           {relatedWithCategory.map(({ article: r, category: rCategory }) => (
@@ -195,8 +190,8 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
           ))}
         </div>
       </section>
-    )}
-  </article>
+    </div>
+  )}
 
   <SiteFooter slot="footer" />
 </BaseLayout>
@@ -279,7 +274,8 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
   .business-chip:hover { border-color: var(--color-orange); color: var(--color-orange); }
 
   .related-block { margin-top: var(--space-5); }
-  .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .related-wrap { max-width: 60rem; margin-inline: auto; padding-block: var(--space-5); }
+  .related-block { padding-top: var(--space-4); border-top: 1px solid var(--color-line); }
   .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3); }
   @media (max-width: 45rem) { .related-grid { grid-template-columns: 1fr; } }
   .related-card {
@@ -290,7 +286,7 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
   }
   .related-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
   .related-card-media {
-    height: 9.5rem; display: flex; align-items: center; justify-content: center;
+    height: 12.5rem; display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
     background-size: cover; background-position: center;
   }
