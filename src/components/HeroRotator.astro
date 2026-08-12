@@ -1,0 +1,183 @@
+---
+// Self-contained, auto-rotating benefit showcase for the right side of the
+// homepage hero. Deliberately does not touch any existing hero markup or
+// styles — it's an independent sibling element, absolutely positioned.
+// All classes below are prefixed sfg-hero-rotator- to avoid any collision
+// with existing site-wide styles.
+---
+
+<div class="sfg-hero-rotator-wrap">
+  <div class="sfg-hero-rotator-aurora" id="sfg-hr-aurora"></div>
+  <div class="sfg-hero-rotator">
+    <div class="sfg-hero-rotator-icon" id="sfg-hr-icon"></div>
+    <div class="sfg-hero-rotator-slide" id="sfg-hr-slide"></div>
+    <div class="sfg-hero-rotator-progress" id="sfg-hr-progress"></div>
+  </div>
+</div>
+
+<style>
+  .sfg-hero-rotator-wrap {
+    position: absolute; top: 50%; right: 3.5vw; transform: translateY(-50%);
+    z-index: 2; width: 23rem;
+  }
+  @media (max-width: 60rem) {
+    .sfg-hero-rotator-wrap {
+      position: relative; top: auto; right: auto; transform: none;
+      width: 100%; max-width: 26rem; margin: 2rem auto 0;
+      flex: none; /* .hero is display:flex — without this, this becomes a squeezed flex child */
+    }
+  }
+
+  .sfg-hero-rotator-aurora {
+    position: absolute; top: 50%; left: 50%; width: 22rem; height: 22rem;
+    transform: translate(-50%, -50%); border-radius: 50%; filter: blur(50px); opacity: 0.5; z-index: -1;
+    transition: background 1.2s ease; animation: sfg-hr-aurora-drift 8s ease-in-out infinite;
+  }
+  @keyframes sfg-hr-aurora-drift {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.15); }
+  }
+  @media (prefers-reduced-motion: reduce) { .sfg-hero-rotator-aurora { animation: none; } }
+
+  .sfg-hero-rotator {
+    position: relative;
+    background: linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 1.5rem;
+    padding: 2.2rem 1.9rem;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+    min-height: 14rem;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+  }
+
+  .sfg-hero-rotator-icon {
+    width: 3.2rem; height: 3.2rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem; color: #fff; position: relative;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+  }
+  .sfg-hero-rotator-icon::after {
+    content: ''; position: absolute; inset: -6px; border-radius: 50%;
+    border: 1.5px solid #F5B429; opacity: 0; animation: sfg-hr-icon-pulse 2.2s ease-out infinite;
+  }
+  @keyframes sfg-hr-icon-pulse {
+    0% { transform: scale(0.85); opacity: 0.8; }
+    100% { transform: scale(1.35); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .sfg-hero-rotator-icon::after { animation: none; opacity: 0; } }
+
+  .sfg-hero-rotator-slide { position: relative; min-height: 5.6rem; overflow: hidden; }
+  :global(.sfg-hr-text) {
+    position: absolute; inset: 0;
+    font-family: var(--font-display, 'Poppins', sans-serif); font-weight: 700; font-size: 1.5rem; line-height: 1.3; color: #fff;
+    transform: translateY(100%);
+    transition: transform 0.65s cubic-bezier(.4,0,.2,1);
+  }
+  :global(.sfg-hr-text.is-active) { transform: translateY(0); }
+  :global(.sfg-hr-text.is-exiting) { transform: translateY(-100%); }
+  :global(.sfg-hr-num) {
+    font-size: 1.9rem; background: linear-gradient(90deg, #fff, #F5B429);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .sfg-hero-rotator-progress { display: flex; gap: 0.35rem; margin-top: 1.5rem; }
+  :global(.sfg-hr-track) { flex: 1; height: 3px; border-radius: 999px; background: rgba(255,255,255,0.2); overflow: hidden; }
+  :global(.sfg-hr-fill) { height: 100%; width: 0%; background: #F5B429; border-radius: 999px; }
+</style>
+
+<script>
+  const items = [
+    {
+      html: 'Real Events. Real Prizes.',
+      aurora: 'radial-gradient(circle, #F07E23, transparent 70%)',
+      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>',
+    },
+    {
+      html: '<span class="sfg-hr-num">98</span> Real Local Guides',
+      aurora: 'radial-gradient(circle, #2E6F9E, transparent 70%)',
+      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>',
+    },
+    {
+      html: 'Local Businesses We Stand Behind',
+      aurora: 'radial-gradient(circle, #7B4FA0, transparent 70%)',
+      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>',
+    },
+    {
+      html: 'Real Tools. Not Just Listings.',
+      aurora: 'radial-gradient(circle, #F5B429, transparent 70%)',
+      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94Z"/></svg>',
+    },
+    {
+      html: '<span class="sfg-hr-num">98</span> Articles. Built to Drive Traffic.',
+      aurora: 'radial-gradient(circle, #2E9E5B, transparent 70%)',
+      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+    },
+  ];
+
+  const slide = document.getElementById('sfg-hr-slide');
+  const iconEl = document.getElementById('sfg-hr-icon');
+  const auroraEl = document.getElementById('sfg-hr-aurora');
+  const progressEl = document.getElementById('sfg-hr-progress');
+
+  if (slide && iconEl && auroraEl && progressEl) {
+    items.forEach(() => {
+      const track = document.createElement('div');
+      track.className = 'sfg-hr-track';
+      const fill = document.createElement('div');
+      fill.className = 'sfg-hr-fill';
+      track.appendChild(fill);
+      progressEl.appendChild(track);
+    });
+
+    const firstText = document.createElement('div');
+    firstText.className = 'sfg-hr-text is-active';
+    firstText.innerHTML = items[0].html;
+    slide.appendChild(firstText);
+    iconEl.innerHTML = items[0].icon;
+    auroraEl.style.background = items[0].aurora;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let current = 0;
+    function render(index: number) {
+      const item = items[index];
+
+      const oldText = slide!.querySelector('.sfg-hr-text.is-active');
+      if (oldText) {
+        oldText.classList.remove('is-active');
+        oldText.classList.add('is-exiting');
+        setTimeout(() => oldText.remove(), 700);
+      }
+
+      const newText = document.createElement('div');
+      newText.className = 'sfg-hr-text';
+      newText.innerHTML = item.html;
+      slide!.appendChild(newText);
+      requestAnimationFrame(() => requestAnimationFrame(() => newText.classList.add('is-active')));
+
+      iconEl!.innerHTML = item.icon;
+      auroraEl!.style.background = item.aurora;
+
+      document.querySelectorAll('.sfg-hr-fill').forEach((f, i) => {
+        const el = f as HTMLElement;
+        if (i < index) { el.style.transition = 'none'; el.style.width = '100%'; }
+        else { el.style.transition = 'none'; el.style.width = '0%'; }
+      });
+      void progressEl!.offsetWidth;
+      const currentFill = progressEl!.children[index].querySelector('.sfg-hr-fill') as HTMLElement;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        currentFill.style.transition = 'width 4s linear';
+        currentFill.style.width = '100%';
+      }));
+    }
+
+    // Respect reduced-motion preference — just show the first message, no auto-cycling
+    if (!reduceMotion) {
+      setInterval(() => { current = (current + 1) % items.length; render(current); }, 4000);
+    } else {
+      const firstFill = progressEl.children[0]?.querySelector('.sfg-hr-fill') as HTMLElement;
+      if (firstFill) firstFill.style.width = '100%';
+    }
+  }
+</script>
