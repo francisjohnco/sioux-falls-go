@@ -1,7 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Home Watch Company in Sioux Falls?"
 category: "home-watch-services"
-heroImage: "/images/businesses/while-away.jpg"
+heroImage: "/images/stock/rustic-bedroom.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-home-watch-company-in-sioux-falls", "home-watch-services-faq-sioux-falls"]
 relatedBusinesses: ["while-away"]

@@ -1,7 +1,7 @@
 ---
 title: "The Best Shopping for a Sioux Falls Winter Day"
 category: "shopping-retail"
-heroImage: "/images/businesses/animalwisedco.jpg"
+heroImage: "/images/stock/store-worker.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["best-shopping-in-sioux-falls", "shopping-by-neighborhood-sioux-falls"]
 relatedBusinesses: ["animalwisedco"]

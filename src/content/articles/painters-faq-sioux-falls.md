@@ -1,7 +1,7 @@
 ---
 title: "Painters FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "painters"
-heroImage: "/images/businesses/positive-painting.jpg"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "how-to-choose-a-painting-contractor-in-sioux-falls", "painting-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["positive-painting"]

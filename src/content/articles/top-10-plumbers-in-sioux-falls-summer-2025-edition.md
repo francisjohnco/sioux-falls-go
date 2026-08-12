@@ -1,7 +1,7 @@
 ---
 title: "Top 10 Plumbers in Sioux\u202fFalls \u2013 Summer 2025 Edition"
 category: "for-locals"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "/images/articles/top-10-plumbers-in-sioux-falls-summer-2025-edition.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

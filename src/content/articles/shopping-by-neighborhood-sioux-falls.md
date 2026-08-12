@@ -1,7 +1,7 @@
 ---
 title: "Shopping by Neighborhood: Where Sioux Falls Locals Actually Go"
 category: "shopping-retail"
-heroImage: "/images/businesses/animalwisedco.jpg"
+heroImage: "/images/stock/delivery-package.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-shopping-in-sioux-falls", "sioux-falls-shopping-a-locals-guide"]
 relatedBusinesses: ["animalwisedco"]

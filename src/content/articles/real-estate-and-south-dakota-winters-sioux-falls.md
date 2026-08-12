@@ -1,7 +1,7 @@
 ---
 title: "Buying or Selling a Home in Sioux Falls During Winter: What to Expect"
 category: "real-estate-agents"
-heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
+heroImage: "/images/stock/real-estate-handshake.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "how-to-choose-a-real-estate-agent-in-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]

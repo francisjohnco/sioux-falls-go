@@ -1,7 +1,7 @@
 ---
 title: "Plumbing FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "plumbers"
-heroImage: "/images/businesses/jurrens-plumbing.jpg"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "how-to-choose-a-plumber-in-sioux-falls", "plumbing-south-dakota-winters-sioux-falls-homeowners"]

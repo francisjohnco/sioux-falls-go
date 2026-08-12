@@ -1,7 +1,7 @@
 ---
 title: "Top 10 Lawn Care Services in Sioux Falls For Spring 2025"
 category: "for-locals"
-heroImage: "/images/scenic/levitt-concert-center.jpg"
+heroImage: "/images/articles/top-10-lawn-care-services-in-sioux-falls-for-spring-2025.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

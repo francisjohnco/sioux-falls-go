@@ -1,7 +1,7 @@
 ---
 title: "Preparing Your Trees for South Dakota Winter and Ice Storms"
 category: "local-tree-services"
-heroImage: "/images/businesses/american-tree-service.jpg"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "how-to-choose-a-tree-service-in-sioux-falls", "emergency-tree-removal-in-sioux-falls-storm-damage-and-24-7-service"]

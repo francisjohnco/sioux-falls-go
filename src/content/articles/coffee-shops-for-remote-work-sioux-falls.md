@@ -1,7 +1,7 @@
 ---
 title: "Best Coffee Shops for Remote Work in Sioux Falls"
 category: "coffee-shops"
-heroImage: "/images/businesses/la-luna-cafe.jpg"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "visiting-sioux-falls-where-to-find-great-coffee"]
 relatedBusinesses: ["la-luna-cafe"]

@@ -1,7 +1,7 @@
 ---
 title: "Visiting Sioux Falls? Here's Where to Shop"
 category: "shopping-retail"
-heroImage: "/images/businesses/animalwisedco.jpg"
+heroImage: "/images/stock/store-worker.jpg"
 contentType: "visitor-guide"
 relatedArticles: ["best-shopping-in-sioux-falls", "sioux-falls-shopping-a-locals-guide"]
 relatedBusinesses: ["animalwisedco"]

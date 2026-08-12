@@ -1,7 +1,7 @@
 ---
 title: "Lawn Care and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "lawn-care"
-heroImage: "/images/businesses/robert-s-property-care.jpg"
+heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "how-to-choose-a-lawn-care-company-in-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]

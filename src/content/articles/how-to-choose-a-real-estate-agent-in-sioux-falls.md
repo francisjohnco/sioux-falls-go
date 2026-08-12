@@ -1,7 +1,7 @@
 ---
 title: "How to Choose a Real Estate Agent in Sioux Falls"
 category: "real-estate-agents"
-heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
+heroImage: "/images/stock/real-estate-handshake.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "real-estate-agents-faq-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]

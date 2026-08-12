@@ -1,7 +1,7 @@
 ---
 title: "How to Know When a Tree Needs to Come Down in South Dakota"
 category: "local-tree-services"
-heroImage: "/images/businesses/american-tree-service.jpg"
+heroImage: "/images/articles/how-to-know-when-a-tree-needs-to-come-down-in-south-dakota.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-a-tree-service-in-sioux-falls", "how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "complete-guide-to-professional-tree-care-in-sioux-falls"]

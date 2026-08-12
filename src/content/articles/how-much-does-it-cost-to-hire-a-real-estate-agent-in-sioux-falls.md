@@ -1,7 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Real Estate Agent in Sioux Falls?"
 category: "real-estate-agents"
-heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
+heroImage: "/images/stock/real-estate-keys.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-real-estate-agent-in-sioux-falls", "real-estate-agents-faq-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]

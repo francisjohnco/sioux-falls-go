@@ -1,7 +1,7 @@
 ---
 title: "Home Watch and South Dakota Winters: What Every Snowbird Should Know"
 category: "home-watch-services"
-heroImage: "/images/businesses/while-away.jpg"
+heroImage: "/images/stock/rustic-bedroom.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-home-watch-company-in-sioux-falls", "how-to-choose-a-home-watch-company-in-sioux-falls"]
 relatedBusinesses: ["while-away"]

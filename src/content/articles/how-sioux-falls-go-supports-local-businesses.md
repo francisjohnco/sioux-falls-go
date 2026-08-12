@@ -1,7 +1,7 @@
 ---
 title: "How Sioux Falls Go Supports Local Businesses"
 category: "for-local-businesses"
-heroImage: "/images/businesses/sajmedia-marketing.png"
+heroImage: "/images/articles/how-sioux-falls-go-supports-local-businesses.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

@@ -8,8 +8,25 @@ import EventsSection from '../components/EventsSection.astro';
 
 const businesses = await getCollection('businesses');
 const spotlightBusinesses = businesses.filter((b) => b.data.heroImage).slice(0, 3);
+
+function makeExcerpt(markdown: string, maxLen = 110): string {
+  const plain = markdown
+    .replace(/^#{1,6}\s+.*/gm, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[*_`>#-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (plain.length <= maxLen) return plain;
+  const cut = plain.slice(0, maxLen);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
+}
+
 const spotlightWithCat = await Promise.all(
-  spotlightBusinesses.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
+  spotlightBusinesses.map(async (b) => ({
+    business: b,
+    category: await getEntry(b.data.category),
+    excerpt: makeExcerpt(b.body ?? ''),
+  }))
 );
 
 const resourceSlugs = [
@@ -54,10 +71,10 @@ const schema = {
 
   <div class="container">
     <section class="section">
-      <span class="eyebrow">Our Latest Spotlight</span>
+      <span class="eyebrow">Our Latest Feature</span>
       <h2>Check out these hometown favorites</h2>
       <div class="spotlight-grid">
-        {spotlightWithCat.map(({ business, category }) => (
+        {spotlightWithCat.map(({ business, category, excerpt }) => (
           <a class="spot-card" href={`/businesses/${business.id}`}>
             <div class="spot-media" style={`background-image: url(${business.data.heroImage})`}>
               <span class="spot-badge">
@@ -67,6 +84,8 @@ const schema = {
             <div class="spot-body">
               <h3>{business.data.name}</h3>
               {business.data.googleRating && <p class="spot-rating"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)} {business.data.googleReviewCount && `(${business.data.googleReviewCount} reviews)`}</p>}
+              <p class="spot-excerpt">{excerpt}</p>
+              <span class="spot-readmore">Read more →</span>
             </div>
           </a>
         ))}
@@ -202,6 +221,8 @@ const schema = {
   .spot-body { padding: 1.3rem; }
   .spot-body h3 { font-size: 1.1875rem; margin: 0; }
   .spot-rating { display: flex; align-items: center; gap: 0.3rem; color: var(--color-navy); font-weight: 700; font-size: 0.875rem; margin-top: 0.6rem; }
+  .spot-excerpt { font-size: 0.875rem; color: var(--color-navy-light); margin: 0.6rem 0 0; line-height: 1.5; }
+  .spot-readmore { display: inline-block; margin-top: 0.7rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); }
   .filled-star { fill: #F5B429; color: #F5B429; }
   .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 

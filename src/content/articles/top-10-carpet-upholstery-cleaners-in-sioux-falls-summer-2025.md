@@ -10,7 +10,7 @@ author: "Sioux Falls Go Editorial"
 aiAssisted: false
 publishedAt: 2025-06-20
 updatedAt: 2025-06-20
-heroImage: "/images/articles/top-10-carpet-upholstery-cleaners.png"
+heroImage: "/images/articles/top-10-carpet-upholstery-cleaners-in-sioux-falls-summer-2025.png"
 embeddedFaqs:
   - question: "How often should carpet actually be professionally cleaned in Sioux Falls?"
     answer: "Most local pros recommend once a year for an average household, and twice a year if you've got pets, kids, or track in a lot of South Dakota winter salt and mud."

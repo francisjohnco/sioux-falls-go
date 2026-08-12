@@ -1,7 +1,7 @@
 ---
 title: "Pest Control FAQs for Sioux Falls and Surrounding Areas"
 category: "consumer-guide"
-heroImage: "/images/scenic/levitt-concert-center.jpg"
+heroImage: "/images/articles/pest-control-faqs-for-sioux-falls-and-surrounding-areas.png"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: []

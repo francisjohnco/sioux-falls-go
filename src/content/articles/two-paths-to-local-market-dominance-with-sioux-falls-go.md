@@ -1,7 +1,7 @@
 ---
 title: "Two Paths to Local Market Dominance with Sioux Falls Go"
 category: "for-local-businesses"
-heroImage: "/images/scenic/levitt-concert-center.jpg"
+heroImage: "/images/articles/two-paths-to-local-market-dominance-with-sioux-falls-go.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

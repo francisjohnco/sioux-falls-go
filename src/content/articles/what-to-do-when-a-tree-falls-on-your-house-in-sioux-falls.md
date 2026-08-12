@@ -1,7 +1,7 @@
 ---
 title: "What to Do When a Tree Falls on Your House in Sioux Falls"
 category: "local-tree-services"
-heroImage: "/images/businesses/american-tree-service.jpg"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

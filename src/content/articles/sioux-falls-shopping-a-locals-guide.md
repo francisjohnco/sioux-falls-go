@@ -1,7 +1,7 @@
 ---
 title: "Sioux Falls Shopping: A Local's Guide"
 category: "shopping-retail"
-heroImage: "/images/businesses/animalwisedco.jpg"
+heroImage: "/images/stock/florist-bouquet.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-shopping-in-sioux-falls", "visiting-sioux-falls-where-to-shop"]
 relatedBusinesses: ["animalwisedco"]

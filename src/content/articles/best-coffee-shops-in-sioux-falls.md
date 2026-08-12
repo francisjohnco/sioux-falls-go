@@ -1,7 +1,7 @@
 ---
 title: "Best Coffee Shops in Sioux Falls"
 category: "coffee-shops"
-heroImage: "/images/businesses/la-luna-cafe.jpg"
+heroImage: "/images/articles/best-coffee-shops-in-sioux-falls.png"
 contentType: "local-resource"
 relatedArticles: ["coffee-shops-for-remote-work-sioux-falls", "visiting-sioux-falls-where-to-find-great-coffee"]
 relatedBusinesses: ["la-luna-cafe"]

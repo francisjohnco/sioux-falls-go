@@ -1,7 +1,7 @@
 ---
 title: "Where to Eat in Downtown Sioux Falls If You're Just Passing Through"
 category: "restaurants-dining"
-heroImage: "/images/businesses/shahi-india-grill.jpeg"
+heroImage: "/images/stock/restaurant-workers.jpg"
 contentType: "visitor-guide"
 relatedArticles: ["best-restaurants-in-sioux-falls", "sioux-falls-dining-a-locals-guide"]
 relatedBusinesses: ["shahi-india-grill"]

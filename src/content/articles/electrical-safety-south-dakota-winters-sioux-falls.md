@@ -1,7 +1,7 @@
 ---
 title: "Electrical Safety and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "electricians"
-heroImage: "/images/businesses/redstone-electric.jpg"
+heroImage: "/images/stock/cornfield.jpg"
 contentType: "seasonal-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-an-electrician-in-sioux-falls", "how-to-choose-an-electrician-in-sioux-falls"]

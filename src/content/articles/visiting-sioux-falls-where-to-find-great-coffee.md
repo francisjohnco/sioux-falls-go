@@ -1,7 +1,7 @@
 ---
 title: "Visiting Sioux Falls? Here's Where to Find Great Coffee"
 category: "coffee-shops"
-heroImage: "/images/businesses/la-luna-cafe.jpg"
+heroImage: "/images/stock/cornfield.jpg"
 contentType: "visitor-guide"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "coffee-shops-for-remote-work-sioux-falls"]
 relatedBusinesses: ["la-luna-cafe"]

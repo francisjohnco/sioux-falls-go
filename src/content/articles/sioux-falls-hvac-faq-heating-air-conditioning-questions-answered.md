@@ -1,7 +1,7 @@
 ---
 title: "Sioux Falls HVAC FAQ: Heating & Air Conditioning Questions Answered"
 category: "consumer-guide"
-heroImage: "/images/scenic/mckennan-park.jpg"
+heroImage: "/images/articles/sioux-falls-hvac-faq-heating-air-conditioning-questions-answered.png"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: []

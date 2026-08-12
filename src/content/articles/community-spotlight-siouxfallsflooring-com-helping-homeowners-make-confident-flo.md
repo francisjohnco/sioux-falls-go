@@ -1,7 +1,7 @@
 ---
 title: "Community Spotlight: SiouxFallsFlooring.com \u2014 Helping Homeowners Make Confident Flooring Decisions"
 category: "flooring"
-heroImage: "/images/scenic/falls-park-2.jpg"
+heroImage: "/images/articles/community-spotlight-siouxfallsflooring-com-helping-homeowners-make-confident-flo.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

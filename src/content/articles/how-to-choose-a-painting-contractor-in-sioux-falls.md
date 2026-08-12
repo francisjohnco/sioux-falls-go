@@ -1,7 +1,7 @@
 ---
 title: "How to Choose a Painting Contractor in Sioux Falls"
 category: "painters"
-heroImage: "/images/businesses/positive-painting.jpg"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "painters-faq-sioux-falls"]
 relatedBusinesses: ["positive-painting"]

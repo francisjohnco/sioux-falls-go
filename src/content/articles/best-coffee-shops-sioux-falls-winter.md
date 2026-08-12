@@ -1,7 +1,7 @@
 ---
 title: "The Best Coffee Shops for a Sioux Falls Winter Day"
 category: "coffee-shops"
-heroImage: "/images/businesses/la-luna-cafe.jpg"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "coffee-shops-by-neighborhood-sioux-falls"]
 relatedBusinesses: ["la-luna-cafe"]

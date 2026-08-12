@@ -1,7 +1,7 @@
 ---
 title: "Restaurants by Neighborhood: Where Sioux Falls Locals Actually Eat"
 category: "restaurants-dining"
-heroImage: "/images/businesses/shahi-india-grill.jpeg"
+heroImage: "/images/stock/restaurant-workers.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-restaurants-in-sioux-falls", "sioux-falls-dining-a-locals-guide"]
 relatedBusinesses: ["shahi-india-grill"]

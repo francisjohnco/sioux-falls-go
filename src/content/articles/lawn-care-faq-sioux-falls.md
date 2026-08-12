@@ -1,7 +1,7 @@
 ---
 title: "Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "lawn-care"
-heroImage: "/images/businesses/robert-s-property-care.jpg"
+heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "how-to-choose-a-lawn-care-company-in-sioux-falls", "lawn-care-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]

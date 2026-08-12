@@ -1,7 +1,7 @@
 ---
 title: "Shine Bright With The Sioux Falls Go Postcard"
 category: "grow-with-sfg"
-heroImage: "/images/scenic/falls-park-1.jpg"
+heroImage: "/images/articles/shine-bright-with-the-sioux-falls-go-postcard.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

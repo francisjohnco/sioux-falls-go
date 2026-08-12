@@ -1,7 +1,7 @@
 ---
 title: "Complete Guide to Professional Tree Care in Sioux Falls"
 category: "local-tree-services"
-heroImage: "/images/businesses/american-tree-service.jpg"
+heroImage: "/images/stock/cathedral.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-a-tree-service-in-sioux-falls", "how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "how-to-know-when-a-tree-needs-to-come-down-in-south-dakota"]
