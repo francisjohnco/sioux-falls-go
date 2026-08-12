@@ -26,7 +26,7 @@ const excerpt = makeExcerpt(business.body ?? '');
 ---
 <div class={`biz-card ${compact ? 'biz-card--compact' : ''}`}>
   <a href={`/businesses/${business.id}`} class="biz-card-photo-link">
-    <div class="biz-card-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage}); background-size: contain; background-repeat: no-repeat; background-position: center;` : undefined}>
+    <div class="biz-card-media" style={business.data.heroImage ? `background-image: url(${business.data.heroImage}); background-size: cover; background-position: center;` : undefined}>
       {!business.data.heroImage && (
         <svg class="media-pattern" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <polygon points="0,160 0,90 90,60 180,95 260,50 300,75 300,160" fill="#ffffff" opacity="0.06" />
