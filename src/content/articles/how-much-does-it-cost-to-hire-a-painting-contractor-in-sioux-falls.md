@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Painting Contractor in Sioux Falls?"
 category: "painters"
+heroImage: "/images/businesses/positive-painting.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-painting-contractor-in-sioux-falls", "painters-faq-sioux-falls"]
 relatedBusinesses: ["positive-painting"]

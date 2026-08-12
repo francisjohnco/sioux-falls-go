@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Landscaping Companies In Sioux Falls 2025"
 category: "for-locals"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

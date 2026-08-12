@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Lawn Care Company in Sioux Falls"
 category: "lawn-care"
+heroImage: "/images/businesses/robert-s-property-care.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "lawn-care-faq-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]

@@ -1,6 +1,7 @@
 ---
 title: "Convert Chat AI-AutoBot"
 category: "spotlight-giveaways"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

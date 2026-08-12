@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Plumber in Sioux Falls"
 category: "plumbers"
+heroImage: "/images/businesses/jurrens-plumbing.jpg"
 contentType: "buying-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]

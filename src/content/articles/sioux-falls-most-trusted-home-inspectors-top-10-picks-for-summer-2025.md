@@ -1,6 +1,7 @@
 ---
 title: "Sioux Falls' Most Trusted Home Inspectors - Top 10 Picks for Summer 2025"
 category: "for-locals"
+heroImage: "/images/scenic/levitt-concert-center.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

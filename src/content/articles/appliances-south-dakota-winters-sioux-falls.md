@@ -1,6 +1,7 @@
 ---
 title: "Appliances and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "appliance-repair-service"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-an-appliance-repair-company-in-sioux-falls", "how-to-choose-an-appliance-repair-company-in-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]

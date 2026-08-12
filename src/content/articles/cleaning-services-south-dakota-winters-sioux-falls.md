@@ -1,6 +1,7 @@
 ---
 title: "Cleaning Services and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "cleaning-services"
+heroImage: "/images/businesses/t-j-vance-quality-cleaning.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "how-to-choose-a-cleaning-service-in-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]

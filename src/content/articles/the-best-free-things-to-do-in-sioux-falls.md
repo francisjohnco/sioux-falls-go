@@ -1,6 +1,7 @@
 ---
 title: "The Best Free Things to Do in Sioux Falls"
 category: "explore-sioux-falls"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

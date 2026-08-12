@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Home Watch Company in Sioux Falls"
 category: "home-watch-services"
+heroImage: "/images/businesses/while-away.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-home-watch-company-in-sioux-falls", "home-watch-services-faq-sioux-falls"]
 relatedBusinesses: ["while-away"]

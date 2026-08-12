@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Pest Control Companies in Sioux Falls - Summer 2025"
 category: "for-locals"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

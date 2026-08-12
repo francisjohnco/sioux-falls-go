@@ -1,6 +1,7 @@
 ---
 title: "What Is Sioux Falls Go? (And Why It Matters)"
 category: "for-local-businesses"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

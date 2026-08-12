@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Residential Cleaning Services in Sioux Falls \u2013 Summer 2025"
 category: "for-locals"
+heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

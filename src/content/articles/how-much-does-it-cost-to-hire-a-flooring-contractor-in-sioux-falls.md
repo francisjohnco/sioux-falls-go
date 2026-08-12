@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Flooring Contractor in Sioux Falls?"
 category: "flooring"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-flooring-contractor-in-sioux-falls", "flooring-faq-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]

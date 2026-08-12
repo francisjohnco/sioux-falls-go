@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Handyman Services in Sioux Falls \u2013 Summer\u00a02025 Edition"
 category: "for-locals"
+heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

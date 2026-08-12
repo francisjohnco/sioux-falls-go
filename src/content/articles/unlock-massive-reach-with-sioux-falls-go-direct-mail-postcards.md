@@ -1,6 +1,7 @@
 ---
 title: "Unlock Massive Reach with Sioux Falls Go Direct Mail Postcards"
 category: "grow-with-sfg"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

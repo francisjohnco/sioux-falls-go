@@ -1,6 +1,7 @@
 ---
 title: "Window Cleaning and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "window-cleaning"
+heroImage: "/images/businesses/sioux-empire-shine.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-window-cleaning-company-in-sioux-falls", "how-to-choose-a-window-cleaning-company-in-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]

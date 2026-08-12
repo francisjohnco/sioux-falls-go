@@ -1,6 +1,7 @@
 ---
 title: "Sioux Falls Go Roadmap"
 category: "for-local-businesses"
+heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

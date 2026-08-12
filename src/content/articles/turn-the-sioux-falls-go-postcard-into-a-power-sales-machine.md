@@ -1,6 +1,7 @@
 ---
 title: "Turn The Sioux Falls Go Postcard into a power Sales Machine"
 category: "grow-with-sfg"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire an Appliance Repair Company in Sioux Falls?"
 category: "appliance-repair-service"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-an-appliance-repair-company-in-sioux-falls", "appliance-repair-faq-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]

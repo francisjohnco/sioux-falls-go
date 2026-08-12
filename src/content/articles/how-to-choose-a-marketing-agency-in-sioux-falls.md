@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Marketing Agency in Sioux Falls"
 category: "marketing-agencies"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls", "marketing-agencies-faq-sioux-falls"]
 relatedBusinesses: ["sajmedia-marketing"]

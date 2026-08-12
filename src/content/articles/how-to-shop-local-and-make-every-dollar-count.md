@@ -1,6 +1,7 @@
 ---
 title: "How to shop Local (and Make every Dollar count)"
 category: "consumer-guide"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

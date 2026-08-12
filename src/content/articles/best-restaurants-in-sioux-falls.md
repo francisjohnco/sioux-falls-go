@@ -1,6 +1,7 @@
 ---
 title: "Best Restaurants in Sioux Falls"
 category: "restaurants-dining"
+heroImage: "/images/businesses/shahi-india-grill.jpeg"
 contentType: "local-resource"
 relatedArticles: ["sioux-falls-dining-a-locals-guide", "where-to-eat-downtown-sioux-falls-visitors"]
 relatedBusinesses: ["shahi-india-grill"]

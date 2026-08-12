@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Window Cleaning Company in Sioux Falls?"
 category: "window-cleaning"
+heroImage: "/images/businesses/sioux-empire-shine.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-window-cleaning-company-in-sioux-falls", "window-cleaning-faq-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]

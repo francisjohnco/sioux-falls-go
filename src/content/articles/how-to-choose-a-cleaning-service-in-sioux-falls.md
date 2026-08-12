@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Cleaning Service in Sioux Falls"
 category: "cleaning-services"
+heroImage: "/images/businesses/t-j-vance-quality-cleaning.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "cleaning-services-faq-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]

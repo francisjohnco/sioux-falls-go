@@ -1,6 +1,7 @@
 ---
 title: "The Best Restaurants for a Sioux Falls Winter Night"
 category: "restaurants-dining"
+heroImage: "/images/businesses/shahi-india-grill.jpeg"
 contentType: "seasonal-guide"
 relatedArticles: ["best-restaurants-in-sioux-falls", "restaurants-by-neighborhood-sioux-falls"]
 relatedBusinesses: ["shahi-india-grill"]

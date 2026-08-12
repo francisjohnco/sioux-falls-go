@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Lawn Care Company in Sioux Falls?"
 category: "lawn-care"
+heroImage: "/images/businesses/robert-s-property-care.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-lawn-care-company-in-sioux-falls", "lawn-care-faq-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]

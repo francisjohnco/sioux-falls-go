@@ -1,6 +1,7 @@
 ---
 title: "How to Choose a Flooring Contractor in Sioux Falls"
 category: "flooring"
+heroImage: "/images/scenic/levitt-concert-center.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "flooring-faq-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]

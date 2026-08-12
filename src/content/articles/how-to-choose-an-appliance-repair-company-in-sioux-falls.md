@@ -1,6 +1,7 @@
 ---
 title: "How to Choose an Appliance Repair Company in Sioux Falls"
 category: "appliance-repair-service"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-an-appliance-repair-company-in-sioux-falls", "appliance-repair-faq-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]

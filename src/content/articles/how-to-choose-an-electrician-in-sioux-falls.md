@@ -1,6 +1,7 @@
 ---
 title: "How to Choose an Electrician in Sioux Falls"
 category: "electricians"
+heroImage: "/images/businesses/redstone-electric.jpg"
 contentType: "buying-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-an-electrician-in-sioux-falls", "electricians-faq-sioux-falls"]

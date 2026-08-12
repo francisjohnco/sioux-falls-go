@@ -1,6 +1,7 @@
 ---
 title: "Appliance Repair FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "appliance-repair-service"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-an-appliance-repair-company-in-sioux-falls", "how-to-choose-an-appliance-repair-company-in-sioux-falls", "appliances-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]

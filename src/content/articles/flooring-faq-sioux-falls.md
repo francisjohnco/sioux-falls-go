@@ -1,6 +1,7 @@
 ---
 title: "Flooring FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "flooring"
+heroImage: "/images/scenic/levitt-concert-center.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "how-to-choose-a-flooring-contractor-in-sioux-falls", "flooring-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]

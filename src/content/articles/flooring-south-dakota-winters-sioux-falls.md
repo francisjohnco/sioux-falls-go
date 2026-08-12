@@ -1,6 +1,7 @@
 ---
 title: "Flooring and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "flooring"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "how-to-choose-a-flooring-contractor-in-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]

@@ -1,6 +1,7 @@
 ---
 title: "Painting and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "painters"
+heroImage: "/images/businesses/positive-painting.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "how-to-choose-a-painting-contractor-in-sioux-falls"]
 relatedBusinesses: ["positive-painting"]

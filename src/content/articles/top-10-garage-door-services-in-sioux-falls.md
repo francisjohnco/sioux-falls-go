@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Garage Door Services in Sioux Falls"
 category: "for-locals"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

@@ -1,6 +1,7 @@
 ---
 title: "Home Watch Services FAQ: Sioux Falls Snowbirds' Most Common Questions"
 category: "home-watch-services"
+heroImage: "/images/businesses/while-away.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-home-watch-company-in-sioux-falls", "how-to-choose-a-home-watch-company-in-sioux-falls", "home-watch-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["while-away"]

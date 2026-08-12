@@ -1,6 +1,7 @@
 ---
 title: "Seasonal Marketing for Sioux Falls Businesses: When to Invest and Why"
 category: "marketing-agencies"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls", "how-to-choose-a-marketing-agency-in-sioux-falls"]
 relatedBusinesses: ["sajmedia-marketing"]

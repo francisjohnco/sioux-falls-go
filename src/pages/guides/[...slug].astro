@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
@@ -36,6 +37,9 @@ if (related.length < 3) {
   );
   related = [...related, ...sameCategory.slice(0, 3 - related.length)];
 }
+const relatedWithCategory = await Promise.all(
+  related.map(async (r) => ({ article: r, category: await getEntry(r.data.category) }))
+);
 
 // Resolve related businesses for the "find a pro" resource CTA
 const relatedBusinesses = await Promise.all(
@@ -177,11 +181,16 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
         <div class="contour-rule" role="presentation"></div>
         <h2>You might also want to read</h2>
         <div class="related-grid">
-          {related.map((r) => (
+          {relatedWithCategory.map(({ article: r, category: rCategory }) => (
             <a class="related-card" href={`/guides/${r.id}`}>
-              <span class="related-tag">{r.data.contentType.replace('-', ' ')}</span>
-              <h3>{r.data.title}</h3>
-              <p>{r.data.seo.description}</p>
+              <div class="related-card-media" style={r.data.heroImage ? `background-image: url(${r.data.heroImage})` : undefined}>
+                {!r.data.heroImage && <Icon name={rCategory.data.icon} size={24} class="related-card-icon" />}
+              </div>
+              <div class="related-card-body">
+                <span class="related-tag">{r.data.contentType.replace('-', ' ')}</span>
+                <h3>{r.data.title}</h3>
+                <p>{r.data.seo.description}</p>
+              </div>
             </a>
           ))}
         </div>
@@ -272,12 +281,19 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
   .related-block { margin-top: var(--space-5); }
   .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .related-card {
-    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-2); text-decoration: none;
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden;
+    text-decoration: none;
     box-shadow: 0 1px 3px rgba(27,42,74,0.05);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .related-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .related-card-media {
+    height: 6.5rem; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
+    background-size: cover; background-position: center;
+  }
+  .related-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .related-card-body { padding: var(--space-2); }
   .related-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .related-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .related-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }

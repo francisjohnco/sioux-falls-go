@@ -1,6 +1,7 @@
 ---
 title: "Top 10 Reasons Sioux Falls Should Be on Your Must-Visit List"
 category: "explore-sioux-falls"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

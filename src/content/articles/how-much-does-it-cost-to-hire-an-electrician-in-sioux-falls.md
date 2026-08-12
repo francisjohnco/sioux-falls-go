@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire an Electrician in Sioux Falls?"
 category: "electricians"
+heroImage: "/images/businesses/redstone-electric.jpg"
 contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-an-electrician-in-sioux-falls", "electricians-faq-sioux-falls"]

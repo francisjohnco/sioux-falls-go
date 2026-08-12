@@ -1,6 +1,7 @@
 ---
 title: "Cleaning Services FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "cleaning-services"
+heroImage: "/images/businesses/t-j-vance-quality-cleaning.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "how-to-choose-a-cleaning-service-in-sioux-falls", "cleaning-services-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]

@@ -1,6 +1,7 @@
 ---
 title: "Electricians FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "electricians"
+heroImage: "/images/businesses/redstone-electric.jpg"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-an-electrician-in-sioux-falls", "how-to-choose-an-electrician-in-sioux-falls", "electrical-safety-south-dakota-winters-sioux-falls"]

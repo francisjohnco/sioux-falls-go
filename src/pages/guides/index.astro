@@ -64,8 +64,8 @@ const schema = {
         <div class="loop-grid">
           {serviceWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
-              <div class="loop-card-media">
-                <Icon name={category.data.icon} size={28} class="loop-card-icon" />
+              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+                {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category.data.name}</span>
@@ -87,8 +87,10 @@ const schema = {
           <div class="loop-grid">
             {localsWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <div class="loop-card-media">
-                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
+                <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+
+                  {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -112,8 +114,10 @@ const schema = {
           <div class="loop-grid">
             {visitorWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <div class="loop-card-media">
-                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
+                <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+
+                  {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -137,8 +141,10 @@ const schema = {
           <div class="loop-grid">
             {businessWithCat.map(({ article, category }) => (
               <a class="loop-card" href={`/guides/${article.id}`}>
-                <div class="loop-card-media">
-                  <Icon name={category.data.icon} size={28} class="loop-card-icon" />
+                <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+
+                  {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+
                 </div>
                 <div class="loop-card-body">
                   <span class="loop-tag">{category.data.name}</span>
@@ -173,6 +179,7 @@ const schema = {
   .loop-card-media {
     height: 5.5rem; display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
+    background-size: cover; background-position: center;
   }
   .loop-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
   .loop-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }

@@ -1,6 +1,7 @@
 ---
 title: "Real Estate Agents FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "real-estate-agents"
+heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "how-to-choose-a-real-estate-agent-in-sioux-falls", "real-estate-and-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]

@@ -1,6 +1,7 @@
 ---
 title: "Marketing Agencies FAQ: Sioux Falls Business Owners' Most Common Questions"
 category: "marketing-agencies"
+heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls", "how-to-choose-a-marketing-agency-in-sioux-falls", "seasonal-marketing-sioux-falls-businesses"]
 relatedBusinesses: ["sajmedia-marketing"]

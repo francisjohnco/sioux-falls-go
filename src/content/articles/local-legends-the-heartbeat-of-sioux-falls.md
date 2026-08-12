@@ -1,6 +1,7 @@
 ---
 title: "Local Legends \u2013 The Heartbeat of Sioux Falls"
 category: "consumer-guide"
+heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

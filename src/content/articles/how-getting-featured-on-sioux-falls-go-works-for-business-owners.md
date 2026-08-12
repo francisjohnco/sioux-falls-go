@@ -1,6 +1,7 @@
 ---
 title: "How Getting Featured on Sioux Falls Go Works (For Business Owners)"
 category: "for-local-businesses"
+heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

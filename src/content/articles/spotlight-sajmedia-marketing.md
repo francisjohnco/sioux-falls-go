@@ -1,6 +1,7 @@
 ---
 title: "Spotlight: How SAJMedia Marketing Helps Sioux Falls Businesses Get Found"
 category: "marketing-agencies"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "business-spotlight"
 relatedNeighborhoods: []
 relatedArticles: []

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -36,9 +36,12 @@ const insightSlugs = [
   'how-to-choose-a-painting-contractor-in-sioux-falls',
 ];
 const allArticles = await getCollection('articles');
-const localInsights = insightSlugs
-  .map((slug) => allArticles.find((a) => a.id === slug))
-  .filter((a): a is NonNullable<typeof a> => Boolean(a));
+const localInsights = await Promise.all(
+  insightSlugs
+    .map((slug) => allArticles.find((a) => a.id === slug))
+    .filter((a): a is NonNullable<typeof a> => Boolean(a))
+    .map(async (article) => ({ article, category: await getEntry(article.data.category) }))
+);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -156,12 +159,17 @@ const schema = {
         <span class="eyebrow">Local Insights</span>
         <h2>Resources and Tips to Shop and Hire Smarter in Sioux Falls</h2>
         <div class="insights-grid">
-          {localInsights.map((article) => (
+          {localInsights.map(({ article, category }) => (
             <a class="insight-card" href={`/guides/${article.id}`}>
-              <span class="insight-tag">{article.data.contentType.replace('-', ' ')}</span>
-              <h3>{article.data.title}</h3>
-              <p>{article.data.seo.description}</p>
-              <span class="insight-link">Read more →</span>
+              <div class="insight-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+                {!article.data.heroImage && <Icon name={category.data.icon} size={24} class="insight-card-icon" />}
+              </div>
+              <div class="insight-card-body">
+                <span class="insight-tag">{article.data.contentType.replace('-', ' ')}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+                <span class="insight-link">Read more →</span>
+              </div>
             </a>
           ))}
         </div>
@@ -355,10 +363,17 @@ const schema = {
   @media (max-width: 55rem) { .insights-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 36rem) { .insights-grid { grid-template-columns: 1fr; } }
   .insight-card {
-    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-3); text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden;
+    text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
   .insight-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(46,111,158,0.14); border-color: var(--color-river); }
+  .insight-card-media {
+    height: 7rem; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-river) 100%);
+    background-size: cover; background-position: center;
+  }
+  .insight-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .insight-card-body { padding: var(--space-3); }
   .insight-tag { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange-dark); }
   .insight-card h3 { font-size: 1.0625rem; margin: 0.4rem 0 0.4rem; color: var(--color-navy); }
   .insight-card p { font-size: 0.875rem; color: var(--color-navy-light); margin: 0 0 0.8rem; }

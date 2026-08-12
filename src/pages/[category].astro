@@ -5,6 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import LayeredHero from '../components/LayeredHero.astro';
+import Icon from '../components/Icon.astro';
 
 export async function getStaticPaths() {
   const categories = await getCollection('categories');
@@ -106,25 +107,32 @@ const schema = {
       </div>
     )}
 
-    {articles.length > 0 && (
-      <>
-        <div class="contour-rule" role="presentation"></div>
-        <section aria-labelledby="guides-heading">
-          <span class="eyebrow">From the Knowledge Base</span>
-          <h2 id="guides-heading">Helpful guides for {category.data.name.toLowerCase()}</h2>
-          <div class="grid">
-            {articles.slice(0, 3).map((article) => (
-              <a class="guide-card" href={`/guides/${article.id}`}>
+  </div>
+
+  {articles.length > 0 && (
+    <section class="guides-band" aria-labelledby="guides-heading">
+      <div class="container">
+        <span class="eyebrow">From the Knowledge Base</span>
+        <h2 id="guides-heading">Helpful guides for {category.data.name.toLowerCase()}</h2>
+        <div class="grid">
+          {articles.slice(0, 3).map((article) => (
+            <a class="guide-card" href={`/guides/${article.id}`}>
+              <div class="guide-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+                {!article.data.heroImage && <Icon name={category.data.icon} size={26} class="guide-card-icon" />}
+              </div>
+              <div class="guide-card-body">
                 <span class="guide-tag">{article.data.contentType.replace('-', ' ')}</span>
                 <h3>{article.data.title}</h3>
                 <p>{article.data.seo.description}</p>
-              </a>
-            ))}
-          </div>
-        </section>
-      </>
-    )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
+  <div class="container page">
     {renderedFaqs.length > 0 && (
       <>
         <div class="contour-rule" role="presentation"></div>
@@ -167,6 +175,14 @@ const schema = {
   .category-search-btn:hover { background: var(--color-orange-dark); transform: scale(1.05); }
 
   .page { padding-block: 0 var(--space-6); }
+  .contour-rule { height: 1px; background: var(--color-line); margin-block: var(--space-5); }
+
+  .guides-band {
+    background: var(--color-river-light, #EAF2F8);
+    padding-block: var(--space-5);
+    margin-block: var(--space-5);
+  }
+  .guides-band .eyebrow { display: block; margin-bottom: 0.2rem; }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
 
   .grid {
@@ -182,12 +198,19 @@ const schema = {
   .empty-note { text-align: center; color: var(--color-navy-light); margin-top: var(--space-3); }
 
   .guide-card {
-    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
-    padding: var(--space-2); text-decoration: none;
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); overflow: hidden;
+    text-decoration: none;
     box-shadow: 0 1px 3px rgba(27,42,74,0.05);
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .guide-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,126,35,0.14); border-color: var(--color-orange); }
+  .guide-card-media {
+    height: 6.5rem; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
+    background-size: cover; background-position: center;
+  }
+  .guide-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .guide-card-body { padding: var(--space-2); }
   .guide-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .guide-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .guide-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }

@@ -1,6 +1,7 @@
 ---
 title: "Tree Services FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "local-tree-services"
+heroImage: "/images/businesses/american-tree-service.jpg"
 contentType: "faq"
 relatedArticles: ["how-to-choose-a-tree-service-in-sioux-falls", "how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "preparing-your-trees-for-south-dakota-winter-and-ice-storms"]
 relatedBusinesses: ["american-tree-service"]

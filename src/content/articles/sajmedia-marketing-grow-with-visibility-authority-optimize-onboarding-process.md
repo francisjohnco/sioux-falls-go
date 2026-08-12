@@ -1,6 +1,7 @@
 ---
 title: "SAJMedia Marketing: Grow with Visibility, Authority, & Optimize Onboarding Process"
 category: "community-spotlight"
+heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

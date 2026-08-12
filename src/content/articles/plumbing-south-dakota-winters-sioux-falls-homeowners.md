@@ -1,6 +1,7 @@
 ---
 title: "Plumbing and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "plumbers"
+heroImage: "/images/businesses/jurrens-plumbing.jpg"
 contentType: "seasonal-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "how-to-choose-a-plumber-in-sioux-falls"]

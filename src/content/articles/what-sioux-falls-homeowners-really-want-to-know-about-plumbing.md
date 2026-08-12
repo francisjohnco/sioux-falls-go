@@ -1,6 +1,7 @@
 ---
 title: "What Sioux Falls Homeowners Really Want to Know About Plumbing"
 category: "consumer-guide"
+heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []

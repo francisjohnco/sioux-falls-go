@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Plumber in Sioux Falls?"
 category: "plumbers"
+heroImage: "/images/businesses/jurrens-plumbing.jpg"
 contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]

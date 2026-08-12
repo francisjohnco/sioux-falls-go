@@ -1,6 +1,7 @@
 ---
 title: "Coffee Shops by Neighborhood: Where Sioux Falls Locals Actually Go"
 category: "coffee-shops"
+heroImage: "/images/businesses/la-luna-cafe.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "coffee-shops-for-remote-work-sioux-falls"]
 relatedBusinesses: ["la-luna-cafe"]
