@@ -1,0 +1,463 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
+
+interface EventItem {
+  category: 'family' | 'downtown' | 'music' | 'sports';
+  date: Date;
+  title: string;
+  description: string;
+  sourceName: string;
+  sourceUrl: string;
+  photo: string;
+  location: string;
+}
+
+const categoryMeta = {
+  family: { label: 'Family', color: 'var(--color-orange)', icon: 'heart' },
+  downtown: { label: 'Downtown', color: 'var(--color-river)', icon: 'home' },
+  music: { label: 'Live Music', color: '#7B4FA0', icon: 'mic' },
+  sports: { label: 'Sports', color: '#2E9E5B', icon: 'activity' },
+};
+
+// Real, sourced events. See docs/content-strategy.md for the refresh cadence note —
+// this needs periodic re-checking against the source links, same as the homepage
+// events widget.
+const events: EventItem[] = [
+  { category: 'family', date: new Date('2026-07-31'), title: 'Sioux Empire Fair', description: 'Rides, fair food, livestock shows, and nightly entertainment at the Fairgrounds.', sourceName: 'Sioux Empire Fair', sourceUrl: 'https://en.wikipedia.org/wiki/Sioux_Empire_Fair', photo: '/images/scenic/falls-park-1.jpg', location: 'W. H. Lyon Fairgrounds' },
+  { category: 'downtown', date: new Date('2026-08-07'), title: 'Downtown Open Streets', description: 'Phillips Avenue goes car-free for a day of vendors and family activities.', sourceName: 'Downtown Sioux Falls, Inc.', sourceUrl: 'https://dtsf.com/', photo: '/images/scenic/downtown-1.jpg', location: 'Downtown Phillips Ave' },
+  { category: 'music', date: new Date('2026-08-06'), title: 'Levitt at the Falls: The Fretliners', description: 'Free outdoor concert series right at Falls Park.', sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Falls Park' },
+  { category: 'sports', date: new Date('2026-08-18'), title: 'Canaries vs. Winnipeg Goldeyes', description: 'Home game at Sioux Falls Stadium — three-game series through Aug 20.', sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/scenic/mckennan-park.jpg', location: 'Sioux Falls Stadium' },
+  { category: 'family', date: new Date('2026-08-08'), title: 'Outdoor Campus Fall Fun', description: 'Free hands-on classes in hunting, fishing, outdoor skills, and conservation.', sourceName: "the 'hood magazine", sourceUrl: 'https://thehoodmagazine.com/calendar/', photo: '/images/scenic/mckennan-park.jpg', location: 'Falls Park' },
+  { category: 'downtown', date: new Date('2026-08-21'), title: 'Four Winds Music & Art Fest', description: 'Local, regional, and national bands across several downtown venues.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend', photo: '/images/scenic/downtown-2.jpg', location: 'Downtown Phillips Ave' },
+  { category: 'music', date: new Date('2026-08-14'), title: 'The Crane Wives', description: "Indie folk at The District, one of downtown's newer live venues.", sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/businesses/shahi-india-grill.jpeg', location: 'Denny Sanford Premier Center' },
+  { category: 'sports', date: new Date('2026-08-28'), title: "Women's Volleyball Showcase", description: 'Three days of college volleyball at Sanford Pentagon.', sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/scenic/falls-park-1.jpg', location: 'Sanford Pentagon' },
+  { category: 'downtown', date: new Date('2026-08-29'), title: '605 Made Night Market', description: 'An outdoor market of local makers, with performances throughout the evening.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Downtown Phillips Ave' },
+  { category: 'music', date: new Date('2026-08-27'), title: 'Gary Allan', description: "Country headliner at Washington Pavilion's Sommervold Hall.", sourceName: 'ConcertFix', sourceUrl: 'https://concertfix.com/concerts/sioux-falls-sd', photo: '/images/scenic/downtown-1.jpg', location: 'Denny Sanford Premier Center' },
+  { category: 'sports', date: new Date('2026-09-11'), title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/downtown-2.jpg', location: 'Minnehaha Country Club' },
+];
+
+events.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+const now = new Date();
+const nextEvent = events.find((e) => e.date.getTime() >= now.getTime()) || events[events.length - 1];
+
+// Group by month for the timeline's month dividers
+const monthGroups: { label: string; events: EventItem[] }[] = [];
+for (const ev of events) {
+  const label = ev.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  let group = monthGroups.find((g) => g.label === label);
+  if (!group) { group = { label, events: [] }; monthGroups.push(group); }
+  group.events.push(ev);
+}
+
+// Map view: group by location
+const locationGroups = new Map<string, EventItem[]>();
+for (const ev of events) {
+  if (!locationGroups.has(ev.location)) locationGroups.set(ev.location, []);
+  locationGroups.get(ev.location)!.push(ev);
+}
+const mapPins = [
+  { spot: 'falls', location: 'Falls Park', top: '18%', left: '38%' },
+  { spot: 'downtown', location: 'Downtown Phillips Ave', top: '42%', left: '52%' },
+  { spot: 'fairgrounds', location: 'W. H. Lyon Fairgrounds', top: '65%', left: '20%' },
+  { spot: 'premier', location: 'Denny Sanford Premier Center', top: '22%', left: '72%' },
+  { spot: 'stadium', location: 'Sioux Falls Stadium', top: '70%', left: '68%' },
+  { spot: 'pentagon', location: 'Sanford Pentagon', top: '85%', left: '40%' },
+  { spot: 'minnehaha', location: 'Minnehaha Country Club', top: '8%', left: '58%' },
+].map((pin) => {
+  const evs = locationGroups.get(pin.location) || [];
+  const dominantCategory = evs[0]?.category || 'downtown';
+  return { ...pin, count: evs.length, color: categoryMeta[dominantCategory].color, events: evs };
+}).filter((p) => p.count > 0);
+
+// Calendar: build real day-by-day event map for August 2026 (where most events fall)
+const calMonth = 7; // 0-indexed: August
+const calYear = 2026;
+const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+const firstDow = new Date(calYear, calMonth, 1).getDay();
+const calEventDays: Record<number, string> = {};
+for (const ev of events) {
+  if (ev.date.getFullYear() === calYear && ev.date.getMonth() === calMonth) {
+    calEventDays[ev.date.getDate()] = categoryMeta[ev.category].color;
+  }
+}
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Sioux Falls Events',
+  itemListElement: events.map((e, i) => ({
+    '@type': 'Event',
+    position: i + 1,
+    name: e.title,
+    startDate: e.date.toISOString().split('T')[0],
+    location: { '@type': 'Place', name: e.location },
+  })),
+};
+---
+<BaseLayout
+  title="Events"
+  description="Everything happening in Sioux Falls — real events from the sources locals trust, plus the ones you tell us about."
+  canonicalPath="/events"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+    <div class="starfield" id="starfield"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow" style="color: var(--color-gold);">Community Calendar</span>
+        <h1>Everything happening in Sioux Falls</h1>
+        <p>Real events from the sources locals actually trust — plus the ones you tell us about.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="spotlight-strip">
+    <div class="container">
+      <div class="spotlight-pulse"></div>
+      <span><strong>Coming up next:</strong> {nextEvent.title} — {nextEvent.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at {nextEvent.location}</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="legend-row">
+      {Object.entries(categoryMeta).map(([key, meta]) => (
+        <div class="legend-item"><span class="legend-dot" style={`background:${meta.color}`}></span> {meta.label}</div>
+      ))}
+      <div class="view-toggle">
+        <button id="btn-timeline" class="is-active">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Timeline
+        </button>
+        <button id="btn-map">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          Map
+        </button>
+      </div>
+    </div>
+
+    <div class="map-view" id="map-view">
+      <div class="city-map" id="city-map">
+        <div class="map-label" style="top:4%; left:4%;">N &uarr; Sioux Falls</div>
+        {mapPins.map((pin) => (
+          <>
+            <div class="map-pin" data-spot={pin.spot} style={`top:${pin.top}; left:${pin.left}; background:${pin.color};`}>
+              <div class="map-pin-count">{pin.count}</div>
+            </div>
+            <div class="map-label" style={`top:calc(${pin.top} + 8%); left:${pin.left};`}>{pin.location}</div>
+          </>
+        ))}
+        <div class="map-popover" id="map-popover"><h4></h4><p></p><span class="cnt"></span></div>
+      </div>
+    </div>
+
+    <div class="events-layout">
+      <div class="calendar-rail">
+        <div class="mini-calendar">
+          <div class="mini-cal-head"><h4>{new Date(calYear, calMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h4></div>
+          <div class="mini-cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+          <div class="mini-cal-grid" id="mini-cal-grid" data-first-dow={firstDow} data-days={daysInMonth} data-events={JSON.stringify(calEventDays)}></div>
+          <div class="mini-cal-legend">Pulsing days have events</div>
+        </div>
+      </div>
+
+      <div class="timeline-wrap" id="timeline-wrap">
+        <div class="timeline-spine"></div>
+        {monthGroups.map((group) => (
+          <>
+            <div class="timeline-month"><span>{group.label}</span></div>
+            {group.events.map((ev, i) => (
+              <div class={`stop ${i % 2 === 0 ? 'is-left' : 'is-right'}`} data-day={ev.date.getDate()}>
+                {i % 2 === 0 ? (
+                  <>
+                    <div class="stop-card">
+                      <div class="stop-photo" style={`background-image:url(${ev.photo})`}></div>
+                      <div class="stop-body">
+                        <h3>{ev.title}</h3>
+                        <p>{ev.description}</p>
+                        <div class="stop-source">Source: <a href={ev.sourceUrl} target="_blank" rel="noopener">{ev.sourceName}</a></div>
+                      </div>
+                    </div>
+                    <div class="stop-node" style={`background:${categoryMeta[ev.category].color}`}>
+                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short' })}</span><span class="day">{ev.date.getDate()}</span></span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div class="stop-node" style={`background:${categoryMeta[ev.category].color}`}>
+                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short' })}</span><span class="day">{ev.date.getDate()}</span></span>
+                    </div>
+                    <div class="stop-card">
+                      <div class="stop-photo" style={`background-image:url(${ev.photo})`}></div>
+                      <div class="stop-body">
+                        <h3>{ev.title}</h3>
+                        <p>{ev.description}</p>
+                        <div class="stop-source">Source: <a href={ev.sourceUrl} target="_blank" rel="noopener">{ev.sourceName}</a></div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </>
+        ))}
+      </div>
+    </div>
+
+    <section class="submit-section">
+      <div class="submit-embers" id="submit-embers"></div>
+      <div class="submit-inner">
+        <div class="submit-copy">
+          <span class="eyebrow" style="color: var(--color-gold);">Know Something We Don't?</span>
+          <h2>Add your event to the calendar</h2>
+          <p>Running a fundraiser, a garage sale, a block party? If it's happening in Sioux Falls, locals want to know. Submit it below — our team reviews every entry before it goes live.</p>
+        </div>
+        <form name="submit-event" method="POST" data-netlify="true" class="submit-form">
+          <input type="hidden" name="form-name" value="submit-event" />
+          <label for="ev-name">Event name</label>
+          <input type="text" id="ev-name" name="name" placeholder="Event name" required />
+          <label for="ev-date">Date</label>
+          <input type="text" id="ev-date" name="date" placeholder="mm/dd/yyyy" required />
+          <label for="ev-category">Category</label>
+          <select id="ev-category" name="category">
+            <option>Family</option><option>Downtown</option><option>Live Music</option><option>Sports</option><option>Other</option>
+          </select>
+          <label for="ev-details">Details</label>
+          <textarea id="ev-details" name="details" rows="2" placeholder="What's happening?" required></textarea>
+          <button type="submit" class="submit-btn">Submit Event</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .container { max-width: 74rem; margin-inline: auto; padding-inline: var(--space-3); }
+  .eyebrow { color: var(--color-orange); font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .hero { position: relative; overflow: hidden; min-height: 22rem; display: flex; align-items: center; }
+  .hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/downtown-2.jpg') center/cover; animation: ev-kb 26s ease-in-out infinite alternate; }
+  @keyframes ev-kb { 0% { transform: scale(1); } 100% { transform: scale(1.08) translate(-1%,-1%); } }
+  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.92) 0%, rgba(13,23,48,0.6) 55%, rgba(13,23,48,0.2) 100%); }
+  .starfield { position: absolute; inset: 0; z-index: 1; }
+  .star { position: absolute; border-radius: 50%; background: #fff; animation: ev-twinkle 3s ease-in-out infinite; }
+  @keyframes ev-twinkle { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
+  .hero-content { position: relative; z-index: 2; padding-block: 3rem; color: #fff; max-width: 40rem; }
+  .hero-content h1 { font-size: 2.6rem; line-height: 1.15; margin: 0.6rem 0 1rem; font-family: var(--font-display); color: #fff; }
+  .hero-content p { font-size: 1.0625rem; color: rgba(255,255,255,0.88); margin: 0; }
+
+  .spotlight-strip { background: var(--color-navy); padding-block: 1.2rem; }
+  .spotlight-strip .container { display: flex; align-items: center; gap: 1rem; color: #fff; }
+  .spotlight-pulse { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--color-gold); position: relative; flex-shrink: 0; }
+  .spotlight-pulse::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 1.5px solid var(--color-gold); animation: ev-pulse 1.8s ease-out infinite; }
+  @keyframes ev-pulse { 0% { transform: scale(0.6); opacity: 1; } 100% { transform: scale(1.8); opacity: 0; } }
+  .spotlight-strip strong { color: var(--color-gold); }
+  .spotlight-strip span { color: rgba(255,255,255,0.75); font-size: 0.9375rem; }
+
+  .legend-row { display: flex; gap: 1.5rem; flex-wrap: wrap; padding-block: 1.6rem; justify-content: center; border-bottom: 1px solid var(--color-line); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.875rem; color: var(--color-navy); }
+  .legend-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; }
+  .view-toggle { display: flex; gap: 0.3rem; background: var(--color-surface); border-radius: 999px; padding: 0.25rem; margin-left: auto; }
+  .view-toggle button { border: none; background: none; padding: 0.5rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.8125rem; color: var(--color-navy); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
+  .view-toggle button.is-active { background: var(--color-navy); color: #fff; }
+
+  .map-view { display: none; padding-block: 2rem; }
+  .map-view.is-active { display: block; }
+  .timeline-wrap.is-hidden, .events-layout.is-hidden { display: none; }
+  .city-map { position: relative; background: linear-gradient(160deg, #eaf2f8 0%, #dce9f2 100%); border-radius: 1.2rem; padding: 2rem; min-height: 32rem; overflow: hidden; border: 1px solid var(--color-line); }
+  .map-pin {
+    position: absolute; width: 2.6rem; height: 2.6rem; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(13,23,48,0.25);
+    transition: transform 0.2s ease;
+  }
+  .map-pin:hover { transform: rotate(-45deg) scale(1.15); }
+  .map-pin-count {
+    position: absolute; inset: 0; margin: auto; width: 1.3rem; height: 1.3rem; background: var(--color-gold); color: var(--color-navy);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 800;
+    transform: rotate(45deg); border: 2px solid #fff;
+  }
+  .map-label { position: absolute; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); background: rgba(255,255,255,0.85); padding: 0.2rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+  .map-popover {
+    position: absolute; width: 15rem; background: #fff; border-radius: 0.8rem; box-shadow: 0 16px 36px rgba(13,23,48,0.25);
+    padding: 0.9rem; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 10;
+  }
+  .map-popover.is-visible { opacity: 1; pointer-events: auto; }
+  .map-popover h4 { font-size: 0.9375rem; color: var(--color-navy); margin: 0 0 0.3rem; }
+  .map-popover p { font-size: 0.75rem; color: var(--color-navy-light); margin: 0 0 0.4rem; }
+  .map-popover .cnt { font-size: 0.6875rem; color: var(--color-orange); font-weight: 700; }
+
+  .events-layout { display: grid; grid-template-columns: 19rem 1fr; gap: 2rem; align-items: start; }
+  @media (max-width: 60rem) { .events-layout { grid-template-columns: 1fr; } .calendar-rail { display: none; } }
+  .calendar-rail { position: sticky; top: 1.5rem; }
+  .mini-calendar {
+    background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.2rem;
+    box-shadow: 0 8px 24px rgba(13,23,48,0.08); opacity: 0; transform: translateY(12px);
+    animation: cal-in 0.6s ease-out 0.3s forwards;
+  }
+  @keyframes cal-in { to { opacity: 1; transform: translateY(0); } }
+  .mini-cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; }
+  .mini-cal-head h4 { font-size: 0.9375rem; color: var(--color-navy); font-family: var(--font-display); margin: 0; }
+  .mini-cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--color-navy-light); margin-bottom: 0.4rem; }
+  .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.15rem; }
+  .mini-cal-day {
+    height: 1.55rem; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0.6875rem; color: var(--color-navy); border-radius: 0.4rem; position: relative; cursor: default;
+  }
+  .mini-cal-day.is-blank { visibility: hidden; }
+  .mini-cal-day.has-event { cursor: pointer; font-weight: 700; }
+  .mini-cal-day.has-event:hover { background: var(--color-surface); }
+  .mini-cal-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 1px; position: relative; }
+  .mini-cal-dot::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid currentColor; animation: dot-pulse 2s ease-out infinite; }
+  @keyframes dot-pulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
+  .mini-cal-legend { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--color-line); font-size: 0.625rem; color: var(--color-navy-light); text-align: center; }
+
+  .timeline-wrap { position: relative; padding-block: 3rem; }
+  .timeline-spine { position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; transform: translateX(-50%); background: linear-gradient(180deg, var(--color-orange), var(--color-river), #7B4FA0, #2E9E5B); border-radius: 2px; }
+  .timeline-month { text-align: center; margin: 2.5rem 0 1.5rem; position: relative; z-index: 2; }
+  .timeline-month span { background: var(--color-navy); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem; padding: 0.5rem 1.3rem; border-radius: 999px; }
+
+  .stop { position: relative; display: grid; grid-template-columns: 1fr 3.5rem 1fr; align-items: center; margin-bottom: 1.8rem; opacity: 0; transform: translateY(20px); animation: stop-in 0.5s ease-out forwards; }
+  @keyframes stop-in { to { opacity: 1; transform: translateY(0); } }
+  .stop-card { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; overflow: hidden; display: flex; box-shadow: 0 2px 10px rgba(13,23,48,0.05); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .stop-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(13,23,48,0.12); }
+  .stop.is-left .stop-card { grid-column: 1; justify-self: end; flex-direction: row; }
+  .stop.is-right .stop-card { grid-column: 3; justify-self: start; flex-direction: row-reverse; }
+  .stop-photo { width: 7rem; flex-shrink: 0; background-size: cover; background-position: center; }
+  .stop-body { padding: 0.9rem 1.1rem; max-width: 18rem; }
+  .stop-body h3 { font-size: 1rem; color: var(--color-navy); margin: 0 0 0.3rem; font-family: var(--font-display); }
+  .stop-body p { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 0.5rem; line-height: 1.4; }
+  .stop-source { font-size: 0.6875rem; color: var(--color-navy-light); }
+  .stop-source a { color: var(--color-orange-dark); font-weight: 600; }
+  .stop-node { grid-column: 2; justify-self: center; width: 3.5rem; height: 3.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; z-index: 2; border: 4px solid #fff; box-shadow: 0 4px 12px rgba(13,23,48,0.2); transition: transform 0.3s cubic-bezier(.2,.8,.2,1); }
+  .stop-node .day { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; line-height: 1; }
+  .stop-node .mon { font-size: 0.5625rem; font-weight: 700; text-transform: uppercase; }
+
+  @media (max-width: 55rem) {
+    .stop { grid-template-columns: 3.5rem 1fr; }
+    .stop-node { grid-column: 1; }
+    .stop.is-left .stop-card, .stop.is-right .stop-card { grid-column: 2; justify-self: start; flex-direction: row; }
+    .timeline-spine { left: 1.75rem; }
+  }
+
+  .submit-section { position: relative; overflow: hidden; background: linear-gradient(120deg, var(--color-navy) 0%, var(--color-river) 100%); border-radius: 1.2rem; padding: 2.8rem; margin-block: 3rem; color: #fff; }
+  .submit-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem; align-items: center; }
+  .submit-copy h2 { color: #fff; font-size: 1.9rem; margin: 0.5rem 0 0.8rem; font-family: var(--font-display); }
+  .submit-copy p { color: rgba(255,255,255,0.85); font-size: 1rem; }
+  .submit-form { background: rgba(255,255,255,0.97); border-radius: 0.9rem; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .submit-form label { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-transform: uppercase; }
+  .submit-form input, .submit-form select, .submit-form textarea { padding: 0.7rem 0.9rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: 0.9375rem; }
+  .submit-btn { background: var(--color-gold); color: var(--color-navy); border: none; font-weight: 800; padding: 0.85rem; border-radius: 0.5rem; cursor: pointer; margin-top: 0.4rem; }
+  .submit-embers { position: absolute; inset: 0; z-index: 1; }
+
+  @media (max-width: 45rem) { .submit-inner { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const btnTimeline = document.getElementById('btn-timeline')!;
+  const btnMap = document.getElementById('btn-map')!;
+  const eventsLayout = document.querySelector('.events-layout')!;
+  const mapView = document.getElementById('map-view')!;
+  btnTimeline.addEventListener('click', () => {
+    btnTimeline.classList.add('is-active'); btnMap.classList.remove('is-active');
+    eventsLayout.classList.remove('is-hidden'); mapView.classList.remove('is-active');
+  });
+  btnMap.addEventListener('click', () => {
+    btnMap.classList.add('is-active'); btnTimeline.classList.remove('is-active');
+    eventsLayout.classList.add('is-hidden'); mapView.classList.add('is-active');
+  });
+
+  const popover = document.getElementById('map-popover')!;
+  document.querySelectorAll('.map-pin').forEach((pin) => {
+    pin.addEventListener('mouseenter', () => {
+      const el = pin as HTMLElement;
+      const labelText = el.nextElementSibling?.textContent || '';
+      const count = el.querySelector('.map-pin-count')?.textContent || '0';
+      popover.querySelector('h4')!.textContent = labelText;
+      popover.querySelector('.cnt')!.textContent = `${count} event${count === '1' ? '' : 's'}`;
+      popover.setAttribute('style', `top:calc(${el.style.top} + 3rem); left:${el.style.left}; opacity:1; pointer-events:auto;`);
+    });
+    pin.addEventListener('mouseleave', () => {
+      popover.removeAttribute('style');
+    });
+  });
+
+  const calGrid = document.getElementById('mini-cal-grid') as HTMLElement;
+  if (calGrid) {
+    const firstDow = parseInt(calGrid.dataset.firstDow || '0');
+    const daysInMonth = parseInt(calGrid.dataset.days || '30');
+    const eventDays = JSON.parse(calGrid.dataset.events || '{}');
+    for (let i = 0; i < firstDow; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'mini-cal-day is-blank';
+      calGrid.appendChild(blank);
+    }
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'mini-cal-day';
+      const num = document.createElement('span');
+      num.textContent = String(d);
+      cell.appendChild(num);
+      if (eventDays[d]) {
+        cell.classList.add('has-event');
+        const dot = document.createElement('div');
+        dot.className = 'mini-cal-dot';
+        dot.style.background = eventDays[d];
+        dot.style.color = eventDays[d];
+        cell.appendChild(dot);
+        cell.addEventListener('click', () => {
+          const stop = document.querySelector(`.stop[data-day="${d}"]`) as HTMLElement | null;
+          stop?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const node = stop?.querySelector('.stop-node') as HTMLElement | null;
+          if (node) {
+            node.style.transform = 'scale(1.3)';
+            setTimeout(() => { node.style.transform = ''; }, 600);
+          }
+        });
+      }
+      calGrid.appendChild(cell);
+    }
+  }
+
+  document.querySelectorAll('.stop').forEach((stop, i) => {
+    (stop as HTMLElement).style.animationDelay = `${i * 0.08}s`;
+  });
+
+  const starfield = document.getElementById('starfield');
+  if (starfield) {
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      const size = 1 + Math.random() * 2;
+      s.className = 'star';
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*60}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;`;
+      starfield.appendChild(s);
+    }
+  }
+
+  const embers = document.getElementById('submit-embers');
+  if (embers) {
+    const colors = ['#F5B429', '#F07E23', '#ffffff'];
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('div');
+      const size = 2 + Math.random() * 3;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const startX = 10 + Math.random() * 80;
+      const duration = 6 + Math.random() * 6;
+      const delay = Math.random() * 6;
+      p.style.cssText = `position:absolute; width:${size}px; height:${size}px; border-radius:50%; background:${color}; opacity:0; left:${startX}%; bottom:0; box-shadow:0 0 4px ${color}; animation: ember-${i} ${duration}s ease-in ${delay}s infinite;`;
+      const styleTag = document.createElement('style');
+      styleTag.textContent = `@keyframes ember-${i} { 0% { opacity:0; transform:translateY(0); } 10% { opacity:0.8; } 90% { opacity:0.3; } 100% { opacity:0; transform:translateY(-16rem); } }`;
+      document.head.appendChild(styleTag);
+      embers.appendChild(p);
+    }
+  }
+</script>
