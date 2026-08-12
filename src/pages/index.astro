@@ -216,7 +216,7 @@ const schema = {
   @media (max-width: 50rem) { .spotlight-grid { grid-template-columns: 1fr; } }
   .spot-card { display: block; text-decoration: none; border-radius: 1rem; overflow: hidden; background: #fff; box-shadow: 0 1px 3px rgba(13,23,48,0.08); border: 1px solid var(--color-line); transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease; }
   .spot-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(13,23,48,0.18); }
-  .spot-media { height: 12rem; background-size: cover; background-position: center; position: relative; }
+  .spot-media { height: 12rem; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: var(--color-navy); position: relative; }
   .spot-badge { display: inline-flex; align-items: center; gap: 0.3rem; position: absolute; top: 0.8rem; left: 0.8rem; background: var(--color-orange); color: #fff; font-size: 0.6875rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; }
   .spot-body { padding: 1.3rem; }
   .spot-body h3 { font-size: 1.1875rem; margin: 0; }
@@ -283,7 +283,7 @@ const schema = {
   @media (max-width: 50rem) { .resource-grid { grid-template-columns: 1fr; } }
   .resource-card { display: block; border-radius: 1rem; overflow: hidden; text-decoration: none; background: #fff; border: 1px solid var(--color-line); box-shadow: 0 1px 3px rgba(13,23,48,0.06); transition: transform 0.25s ease, box-shadow 0.25s ease; }
   .resource-card:hover { transform: translateY(-5px); box-shadow: 0 16px 32px rgba(13,23,48,0.14); }
-  .resource-media { height: 9rem; background-size: cover; background-position: center; }
+  .resource-media { height: 9rem; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: var(--color-navy); }
   .resource-body { padding: 1.2rem; }
   .resource-tag { color: var(--color-orange-dark); font-weight: 700; font-size: 0.6875rem; text-transform: uppercase; }
   .resource-body h3 { font-size: 1.0625rem; margin-top: 0.4rem; color: var(--color-navy); }

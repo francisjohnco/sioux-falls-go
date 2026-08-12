@@ -324,8 +324,9 @@ const schema = {
   }
   .giveback-row:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(46,111,158,0.14); border-color: var(--color-river); }
   .giveback-thumb {
-    width: 3.25rem; height: 3.25rem; border-radius: var(--radius); flex-shrink: 0; background-size: cover; background-position: center;
-    background-color: var(--color-navy); display: flex; align-items: center; justify-content: center; color: #fff;
+    width: 3.25rem; height: 3.25rem; border-radius: var(--radius); flex-shrink: 0;
+    background-color: var(--color-navy); background-size: contain; background-repeat: no-repeat; background-position: center;
+    display: flex; align-items: center; justify-content: center; color: #fff;
   }
   .giveback-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   .giveback-info strong { font-size: 0.9375rem; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -370,7 +371,7 @@ const schema = {
   .insight-card-media {
     height: 7rem; display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-river) 100%);
-    background-size: cover; background-position: center;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
   }
   .insight-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
   .insight-card-body { padding: var(--space-3); }

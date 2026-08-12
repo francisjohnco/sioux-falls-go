@@ -491,7 +491,7 @@ const schema = {
   .guide-card-media {
     height: 6.5rem; display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
-    background-size: cover; background-position: center;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
   }
   .guide-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
   .guide-card-body { padding: var(--space-2); }
@@ -576,7 +576,7 @@ const schema = {
   .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
 
   .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
-  .gallery-item { height: 9rem; border-radius: var(--radius); background-size: cover; background-position: center; background-color: var(--color-surface); }
+  .gallery-item { height: 9rem; border-radius: var(--radius); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: var(--color-surface); }
 
   .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .review-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
@@ -607,7 +607,7 @@ const schema = {
   @media (max-width: 45rem) { .related-grid { grid-template-columns: 1fr; } }
   .related-card { display: block; text-decoration: none; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--color-line); background: #fff; transition: transform 0.2s ease, box-shadow 0.2s ease; }
   .related-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(13,23,48,0.12); }
-  .related-media { height: 7rem; background-size: cover; background-position: center; background: linear-gradient(135deg, #16233d, #2c3f61); display: flex; align-items: center; justify-content: center; color: #fff; }
+  .related-media { height: 7rem; background: linear-gradient(135deg, #16233d, #2c3f61); background-size: contain; background-repeat: no-repeat; background-position: center; display: flex; align-items: center; justify-content: center; color: #fff; }
   .related-body { padding: var(--space-2); display: flex; justify-content: space-between; align-items: center; }
   .related-body strong { font-size: 0.9375rem; color: var(--color-navy); }
   .related-rating { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }

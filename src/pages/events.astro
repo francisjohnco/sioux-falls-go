@@ -225,7 +225,7 @@ const schema = {
 
   .events-layout { display: grid; grid-template-columns: 19rem 1fr; gap: 2rem; align-items: start; }
   @media (max-width: 60rem) { .events-layout { grid-template-columns: 1fr; } .calendar-rail { display: none; } }
-  .calendar-rail { position: sticky; top: 1.5rem; }
+  .calendar-rail { position: sticky; top: 7.5rem; }
   .mini-calendar {
     background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.2rem;
     box-shadow: 0 8px 24px rgba(13,23,48,0.08); opacity: 0; transform: translateY(12px);
@@ -259,7 +259,7 @@ const schema = {
   .stop-card:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(13,23,48,0.12); }
   .stop.is-left .stop-card { grid-column: 1; justify-self: end; flex-direction: row; }
   .stop.is-right .stop-card { grid-column: 3; justify-self: start; flex-direction: row-reverse; }
-  .stop-photo { width: 7rem; flex-shrink: 0; background-size: cover; background-position: center; }
+  .stop-photo { width: 7rem; flex-shrink: 0; background-color: var(--color-navy); background-size: contain; background-repeat: no-repeat; background-position: center; }
   .stop-body { padding: 0.9rem 1.1rem; max-width: 18rem; }
   .stop-body h3 { font-size: 1rem; color: var(--color-navy); margin: 0 0 0.3rem; font-family: var(--font-display); }
   .stop-body p { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 0.5rem; line-height: 1.4; }
