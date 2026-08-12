@@ -1,6 +1,7 @@
 ---
 name: "Security National Bank of South Dakota"
 category: "professional-services"
+heroImage: "/images/businesses/security-national-bank.jpeg"
 verifiedAt: 2026-07-29
 claimed: false
 sourceUrl: "https://siouxfallsgo.com/places/security-national-bank-of-south-dakota/"
