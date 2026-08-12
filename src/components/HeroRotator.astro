@@ -21,13 +21,7 @@
     z-index: 2;
   }
   @media (max-width: 60rem) {
-    .sfg-cf-outer {
-      position: relative; top: auto; right: auto; transform: none;
-      width: 100%; margin: 1.5rem auto 0;
-      flex: none;
-      display: flex; justify-content: center;
-      padding-inline: 1.25rem;
-    }
+    .sfg-cf-outer { display: none; }
   }
 
   .sfg-cf-wrap {
@@ -99,6 +93,12 @@
 
   if (track && wrap) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 60rem)').matches;
+
+    if (isMobile) {
+      // Hidden via CSS on mobile — skip building/animating it entirely
+      // rather than running an invisible animation loop in the background.
+    } else {
 
     const REPEATS = 3;
     const allItems: HTMLElement[] = [];
@@ -168,6 +168,7 @@
         requestAnimationFrame(loop);
       }
       requestAnimationFrame(loop);
+    }
     }
   }
 </script>
