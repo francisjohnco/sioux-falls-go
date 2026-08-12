@@ -1,183 +1,173 @@
 ---
-// Self-contained, auto-rotating benefit showcase for the right side of the
-// homepage hero. Deliberately does not touch any existing hero markup or
-// styles — it's an independent sibling element, absolutely positioned.
-// All classes below are prefixed sfg-hero-rotator- to avoid any collision
-// with existing site-wide styles.
+// Self-contained, continuously-scrolling benefit showcase for the right side
+// of the homepage hero. SiteGround-style coverflow: all messages stay
+// visible in a vertical strip, whichever one passes through the center gets
+// magnified and brightened, the rest shrink and fade with distance.
+// Deliberately does not touch any existing hero markup or styles — it's an
+// independent sibling element, absolutely positioned. All classes below are
+// prefixed sfg-cf- to avoid any collision with existing site-wide styles.
 ---
 
-<div class="sfg-hero-rotator-wrap">
-  <div class="sfg-hero-rotator-aurora" id="sfg-hr-aurora"></div>
-  <div class="sfg-hero-rotator">
-    <div class="sfg-hero-rotator-icon" id="sfg-hr-icon"></div>
-    <div class="sfg-hero-rotator-slide" id="sfg-hr-slide"></div>
-    <div class="sfg-hero-rotator-progress" id="sfg-hr-progress"></div>
+<div class="sfg-cf-outer">
+  <div class="sfg-cf-wrap">
+    <div class="sfg-cf-center-line"></div>
+    <div class="sfg-cf-track" id="sfg-cf-track"></div>
   </div>
 </div>
 
 <style>
-  .sfg-hero-rotator-wrap {
-    position: absolute; top: 50%; right: 3.5vw; transform: translateY(-50%);
-    z-index: 2; width: 23rem;
+  .sfg-cf-outer {
+    position: absolute; top: 50%; right: 2vw; transform: translateY(-50%);
+    z-index: 2;
   }
   @media (max-width: 60rem) {
-    .sfg-hero-rotator-wrap {
+    .sfg-cf-outer {
       position: relative; top: auto; right: auto; transform: none;
-      width: 100%; max-width: 26rem; margin: 2rem auto 0;
-      flex: none; /* .hero is display:flex — without this, this becomes a squeezed flex child */
+      width: 100%; margin: 1.5rem auto 0;
+      flex: none;
+      display: flex; justify-content: center;
+      padding-inline: 1.25rem;
     }
   }
 
-  .sfg-hero-rotator-aurora {
-    position: absolute; top: 50%; left: 50%; width: 22rem; height: 22rem;
-    transform: translate(-50%, -50%); border-radius: 50%; filter: blur(50px); opacity: 0.5; z-index: -1;
-    transition: background 1.2s ease; animation: sfg-hr-aurora-drift 8s ease-in-out infinite;
+  .sfg-cf-wrap {
+    position: relative; height: 20rem; width: 23rem; overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
   }
-  @keyframes sfg-hr-aurora-drift {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.15); }
-  }
-  @media (prefers-reduced-motion: reduce) { .sfg-hero-rotator-aurora { animation: none; } }
+  @media (max-width: 60rem) { .sfg-cf-wrap { width: 100%; max-width: 23rem; } }
+  @media (max-width: 26rem) { .sfg-cf-wrap { max-width: 100%; } }
 
-  .sfg-hero-rotator {
-    position: relative;
-    background: linear-gradient(160deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.25); border-radius: 1.5rem;
-    padding: 2.2rem 1.9rem;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
-    min-height: 14rem;
-    display: flex; flex-direction: column; justify-content: center;
-    overflow: hidden;
+  .sfg-cf-center-line {
+    position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,180,41,0.5), transparent);
+    transform: translateY(-50%); pointer-events: none;
   }
 
-  .sfg-hero-rotator-icon {
-    width: 3.2rem; height: 3.2rem; border-radius: 50%;
+  .sfg-cf-track { position: relative; will-change: transform; }
+
+  :global(.sfg-cf-item) {
+    display: flex; align-items: center; gap: 0.9rem;
+    min-height: 4.6rem; padding-inline: 0.5rem; padding-block: 0.5rem;
+    color: #fff; font-family: var(--font-display, 'Poppins', sans-serif); font-weight: 700; font-size: 0.9375rem;
+    white-space: normal; line-height: 1.3;
+    transform-origin: left center;
+    will-change: transform, opacity, filter;
+  }
+  :global(.sfg-cf-item-text) { min-width: 0; }
+  @media (max-width: 26rem) {
+    :global(.sfg-cf-item) { font-size: 0.8125rem; gap: 0.6rem; }
+    :global(.sfg-cf-icon) { width: 1.8rem; height: 1.8rem; }
+  }
+  :global(.sfg-cf-icon) {
+    flex-shrink: 0; width: 2.1rem; height: 2.1rem; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.2rem; color: #fff; position: relative;
-    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff;
   }
-  .sfg-hero-rotator-icon::after {
-    content: ''; position: absolute; inset: -6px; border-radius: 50%;
-    border: 1.5px solid #F5B429; opacity: 0; animation: sfg-hr-icon-pulse 2.2s ease-out infinite;
-  }
-  @keyframes sfg-hr-icon-pulse {
-    0% { transform: scale(0.85); opacity: 0.8; }
-    100% { transform: scale(1.35); opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) { .sfg-hero-rotator-icon::after { animation: none; opacity: 0; } }
-
-  .sfg-hero-rotator-slide { position: relative; min-height: 5.6rem; overflow: hidden; }
-  :global(.sfg-hr-text) {
-    position: absolute; inset: 0;
-    font-family: var(--font-display, 'Poppins', sans-serif); font-weight: 700; font-size: 1.5rem; line-height: 1.3; color: #fff;
-    transform: translateY(100%);
-    transition: transform 0.65s cubic-bezier(.4,0,.2,1);
-  }
-  :global(.sfg-hr-text.is-active) { transform: translateY(0); }
-  :global(.sfg-hr-text.is-exiting) { transform: translateY(-100%); }
-  :global(.sfg-hr-num) {
-    font-size: 1.9rem; background: linear-gradient(90deg, #fff, #F5B429);
+  :global(.sfg-cf-num) {
+    background: linear-gradient(90deg, #fff, #F5B429);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-
-  .sfg-hero-rotator-progress { display: flex; gap: 0.35rem; margin-top: 1.5rem; }
-  :global(.sfg-hr-track) { flex: 1; height: 3px; border-radius: 999px; background: rgba(255,255,255,0.2); overflow: hidden; }
-  :global(.sfg-hr-fill) { height: 100%; width: 0%; background: #F5B429; border-radius: 999px; }
 </style>
 
 <script>
   const items = [
     {
       html: 'Real Events. Real Prizes.',
-      aurora: 'radial-gradient(circle, #F07E23, transparent 70%)',
-      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>',
+      icon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>',
     },
     {
-      html: '<span class="sfg-hr-num">98</span> Real Local Guides',
-      aurora: 'radial-gradient(circle, #2E6F9E, transparent 70%)',
-      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>',
+      html: '<span class="sfg-cf-num">98</span> Real Local Guides',
+      icon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>',
     },
     {
       html: 'Local Businesses We Stand Behind',
-      aurora: 'radial-gradient(circle, #7B4FA0, transparent 70%)',
-      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>',
+      icon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/></svg>',
     },
     {
       html: 'Real Tools. Not Just Listings.',
-      aurora: 'radial-gradient(circle, #F5B429, transparent 70%)',
-      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94Z"/></svg>',
+      icon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94Z"/></svg>',
     },
     {
-      html: '<span class="sfg-hr-num">98</span> Articles. Built to Drive Traffic.',
-      aurora: 'radial-gradient(circle, #2E9E5B, transparent 70%)',
-      icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+      html: '<span class="sfg-cf-num">98</span> Articles. Built to Drive Traffic.',
+      icon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
     },
   ];
 
-  const slide = document.getElementById('sfg-hr-slide');
-  const iconEl = document.getElementById('sfg-hr-icon');
-  const auroraEl = document.getElementById('sfg-hr-aurora');
-  const progressEl = document.getElementById('sfg-hr-progress');
+  const track = document.getElementById('sfg-cf-track');
+  const wrap = document.querySelector('.sfg-cf-wrap');
 
-  if (slide && iconEl && auroraEl && progressEl) {
-    items.forEach(() => {
-      const track = document.createElement('div');
-      track.className = 'sfg-hr-track';
-      const fill = document.createElement('div');
-      fill.className = 'sfg-hr-fill';
-      track.appendChild(fill);
-      progressEl.appendChild(track);
-    });
-
-    const firstText = document.createElement('div');
-    firstText.className = 'sfg-hr-text is-active';
-    firstText.innerHTML = items[0].html;
-    slide.appendChild(firstText);
-    iconEl.innerHTML = items[0].icon;
-    auroraEl.style.background = items[0].aurora;
-
+  if (track && wrap) {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let current = 0;
-    function render(index: number) {
-      const item = items[index];
-
-      const oldText = slide!.querySelector('.sfg-hr-text.is-active');
-      if (oldText) {
-        oldText.classList.remove('is-active');
-        oldText.classList.add('is-exiting');
-        setTimeout(() => oldText.remove(), 700);
-      }
-
-      const newText = document.createElement('div');
-      newText.className = 'sfg-hr-text';
-      newText.innerHTML = item.html;
-      slide!.appendChild(newText);
-      requestAnimationFrame(() => requestAnimationFrame(() => newText.classList.add('is-active')));
-
-      iconEl!.innerHTML = item.icon;
-      auroraEl!.style.background = item.aurora;
-
-      document.querySelectorAll('.sfg-hr-fill').forEach((f, i) => {
-        const el = f as HTMLElement;
-        if (i < index) { el.style.transition = 'none'; el.style.width = '100%'; }
-        else { el.style.transition = 'none'; el.style.width = '0%'; }
+    const REPEATS = 3;
+    const allItems: HTMLElement[] = [];
+    for (let r = 0; r < REPEATS; r++) {
+      items.forEach((item) => {
+        const el = document.createElement('div');
+        el.className = 'sfg-cf-item';
+        el.innerHTML = `<div class="sfg-cf-icon">${item.icon}</div><div class="sfg-cf-item-text">${item.html}</div>`;
+        track.appendChild(el);
+        allItems.push(el);
       });
-      void progressEl!.offsetWidth;
-      const currentFill = progressEl!.children[index].querySelector('.sfg-hr-fill') as HTMLElement;
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        currentFill.style.transition = 'width 4s linear';
-        currentFill.style.width = '100%';
-      }));
     }
 
-    // Respect reduced-motion preference — just show the first message, no auto-cycling
-    if (!reduceMotion) {
-      setInterval(() => { current = (current + 1) % items.length; render(current); }, 4000);
+    const oneSetItems = allItems.slice(0, items.length);
+    const SET_HEIGHT =
+      oneSetItems[oneSetItems.length - 1].offsetTop +
+      oneSetItems[oneSetItems.length - 1].offsetHeight -
+      oneSetItems[0].offsetTop;
+
+    // Compute the largest safe scale factor from real measured widths, so no
+    // item can ever be pushed past the wrap's edge regardless of viewport
+    // size or how long its text is — safer than guessing a fixed max scale.
+    const wrapWidth = wrap.getBoundingClientRect().width;
+    let maxSafeScale = 1.1;
+    oneSetItems.forEach((el) => {
+      const naturalWidth = el.getBoundingClientRect().width;
+      if (naturalWidth > 0) {
+        const safeScale = wrapWidth / naturalWidth;
+        if (safeScale < maxSafeScale) maxSafeScale = safeScale;
+      }
+    });
+    maxSafeScale = Math.max(1.0, Math.min(1.1, maxSafeScale));
+    const minScale = maxSafeScale - 0.32;
+
+    let offset = SET_HEIGHT;
+    const SPEED = 14;
+
+    function applyStyles() {
+      track!.style.transform = `translateY(${-offset}px)`;
+      const wrapCenter = wrap!.getBoundingClientRect().height / 2;
+      allItems.forEach((el) => {
+        const itemCenterAbs = el.offsetTop + el.offsetHeight / 2 - offset;
+        const dist = Math.abs(itemCenterAbs - wrapCenter);
+        const maxDist = wrapCenter;
+        const t = Math.max(0, 1 - dist / maxDist);
+
+        const scale = minScale + t * (maxSafeScale - minScale);
+        const opacity = 0.18 + t * 0.82;
+        const blur = (1 - t) * 2.2;
+
+        el.style.transform = `scale(${scale.toFixed(3)})`;
+        el.style.opacity = opacity.toFixed(3);
+        el.style.filter = `blur(${blur.toFixed(2)}px)`;
+      });
+    }
+
+    if (reduceMotion) {
+      applyStyles();
     } else {
-      const firstFill = progressEl.children[0]?.querySelector('.sfg-hr-fill') as HTMLElement;
-      if (firstFill) firstFill.style.width = '100%';
+      let last = performance.now();
+      function loop(now: number) {
+        const dt = (now - last) / 1000;
+        last = now;
+        offset += SPEED * dt;
+        if (offset >= SET_HEIGHT * 2) offset -= SET_HEIGHT;
+        applyStyles();
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
     }
   }
 </script>
