@@ -53,26 +53,6 @@ for (const ev of events) {
   group.events.push(ev);
 }
 
-// Map view: group by location
-const locationGroups = new Map<string, EventItem[]>();
-for (const ev of events) {
-  if (!locationGroups.has(ev.location)) locationGroups.set(ev.location, []);
-  locationGroups.get(ev.location)!.push(ev);
-}
-const mapPins = [
-  { spot: 'falls', location: 'Falls Park', top: '18%', left: '38%' },
-  { spot: 'downtown', location: 'Downtown Phillips Ave', top: '42%', left: '52%' },
-  { spot: 'fairgrounds', location: 'W. H. Lyon Fairgrounds', top: '65%', left: '20%' },
-  { spot: 'premier', location: 'Denny Sanford Premier Center', top: '22%', left: '72%' },
-  { spot: 'stadium', location: 'Sioux Falls Stadium', top: '70%', left: '68%' },
-  { spot: 'pentagon', location: 'Sanford Pentagon', top: '85%', left: '40%' },
-  { spot: 'minnehaha', location: 'Minnehaha Country Club', top: '8%', left: '58%' },
-].map((pin) => {
-  const evs = locationGroups.get(pin.location) || [];
-  const dominantCategory = evs[0]?.category || 'downtown';
-  return { ...pin, count: evs.length, color: categoryMeta[dominantCategory].color, events: evs };
-}).filter((p) => p.count > 0);
-
 // Calendar: build real day-by-day event map for August 2026 (where most events fall)
 const calMonth = 7; // 0-indexed: August
 const calYear = 2026;
@@ -131,31 +111,6 @@ const schema = {
       {Object.entries(categoryMeta).map(([key, meta]) => (
         <div class="legend-item"><span class="legend-dot" style={`background:${meta.color}`}></span> {meta.label}</div>
       ))}
-      <div class="view-toggle">
-        <button id="btn-timeline" class="is-active">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Timeline
-        </button>
-        <button id="btn-map">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-          Map
-        </button>
-      </div>
-    </div>
-
-    <div class="map-view" id="map-view">
-      <div class="city-map" id="city-map">
-        <div class="map-label" style="top:4%; left:4%;">N &uarr; Sioux Falls</div>
-        {mapPins.map((pin) => (
-          <>
-            <div class="map-pin" data-spot={pin.spot} style={`top:${pin.top}; left:${pin.left}; background:${pin.color};`}>
-              <div class="map-pin-count">{pin.count}</div>
-            </div>
-            <div class="map-label" style={`top:calc(${pin.top} + 8%); left:${pin.left};`}>{pin.location}</div>
-          </>
-        ))}
-        <div class="map-popover" id="map-popover"><h4></h4><p></p><span class="cnt"></span></div>
-      </div>
     </div>
 
     <div class="events-layout">
@@ -267,34 +222,6 @@ const schema = {
   .legend-row { display: flex; gap: 1.5rem; flex-wrap: wrap; padding-block: 1.6rem; justify-content: center; border-bottom: 1px solid var(--color-line); align-items: center; }
   .legend-item { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.875rem; color: var(--color-navy); }
   .legend-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; }
-  .view-toggle { display: flex; gap: 0.3rem; background: var(--color-surface); border-radius: 999px; padding: 0.25rem; margin-left: auto; }
-  .view-toggle button { border: none; background: none; padding: 0.5rem 1.1rem; border-radius: 999px; font-weight: 700; font-size: 0.8125rem; color: var(--color-navy); cursor: pointer; display: flex; align-items: center; gap: 0.4rem; }
-  .view-toggle button.is-active { background: var(--color-navy); color: #fff; }
-
-  .map-view { display: none; padding-block: 2rem; }
-  .map-view.is-active { display: block; }
-  .timeline-wrap.is-hidden, .events-layout.is-hidden { display: none; }
-  .city-map { position: relative; background: linear-gradient(160deg, #eaf2f8 0%, #dce9f2 100%); border-radius: 1.2rem; padding: 2rem; min-height: 32rem; overflow: hidden; border: 1px solid var(--color-line); }
-  .map-pin {
-    position: absolute; width: 2.6rem; height: 2.6rem; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
-    display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 10px rgba(13,23,48,0.25);
-    transition: transform 0.2s ease;
-  }
-  .map-pin:hover { transform: rotate(-45deg) scale(1.15); }
-  .map-pin-count {
-    position: absolute; inset: 0; margin: auto; width: 1.3rem; height: 1.3rem; background: var(--color-gold); color: var(--color-navy);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; font-weight: 800;
-    transform: rotate(45deg); border: 2px solid #fff;
-  }
-  .map-label { position: absolute; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); background: rgba(255,255,255,0.85); padding: 0.2rem 0.6rem; border-radius: 999px; white-space: nowrap; }
-  .map-popover {
-    position: absolute; width: 15rem; background: #fff; border-radius: 0.8rem; box-shadow: 0 16px 36px rgba(13,23,48,0.25);
-    padding: 0.9rem; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; z-index: 10;
-  }
-  .map-popover.is-visible { opacity: 1; pointer-events: auto; }
-  .map-popover h4 { font-size: 0.9375rem; color: var(--color-navy); margin: 0 0 0.3rem; }
-  .map-popover p { font-size: 0.75rem; color: var(--color-navy-light); margin: 0 0 0.4rem; }
-  .map-popover .cnt { font-size: 0.6875rem; color: var(--color-orange); font-weight: 700; }
 
   .events-layout { display: grid; grid-template-columns: 19rem 1fr; gap: 2rem; align-items: start; }
   @media (max-width: 60rem) { .events-layout { grid-template-columns: 1fr; } .calendar-rail { display: none; } }
@@ -363,34 +290,6 @@ const schema = {
 </style>
 
 <script>
-  const btnTimeline = document.getElementById('btn-timeline')!;
-  const btnMap = document.getElementById('btn-map')!;
-  const eventsLayout = document.querySelector('.events-layout')!;
-  const mapView = document.getElementById('map-view')!;
-  btnTimeline.addEventListener('click', () => {
-    btnTimeline.classList.add('is-active'); btnMap.classList.remove('is-active');
-    eventsLayout.classList.remove('is-hidden'); mapView.classList.remove('is-active');
-  });
-  btnMap.addEventListener('click', () => {
-    btnMap.classList.add('is-active'); btnTimeline.classList.remove('is-active');
-    eventsLayout.classList.add('is-hidden'); mapView.classList.add('is-active');
-  });
-
-  const popover = document.getElementById('map-popover')!;
-  document.querySelectorAll('.map-pin').forEach((pin) => {
-    pin.addEventListener('mouseenter', () => {
-      const el = pin as HTMLElement;
-      const labelText = el.nextElementSibling?.textContent || '';
-      const count = el.querySelector('.map-pin-count')?.textContent || '0';
-      popover.querySelector('h4')!.textContent = labelText;
-      popover.querySelector('.cnt')!.textContent = `${count} event${count === '1' ? '' : 's'}`;
-      popover.setAttribute('style', `top:calc(${el.style.top} + 3rem); left:${el.style.left}; opacity:1; pointer-events:auto;`);
-    });
-    pin.addEventListener('mouseleave', () => {
-      popover.removeAttribute('style');
-    });
-  });
-
   const calGrid = document.getElementById('mini-cal-grid') as HTMLElement;
   if (calGrid) {
     const firstDow = parseInt(calGrid.dataset.firstDow || '0');
