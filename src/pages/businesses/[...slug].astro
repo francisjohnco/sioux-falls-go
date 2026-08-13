@@ -101,7 +101,6 @@ const schema = {
           <button class="tab is-active" data-tab="story" role="tab">Story</button>
           <button class="tab" data-tab="photos" role="tab">Photos</button>
           <button class="tab" data-tab="specials" role="tab">Specials</button>
-          <button class="tab" data-tab="reviews" role="tab">Reviews</button>
         </div>
 
         <div class="champion-grid">
@@ -117,10 +116,6 @@ const schema = {
 
             <div class="tab-panel" data-panel="specials">
               <p class="empty-note">No active specials right now. Champions can offer exclusive discounts here.</p>
-            </div>
-
-            <div class="tab-panel" data-panel="reviews">
-              <p class="empty-note">Live Google reviews will render here once the Places API is connected.</p>
             </div>
           </div>
 
@@ -581,8 +576,8 @@ const schema = {
   .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .review-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
   .review-stars { display: flex; gap: 0.15rem; margin-bottom: 0.6rem; }
-  .star-filled { fill: var(--color-gold); color: var(--color-gold); }
-  .star-empty { fill: none; color: var(--color-line); }
+  :global(.star-filled) { fill: var(--color-gold); color: var(--color-gold); }
+  :global(.star-empty) { fill: none; color: var(--color-line); }
   .review-text { font-size: 0.9375rem; color: var(--color-ink); font-style: italic; margin: 0; }
   .review-author { font-size: 0.8125rem; color: var(--color-navy-light); font-weight: 600; margin: 0.6rem 0 0; }
 

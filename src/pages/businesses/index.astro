@@ -357,7 +357,7 @@ const schema = {
   .giveback-info strong { font-size: 0.9375rem; color: var(--color-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .giveback-meta { font-size: 0.8125rem; color: var(--color-navy-light); }
   .giveback-rating { display: inline-flex; align-items: center; gap: 0.3rem; font-weight: 700; color: var(--color-navy); font-size: 0.875rem; white-space: nowrap; }
-  .filled-star { fill: var(--color-gold); color: var(--color-gold); }
+  :global(.filled-star) { fill: var(--color-gold); color: var(--color-gold); }
 
   /* NEWLY VERIFIED — its own blue band for depth */
   .verified-band { background: linear-gradient(180deg, var(--color-river-light) 0%, #fff 100%); padding-block: var(--space-5); }
