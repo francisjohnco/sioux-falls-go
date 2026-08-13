@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Experience {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
+  cardTitle: string;
+  cardDescription: string;
+  gradient: string;
+}
+
+const experiences: Experience[] = [
+  {
+    id: 'downtown',
+    label: 'Downtown & Walkable',
+    description: 'Steps from Falls Park, Phillips Ave restaurants, and the SculptureWalk.',
+    icon: '<path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1M10 21v-4h4v4"/>',
+    cardTitle: 'Your Downtown Loft Here',
+    cardDescription: 'Perfect for a walkable stay near Falls Park and Phillips Avenue nightlife.',
+    gradient: 'linear-gradient(135deg, #eef2f7 0%, #e4ebf2 100%)',
+  },
+  {
+    id: 'nature',
+    label: 'Riverside & Nature',
+    description: 'Quiet stays near trails, the Big Sioux River, and the city\'s green spaces.',
+    icon: '<path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>',
+    cardTitle: 'Your Nature Retreat Here',
+    cardDescription: 'A peaceful home surrounded by trees and trails, ideal for a slower pace.',
+    gradient: 'linear-gradient(135deg, #eef2f7 0%, #e4ebf2 100%)',
+  },
+  {
+    id: 'historic',
+    label: 'Historic & Charming',
+    description: 'Character-filled homes in Sioux Falls\' oldest, most storied neighborhoods.',
+    icon: '<path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6"/><path d="M9 10h1M14 10h1"/>',
+    cardTitle: 'Your Historic Home Here',
+    cardDescription: 'A charming, character-filled property near downtown\'s original streets.',
+    gradient: 'linear-gradient(135deg, #eef2f7 0%, #e4ebf2 100%)',
+  },
+  {
+    id: 'family',
+    label: 'Family-Friendly',
+    description: 'Room to spread out, near parks, the zoo, and family attractions.',
+    icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"/>',
+    cardTitle: 'Your Family Stay Here',
+    cardDescription: 'Extra space and a yard, close to family-friendly attractions.',
+    gradient: 'linear-gradient(135deg, #eef2f7 0%, #e4ebf2 100%)',
+  },
+  {
+    id: 'budget',
+    label: 'Solo & Budget',
+    description: 'Simple, affordable stays for the solo traveler or short weekend trip.',
+    icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a6 6 0 0 1 12 0v2"/>',
+    cardTitle: 'Your Studio Here',
+    cardDescription: 'An affordable, well-located spot for solo travelers passing through.',
+    gradient: 'linear-gradient(135deg, #eef2f7 0%, #e4ebf2 100%)',
+  },
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Places to Stay in Sioux Falls',
+  description: 'Real local homes hosted by Sioux Falls locals, organized by experience.',
+};
+---
+<BaseLayout
+  title="Places to Stay"
+  description="Stay like a local, not a tourist. Real homes hosted by real Sioux Falls locals — organized by the kind of trip you're actually here for."
+  canonicalPath="/stay"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">Places to Stay</span>
+        <h1>Stay Like a Local, Not a Tourist</h1>
+        <p>Real homes hosted by real Sioux Falls locals — organized by the kind of trip you're actually here for.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="intro-strip"><div class="container">
+    <p>We're building this out with real local hosts. Own a great space in Sioux Falls? Be one of the first featured.</p>
+  </div></div>
+
+  <nav class="exp-nav">
+    {experiences.map((exp) => (
+      <a href={`#${exp.id}`}>{exp.label}</a>
+    ))}
+  </nav>
+
+  {experiences.map((exp) => (
+    <section class="exp-section" id={exp.id}>
+      <div class="container">
+        <div class="exp-head">
+          <div class="exp-head-text">
+            <span class="eyebrow">Experience</span>
+            <h2>{exp.label}</h2>
+            <p>{exp.description}</p>
+          </div>
+        </div>
+        <div class="host-grid">
+          {[1, 2, 3].map(() => (
+            <div class="host-card">
+              <div class="host-card-media" style={`background: ${exp.gradient};`}>
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.5" set:html={exp.icon} />
+                <span class="host-card-badge">Host Wanted</span>
+              </div>
+              <div class="host-card-body">
+                <h3>{exp.cardTitle}</h3>
+                <p>{exp.cardDescription}</p>
+                <a class="host-card-cta" href="#apply">List Your Place →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <div class="container">
+    <section class="host-cta-band" id="apply">
+      <div class="host-cta-copy">
+        <h2>Are you a Sioux Falls host?</h2>
+        <p>Be one of the first local hosts featured on Sioux Falls Go. Free to list, no booking fees, just real local exposure.</p>
+      </div>
+      <form name="stay-host-apply" method="POST" data-netlify="true" class="host-cta-form">
+        <input type="hidden" name="form-name" value="stay-host-apply" />
+        <label for="host-name">Your Name</label>
+        <input type="text" id="host-name" name="name" placeholder="Your name" required />
+        <label for="host-email">Email</label>
+        <input type="email" id="host-email" name="email" placeholder="Email" required />
+        <label for="host-experience">Which experience fits your place?</label>
+        <select id="host-experience" name="experience">
+          {experiences.map((exp) => <option value={exp.label}>{exp.label}</option>)}
+        </select>
+        <label for="host-details">Tell us about your place</label>
+        <textarea id="host-details" name="details" rows="3" placeholder="Location, size, what makes it special..."></textarea>
+        <button type="submit" class="host-cta-btn">Apply to Host →</button>
+        <p class="host-form-status" id="host-form-status" hidden></p>
+      </form>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .container { max-width: 76rem; margin-inline: auto; padding-inline: var(--space-3); }
+  .eyebrow { color: var(--color-orange); font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .hero { position: relative; min-height: 24rem; display: flex; align-items: center; overflow: hidden; }
+  .hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/falls-park-2.jpg') center/cover; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.85) 0%, rgba(13,23,48,0.55) 55%, rgba(13,23,48,0.25) 100%); }
+  .hero-content { position: relative; z-index: 2; padding-block: 3.5rem; color: #fff; max-width: 40rem; }
+  .hero-content h1 { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.15; margin: 0.6rem 0 1rem; color: #fff; }
+  .hero-content p { font-size: 1.0625rem; color: rgba(255,255,255,0.9); }
+
+  .intro-strip { background: var(--color-surface); padding-block: 1.6rem; text-align: center; }
+  .intro-strip p { max-width: 44rem; margin: 0 auto; font-size: 1rem; color: var(--color-navy); font-weight: 500; }
+
+  .exp-nav { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; padding-block: 1.6rem; position: sticky; top: 0; background: #fff; z-index: 10; border-bottom: 1px solid var(--color-line); }
+  .exp-nav a { padding: 0.55rem 1.1rem; border-radius: 999px; border: 1.5px solid var(--color-line); font-weight: 700; font-size: 0.8125rem; color: var(--color-navy); text-decoration: none; }
+  .exp-nav a:hover { border-color: var(--color-orange); color: var(--color-orange); }
+
+  .exp-section { padding-block: 3rem; scroll-margin-top: 4.5rem; }
+  .exp-section:nth-child(even) { background: var(--color-surface); }
+  .exp-head { margin-bottom: 1.5rem; }
+  .exp-head-text h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--color-navy); margin-top: 0.4rem; }
+  .exp-head-text p { color: var(--color-navy-light); font-size: 0.9375rem; margin-top: 0.3rem; max-width: 40ch; }
+
+  .host-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+  @media (max-width: 55rem) { .host-grid { grid-template-columns: 1fr; } }
+
+  .host-card {
+    border-radius: 1.1rem; overflow: hidden; background: #fff; border: 1.5px dashed #c9d3e0;
+    display: flex; flex-direction: column; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+  }
+  .host-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.1); border-color: var(--color-orange); }
+  .host-card-media { height: 10rem; position: relative; display: flex; align-items: center; justify-content: center; }
+  .host-card-media svg { opacity: 0.35; }
+  .host-card-badge {
+    position: absolute; top: 0.8rem; left: 0.8rem; background: rgba(27,42,74,0.9); color: #fff;
+    font-size: 0.6875rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.02em;
+  }
+  .host-card-body { padding: 1.1rem 1.2rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
+  .host-card-body h3 { font-family: var(--font-display); font-size: 1.0625rem; color: var(--color-navy); margin-bottom: 0.4rem; }
+  .host-card-body p { font-size: 0.8438rem; color: var(--color-navy-light); line-height: 1.45; margin: 0 0 1rem; flex: 1; }
+  .host-card-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    background: var(--color-surface); color: var(--color-navy); font-weight: 700; font-size: 0.8125rem;
+    padding: 0.6rem; border-radius: 0.6rem; text-decoration: none; border: 1px solid var(--color-line);
+  }
+  .host-card:hover .host-card-cta { background: var(--color-orange); color: #fff; border-color: var(--color-orange); }
+
+  .host-cta-band {
+    background: linear-gradient(120deg, var(--color-navy) 0%, var(--color-river) 100%);
+    border-radius: 1.2rem; padding: 2.5rem; margin-block: 3rem; color: #fff;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center;
+  }
+  @media (max-width: 50rem) { .host-cta-band { grid-template-columns: 1fr; } }
+  .host-cta-copy h2 { font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 0.5rem; color: #fff; }
+  .host-cta-copy p { color: rgba(255,255,255,0.85); max-width: 34rem; }
+
+  .host-cta-form { background: rgba(255,255,255,0.97); border-radius: 0.9rem; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .host-cta-form label { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-transform: uppercase; letter-spacing: 0.02em; }
+  .host-cta-form input, .host-cta-form select, .host-cta-form textarea {
+    padding: 0.7rem 0.9rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: 0.9375rem;
+  }
+  .host-cta-btn { margin-top: 0.4rem; background: var(--color-gold); color: var(--color-navy); border: none; font-weight: 800; padding: 0.85rem; border-radius: 0.5rem; cursor: pointer; }
+  .host-form-status { font-size: 0.8125rem; font-weight: 600; margin: 0.3rem 0 0; }
+  .host-form-status.is-success { color: var(--color-success); }
+  .host-form-status.is-error { color: #C0392B; }
+</style>
+
+<script>
+  const form = document.querySelector('form[name="stay-host-apply"]') as HTMLFormElement;
+  const statusEl = document.getElementById('host-form-status');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const formData = new FormData(form);
+      const body = new URLSearchParams(formData as any).toString();
+      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+      if (!res.ok) throw new Error('Submission failed');
+      form.reset();
+      if (statusEl) {
+        statusEl.textContent = "Thanks! We'll reach out about featuring your place.";
+        statusEl.classList.remove('is-error');
+        statusEl.classList.add('is-success');
+        statusEl.hidden = false;
+      }
+    } catch (err) {
+      if (statusEl) {
+        statusEl.textContent = 'Something went wrong — please try again.';
+        statusEl.classList.remove('is-success');
+        statusEl.classList.add('is-error');
+        statusEl.hidden = false;
+      }
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Apply to Host →';
+    }
+  });
+</script>
