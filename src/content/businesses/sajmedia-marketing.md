@@ -1,6 +1,7 @@
 ---
 name: "SAJMedia Marketing"
 category: "marketing-agencies"
+placeId: "ChIJkdQmp43LjocRswPLmOq_5h8"
 heroImage: "/images/businesses/sajmedia-marketing.png"
 verifiedAt: 2026-07-29
 claimed: true
