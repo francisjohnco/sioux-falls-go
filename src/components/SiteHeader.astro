@@ -1,10 +1,32 @@
 ---
-const links = [
-  { href: '/businesses', label: 'Businesses' },
-  { href: '/events', label: 'Events' },
+import { getCollection } from 'astro:content';
+
+const allCategories = await getCollection('categories');
+
+const PARENT_GROUPS = [
+  { slug: 'home-services', label: 'Home Services' },
+  { slug: 'professional-services', label: 'Professional Services' },
+  { slug: 'food-retail', label: 'Food & Retail' },
+];
+
+const proGroups = PARENT_GROUPS.map((group) => {
+  const parent = allCategories.find((c) => c.data.slug === group.slug);
+  const children = allCategories
+    .filter((c) => c.data.parentCategory?.id === group.slug && c.data.slug !== group.slug)
+    .sort((a, b) => a.data.name.localeCompare(b.data.name));
+  return { ...group, parentSlug: parent?.data.slug ?? group.slug, children };
+});
+
+const simpleLinks = [
   { href: '/spotlight-giveaway', label: 'Giveaway' },
   { href: '/local-deals', label: 'Local Deals' },
   { href: '/guides', label: 'The Loop' },
+];
+
+const exploreItems = [
+  { href: '/shopping-retail', label: 'Shopping', icon: 'M6 2l1.5 5h9L18 2M3 7h18l-1.5 13.5a1 1 0 0 1-1 .9H5.5a1 1 0 0 1-1-.9L3 7z' },
+  { href: '/restaurants-dining', label: 'Places to Eat', icon: 'M3 2v20M3 7h4M21 15c-3 0-4-2-4-4V2v13c0 4-2 6-4 6' },
+  { href: '/stay', label: 'Places to Stay', icon: 'M3 21h18M5 21V7l7-4 7 4v14M9 9h1M9 13h1M14 9h1M14 13h1M10 21v-4h4v4' },
 ];
 ---
 <header class="site-header">
@@ -14,13 +36,57 @@ const links = [
     </a>
 
     <nav class="desktop-nav" aria-label="Primary">
-      <ul>
-        {links.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
-        ))}
-      </ul>
+      <!-- EXPLORE SIOUX FALLS — split button -->
+      <div class="split-wrap">
+        <div class="split-btn">
+          <a href="/visit-sioux-falls" class="split-btn-main">Explore Sioux Falls</a>
+          <button class="split-btn-chev" id="explore-chev" aria-expanded="false" aria-label="Show explore options">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+        <div class="dropdown-panel" id="explore-dropdown">
+          <div class="dropdown-grid one-col">
+            {exploreItems.map((item) => (
+              <a class="dropdown-item" href={item.href}>
+                <span class="dropdown-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" set:html={`<path d="${item.icon}"/>`} /></span>
+                <span class="dropdown-item-text"><strong>{item.label}</strong></span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {simpleLinks.map((link) => (
+        <a class="nav-secondary-link" href={link.href}>{link.label}</a>
+      ))}
+
+      <!-- LOCAL PROS — split button, mega-menu -->
+      <div class="split-wrap">
+        <div class="split-btn alt">
+          <a href="/businesses" class="split-btn-main">Local Pros</a>
+          <button class="split-btn-chev" id="pros-chev" aria-expanded="false" aria-label="Show local pro categories">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+        <div class="dropdown-panel mega" id="pros-dropdown">
+          <div class="mega-grid">
+            {proGroups.map((group) => (
+              <div class="mega-col">
+                <a class="mega-col-title" href={`/${group.parentSlug}`}>{group.label}</a>
+                <ul>
+                  {group.children.map((child) => (
+                    <li><a href={`/${child.data.slug}`}>{child.data.name}</a></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <a class="mega-footer-link" href="/businesses">See All Local Pros →</a>
+        </div>
+      </div>
     </nav>
-    <a href="/get-featured" class="button header-cta desktop-cta">Get Listed</a>
+
+    <a href="/get-featured" class="button header-cta desktop-cta">Get Featured</a>
 
     <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
       <span></span>
@@ -31,13 +97,37 @@ const links = [
 
   <div class="mobile-menu" id="mobile-menu">
     <nav aria-label="Mobile primary">
-      <ul>
-        {links.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
-        ))}
-      </ul>
+      <div class="mobile-accordion">
+        <button class="mobile-trigger" id="mobile-explore-trigger" aria-expanded="false">
+          <span>Explore Sioux Falls</span>
+          <svg class="mobile-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="mobile-submenu" id="mobile-explore-submenu">
+          <a class="mobile-sub-browse-all" href="/visit-sioux-falls">Browse All →</a>
+          {exploreItems.map((item) => (
+            <a class="mobile-sub-link" href={item.href}>{item.label}</a>
+          ))}
+        </div>
+      </div>
+
+      <a class="mobile-flat-link" href="/spotlight-giveaway">Giveaway</a>
+      <a class="mobile-flat-link" href="/local-deals">Local Deals</a>
+      <a class="mobile-flat-link" href="/guides">The Loop</a>
+
+      <div class="mobile-accordion">
+        <button class="mobile-trigger" id="mobile-pros-trigger" aria-expanded="false">
+          <span>Local Pros</span>
+          <svg class="mobile-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="mobile-submenu" id="mobile-pros-submenu">
+          <a class="mobile-sub-browse-all" href="/businesses">See All Local Pros →</a>
+          {proGroups.map((group) => (
+            <a class="mobile-sub-link" href={`/${group.parentSlug}`}>{group.label}</a>
+          ))}
+        </div>
+      </div>
     </nav>
-    <a href="/get-featured" class="button mobile-menu-cta">Get Listed</a>
+    <a href="/get-featured" class="button mobile-menu-cta">Get Featured</a>
   </div>
   <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
 </header>
@@ -67,24 +157,73 @@ const links = [
     text-decoration: none;
   }
   .wordmark-logo { height: 4.6rem; width: auto; display: block; }
-  .wordmark-accent { color: var(--color-orange); }
 
-  .desktop-nav ul {
-    display: flex;
-    gap: var(--space-3);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex-wrap: wrap;
+  .desktop-nav {
+    display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap;
   }
-  .desktop-nav a {
-    color: var(--color-navy);
-    font-weight: 700;
-    font-size: 1.1875rem;
-    text-decoration: none;
+  .nav-secondary-link {
+    padding: 0.55rem 0.8rem; text-decoration: none; color: var(--color-navy);
+    font-weight: 700; font-size: 0.9375rem;
   }
-  .desktop-nav a:hover { color: var(--color-orange); }
-  .header-cta { padding: 0.6rem 1.4rem; font-size: 0.875rem; }
+  .nav-secondary-link:hover { color: var(--color-orange); }
+
+  /* SPLIT BUTTON */
+  .split-wrap { position: relative; }
+  .split-btn {
+    display: flex; align-items: stretch; border-radius: 999px; overflow: hidden;
+    background: var(--color-navy);
+  }
+  .split-btn.alt { background: linear-gradient(120deg, var(--color-orange), var(--color-gold)); }
+  .split-btn-main {
+    display: flex; align-items: center; padding: 0.55rem 0.8rem 0.55rem 1rem;
+    text-decoration: none; font-weight: 700; font-size: 0.9375rem; color: #fff;
+  }
+  .split-btn-chev {
+    display: flex; align-items: center; padding: 0.55rem 0.75rem; border: none;
+    background: rgba(0,0,0,0.14); cursor: pointer; color: #fff;
+    border-left: 1px solid rgba(255,255,255,0.25);
+  }
+  .split-btn-chev svg { transition: transform 0.2s ease; }
+  .split-btn-chev[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+  .dropdown-panel {
+    position: absolute; top: calc(100% + 0.6rem); left: 50%; transform: translateX(-50%) translateY(-8px);
+    background: #fff; border-radius: 1rem; box-shadow: 0 20px 50px rgba(13,23,48,0.18);
+    border: 1px solid var(--color-line); padding: 1rem; z-index: 30;
+    opacity: 0; visibility: hidden; transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    width: 16rem;
+  }
+  .dropdown-panel.is-open { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+  .dropdown-grid.one-col { display: flex; flex-direction: column; gap: 0.2rem; }
+  .dropdown-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem; border-radius: 0.6rem; text-decoration: none; color: var(--color-navy); }
+  .dropdown-item:hover { background: var(--color-surface); }
+  .dropdown-icon { width: 1.9rem; height: 1.9rem; border-radius: 0.5rem; background: rgba(240,126,35,0.12); color: var(--color-orange); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dropdown-item-text strong { font-weight: 700; font-size: 0.9rem; }
+
+  /* MEGA MENU */
+  .dropdown-panel.mega { width: 34rem; }
+  .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .mega-col-title {
+    display: block; font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem;
+    color: var(--color-navy); text-decoration: none; margin-bottom: 0.5rem; padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--color-orange);
+  }
+  .mega-col-title:hover { color: var(--color-orange); }
+  .mega-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+  .mega-col a { text-decoration: none; color: var(--color-navy-light); font-size: 0.8438rem; font-weight: 600; }
+  .mega-col a:hover { color: var(--color-orange); }
+  .mega-footer-link {
+    display: block; text-align: center; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid var(--color-line);
+    font-weight: 700; font-size: 0.875rem; color: var(--color-orange-dark); text-decoration: none;
+  }
+
+  /* GET FEATURED — rectangular, river blue, not a pill */
+  .header-cta {
+    padding: 0.65rem 1.5rem; font-size: 0.9375rem; font-weight: 700;
+    background: var(--color-river); color: #fff; border-radius: 0.5rem;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .header-cta:hover { background: var(--color-navy); transform: translateY(-1px); }
 
   .hamburger-btn {
     display: none;
@@ -112,15 +251,42 @@ const links = [
     transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
     display: flex; flex-direction: column;
     padding: 5rem var(--space-3) var(--space-3);
+    overflow-y: auto;
   }
   .mobile-menu.is-open { transform: translateX(0); }
-  .mobile-menu nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); }
-  .mobile-menu nav a {
-    display: block; padding: var(--space-2) 0; font-size: 1.125rem; font-weight: 700;
+
+  .mobile-flat-link {
+    display: block; padding: var(--space-2) 0; font-size: 1.0625rem; font-weight: 700;
     color: var(--color-navy); text-decoration: none; border-bottom: 1px solid var(--color-line);
   }
-  .mobile-menu nav a:hover { color: var(--color-orange); }
-  .mobile-menu-cta { margin-top: var(--space-3); text-align: center; }
+  .mobile-flat-link:hover { color: var(--color-orange); }
+
+  .mobile-accordion { border-bottom: 1px solid var(--color-line); }
+  .mobile-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    background: none; border: none; padding: var(--space-2) 0; cursor: pointer;
+    font-size: 1.0625rem; font-weight: 700; color: var(--color-navy); font-family: var(--font-body);
+  }
+  .mobile-chevron { transition: transform 0.25s ease; }
+  .mobile-trigger[aria-expanded="true"] .mobile-chevron { transform: rotate(180deg); }
+
+  .mobile-submenu { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .mobile-submenu.is-open { max-height: 20rem; padding-bottom: 0.7rem; }
+  .mobile-sub-browse-all {
+    display: block; padding: 0.7rem 0.8rem; margin-bottom: 0.3rem; border-radius: 0.6rem;
+    background: rgba(240,126,35,0.08); border: 1px dashed rgba(240,126,35,0.4);
+    color: var(--color-navy); font-weight: 700; font-size: 0.9375rem; text-decoration: none;
+  }
+  .mobile-sub-link {
+    display: block; padding: 0.65rem 0.8rem; color: var(--color-navy-light);
+    font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+  }
+  .mobile-sub-link:hover { color: var(--color-orange); }
+
+  .mobile-menu-cta {
+    margin-top: var(--space-3); text-align: center;
+    background: var(--color-river); border-radius: 0.5rem;
+  }
 
   .mobile-menu-backdrop {
     position: fixed; inset: 0; background: rgba(13,23,48,0.4); z-index: 35;
@@ -128,7 +294,7 @@ const links = [
   }
   .mobile-menu-backdrop.is-open { opacity: 1; pointer-events: auto; }
 
-  @media (max-width: 52rem) {
+  @media (max-width: 62rem) {
     .desktop-nav, .desktop-cta { display: none; }
     .hamburger-btn { display: flex; }
   }
@@ -158,4 +324,49 @@ const links = [
   });
   backdrop.addEventListener('click', closeMenu);
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+
+  // Desktop dropdowns — click to toggle, click outside or Escape to close
+  function setupDropdown(chevId: string, panelId: string) {
+    const chev = document.getElementById(chevId);
+    const panel = document.getElementById(panelId);
+    if (!chev || !panel) return;
+    chev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = panel.classList.contains('is-open');
+      document.querySelectorAll('.dropdown-panel.is-open').forEach((p) => p.classList.remove('is-open'));
+      document.querySelectorAll('.split-btn-chev[aria-expanded="true"]').forEach((c) => c.setAttribute('aria-expanded', 'false'));
+      if (!isOpen) {
+        panel.classList.add('is-open');
+        chev.setAttribute('aria-expanded', 'true');
+      }
+    });
+  }
+  setupDropdown('explore-chev', 'explore-dropdown');
+  setupDropdown('pros-chev', 'pros-dropdown');
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.dropdown-panel.is-open').forEach((p) => p.classList.remove('is-open'));
+    document.querySelectorAll('.split-btn-chev[aria-expanded="true"]').forEach((c) => c.setAttribute('aria-expanded', 'false'));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.dropdown-panel.is-open').forEach((p) => p.classList.remove('is-open'));
+      document.querySelectorAll('.split-btn-chev[aria-expanded="true"]').forEach((c) => c.setAttribute('aria-expanded', 'false'));
+      closeMenu();
+    }
+  });
+
+  // Mobile accordions
+  function setupMobileAccordion(triggerId: string, submenuId: string) {
+    const trigger = document.getElementById(triggerId);
+    const submenu = document.getElementById(submenuId);
+    if (!trigger || !submenu) return;
+    trigger.addEventListener('click', () => {
+      const isOpen = submenu.classList.contains('is-open');
+      submenu.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
+  setupMobileAccordion('mobile-explore-trigger', 'mobile-explore-submenu');
+  setupMobileAccordion('mobile-pros-trigger', 'mobile-pros-submenu');
 </script>
