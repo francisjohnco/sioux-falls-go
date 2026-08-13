@@ -128,6 +128,9 @@ const schema = {
         {business.data.hoursSchedule && (
           <p class="trust-stat open-now-indicator" id="open-now-indicator-trust" hidden></p>
         )}
+        {business.data.responseTime && (
+          <span class="trust-stat"><Icon name="zap" size={14} /> Usually responds {business.data.responseTime}</span>
+        )}
       </div>
       {smartCTA.external ? (
         <a class="btn btn--primary" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
@@ -531,7 +534,7 @@ const schema = {
   .badge--verified, .badge--champion-solid { display: inline-flex; align-items: center; gap: 0.3rem; }
   .rating-pill, .hero-rating-pill { display: inline-flex; align-items: center; gap: 0.3rem; }
   .trust-list li { display: flex; align-items: center; gap: 0.4rem; }
-  .filled-star { fill: currentColor; }
+  :global(.filled-star) { fill: currentColor; }
 
   .category-link { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); text-underline-offset: 0.2em; }
   .category-link:hover { text-decoration-color: currentColor; }
