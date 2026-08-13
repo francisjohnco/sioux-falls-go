@@ -96,6 +96,8 @@ const businesses = defineCollection({
     interviewDate: z.date().optional(),
     interviewedBy: z.string().optional(),
     pullQuote: z.string().optional(), // curated quote for premium editorial layout
+    ownerName: z.string().optional(), // powers the "Meet the Owner" card — omitted entirely if not provided, never inferred or guessed
+    ownerQuote: z.string().optional(), // short personal line for that same card, distinct from pullQuote
 
     // ── Profile enhancements ──
     gallery: z.array(z.string()).default([]), // additional photos beyond heroImage — Champion tier only, gated in the template

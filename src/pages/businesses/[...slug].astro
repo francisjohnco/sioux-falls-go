@@ -151,6 +151,16 @@ const schema = {
               {business.data.pullQuote && <blockquote class="pull-quote-v2">"{business.data.pullQuote}"</blockquote>}
               <div class="prose"><Content /></div>
 
+              {business.data.ownerName && (
+                <div class="owner-card">
+                  <div class="owner-avatar">{business.data.ownerName.charAt(0)}</div>
+                  <div>
+                    <h3>Meet {business.data.ownerName.split(' ')[0]}</h3>
+                    {business.data.ownerQuote && <p>"{business.data.ownerQuote}"</p>}
+                  </div>
+                </div>
+              )}
+
               {featuredReview && (
                 <>
                   <div class="testimonial-feature">
@@ -544,6 +554,16 @@ const schema = {
   }
   .pull-quote-v2::before { content: '"'; position: absolute; left: -0.4rem; top: -0.8rem; font-size: 3.2rem; color: var(--color-orange); opacity: 0.3; font-family: 'Playfair Display', serif; }
 
+  /* Meet the Owner — only ever rendered when ownerName is genuinely provided */
+  .owner-card { display: flex; gap: 1.1rem; align-items: center; margin: var(--space-3) 0; padding: 1.2rem; background: var(--color-surface); border-radius: var(--radius); }
+  .owner-avatar {
+    width: 3.6rem; height: 3.6rem; border-radius: 50%; background: var(--color-navy); color: #fff;
+    flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  }
+  .owner-card h3 { font-size: 0.9375rem; color: var(--color-navy); margin-bottom: 0.15rem; }
+  .owner-card p { font-size: 0.8438rem; color: var(--color-navy-light); margin: 0; font-style: italic; }
+
   /* Featured testimonial — real first review, styled as an editorial callout instead of a plain card */
   .testimonial-feature { background: var(--color-navy); color: #fff; border-radius: var(--radius); padding: var(--space-3); margin-top: var(--space-3); text-align: center; }
   .testimonial-feature .review-stars { justify-content: center; margin-bottom: 0.7rem; }
@@ -557,7 +577,8 @@ const schema = {
   .contact-card dt:first-child { margin-top: 0; }
   .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
   .data-pending { font-weight: 400; font-style: italic; color: var(--color-navy-light); }
-  .contact-cta { display: block; text-align: center; margin-top: var(--space-2); }
+  .contact-cta { display: block; text-align: center; margin-top: var(--space-2); background: var(--color-navy); color: #fff; }
+  .contact-cta:hover { background: #131f38; }
   .contact-card .open-now-indicator { display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.8rem; font-weight: 700; font-size: 0.8125rem; padding: 0.35rem 0.75rem; border-radius: var(--radius-pill); }
   .contact-card .open-now-indicator.is-open { background: #E7F6ED; color: var(--color-success); }
   .contact-card .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
