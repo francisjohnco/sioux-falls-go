@@ -19,8 +19,31 @@ const {
   noindex = false,
 } = Astro.props;
 
-const site = 'https://siouxfallsgo.com'; // placeholder — set real prod domain before launch
+// IMPORTANT: siouxfallsgo.com still points to the old WordPress site — DNS
+// has not been switched yet. Using it here would make every canonical tag
+// point to a different live domain than the one actually being crawled,
+// which is a real conflict, not a neutral placeholder. Once DNS switches,
+// update this back to the real domain.
+const site = 'https://sioux-falls-go.netlify.app';
 const canonicalURL = new URL(canonicalPath, site).toString();
+
+// Sioux Falls, SD — real coordinates, used for geo meta tags sitewide.
+const GEO = { lat: '43.5460', lng: '-96.7313', region: 'US-SD', placename: 'Sioux Falls' };
+
+// Included on every page alongside page-specific schema, so AI engines and
+// search engines have a consistent answer to "what is this site" no matter
+// which page they land on first.
+const ORG_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Sioux Falls Go',
+  url: site,
+  description: 'A local directory and guide for Sioux Falls, South Dakota — real vetted businesses, real events, and real local guides.',
+  areaServed: { '@type': 'City', name: 'Sioux Falls', containedInPlace: { '@type': 'State', name: 'South Dakota' } },
+};
+
+const pageSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const allSchemas = [ORG_SCHEMA, ...pageSchemas];
 ---
 
 <!doctype html>
@@ -32,6 +55,11 @@ const canonicalURL = new URL(canonicalPath, site).toString();
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalURL} />
+
+    <meta name="geo.position" content={`${GEO.lat};${GEO.lng}`} />
+    <meta name="geo.placename" content={GEO.placename} />
+    <meta name="geo.region" content={GEO.region} />
+    <meta name="ICBM" content={`${GEO.lat}, ${GEO.lng}`} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -50,11 +78,7 @@ const canonicalURL = new URL(canonicalPath, site).toString();
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
 
-    {schema && (
-      Array.isArray(schema)
-        ? schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)
-        : <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    )}
+    {allSchemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>

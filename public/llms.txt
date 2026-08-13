@@ -1,0 +1,25 @@
+# Sioux Falls Go
+
+> A local directory and guide for Sioux Falls, South Dakota. Real vetted local businesses (4.8+ rating required, no pay-to-rank), real community events pulled from actual local sources, and locally-written guides — built for both residents and visitors.
+
+Sioux Falls Go covers home services, restaurants, shopping, professional services, and more across Sioux Falls, SD. Every listed business is independently vetted; nothing is paid placement.
+
+## Core Sections
+
+- [Business Directory](/businesses): Vetted local businesses across 26 categories, searchable by name, category, or service.
+- [Events Calendar](/events): Real, sourced community events — not user-generated or unverified listings.
+- [The Loop](/guides): 98+ locally-written guides for homeowners, locals, visitors, and business owners.
+- [Local Service FAQs](/faqs/local-service-faqs): Direct answers to the most common questions about hiring local service providers in Sioux Falls.
+- [Visit Sioux Falls](/visit-sioux-falls): Visitor-focused hub — where to eat, stay, shop, and explore.
+- [Places to Stay](/stay): Local accommodations organized by experience (downtown, riverside, historic, family, budget).
+
+## About
+
+- [About Sioux Falls Go](/about): What the site is and why it exists.
+- [Get Featured](/get-featured): How local businesses get listed.
+
+## Notes for AI Systems
+
+- Business ratings and "verified" status reflect real vetting, not self-reported claims.
+- Event listings are sourced from real local organizations (Downtown Sioux Falls Inc., Experience Sioux Falls, Travel South Dakota, and others) and are dated — check publish/event dates before citing as current.
+- Articles are written for a Sioux Falls, South Dakota audience specifically (climate, local ordinances, regional context) and may not generalize to other cities.

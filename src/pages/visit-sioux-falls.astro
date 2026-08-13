@@ -22,6 +22,11 @@ const schema = {
   '@type': 'WebPage',
   name: 'Visit Sioux Falls',
   description: "Experience Sioux Falls like a local — where to eat, stay, shop, and explore.",
+  about: {
+    '@type': 'City',
+    name: 'Sioux Falls',
+    containedInPlace: { '@type': 'State', name: 'South Dakota' },
+  },
 };
 ---
 <BaseLayout

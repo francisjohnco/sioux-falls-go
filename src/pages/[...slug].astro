@@ -14,11 +14,19 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 const { Content } = await render(page);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: page.data.title,
+  description: page.data.seo.description,
+};
 ---
 <BaseLayout
   title={page.data.seo.title}
   description={page.data.seo.description}
   canonicalPath={`/${page.id}`}
+  schema={schema}
 >
   <SiteHeader slot="header" />
 
