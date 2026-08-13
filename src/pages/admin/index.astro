@@ -8,6 +8,15 @@ const businessesWithCategory = await Promise.all(
   businesses.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
 );
 businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.business.data.name));
+
+let newsletterConfig = { frequency: 'weekly', lastGeneratedAt: null as string | null };
+try {
+  const fs = await import('node:fs/promises');
+  const raw = await fs.readFile(new URL('../../../data/newsletter-config.json', import.meta.url), 'utf-8');
+  newsletterConfig = JSON.parse(raw);
+} catch {
+  // fall back to defaults if the file can't be read at build time
+}
 ---
 <BaseLayout
   title="Admin — Sioux Falls Go"
@@ -35,6 +44,9 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
         </button>
         <button class="nav-item" data-tab="giveaways">
           <span class="nav-icon"><Icon name="gift" size={18} /></span> Giveaways
+        </button>
+        <button class="nav-item" data-tab="newsletter">
+          <span class="nav-icon"><Icon name="mail" size={18} /></span> Newsletter
         </button>
       </nav>
     </aside>
@@ -263,6 +275,41 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
         </div>
       </section>
 
+      <!-- ── NEWSLETTER ── -->
+      <section class="tab-panel" id="panel-newsletter">
+        <div class="panel-header-row">
+          <div>
+            <h1>Newsletter</h1>
+            <p class="panel-sub">Auto-drafts from recent articles — you review and send in MailerLite, nothing sends automatically.</p>
+          </div>
+        </div>
+
+        <div class="card newsletter-card">
+          <div class="newsletter-field">
+            <label for="newsletter-frequency">How often should a draft be generated?</label>
+            <select id="newsletter-frequency">
+              <option value="weekly" selected={newsletterConfig.frequency === 'weekly'}>Weekly</option>
+              <option value="biweekly" selected={newsletterConfig.frequency === 'biweekly'}>Every 2 weeks</option>
+              <option value="monthly" selected={newsletterConfig.frequency === 'monthly'}>Monthly</option>
+            </select>
+          </div>
+
+          <div class="newsletter-meta">
+            <span>Last generated:</span>
+            <strong id="newsletter-last-generated">
+              {newsletterConfig.lastGeneratedAt
+                ? new Date(newsletterConfig.lastGeneratedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                : 'Never yet'}
+            </strong>
+          </div>
+
+          <div class="newsletter-actions">
+            <button class="button" id="newsletter-generate-now">Generate Draft Now</button>
+            <p class="newsletter-status" id="newsletter-status" hidden></p>
+          </div>
+        </div>
+      </section>
+
     </main>
 
     <!-- Mobile bottom nav -->
@@ -464,6 +511,22 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
     .bottomnav-item span { font-size: 1.15rem; }
     .bottomnav-item.is-active { color: var(--color-orange); }
   }
+  .newsletter-card { padding: 1.5rem; max-width: 32rem; }
+  .newsletter-field { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.3rem; }
+  .newsletter-field label { font-weight: 700; font-size: 0.9375rem; color: var(--color-navy); }
+  .newsletter-field select {
+    padding: 0.7rem 0.9rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line);
+    font-size: 0.9375rem; font-family: var(--font-body); background: #fff;
+  }
+  .newsletter-meta {
+    display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--color-navy-light);
+    padding-bottom: 1.3rem; margin-bottom: 1.3rem; border-bottom: 1px solid var(--color-line);
+  }
+  .newsletter-meta strong { color: var(--color-navy); }
+  .newsletter-actions { display: flex; flex-direction: column; gap: 0.7rem; }
+  .newsletter-status { font-size: 0.875rem; font-weight: 600; margin: 0; }
+  .newsletter-status.is-success { color: var(--color-success); }
+  .newsletter-status.is-error { color: #C0392B; }
 </style>
 
 <script>
@@ -768,6 +831,54 @@ businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.busin
     } catch (err: any) {
       errorEl.textContent = `Publish failed: ${err.message}`;
       errorEl.removeAttribute('hidden');
+    }
+  });
+
+  // NEWSLETTER TAB
+  const freqSelect = document.getElementById('newsletter-frequency') as HTMLSelectElement | null;
+  freqSelect?.addEventListener('change', async () => {
+    try {
+      const res = await fetch('/api/update-newsletter-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ frequency: freqSelect.value }),
+      });
+      if (!res.ok) throw new Error((await res.json()).error || 'Failed to save');
+    } catch (err: any) {
+      alert(`Couldn't save frequency: ${err.message}`);
+    }
+  });
+
+  const generateBtn = document.getElementById('newsletter-generate-now') as HTMLButtonElement | null;
+  const newsletterStatus = document.getElementById('newsletter-status');
+  const lastGeneratedEl = document.getElementById('newsletter-last-generated');
+  generateBtn?.addEventListener('click', async () => {
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Generating…';
+    if (newsletterStatus) newsletterStatus.hidden = true;
+    try {
+      const res = await fetch('/api/generate-newsletter', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Generation failed');
+      if (newsletterStatus) {
+        newsletterStatus.textContent = `Draft created from ${data.articleCount} recent article(s) — review and send it in MailerLite.`;
+        newsletterStatus.classList.remove('is-error');
+        newsletterStatus.classList.add('is-success');
+        newsletterStatus.hidden = false;
+      }
+      if (lastGeneratedEl) {
+        lastGeneratedEl.textContent = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      }
+    } catch (err: any) {
+      if (newsletterStatus) {
+        newsletterStatus.textContent = `Couldn't generate: ${err.message}`;
+        newsletterStatus.classList.remove('is-success');
+        newsletterStatus.classList.add('is-error');
+        newsletterStatus.hidden = false;
+      }
+    } finally {
+      generateBtn.disabled = false;
+      generateBtn.textContent = 'Generate Draft Now';
     }
   });
 </script>
