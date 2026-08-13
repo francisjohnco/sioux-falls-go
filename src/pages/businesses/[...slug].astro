@@ -152,16 +152,6 @@ const schema = {
               {business.data.pullQuote && <blockquote class="pull-quote-v2">"{business.data.pullQuote}"</blockquote>}
               <div class="prose"><Content /></div>
 
-              {business.data.ownerName && (
-                <div class="owner-card">
-                  <div class="owner-avatar">{business.data.ownerName.charAt(0)}</div>
-                  <div>
-                    <h3>Meet {business.data.ownerName.split(' ')[0]}</h3>
-                    {business.data.ownerQuote && <p>"{business.data.ownerQuote}"</p>}
-                  </div>
-                </div>
-              )}
-
               {featuredReview && (
                 <>
                   <div class="testimonial-feature">
@@ -177,6 +167,16 @@ const schema = {
                     <a class="more-reviews-link" href="#reviews-section">See more reviews ↓</a>
                   )}
                 </>
+              )}
+
+              {business.data.ownerName && (
+                <div class="owner-card">
+                  <div class="owner-avatar">{business.data.ownerName.charAt(0)}</div>
+                  <div>
+                    <h3>Meet {business.data.ownerName.split(' ')[0]}</h3>
+                    {business.data.ownerQuote && <p>"{business.data.ownerQuote}"</p>}
+                  </div>
+                </div>
               )}
             </div>
 
@@ -232,6 +232,32 @@ const schema = {
             )}
           </aside>
         </div>
+
+        {business.data.reviews.length > 0 && (
+          <section class="reviews-section" id="reviews-section">
+            <div class="contour-rule" role="presentation"></div>
+            <span class="eyebrow">What People Are Saying</span>
+            <h2>Reviews</h2>
+            <div class="reviews-grid">
+              {business.data.reviews.slice(0, 3).map((review) => (
+                <div class="review-card">
+                  <div class="review-stars">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Icon name="star" size={14} class={i < review.rating ? 'star-filled' : 'star-empty'} />
+                    ))}
+                  </div>
+                  <p class="review-text">"{review.text}"</p>
+                  <p class="review-author">— {review.author}{review.date && `, ${review.date}`}</p>
+                </div>
+              ))}
+            </div>
+            {business.data.placeId && (
+              <a class="view-more-google" href={`https://www.google.com/maps/place/?q=place_id:${business.data.placeId}`} target="_blank" rel="nofollow noopener">
+                View more reviews on Google ↗
+              </a>
+            )}
+          </section>
+        )}
 
         <section class="quote-section" id="quote-section">
           <div class="contour-rule" role="presentation"></div>
@@ -454,7 +480,7 @@ const schema = {
       </section>
     )}
 
-    {business.data.reviews.length > 0 && (
+    {!isChampion && business.data.reviews.length > 0 && (
       <section class="reviews-section" id="reviews-section">
         <div class="contour-rule" role="presentation"></div>
         <span class="eyebrow">What People Are Saying</span>
