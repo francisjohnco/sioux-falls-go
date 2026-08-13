@@ -18,5 +18,6 @@
     "title": "Home Watch Services in Sioux Falls",
     "description": "Find trusted home watch services in Sioux Falls, plus local guides and resources."
   },
-  "icon": "key"
+  "icon": "key",
+  "parentCategory": "home-services"
 }

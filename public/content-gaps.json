@@ -1,6 +1,16 @@
 {
-  "generatedAt": "2026-08-13T11:03:44.569Z",
+  "generatedAt": "2026-08-13T12:42:12.786Z",
   "categories": [
+    {
+      "slug": "food-retail",
+      "name": "Food & Retail",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
     {
       "slug": "explore-sioux-falls",
       "name": "Explore Sioux Falls",

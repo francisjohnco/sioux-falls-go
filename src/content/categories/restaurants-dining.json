@@ -20,5 +20,6 @@
     "title": "Restaurants & Dining in Sioux Falls",
     "description": "Find locally owned restaurants and dining spots in Sioux Falls, recommended by the community."
   },
-  "icon": "utensils"
+  "icon": "utensils",
+  "parentCategory": "food-retail"
 }

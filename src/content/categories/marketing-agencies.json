@@ -18,5 +18,6 @@
     "title": "Marketing Agencies in Sioux Falls",
     "description": "Find trusted marketing agencies in Sioux Falls, plus local guides and resources."
   },
-  "icon": "megaphone"
+  "icon": "megaphone",
+  "parentCategory": "professional-services"
 }

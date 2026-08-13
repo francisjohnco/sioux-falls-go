@@ -18,5 +18,6 @@
     "title": "Window Cleaning in Sioux Falls",
     "description": "Find trusted window cleaning in Sioux Falls, plus local guides and resources."
   },
-  "icon": "window"
+  "icon": "window",
+  "parentCategory": "home-services"
 }

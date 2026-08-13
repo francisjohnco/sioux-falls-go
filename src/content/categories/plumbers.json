@@ -21,5 +21,6 @@
     "title": "Plumbers in Sioux Falls",
     "description": "Find trusted plumbers in Sioux Falls, plus local guides and resources."
   },
-  "icon": "wrench"
+  "icon": "wrench",
+  "parentCategory": "home-services"
 }

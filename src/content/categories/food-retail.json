@@ -1,0 +1,22 @@
+{
+  "name": "Food & Retail",
+  "slug": "food-retail",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Food & Retail in Sioux Falls",
+    "description": "Find trusted local restaurants, coffee shops, and retail businesses in Sioux Falls, plus local guides and resources."
+  },
+  "icon": "shopping-bag"
+}
