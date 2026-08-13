@@ -17,12 +17,6 @@ const proGroups = PARENT_GROUPS.map((group) => {
   return { ...group, parentSlug: parent?.data.slug ?? group.slug, children };
 });
 
-const simpleLinks = [
-  { href: '/spotlight-giveaway', label: 'Giveaway' },
-  { href: '/local-deals', label: 'Local Deals' },
-  { href: '/guides', label: 'The Loop' },
-];
-
 const exploreItems = [
   { href: '/shopping-retail', label: 'Shopping', icon: 'M6 2l1.5 5h9L18 2M3 7h18l-1.5 13.5a1 1 0 0 1-1 .9H5.5a1 1 0 0 1-1-.9L3 7z' },
   { href: '/restaurants-dining', label: 'Places to Eat', icon: 'M3 2v20M3 7h4M21 15c-3 0-4-2-4-4V2v13c0 4-2 6-4 6' },
@@ -36,7 +30,9 @@ const exploreItems = [
     </a>
 
     <nav class="desktop-nav" aria-label="Primary">
-      <!-- EXPLORE SIOUX FALLS — split button -->
+      <a class="nav-secondary-link" href="/guides">The Loop</a>
+
+      <!-- EXPLORE SIOUX FALLS — split button, de-highlighted to plain text -->
       <div class="split-wrap">
         <div class="split-btn">
           <a href="/visit-sioux-falls" class="split-btn-main">Explore Sioux Falls</a>
@@ -56,13 +52,12 @@ const exploreItems = [
         </div>
       </div>
 
-      {simpleLinks.map((link) => (
-        <a class="nav-secondary-link" href={link.href}>{link.label}</a>
-      ))}
+      <a class="nav-secondary-link" href="/spotlight-giveaway">Giveaway</a>
+      <a class="nav-secondary-link" href="/local-deals">Local Deals</a>
 
-      <!-- LOCAL PROS — split button, mega-menu -->
+      <!-- LOCAL PROS — split button, mega-menu, de-highlighted to plain text -->
       <div class="split-wrap">
-        <div class="split-btn alt">
+        <div class="split-btn">
           <a href="/businesses" class="split-btn-main">Local Pros</a>
           <button class="split-btn-chev" id="pros-chev" aria-expanded="false" aria-label="Show local pro categories">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
@@ -171,18 +166,17 @@ const exploreItems = [
   .split-wrap { position: relative; }
   .split-btn {
     display: flex; align-items: stretch; border-radius: 999px; overflow: hidden;
-    background: var(--color-navy);
   }
-  .split-btn.alt { background: linear-gradient(120deg, var(--color-orange), var(--color-gold)); }
   .split-btn-main {
-    display: flex; align-items: center; padding: 0.55rem 0.8rem 0.55rem 1rem;
-    text-decoration: none; font-weight: 700; font-size: 0.9375rem; color: #fff;
+    display: flex; align-items: center; padding: 0.55rem 0.3rem 0.55rem 0.9rem;
+    text-decoration: none; font-weight: 700; font-size: 0.9375rem; color: var(--color-navy);
   }
+  .split-btn-main:hover { color: var(--color-orange); }
   .split-btn-chev {
-    display: flex; align-items: center; padding: 0.55rem 0.75rem; border: none;
-    background: rgba(0,0,0,0.14); cursor: pointer; color: #fff;
-    border-left: 1px solid rgba(255,255,255,0.25);
+    display: flex; align-items: center; padding: 0.55rem 0.6rem 0.55rem 0.2rem; border: none;
+    background: none; cursor: pointer; color: var(--color-navy);
   }
+  .split-btn-chev:hover { color: var(--color-orange); }
   .split-btn-chev svg { transition: transform 0.2s ease; }
   .split-btn-chev[aria-expanded="true"] svg { transform: rotate(180deg); }
 
