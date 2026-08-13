@@ -36,6 +36,42 @@ const spotlights = allArticles.filter(
 // "Verified" = we've confirmed this business's info recently — distinct from partnership tier
 const isVerified = !!business.data.verifiedAt;
 
+// Smart CTA — the button label and action change based on the business's
+// real category, instead of one generic "Get a Quote" for every industry.
+const TRADE_CATEGORIES = [
+  'plumbers', 'electricians', 'painters', 'lawn-care', 'local-tree-services',
+  'window-cleaning', 'flooring', 'home-watch-services', 'appliance-repair-service',
+  'cleaning-services', 'home-services',
+];
+const CONSULT_CATEGORIES = ['marketing-agencies', 'real-estate-agents', 'professional-services'];
+const MENU_CATEGORIES = ['restaurants-dining'];
+const DIRECTIONS_CATEGORIES = ['coffee-shops', 'shopping-retail'];
+
+function getSmartCTA(categorySlug: string, biz: typeof business.data) {
+  if (MENU_CATEGORIES.includes(categorySlug) && biz.website) {
+    return { label: 'View Menu', href: biz.website, external: true };
+  }
+  if (DIRECTIONS_CATEGORIES.includes(categorySlug)) {
+    const mapsHref = biz.latitude && biz.longitude
+      ? `https://maps.google.com/?q=${biz.latitude},${biz.longitude}`
+      : biz.address
+        ? `https://maps.google.com/?q=${encodeURIComponent(biz.address)}`
+        : null;
+    if (mapsHref) return { label: 'Get Directions', href: mapsHref, external: true };
+  }
+  if (CONSULT_CATEGORIES.includes(categorySlug)) {
+    return { label: 'Schedule a Consultation', href: '#quote-section', external: false };
+  }
+  // Trades and anything unmapped default to the quote form, the most broadly useful action
+  return { label: 'Get a Free Quote', href: '#quote-section', external: false };
+}
+const smartCTA = getSmartCTA(category.data.slug, business.data);
+
+// Featured testimonial — the first real review, if any exist, to give
+// immediate social proof right after the story instead of only at the
+// bottom of the page.
+const featuredReview = business.data.reviews[0] ?? null;
+
 // Related businesses — same category, excluding this one. Free tier only,
 // per the product decision: Champion profiles don't route attention away.
 const allBusinesses = await getCollection('businesses');
@@ -72,27 +108,33 @@ const schema = {
 
   {isChampion ? (
     <>
-      <div
-        class="champion-hero"
-        style={business.data.heroImage ? `background-image: linear-gradient(rgba(27,42,74,0.15),rgba(27,42,74,0.8)), url(${business.data.heroImage});` : undefined}
-      >
-        <div class="container champion-hero-inner">
-          <a href="/community-champion" class="champion-badge-link">
-            <img src="/images/community-champion-badge.png" alt="Community Champion badge — click to learn what this means" class="champion-badge-img" />
-          </a>
-          <div>
-            <div class="hero-badges">
-              {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
-              <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>
-            </div>
-            <h1>{business.data.name}</h1>
-            <div class="hero-meta">
-              {business.data.googleRating && (
-                <span class="rating-pill"><Icon name="star" size={13} class="filled-star" /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews) <span class="live-tag">LIVE</span></span>
-              )}
-              <span><a href={`/${category.data.slug}`} class="category-link">{category.data.name}</a></span>
-            </div>
+      <div class="champion-hero-v2">
+        <div class="champion-hero-glow"></div>
+        <div class="container champion-hero-inner-v2">
+          <div class="hero-badges">
+            {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
+            <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>
+            <span class="badge badge--category-plain">{category.data.name}</span>
           </div>
+          <h1>{business.data.name}</h1>
+        </div>
+      </div>
+
+      <div class="trust-bar">
+        <div class="container trust-bar-inner">
+          <div class="trust-stats">
+            {business.data.googleRating && (
+              <span class="trust-stat"><Icon name="star" size={14} class="filled-star" /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews)</span>
+            )}
+            {business.data.hoursSchedule && (
+              <p class="trust-stat open-now-indicator" id="open-now-indicator-trust" hidden></p>
+            )}
+          </div>
+          {smartCTA.external ? (
+            <a class="btn btn--primary" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
+          ) : (
+            <a class="btn btn--primary" href={smartCTA.href}>{smartCTA.label}</a>
+          )}
         </div>
       </div>
 
@@ -103,11 +145,28 @@ const schema = {
           <button class="tab" data-tab="specials" role="tab">Specials</button>
         </div>
 
-        <div class="champion-grid">
+        <div class="champion-grid-v2">
           <div class="champion-main">
             <div class="tab-panel is-active" data-panel="story">
-              {business.data.pullQuote && <blockquote class="pull-quote">"{business.data.pullQuote}"</blockquote>}
+              {business.data.pullQuote && <blockquote class="pull-quote-v2">"{business.data.pullQuote}"</blockquote>}
               <div class="prose"><Content /></div>
+
+              {featuredReview && (
+                <>
+                  <div class="testimonial-feature">
+                    <div class="review-stars">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Icon name="star" size={16} class={i < featuredReview.rating ? 'star-filled' : 'star-empty'} />
+                      ))}
+                    </div>
+                    <blockquote>"{featuredReview.text}"</blockquote>
+                    <cite>— {featuredReview.author}{featuredReview.date && `, ${featuredReview.date}`}</cite>
+                  </div>
+                  {business.data.reviews.length > 1 && (
+                    <a class="more-reviews-link" href="#reviews-section">Read all {business.data.reviews.length} reviews →</a>
+                  )}
+                </>
+              )}
             </div>
 
             <div class="tab-panel" data-panel="photos">
@@ -119,19 +178,35 @@ const schema = {
             </div>
           </div>
 
-          <aside class="champion-side">
+          <aside class="champion-side-v2">
             <div class="card contact-card">
+              {business.data.hoursSchedule && <p class="open-now-indicator" id="open-now-indicator" hidden></p>}
               <dl>
                 {business.data.address && business.data.showAddress && <><dt>Address</dt><dd>{business.data.address}</dd></>}
                 {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
                 {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
-                {business.data.hours
-                  ? <><dt>Hours</dt><dd>{business.data.hours}</dd></>
-                  : <><dt>Hours</dt><dd class="data-pending">Not listed yet</dd></>}
                 {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
               </dl>
-              <a class="button contact-cta" href="#">Contact Business</a>
+              {smartCTA.external ? (
+                <a class="button contact-cta" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
+              ) : (
+                <a class="button contact-cta" href={smartCTA.href}>{smartCTA.label}</a>
+              )}
             </div>
+
+            {business.data.hoursSchedule && (
+              <div class="card hours-card">
+                <h3>Hours</h3>
+                <div class="hours-table-v2" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)}>
+                  {daysOfWeek.map(({ key, label }) => (
+                    <div class="hours-row-v2" data-day={key}>
+                      <span class="hours-day">{label}</span>
+                      <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {spotlights.length > 0 && (
               <div class="spotlight-block">
@@ -147,7 +222,7 @@ const schema = {
           </aside>
         </div>
 
-        <section class="quote-section">
+        <section class="quote-section" id="quote-section">
           <div class="contour-rule" role="presentation"></div>
           <div class="quote-card">
             <div>
@@ -339,7 +414,7 @@ const schema = {
   )}
 
   <div class="container page-extras">
-    {business.data.hoursSchedule && (
+    {business.data.hoursSchedule && !isChampion && (
       <section class="hours-section">
         <div class="contour-rule" role="presentation"></div>
         <h2>Hours</h2>
@@ -369,7 +444,7 @@ const schema = {
     )}
 
     {business.data.reviews.length > 0 && (
-      <section class="reviews-section">
+      <section class="reviews-section" id="reviews-section">
         <div class="contour-rule" role="presentation"></div>
         <span class="eyebrow">What People Are Saying</span>
         <h2>Reviews</h2>
@@ -424,23 +499,30 @@ const schema = {
   .badge--champion-solid { background: var(--color-orange); color: #fff; }
   .hero-badges { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
 
-  /* Champion hero */
-  .champion-hero {
-    background:
-      radial-gradient(circle at 15% 20%, rgba(240,126,35,0.18), transparent 45%),
-      radial-gradient(circle at 85% 80%, rgba(255,255,255,0.06), transparent 50%),
-      linear-gradient(135deg, var(--color-navy) 0%, #131f38 100%);
-    background-size: cover; background-position: center; padding-block: var(--space-5);
-    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.06);
+  /* Champion hero v2 — gradient only, no photo, avoids any collision with a business's own logo/photo text */
+  .champion-hero-v2 {
+    position: relative; overflow: hidden; padding-block: var(--space-4);
+    background: linear-gradient(135deg, #16233d 0%, #2c3f61 55%, #3d5a85 100%);
   }
-  .champion-hero-inner { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
-  .champion-badge-link { flex-shrink: 0; }
-  .champion-badge-img { width: 6rem; height: 6rem; display: block; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.35)); transition: transform 0.2s ease; }
-  .champion-badge-link:hover .champion-badge-img { transform: scale(1.05) rotate(-3deg); }
-  .champion-hero h1 { color: #fff; margin: 0 0 0.4rem; }
-  .hero-meta { display: flex; gap: 1rem; color: rgba(255,255,255,0.85); font-size: 0.9375rem; flex-wrap: wrap; }
-  .rating-pill { background: rgba(255,255,255,0.15); padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); font-weight: 700; }
-  .live-tag { font-size: 0.625rem; background: #E7F6ED; color: var(--color-success); padding: 0.1rem 0.4rem; border-radius: var(--radius-pill); font-weight: 700; margin-left: 0.3rem; }
+  .champion-hero-glow {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 85% 20%, rgba(240,126,35,0.25), transparent 55%);
+  }
+  .champion-hero-inner-v2 { position: relative; z-index: 2; }
+  .champion-hero-v2 h1 { font-family: var(--font-display); font-size: 2.2rem; color: #fff; margin: 0; }
+  .badge--category-plain { background: rgba(255,255,255,0.15); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: var(--radius-pill); }
+
+  /* Trust bar — sticky, immediate real signals + the smart CTA */
+  .trust-bar { background: #fff; border-bottom: 1px solid var(--color-line); padding-block: 0.9rem; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 10px rgba(13,23,48,0.06); }
+  .trust-bar-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
+  .trust-stats { display: flex; gap: 1.3rem; flex-wrap: wrap; }
+  .trust-stat { display: flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; font-weight: 700; color: var(--color-navy); }
+  .trust-stat.open-now-indicator { padding: 0; background: none; }
+  .trust-stat.open-now-indicator.is-open { color: var(--color-success); }
+  .trust-stat.open-now-indicator.is-closed { color: #C0392B; }
+  .btn { padding: 0.7rem 1.3rem; border-radius: 0.6rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; display: inline-block; }
+  .btn--primary { background: var(--color-orange); color: #fff; }
+  .btn--primary:hover { background: var(--color-orange-dark); }
 
   .tabs { display: flex; gap: 1.5rem; border-bottom: 2px solid var(--color-line); margin-top: var(--space-3); overflow-x: auto; }
   .tab { background: none; border: none; padding-bottom: 0.65rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy-light); border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; transition: color 0.15s ease, border-color 0.15s ease; }
@@ -451,10 +533,22 @@ const schema = {
   @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
   .empty-note { color: var(--color-navy-light); font-style: italic; }
 
-  .champion-grid { display: grid; grid-template-columns: 1fr 18rem; gap: var(--space-4); margin-top: var(--space-3); }
-  @media (max-width: 45rem) { .champion-grid { grid-template-columns: 1fr; } }
+  /* Wider sidebar (18rem -> 22rem) */
+  .champion-grid-v2 { display: grid; grid-template-columns: 1fr 22rem; gap: var(--space-4); margin-top: var(--space-3); align-items: start; }
+  @media (max-width: 45rem) { .champion-grid-v2 { grid-template-columns: 1fr; } }
 
-  .pull-quote { font-family: var(--font-display); font-size: 1.25rem; color: var(--color-navy); border-left: 4px solid var(--color-orange); padding-left: 1rem; margin: 0 0 var(--space-2); font-weight: 500; }
+  .pull-quote-v2 {
+    font-family: var(--font-display); font-size: 1.375rem; font-style: italic; color: var(--color-navy);
+    line-height: 1.45; margin: 0 0 var(--space-3); position: relative; padding-left: 1.8rem;
+  }
+  .pull-quote-v2::before { content: '"'; position: absolute; left: -0.4rem; top: -0.8rem; font-size: 3.2rem; color: var(--color-orange); opacity: 0.3; font-family: var(--font-display); }
+
+  /* Featured testimonial — real first review, styled as an editorial callout instead of a plain card */
+  .testimonial-feature { background: var(--color-navy); color: #fff; border-radius: var(--radius); padding: var(--space-3); margin-top: var(--space-3); text-align: center; }
+  .testimonial-feature .review-stars { justify-content: center; margin-bottom: 0.7rem; }
+  .testimonial-feature blockquote { font-family: var(--font-display); font-size: 1.15rem; font-style: italic; margin: 0 0 0.7rem; line-height: 1.5; }
+  .testimonial-feature cite { font-style: normal; font-size: 0.8125rem; color: rgba(255,255,255,0.7); }
+  .more-reviews-link { display: block; text-align: center; margin-top: 0.7rem; font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 
   .contact-card { box-shadow: 0 2px 8px rgba(27,42,74,0.06); }
   .contact-card dl { margin: 0; }
@@ -463,6 +557,20 @@ const schema = {
   .contact-card dd { margin: 0.2rem 0 0; font-weight: 600; }
   .data-pending { font-weight: 400; font-style: italic; color: var(--color-navy-light); }
   .contact-cta { display: block; text-align: center; margin-top: var(--space-2); }
+  .contact-card .open-now-indicator { display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.8rem; font-weight: 700; font-size: 0.8125rem; padding: 0.35rem 0.75rem; border-radius: var(--radius-pill); }
+  .contact-card .open-now-indicator.is-open { background: #E7F6ED; color: var(--color-success); }
+  .contact-card .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
+
+  /* Full day-by-day hours, now living in the sidebar instead of a separate lower section */
+  .hours-card h3 { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-navy-light); margin-bottom: 0.7rem; }
+  .hours-table-v2 { display: flex; flex-direction: column; }
+  .hours-row-v2 { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.8438rem; border-top: 1px solid var(--color-line); }
+  .hours-row-v2:first-child { border-top: none; }
+  .hours-row-v2.is-today { font-weight: 700; color: var(--color-orange-dark); }
+  .hours-row-v2 .hours-day { color: var(--color-navy); }
+  .hours-row-v2.is-today .hours-day { color: var(--color-orange-dark); }
+  .hours-row-v2 .hours-time { color: var(--color-navy-light); font-weight: 600; }
+  .hours-row-v2.is-today .hours-time { color: var(--color-orange-dark); }
 
   .spotlight-block { margin-top: var(--space-3); }
   .spotlight-block h3 { font-size: 1rem; margin-bottom: 0.5rem; }
@@ -630,7 +738,8 @@ const schema = {
   // Live open/closed indicator, computed from the real hoursSchedule data
   const hoursTable = document.getElementById('hours-table');
   const indicator = document.getElementById('open-now-indicator');
-  if (hoursTable && indicator) {
+  const trustIndicator = document.getElementById('open-now-indicator-trust');
+  if (hoursTable && (indicator || trustIndicator)) {
     const schedule = JSON.parse(hoursTable.dataset.hours || '{}');
     const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     const now = new Date();
@@ -652,19 +761,24 @@ const schema = {
       return d;
     }
 
+    function setIndicator(text: string, isOpen: boolean) {
+      [indicator, trustIndicator].forEach((el) => {
+        if (!el) return;
+        el.textContent = text;
+        el.classList.add(isOpen ? 'is-open' : 'is-closed');
+        el.hidden = false;
+      });
+    }
+
     if (!todayHours || /closed/i.test(todayHours)) {
-      indicator.textContent = 'Closed today';
-      indicator.classList.add('is-closed');
-      indicator.hidden = false;
+      setIndicator('Closed today', false);
     } else {
       const [openStr, closeStr] = todayHours.split('-').map((s: string) => s.trim());
       const openTime = parseTime(openStr, now);
       const closeTime = parseTime(closeStr, now);
       if (openTime && closeTime) {
         const isOpen = now >= openTime && now <= closeTime;
-        indicator.textContent = isOpen ? `Open now — closes ${closeStr}` : `Closed now — opens ${openStr}`;
-        indicator.classList.add(isOpen ? 'is-open' : 'is-closed');
-        indicator.hidden = false;
+        setIndicator(isOpen ? `Open now — closes ${closeStr}` : `Closed now — opens ${openStr}`, isOpen);
       }
     }
   }
