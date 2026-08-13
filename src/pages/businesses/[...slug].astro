@@ -117,6 +117,7 @@ const schema = {
             <span class="badge badge--category-plain">{category.data.name}</span>
           </div>
           <h1>{business.data.name}</h1>
+          <p class="hero-tagline">A Sioux Falls story of trust and real growth.</p>
         </div>
       </div>
 
@@ -173,7 +174,7 @@ const schema = {
                     <cite>— {featuredReview.author}{featuredReview.date && `, ${featuredReview.date}`}</cite>
                   </div>
                   {business.data.reviews.length > 1 && (
-                    <a class="more-reviews-link" href="#reviews-section">Read all {business.data.reviews.length} reviews →</a>
+                    <a class="more-reviews-link" href="#reviews-section">See more reviews ↓</a>
                   )}
                 </>
               )}
@@ -459,7 +460,7 @@ const schema = {
         <span class="eyebrow">What People Are Saying</span>
         <h2>Reviews</h2>
         <div class="reviews-grid">
-          {business.data.reviews.map((review) => (
+          {business.data.reviews.slice(0, 3).map((review) => (
             <div class="review-card">
               <div class="review-stars">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -471,6 +472,11 @@ const schema = {
             </div>
           ))}
         </div>
+        {business.data.placeId && (
+          <a class="view-more-google" href={`https://www.google.com/maps/place/?q=place_id:${business.data.placeId}`} target="_blank" rel="nofollow noopener">
+            View more reviews on Google ↗
+          </a>
+        )}
       </section>
     )}
 
@@ -511,7 +517,7 @@ const schema = {
 
   /* Champion hero v2 — gradient only, no photo, avoids any collision with a business's own logo/photo text */
   .champion-hero-v2 {
-    position: relative; overflow: hidden; padding-block: 4.5rem; min-height: 16rem;
+    position: relative; overflow: hidden; padding-block: 4.5rem; min-height: 32rem;
     display: flex; align-items: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 55%, #3d5a85 100%);
   }
@@ -521,6 +527,7 @@ const schema = {
   }
   .champion-hero-inner-v2 { width: 100%; position: relative; z-index: 2; }
   .champion-hero-v2 h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2.8rem; color: #fff; margin: 0; }
+  .hero-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.0625rem; color: rgba(255,255,255,0.85); margin: 0.6rem 0 0; }
   .badge--category-plain { background: rgba(255,255,255,0.15); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: var(--radius-pill); }
 
   /* Trust bar — sticky, immediate real signals + the smart CTA */
@@ -704,6 +711,11 @@ const schema = {
   .gallery-item { height: 9rem; border-radius: var(--radius); background-size: cover; background-position: center; background-color: var(--color-surface); }
 
   .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
+  .view-more-google {
+    display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--space-3);
+    font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark); text-decoration: none;
+  }
+  .view-more-google:hover { text-decoration: underline; }
   .review-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
   .review-stars { display: flex; gap: 0.15rem; margin-bottom: 0.6rem; }
   :global(.star-filled) { fill: var(--color-gold); color: var(--color-gold); }
