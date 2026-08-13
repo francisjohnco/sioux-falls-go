@@ -1,0 +1,241 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const allArticles = await getCollection('articles');
+
+// Top 3 travel articles for visitors — the two dedicated "explore Sioux
+// Falls" pieces plus the strongest visitor-specific pick, real content only.
+const travelSlugs = [
+  'the-best-free-things-to-do-in-sioux-falls',
+  'top-10-reasons-sioux-falls-should-be-on-your-must-visit-list',
+  'where-to-eat-downtown-sioux-falls-visitors',
+];
+const travelArticles = travelSlugs
+  .map((slug) => allArticles.find((a) => a.id === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Visit Sioux Falls',
+  description: "Experience Sioux Falls like a local — where to eat, stay, shop, and explore.",
+};
+---
+<BaseLayout
+  title="Visit Sioux Falls"
+  description="Experience Sioux Falls like a local — where to eat, stay, shop, and explore. Real events, real guides, real local favorites."
+  canonicalPath="/visit-sioux-falls"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">Visitor's Corner</span>
+        <h1>Experience Sioux Falls Like a Local</h1>
+        <p>From secret spots to city favorites — discover where to eat, stay, and play. Whether it's your first visit or your fiftieth, there's always something new.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="bento-wrap"><div class="container">
+    <div class="bento-head">
+      <span class="eyebrow">Start Exploring</span>
+      <h2>Where To Begin</h2>
+    </div>
+
+    <div class="bento-grid">
+      <a class="bento-card bento-card--events" href="/events">
+        <div class="bento-photo" style="background-image:url('/images/scenic/levitt-concert-center.jpg')"></div>
+        <div class="bento-scrim"></div>
+        <div class="bento-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="bento-content">
+          <span class="bento-tag">Live &amp; Real</span>
+          <h3>Events This Week</h3>
+          <p>Concerts, markets, and festivals — pulled from the real local calendar.</p>
+        </div>
+      </a>
+
+      <a class="bento-card bento-card--eat" href="/restaurants-dining">
+        <div class="bento-photo" style="background-image:url('/images/businesses/shahi-india-grill.jpeg')"></div>
+        <div class="bento-scrim"></div>
+        <div class="bento-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="bento-content">
+          <span class="bento-tag">Eat &amp; Drink</span>
+          <h3>Local Restaurants</h3>
+        </div>
+      </a>
+
+      <a class="bento-card bento-card--shop" href="/shopping-retail">
+        <div class="bento-photo" style="background: linear-gradient(135deg, #7B4FA0, #A66BC9);"></div>
+        <div class="bento-scrim"></div>
+        <div class="bento-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="bento-content">
+          <span class="bento-tag">Shop</span>
+          <h3>Local Makers</h3>
+        </div>
+      </a>
+
+      <div class="bento-card bento-card--stay bento-card--soon">
+        <div class="bento-photo" style="background: linear-gradient(135deg, #2E6F9E, #4a8fc4);"></div>
+        <div class="bento-scrim"></div>
+        <div class="bento-badge-soon">Coming Soon</div>
+        <div class="bento-content">
+          <span class="bento-tag">Stay</span>
+          <h3>Places to Stay</h3>
+        </div>
+      </div>
+
+      <a class="bento-card bento-card--explore" href="/guides">
+        <div class="bento-photo" style="background-image:url('/images/scenic/falls-park-1.jpg')"></div>
+        <div class="bento-scrim"></div>
+        <div class="bento-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="bento-content">
+          <span class="bento-tag">Explore</span>
+          <h3>Free Things to Do &amp; Travel Guides</h3>
+          <p>Real, local-written guides from The Loop.</p>
+        </div>
+      </a>
+    </div>
+  </div></div>
+
+  {travelArticles.length > 0 && (
+    <div class="travel-wrap"><div class="container">
+      <div class="bento-head">
+        <span class="eyebrow">Explore Sioux Falls</span>
+        <h2>Travel Articles</h2>
+      </div>
+      <div class="travel-grid">
+        {travelArticles.map((article) => (
+          <a class="travel-card" href={`/guides/${article.id}`}>
+            <div class="travel-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}></div>
+            <div class="travel-card-body">
+              <span class="travel-tag">Travel Guide</span>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.seo.description}</p>
+              <span class="travel-read-more">Read more →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div></div>
+  )}
+
+  <section class="about-section">
+    <div class="about-photo" style="background-image:url('/images/stock/cathedral.jpg')"></div>
+    <div class="about-overlay"></div>
+    <div class="container">
+      <div class="about-content">
+        <span class="eyebrow">Sioux Falls, SD</span>
+        <h2>About Sioux Falls</h2>
+        <p>Welcome to Sioux Falls — a city that feels as genuine as the people who call it home. From charming local shops and family-run restaurants to trails, galleries, and live music venues, every corner of Sioux Falls tells a story worth exploring.</p>
+        <p>Stroll through Falls Park, unwind at the Butterfly House &amp; Marine Cove, or discover the local energy of downtown. Whether you're visiting for a weekend or settling in for good, you'll find a community that welcomes you like family.</p>
+        <div class="about-divider"></div>
+        <h3>What makes this guide different?</h3>
+        <p>SiouxFallsGo.com goes beyond lists and ratings. We spotlight locally loved places, community events, and the stories behind the businesses that make Sioux Falls special. It's more than where to go — it's how to experience Sioux Falls like a local.</p>
+      </div>
+    </div>
+  </section>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .container { max-width: 76rem; margin-inline: auto; padding-inline: var(--space-3); }
+  .eyebrow { color: var(--color-orange); font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .hero { position: relative; min-height: 26rem; display: flex; align-items: center; overflow: hidden; }
+  .hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/downtown-2.jpg') center/cover; animation: vh-kb 26s ease-in-out infinite alternate; }
+  @keyframes vh-kb { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.85) 0%, rgba(13,23,48,0.5) 55%, rgba(13,23,48,0.2) 100%); }
+  .hero-content { position: relative; z-index: 2; padding-block: 4rem; color: #fff; max-width: 42rem; }
+  .hero-content h1 { font-family: var(--font-display); font-size: 3rem; line-height: 1.12; margin: 0.6rem 0 1rem; color: #fff; }
+  .hero-content p { font-size: 1.125rem; color: rgba(255,255,255,0.9); }
+
+  .bento-wrap { padding-block: 3.5rem; }
+  .bento-head { text-align: center; margin-bottom: 2rem; }
+  .bento-head h2 { font-family: var(--font-display); font-size: 2rem; color: var(--color-navy); margin-top: 0.5rem; }
+
+  .bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: 14rem 14rem; gap: 1.2rem; }
+  .bento-card {
+    position: relative; border-radius: 1.3rem; overflow: hidden; text-decoration: none;
+    display: flex; align-items: flex-end; box-shadow: 0 4px 16px rgba(13,23,48,0.08);
+    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s ease;
+  }
+  .bento-card:not(.bento-card--soon):hover { transform: translateY(-6px); box-shadow: 0 24px 44px rgba(13,23,48,0.22); }
+  .bento-card--eat { grid-column: span 2; grid-row: span 1; }
+  .bento-card--events { grid-column: span 2; grid-row: span 2; }
+  .bento-card--shop { grid-column: span 1; grid-row: span 1; }
+  .bento-card--stay { grid-column: span 1; grid-row: span 1; }
+  .bento-card--explore { grid-column: span 2; grid-row: span 1; }
+  .bento-card--soon { cursor: default; }
+
+  .bento-photo { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.5s ease; }
+  .bento-card:hover .bento-photo { transform: scale(1.06); }
+  .bento-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,23,48,0) 40%, rgba(13,23,48,0.85) 100%); }
+  .bento-content { position: relative; z-index: 2; padding: 1.4rem; color: #fff; width: 100%; }
+  .bento-tag {
+    display: inline-block; background: rgba(255,255,255,0.18); backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.3); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.03em; padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.6rem;
+  }
+  .bento-content h3 { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.2; color: #fff; }
+  .bento-card--events h3 { font-size: 1.7rem; }
+  .bento-content p { font-size: 0.875rem; color: rgba(255,255,255,0.85); margin-top: 0.4rem; }
+  .bento-arrow {
+    position: absolute; top: 1.2rem; right: 1.2rem; width: 2.2rem; height: 2.2rem; border-radius: 50%;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center; color: #fff; z-index: 2;
+    transition: background 0.2s ease;
+  }
+  .bento-card:hover .bento-arrow { background: var(--color-orange); border-color: var(--color-orange); }
+  .bento-badge-soon {
+    position: absolute; top: 1.2rem; left: 1.2rem; background: var(--color-gold); color: var(--color-navy);
+    font-size: 0.6875rem; font-weight: 800; text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 999px; z-index: 3;
+  }
+  @media (max-width: 55rem) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+    .bento-card--eat, .bento-card--events, .bento-card--explore { grid-column: span 2; }
+  }
+
+  /* TRAVEL ARTICLES */
+  .travel-wrap { padding-block: 3.5rem; background: var(--color-surface); }
+  .travel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 55rem) { .travel-grid { grid-template-columns: 1fr; } }
+  .travel-card {
+    display: block; background: #fff; border-radius: 1.1rem; overflow: hidden; text-decoration: none;
+    box-shadow: 0 4px 16px rgba(13,23,48,0.06); transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .travel-card:hover { transform: translateY(-5px); box-shadow: 0 20px 36px rgba(13,23,48,0.14); }
+  .travel-card-media { height: 12rem; background-size: cover; background-position: center; background-color: var(--color-navy); }
+  .travel-card-body { padding: 1.3rem 1.4rem 1.5rem; }
+  .travel-tag { display: inline-block; color: var(--color-orange-dark); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+  .travel-card-body h3 { font-family: var(--font-display); font-size: 1.1875rem; color: var(--color-navy); line-height: 1.3; margin-bottom: 0.5rem; }
+  .travel-card-body p { font-size: 0.875rem; color: var(--color-navy-light); line-height: 1.5; margin: 0 0 0.9rem; }
+  .travel-read-more { font-weight: 700; font-size: 0.8438rem; color: var(--color-orange-dark); }
+
+  /* ABOUT SECTION */
+  .about-section { position: relative; overflow: hidden; padding-block: 4.5rem; }
+  .about-photo { position: absolute; inset: 0; background-size: cover; background-position: center 30%; }
+  .about-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.92) 0%, rgba(13,23,48,0.78) 55%, rgba(13,23,48,0.6) 100%); }
+  .about-content { position: relative; z-index: 2; color: #fff; max-width: 42rem; }
+  .about-content h2 { font-family: var(--font-display); font-size: 2.2rem; color: #fff; margin: 0.5rem 0 1.2rem; }
+  .about-content h3 { font-family: var(--font-display); font-size: 1.3rem; color: #fff; margin-bottom: 0.8rem; }
+  .about-content p { font-size: 1.0625rem; line-height: 1.65; color: rgba(255,255,255,0.88); margin: 0 0 1.1rem; }
+  .about-divider { width: 3rem; height: 3px; background: var(--color-orange); border-radius: 2px; margin: 1.8rem 0 1.6rem; }
+</style>
