@@ -21,6 +21,27 @@ hoursSchedule:
   sun: "Closed"
 latitude: 43.524902
 longitude: -96.750074
+reviews:
+  - author: "Ryan Jurrens"
+    rating: 5
+    text: "Francis was very professional, knowledgeable, and wanted what was best for me and my business. He did not pressure me into a product I didn’t want or feel comfortable with."
+    date: "3 months ago"
+  - author: "denis kilimnik"
+    rating: 5
+    text: "Francis was professional and friendly. He thoroughly explained his services and gave me different options. I did not feel pressured, and I would recommend checking them out."
+    date: "4 months ago"
+  - author: "Corey Thorson"
+    rating: 5
+    text: "Francis was very knowledgeable. He took the time to go over everything and explain in detail how everything works.  It was a pleasure working with him."
+    date: "4 months ago"
+  - author: "Daniel Brunz"
+    rating: 5
+    text: "Francis was super helpful in helping me identify best ways to optimize my Google ranking!"
+    date: "3 months ago"
+  - author: "eli K"
+    rating: 5
+    text: "It was great working with Francis! He knows how to help get your business on the map!"
+    date: "5 months ago"
 ---
 
 ## **Marketing Services in Sioux Falls That Help Your Business Get Found and Grow**
