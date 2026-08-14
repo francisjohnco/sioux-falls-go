@@ -1,5 +1,7 @@
 ---
 name: "SAJMedia Marketing"
+googleReviewCount: 9
+googleRating: 5
 category: "marketing-agencies"
 placeId: "ChIJkdQmp43LjocRswPLmOq_5h8"
 heroImage: "/images/businesses/sajmedia-marketing.png"
