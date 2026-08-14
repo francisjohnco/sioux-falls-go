@@ -26,6 +26,21 @@ function yamlEscape(str: string): string {
   return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
 
+function setScalarField(frontmatter: string, field: string, value: string | number): string {
+  const lines = frontmatter.split('\n');
+  const idx = lines.findIndex((l) => l.match(new RegExp(`^${field}:`)));
+  const newLine = `${field}: ${value}`;
+  if (idx === -1) {
+    // Insert near the top, right after the name field, so it's easy to find when eyeballing the file
+    const nameIdx = lines.findIndex((l) => l.match(/^name:/));
+    const insertAt = nameIdx === -1 ? 0 : nameIdx + 1;
+    lines.splice(insertAt, 0, newLine);
+  } else {
+    lines[idx] = newLine;
+  }
+  return lines.join('\n');
+}
+
 function setReviewsBlock(frontmatter: string, reviews: GoogleReview[]): string {
   const lines = frontmatter.split('\n');
   const startIdx = lines.findIndex((l) => l.match(/^reviews:/));
@@ -66,14 +81,21 @@ async function syncOneBusiness(
 ): Promise<{ slug: string; status: 'updated' | 'no-reviews' | 'error'; detail?: string }> {
   try {
     const placesRes = await fetch(
-      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=reviews&key=${apiKey}`
+      `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=reviews,rating,user_ratings_total&key=${apiKey}`
     );
     const placesData = await placesRes.json();
     if (placesData.status !== 'OK') {
       return { slug, status: 'error', detail: `Google API status: ${placesData.status}` };
     }
     const reviews: GoogleReview[] = placesData.result?.reviews || [];
-    if (reviews.length === 0) {
+    const rating: number | undefined = placesData.result?.rating;
+    const reviewCount: number | undefined = placesData.result?.user_ratings_total;
+
+    // A business can have a real rating/count even if Google's API happens
+    // to return zero individual reviews in this particular response (it
+    // only returns up to 5, and which 5 can vary) — so only bail out
+    // entirely if there's truly nothing at all to write.
+    if (reviews.length === 0 && rating === undefined) {
       return { slug, status: 'no-reviews' };
     }
 
@@ -82,7 +104,13 @@ async function syncOneBusiness(
     const fileData = await getRes.json();
     const currentRaw = Buffer.from(fileData.content, 'base64').toString('utf-8');
     const { frontmatter, body } = parseFrontmatter(currentRaw);
-    const updatedFrontmatter = setReviewsBlock(frontmatter, reviews.slice(0, 5));
+    let updatedFrontmatter = setReviewsBlock(frontmatter, reviews.slice(0, 5));
+    if (rating !== undefined) {
+      updatedFrontmatter = setScalarField(updatedFrontmatter, 'googleRating', rating);
+    }
+    if (reviewCount !== undefined) {
+      updatedFrontmatter = setScalarField(updatedFrontmatter, 'googleReviewCount', reviewCount);
+    }
     const newRaw = `---\n${updatedFrontmatter}\n---\n${body}`;
 
     const putRes = await fetch(apiUrl, {
