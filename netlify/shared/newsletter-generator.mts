@@ -44,34 +44,43 @@ async function getRecentArticles(sinceDate: Date | null): Promise<ArticleSummary
   const files: { name: string; path: string }[] = await listRes.json();
 
   const articles: ArticleSummary[] = [];
-  // Only inspect the most recently-modified files, not all 98+ — GitHub's
-  // list endpoint doesn't sort by date, so pull a reasonable batch and
-  // filter by the actual publishedAt frontmatter after reading each one.
   const mdFiles = files.filter((f) => f.name.endsWith('.md'));
 
-  for (const file of mdFiles) {
-    const contentRes = await fetch(
-      `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${file.path}`,
-      { headers }
-    );
-    if (!contentRes.ok) continue;
-    const data = await contentRes.json();
-    const raw = Buffer.from(data.content, 'base64').toString('utf-8');
+  // Fetch all article contents in parallel rather than one at a time —
+  // ~98 sequential round-trips risked exceeding Netlify's function
+  // execution timeout, which would silently produce an empty article
+  // list with no visible error. GitHub allows up to 100 concurrent
+  // requests, so fetching the whole batch at once is safely within that.
+  const results = await Promise.all(
+    mdFiles.map(async (file) => {
+      const contentRes = await fetch(
+        `${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${file.path}`,
+        { headers }
+      );
+      if (!contentRes.ok) return null;
+      const data = await contentRes.json();
+      const raw = Buffer.from(data.content, 'base64').toString('utf-8');
 
-    const titleMatch = raw.match(/^title:\s*"(.+?)"\s*$/m);
-    const descMatch = raw.match(/description:\s*"(.+?)"\s*$/m);
-    const dateMatch = raw.match(/publishedAt:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
-    if (!titleMatch || !dateMatch) continue;
+      const titleMatch = raw.match(/^title:\s*"(.+?)"\s*$/m);
+      // Real articles nest description under seo:, not as a top-level field
+      const descMatch = raw.match(/^\s*description:\s*"(.+?)"\s*$/m);
+      const dateMatch = raw.match(/publishedAt:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
+      if (!titleMatch || !dateMatch) return null;
 
-    const publishDate = new Date(dateMatch[1]);
-    if (sinceDate && publishDate <= sinceDate) continue;
+      const publishDate = new Date(dateMatch[1]);
+      if (sinceDate && publishDate <= sinceDate) return null;
 
-    articles.push({
-      title: titleMatch[1],
-      description: descMatch?.[1] || '',
-      slug: file.name.replace(/\.md$/, ''),
-      date: dateMatch[1],
-    });
+      return {
+        title: titleMatch[1],
+        description: descMatch?.[1] || '',
+        slug: file.name.replace(/\.md$/, ''),
+        date: dateMatch[1],
+      };
+    })
+  );
+
+  for (const r of results) {
+    if (r) articles.push(r);
   }
 
   return articles.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
