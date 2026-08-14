@@ -19,6 +19,18 @@ export default async (req: Request) => {
 
   const siteUrl = process.env.URL || process.env.DEPLOY_URL;
   const redirectUri = `${siteUrl}/api/gsc-auth-callback`;
+
+  // Temporary debug mode — visit gsc-auth-start?debug=1 to see the exact
+  // redirect_uri our code sends, for comparing character-by-character
+  // against what's registered in Google Cloud Console. No secrets exposed.
+  const reqUrl = new URL(req.url);
+  if (reqUrl.searchParams.get('debug') === '1') {
+    return new Response(JSON.stringify({ siteUrl, redirectUri }, null, 2), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   const state = crypto.randomBytes(16).toString('hex');
 
   const params = new URLSearchParams({
