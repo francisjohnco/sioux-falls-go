@@ -17,6 +17,38 @@ try {
 } catch {
   // fall back to defaults if the file can't be read at build time
 }
+
+// Real dashboard stats — computed from actual content, not hardcoded
+const championCount = businesses.filter((b) => b.data.partnershipTier === 'community-champion').length;
+const giveBackCount = businesses.filter(
+  (b) => b.data.partnershipTier === 'community-champion' || b.data.partnershipTier === 'community-listing'
+).length;
+const allArticles = await getCollection('articles');
+
+// Real "needs attention" list — actual data gaps, not a fake activity log.
+// This is more honest and more useful than a fabricated event feed would
+// be: there's no real audit trail in this static-site architecture, so a
+// "Recent Activity" feed would have to be fake. This tells you what to
+// actually do instead of pretending to show you what happened.
+const missingPlaceId = businesses.filter((b) => !b.data.placeId);
+const missingHours = businesses.filter((b) => !b.data.hoursSchedule);
+const missingReviews = businesses.filter((b) => b.data.reviews.length === 0);
+
+let topContentGap: { name: string; priorityScore: number } | null = null;
+try {
+  const fs = await import('node:fs/promises');
+  const raw = await fs.readFile(new URL('../../../public/content-gaps.json', import.meta.url), 'utf-8');
+  const gaps = JSON.parse(raw);
+  const sorted = gaps.categories.filter((c: any) => c.priorityScore > 0).sort((a: any, b: any) => b.priorityScore - a.priorityScore);
+  if (sorted.length > 0) topContentGap = sorted[0];
+} catch {
+  // content-gaps.json is generated at build time — if it's not there yet, just skip this insight
+}
+
+const FREQUENCY_DAYS: Record<string, number> = { weekly: 7, biweekly: 14, monthly: 30 };
+const newsletterOverdue = newsletterConfig.lastGeneratedAt
+  ? (Date.now() - new Date(newsletterConfig.lastGeneratedAt).getTime()) / (1000 * 60 * 60 * 24) > (FREQUENCY_DAYS[newsletterConfig.frequency] ?? 7)
+  : true;
 ---
 <BaseLayout
   title="Admin — Sioux Falls Go"
@@ -60,29 +92,55 @@ try {
 
         <div class="stat-grid">
           <div class="stat-card">
-            <span class="stat-number">3</span>
-            <span class="stat-label">New Applications</span>
-          </div>
-          <div class="stat-card stat-card--accent">
-            <span class="stat-number">2</span>
-            <span class="stat-label">Drafts Awaiting Review</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-number">17</span>
+            <span class="stat-number">{businesses.length}</span>
             <span class="stat-label">Businesses Live</span>
           </div>
+          <div class="stat-card stat-card--accent">
+            <span class="stat-number">{championCount}</span>
+            <span class="stat-label">Community Champions</span>
+          </div>
           <div class="stat-card">
-            <span class="stat-number">1</span>
-            <span class="stat-label">Active Giveaway</span>
+            <span class="stat-number">{giveBackCount}</span>
+            <span class="stat-label">Give Back Partners</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{allArticles.length}</span>
+            <span class="stat-label">Articles &amp; Guides</span>
           </div>
         </div>
 
-        <h2 class="section-heading">Recent Activity</h2>
+        <h2 class="section-heading">Needs Your Attention</h2>
         <ul class="activity-list">
-          <li><span class="activity-dot"></span> <strong>605 Drain Solutions</strong> interview completed — draft ready for review <time>2h ago</time></li>
-          <li><span class="activity-dot activity-dot--new"></span> New application: <strong>Uptown Nail Studio</strong> <time>5h ago</time></li>
-          <li><span class="activity-dot"></span> <strong>Spring Giveaway</strong> passed 100 entries <time>1d ago</time></li>
-          <li><span class="activity-dot"></span> <strong>SAJMedia Marketing</strong> profile updated <time>2d ago</time></li>
+          {missingPlaceId.length > 0 && (
+            <li>
+              <span class="activity-dot activity-dot--new"></span>
+              <strong>{missingPlaceId.length} business{missingPlaceId.length === 1 ? '' : 'es'}</strong> missing a Google Place ID — reviews can't sync until it's set
+              <a href="/admin?tab=directory" class="attention-link">Fix in Directory →</a>
+            </li>
+          )}
+          {missingHours.length > 0 && (
+            <li>
+              <span class="activity-dot"></span>
+              <strong>{missingHours.length} business{missingHours.length === 1 ? '' : 'es'}</strong> missing real hours — showing "Not listed" on their profile
+            </li>
+          )}
+          {topContentGap && (
+            <li>
+              <span class="activity-dot activity-dot--new"></span>
+              <strong>{topContentGap.name}</strong> is your highest-priority content gap right now
+              <a href="/admin?tab=content-engine" class="attention-link">Open Content Engine →</a>
+            </li>
+          )}
+          {newsletterOverdue && (
+            <li>
+              <span class="activity-dot"></span>
+              Newsletter is overdue for a {newsletterConfig.frequency} draft
+              <a href="/admin?tab=newsletter" class="attention-link">Generate one →</a>
+            </li>
+          )}
+          {missingPlaceId.length === 0 && missingHours.length === 0 && !topContentGap && !newsletterOverdue && (
+            <li><span class="activity-dot"></span> Nothing urgent right now — everything's covered.</li>
+          )}
         </ul>
       </section>
 
@@ -389,6 +447,8 @@ try {
   .activity-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-line); flex-shrink: 0; }
   .activity-dot--new { background: var(--color-orange); }
   .activity-list time { margin-left: auto; font-size: 0.8125rem; color: var(--color-navy-light); white-space: nowrap; }
+  .attention-link { margin-left: auto; font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; white-space: nowrap; }
+  .attention-link:hover { text-decoration: underline; }
 
   /* Content Engine */
   .gsc-widget { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-top: var(--space-2); }
