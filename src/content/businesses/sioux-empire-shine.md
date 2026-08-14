@@ -1,6 +1,14 @@
 ---
 name: "Sioux Empire Shine"
 category: "window-cleaning"
+hoursSchedule:
+  mon: "7:00 AM - 9:00 PM"
+  tue: "7:00 AM - 9:00 PM"
+  wed: "7:00 AM - 9:00 PM"
+  thu: "7:00 AM - 9:00 PM"
+  fri: "7:00 AM - 9:00 PM"
+  sat: "7:00 AM - 5:00 PM"
+  sun: "7:00 AM - 9:00 PM"
 heroImage: "/images/businesses/sioux-empire-shine.jpg"
 verifiedAt: 2026-07-29
 claimed: true

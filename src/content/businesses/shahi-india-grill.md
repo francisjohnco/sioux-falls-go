@@ -1,6 +1,7 @@
 ---
 name: "Shahi India Grill"
 category: "restaurants-dining"
+showAddress: true
 verifiedAt: 2026-07-29
 claimed: false
 heroImage: "/images/businesses/shahi-india-grill.jpeg"

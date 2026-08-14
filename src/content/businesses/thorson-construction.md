@@ -1,6 +1,14 @@
 ---
 name: "Thorson Construction"
 category: "home-services"
+hoursSchedule:
+  mon: "6:00 AM - 9:00 PM"
+  tue: "6:00 AM - 9:00 PM"
+  wed: "6:00 AM - 9:00 PM"
+  thu: "6:00 AM - 9:00 PM"
+  fri: "6:00 AM - 9:00 PM"
+  sat: "6:00 AM - 9:00 PM"
+  sun: "6:00 AM - 9:00 PM"
 heroImage: "/images/businesses/thorson-construction.jpg"
 verifiedAt: 2026-07-29
 claimed: true

@@ -1,6 +1,14 @@
 ---
 name: "Animalwisedco"
 category: "shopping-retail"
+hoursSchedule:
+  mon: "9:00 AM - 5:00 PM"
+  tue: "9:00 AM - 5:00 PM"
+  wed: "9:00 AM - 5:00 PM"
+  thu: "9:00 AM - 5:00 PM"
+  fri: "9:00 AM - 5:00 PM"
+  sat: "Closed"
+  sun: "Closed"
 heroImage: "/images/businesses/animalwisedco.jpg"
 verifiedAt: 2026-07-29
 claimed: true

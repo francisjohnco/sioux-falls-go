@@ -1,6 +1,14 @@
 ---
 name: "Positive Painting"
 category: "painters"
+hoursSchedule:
+  mon: "8:00 AM - 4:00 PM"
+  tue: "8:00 AM - 4:00 PM"
+  wed: "8:00 AM - 4:00 PM"
+  thu: "8:00 AM - 4:00 PM"
+  fri: "8:00 AM - 4:00 PM"
+  sat: "Closed"
+  sun: "Closed"
 heroImage: "/images/businesses/positive-painting.jpg"
 verifiedAt: 2026-07-29
 claimed: true

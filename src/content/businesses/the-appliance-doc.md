@@ -1,6 +1,14 @@
 ---
 name: "The Appliance Doc"
 category: "appliance-repair-service"
+hoursSchedule:
+  mon: "7:00 AM - 6:00 PM"
+  tue: "7:00 AM - 6:00 PM"
+  wed: "7:00 AM - 6:00 PM"
+  thu: "7:00 AM - 6:00 PM"
+  fri: "7:00 AM - 6:00 PM"
+  sat: "Closed"
+  sun: "Closed"
 verifiedAt: 2026-07-29
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/the-appliance-doc/"

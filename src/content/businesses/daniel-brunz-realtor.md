@@ -1,6 +1,14 @@
 ---
 name: "Daniel Brunz Realtor"
 category: "real-estate-agents"
+hoursSchedule:
+  mon: "8:00 AM - 8:00 PM"
+  tue: "8:00 AM - 8:00 PM"
+  wed: "8:00 AM - 8:00 PM"
+  thu: "8:00 AM - 8:00 PM"
+  fri: "8:00 AM - 8:00 PM"
+  sat: "8:00 AM - 8:00 PM"
+  sun: "Closed"
 heroImage: "/images/businesses/daniel-brunz-realtor.jpg"
 verifiedAt: 2026-07-29
 claimed: true
