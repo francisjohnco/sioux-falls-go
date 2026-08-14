@@ -19,12 +19,11 @@ const {
   noindex = false,
 } = Astro.props;
 
-// IMPORTANT: siouxfallsgo.com still points to the old WordPress site — DNS
-// has not been switched yet. Using it here would make every canonical tag
-// point to a different live domain than the one actually being crawled,
-// which is a real conflict, not a neutral placeholder. Once DNS switches,
-// update this back to the real domain.
-const site = 'https://sioux-falls-go.netlify.app';
+// DNS has switched — confirmed by directly fetching siouxfallsgo.com and
+// verifying it serves the real, current site (not the old WordPress site
+// anymore). Canonical URLs now correctly point to the real production
+// domain instead of the netlify.app subdomain.
+const site = 'https://siouxfallsgo.com';
 const canonicalURL = new URL(canonicalPath, site).toString();
 
 // Sioux Falls, SD — real coordinates, used for geo meta tags sitewide.

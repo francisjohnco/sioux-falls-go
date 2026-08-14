@@ -91,7 +91,7 @@ async function draftNewsletterCopy(articles: ArticleSummary[]): Promise<{ subjec
   const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
 
   const articleList = articles.length > 0
-    ? articles.map((a) => `- "${a.title}" (${a.description}) — https://sioux-falls-go.netlify.app/guides/${a.slug}`).join('\n')
+    ? articles.map((a) => `- "${a.title}" (${a.description}) — https://siouxfallsgo.com/guides/${a.slug}`).join('\n')
     : 'No new articles published since the last newsletter — lead with the events calendar instead.';
 
   const message = await anthropic.messages.create({
@@ -109,7 +109,7 @@ SUBJECT: <subject line, under 60 characters>
     messages: [
       {
         role: 'user',
-        content: `Recent Sioux Falls Go articles to feature:\n${articleList}\n\nAlso include a line inviting readers to check the full real-time events calendar at https://sioux-falls-go.netlify.app/events. Keep the whole email short — a friendly opener, 2-4 short article blurbs with links, an events mention, sign-off.`,
+        content: `Recent Sioux Falls Go articles to feature:\n${articleList}\n\nAlso include a line inviting readers to check the full real-time events calendar at https://siouxfallsgo.com/events. Keep the whole email short — a friendly opener, 2-4 short article blurbs with links, an events mention, sign-off.`,
       },
     ],
   });
