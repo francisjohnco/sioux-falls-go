@@ -5,7 +5,7 @@
 // controlled entirely by what's set in the admin panel, checked fresh
 // every time this runs.
 
-import { generateAndDraftNewsletter } from '../shared/newsletter-generator.mts';
+import { generateAndDraftNewsletter } from './_shared/newsletter-generator.mts';
 
 const GITHUB_API = 'https://api.github.com';
 

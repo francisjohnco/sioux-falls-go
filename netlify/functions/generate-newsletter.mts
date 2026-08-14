@@ -2,7 +2,7 @@
 // a valid admin session cookie — same auth check as every other admin
 // function on this site.
 
-import { generateAndDraftNewsletter } from '../shared/newsletter-generator.mts';
+import { generateAndDraftNewsletter } from './_shared/newsletter-generator.mts';
 
 const GITHUB_API = 'https://api.github.com';
 
