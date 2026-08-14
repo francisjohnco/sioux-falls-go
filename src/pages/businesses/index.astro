@@ -14,7 +14,7 @@ const searchIndex = [
   ...categories.map((c) => ({ type: 'category' as const, label: c.data.name, url: `/${c.data.slug}` })),
   ...businesses.map((b) => ({ type: 'business' as const, label: b.data.name, url: `/businesses/${b.id}` })),
 ];
-const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing');
+const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing' || b.data.partnershipTier === 'community-champion');
 
 const newlyVerified = [...businesses]
   .sort((a, b) => b.data.verifiedAt.getTime() - a.data.verifiedAt.getTime())

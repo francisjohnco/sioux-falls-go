@@ -111,7 +111,7 @@ const schema = {
       <div class="hero-badges">
         {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
         {isChampion && <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>}
-        {business.data.partnershipTier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
+        {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <span class="badge badge--giveback">Give Back Partner</span>}
         <span class="badge badge--category-plain">{category.data.name}</span>
       </div>
       <h1>{business.data.name}</h1>
@@ -234,7 +234,7 @@ const schema = {
             <li><Icon name="check" size={14} /> Locally owned &amp; operated</li>
             {business.data.googleRating && <li><Icon name="check" size={14} /> {business.data.googleRating.toFixed(1)}+ rating on Google</li>}
             {isVerified && <li><Icon name="check" size={14} /> Info confirmed by our team</li>}
-            {business.data.partnershipTier === 'community-listing' && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
+            {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
           </ul>
         </div>
 
