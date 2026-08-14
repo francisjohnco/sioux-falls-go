@@ -46,7 +46,7 @@ async function getRecentArticles(sinceDate: Date | null): Promise<ArticleSummary
   const articles: ArticleSummary[] = [];
   // Only inspect the most recently-modified files, not all 98+ — GitHub's
   // list endpoint doesn't sort by date, so pull a reasonable batch and
-  // filter by the actual publishDate frontmatter after reading each one.
+  // filter by the actual publishedAt frontmatter after reading each one.
   const mdFiles = files.filter((f) => f.name.endsWith('.md'));
 
   for (const file of mdFiles) {
@@ -60,7 +60,7 @@ async function getRecentArticles(sinceDate: Date | null): Promise<ArticleSummary
 
     const titleMatch = raw.match(/^title:\s*"(.+?)"\s*$/m);
     const descMatch = raw.match(/description:\s*"(.+?)"\s*$/m);
-    const dateMatch = raw.match(/publishDate:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
+    const dateMatch = raw.match(/publishedAt:\s*"?(\d{4}-\d{2}-\d{2})"?/m);
     if (!titleMatch || !dateMatch) continue;
 
     const publishDate = new Date(dateMatch[1]);
