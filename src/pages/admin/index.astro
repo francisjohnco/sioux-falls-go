@@ -261,7 +261,28 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
           {businessesWithCategory.map(({ business, category }) => (
             <div class="biz-row" data-search={business.data.name.toLowerCase()} data-slug={business.id}>
-              <span class="biz-name">{business.data.name}</span>
+              <button
+                class="biz-name biz-name--link"
+                data-open-edit={business.id}
+                data-business={JSON.stringify({
+                  name: business.data.name,
+                  address: business.data.address || '',
+                  phone: business.data.phone || '',
+                  website: business.data.website || '',
+                  heroImage: business.data.heroImage || '',
+                  latitude: business.data.latitude ?? '',
+                  longitude: business.data.longitude ?? '',
+                  pullQuote: business.data.pullQuote || '',
+                  ownerName: business.data.ownerName || '',
+                  ownerQuote: business.data.ownerQuote || '',
+                  responseTime: business.data.responseTime || '',
+                  googleRating: business.data.googleRating ?? '',
+                  googleReviewCount: business.data.googleReviewCount ?? '',
+                  giveawaysPerYear: business.data.giveawaysPerYear ?? 0,
+                  hoursSchedule: business.data.hoursSchedule || {},
+                  body: business.body || '',
+                })}
+              >{business.data.name}</button>
               <span>{category.data.name}</span>
               <span>
                 <select class="tier-select" data-field="partnershipTier" data-slug={business.id}>
@@ -297,6 +318,55 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </div>
         <p class="save-status" id="directory-save-status" hidden></p>
       </section>
+
+      <!-- FULL BUSINESS EDIT MODAL -->
+      <div class="edit-modal-backdrop" id="edit-modal-backdrop">
+        <div class="edit-modal">
+          <div class="edit-modal-header">
+            <h2 id="edit-modal-title">Edit Business</h2>
+            <button class="edit-modal-close" id="edit-modal-close" aria-label="Close">✕</button>
+          </div>
+          <div class="edit-modal-body">
+            <div class="edit-field-grid">
+              <label>Name <input type="text" id="edit-name" /></label>
+              <label>Phone <input type="text" id="edit-phone" /></label>
+              <label>Address <input type="text" id="edit-address" /></label>
+              <label>Website <input type="text" id="edit-website" /></label>
+              <label>Hero Image URL <input type="text" id="edit-heroImage" /></label>
+              <label>Latitude <input type="number" step="any" id="edit-latitude" /></label>
+              <label>Longitude <input type="number" step="any" id="edit-longitude" /></label>
+              <label>Google Rating <input type="number" step="0.1" min="1" max="5" id="edit-googleRating" /></label>
+              <label>Google Review Count <input type="number" id="edit-googleReviewCount" /></label>
+              <label>Giveaways Per Year <input type="number" id="edit-giveawaysPerYear" /></label>
+              <label>Response Time <input type="text" id="edit-responseTime" placeholder="within 1 hour" /></label>
+              <label>Owner Name <input type="text" id="edit-ownerName" /></label>
+            </div>
+
+            <label class="edit-field-full">Owner Quote <textarea id="edit-ownerQuote" rows="2"></textarea></label>
+            <label class="edit-field-full">Pull Quote (editorial highlight) <textarea id="edit-pullQuote" rows="2"></textarea></label>
+
+            <h3 class="edit-section-heading">Hours</h3>
+            <div class="edit-hours-grid">
+              <label>Mon <input type="text" id="edit-hours-mon" placeholder="9:00 AM - 5:00 PM" /></label>
+              <label>Tue <input type="text" id="edit-hours-tue" placeholder="9:00 AM - 5:00 PM" /></label>
+              <label>Wed <input type="text" id="edit-hours-wed" placeholder="9:00 AM - 5:00 PM" /></label>
+              <label>Thu <input type="text" id="edit-hours-thu" placeholder="9:00 AM - 5:00 PM" /></label>
+              <label>Fri <input type="text" id="edit-hours-fri" placeholder="9:00 AM - 5:00 PM" /></label>
+              <label>Sat <input type="text" id="edit-hours-sat" placeholder="Closed" /></label>
+              <label>Sun <input type="text" id="edit-hours-sun" placeholder="Closed" /></label>
+            </div>
+
+            <h3 class="edit-section-heading">Story</h3>
+            <textarea id="edit-body" rows="10" class="edit-body-textarea" placeholder="The business's full story/description..."></textarea>
+
+            <p class="edit-modal-status" id="edit-modal-status" hidden></p>
+          </div>
+          <div class="edit-modal-footer">
+            <button class="button button--ghost" id="edit-modal-cancel">Cancel</button>
+            <button class="button" id="edit-modal-save">Save Changes</button>
+          </div>
+        </div>
+      </div>
 
       <!-- ── GIVEAWAYS ── -->
       <section class="tab-panel" id="panel-giveaways">
@@ -587,6 +657,35 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .newsletter-status { font-size: 0.875rem; font-weight: 600; margin: 0; }
   .newsletter-status.is-success { color: var(--color-success); }
   .newsletter-status.is-error { color: #C0392B; }
+  /* FULL BUSINESS EDIT MODAL */
+  .biz-name--link { background: none; border: none; padding: 0; text-align: left; font-weight: 700; color: var(--color-navy); cursor: pointer; font-family: inherit; font-size: inherit; text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.15s ease; }
+  .biz-name--link:hover { text-decoration-color: var(--color-orange); color: var(--color-orange-dark); }
+
+  .edit-modal-backdrop {
+    position: fixed; inset: 0; background: rgba(13,23,48,0.5); z-index: 100;
+    display: flex; align-items: center; justify-content: center; padding: 2rem;
+    opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s;
+  }
+  .edit-modal-backdrop.is-open { opacity: 1; visibility: visible; }
+  .edit-modal { background: #fff; border-radius: 1rem; width: 100%; max-width: 42rem; max-height: 90vh; display: flex; flex-direction: column; box-shadow: 0 30px 60px rgba(13,23,48,0.3); }
+  .edit-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--color-line); }
+  .edit-modal-header h2 { font-size: 1.1rem; margin: 0; }
+  .edit-modal-close { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--color-navy-light); padding: 0.3rem; }
+  .edit-modal-close:hover { color: var(--color-navy); }
+  .edit-modal-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+  .edit-field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 0.9rem; }
+  .edit-modal label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.75rem; font-weight: 700; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.02em; }
+  .edit-modal input, .edit-modal textarea { font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400; text-transform: none; letter-spacing: normal; color: var(--color-navy); padding: 0.55rem 0.7rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line); }
+  .edit-field-full { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+  .edit-section-heading { font-size: 0.9375rem; margin: 1.2rem 0 0.7rem; padding-top: 0.9rem; border-top: 1px solid var(--color-line); }
+  .edit-hours-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin-bottom: 0.5rem; }
+  @media (max-width: 40rem) { .edit-hours-grid { grid-template-columns: repeat(2, 1fr); } .edit-field-grid { grid-template-columns: 1fr; } }
+  .edit-body-textarea { width: 100%; font-family: var(--font-body); }
+  .edit-modal-footer { display: flex; justify-content: flex-end; gap: 0.7rem; padding: 1.1rem 1.5rem; border-top: 1px solid var(--color-line); }
+  .button--ghost { background: var(--color-surface); color: var(--color-navy); }
+  .edit-modal-status { font-size: 0.8125rem; font-weight: 600; margin: 0.8rem 0 0; }
+  .edit-modal-status.is-success { color: var(--color-success); }
+  .edit-modal-status.is-error { color: #C0392B; }
 </style>
 
 <script>
@@ -891,6 +990,115 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     } catch (err: any) {
       errorEl.textContent = `Publish failed: ${err.message}`;
       errorEl.removeAttribute('hidden');
+    }
+  });
+
+  // FULL BUSINESS EDIT MODAL
+  const editBackdrop = document.getElementById('edit-modal-backdrop');
+  const editStatus = document.getElementById('edit-modal-status');
+  const editSaveBtn = document.getElementById('edit-modal-save');
+  let currentEditSlug: string | null = null;
+  let currentEditOriginal: any = null;
+
+  const SCALAR_EDIT_IDS = [
+    'name', 'phone', 'address', 'website', 'heroImage', 'latitude', 'longitude',
+    'googleRating', 'googleReviewCount', 'giveawaysPerYear', 'responseTime',
+    'ownerName', 'ownerQuote', 'pullQuote',
+  ];
+  const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  const NUMBER_FIELDS = ['latitude', 'longitude', 'googleRating', 'googleReviewCount', 'giveawaysPerYear'];
+
+  function openEditModal(slug: string, data: any) {
+    currentEditSlug = slug;
+    currentEditOriginal = data;
+    document.getElementById('edit-modal-title')!.textContent = `Edit ${data.name}`;
+    for (const id of SCALAR_EDIT_IDS) {
+      const el = document.getElementById(`edit-${id}`) as HTMLInputElement | null;
+      if (el) el.value = data[id] ?? '';
+    }
+    for (const day of DAY_KEYS) {
+      const el = document.getElementById(`edit-hours-${day}`) as HTMLInputElement | null;
+      if (el) el.value = data.hoursSchedule?.[day] || '';
+    }
+    (document.getElementById('edit-body') as HTMLTextAreaElement).value = data.body || '';
+    if (editStatus) editStatus.hidden = true;
+    editBackdrop?.classList.add('is-open');
+  }
+
+  function closeEditModal() {
+    editBackdrop?.classList.remove('is-open');
+    currentEditSlug = null;
+    currentEditOriginal = null;
+  }
+
+  document.querySelectorAll('[data-open-edit]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.getAttribute('data-open-edit')!;
+      const data = JSON.parse(btn.getAttribute('data-business') || '{}');
+      openEditModal(slug, data);
+    });
+  });
+
+  document.getElementById('edit-modal-close')?.addEventListener('click', closeEditModal);
+  document.getElementById('edit-modal-cancel')?.addEventListener('click', closeEditModal);
+  editBackdrop?.addEventListener('click', (e) => { if (e.target === editBackdrop) closeEditModal(); });
+
+  editSaveBtn?.addEventListener('click', async () => {
+    if (!currentEditSlug) return;
+    const updates: Record<string, unknown> = {};
+
+    for (const id of SCALAR_EDIT_IDS) {
+      const el = document.getElementById(`edit-${id}`) as HTMLInputElement | null;
+      if (!el) continue;
+      const raw = el.value.trim();
+      const newVal = NUMBER_FIELDS.includes(id) ? (raw === '' ? null : Number(raw)) : (raw === '' ? null : raw);
+      const oldVal = currentEditOriginal[id] === '' ? null : currentEditOriginal[id];
+      if (newVal !== oldVal) updates[id] = newVal;
+    }
+
+    const newHours: Record<string, string> = {};
+    let hoursChanged = false;
+    for (const day of DAY_KEYS) {
+      const el = document.getElementById(`edit-hours-${day}`) as HTMLInputElement | null;
+      const val = el?.value.trim() || '';
+      if (val) newHours[day] = val;
+      if (val !== (currentEditOriginal.hoursSchedule?.[day] || '')) hoursChanged = true;
+    }
+    if (hoursChanged) updates.hoursSchedule = newHours;
+
+    const newBody = (document.getElementById('edit-body') as HTMLTextAreaElement).value;
+    if (newBody !== currentEditOriginal.body) updates.body = newBody;
+
+    if (Object.keys(updates).length === 0) {
+      if (editStatus) { editStatus.textContent = 'No changes to save.'; editStatus.hidden = false; editStatus.className = 'edit-modal-status'; }
+      return;
+    }
+
+    editSaveBtn.setAttribute('disabled', 'true');
+    editSaveBtn.textContent = 'Saving…';
+    try {
+      const res = await fetch('/api/update-business', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: currentEditSlug, updates }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      if (editStatus) {
+        editStatus.textContent = 'Saved! Site will rebuild automatically.';
+        editStatus.className = 'edit-modal-status is-success';
+        editStatus.hidden = false;
+      }
+      setTimeout(closeEditModal, 1200);
+    } catch (err: any) {
+      if (editStatus) {
+        editStatus.textContent = `Couldn't save: ${err.message}`;
+        editStatus.className = 'edit-modal-status is-error';
+        editStatus.hidden = false;
+      }
+    } finally {
+      editSaveBtn.removeAttribute('disabled');
+      editSaveBtn.textContent = 'Save Changes';
     }
   });
 
