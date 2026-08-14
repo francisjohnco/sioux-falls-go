@@ -88,7 +88,15 @@ async function draftNewsletterCopy(articles: ArticleSummary[]): Promise<{ subjec
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 1500,
-    system: `You write the Sioux Falls Go email newsletter. Warm, local, brief — this is an email people skim, not an article. Output ONLY valid JSON, no markdown fences: {"subject": "string, under 60 characters", "html": "string, simple inline-styled HTML email body"}`,
+    // Deliberately not asking for JSON here — the HTML body naturally
+    // contains unescaped quotes (style="...") and can include characters
+    // that break JSON string parsing even with clear instructions. A
+    // plain delimiter is far more reliable for this kind of output.
+    system: `You write the Sioux Falls Go email newsletter. Warm, local, brief — this is an email people skim, not an article. Respond in exactly this format, nothing else:
+
+SUBJECT: <subject line, under 60 characters>
+---BODY---
+<simple inline-styled HTML email body>`,
     messages: [
       {
         role: 'user',
@@ -98,8 +106,17 @@ async function draftNewsletterCopy(articles: ArticleSummary[]): Promise<{ subjec
   });
 
   const textBlock = message.content.find((b) => b.type === 'text');
-  const parsed = JSON.parse(textBlock?.type === 'text' ? textBlock.text : '{}');
-  return { subject: parsed.subject, html: parsed.html };
+  const raw = textBlock?.type === 'text' ? textBlock.text : '';
+
+  const subjectMatch = raw.match(/^SUBJECT:\s*(.+?)\s*$/m);
+  const bodyIdx = raw.indexOf('---BODY---');
+  if (!subjectMatch || bodyIdx === -1) {
+    throw new Error(`Newsletter draft response didn't match the expected format. Got: ${raw.slice(0, 200)}`);
+  }
+
+  const subject = subjectMatch[1].trim();
+  const html = raw.slice(bodyIdx + '---BODY---'.length).trim();
+  return { subject, html };
 }
 
 async function createMailerLiteDraft(subject: string, html: string): Promise<{ id: string }> {
