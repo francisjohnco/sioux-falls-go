@@ -20,7 +20,18 @@ export default async (req: Request) => {
   const savedState = stateMatch ? stateMatch[1] : null;
 
   if (!code || !state || state !== savedState) {
-    return Response.redirect(`${url.origin}/admin?gsc=error&reason=state_mismatch`, 302);
+    // TEMPORARY diagnostic — safe to expose, these are single-use random
+    // tokens with no security value once compared, not secrets. Tells us
+    // whether the cookie never arrived at all vs. arrived with a genuinely
+    // different value, which point to very different fixes.
+    const diag = new URLSearchParams({
+      reason: 'state_mismatch',
+      hadCookie: String(cookieHeader.length > 0),
+      hadStateCookie: String(savedState !== null),
+      urlState: state || '(none)',
+      cookieState: savedState || '(none)',
+    });
+    return Response.redirect(`${url.origin}/admin?gsc=error&${diag.toString()}`, 302);
   }
 
   const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
