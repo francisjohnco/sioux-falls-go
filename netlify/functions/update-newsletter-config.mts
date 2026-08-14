@@ -32,19 +32,35 @@ export default async (req: Request) => {
   try {
     const getRes = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, { headers });
     const fileData = await getRes.json();
-    const current = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf-8'));
+    const rawContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+
+    let current;
+    try {
+      current = JSON.parse(rawContent);
+    } catch (parseErr) {
+      throw new Error(`data/newsletter-config.json is currently malformed on GitHub and needs a manual fix before this can save. Raw content: ${rawContent.slice(0, 200)}`);
+    }
     current.frequency = frequency;
+
+    // Sanity-check our own output before ever sending it to GitHub — this
+    // guarantees we can never be the ones writing broken JSON, regardless
+    // of what state the source file was in or what else touched it.
+    const newContent = JSON.stringify(current, null, 2) + '\n';
+    JSON.parse(newContent);
 
     const putRes = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
       method: 'PUT',
       headers: { ...headers, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: `Update newsletter frequency to ${frequency} [skip ci]`,
-        content: Buffer.from(JSON.stringify(current, null, 2) + '\n').toString('base64'),
+        content: Buffer.from(newContent).toString('base64'),
         sha: fileData.sha,
       }),
     });
-    if (!putRes.ok) throw new Error(`GitHub write failed: ${putRes.status}`);
+    if (!putRes.ok) {
+      const putError = await putRes.json().catch(() => ({}));
+      throw new Error(`GitHub write failed: ${putRes.status}${putRes.status === 409 ? ' (someone else saved a change to this file at the same moment — try again)' : ''} ${putError.message || ''}`);
+    }
 
     return new Response(JSON.stringify({ ok: true, frequency }), {
       status: 200,

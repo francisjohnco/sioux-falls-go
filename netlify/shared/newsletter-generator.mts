@@ -158,18 +158,34 @@ async function updateLastGeneratedAt(): Promise<void> {
 
   const getRes = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, { headers });
   const fileData = await getRes.json();
-  const current = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf-8'));
+  const rawContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+
+  let current;
+  try {
+    current = JSON.parse(rawContent);
+  } catch {
+    throw new Error(`data/newsletter-config.json is currently malformed on GitHub and needs a manual fix. Raw content: ${rawContent.slice(0, 200)}`);
+  }
   current.lastGeneratedAt = new Date().toISOString();
 
-  await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
+  // Sanity-check before writing — never send GitHub something that
+  // wouldn't parse back as valid JSON, regardless of the source state.
+  const newContent = JSON.stringify(current, null, 2) + '\n';
+  JSON.parse(newContent);
+
+  const putRes = await fetch(`${GITHUB_API}/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
     method: 'PUT',
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       message: 'Update newsletter lastGeneratedAt [skip ci]',
-      content: Buffer.from(JSON.stringify(current, null, 2) + '\n').toString('base64'),
+      content: Buffer.from(newContent).toString('base64'),
       sha: fileData.sha,
     }),
   });
+  if (!putRes.ok) {
+    const putError = await putRes.json().catch(() => ({}));
+    throw new Error(`GitHub write failed: ${putRes.status}${putRes.status === 409 ? ' (a conflicting save happened at the same moment)' : ''} ${putError.message || ''}`);
+  }
 }
 
 export async function generateAndDraftNewsletter(lastGeneratedAt: string | null): Promise<{
