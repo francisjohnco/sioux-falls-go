@@ -172,7 +172,13 @@ export async function generateAndDraftNewsletter(lastGeneratedAt: string | null)
     const articles = await getRecentArticles(sinceDate);
     const { subject, html } = await draftNewsletterCopy(articles);
     const campaign = await createMailerLiteDraft(subject, html);
-    await updateLastGeneratedAt();
+    // Only advance the "last generated" timestamp when real articles were
+    // actually found and used — a 0-article result means nothing genuinely
+    // happened, and advancing the timestamp anyway would poison every
+    // future comparison, silently excluding real older articles forever.
+    if (articles.length > 0) {
+      await updateLastGeneratedAt();
+    }
     return { ok: true, campaignId: campaign.id, articleCount: articles.length };
   } catch (err: any) {
     return { ok: false, articleCount: 0, error: String(err?.message || err) };
