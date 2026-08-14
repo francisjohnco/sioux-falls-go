@@ -109,6 +109,27 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
         </div>
 
+        <h2 class="section-heading">Search Traffic <span class="section-heading-sub">Last 28 days, from Google Search Console</span></h2>
+        <div class="stat-grid" id="search-traffic-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="traffic-clicks">—</span>
+            <span class="stat-label">Clicks from Search</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="traffic-impressions">—</span>
+            <span class="stat-label">Impressions</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="traffic-ctr">—</span>
+            <span class="stat-label">Click-Through Rate</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="traffic-position">—</span>
+            <span class="stat-label">Avg. Search Position</span>
+          </div>
+        </div>
+        <p class="traffic-status" id="traffic-status" hidden></p>
+
         <h2 class="section-heading">Needs Your Attention</h2>
         <ul class="activity-list">
           {missingPlaceId.length > 0 && (
@@ -512,6 +533,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .stat-label { font-size: 0.8125rem; color: var(--color-navy-light); }
 
   .section-heading { margin-top: var(--space-4); font-size: 1.1875rem; }
+  .section-heading-sub { font-size: 0.75rem; font-weight: 500; color: var(--color-navy-light); text-transform: none; margin-left: 0.6rem; }
+  .traffic-status { font-size: 0.875rem; color: var(--color-navy-light); margin: 0.6rem 0 1.5rem; }
+  .traffic-status.is-error { color: #C0392B; }
   .activity-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
   .activity-list li { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.75rem 1rem; font-size: 0.9375rem; display: flex; align-items: center; gap: 0.6rem; }
   .activity-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-line); flex-shrink: 0; }
@@ -865,6 +889,39 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   }
 
   refreshGscStatus();
+
+  // Real search traffic for the Dashboard — only meaningful once GSC is
+  // actually connected, so this fails gracefully rather than showing
+  // broken/blank numbers if it isn't.
+  async function loadSearchTraffic() {
+    const trafficStatus = document.getElementById('traffic-status');
+    try {
+      const res = await fetch('/api/gsc-fetch-summary');
+      const data = await res.json();
+      if (!res.ok) {
+        if (trafficStatus) {
+          trafficStatus.textContent = data.error === 'Search Console not connected'
+            ? 'Connect Search Console (Content Engine tab) to see real search traffic here.'
+            : `Couldn't load search traffic: ${data.error}`;
+          trafficStatus.className = 'traffic-status is-error';
+          trafficStatus.hidden = false;
+        }
+        return;
+      }
+      const set = (id: string, val: string) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      set('traffic-clicks', data.clicks.toLocaleString());
+      set('traffic-impressions', data.impressions.toLocaleString());
+      set('traffic-ctr', `${data.ctr}%`);
+      set('traffic-position', String(data.avgPosition));
+    } catch (err: any) {
+      if (trafficStatus) {
+        trafficStatus.textContent = `Couldn't load search traffic: ${err.message}`;
+        trafficStatus.className = 'traffic-status is-error';
+        trafficStatus.hidden = false;
+      }
+    }
+  }
+  loadSearchTraffic();
 
 
   let latestGaps: any[] = [];
