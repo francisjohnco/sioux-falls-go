@@ -668,13 +668,19 @@ const schema = {
       return d;
     }
 
+    const clockIconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+
     function setIndicator(text: string, isOpen: boolean) {
-      [indicator, trustIndicator].forEach((el) => {
-        if (!el) return;
-        el.textContent = text;
-        el.classList.add(isOpen ? 'is-open' : 'is-closed');
-        el.hidden = false;
-      });
+      if (indicator) {
+        indicator.textContent = text;
+        indicator.classList.add(isOpen ? 'is-open' : 'is-closed');
+        indicator.hidden = false;
+      }
+      if (trustIndicator) {
+        trustIndicator.innerHTML = `${clockIconSvg} ${text}`;
+        trustIndicator.classList.add(isOpen ? 'is-open' : 'is-closed');
+        trustIndicator.hidden = false;
+      }
     }
 
     if (!todayHours || /closed/i.test(todayHours)) {
