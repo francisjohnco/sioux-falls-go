@@ -200,7 +200,19 @@ const schema = {
 
       <aside class="champion-side-v2">
         <div class="card contact-card">
-          {business.data.hoursSchedule && <p class="open-now-indicator" id="open-now-indicator" hidden></p>}
+          {business.data.hoursSchedule && (
+            <button class="open-now-indicator" id="open-now-indicator" type="button" hidden></button>
+          )}
+          {business.data.hoursSchedule && (
+            <div class="hours-table-v2" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)} hidden>
+              {daysOfWeek.map(({ key, label }) => (
+                <div class="hours-row-v2" data-day={key}>
+                  <span class="hours-day">{label}</span>
+                  <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
+                </div>
+              ))}
+            </div>
+          )}
           <dl>
             {business.data.address && business.data.showAddress && <><dt>Address</dt><dd>{business.data.address}</dd></>}
             {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
@@ -214,20 +226,6 @@ const schema = {
           )}
         </div>
 
-        {business.data.hoursSchedule && (
-          <div class="card hours-card">
-            <h3>Hours</h3>
-            <div class="hours-table-v2" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)}>
-              {daysOfWeek.map(({ key, label }) => (
-                <div class="hours-row-v2" data-day={key}>
-                  <span class="hours-day">{label}</span>
-                  <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <div class="card trust-card">
           <h3>Why we recommend them</h3>
           <ul class="trust-list">
@@ -237,6 +235,13 @@ const schema = {
             {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
           </ul>
         </div>
+
+        {isChampion && (
+          <div class="card champion-badge-card">
+            <img src="/images/community-champion-badge.png" alt="Sioux Falls Go Community Champion badge" />
+            <p>A Sioux Falls Community Champion — support the locals who show up for this community.</p>
+          </div>
+        )}
 
         {spotlights.length > 0 && (
           <div class="spotlight-block">
@@ -421,7 +426,7 @@ const schema = {
   /* Trust bar — sticky, immediate real signals + the smart CTA */
   .trust-bar { background: #fff; border-bottom: 1px solid var(--color-line); padding-block: 0.9rem; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 10px rgba(13,23,48,0.06); }
   .trust-bar-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
-  .trust-stats { display: flex; gap: 1.3rem; flex-wrap: wrap; }
+  .trust-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
   .trust-stat { display: flex; align-items: center; gap: 0.35rem; font-size: 0.875rem; font-weight: 700; color: var(--color-navy); }
   .trust-stat.open-now-indicator { padding: 0; background: none; }
   .trust-stat.open-now-indicator.is-open { color: var(--color-success); }
@@ -442,6 +447,7 @@ const schema = {
   /* Wider sidebar (18rem -> 22rem) */
   .champion-grid-v2 { display: grid; grid-template-columns: 1fr 22rem; gap: var(--space-4); margin-top: var(--space-3); align-items: start; }
   @media (max-width: 45rem) { .champion-grid-v2 { grid-template-columns: 1fr; } }
+  .champion-side-v2 { display: flex; flex-direction: column; gap: var(--space-3); }
 
   .pull-quote-v2 {
     font-family: 'Playfair Display', serif; font-size: 1.5rem; font-style: italic; color: var(--color-navy);
@@ -474,13 +480,20 @@ const schema = {
   .data-pending { font-weight: 400; font-style: italic; color: var(--color-navy-light); }
   .contact-cta { display: block; text-align: center; margin-top: var(--space-2); background: var(--color-navy); color: #fff; }
   .contact-cta:hover { background: #131f38; }
-  .contact-card .open-now-indicator { display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.8rem; font-weight: 700; font-size: 0.8125rem; padding: 0.35rem 0.75rem; border-radius: var(--radius-pill); }
+  .contact-card .open-now-indicator {
+    display: flex; align-items: center; justify-content: space-between; width: 100%;
+    margin-bottom: 0.8rem; font-weight: 700; font-size: 0.8125rem;
+    padding: 0.5rem 0.75rem; border-radius: var(--radius-pill);
+    border: none; cursor: pointer; font-family: var(--font-body); text-align: left;
+  }
   .contact-card .open-now-indicator.is-open { background: #E7F6ED; color: var(--color-success); }
   .contact-card .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
+  .indicator-chevron { transition: transform 0.2s ease; flex-shrink: 0; }
+  .open-now-indicator.is-expanded .indicator-chevron { transform: rotate(180deg); }
 
-  /* Full day-by-day hours, now living in the sidebar instead of a separate lower section */
-  .hours-card h3 { font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-navy-light); margin-bottom: 0.7rem; }
-  .hours-table-v2 { display: flex; flex-direction: column; }
+  /* Full day-by-day hours — now a click-to-expand dropdown inside the contact card, not a separate section */
+  .hours-table-v2 { display: flex; flex-direction: column; margin-bottom: 0.9rem; background: var(--color-surface); border-radius: 0.6rem; padding: 0.3rem 0.7rem; }
+  .hours-table-v2[hidden] { display: none; }
   .hours-row-v2 { display: flex; justify-content: space-between; padding: 0.5rem 0; font-size: 0.8438rem; border-top: 1px solid var(--color-line); }
   .hours-row-v2:first-child { border-top: none; }
   .hours-row-v2.is-today { font-weight: 700; color: var(--color-orange-dark); }
@@ -518,6 +531,10 @@ const schema = {
   .guide-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .guide-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .guide-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  .champion-badge-card { text-align: center; }
+  .champion-badge-card img { width: 6.5rem; height: 6.5rem; margin: 0 auto 0.8rem; display: block; }
+  .champion-badge-card p { font-size: 0.8438rem; color: var(--color-navy-light); line-height: 1.5; margin: 0; }
 
   .contact-card h3, .trust-card h3 { font-size: 1rem; margin-bottom: var(--space-2); }
   .contact-card dl { margin: 0; }
@@ -646,6 +663,14 @@ const schema = {
   const hoursTable = document.getElementById('hours-table');
   const indicator = document.getElementById('open-now-indicator');
   const trustIndicator = document.getElementById('open-now-indicator-trust');
+  const hoursDropdown = document.getElementById('hours-table');
+
+  indicator?.addEventListener('click', () => {
+    if (!hoursDropdown) return;
+    const isOpen = !hoursDropdown.hidden;
+    hoursDropdown.hidden = isOpen;
+    indicator.classList.toggle('is-expanded', !isOpen);
+  });
   if (hoursTable && (indicator || trustIndicator)) {
     const schedule = JSON.parse(hoursTable.dataset.hours || '{}');
     const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
@@ -670,9 +695,11 @@ const schema = {
 
     const clockIconSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
 
+    const chevronSvg = '<svg class="indicator-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
     function setIndicator(text: string, isOpen: boolean) {
       if (indicator) {
-        indicator.textContent = text;
+        indicator.innerHTML = `<span>${text}</span> ${chevronSvg}`;
         indicator.classList.add(isOpen ? 'is-open' : 'is-closed');
         indicator.hidden = false;
       }
