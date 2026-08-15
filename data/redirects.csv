@@ -118,3 +118,4 @@ old_url,new_url,status,notes
 /advertising-dashboard/,/,301,"WP infrastructure page, not content"
 /terms-and-conditions/,/terms-of-use,301,"WP infrastructure page, not content"
 /blog/,/guides,301,"WP infrastructure page, not content"
+/become-a-partner/,/get-featured,301,consolidated into one real partner page
