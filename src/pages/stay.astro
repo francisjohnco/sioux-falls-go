@@ -2,6 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { getCollection } from 'astro:content';
+
+const realStays = await getCollection('stays');
+
+// Maps this page's simpler section ids to the real schema's category values
+const CATEGORY_MAP: Record<string, string> = {
+  downtown: 'downtown-walkable',
+  nature: 'riverside-nature',
+  historic: 'historic-charming',
+  family: 'family-friendly',
+  solo: 'solo-budget',
+};
 
 interface Experience {
   id: string;
@@ -109,7 +121,22 @@ const schema = {
           </div>
         </div>
         <div class="host-grid">
-          {[1, 2, 3].map(() => (
+          {realStays
+            .filter((s) => s.data.experienceCategories.includes(CATEGORY_MAP[exp.id] as any))
+            .map((stay) => (
+              <a class="host-card host-card--real" href={`/stay/${stay.id}`}>
+                <div class="host-card-media" style={stay.data.heroImage ? `background-image: url(${stay.data.heroImage}); background-size: cover; background-position: center;` : `background: ${exp.gradient};`}>
+                  {!stay.data.heroImage && <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.5" set:html={exp.icon} />}
+                  <span class="host-card-badge host-card-badge--live">Real Stay</span>
+                </div>
+                <div class="host-card-body">
+                  <h3>{stay.data.name}</h3>
+                  <p>{stay.data.locationLabel}</p>
+                  <span class="host-card-cta">View Stay →</span>
+                </div>
+              </a>
+            ))}
+          {Array.from({ length: Math.max(0, 3 - realStays.filter((s) => s.data.experienceCategories.includes(CATEGORY_MAP[exp.id] as any)).length) }).map(() => (
             <div class="host-card">
               <div class="host-card-media" style={`background: ${exp.gradient};`}>
                 <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" stroke-width="1.5" set:html={exp.icon} />
@@ -187,12 +214,15 @@ const schema = {
     position: relative;
   }
   .host-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.1); border-color: var(--color-orange); }
+  .host-card--real { border-style: solid; border-color: var(--color-line); text-decoration: none; color: inherit; }
+  .host-card--real:hover { border-color: var(--color-orange); }
   .host-card-media { height: 10rem; position: relative; display: flex; align-items: center; justify-content: center; }
   .host-card-media svg { opacity: 0.35; }
   .host-card-badge {
     position: absolute; top: 0.8rem; left: 0.8rem; background: rgba(27,42,74,0.9); color: #fff;
     font-size: 0.6875rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.02em;
   }
+  .host-card-badge--live { background: #1E824C; }
   .host-card-body { padding: 1.1rem 1.2rem 1.3rem; flex: 1; display: flex; flex-direction: column; }
   .host-card-body h3 { font-family: var(--font-display); font-size: 1.0625rem; color: var(--color-navy); margin-bottom: 0.4rem; }
   .host-card-body p { font-size: 0.8438rem; color: var(--color-navy-light); line-height: 1.45; margin: 0 0 1rem; flex: 1; }
