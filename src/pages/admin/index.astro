@@ -233,38 +233,26 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
           <div class="engine-panel">
             <h3>Generate a Spotlight or Press Release</h3>
-            <p class="panel-note">Champion tier only — publishes as a real article, appears under "Latest from [Business]" on their profile.</p>
+            <p class="panel-note">Champion tier only — publishes as a real article, appears under "Latest from [Business]" on their profile. Write exactly what you want — mention if it should read as a press release, an announcement, whatever fits.</p>
 
-            <div class="engine-controls">
-              <label class="engine-select">
-                Type
-                <select id="spotlight-type-select">
-                  <option value="business-spotlight">Spotlight</option>
-                  <option value="press-release">Press Release</option>
-                </select>
-              </label>
-              <label class="engine-select">
-                Business
-                <select id="spotlight-business-select">
-                  {businessesWithCategory.filter(({ business }) => business.data.partnershipTier === 'community-champion').map(({ business }) => (
-                    <option value={business.id} data-name={business.data.name}>{business.data.name}</option>
-                  ))}
-                </select>
-              </label>
+            <label class="engine-select">
+              Business
+              <select id="spotlight-business-select">
+                {businessesWithCategory.filter(({ business }) => business.data.partnershipTier === 'community-champion').map(({ business }) => (
+                  <option value={business.id} data-name={business.data.name}>{business.data.name}</option>
+                ))}
+              </select>
+            </label>
+
+            <label class="engine-field">
+              Your prompt
+              <textarea id="spotlight-prompt" rows="5" placeholder="e.g. Write a press release announcing our new same-day service. Mention the giveaway happening this month."></textarea>
+            </label>
+
+            <div class="prompt-actions">
+              <button class="button--link" id="save-standard-prompt-btn" type="button">Save as my standard prompt</button>
+              <span class="prompt-save-status" id="prompt-save-status" hidden></span>
             </div>
-
-            <label class="engine-field">
-              <span id="spotlight-q1-label">What made you start this business?</span>
-              <textarea id="spotlight-q1" rows="2" placeholder="Their answer..."></textarea>
-            </label>
-            <label class="engine-field">
-              <span id="spotlight-q2-label">What makes you different from others in this category?</span>
-              <textarea id="spotlight-q2" rows="2" placeholder="Their answer..."></textarea>
-            </label>
-            <label class="engine-field">
-              <span id="spotlight-q3-label">Anything you want customers to know?</span>
-              <textarea id="spotlight-q3" rows="2" placeholder="Their answer..."></textarea>
-            </label>
 
             <button class="button" id="spotlight-generate-btn"><Icon name="sparkles" size={16} /> Generate Draft</button>
             <p class="engine-error" id="spotlight-error" hidden></p>
@@ -274,9 +262,12 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <div class="engine-output" id="engine-output" hidden>
               <div class="output-header">
                 <h4>Generated Draft</h4>
-                <span class="badge badge--giveback">AI-assisted — needs review</span>
+                <span class="badge badge--giveback">AI-assisted — review and edit before publishing</span>
               </div>
-              <div class="output-text" id="output-text"></div>
+              <label class="edit-field-full">Title <input type="text" id="output-title" /></label>
+              <label class="edit-field-full">Body
+                <textarea id="output-body" rows="12" class="edit-body-textarea"></textarea>
+              </label>
               <div class="output-actions">
                 <button class="button" id="approve-btn">Approve &amp; Publish</button>
               </div>
@@ -664,6 +655,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .publish-success { color: var(--color-success); font-size: 0.875rem; margin-top: var(--space-1); font-weight: 600; }
   .engine-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-2); align-items: start; }
   .engine-panel { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
+  .prompt-actions { display: flex; align-items: center; gap: 0.8rem; margin: 0.4rem 0 0.9rem; }
+  .button--link { background: none; border: none; padding: 0; color: var(--color-orange-dark); font-weight: 700; font-size: 0.8125rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
+  .button--link:hover { color: var(--color-orange); }
+  .prompt-save-status { font-size: 0.8125rem; color: var(--color-success); }
+
   .engine-panel h3 { font-size: 1rem; margin-bottom: 0.4rem; }
   .panel-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
   .optional-tag { font-weight: 400; text-transform: none; color: var(--color-navy-light); font-size: 0.75rem; }
@@ -691,7 +687,6 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .engine-output { margin-top: var(--space-3); border-top: 1px solid var(--color-line); padding-top: var(--space-3); }
   .output-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); flex-wrap: wrap; }
   .output-header h4 { margin: 0; }
-  .output-text { background: var(--color-surface); border-radius: var(--radius); padding: var(--space-2); font-size: 0.9375rem; }
   .output-actions { display: flex; gap: 0.5rem; margin-top: var(--space-2); flex-wrap: wrap; }
 
   /* Directory */
@@ -1077,11 +1072,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
   let currentDraft: any = null;
 
-  async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string; direction?: string }) {
+  async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string; direction?: string }, triggerBtn: HTMLButtonElement) {
     const outputEl = document.getElementById('engine-output')!;
     outputEl.setAttribute('hidden', '');
 
-    const activeBtn = (document.getElementById('article-generate-btn') || document.getElementById('spotlight-generate-btn')) as HTMLButtonElement;
+    const activeBtn = triggerBtn;
     const originalLabel = activeBtn?.innerHTML;
     if (activeBtn) { activeBtn.disabled = true; activeBtn.textContent = 'Starting…'; }
 
@@ -1135,17 +1130,16 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       const data = { draft: job.draft };
 
       currentDraft = { draft: data.draft, categorySlug: opts.categorySlug, contentType: opts.contentType };
-      document.getElementById('output-text')!.innerHTML = `
-        <p><strong>${data.draft.title}</strong></p>
-        <div>${data.draft.bodyMarkdown.slice(0, 400).replace(/\n/g, '<br>')}...</div>
-      `;
+      (document.getElementById('output-title') as HTMLInputElement).value = data.draft.title;
+      (document.getElementById('output-body') as HTMLTextAreaElement).value = data.draft.bodyMarkdown;
       outputEl.removeAttribute('hidden');
+      outputEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } finally {
       if (activeBtn && originalLabel) { activeBtn.disabled = false; activeBtn.innerHTML = originalLabel; }
     }
   }
 
-  document.getElementById('article-generate-btn')?.addEventListener('click', () => {
+  document.getElementById('article-generate-btn')?.addEventListener('click', function () {
     const errorEl = document.getElementById('article-error')!;
     const typeSelect = document.getElementById('article-type-select') as HTMLSelectElement;
     const catSelect = document.getElementById('article-category-select') as HTMLSelectElement;
@@ -1156,54 +1150,65 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       categoryName: catSelect.selectedOptions[0]?.dataset.name || catSelect.value,
       contentType: typeSelect.value,
       direction: direction || undefined,
-    }).catch((err: any) => {
+    }, this as HTMLButtonElement).catch((err: any) => {
       errorEl.textContent = `Generation failed: ${err.message}`;
       errorEl.removeAttribute('hidden');
     });
   });
 
-  const SPOTLIGHT_QUESTIONS = {
-    'business-spotlight': [
-      'What made you start this business?',
-      'What makes you different from others in this category?',
-      'Anything you want customers to know?',
-    ],
-    'press-release': [
-      "What's the news or announcement?",
-      'Why does this matter to your customers right now?',
-      'Any specific details to include — dates, numbers, a quote?',
-    ],
-  };
-  document.getElementById('spotlight-type-select')?.addEventListener('change', (e) => {
-    const questions = SPOTLIGHT_QUESTIONS[(e.target as HTMLSelectElement).value as keyof typeof SPOTLIGHT_QUESTIONS];
-    questions.forEach((q, i) => {
-      const label = document.getElementById(`spotlight-q${i + 1}-label`);
-      if (label) label.textContent = q;
-    });
+  // Standard prompt — loads whatever was last saved, pre-filling the box
+  // every time this tab opens, until explicitly changed and re-saved.
+  const STANDARD_PROMPT_KEY = 'spotlight-standard-prompt';
+  const spotlightPromptEl = document.getElementById('spotlight-prompt') as HTMLTextAreaElement;
+
+  fetch(`/api/get-admin-setting?key=${STANDARD_PROMPT_KEY}`)
+    .then((r) => r.json())
+    .then((data) => {
+      if (data.value && spotlightPromptEl) spotlightPromptEl.value = data.value;
+    })
+    .catch(() => {}); // no saved prompt yet — leave the field empty, not an error
+
+  document.getElementById('save-standard-prompt-btn')?.addEventListener('click', async () => {
+    const statusEl = document.getElementById('prompt-save-status')!;
+    const value = spotlightPromptEl?.value.trim();
+    if (!value) return;
+    try {
+      await fetch('/api/save-admin-setting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: STANDARD_PROMPT_KEY, value }),
+      });
+      statusEl.textContent = 'Saved — this will be your default every time.';
+      statusEl.hidden = false;
+      setTimeout(() => { statusEl.hidden = true; }, 3000);
+    } catch {
+      statusEl.textContent = "Couldn't save right now.";
+      statusEl.hidden = false;
+    }
   });
 
-  document.getElementById('spotlight-generate-btn')?.addEventListener('click', () => {
+  document.getElementById('spotlight-generate-btn')?.addEventListener('click', function () {
     const errorEl = document.getElementById('spotlight-error')!;
     const bizSelect = document.getElementById('spotlight-business-select') as HTMLSelectElement;
-    const typeSelect = document.getElementById('spotlight-type-select') as HTMLSelectElement;
     errorEl.setAttribute('hidden', '');
     if (!bizSelect || !bizSelect.value) {
       errorEl.textContent = 'No Champion-tier businesses available yet.';
       errorEl.removeAttribute('hidden');
       return;
     }
-    const questionLabels = SPOTLIGHT_QUESTIONS[typeSelect.value as keyof typeof SPOTLIGHT_QUESTIONS];
-    const answers = [1, 2, 3].map((n) => ({
-      question: questionLabels[n - 1],
-      answer: (document.getElementById(`spotlight-q${n}`) as HTMLTextAreaElement)?.value,
-    }));
+    const prompt = spotlightPromptEl?.value.trim();
+    if (!prompt) {
+      errorEl.textContent = 'Write a prompt describing what you want first.';
+      errorEl.removeAttribute('hidden');
+      return;
+    }
     generateDraft({
       categorySlug: 'community-spotlight',
       categoryName: 'Community Spotlight',
-      contentType: typeSelect.value,
+      contentType: 'business-spotlight',
       businessName: bizSelect.selectedOptions[0]?.dataset.name || bizSelect.value,
-      interviewAnswers: answers,
-    }).catch((err: any) => {
+      direction: prompt,
+    }, this as HTMLButtonElement).catch((err: any) => {
       errorEl.textContent = `Generation failed: ${err.message}`;
       errorEl.removeAttribute('hidden');
     });
@@ -1215,12 +1220,20 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     const successEl = document.getElementById('publish-success')!;
     errorEl.setAttribute('hidden', '');
     successEl.setAttribute('hidden', '');
+
+    // Publish whatever is actually in the editable fields right now —
+    // the whole point of making them editable is that edits get used,
+    // not silently discarded in favor of the original generation.
+    const editedTitle = (document.getElementById('output-title') as HTMLInputElement)?.value.trim();
+    const editedBody = (document.getElementById('output-body') as HTMLTextAreaElement)?.value.trim();
+    const finalDraft = { ...currentDraft.draft, title: editedTitle || currentDraft.draft.title, bodyMarkdown: editedBody || currentDraft.draft.bodyMarkdown };
+
     try {
       const res = await fetch('/api/publish-draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          draft: currentDraft.draft,
+          draft: finalDraft,
           categorySlug: currentDraft.categorySlug,
           contentType: currentDraft.contentType,
           author: 'Sioux Falls Go Editorial',
