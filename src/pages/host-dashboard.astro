@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+---
+
+<BaseLayout
+  title="Host Dashboard"
+  description="Manage your Sioux Falls Go stay listing."
+  canonicalPath="/host-dashboard"
+  noindex
+>
+  <SiteHeader slot="header" />
+
+  <div class="dashboard-wrap" id="dashboard-wrap" hidden>
+    <div class="container">
+      <h1>Welcome back<span id="host-listing-name"></span></h1>
+      <p class="dash-sub">Manage your listing and download the shared Sioux Falls host picks.</p>
+
+      <div class="dash-card">
+        <h2>Your Listing</h2>
+        <p id="view-listing-note">See how your page looks to visitors.</p>
+        <a href="#" id="view-listing-link" class="dash-btn dash-btn--ghost">View My Listing →</a>
+      </div>
+
+      <div class="dash-card">
+        <h2>Sioux Falls Host Picks</h2>
+        <p>A shared flyer of places recommended by multiple Sioux Falls Go hosts — print it for your guests.</p>
+        <button id="download-picks-btn" class="dash-btn">Download PDF</button>
+        <p class="dash-status" id="download-status" hidden></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-loading" id="dashboard-loading">
+    <p>Checking your session…</p>
+  </div>
+</BaseLayout>
+
+<script>
+  const loadingEl = document.getElementById('dashboard-loading')!;
+  const wrapEl = document.getElementById('dashboard-wrap')!;
+
+  (async () => {
+    try {
+      const res = await fetch('/api/host-session-check');
+      const data = await res.json();
+      if (!res.ok || !data.authenticated) {
+        window.location.href = '/host-login';
+        return;
+      }
+      const slug = data.slug;
+      (document.getElementById('view-listing-link') as HTMLAnchorElement).href = `/stay/${slug}`;
+      loadingEl.hidden = true;
+      wrapEl.hidden = false;
+    } catch {
+      window.location.href = '/host-login';
+    }
+  })();
+
+  document.getElementById('download-picks-btn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('download-picks-btn') as HTMLButtonElement;
+    const statusEl = document.getElementById('download-status')!;
+    statusEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Preparing…';
+    try {
+      const res = await fetch('/api/download-host-picks');
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Download failed (HTTP ${res.status})`);
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sioux-falls-host-picks.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      statusEl.textContent = err.message;
+      statusEl.hidden = false;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Download PDF';
+    }
+  });
+</script>
+
+<style>
+  .dashboard-loading { text-align: center; padding: 5rem 1.5rem; color: #5b6b8c; }
+  .dashboard-wrap { background: #F7F8FA; min-height: 60vh; padding-block: 2.5rem; }
+  .container { max-width: 42rem; margin: 0 auto; padding-inline: 1.5rem; }
+  .dashboard-wrap h1 { font-family: var(--font-display); font-size: 1.75rem; color: #1B2A4A; margin: 0 0 0.3rem; }
+  .dash-sub { color: #5b6b8c; font-size: 0.9375rem; margin: 0 0 1.8rem; }
+  .dash-card { background: #fff; border: 1px solid #E4E7EC; border-radius: 1rem; padding: 1.6rem; margin-bottom: 1.2rem; }
+  .dash-card h2 { font-family: var(--font-display); font-size: 1.1rem; color: #1B2A4A; margin: 0 0 0.5rem; }
+  .dash-card p { font-size: 0.875rem; color: #3d4657; margin: 0 0 1rem; }
+  .dash-btn { display: inline-block; background: #1B2A4A; color: #fff; font-weight: 700; font-size: 0.875rem; padding: 0.7rem 1.3rem; border-radius: 0.5rem; border: none; text-decoration: none; cursor: pointer; }
+  .dash-btn:hover { background: #131f38; }
+  .dash-btn--ghost { background: #F7F8FA; color: #1B2A4A; border: 1.5px solid #E4E7EC; }
+  .dash-btn--ghost:hover { background: #E4E7EC; }
+  .dash-status { font-size: 0.8125rem; color: #C0392B; font-weight: 600; margin: 0.8rem 0 0; }
+</style>

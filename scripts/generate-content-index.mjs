@@ -167,6 +167,39 @@ function main() {
     description: a.seo?.description || '',
   }));
   fs.writeFileSync(path.join(ROOT, 'public/article-index.json'), JSON.stringify(articleIndex, null, 2));
+
+  // Community picks — the shared host-community flyer content, exposed as
+  // a static asset so the PDF-generation function can read it at runtime
+  // (functions don't have direct access to Astro's content collections).
+  try {
+    const picksDir = path.join(ROOT, 'src/content/community-picks');
+    const picksFiles = fs.readdirSync(picksDir).filter((f) => f.endsWith('.md'));
+    if (picksFiles.length > 0) {
+      const raw = fs.readFileSync(path.join(picksDir, picksFiles[0]), 'utf-8');
+      // Isolate ONLY the frontmatter block first — this file also has an
+      // HTML comment below it with example syntax for documentation
+      // purposes, which must never be mistaken for real data.
+      const frontmatterMatch = raw.match(/^---\n([\s\S]*?)\n---/);
+      const frontmatter = frontmatterMatch ? frontmatterMatch[1] : '';
+      // The picks array is small and predictably structured — a targeted
+      // manual parser here avoids adding a new dependency just for this.
+      const picks = [];
+      const pickBlocks = frontmatter.split(/\n\s*-\s+category:/).slice(1);
+      for (const block of pickBlocks) {
+        const category = block.match(/^\s*"?(\w+)"?/)?.[1] || '';
+        const name = block.match(/name:\s*"(.+?)"/)?.[1] || '';
+        const description = block.match(/description:\s*"(.+?)"/)?.[1] || '';
+        const recommendedByMatch = block.match(/recommendedBy:\s*\[(.*?)\]/);
+        const recommendedBy = recommendedByMatch
+          ? recommendedByMatch[1].split(',').map((s) => s.trim().replace(/^"|"$/g, '')).filter(Boolean)
+          : [];
+        if (name) picks.push({ category, name, description, recommendedBy });
+      }
+      fs.writeFileSync(path.join(ROOT, 'public/community-picks.json'), JSON.stringify({ picks }, null, 2));
+    }
+  } catch (err) {
+    console.log('Could not generate community-picks.json:', err.message);
+  }
   console.log(`Content gap report written: ${outPath}`);
   console.log('Top 5 priorities:');
   report.slice(0, 5).forEach((r, i) => console.log(`  ${i + 1}. ${r.name} (score: ${r.priorityScore}) — ${r.reasons.join('; ')}`));

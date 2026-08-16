@@ -275,6 +275,8 @@ const stays = defineCollection({
     gallery: z.array(z.string()).default([]),
     airbnbUrl: z.string(), // the real listing — booking happens there, not on this site
     hostName: z.string().optional(),
+    hostEmail: z.string().optional(), // used for host login, alongside their access code
+    hostAccessCode: z.string().optional(), // private per-host login credential — you generate and share this with each host directly
     verifiedAt: z.date().optional(), // omitted entirely until independently confirmed
     insiderTips: z.array(z.object({
       tip: z.string(),
@@ -295,6 +297,30 @@ const stays = defineCollection({
   }),
 });
 
+/**
+ * COMMUNITY PICKS
+ * The curated "multiple Sioux Falls hosts recommended this" list — not
+ * auto-generated. When the host intake form exists and enough hosts have
+ * submitted eat/shop/sight picks, you review them, decide which places
+ * genuinely got recommended by more than one host (different hosts may
+ * phrase the same place differently, so this needs a real human look),
+ * and add them here. This single file becomes the one shared flyer every
+ * logged-in host can download — not a personalized per-listing card.
+ */
+const communityPicks = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/community-picks' }),
+  schema: z.object({
+    title: z.string(),
+    lastUpdated: z.date(),
+    picks: z.array(z.object({
+      category: z.enum(['eat', 'shop', 'sight']),
+      name: z.string(),
+      description: z.string(),
+      recommendedBy: z.array(z.string()).default([]), // real host/listing names who recommended this, for transparency
+    })),
+  }),
+});
+
 export const collections = {
   categories,
   neighborhoods,
@@ -305,4 +331,5 @@ export const collections = {
   hubs,
   pages,
   stays,
+  communityPicks,
 };

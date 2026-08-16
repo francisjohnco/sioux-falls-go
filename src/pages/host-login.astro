@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+---
+
+<BaseLayout
+  title="Host Login"
+  description="Log in to manage your Sioux Falls Go stay listing."
+  canonicalPath="/host-login"
+  noindex
+>
+  <SiteHeader slot="header" />
+
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>Host Login</h1>
+      <p class="login-sub">Log in with the email and access code Sioux Falls Go sent you.</p>
+
+      <form id="host-login-form">
+        <label>
+          Email
+          <input type="email" id="host-email" required autocomplete="email" />
+        </label>
+        <label>
+          Access Code
+          <input type="text" id="host-access-code" required autocomplete="off" />
+        </label>
+        <button type="submit" id="host-login-btn">Log In</button>
+        <p class="login-error" id="login-error" hidden></p>
+      </form>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('host-login-form') as HTMLFormElement;
+  const errorEl = document.getElementById('login-error')!;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('host-login-btn') as HTMLButtonElement;
+    const email = (document.getElementById('host-email') as HTMLInputElement).value.trim();
+    const accessCode = (document.getElementById('host-access-code') as HTMLInputElement).value.trim();
+    errorEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Logging in…';
+
+    try {
+      const res = await fetch('/api/host-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, accessCode }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Login failed');
+      window.location.href = '/host-dashboard';
+    } catch (err: any) {
+      errorEl.textContent = err.message;
+      errorEl.hidden = false;
+      btn.disabled = false;
+      btn.textContent = 'Log In';
+    }
+  });
+</script>
+
+<style>
+  .login-wrap { min-height: 60vh; display: flex; align-items: center; justify-content: center; padding: 3rem 1.5rem; background: #F7F8FA; }
+  .login-card { background: #fff; border: 1px solid #E4E7EC; border-radius: 1rem; padding: 2.2rem; width: 100%; max-width: 26rem; box-shadow: 0 10px 30px rgba(13,23,48,0.06); }
+  .login-card h1 { font-family: var(--font-display); font-size: 1.5rem; color: #1B2A4A; margin: 0 0 0.4rem; }
+  .login-sub { font-size: 0.875rem; color: #5b6b8c; margin: 0 0 1.6rem; }
+  #host-login-form { display: flex; flex-direction: column; gap: 1rem; }
+  #host-login-form label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8125rem; font-weight: 700; color: #1B2A4A; }
+  #host-login-form input { font-family: inherit; font-size: 0.9375rem; font-weight: 400; padding: 0.7rem 0.9rem; border-radius: 0.5rem; border: 1.5px solid #E4E7EC; }
+  #host-login-btn { background: #1B2A4A; color: #fff; font-weight: 700; padding: 0.8rem; border-radius: 0.5rem; border: none; cursor: pointer; margin-top: 0.4rem; }
+  #host-login-btn:hover { background: #131f38; }
+  #host-login-btn:disabled { opacity: 0.6; cursor: default; }
+  .login-error { color: #C0392B; font-size: 0.8438rem; font-weight: 600; margin: 0; }
+</style>
