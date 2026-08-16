@@ -1,0 +1,213 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+
+export async function getStaticPaths() {
+  const stays = await getCollection('stays');
+  return stays.map((stay) => ({ params: { slug: stay.id }, props: { stay } }));
+}
+
+const { stay } = Astro.props;
+const { Content } = await render(stay);
+const neighborhood = stay.data.neighborhood ? await getEntry(stay.data.neighborhood) : null;
+
+const STAY_TYPE_LABELS: Record<string, string> = {
+  'entire-home': 'Entire Home',
+  'private-room': 'Private Room',
+  'guest-suite': 'Guest Suite',
+};
+
+const AMENITY_ICONS: Record<string, string> = {
+  'King bed': 'key',
+  'Private entrance & patio': 'leaf',
+  'Kitchenette (mini-fridge, microwave, Keurig)': 'coffee',
+  'Full bathroom': 'window',
+  'Cozy lounge space': 'home',
+  'Mudroom storage': 'folder',
+};
+---
+
+<BaseLayout
+  title={stay.data.name}
+  description={stay.data.seo.description}
+  canonicalPath={`/stay/${stay.id}`}
+>
+  <nav class="stay-top-nav">
+    <div class="container stay-top-nav-inner">
+      <a href="/stay" class="stay-logo">sioux falls <span>go</span> — stay</a>
+    </div>
+  </nav>
+
+  <div class="container gallery-hero">
+    {stay.data.heroImage ? (
+      <div class="gallery-grid">
+        <div class="gallery-main" style={`background-image: url(${stay.data.heroImage})`}></div>
+        <div class="gallery-side">
+          {stay.data.gallery.slice(0, 2).map((img) => (
+            <div class="gallery-side-img" style={`background-image: url(${img})`}></div>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <div class="gallery-grid gallery-grid--placeholder">
+        <div class="gallery-main gallery-placeholder-a"></div>
+        <div class="gallery-side">
+          <div class="gallery-side-img gallery-placeholder-b"></div>
+          <div class="gallery-side-img gallery-placeholder-c">
+            <span class="gallery-photos-pending">Photos coming soon</span>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <div class="container listing-header">
+    <span class="listing-eyebrow">{neighborhood ? neighborhood.data.name : stay.data.locationLabel} · {STAY_TYPE_LABELS[stay.data.stayType]}</span>
+    <h1>{stay.data.name}</h1>
+    <div class="listing-meta">
+      {stay.data.verifiedAt ? (
+        <span class="verified-pill"><Icon name="check" size={13} /> Verified by Sioux Falls Go</span>
+      ) : (
+        <span class="unverified-note">New listing — not yet independently verified</span>
+      )}
+      <span>· Sioux Falls, SD</span>
+    </div>
+  </div>
+
+  <div class="container listing-body">
+    <div class="listing-main">
+      {stay.data.hostName && (
+        <div class="host-row">
+          <div class="host-avatar">{stay.data.hostName.charAt(0)}</div>
+          <div>
+            <h3>Hosted by {stay.data.hostName}</h3>
+            <p>Real host, real Sioux Falls property</p>
+          </div>
+        </div>
+      )}
+
+      <div class="stat-row">
+        <div class="stat-item"><strong>{stay.data.bedrooms}</strong><span>Bedroom{stay.data.bedrooms !== 1 ? 's' : ''}</span></div>
+        <div class="stat-item"><strong>{stay.data.bathrooms}</strong><span>Bathroom{stay.data.bathrooms !== 1 ? 's' : ''}</span></div>
+      </div>
+      <p class="guest-capacity-label">{stay.data.guestCapacityLabel}</p>
+
+      <div class="description-section">
+        <h2>About this stay</h2>
+        <div class="prose"><Content /></div>
+      </div>
+
+      {stay.data.amenities.length > 0 && (
+        <div>
+          <h2>What this place offers</h2>
+          <div class="amenities-grid">
+            {stay.data.amenities.map((a) => (
+              <div class="amenity-item"><Icon name={AMENITY_ICONS[a] || 'check'} size={18} class="amenity-icon" /> {a}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {stay.data.insiderTips.length > 0 && (
+        <div class="insider-tips">
+          <span class="insider-badge">✦ Sioux Falls Go Insider Tips</span>
+          <h2>Before you book, from the locals</h2>
+          {stay.data.insiderTips.map((t, i) => (
+            <div class="insider-tip">
+              <div class="insider-tip-marker">{i + 1}</div>
+              <p>{t.tip}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <aside class="booking-card">
+      <p class="booking-card-label">Ready to stay?</p>
+      <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="book-btn">
+        Book on Airbnb ↗
+      </a>
+      <p class="book-btn-note">You'll complete your booking securely on Airbnb</p>
+      <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="see-reviews-link">See reviews on Airbnb →</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700&display=swap');
+
+  :root {
+    --stay-ink: #1c1917;
+    --stay-quartzite: #c08677;
+    --stay-quartzite-deep: #9c6455;
+    --stay-parchment: #f2ede4;
+    --stay-river: #3e5c76;
+    --stay-charcoal-text: #2b2620;
+    --stay-line: #e2dccf;
+  }
+  .container { max-width: 72rem; margin: 0 auto; padding-inline: 1.5rem; }
+
+  .stay-top-nav { background: var(--stay-ink); padding: 1.1rem 0; }
+  .stay-logo { color: var(--stay-parchment); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
+  .stay-logo span { color: var(--stay-quartzite); }
+
+  .gallery-hero { padding-block: 1.5rem; }
+  .gallery-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 0.6rem; height: 26rem; border-radius: 1rem; overflow: hidden; }
+  .gallery-main { background-size: cover; background-position: center; background-color: var(--stay-line); }
+  .gallery-side { display: grid; grid-template-rows: 1fr 1fr; gap: 0.6rem; }
+  .gallery-side-img { background-size: cover; background-position: center; position: relative; background-color: var(--stay-line); }
+  .gallery-placeholder-a { background: linear-gradient(160deg, var(--stay-river), var(--stay-ink)); }
+  .gallery-placeholder-b { background: linear-gradient(160deg, var(--stay-quartzite), var(--stay-quartzite-deep)); }
+  .gallery-placeholder-c { background: linear-gradient(160deg, #5b6650, #2b2620); display: flex; align-items: center; justify-content: center; }
+  .gallery-photos-pending { color: rgba(242,237,228,0.85); font-size: 0.8125rem; font-weight: 600; }
+
+  .listing-header { padding-block: 1.8rem 1rem; border-bottom: 1px solid var(--stay-line); }
+  .listing-eyebrow { color: var(--stay-quartzite-deep); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: block; }
+  .listing-header h1 { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 600; color: var(--stay-ink); margin-bottom: 0.5rem; }
+  .listing-meta { display: flex; align-items: center; gap: 0.8rem; color: var(--stay-charcoal-text); font-size: 0.9375rem; flex-wrap: wrap; }
+  .verified-pill { display: inline-flex; align-items: center; gap: 0.3rem; background: #E7F6ED; color: #1E824C; font-size: 0.8125rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 999px; }
+  .unverified-note { font-size: 0.8125rem; color: #8a8074; font-style: italic; }
+
+  .listing-body { display: grid; grid-template-columns: 1fr 22rem; gap: 3rem; padding-block: 2.2rem; align-items: start; }
+  @media (max-width: 55rem) { .listing-body { grid-template-columns: 1fr; } }
+
+  .host-row { display: flex; align-items: center; gap: 1rem; padding-bottom: 1.6rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.6rem; }
+  .host-avatar { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--stay-river); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; flex-shrink: 0; }
+  .host-row h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--stay-ink); font-weight: 600; margin: 0; }
+  .host-row p { margin: 0.15rem 0 0; font-size: 0.875rem; color: #6b6258; }
+
+  .stat-row { display: flex; gap: 2rem; margin-bottom: 0.3rem; }
+  .stat-item strong { display: block; font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--stay-ink); }
+  .stat-item span { font-size: 0.8125rem; color: #6b6258; }
+  .guest-capacity-label { font-size: 0.875rem; color: var(--stay-quartzite-deep); font-weight: 600; padding-bottom: 1.6rem; border-bottom: 1px solid var(--stay-line); margin: 0 0 1.6rem; }
+
+  .listing-body h2 { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--stay-ink); margin-bottom: 0.8rem; }
+  .description-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
+  .description-section .prose p { font-size: 0.9688rem; color: var(--stay-charcoal-text); line-height: 1.7; margin: 0 0 1rem; }
+
+  .amenities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
+  .amenity-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9375rem; color: var(--stay-charcoal-text); }
+  .amenity-item :global(svg) { color: var(--stay-river); flex-shrink: 0; }
+
+  .insider-tips { background: var(--stay-ink); border-radius: 1.1rem; padding: 1.8rem; color: var(--stay-parchment); margin-bottom: 1.8rem; position: relative; overflow: hidden; }
+  .insider-tips::before { content: ''; position: absolute; top: -3rem; right: -3rem; width: 10rem; height: 10rem; border-radius: 50%; background: var(--stay-quartzite); opacity: 0.15; }
+  .insider-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--stay-quartzite); color: var(--stay-ink); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 999px; margin-bottom: 0.9rem; }
+  .insider-tips h2 { color: #fff; font-size: 1.2rem; margin-bottom: 1rem; }
+  .insider-tip { display: flex; gap: 0.8rem; margin-bottom: 1rem; }
+  .insider-tip:last-child { margin-bottom: 0; }
+  .insider-tip-marker { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: rgba(242,237,228,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--stay-quartzite); font-size: 0.8rem; }
+  .insider-tip p { margin: 0; font-size: 0.875rem; color: rgba(242,237,228,0.88); }
+
+  .booking-card { background: #fff; border: 1px solid var(--stay-line); border-radius: 1.1rem; padding: 1.6rem; position: sticky; top: 1.5rem; box-shadow: 0 20px 50px rgba(28,25,23,0.1); }
+  .booking-card-label { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--stay-ink); margin: 0 0 1rem; }
+  .book-btn {
+    display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%;
+    background: linear-gradient(135deg, var(--stay-quartzite), var(--stay-quartzite-deep));
+    color: #fff; font-weight: 700; font-size: 1rem; padding: 0.95rem; border-radius: 0.7rem;
+    text-decoration: none; box-shadow: 0 10px 24px rgba(192,134,119,0.4);
+  }
+  .book-btn-note { text-align: center; font-size: 0.75rem; color: #8a8074; margin: 0.7rem 0; }
+  .see-reviews-link { display: block; text-align: center; font-size: 0.8438rem; font-weight: 700; color: var(--stay-river); text-decoration: none; }
+  .see-reviews-link:hover { text-decoration: underline; }
+</style>

@@ -250,6 +250,38 @@ const pages = defineCollection({
   }),
 });
 
+/**
+ * STAYS
+ * Individual host listings for the /stay hub — each one links out to book
+ * on the host's real Airbnb page rather than handling booking ourselves.
+ * Deliberately no rating/review-count fields: Airbnb doesn't offer a public
+ * API for that data, and a number we can't keep current would go stale and
+ * mislead rather than help. "See reviews on Airbnb" stays a live link instead.
+ */
+const stays = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/stays' }),
+  schema: z.object({
+    name: z.string(),
+    stayType: z.enum(['entire-home', 'private-room', 'guest-suite']),
+    neighborhood: reference('neighborhoods').optional(),
+    locationLabel: z.string(), // e.g. "1 block from Phillips Ave, Downtown Sioux Falls"
+    bedrooms: z.number(),
+    bathrooms: z.number(),
+    guestCapacityLabel: z.string(), // qualitative when an exact number isn't confirmed, e.g. "Ideal for couples or solo travelers"
+    amenities: z.array(z.string()).default([]),
+    heroImage: z.string().optional(),
+    gallery: z.array(z.string()).default([]),
+    airbnbUrl: z.string(), // the real listing — booking happens there, not on this site
+    hostName: z.string().optional(),
+    verifiedAt: z.date().optional(), // omitted entirely until independently confirmed
+    insiderTips: z.array(z.object({ tip: z.string() })).default([]), // includes the host's own local recommendation once collected
+    seo: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+  }),
+});
+
 export const collections = {
   categories,
   neighborhoods,
@@ -259,4 +291,5 @@ export const collections = {
   faqs,
   hubs,
   pages,
+  stays,
 };
