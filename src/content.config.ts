@@ -187,6 +187,7 @@ const articles = defineCollection({
       description: z.string(),
     }),
     heroImage: z.string().optional(),
+    heroImageCredit: z.object({ photographer: z.string(), profileUrl: z.string() }).optional(), // required attribution when heroImage comes from Unsplash
     sourceUrl: z.string().optional(), // original WP URL, for migration traceability
   }),
 });

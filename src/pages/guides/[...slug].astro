@@ -96,6 +96,11 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
     {article.data.heroImage && (
       <img src={article.data.heroImage} alt={article.data.title} class="article-hero-img" />
     )}
+    {article.data.heroImageCredit && (
+      <p class="hero-image-credit">
+        Photo by <a href={article.data.heroImageCredit.profileUrl} target="_blank" rel="noopener">{article.data.heroImageCredit.photographer}</a> on Unsplash
+      </p>
+    )}
 
     <div class="prose">
       {sponsor ? (

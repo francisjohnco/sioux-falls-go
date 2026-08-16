@@ -25,6 +25,12 @@ const giveBackCount = businesses.filter(
 ).length;
 const allArticles = await getCollection('articles');
 const allCategories = await getCollection('categories');
+const articleIndexForEngine = allArticles.map((a) => ({
+  title: a.data.title,
+  slug: a.id,
+  category: a.data.category.id,
+  description: a.data.seo.description,
+}));
 
 // Real "needs attention" list — actual data gaps, not a fake activity log.
 // This is more honest and more useful than a fabricated event feed would
@@ -263,6 +269,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <div class="output-header">
                 <h4>Generated Draft</h4>
                 <span class="badge badge--giveback">AI-assisted — review and edit before publishing</span>
+              </div>
+              <div class="output-image-preview" id="output-image-preview" hidden>
+                <img id="output-image-preview-img" alt="Selected header image" />
+                <p class="image-credit" id="output-image-credit"></p>
               </div>
               <label class="edit-field-full">Title <input type="text" id="output-title" /></label>
               <label class="edit-field-full">Body
@@ -560,6 +570,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       </button>
     </nav>
   </div>
+
+  <script type="application/json" id="article-index-data" set:html={JSON.stringify(articleIndexForEngine)}></script>
 </BaseLayout>
 
 <style>
@@ -659,6 +671,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .button--link { background: none; border: none; padding: 0; color: var(--color-orange-dark); font-weight: 700; font-size: 0.8125rem; cursor: pointer; text-decoration: underline; font-family: var(--font-body); }
   .button--link:hover { color: var(--color-orange); }
   .prompt-save-status { font-size: 0.8125rem; color: var(--color-success); }
+
+  .output-image-preview { margin-bottom: var(--space-2); }
+  .output-image-preview img { width: 100%; max-height: 14rem; object-fit: cover; border-radius: var(--radius); }
+  .image-credit { font-size: 0.75rem; color: var(--color-navy-light); margin: 0.3rem 0 0; }
 
   .engine-panel h3 { font-size: 1rem; margin-bottom: 0.4rem; }
   .panel-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
@@ -1072,6 +1088,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
   let currentDraft: any = null;
 
+  const articleIndex: { title: string; slug: string; category: string; description: string }[] = JSON.parse(
+    document.getElementById('article-index-data')?.textContent || '[]'
+  );
+
   async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string; direction?: string }, triggerBtn: HTMLButtonElement) {
     const outputEl = document.getElementById('engine-output')!;
     outputEl.setAttribute('hidden', '');
@@ -1083,6 +1103,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     try {
       // Step 1: kick off the background job — this returns almost
       // instantly with just a job ID, well clear of any timeout.
+      const sameCategory = articleIndex.filter((a) => a.category === opts.categorySlug);
+      const otherRelevant = articleIndex.filter((a) => a.category !== opts.categorySlug).slice(0, 15);
+      const relevantExisting = [...sameCategory, ...otherRelevant];
+
       const startRes = await fetch('/api/start-generate-draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1093,7 +1117,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           direction: opts.direction,
           interviewAnswers: opts.interviewAnswers,
           businessName: opts.businessName,
-          existingArticleTitles: [],
+          existingArticles: relevantExisting,
         }),
       });
       const startText = await startRes.text();
@@ -1132,6 +1156,18 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       currentDraft = { draft: data.draft, categorySlug: opts.categorySlug, contentType: opts.contentType };
       (document.getElementById('output-title') as HTMLInputElement).value = data.draft.title;
       (document.getElementById('output-body') as HTMLTextAreaElement).value = data.draft.bodyMarkdown;
+
+      const imgPreview = document.getElementById('output-image-preview')!;
+      if (data.draft.heroImage) {
+        (document.getElementById('output-image-preview-img') as HTMLImageElement).src = data.draft.heroImage;
+        document.getElementById('output-image-credit')!.textContent = data.draft.heroImageCredit
+          ? `Photo by ${data.draft.heroImageCredit.photographer} on Unsplash`
+          : '';
+        imgPreview.hidden = false;
+      } else {
+        imgPreview.hidden = true;
+      }
+
       outputEl.removeAttribute('hidden');
       outputEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } finally {

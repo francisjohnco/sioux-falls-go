@@ -80,6 +80,8 @@ export default async (req: Request) => {
     publishedAt: today,
     updatedAt: today,
     seo: { title: draft.seoTitle, description: draft.seoDescription },
+    heroImage: draft.heroImage || undefined,
+    heroImageCredit: draft.heroImageCredit || undefined,
   });
 
   const fileContent = `${frontmatter}\n\n${draft.bodyMarkdown}\n`;

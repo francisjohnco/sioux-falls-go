@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { runDraftGeneration } from './_shared/draft-generator.mts';
+import { runDraftGeneration, fetchHeroImage } from './_shared/draft-generator.mts';
 
 // This is a Netlify SCHEDULED function — the cron schedule below controls
 // when it runs automatically. "0 14 * * 1,3" = 2pm UTC every Monday and
@@ -23,6 +23,11 @@ export default async () => {
   const gapsRes = await fetch(`${siteUrl}/content-gaps.json`);
   if (!gapsRes.ok) return new Response('Could not fetch content-gaps.json', { status: 500 });
   const gaps = await gapsRes.json();
+
+  // Real article index for internal linking and deduplication — same file,
+  // same generation script, as what the admin UI uses directly.
+  const articleIndexRes = await fetch(`${siteUrl}/article-index.json`);
+  const articleIndex = articleIndexRes.ok ? await articleIndexRes.json() : [];
 
   const topGap = gaps.categories.find((c: any) => c.priorityScore > 0);
   if (!topGap) {
@@ -48,12 +53,18 @@ export default async () => {
       categoryName: topGap.name,
       categorySlug: topGap.slug,
       contentType: contentTypeToGenerate,
-      existingArticleTitles: [],
+      existingArticles: [
+        ...articleIndex.filter((a: any) => a.category === topGap.slug),
+        ...articleIndex.filter((a: any) => a.category !== topGap.slug).slice(0, 15),
+      ],
     });
   } catch (err: any) {
     console.error('Draft generation failed:', err?.message || err);
     return new Response('Generation failed', { status: 500 });
   }
+
+  const heroImage = await fetchHeroImage(`${topGap.name} ${contentTypeToGenerate.replace(/-/g, ' ')}`.trim());
+  const draftWithImage = { ...draft, heroImage: heroImage?.url, heroImageCredit: heroImage?.credit };
 
   // 3. Store in the pending-review queue — NOT published yet
   const store = getStore('pending-drafts');
@@ -63,7 +74,7 @@ export default async () => {
     categorySlug: topGap.slug,
     categoryName: topGap.name,
     contentType: contentTypeToGenerate,
-    draft,
+    draft: draftWithImage,
     generatedAt: new Date().toISOString(),
     status: 'pending-review',
   });

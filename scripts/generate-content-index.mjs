@@ -156,6 +156,17 @@ function main() {
 
   const outPath = path.join(ROOT, 'public/content-gaps.json');
   fs.writeFileSync(outPath, JSON.stringify({ generatedAt: now.toISOString(), categories: report }, null, 2));
+
+  // Real article index — used by the scheduled auto-generation function for
+  // internal linking and avoiding duplicate angles, the same real data the
+  // admin UI already gets directly via getCollection().
+  const articleIndex = articles.map((a) => ({
+    title: a.title,
+    slug: a.file.replace(/\.md$/, ''),
+    category: a.category,
+    description: a.seo?.description || '',
+  }));
+  fs.writeFileSync(path.join(ROOT, 'public/article-index.json'), JSON.stringify(articleIndex, null, 2));
   console.log(`Content gap report written: ${outPath}`);
   console.log('Top 5 priorities:');
   report.slice(0, 5).forEach((r, i) => console.log(`  ${i + 1}. ${r.name} (score: ${r.priorityScore}) — ${r.reasons.join('; ')}`));
