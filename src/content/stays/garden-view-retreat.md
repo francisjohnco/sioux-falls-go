@@ -19,8 +19,8 @@ insiderTips:
   - tip: "Under a mile from Sanford and Avera hospitals, which makes this a genuinely easy pick for medical stays, not just weekend trips."
   - tip: "Street parking is easiest along 2nd Street, right near the path to the private entrance."
 seo:
-  title: "Garden View Retreat — Downtown Sioux Falls Stay"
-  description: "A private garden-level retreat inside a restored 1889 Victorian, one block from Phillips Avenue in downtown Sioux Falls."
+  title: "Sioux Falls Vacation Rental – Garden View Retreat"
+  description: "A private, walkable Sioux Falls vacation rental steps from Phillips Avenue. Historic Victorian charm, your own entrance, downtown at your doorstep."
 ---
 
 Tucked into the lower level of a beautifully restored 1889 Victorian — once home to a family of thirteen — Garden View Retreat is a quiet, private escape just one block off Phillips Avenue. You get your own entrance, your own patio, and a home that's fully separated from the main house, so the stay feels genuinely independent, not like a room in someone else's place.

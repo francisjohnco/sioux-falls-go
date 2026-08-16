@@ -276,7 +276,18 @@ const stays = defineCollection({
     airbnbUrl: z.string(), // the real listing — booking happens there, not on this site
     hostName: z.string().optional(),
     verifiedAt: z.date().optional(), // omitted entirely until independently confirmed
-    insiderTips: z.array(z.object({ tip: z.string() })).default([]), // includes the host's own local recommendation once collected
+    insiderTips: z.array(z.object({
+      tip: z.string(),
+      category: z.enum(['eat', 'shop', 'sight', 'general']).default('general'), // 'eat'/'shop'/'sight' are the host's own picks, collected via the intake form; 'general' is practical local knowledge like this one
+    })).default([]),
+    // SEO pattern for every stay listing: lead with real search intent
+    // ("Sioux Falls Vacation Rental"), not the property name — almost
+    // nobody searches a specific listing by name yet. Title format:
+    // "Sioux Falls Vacation Rental – [Name]", kept to ~45-50 characters —
+    // BaseLayout automatically appends " | Sioux Falls Go" (17 more
+    // chars), and going past ~65 total risks truncation in search results.
+    // Description: use the full ~150-160 char budget, name a real nearby
+    // landmark, and lead with what actually differentiates the stay.
     seo: z.object({
       title: z.string(),
       description: z.string(),
