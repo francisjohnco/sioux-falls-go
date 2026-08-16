@@ -1,4 +1,5 @@
 import { getStore } from '@netlify/blobs';
+import { runDraftGeneration } from './_shared/draft-generator.mts';
 
 // This is a Netlify SCHEDULED function — the cron schedule below controls
 // when it runs automatically. "0 14 * * 1,3" = 2pm UTC every Monday and
@@ -41,31 +42,18 @@ export default async () => {
       ? 'local-resource'
       : 'local-resource';
 
-  const draftRes = await fetch(`${siteUrl}/api/generate-draft`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      // Scheduled functions run server-side with no user cookie — this
-      // internal call authenticates via a shared secret instead. See
-      // INTERNAL_FUNCTION_TOKEN in the setup docs.
-      'x-internal-token': process.env.INTERNAL_FUNCTION_TOKEN || '',
-    },
-    body: JSON.stringify({
+  let draft;
+  try {
+    draft = await runDraftGeneration({
       categoryName: topGap.name,
       categorySlug: topGap.slug,
       contentType: contentTypeToGenerate,
-      promptTemplate: 'Scheduled auto-generation',
       existingArticleTitles: [],
-    }),
-  });
-
-  if (!draftRes.ok) {
-    const detail = await draftRes.text();
-    console.error('Draft generation failed:', detail);
+    });
+  } catch (err: any) {
+    console.error('Draft generation failed:', err?.message || err);
     return new Response('Generation failed', { status: 500 });
   }
-
-  const { draft } = await draftRes.json();
 
   // 3. Store in the pending-review queue — NOT published yet
   const store = getStore('pending-drafts');
@@ -86,4 +74,5 @@ export default async () => {
 
 export const config = {
   schedule: '0 14 * * 1,3', // 2pm UTC, Monday and Wednesday
+  background: true, // the actual generation call can take longer than the 10s synchronous limit
 };

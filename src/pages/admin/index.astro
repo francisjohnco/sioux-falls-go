@@ -72,6 +72,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <button class="nav-item" data-tab="content-engine">
           <span class="nav-icon"><Icon name="edit" size={18} /></span> Content Engine
         </button>
+        <button class="nav-item" data-tab="drafts">
+          <span class="nav-icon"><Icon name="clipboard" size={18} /></span> Drafts &amp; Articles
+        </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
         </button>
@@ -283,6 +286,64 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
         </div>
       </section>
+
+      <!-- ── DRAFTS & ARTICLES ── -->
+      <section class="tab-panel" id="panel-drafts">
+        <h1>Drafts &amp; Articles</h1>
+        <p class="panel-sub">Review what's waiting, and edit anything already published.</p>
+
+        <h3 class="section-heading">Pending Review <span id="pending-drafts-count" class="live-tag"></span></h3>
+        <p class="panel-note">Drafts from the Monday/Wednesday auto-generation — nothing here has published itself, review and approve each one.</p>
+        <div id="pending-drafts-list" class="pending-drafts-list">
+          <p class="empty-note">Loading…</p>
+        </div>
+
+        <h3 class="section-heading">All Published Articles</h3>
+        <input type="text" id="article-search" class="directory-search" placeholder="Search articles by title…" />
+        <div id="articles-list" class="articles-list">
+          {allArticles
+            .sort((a, b) => (b.data.publishedAt?.toString() || '').localeCompare(a.data.publishedAt?.toString() || ''))
+            .map((a) => (
+              <button
+                class="article-row"
+                data-search={a.data.title.toLowerCase()}
+                data-open-article={a.id}
+                data-article={JSON.stringify({
+                  title: a.data.title,
+                  seoTitle: a.data.seo.title,
+                  seoDescription: a.data.seo.description,
+                  bodyMarkdown: a.body || '',
+                })}
+              >
+                <span class="article-row-title">{a.data.title}</span>
+                <span class="article-row-meta">{a.data.contentType} · {a.data.publishedAt?.toString().slice(0, 10)}</span>
+              </button>
+            ))}
+        </div>
+      </section>
+
+      <!-- ARTICLE EDIT MODAL -->
+      <div class="edit-modal-backdrop" id="article-edit-modal-backdrop">
+        <div class="edit-modal">
+          <div class="edit-modal-header">
+            <h2 id="article-edit-modal-title">Edit Article</h2>
+            <button class="edit-modal-close" id="article-edit-modal-close" aria-label="Close">✕</button>
+          </div>
+          <div class="edit-modal-body">
+            <label class="edit-field-full">Title <input type="text" id="article-edit-title" /></label>
+            <label class="edit-field-full">SEO Title <input type="text" id="article-edit-seo-title" /></label>
+            <label class="edit-field-full">SEO Description <textarea id="article-edit-seo-description" rows="2"></textarea></label>
+            <label class="edit-field-full">Body
+              <textarea id="article-edit-body" rows="14" class="edit-body-textarea"></textarea>
+            </label>
+            <p class="edit-modal-status" id="article-edit-status" hidden></p>
+          </div>
+          <div class="edit-modal-footer">
+            <button class="button button--ghost" id="article-edit-cancel">Cancel</button>
+            <button class="button" id="article-edit-save">Save Changes</button>
+          </div>
+        </div>
+      </div>
 
       <!-- ── DIRECTORY ── -->
       <section class="tab-panel" id="panel-directory">
@@ -583,6 +644,19 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .gap-queue-section h3 { font-size: 0.9375rem; margin-bottom: 0.2rem; }
   .gap-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
   .gap-queue-list { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .panel-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0.3rem 0 0.9rem; }
+  .pending-drafts-list { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: var(--space-4); }
+  .pending-draft-card { display: flex; justify-content: space-between; gap: 1rem; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1rem 1.2rem; }
+  .pending-draft-meta { font-size: 0.75rem; color: var(--color-navy-light); margin: 0.2rem 0 0.4rem; }
+  .pending-draft-excerpt { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0; max-width: 42rem; }
+  .pending-draft-actions { display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
+
+  .articles-list { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.8rem; max-height: 30rem; overflow-y: auto; }
+  .article-row { display: flex; flex-direction: column; align-items: flex-start; text-align: left; background: #fff; border: 1px solid var(--color-line); border-radius: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; width: 100%; }
+  .article-row:hover { border-color: var(--color-orange); }
+  .article-row-title { font-weight: 600; font-size: 0.9rem; color: var(--color-navy); }
+  .article-row-meta { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
   .gap-item { display: grid; grid-template-columns: 1.75rem 1fr auto; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--color-surface); border-radius: var(--radius); }
   .gap-rank { font-family: var(--font-display); font-weight: 700; color: var(--color-orange); text-align: center; }
   .gap-item p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
@@ -1009,10 +1083,12 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
     const activeBtn = (document.getElementById('article-generate-btn') || document.getElementById('spotlight-generate-btn')) as HTMLButtonElement;
     const originalLabel = activeBtn?.innerHTML;
-    if (activeBtn) { activeBtn.disabled = true; activeBtn.textContent = 'Generating…'; }
+    if (activeBtn) { activeBtn.disabled = true; activeBtn.textContent = 'Starting…'; }
 
     try {
-      const res = await fetch('/api/generate-draft', {
+      // Step 1: kick off the background job — this returns almost
+      // instantly with just a job ID, well clear of any timeout.
+      const startRes = await fetch('/api/start-generate-draft', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1025,16 +1101,38 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           existingArticleTitles: [],
         }),
       });
-      const rawText = await res.text();
-      let data: any;
+      const startText = await startRes.text();
+      let startData: any;
       try {
-        data = JSON.parse(rawText);
+        startData = JSON.parse(startText);
       } catch {
-        // The real diagnostic — shows the actual status and what came
-        // back, instead of just "Unexpected token '<'".
-        throw new Error(`Server returned HTTP ${res.status} (not JSON): ${rawText.slice(0, 200)}`);
+        throw new Error(`Server returned HTTP ${startRes.status} (not JSON): ${startText.slice(0, 200)}`);
       }
-      if (!res.ok) throw new Error(data.error + (data.detail ? `: ${data.detail}` : ''));
+      if (!startRes.ok || !startData.jobId) throw new Error(startData.error || 'Could not start generation');
+
+      // Step 2: poll every 2.5s for up to 2 minutes — the actual
+      // generation runs in the background function, well within its
+      // 15-minute budget, while this just checks in periodically.
+      const jobId = startData.jobId;
+      let job: any = null;
+      for (let attempt = 0; attempt < 48; attempt++) {
+        await new Promise((r) => setTimeout(r, 2500));
+        if (activeBtn) activeBtn.textContent = `Generating${'.'.repeat((attempt % 3) + 1)}`;
+
+        const pollRes = await fetch(`/api/check-draft-status?jobId=${jobId}`);
+        const pollText = await pollRes.text();
+        try {
+          job = JSON.parse(pollText);
+        } catch {
+          throw new Error(`Status check returned HTTP ${pollRes.status} (not JSON): ${pollText.slice(0, 200)}`);
+        }
+        if (job.status === 'complete' || job.status === 'error') break;
+      }
+
+      if (!job || job.status === 'pending') throw new Error('Generation is taking longer than expected — check back in a minute, the job may still complete.');
+      if (job.status === 'error') throw new Error(job.error || 'Generation failed');
+
+      const data = { draft: job.draft };
 
       currentDraft = { draft: data.draft, categorySlug: opts.categorySlug, contentType: opts.contentType };
       document.getElementById('output-text')!.innerHTML = `
@@ -1244,6 +1342,189 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     } finally {
       editSaveBtn.removeAttribute('disabled');
       editSaveBtn.textContent = 'Save Changes';
+    }
+  });
+
+  // DRAFTS & ARTICLES TAB
+  async function loadPendingDrafts() {
+    const listEl = document.getElementById('pending-drafts-list')!;
+    const countEl = document.getElementById('pending-drafts-count')!;
+    try {
+      const res = await fetch('/api/list-pending-drafts');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not load pending drafts');
+
+      const drafts = data.drafts || [];
+      countEl.textContent = drafts.length > 0 ? `${drafts.length} WAITING` : '';
+
+      if (drafts.length === 0) {
+        listEl.innerHTML = '<p class="empty-note">Nothing waiting for review right now.</p>';
+        return;
+      }
+
+      listEl.innerHTML = drafts
+        .map(
+          (d: any) => `
+        <div class="pending-draft-card" data-id="${d.id}">
+          <div>
+            <strong>${d.draft?.title || '(untitled)'}</strong>
+            <p class="pending-draft-meta">${d.categoryName} · ${d.contentType} · generated ${new Date(d.generatedAt).toLocaleDateString()}</p>
+            <p class="pending-draft-excerpt">${(d.draft?.bodyMarkdown || '').slice(0, 200)}…</p>
+          </div>
+          <div class="pending-draft-actions">
+            <button class="button pending-publish-btn" data-id="${d.id}">Approve &amp; Publish</button>
+            <button class="button button--ghost pending-discard-btn" data-id="${d.id}">Discard</button>
+          </div>
+        </div>`
+        )
+        .join('');
+
+      document.querySelectorAll('.pending-publish-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = (btn as HTMLElement).dataset.id!;
+          const draftData = drafts.find((d: any) => d.id === id);
+          if (!draftData) return;
+          (btn as HTMLButtonElement).disabled = true;
+          (btn as HTMLButtonElement).textContent = 'Publishing…';
+          try {
+            const res = await fetch('/api/publish-draft', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                draft: draftData.draft,
+                categorySlug: draftData.categorySlug,
+                contentType: draftData.contentType,
+                pendingDraftId: id,
+              }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Publish failed');
+            loadPendingDrafts();
+          } catch (err: any) {
+            alert(`Couldn't publish: ${err.message}`);
+            (btn as HTMLButtonElement).disabled = false;
+            (btn as HTMLButtonElement).textContent = 'Approve & Publish';
+          }
+        });
+      });
+
+      document.querySelectorAll('.pending-discard-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = (btn as HTMLElement).dataset.id!;
+          if (!confirm('Discard this draft? This cannot be undone.')) return;
+          await fetch('/api/discard-draft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id }),
+          });
+          loadPendingDrafts();
+        });
+      });
+    } catch (err: any) {
+      listEl.innerHTML = `<p class="empty-note">Couldn't load pending drafts: ${err.message}</p>`;
+    }
+  }
+
+  // Only load once the Drafts tab is actually opened, not on every page load
+  let pendingDraftsLoaded = false;
+  document.querySelector('[data-tab="drafts"]')?.addEventListener('click', () => {
+    if (!pendingDraftsLoaded) {
+      pendingDraftsLoaded = true;
+      loadPendingDrafts();
+    }
+  });
+
+  // Article search — same pattern as the Directory search
+  document.getElementById('article-search')?.addEventListener('input', (e) => {
+    const query = (e.target as HTMLInputElement).value.toLowerCase();
+    document.querySelectorAll('.article-row').forEach((row) => {
+      const el = row as HTMLElement;
+      el.hidden = !el.dataset.search?.includes(query);
+    });
+  });
+
+  // Article edit modal
+  const articleModalBackdrop = document.getElementById('article-edit-modal-backdrop');
+  const articleEditStatus = document.getElementById('article-edit-status');
+  let currentArticleSlug: string | null = null;
+  let currentArticleOriginal: any = null;
+
+  function openArticleEditModal(slug: string, data: any) {
+    currentArticleSlug = slug;
+    currentArticleOriginal = data;
+    document.getElementById('article-edit-modal-title')!.textContent = `Edit: ${data.title}`;
+    (document.getElementById('article-edit-title') as HTMLInputElement).value = data.title || '';
+    (document.getElementById('article-edit-seo-title') as HTMLInputElement).value = data.seoTitle || '';
+    (document.getElementById('article-edit-seo-description') as HTMLTextAreaElement).value = data.seoDescription || '';
+    (document.getElementById('article-edit-body') as HTMLTextAreaElement).value = data.bodyMarkdown || '';
+    if (articleEditStatus) articleEditStatus.hidden = true;
+    articleModalBackdrop?.classList.add('is-open');
+  }
+
+  function closeArticleEditModal() {
+    articleModalBackdrop?.classList.remove('is-open');
+    currentArticleSlug = null;
+    currentArticleOriginal = null;
+  }
+
+  document.querySelectorAll('[data-open-article]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.getAttribute('data-open-article')!;
+      const data = JSON.parse(btn.getAttribute('data-article') || '{}');
+      openArticleEditModal(slug, data);
+    });
+  });
+
+  document.getElementById('article-edit-modal-close')?.addEventListener('click', closeArticleEditModal);
+  document.getElementById('article-edit-cancel')?.addEventListener('click', closeArticleEditModal);
+  articleModalBackdrop?.addEventListener('click', (e) => { if (e.target === articleModalBackdrop) closeArticleEditModal(); });
+
+  document.getElementById('article-edit-save')?.addEventListener('click', async () => {
+    if (!currentArticleSlug) return;
+    const saveBtn = document.getElementById('article-edit-save') as HTMLButtonElement;
+    const updates: Record<string, unknown> = {};
+
+    const fieldMap: Record<string, string> = {
+      title: 'article-edit-title',
+      seoTitle: 'article-edit-seo-title',
+      seoDescription: 'article-edit-seo-description',
+      bodyMarkdown: 'article-edit-body',
+    };
+    for (const [key, elId] of Object.entries(fieldMap)) {
+      const el = document.getElementById(elId) as HTMLInputElement | HTMLTextAreaElement;
+      if (el && el.value !== currentArticleOriginal[key]) updates[key] = el.value;
+    }
+
+    if (Object.keys(updates).length === 0) {
+      if (articleEditStatus) { articleEditStatus.textContent = 'No changes to save.'; articleEditStatus.hidden = false; articleEditStatus.className = 'edit-modal-status'; }
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving…';
+    try {
+      const res = await fetch('/api/update-article', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: currentArticleSlug, updates }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      if (articleEditStatus) {
+        articleEditStatus.textContent = 'Saved! Site will rebuild automatically.';
+        articleEditStatus.className = 'edit-modal-status is-success';
+        articleEditStatus.hidden = false;
+      }
+      setTimeout(closeArticleEditModal, 1200);
+    } catch (err: any) {
+      if (articleEditStatus) {
+        articleEditStatus.textContent = `Couldn't save: ${err.message}`;
+        articleEditStatus.className = 'edit-modal-status is-error';
+        articleEditStatus.hidden = false;
+      }
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
     }
   });
 

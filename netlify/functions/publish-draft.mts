@@ -1,3 +1,5 @@
+import { getStore } from '@netlify/blobs';
+
 // Env vars required:
 //   GITHUB_TOKEN — a fine-grained GitHub Personal Access Token with
 //                  "Contents: Read and write" permission on this one repo
@@ -58,7 +60,7 @@ export default async (req: Request) => {
     return new Response(JSON.stringify({ error: 'Missing draft in request body' }), { status: 400 });
   }
 
-  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy } = body;
+  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy, pendingDraftId } = body;
   const slug = slugify(draft.title);
   const today = new Date().toISOString().split('T')[0];
 
@@ -104,6 +106,11 @@ export default async (req: Request) => {
         status: 502,
         headers: { 'Content-Type': 'application/json' },
       });
+    }
+
+    if (pendingDraftId) {
+      const pendingStore = getStore('pending-drafts');
+      await pendingStore.delete(pendingDraftId);
     }
 
     return new Response(JSON.stringify({ ok: true, path, slug }), {
