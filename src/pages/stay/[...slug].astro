@@ -18,13 +18,20 @@ const STAY_TYPE_LABELS: Record<string, string> = {
   'guest-suite': 'Guest Suite',
 };
 
-const AMENITY_ICONS: Record<string, string> = {
-  'King bed': 'key',
-  'Private entrance & patio': 'leaf',
-  'Kitchenette (mini-fridge, microwave, Keurig)': 'coffee',
-  'Full bathroom': 'window',
-  'Cozy lounge space': 'home',
-  'Mudroom storage': 'folder',
+const EXPERIENCE_CATEGORY_LABELS: Record<string, string> = {
+  'downtown-walkable': 'Downtown & Walkable',
+  'riverside-nature': 'Riverside & Nature',
+  'historic-charming': 'Historic & Charming',
+  'family-friendly': 'Family-Friendly',
+  'solo-budget': 'Solo & Budget',
+};
+
+const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
+  'Garden view': { icon: 'leaf', color: '#5B8C5A' },
+  'Wifi – 5 Mbps': { icon: 'globe', color: '#3E7CB1' },
+  'Dedicated workspace': { icon: 'briefcase', color: '#C9992D' },
+  'Free street parking': { icon: 'pin', color: '#C08677' },
+  'Pets allowed': { icon: 'heart', color: '#D4645A' },
 };
 ---
 
@@ -65,6 +72,14 @@ const AMENITY_ICONS: Record<string, string> = {
   <div class="container listing-header">
     <span class="listing-eyebrow">{neighborhood ? neighborhood.data.name : stay.data.locationLabel} · {STAY_TYPE_LABELS[stay.data.stayType]}</span>
     <h1>{stay.data.name}</h1>
+    <p class="branded-tagline">✦ A Sioux Falls Go pick — real stays, chosen by people who actually live here.</p>
+    {stay.data.experienceCategories.length > 0 && (
+      <div class="category-tags">
+        {stay.data.experienceCategories.map((c) => (
+          <span class="category-tag">{EXPERIENCE_CATEGORY_LABELS[c]}</span>
+        ))}
+      </div>
+    )}
     <div class="listing-meta">
       {stay.data.verifiedAt ? (
         <span class="verified-pill"><Icon name="check" size={13} /> Verified by Sioux Falls Go</span>
@@ -99,15 +114,45 @@ const AMENITY_ICONS: Record<string, string> = {
       </div>
 
       {stay.data.amenities.length > 0 && (
-        <div>
+        <div class="amenities-section">
           <h2>What this place offers</h2>
           <div class="amenities-grid">
-            {stay.data.amenities.map((a) => (
-              <div class="amenity-item"><Icon name={AMENITY_ICONS[a] || 'check'} size={18} class="amenity-icon" /> {a}</div>
-            ))}
+            {stay.data.amenities.map((a) => {
+              const style = AMENITY_STYLE[a] || { icon: 'check', color: 'var(--stay-river)' };
+              return (
+                <div class="amenity-item">
+                  <span class="amenity-icon-wrap" style={`background: ${style.color}1a; color: ${style.color};`}>
+                    <Icon name={style.icon} size={16} />
+                  </span>
+                  {a}
+                </div>
+              );
+            })}
           </div>
+          {stay.data.amenityCount && stay.data.amenityCount > stay.data.amenities.length && (
+            <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="see-all-amenities">
+              See all {stay.data.amenityCount} amenities on Airbnb →
+            </a>
+          )}
         </div>
       )}
+
+      <div class="map-section">
+        <h2>What's around</h2>
+        {import.meta.env.GOOGLE_MAPS_EMBED_KEY ? (
+          <div class="map-embed-wrap">
+            <iframe
+              src={`https://www.google.com/maps/embed/v1/place?key=${import.meta.env.GOOGLE_MAPS_EMBED_KEY}&q=Downtown+Sioux+Falls,SD&zoom=14`}
+              width="100%" height="320" style="border:0;" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        ) : (
+          <a href="https://www.google.com/maps/search/Downtown+Sioux+Falls,SD" target="_blank" rel="noopener" class="map-fallback-link">
+            <Icon name="map" size={18} /> View the area on Google Maps ↗
+          </a>
+        )}
+        <p class="map-note">Approximate area shown — the exact address is shared after booking, same as on Airbnb.</p>
+      </div>
 
       {stay.data.insiderTips.length > 0 && (
         <div class="insider-tips">
@@ -165,6 +210,9 @@ const AMENITY_ICONS: Record<string, string> = {
   .listing-header { padding-block: 1.8rem 1rem; border-bottom: 1px solid var(--stay-line); }
   .listing-eyebrow { color: var(--stay-quartzite-deep); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: block; }
   .listing-header h1 { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 600; color: var(--stay-ink); margin-bottom: 0.5rem; }
+  .branded-tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9375rem; color: var(--stay-quartzite-deep); margin: 0 0 0.9rem; }
+  .category-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+  .category-tag { background: var(--stay-parchment); border: 1px solid var(--stay-line); color: var(--stay-ink); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; }
   .listing-meta { display: flex; align-items: center; gap: 0.8rem; color: var(--stay-charcoal-text); font-size: 0.9375rem; flex-wrap: wrap; }
   .verified-pill { display: inline-flex; align-items: center; gap: 0.3rem; background: #E7F6ED; color: #1E824C; font-size: 0.8125rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 999px; }
   .unverified-note { font-size: 0.8125rem; color: #8a8074; font-style: italic; }
@@ -186,9 +234,19 @@ const AMENITY_ICONS: Record<string, string> = {
   .description-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
   .description-section .prose p { font-size: 0.9688rem; color: var(--stay-charcoal-text); line-height: 1.7; margin: 0 0 1rem; }
 
-  .amenities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
-  .amenity-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9375rem; color: var(--stay-charcoal-text); }
-  .amenity-item :global(svg) { color: var(--stay-river); flex-shrink: 0; }
+  .amenities-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
+  .amenities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+  .amenity-item { display: flex; align-items: center; gap: 0.7rem; font-size: 0.9375rem; color: var(--stay-charcoal-text); }
+  .amenity-icon-wrap { width: 2.1rem; height: 2.1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .see-all-amenities { display: inline-block; margin-top: 1.1rem; font-size: 0.875rem; font-weight: 700; color: var(--stay-river); text-decoration: none; }
+  .see-all-amenities:hover { text-decoration: underline; }
+
+  .map-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
+  .map-embed-wrap { border-radius: 1rem; overflow: hidden; border: 1px solid var(--stay-line); }
+  .map-embed-wrap iframe { display: block; }
+  .map-fallback-link { display: flex; align-items: center; gap: 0.6rem; background: var(--stay-parchment); border: 1px solid var(--stay-line); border-radius: 1rem; padding: 1.4rem; color: var(--stay-river); font-weight: 700; text-decoration: none; justify-content: center; }
+  .map-fallback-link:hover { text-decoration: underline; }
+  .map-note { font-size: 0.8125rem; color: #8a8074; margin: 0.7rem 0 0; }
 
   .insider-tips { background: var(--stay-ink); border-radius: 1.1rem; padding: 1.8rem; color: var(--stay-parchment); margin-bottom: 1.8rem; position: relative; overflow: hidden; }
   .insider-tips::before { content: ''; position: absolute; top: -3rem; right: -3rem; width: 10rem; height: 10rem; border-radius: 50%; background: var(--stay-quartzite); opacity: 0.15; }

@@ -269,6 +269,8 @@ const stays = defineCollection({
     bathrooms: z.number(),
     guestCapacityLabel: z.string(), // qualitative when an exact number isn't confirmed, e.g. "Ideal for couples or solo travelers"
     amenities: z.array(z.string()).default([]),
+    amenityCount: z.number().optional(), // real total from the Airbnb listing, when the full amenities list isn't itemized here
+    experienceCategories: z.array(z.enum(['downtown-walkable', 'riverside-nature', 'historic-charming', 'family-friendly', 'solo-budget'])).default([]),
     heroImage: z.string().optional(),
     gallery: z.array(z.string()).default([]),
     airbnbUrl: z.string(), // the real listing — booking happens there, not on this site

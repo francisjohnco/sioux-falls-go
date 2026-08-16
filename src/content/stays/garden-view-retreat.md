@@ -6,12 +6,13 @@ bedrooms: 1
 bathrooms: 1
 guestCapacityLabel: "Ideal for couples or solo travelers"
 amenities:
-  - "King bed"
-  - "Private entrance & patio"
-  - "Kitchenette (mini-fridge, microwave, Keurig)"
-  - "Full bathroom"
-  - "Cozy lounge space"
-  - "Mudroom storage"
+  - "Garden view"
+  - "Wifi – 5 Mbps"
+  - "Dedicated workspace"
+  - "Free street parking"
+  - "Pets allowed"
+amenityCount: 54
+experienceCategories: ["downtown-walkable", "historic-charming"]
 airbnbUrl: "https://www.airbnb.com/rooms/25626639"
 insiderTips:
   - tip: "You're a block from Phillips Avenue — walk to dinner, coffee, and downtown nightlife without moving your car."
