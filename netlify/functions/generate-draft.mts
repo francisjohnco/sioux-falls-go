@@ -75,7 +75,8 @@ Generate one article for Sioux Falls Go.
 Category: ${categoryName} (${categorySlug})
 Content type: ${contentType}
 ${direction ? `\nSpecific direction from the site owner — follow this closely, it's more important than your own default angle:\n${direction}` : ''}
-${businessName ? `\nThis is a Business Spotlight for: ${businessName}` : ''}
+${businessName ? `\nThis is a ${contentType === 'press-release' ? 'press release' : 'Business Spotlight'} for: ${businessName}` : ''}
+${contentType === 'press-release' ? '\nWrite this as a real press release, not a narrative profile: lead with the actual news/announcement in the first sentence, keep it factual and newsworthy rather than storytelling, and keep it noticeably shorter than a full article (roughly half the length).' : ''}
 ${interviewAnswers?.length ? `\nInterview answers to draw from (write the article using these, in your own words, not verbatim quotes):\n${interviewAnswers.map((a: any) => `Q: ${a.question}\nA: ${a.answer}`).join('\n\n')}` : ''}
 
 Articles already published in this category (do NOT duplicate their angle — pick a genuinely different, complementary angle):

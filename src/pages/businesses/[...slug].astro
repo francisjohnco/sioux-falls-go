@@ -28,7 +28,7 @@ const relatedGuides = allArticles.filter(
 // Spotlights written about this specific business — premium feature
 const spotlights = allArticles.filter(
   (a) =>
-    a.data.contentType === 'business-spotlight' &&
+    (a.data.contentType === 'business-spotlight' || a.data.contentType === 'press-release') &&
     a.data.relatedBusinesses.some((ref) => ref.id === business.id)
 );
 
@@ -248,7 +248,7 @@ const schema = {
             <h3>Latest from {business.data.name}</h3>
             {spotlights.map((s) => (
               <a class="spotlight-card" href={`/guides/${s.id}`}>
-                <span class="spotlight-tag">Spotlight</span>
+                <span class="spotlight-tag">{s.data.contentType === 'press-release' ? 'Press Release' : 'Spotlight'}</span>
                 <h4>{s.data.title}</h4>
               </a>
             ))}

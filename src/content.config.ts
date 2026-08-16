@@ -168,6 +168,7 @@ const articles = defineCollection({
       'safety-information',
       'maintenance-guide',
       'business-spotlight', // premium-tier feature: written by us about a Community Champion
+      'press-release', // premium-tier feature: monthly press release for a Community Champion
     ]),
     relatedNeighborhoods: z.array(reference('neighborhoods')).default([]),
     relatedArticles: z.array(reference('articles')).default([]),
