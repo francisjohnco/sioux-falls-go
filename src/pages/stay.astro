@@ -170,8 +170,18 @@ const schema = {
         <select id="host-experience" name="experience">
           {experiences.map((exp) => <option value={exp.label}>{exp.label}</option>)}
         </select>
-        <label for="host-details">Tell us about your place</label>
-        <textarea id="host-details" name="details" rows="3" placeholder="Location, size, what makes it special..."></textarea>
+        <label for="host-airbnb-url">Your Airbnb listing URL</label>
+        <input type="url" id="host-airbnb-url" name="airbnbUrl" placeholder="https://www.airbnb.com/rooms/..." required />
+        <label for="host-amenities">Amenities</label>
+        <textarea id="host-amenities" name="amenities" rows="3" placeholder="Copy and paste your amenities list directly from your Airbnb listing"></textarea>
+        <label for="host-description">Description</label>
+        <textarea id="host-description" name="description" rows="4" placeholder="Copy and paste your &quot;About this space&quot; description directly from Airbnb — we'll adapt it to match Sioux Falls Go's style"></textarea>
+        <label for="host-pick-eat">One place to eat you'd recommend to your guests</label>
+        <input type="text" id="host-pick-eat" name="pickEat" placeholder="Restaurant or coffee shop name" />
+        <label for="host-pick-shop">One shop you'd recommend</label>
+        <input type="text" id="host-pick-shop" name="pickShop" placeholder="Shop or boutique name" />
+        <label for="host-pick-sight">One sight worth seeing</label>
+        <input type="text" id="host-pick-sight" name="pickSight" placeholder="Attraction or spot name" />
         <button type="submit" class="host-cta-btn">Apply to Host →</button>
         <p class="host-form-status" id="host-form-status" hidden></p>
       </form>
