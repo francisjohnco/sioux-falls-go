@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
 import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
@@ -40,11 +41,7 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
   description={stay.data.seo.description}
   canonicalPath={`/stay/${stay.id}`}
 >
-  <nav class="stay-top-nav">
-    <div class="container stay-top-nav-inner">
-      <a href="/stay" class="stay-logo">sioux falls <span>go</span> — stay</a>
-    </div>
-  </nav>
+  <SiteHeader slot="header" />
 
   <div class="container gallery-hero">
     {stay.data.heroImage ? (
@@ -192,10 +189,6 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
     --stay-line: #e2dccf;
   }
   .container { max-width: 72rem; margin: 0 auto; padding-inline: 1.5rem; }
-
-  .stay-top-nav { background: var(--stay-ink); padding: 1.1rem 0; }
-  .stay-logo { color: var(--stay-parchment); font-weight: 700; font-size: 1.1rem; text-decoration: none; }
-  .stay-logo span { color: var(--stay-quartzite); }
 
   .gallery-hero { padding-block: 1.5rem; }
   .gallery-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 0.6rem; height: 26rem; border-radius: 1rem; overflow: hidden; }

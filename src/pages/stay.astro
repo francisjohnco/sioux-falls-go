@@ -265,7 +265,10 @@ const schema = {
       const formData = new FormData(form);
       const body = new URLSearchParams(formData as any).toString();
       const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
-      if (!res.ok) throw new Error('Submission failed');
+      if (!res.ok) {
+        const responseText = await res.text().catch(() => '');
+        throw new Error(`HTTP ${res.status}: ${responseText.slice(0, 150) || '(no response body)'}`);
+      }
       form.reset();
       if (statusEl) {
         statusEl.textContent = "Thanks! We'll reach out about featuring your place.";
@@ -273,9 +276,9 @@ const schema = {
         statusEl.classList.add('is-success');
         statusEl.hidden = false;
       }
-    } catch (err) {
+    } catch (err: any) {
       if (statusEl) {
-        statusEl.textContent = 'Something went wrong — please try again.';
+        statusEl.textContent = `Something went wrong: ${err.message}`;
         statusEl.classList.remove('is-success');
         statusEl.classList.add('is-error');
         statusEl.hidden = false;
