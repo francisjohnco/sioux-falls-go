@@ -24,6 +24,7 @@ const giveBackCount = businesses.filter(
   (b) => b.data.partnershipTier === 'community-champion' || b.data.partnershipTier === 'community-listing'
 ).length;
 const allArticles = await getCollection('articles');
+const allCategories = await getCollection('categories');
 
 // Real "needs attention" list — actual data gaps, not a fake activity log.
 // This is more honest and more useful than a fabricated event feed would
@@ -188,53 +189,76 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </div>
 
         <div class="engine-layout">
-          <div class="engine-queue">
-            <h3>Queue</h3>
-            <button class="queue-item is-active" data-business="605 Drain Solutions">
-              <strong>605 Drain Solutions</strong>
-              <span class="queue-status queue-status--ready">Ready to draft</span>
-            </button>
-            <button class="queue-item" data-business="Uptown Nail Studio">
-              <strong>Uptown Nail Studio</strong>
-              <span class="queue-status queue-status--pending">Awaiting interview</span>
-            </button>
-            <button class="queue-item" data-business="Dakota Elite Flooring">
-              <strong>Dakota Elite Flooring</strong>
-              <span class="queue-status queue-status--draft">Draft in review</span>
-            </button>
-          </div>
-
-          <div class="engine-workspace">
-            <h3>Interview Answers — <span id="engine-business-name">605 Drain Solutions</span></h3>
-
-            <label class="engine-field">
-              What made you start this business?
-              <textarea rows="2">Jeff and his wife wanted to help people avoid overpriced emergency plumbing calls by renting out pro-grade drain equipment.</textarea>
-            </label>
-            <label class="engine-field">
-              What makes you different from others in this category?
-              <textarea rows="2">We walk people through the whole process — videos, phone support, and the right equipment for the actual clog, not a one-size-fits-all rental.</textarea>
-            </label>
-            <label class="engine-field">
-              Anything you want customers to know?
-              <textarea rows="2">Same-day rentals, online booking, and we genuinely want people to save money over calling a plumber for something they can do themselves.</textarea>
-            </label>
+          <div class="engine-panel">
+            <h3>Generate a Guide or Article</h3>
+            <p class="panel-note">Pick a real content type and category — this writes a new article, avoiding topics you've already covered.</p>
 
             <div class="engine-controls">
               <label class="engine-select">
-                Prompt template
-                <select id="prompt-template-select">
-                  <option>Service Business — Founder Story</option>
-                  <option>Restaurant — Local Favorite</option>
-                  <option>Retail — Product Spotlight</option>
-                  <option>Business Spotlight / Press Release (Champion tier)</option>
+                Content type
+                <select id="article-type-select">
+                  <option value="faq">FAQ</option>
+                  <option value="buying-guide">Buying Guide</option>
+                  <option value="cost-guide">Cost Guide</option>
+                  <option value="educational-article">Educational Article</option>
+                  <option value="seasonal-guide">Seasonal Guide</option>
+                  <option value="visitor-guide">Visitor Guide</option>
+                  <option value="local-resource">Local Resource</option>
+                  <option value="checklist">Checklist</option>
+                  <option value="definition">Definition</option>
+                  <option value="comparison">Comparison</option>
+                  <option value="safety-information">Safety Information</option>
+                  <option value="maintenance-guide">Maintenance Guide</option>
                 </select>
               </label>
-              <button class="button" id="generate-btn"><Icon name="sparkles" size={16} /> Generate Draft</button>
+              <label class="engine-select">
+                Category
+                <select id="article-category-select">
+                  {allCategories.filter((c) => !['community-spotlight','consumer-guide','explore-sioux-falls','for-local-businesses','for-locals','grow-with-sfg','local-spotlights','marketing-tips-insights','spotlight-giveaways'].includes(c.data.slug)).map((c) => (
+                    <option value={c.data.slug} data-name={c.data.name}>{c.data.name}</option>
+                  ))}
+                </select>
+              </label>
+              <label class="engine-select engine-select--direction">
+                Direction for the AI <span class="optional-tag">optional</span>
+                <input type="text" id="article-direction" placeholder="e.g. focus on winter pipe issues, mention the giveaway" />
+              </label>
+              <button class="button" id="article-generate-btn"><Icon name="sparkles" size={16} /> Generate Draft</button>
             </div>
-            <p class="spotlight-note">Spotlight/press-release drafts publish as articles and automatically appear under "Latest from [Business]" on that business's profile — Champion tier only.</p>
-            <p class="engine-error" id="engine-error" hidden></p>
+            <p class="engine-error" id="article-error" hidden></p>
+          </div>
 
+          <div class="engine-panel">
+            <h3>Generate a Business Spotlight</h3>
+            <p class="panel-note">Champion tier only — a real article written about a business, published under "Latest from [Business]" on their profile.</p>
+
+            <label class="engine-select">
+              Business
+              <select id="spotlight-business-select">
+                {businessesWithCategory.filter(({ business }) => business.data.partnershipTier === 'community-champion').map(({ business }) => (
+                  <option value={business.id} data-name={business.data.name}>{business.data.name}</option>
+                ))}
+              </select>
+            </label>
+
+            <label class="engine-field">
+              What made you start this business?
+              <textarea id="spotlight-q1" rows="2" placeholder="Their answer..."></textarea>
+            </label>
+            <label class="engine-field">
+              What makes you different from others in this category?
+              <textarea id="spotlight-q2" rows="2" placeholder="Their answer..."></textarea>
+            </label>
+            <label class="engine-field">
+              Anything you want customers to know?
+              <textarea id="spotlight-q3" rows="2" placeholder="Their answer..."></textarea>
+            </label>
+
+            <button class="button" id="spotlight-generate-btn"><Icon name="sparkles" size={16} /> Generate Draft</button>
+            <p class="engine-error" id="spotlight-error" hidden></p>
+          </div>
+
+          <div class="engine-workspace">
             <div class="engine-output" id="engine-output" hidden>
               <div class="output-header">
                 <h4>Generated Draft</h4>
@@ -243,8 +267,6 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <div class="output-text" id="output-text"></div>
               <div class="output-actions">
                 <button class="button" id="approve-btn">Approve &amp; Publish</button>
-                <button class="button button--ghost">Edit Draft</button>
-                <button class="button button--ghost" id="regenerate-btn">Regenerate</button>
               </div>
               <p class="engine-error" id="publish-error" hidden></p>
               <p class="publish-success" id="publish-success" hidden></p>
@@ -557,7 +579,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .gap-item p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
   .engine-error { color: #C0392B; font-size: 0.875rem; margin-top: var(--space-1); }
   .publish-success { color: var(--color-success); font-size: 0.875rem; margin-top: var(--space-1); font-weight: 600; }
-  .engine-layout { display: grid; grid-template-columns: 16rem 1fr; gap: var(--space-3); margin-top: var(--space-2); align-items: start; }
+  .engine-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-2); align-items: start; }
+  .engine-panel { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-3); }
+  .engine-panel h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .panel-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
+  .optional-tag { font-weight: 400; text-transform: none; color: var(--color-navy-light); font-size: 0.75rem; }
+  .engine-select--direction input { font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400; padding: 0.6rem 0.8rem; border-radius: var(--radius); border: 1.5px solid var(--color-line); }
+  .engine-workspace { grid-column: 1 / -1; }
   .engine-queue { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); display: flex; flex-direction: column; gap: 0.4rem; }
   .engine-queue h3 { font-size: 0.9375rem; margin-bottom: 0.3rem; }
   .queue-item { display: flex; flex-direction: column; gap: 0.25rem; text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius); padding: 0.6rem 0.7rem; cursor: pointer; }
@@ -966,14 +994,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
   let currentDraft: any = null;
 
-  async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string }) {
-    const errorEl = document.getElementById('engine-error')!;
+  async function generateDraft(opts: { categorySlug: string; categoryName: string; contentType: string; interviewAnswers?: any[]; businessName?: string; direction?: string }) {
     const outputEl = document.getElementById('engine-output')!;
-    errorEl.setAttribute('hidden', '');
     outputEl.setAttribute('hidden', '');
 
-    const genBtn = document.getElementById('generate-btn') as HTMLButtonElement;
-    if (genBtn) { genBtn.disabled = true; genBtn.textContent = 'Generating...'; }
+    const activeBtn = (document.getElementById('article-generate-btn') || document.getElementById('spotlight-generate-btn')) as HTMLButtonElement;
+    const originalLabel = activeBtn?.innerHTML;
+    if (activeBtn) { activeBtn.disabled = true; activeBtn.textContent = 'Generating…'; }
 
     try {
       const res = await fetch('/api/generate-draft', {
@@ -983,7 +1010,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           categoryName: opts.categoryName,
           categorySlug: opts.categorySlug,
           contentType: opts.contentType,
-          promptTemplate: (document.getElementById('prompt-template-select') as HTMLSelectElement)?.value,
+          direction: opts.direction,
           interviewAnswers: opts.interviewAnswers,
           businessName: opts.businessName,
           existingArticleTitles: [],
@@ -998,29 +1025,52 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <div>${data.draft.bodyMarkdown.slice(0, 400).replace(/\n/g, '<br>')}...</div>
       `;
       outputEl.removeAttribute('hidden');
-    } catch (err: any) {
-      errorEl.textContent = `Generation failed: ${err.message}`;
-      errorEl.removeAttribute('hidden');
     } finally {
-      if (genBtn) { genBtn.disabled = false; genBtn.innerHTML = '<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg> Generate Draft'; }
+      if (activeBtn && originalLabel) { activeBtn.disabled = false; activeBtn.innerHTML = originalLabel; }
     }
   }
 
-  document.getElementById('generate-btn')?.addEventListener('click', () => {
+  document.getElementById('article-generate-btn')?.addEventListener('click', () => {
+    const errorEl = document.getElementById('article-error')!;
+    const typeSelect = document.getElementById('article-type-select') as HTMLSelectElement;
+    const catSelect = document.getElementById('article-category-select') as HTMLSelectElement;
+    const direction = (document.getElementById('article-direction') as HTMLInputElement)?.value.trim();
+    errorEl.setAttribute('hidden', '');
     generateDraft({
-      categorySlug: 'plumbers', // demo default when generating from the interview panel, not the gap queue
-      categoryName: 'Plumbers',
-      contentType: 'business-spotlight',
-      businessName: document.getElementById('engine-business-name')?.textContent || undefined,
-      interviewAnswers: Array.from(document.querySelectorAll('.engine-field')).map((f) => ({
-        question: f.textContent?.split('\n')[0]?.trim(),
-        answer: (f.querySelector('textarea') as HTMLTextAreaElement)?.value,
-      })),
+      categorySlug: catSelect.value,
+      categoryName: catSelect.selectedOptions[0]?.dataset.name || catSelect.value,
+      contentType: typeSelect.value,
+      direction: direction || undefined,
+    }).catch((err: any) => {
+      errorEl.textContent = `Generation failed: ${err.message}`;
+      errorEl.removeAttribute('hidden');
     });
   });
 
-  document.getElementById('regenerate-btn')?.addEventListener('click', () => {
-    if (currentDraft) generateDraft({ categorySlug: currentDraft.categorySlug, categoryName: currentDraft.categorySlug, contentType: currentDraft.contentType });
+  document.getElementById('spotlight-generate-btn')?.addEventListener('click', () => {
+    const errorEl = document.getElementById('spotlight-error')!;
+    const bizSelect = document.getElementById('spotlight-business-select') as HTMLSelectElement;
+    errorEl.setAttribute('hidden', '');
+    if (!bizSelect || !bizSelect.value) {
+      errorEl.textContent = 'No Champion-tier businesses available to spotlight yet.';
+      errorEl.removeAttribute('hidden');
+      return;
+    }
+    const answers = [
+      { question: 'What made you start this business?', answer: (document.getElementById('spotlight-q1') as HTMLTextAreaElement)?.value },
+      { question: 'What makes you different from others in this category?', answer: (document.getElementById('spotlight-q2') as HTMLTextAreaElement)?.value },
+      { question: 'Anything you want customers to know?', answer: (document.getElementById('spotlight-q3') as HTMLTextAreaElement)?.value },
+    ];
+    generateDraft({
+      categorySlug: 'community-spotlight',
+      categoryName: 'Community Spotlight',
+      contentType: 'business-spotlight',
+      businessName: bizSelect.selectedOptions[0]?.dataset.name || bizSelect.value,
+      interviewAnswers: answers,
+    }).catch((err: any) => {
+      errorEl.textContent = `Generation failed: ${err.message}`;
+      errorEl.removeAttribute('hidden');
+    });
   });
 
   document.getElementById('approve-btn')?.addEventListener('click', async () => {
