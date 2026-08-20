@@ -25,6 +25,7 @@ const giveBackCount = businesses.filter(
 ).length;
 const allArticles = await getCollection('articles');
 const allCategories = await getCollection('categories');
+const allStays = await getCollection('stays');
 const articleIndexForEngine = allArticles.map((a) => ({
   title: a.data.title,
   slug: a.id,
@@ -83,6 +84,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
+        </button>
+        <button class="nav-item" data-tab="stays">
+          <span class="nav-icon"><Icon name="key" size={18} /></span> Stays
         </button>
         <button class="nav-item" data-tab="giveaways">
           <span class="nav-icon"><Icon name="gift" size={18} /></span> Giveaways
@@ -482,6 +486,79 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </div>
       </div>
 
+      <!-- ── STAYS ── -->
+      <section class="tab-panel" id="panel-stays">
+        <div class="panel-header-row">
+          <div>
+            <h1>Stays</h1>
+            <p class="panel-sub">{allStays.length} listing{allStays.length !== 1 ? 's' : ''} — edit details, verification, and insider tips.</p>
+          </div>
+        </div>
+
+        <div class="biz-row biz-row--header">
+          <span>Name</span><span>Type</span><span>Location</span><span>Verified</span><span>Airbnb</span>
+        </div>
+        {allStays.map((stay) => (
+          <div class="biz-row" data-slug={stay.id}>
+            <button class="biz-name biz-name--link" data-open-stay={stay.id} data-stay={JSON.stringify({
+              name: stay.data.name,
+              locationLabel: stay.data.locationLabel,
+              bedrooms: stay.data.bedrooms,
+              bathrooms: stay.data.bathrooms,
+              guestCapacityLabel: stay.data.guestCapacityLabel,
+              amenities: stay.data.amenities,
+              amenityCount: stay.data.amenityCount ?? '',
+              airbnbUrl: stay.data.airbnbUrl,
+              hostName: stay.data.hostName || '',
+              verified: !!stay.data.verifiedAt,
+              insiderTips: stay.data.insiderTips,
+            })}>{stay.data.name}</button>
+            <span>{stay.data.stayType}</span>
+            <span>{stay.data.locationLabel}</span>
+            <span>{stay.data.verifiedAt ? '✓ Verified' : 'Not verified'}</span>
+            <a href={stay.data.airbnbUrl} target="_blank" rel="noopener">View ↗</a>
+          </div>
+        ))}
+      </section>
+
+      <!-- STAY EDIT MODAL -->
+      <div class="edit-modal-backdrop" id="stay-edit-modal-backdrop">
+        <div class="edit-modal">
+          <div class="edit-modal-header">
+            <h2 id="stay-edit-modal-title">Edit Stay</h2>
+            <button class="edit-modal-close" id="stay-edit-modal-close" aria-label="Close">✕</button>
+          </div>
+          <div class="edit-modal-body">
+            <div class="edit-field-grid">
+              <label>Name <input type="text" id="stay-edit-name" /></label>
+              <label>Host Name <input type="text" id="stay-edit-hostname" /></label>
+              <label>Bedrooms <input type="number" id="stay-edit-bedrooms" /></label>
+              <label>Bathrooms <input type="number" id="stay-edit-bathrooms" /></label>
+            </div>
+            <label class="edit-field-full">Location Label <input type="text" id="stay-edit-location" /></label>
+            <label class="edit-field-full">Guest Capacity Label <input type="text" id="stay-edit-capacity" /></label>
+            <label class="edit-field-full">Airbnb URL <input type="text" id="stay-edit-airbnb" /></label>
+            <label class="edit-field-full">Total Amenity Count (on Airbnb) <input type="number" id="stay-edit-amenity-count" /></label>
+            <label class="edit-field-full">Amenities (one per line) <textarea id="stay-edit-amenities" rows="5"></textarea></label>
+
+            <label style="display:flex; align-items:center; gap:0.6rem; margin: 1rem 0;">
+              <input type="checkbox" id="stay-edit-verified" style="width:auto;" />
+              <span style="text-transform:none; font-size:0.9375rem;">Verified — I've personally confirmed the real Airbnb listing and key facts match</span>
+            </label>
+
+            <h3 class="edit-section-heading">Insider Tips</h3>
+            <div id="stay-edit-tips-list"></div>
+            <button class="button--link" id="stay-add-tip-btn" type="button">+ Add a tip</button>
+
+            <p class="edit-modal-status" id="stay-edit-status" hidden></p>
+          </div>
+          <div class="edit-modal-footer">
+            <button class="button button--ghost" id="stay-edit-cancel">Cancel</button>
+            <button class="button" id="stay-edit-save">Save Changes</button>
+          </div>
+        </div>
+      </div>
+
       <!-- ── GIVEAWAYS ── -->
       <section class="tab-panel" id="panel-giveaways">
         <div class="panel-header-row">
@@ -675,6 +752,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .output-image-preview { margin-bottom: var(--space-2); }
   .output-image-preview img { width: 100%; max-height: 14rem; object-fit: cover; border-radius: var(--radius); }
   .image-credit { font-size: 0.75rem; color: var(--color-navy-light); margin: 0.3rem 0 0; }
+
+  .tip-edit-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.6rem; }
+  .tip-edit-row select { flex-shrink: 0; width: 6rem; font-size: 0.8125rem; padding: 0.5rem; border-radius: 0.4rem; border: 1.5px solid var(--color-line); }
+  .tip-edit-row input { flex: 1; font-size: 0.875rem; padding: 0.5rem 0.7rem; border-radius: 0.4rem; border: 1.5px solid var(--color-line); }
+  .tip-remove-btn { background: none; border: none; color: #C0392B; cursor: pointer; font-size: 1rem; flex-shrink: 0; padding: 0.3rem; }
 
   .engine-panel h3 { font-size: 1rem; margin-bottom: 0.4rem; }
   .panel-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0 0 var(--space-2); }
@@ -1072,12 +1154,14 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         .join('');
 
       document.querySelectorAll('.gap-generate-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const el = btn as HTMLElement;
+        btn.addEventListener('click', function () {
+          const el = this as HTMLElement;
           generateDraft({
             categorySlug: el.dataset.slug!,
             categoryName: el.dataset.name!,
             contentType: el.dataset.type!,
+          }, this as HTMLButtonElement).catch((err: any) => {
+            alert(`Generation failed: ${err.message}`);
           });
         });
       });
@@ -1391,6 +1475,143 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     } finally {
       editSaveBtn.removeAttribute('disabled');
       editSaveBtn.textContent = 'Save Changes';
+    }
+  });
+
+  // STAYS TAB
+  const stayModalBackdrop = document.getElementById('stay-edit-modal-backdrop');
+  const stayEditStatus = document.getElementById('stay-edit-status');
+  let currentStaySlug: string | null = null;
+  let currentStayOriginal: any = null;
+
+  function renderTipRow(tip: { tip: string; category: string } = { tip: '', category: 'general' }) {
+    const row = document.createElement('div');
+    row.className = 'tip-edit-row';
+    row.innerHTML = `
+      <select class="tip-category-select">
+        <option value="general"${tip.category === 'general' ? ' selected' : ''}>General</option>
+        <option value="eat"${tip.category === 'eat' ? ' selected' : ''}>Eat</option>
+        <option value="shop"${tip.category === 'shop' ? ' selected' : ''}>Shop</option>
+        <option value="sight"${tip.category === 'sight' ? ' selected' : ''}>Sight</option>
+      </select>
+      <input type="text" class="tip-text-input" value="${(tip.tip || '').replace(/"/g, '&quot;')}" placeholder="Tip text..." />
+      <button type="button" class="tip-remove-btn" aria-label="Remove">✕</button>
+    `;
+    row.querySelector('.tip-remove-btn')?.addEventListener('click', () => row.remove());
+    document.getElementById('stay-edit-tips-list')?.appendChild(row);
+  }
+
+  document.getElementById('stay-add-tip-btn')?.addEventListener('click', () => renderTipRow());
+
+  function openStayEditModal(slug: string, data: any) {
+    currentStaySlug = slug;
+    currentStayOriginal = data;
+    document.getElementById('stay-edit-modal-title')!.textContent = `Edit ${data.name}`;
+    (document.getElementById('stay-edit-name') as HTMLInputElement).value = data.name || '';
+    (document.getElementById('stay-edit-hostname') as HTMLInputElement).value = data.hostName || '';
+    (document.getElementById('stay-edit-bedrooms') as HTMLInputElement).value = data.bedrooms ?? '';
+    (document.getElementById('stay-edit-bathrooms') as HTMLInputElement).value = data.bathrooms ?? '';
+    (document.getElementById('stay-edit-location') as HTMLInputElement).value = data.locationLabel || '';
+    (document.getElementById('stay-edit-capacity') as HTMLInputElement).value = data.guestCapacityLabel || '';
+    (document.getElementById('stay-edit-airbnb') as HTMLInputElement).value = data.airbnbUrl || '';
+    (document.getElementById('stay-edit-amenity-count') as HTMLInputElement).value = data.amenityCount ?? '';
+    (document.getElementById('stay-edit-amenities') as HTMLTextAreaElement).value = (data.amenities || []).join('\n');
+    (document.getElementById('stay-edit-verified') as HTMLInputElement).checked = !!data.verified;
+
+    const tipsList = document.getElementById('stay-edit-tips-list')!;
+    tipsList.innerHTML = '';
+    (data.insiderTips || []).forEach((t: any) => renderTipRow(t));
+
+    if (stayEditStatus) stayEditStatus.hidden = true;
+    stayModalBackdrop?.classList.add('is-open');
+  }
+
+  function closeStayEditModal() {
+    stayModalBackdrop?.classList.remove('is-open');
+    currentStaySlug = null;
+    currentStayOriginal = null;
+  }
+
+  document.querySelectorAll('[data-open-stay]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.getAttribute('data-open-stay')!;
+      const data = JSON.parse(btn.getAttribute('data-stay') || '{}');
+      openStayEditModal(slug, data);
+    });
+  });
+
+  document.getElementById('stay-edit-modal-close')?.addEventListener('click', closeStayEditModal);
+  document.getElementById('stay-edit-cancel')?.addEventListener('click', closeStayEditModal);
+  stayModalBackdrop?.addEventListener('click', (e) => { if (e.target === stayModalBackdrop) closeStayEditModal(); });
+
+  document.getElementById('stay-edit-save')?.addEventListener('click', async () => {
+    if (!currentStaySlug) return;
+    const saveBtn = document.getElementById('stay-edit-save') as HTMLButtonElement;
+    const updates: Record<string, unknown> = {};
+
+    const fieldMap: Record<string, string> = {
+      name: 'stay-edit-name', hostName: 'stay-edit-hostname', locationLabel: 'stay-edit-location',
+      guestCapacityLabel: 'stay-edit-capacity', airbnbUrl: 'stay-edit-airbnb',
+    };
+    for (const [key, elId] of Object.entries(fieldMap)) {
+      const el = document.getElementById(elId) as HTMLInputElement;
+      if (el && el.value !== (currentStayOriginal[key] || '')) updates[key] = el.value;
+    }
+    const numberFieldMap: Record<string, string> = { bedrooms: 'stay-edit-bedrooms', bathrooms: 'stay-edit-bathrooms', amenityCount: 'stay-edit-amenity-count' };
+    for (const [key, elId] of Object.entries(numberFieldMap)) {
+      const el = document.getElementById(elId) as HTMLInputElement;
+      const val = el.value === '' ? null : Number(el.value);
+      const origVal = currentStayOriginal[key] === '' ? null : currentStayOriginal[key];
+      if (val !== origVal) updates[key] = val;
+    }
+
+    const newAmenities = (document.getElementById('stay-edit-amenities') as HTMLTextAreaElement).value
+      .split('\n').map((s) => s.trim()).filter(Boolean);
+    if (JSON.stringify(newAmenities) !== JSON.stringify(currentStayOriginal.amenities || [])) {
+      updates.amenities = newAmenities;
+    }
+
+    const newVerified = (document.getElementById('stay-edit-verified') as HTMLInputElement).checked;
+    if (newVerified !== !!currentStayOriginal.verified) updates.verified = newVerified;
+
+    const newTips = Array.from(document.querySelectorAll('#stay-edit-tips-list .tip-edit-row')).map((row) => ({
+      tip: (row.querySelector('.tip-text-input') as HTMLInputElement).value.trim(),
+      category: (row.querySelector('.tip-category-select') as HTMLSelectElement).value,
+    })).filter((t) => t.tip);
+    if (JSON.stringify(newTips) !== JSON.stringify(currentStayOriginal.insiderTips || [])) {
+      updates.insiderTips = newTips;
+    }
+
+    if (Object.keys(updates).length === 0) {
+      if (stayEditStatus) { stayEditStatus.textContent = 'No changes to save.'; stayEditStatus.hidden = false; stayEditStatus.className = 'edit-modal-status'; }
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving…';
+    try {
+      const res = await fetch('/api/update-stay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: currentStaySlug, updates }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Save failed');
+      if (stayEditStatus) {
+        stayEditStatus.textContent = 'Saved! Site will rebuild automatically.';
+        stayEditStatus.className = 'edit-modal-status is-success';
+        stayEditStatus.hidden = false;
+      }
+      setTimeout(closeStayEditModal, 1200);
+    } catch (err: any) {
+      if (stayEditStatus) {
+        stayEditStatus.textContent = `Couldn't save: ${err.message}`;
+        stayEditStatus.className = 'edit-modal-status is-error';
+        stayEditStatus.hidden = false;
+      }
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
     }
   });
 
