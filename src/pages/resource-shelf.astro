@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Resource {
+  name: string;
+  domain: string;
+  href: string;
+  linkLabel: string;
+  bestFor: string;
+  description: string;
+  icon: string;
+}
+
+const siouxFallsResources: Resource[] = [
+  {
+    name: 'Sioux Falls Roofs',
+    domain: 'siouxfallsroofs.com',
+    href: 'https://siouxfallsroofs.com/complete-sioux-falls-roofing-guide/',
+    linkLabel: 'Complete Sioux Falls Roofing Guide',
+    bestFor: 'Cost & material guides',
+    description: 'Real cost breakdowns by roofing material, storm/hail insurance claim guidance, and what our freeze-thaw winters actually do to shingles — worth reading before you get quotes.',
+    icon: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/>',
+  },
+  {
+    name: 'Sioux Falls Window Guide',
+    domain: 'siouxfallswindowguide.com',
+    href: 'https://siouxfallswindowguide.com/the-math/',
+    linkLabel: 'The Math — real energy savings calculators',
+    bestFor: 'Efficiency comparisons',
+    description: 'Independent U-factor and energy-math calculators that translate window specs into real dollar savings on a Sioux Falls utility bill — not a sales pitch for one brand.',
+    icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+  },
+  {
+    name: 'Sioux Falls Revamp',
+    domain: 'siouxfallsrevamp.com',
+    href: 'https://siouxfallsrevamp.com/roi-calculator/',
+    linkLabel: 'Renovation ROI Calculator',
+    bestFor: 'Renovation planning',
+    description: "An interactive calculator that estimates renovation ROI against real Minnehaha and Lincoln County resale data — not national averages that mean nothing here.",
+    icon: '<path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>',
+  },
+  {
+    name: 'Sioux Casa',
+    domain: 'siouxcasa.com',
+    href: 'https://siouxcasa.com',
+    linkLabel: 'Get a second opinion on your quote',
+    bestFor: 'Second-opinion tool',
+    description: "Already have a contractor's estimate? Paste it in and get an independent read on what's solid, what's missing, and what to ask before you sign — not a licensed inspection, but a smart first check.",
+    icon: '<path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/>',
+  },
+  {
+    name: 'Sioux Falls Flooring',
+    domain: 'siouxfallsflooring.com',
+    href: 'https://siouxfallsflooring.com/flooring-services/',
+    linkLabel: 'Every flooring type explained',
+    bestFor: 'Material comparisons',
+    description: "Hardwood vs. LVP vs. tile, broken down for our climate and typical Sioux Falls home foundations, plus the red flags that catch homeowners off guard before they hire an installer.",
+    icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+  },
+];
+
+const southDakotaResources: Resource[] = [
+  {
+    name: 'Pro Tree SD',
+    domain: 'protreesd.com',
+    href: 'https://protreesd.com/eab-watch/',
+    linkLabel: 'EAB Watch — live quarantine tracker',
+    bestFor: 'Species & storm guidance',
+    description: 'A tree-care guide covering 24 South Dakota cities, including a live-tracked map of which counties are under the state emerald ash borer quarantine — genuinely hard to find anywhere else.',
+    icon: '<path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/>',
+  },
+];
+
+const nationalResources: Resource[] = [
+  {
+    name: 'Upper Cervical Doctors',
+    domain: 'uppercervicaldoctors.com',
+    href: 'https://www.uppercervicaldoctors.com/',
+    linkLabel: 'Search by condition',
+    bestFor: 'Find a specialist',
+    description: 'A verified national directory searchable by actual condition — migraines, vertigo, TMJ — instead of a generic "chiropractor near me" list, with listings sourced from what each doctor has actually confirmed they treat.',
+    icon: '<path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 6v6l4 2"/>',
+  },
+  {
+    name: 'Holistic Dental Care',
+    domain: 'holisticdentalcare.net',
+    href: 'https://holisticdentalcare.net/topics/biological-dentistry/',
+    linkLabel: 'What is holistic dentistry?',
+    bestFor: 'Find a specialist',
+    description: 'A directory of biological and mercury-free dentists across 30 states, with plain-English guides on the oral-systemic connection — useful precisely because it never lists conventional offices.',
+    icon: '<path d="M12 2C8 2 6 5 6 9c0 3 1 5 1 8 0 2 2 3 5 3s5-1 5-3c0-3 1-5 1-8 0-4-2-7-6-7z"/>',
+  },
+  {
+    name: 'Mercury Free Dental',
+    domain: 'mercuryfreedental.com',
+    href: 'https://mercuryfreedental.com/pages/learn/smart-protocol',
+    linkLabel: 'What is the SMART Protocol?',
+    bestFor: 'Understand your options',
+    description: 'A clear breakdown of the SMART protocol for safe amalgam removal — the five protective steps explained in plain language, genuinely useful before choosing a dentist for this specific procedure.',
+    icon: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+  },
+  {
+    name: 'Dental Material Guide',
+    domain: 'dentalmaterialguide.org',
+    href: 'https://dentalmaterialguide.org/fillings',
+    linkLabel: 'Filling materials explained',
+    bestFor: 'Understand your options',
+    description: "Every page is built around the same 10 patient questions — what it is, how long it lasts, what it costs, what to ask — so wherever you start, you get a complete picture before a filling or crown.",
+    icon: '<circle cx="12" cy="12" r="9"/><path d="M12 2v20M2 12h20" opacity="0.5"/>',
+  },
+  {
+    name: 'Understanding Dental',
+    domain: 'understandingdental.com',
+    href: 'https://understandingdental.com/journey',
+    linkLabel: 'The Decision Journey',
+    bestFor: 'Prepare for an appointment',
+    description: 'A guided, two-minute tool: tell it what your dentist recommended and get a plain-language breakdown of what it means, why it\'s typically recommended, and one real question worth asking before you decide.',
+    icon: '<circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/>',
+  },
+  {
+    name: 'Brief Note',
+    domain: 'briefnote.net',
+    href: 'https://briefnote.net',
+    linkLabel: 'Ask a question, get a cited brief',
+    bestFor: 'Quick, sourced answers',
+    description: 'Ask a real question and get a short, honestly cited answer that points you to the fuller source — useful when you want a straight answer without reading a whole guide first.',
+    icon: '<path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>',
+  },
+  {
+    name: 'The Local Bridge',
+    domain: 'thelocalbridge.com',
+    href: 'https://thelocalbridge.com',
+    linkLabel: 'Explore your city',
+    bestFor: 'Community intelligence',
+    description: 'Neighborhood, school, and community guidance for 100 US cities — including Sioux Falls — built from local expert sources rather than a generic relocation-site template.',
+    icon: '<path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/>',
+  },
+];
+---
+
+<BaseLayout
+  title="The Resource Shelf"
+  description="Deep, genuinely useful consumer resources — Sioux Falls specifics, South Dakota-wide guides, and national resources worth knowing about."
+  canonicalPath="/resource-shelf"
+>
+  <SiteHeader slot="header" />
+
+  <div class="container page-header">
+    <span class="page-eyebrow">The Resource Shelf</span>
+    <h1>Good places to actually learn something</h1>
+    <p>Not every question has a quick answer in a local directory. When something needs more depth — real cost breakdowns, material comparisons, questions worth asking a specialist before you book — these are the resources we point people toward ourselves.</p>
+    <p>Organized by how local the question is: Sioux Falls specifics, South Dakota-wide, and national resources worth knowing about regardless of where you live.</p>
+  </div>
+
+  <div class="container scope-section">
+    <div class="scope-header">
+      <h2>Sioux Falls</h2>
+      <span class="scope-count">{siouxFallsResources.length} resources</span>
+    </div>
+    <p class="scope-desc">Deep, single-topic guides built specifically around Sioux Falls conditions — our climate, our building codes, our neighborhoods.</p>
+    <div class="resource-list">
+      {siouxFallsResources.map((r) => (
+        <a href={r.href} target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${r.icon}</svg>`} />
+          <div class="resource-body">
+            <div class="resource-top-row">
+              <span class="resource-name">{r.name}</span>
+              <span class="resource-best-for">{r.bestFor}</span>
+            </div>
+            <p class="resource-desc">{r.description}</p>
+            <div class="resource-link-line"><strong>{r.domain}</strong> · {r.linkLabel} →</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="container scope-section">
+    <div class="scope-header">
+      <h2>South Dakota</h2>
+      <span class="scope-count">{southDakotaResources.length} resource</span>
+    </div>
+    <p class="scope-desc">Guides that hold up across the state, not just within city limits.</p>
+    <div class="resource-list">
+      {southDakotaResources.map((r) => (
+        <a href={r.href} target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${r.icon}</svg>`} />
+          <div class="resource-body">
+            <div class="resource-top-row">
+              <span class="resource-name">{r.name}</span>
+              <span class="resource-best-for">{r.bestFor}</span>
+            </div>
+            <p class="resource-desc">{r.description}</p>
+            <div class="resource-link-line"><strong>{r.domain}</strong> · {r.linkLabel} →</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="container scope-section">
+    <div class="scope-header">
+      <h2>National</h2>
+      <span class="scope-count">{nationalResources.length} resources</span>
+    </div>
+    <p class="scope-desc">Specialized health and consumer resources that go deeper than a typical local page could — same editorial standard, bigger scope.</p>
+    <div class="resource-list">
+      {nationalResources.map((r) => (
+        <a href={r.href} target="_blank" rel="noopener" class="resource-card">
+          <div class="resource-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${r.icon}</svg>`} />
+          <div class="resource-body">
+            <div class="resource-top-row">
+              <span class="resource-name">{r.name}</span>
+              <span class="resource-best-for">{r.bestFor}</span>
+            </div>
+            <p class="resource-desc">{r.description}</p>
+            <div class="resource-link-line"><strong>{r.domain}</strong> · {r.linkLabel} →</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="container scope-section" style="border-bottom: none;">
+    <div class="scope-header">
+      <h2>The Person Behind This Site</h2>
+      <span class="scope-count">1 resource</span>
+    </div>
+    <p class="scope-desc">Deciding whether to hire in-house or bring on a contractor is its own real decision.</p>
+    <div class="resource-list">
+      <a href="https://francisjohn.co" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-icon" set:html={`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0116 0v2"/></svg>`} />
+        <div class="resource-body">
+          <div class="resource-top-row">
+            <span class="resource-name">Francis John</span>
+            <span class="resource-best-for">Hire or contract?</span>
+          </div>
+          <p class="resource-desc">Francis's own site walks through his marketing and local-search work directly — real case studies, a résumé, and enough detail to see whether contract or in-house fits what you're building. The person behind Sioux Falls Go and this whole resource network.</p>
+          <div class="resource-link-line"><strong>francisjohn.co</strong> · See the work →</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <div class="container">
+      <p>We link to these because we'd point people here ourselves — not because of any paid placement. If a resource on this list stops being genuinely useful, it comes off.</p>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .container { max-width: 54rem; margin: 0 auto; padding-inline: 1.5rem; }
+
+  .page-header { padding: 3rem 0 2rem; border-bottom: 1px solid var(--color-line); }
+  .page-eyebrow { color: var(--color-orange); font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.6rem; display: block; }
+  .page-header h1 { font-family: var(--font-display); font-size: 2.1rem; color: var(--color-navy); margin-bottom: 0.9rem; }
+  .page-header p { font-size: 1.0625rem; color: #4b5468; max-width: 40rem; margin: 0 0 0.8rem; }
+  .page-header p:last-child { margin-bottom: 0; }
+
+  .scope-section { padding: 2.6rem 0; border-bottom: 1px solid var(--color-line); }
+  .scope-header { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.4rem; }
+  .scope-header h2 { font-family: var(--font-display); font-size: 1.375rem; color: var(--color-navy); }
+  .scope-count { font-size: 0.8125rem; color: #8a8074; font-weight: 600; }
+  .scope-desc { font-size: 0.9375rem; color: #5b6472; margin: 0 0 1.6rem; max-width: 38rem; }
+
+  .resource-list { display: flex; flex-direction: column; gap: 1rem; }
+  .resource-card {
+    display: flex; gap: 1.1rem; padding: 1.3rem; border: 1px solid var(--color-line);
+    border-radius: 0.9rem; text-decoration: none; color: inherit; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .resource-card:hover { border-color: var(--color-orange); box-shadow: 0 8px 20px rgba(27,42,74,0.08); }
+  .resource-icon {
+    width: 2.6rem; height: 2.6rem; border-radius: 0.6rem; background: var(--color-surface);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-navy);
+  }
+  .resource-body { flex: 1; min-width: 0; }
+  .resource-top-row { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; margin-bottom: 0.35rem; }
+  .resource-name { font-weight: 700; font-size: 1.0625rem; color: var(--color-navy); font-family: var(--font-display); }
+  .resource-best-for { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); background: rgba(240,126,35,0.08); padding: 0.25rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+  .resource-desc { font-size: 0.8906rem; color: #4b5468; margin: 0 0 0.5rem; }
+  .resource-link-line { font-size: 0.8125rem; color: #8a8074; display: flex; align-items: center; gap: 0.4rem; }
+  .resource-link-line strong { color: var(--color-navy); font-weight: 600; }
+
+  .footer-note { background: var(--color-surface); padding: 2.2rem 0; }
+  .footer-note p { font-size: 0.875rem; color: #5b6472; margin: 0; max-width: 38rem; }
+</style>
