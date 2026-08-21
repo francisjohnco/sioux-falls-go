@@ -277,6 +277,8 @@ const stays = defineCollection({
     hostName: z.string().optional(),
     hostEmail: z.string().optional(), // used for host login, alongside their access code
     hostAccessCode: z.string().optional(), // private per-host login credential — you generate and share this with each host directly
+    hostResponseTime: z.string().optional(), // real data only, e.g. "within a day" — never a default, omit entirely if unknown
+    pullQuote: z.string().optional(), // a real sentence pulled from the description, shown as an editorial highlight
     verifiedAt: z.date().optional(), // omitted entirely until independently confirmed
     insiderTips: z.array(z.object({
       tip: z.string(),

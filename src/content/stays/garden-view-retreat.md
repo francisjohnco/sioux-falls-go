@@ -16,6 +16,7 @@ experienceCategories: ["downtown-walkable", "historic-charming"]
 airbnbUrl: "https://www.airbnb.com/rooms/25626639"
 hostEmail: "Lauriebrunz@gmail.com"
 hostAccessCode: "gvr-c3006b"
+pullQuote: "Tucked into the lower level of a beautifully restored 1889 Victorian — once home to a family of thirteen."
 insiderTips:
   - tip: "You're a block from Phillips Avenue — walk to dinner, coffee, and downtown nightlife without moving your car."
   - tip: "Under a mile from Sanford and Avera hospitals, which makes this a genuinely easy pick for medical stays, not just weekend trips."

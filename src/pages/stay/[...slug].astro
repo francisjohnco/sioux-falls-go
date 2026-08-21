@@ -27,12 +27,14 @@ const EXPERIENCE_CATEGORY_LABELS: Record<string, string> = {
   'solo-budget': 'Solo & Budget',
 };
 
-const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
-  'Garden view': { icon: 'leaf', color: '#F07E23' },
-  'Wifi – 5 Mbps': { icon: 'globe', color: '#F07E23' },
-  'Dedicated workspace': { icon: 'briefcase', color: '#F07E23' },
-  'Free street parking': { icon: 'pin', color: '#F07E23' },
-  'Pets allowed': { icon: 'heart', color: '#F07E23' },
+// One consistent icon per amenity, navy — matches the rest of the site's
+// icon treatment instead of a separate multi-color scheme just for this page.
+const AMENITY_ICONS: Record<string, string> = {
+  'Garden view': 'leaf',
+  'Wifi – 5 Mbps': 'globe',
+  'Dedicated workspace': 'briefcase',
+  'Free street parking': 'pin',
+  'Pets allowed': 'heart',
 };
 ---
 
@@ -53,7 +55,12 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
           ))}
         </div>
         {stay.data.gallery.length > 0 && (
-          <span class="gallery-photo-count">1 / {stay.data.gallery.length + 1} photos</span>
+          <>
+            <span class="gallery-photo-count">1 / {stay.data.gallery.length + 1} photos</span>
+            <button class="show-all-btn" type="button">
+              <Icon name="layers" size={14} /> Show all photos
+            </button>
+          </>
         )}
       </div>
     ) : (
@@ -84,7 +91,7 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
       {stay.data.verifiedAt ? (
         <span class="verified-pill"><Icon name="check" size={13} /> Verified by Sioux Falls Go</span>
       ) : (
-        <span class="unverified-note">New listing — not yet independently verified</span>
+        <span class="unverified-note"><Icon name="clock" size={13} /> New listing — not yet independently verified</span>
       )}
       <span>· Sioux Falls, SD</span>
     </div>
@@ -94,11 +101,16 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
     <div class="listing-main">
       {stay.data.hostName && (
         <div class="host-row">
-          <div class="host-avatar">{stay.data.hostName.charAt(0)}</div>
-          <div>
-            <h3>Hosted by {stay.data.hostName}</h3>
-            <p>Real host, real Sioux Falls property</p>
+          <div class="host-left">
+            <div class="host-avatar">{stay.data.hostName.charAt(0)}</div>
+            <div>
+              <h3>Hosted by {stay.data.hostName}</h3>
+              <p>Real host, real Sioux Falls property</p>
+            </div>
           </div>
+          {stay.data.hostResponseTime && (
+            <span class="host-badge">Usually responds {stay.data.hostResponseTime}</span>
+          )}
         </div>
       )}
 
@@ -110,6 +122,7 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
 
       <div class="description-section">
         <h2>About this stay</h2>
+        {stay.data.pullQuote && <p class="pull-quote">"{stay.data.pullQuote}"</p>}
         <div class="prose"><Content /></div>
       </div>
 
@@ -117,17 +130,14 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
         <div class="amenities-section">
           <h2>What this place offers</h2>
           <div class="amenities-grid">
-            {stay.data.amenities.map((a) => {
-              const style = AMENITY_STYLE[a] || { icon: 'check', color: 'var(--stay-river)' };
-              return (
-                <div class="amenity-item">
-                  <span class="amenity-icon-wrap" style={`background: ${style.color}1a; color: ${style.color};`}>
-                    <Icon name={style.icon} size={16} />
-                  </span>
-                  {a}
-                </div>
-              );
-            })}
+            {stay.data.amenities.map((a) => (
+              <div class="amenity-item">
+                <span class="amenity-icon-wrap">
+                  <Icon name={AMENITY_ICONS[a] || 'check'} size={16} />
+                </span>
+                {a}
+              </div>
+            ))}
           </div>
           {stay.data.amenityCount && stay.data.amenityCount > stay.data.amenities.length && (
             <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="see-all-amenities">
@@ -158,6 +168,7 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
         <div class="insider-tips">
           <span class="insider-badge">✦ Sioux Falls Go Insider Tips</span>
           <h2>Before you book, from the locals</h2>
+          <p class="insider-tips-sub">Something Airbnb's own listing page can't give you — real, specific knowledge from Sioux Falls Go{stay.data.hostName ? ` and ${stay.data.hostName}` : ''}.</p>
           {stay.data.insiderTips.map((t, i) => (
             <div class="insider-tip">
               <div class="insider-tip-marker">{i + 1}</div>
@@ -166,10 +177,19 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
           ))}
         </div>
       )}
+
+      <div class="why-book">
+        <div class="why-book-icon"><Icon name="handshake" size={18} /></div>
+        <div>
+          <h4>Why see this on Sioux Falls Go first?</h4>
+          <p>We don't just list this property — we point you here because it fits, and pair it with real local knowledge Airbnb's own algorithm can't offer. Booking still happens securely on Airbnb.</p>
+        </div>
+      </div>
     </div>
 
     <aside class="booking-card">
       <p class="booking-card-label">Ready to stay?</p>
+      <p class="booking-card-sub">Complete your booking securely on Airbnb.</p>
       <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="book-btn">
         Book on Airbnb ↗
       </a>
@@ -177,21 +197,28 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
       <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="see-reviews-link">See reviews on Airbnb →</a>
     </aside>
   </div>
+
+  <!-- Mobile-only sticky booking bar — replaces scrolling back up to the
+       sidebar card, matches how Airbnb's own mobile experience works -->
+  <div class="sticky-book-bar">
+    <div class="sticky-book-info">
+      Ready to stay?
+      <strong>{stay.data.name}</strong>
+    </div>
+    <a href={stay.data.airbnbUrl} target="_blank" rel="nofollow noopener" class="sticky-book-btn">Book on Airbnb ↗</a>
+  </div>
 </BaseLayout>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700&display=swap');
-
   :root {
     --stay-ink: #1B2A4A;
-    --stay-quartzite: #F07E23;
-    --stay-quartzite-deep: #c9660f;
+    --stay-ink-deep: #131f38;
+    --stay-accent: #F07E23;
+    --stay-accent-deep: #d96a12;
     --stay-parchment: #F7F8FA;
-    --stay-river: #F07E23;
-    --stay-charcoal-text: #2b2620;
+    --stay-text: #2b2620;
     --stay-line: #E4E7EC;
-    --stay-button: #1B2A4A;
-    --stay-button-hover: #131f38;
+    --stay-muted: #5b6472;
   }
   .container { max-width: 72rem; margin: 0 auto; padding-inline: 1.5rem; }
 
@@ -201,85 +228,116 @@ const AMENITY_STYLE: Record<string, { icon: string; color: string }> = {
   .gallery-side { display: grid; grid-template-rows: 1fr 1fr; gap: 0.6rem; }
   .gallery-side-img { background-size: cover; background-position: center; position: relative; background-color: var(--stay-line); }
   .gallery-photo-count { display: none; }
+  .show-all-btn {
+    position: absolute; bottom: 1rem; right: 1rem; background: #fff; color: var(--stay-ink);
+    font-size: 0.8125rem; font-weight: 700; padding: 0.55rem 1rem; border-radius: 0.6rem;
+    display: flex; align-items: center; gap: 0.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: none; cursor: pointer;
+    font-family: var(--font-body);
+  }
 
-  /* Mobile: one large hero photo instead of a cramped grid split — the
-     side photos aren't lost, just tucked behind a real photo-count badge
-     matching how Airbnb itself signals "there's more" on a single image. */
+  /* Mobile: one large hero photo instead of a cramped grid split */
   @media (max-width: 40rem) {
     .gallery-grid { grid-template-columns: 1fr; height: 18rem; }
     .gallery-side { display: none; }
+    .show-all-btn { display: none; }
     .gallery-photo-count {
       display: flex; align-items: center; gap: 0.4rem; position: absolute; bottom: 0.8rem; right: 0.8rem;
       background: rgba(28,25,23,0.75); color: #fff; font-size: 0.8125rem; font-weight: 600;
       padding: 0.4rem 0.8rem; border-radius: 0.5rem; z-index: 2;
     }
   }
-  .gallery-placeholder-a { background: linear-gradient(160deg, var(--stay-river), var(--stay-ink)); }
-  .gallery-placeholder-b { background: linear-gradient(160deg, var(--stay-quartzite), var(--stay-quartzite-deep)); }
-  .gallery-placeholder-c { background: linear-gradient(160deg, #5b6650, #2b2620); display: flex; align-items: center; justify-content: center; }
-  .gallery-photos-pending { color: rgba(242,237,228,0.85); font-size: 0.8125rem; font-weight: 600; }
+  .gallery-placeholder-a { background: linear-gradient(155deg, #3a3530, var(--stay-ink)); }
+  .gallery-placeholder-b { background: linear-gradient(155deg, #6b5a4a, #3a3530); }
+  .gallery-placeholder-c { background: linear-gradient(155deg, #4a5a3a, #2b3524); display: flex; align-items: center; justify-content: center; }
+  .gallery-photos-pending { color: rgba(255,255,255,0.85); font-size: 0.8125rem; font-weight: 600; }
 
   .listing-header { padding-block: 1.8rem 1rem; border-bottom: 1px solid var(--stay-line); }
-  .listing-eyebrow { color: var(--stay-quartzite-deep); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; display: block; }
-  .listing-header h1 { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 600; color: var(--stay-ink); margin-bottom: 0.5rem; }
-  .branded-tagline { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.9375rem; color: var(--stay-quartzite-deep); margin: 0 0 0.9rem; }
+  .listing-eyebrow { color: var(--stay-ink); opacity: 0.65; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; display: block; }
+  .listing-header h1 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 600; color: var(--stay-ink); margin-bottom: 0.5rem; }
+  .branded-tagline { font-style: italic; font-size: 0.9375rem; color: var(--stay-muted); margin: 0 0 0.9rem; }
   .category-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
   .category-tag { background: var(--stay-parchment); border: 1px solid var(--stay-line); color: var(--stay-ink); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; }
-  .listing-meta { display: flex; align-items: center; gap: 0.8rem; color: var(--stay-charcoal-text); font-size: 0.9375rem; flex-wrap: wrap; }
+  .listing-meta { display: flex; align-items: center; gap: 0.6rem; color: var(--stay-text); font-size: 0.9375rem; flex-wrap: wrap; }
   .verified-pill { display: inline-flex; align-items: center; gap: 0.3rem; background: #E7F6ED; color: #1E824C; font-size: 0.8125rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 999px; }
-  .unverified-note { font-size: 0.8125rem; color: #8a8074; font-style: italic; }
+  .unverified-note { font-size: 0.8125rem; color: #8a8074; font-style: italic; display: flex; align-items: center; gap: 0.35rem; }
 
   .listing-body { display: grid; grid-template-columns: 1fr 22rem; gap: 3rem; padding-block: 2.2rem; align-items: start; }
   @media (max-width: 55rem) { .listing-body { grid-template-columns: 1fr; } }
+  /* Sidebar booking card only makes sense once there's room beside the
+     content — below that, the sticky bottom bar takes over instead. */
+  @media (max-width: 55rem) { .booking-card { display: none; } }
+  .sticky-book-bar { display: none; }
+  @media (max-width: 55rem) {
+    .sticky-book-bar {
+      display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--stay-line);
+      padding: 0.8rem 1.1rem; align-items: center; justify-content: space-between; gap: 1rem;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.06); z-index: 20;
+    }
+  }
+  .sticky-book-info { font-size: 0.8125rem; color: var(--stay-muted); }
+  .sticky-book-info strong { display: block; color: var(--stay-ink); font-family: var(--font-display); font-size: 0.9375rem; }
+  .sticky-book-btn {
+    background: var(--stay-accent); color: #fff; font-weight: 700; font-size: 0.9375rem; padding: 0.75rem 1.4rem;
+    border-radius: 0.6rem; text-decoration: none; white-space: nowrap; box-shadow: 0 6px 16px rgba(240,126,35,0.3);
+  }
 
-  .host-row { display: flex; align-items: center; gap: 1rem; padding-bottom: 1.6rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.6rem; }
-  .host-avatar { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--stay-river); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 1.2rem; flex-shrink: 0; }
-  .host-row h3 { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--stay-ink); font-weight: 600; margin: 0; }
-  .host-row p { margin: 0.15rem 0 0; font-size: 0.875rem; color: #6b6258; }
+  .host-row { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; padding: 1.1rem 1.3rem; background: var(--stay-parchment); border-radius: 0.9rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
+  .host-left { display: flex; align-items: center; gap: 1rem; }
+  .host-avatar { width: 3rem; height: 3rem; border-radius: 50%; background: var(--stay-ink); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.1rem; flex-shrink: 0; }
+  .host-row h3 { font-family: var(--font-display); font-size: 1rem; color: var(--stay-ink); font-weight: 600; margin: 0; }
+  .host-row p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--stay-muted); }
+  .host-badge { font-size: 0.6875rem; font-weight: 700; color: var(--stay-ink); background: #fff; border: 1px solid var(--stay-line); padding: 0.3rem 0.7rem; border-radius: 999px; }
 
   .stat-row { display: flex; gap: 2rem; margin-bottom: 0.3rem; }
-  .stat-item strong { display: block; font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--stay-ink); }
-  .stat-item span { font-size: 0.8125rem; color: #6b6258; }
-  .guest-capacity-label { font-size: 0.875rem; color: var(--stay-quartzite-deep); font-weight: 600; padding-bottom: 1.6rem; border-bottom: 1px solid var(--stay-line); margin: 0 0 1.6rem; }
+  .stat-item strong { display: block; font-family: var(--font-display); font-size: 1.3rem; color: var(--stay-ink); }
+  .stat-item span { font-size: 0.8125rem; color: var(--stay-muted); }
+  .guest-capacity-label { font-size: 0.875rem; color: var(--stay-ink); font-weight: 600; padding-bottom: 1.6rem; border-bottom: 1px solid var(--stay-line); margin: 0 0 1.6rem; }
 
-  .listing-body h2 { font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--stay-ink); margin-bottom: 0.8rem; }
+  .listing-body h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--stay-ink); margin-bottom: 0.8rem; }
   .description-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
-  .description-section .prose p { font-size: 0.9688rem; color: var(--stay-charcoal-text); line-height: 1.7; margin: 0 0 1rem; }
+  .pull-quote { font-family: var(--font-display); font-size: 1.125rem; color: var(--stay-ink); font-weight: 500; line-height: 1.5; margin: 0 0 1.2rem; padding-left: 1rem; border-left: 3px solid var(--stay-accent); }
+  .description-section .prose p { font-size: 0.9688rem; color: var(--stay-text); line-height: 1.7; margin: 0 0 1rem; }
 
   .amenities-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
   .amenities-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
-  .amenity-item { display: flex; align-items: center; gap: 0.7rem; font-size: 0.9375rem; color: var(--stay-charcoal-text); }
-  .amenity-icon-wrap { width: 2.1rem; height: 2.1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .see-all-amenities { display: inline-block; margin-top: 1.1rem; font-size: 0.875rem; font-weight: 700; color: var(--stay-river); text-decoration: none; }
-  .see-all-amenities:hover { text-decoration: underline; }
+  @media (max-width: 30rem) { .amenities-grid { grid-template-columns: 1fr; } }
+  .amenity-item { display: flex; align-items: center; gap: 0.7rem; font-size: 0.9375rem; color: var(--stay-text); }
+  .amenity-icon-wrap { width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--stay-parchment); color: var(--stay-ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .see-all-amenities { display: inline-block; margin-top: 1.1rem; font-size: 0.875rem; font-weight: 700; color: var(--stay-ink); text-decoration: none; border: 1.5px solid var(--stay-ink); padding: 0.5rem 1rem; border-radius: 0.5rem; }
+  .see-all-amenities:hover { background: var(--stay-ink); color: #fff; }
 
   .map-section { padding-bottom: 1.8rem; border-bottom: 1px solid var(--stay-line); margin-bottom: 1.8rem; }
   .map-embed-wrap { border-radius: 1rem; overflow: hidden; border: 1px solid var(--stay-line); }
   .map-embed-wrap iframe { display: block; }
-  .map-fallback-link { display: flex; align-items: center; gap: 0.6rem; background: var(--stay-parchment); border: 1px solid var(--stay-line); border-radius: 1rem; padding: 1.4rem; color: var(--stay-river); font-weight: 700; text-decoration: none; justify-content: center; }
+  .map-fallback-link { display: flex; align-items: center; gap: 0.6rem; background: var(--stay-parchment); border: 1px solid var(--stay-line); border-radius: 1rem; padding: 1.4rem; color: var(--stay-ink); font-weight: 700; text-decoration: none; justify-content: center; }
   .map-fallback-link:hover { text-decoration: underline; }
   .map-note { font-size: 0.8125rem; color: #8a8074; margin: 0.7rem 0 0; }
 
-  .insider-tips { background: var(--stay-ink); border-radius: 1.1rem; padding: 1.8rem; color: var(--stay-parchment); margin-bottom: 1.8rem; position: relative; overflow: hidden; }
-  .insider-tips::before { content: ''; position: absolute; top: -3rem; right: -3rem; width: 10rem; height: 10rem; border-radius: 50%; background: var(--stay-quartzite); opacity: 0.15; }
-  .insider-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--stay-quartzite); color: var(--stay-ink); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 999px; margin-bottom: 0.9rem; }
-  .insider-tips h2 { color: #fff; font-size: 1.2rem; margin-bottom: 1rem; }
-  .insider-tip { display: flex; gap: 0.8rem; margin-bottom: 1rem; }
+  .insider-tips { background: var(--stay-ink); border-radius: 1.1rem; padding: 2rem; color: #fff; margin-bottom: 1.8rem; position: relative; overflow: hidden; }
+  .insider-tips::before { content: ''; position: absolute; top: -4rem; right: -4rem; width: 12rem; height: 12rem; border-radius: 50%; background: var(--stay-accent); opacity: 0.12; }
+  .insider-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--stay-accent); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 1rem; }
+  .insider-tips h2 { color: #fff; font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .insider-tips-sub { font-size: 0.8438rem; color: rgba(255,255,255,0.65); margin: 0 0 1.3rem; }
+  .insider-tip { display: flex; gap: 0.9rem; margin-bottom: 1.1rem; }
   .insider-tip:last-child { margin-bottom: 0; }
-  .insider-tip-marker { width: 1.6rem; height: 1.6rem; border-radius: 50%; background: rgba(242,237,228,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--stay-quartzite); font-size: 0.8rem; }
-  .insider-tip p { margin: 0; font-size: 0.875rem; color: rgba(242,237,228,0.88); }
+  .insider-tip-marker { width: 1.8rem; height: 1.8rem; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--stay-accent); font-size: 0.8125rem; font-weight: 700; }
+  .insider-tip p { margin: 0; font-size: 0.9063rem; color: rgba(255,255,255,0.9); line-height: 1.55; }
 
-  .booking-card { background: #fff; border: 1px solid var(--stay-line); border-radius: 1.1rem; padding: 1.6rem; position: sticky; top: 1.5rem; box-shadow: 0 20px 50px rgba(28,25,23,0.1); }
-  .booking-card-label { font-family: 'Fraunces', serif; font-size: 1.1rem; color: var(--stay-ink); margin: 0 0 1rem; }
+  .why-book { display: flex; gap: 1rem; padding: 1.3rem; background: var(--stay-parchment); border-radius: 0.9rem; }
+  .why-book-icon { width: 2.4rem; height: 2.4rem; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--stay-ink); }
+  .why-book h4 { font-family: var(--font-display); font-size: 0.9375rem; color: var(--stay-ink); margin: 0 0 0.3rem; }
+  .why-book p { font-size: 0.8438rem; color: var(--stay-muted); margin: 0; line-height: 1.55; }
+
+  .booking-card { background: #fff; border: 1px solid var(--stay-line); border-radius: 1.1rem; padding: 1.6rem; position: sticky; top: 1.5rem; box-shadow: 0 20px 50px rgba(27,42,74,0.08); }
+  .booking-card-label { font-family: var(--font-display); font-size: 1.0625rem; color: var(--stay-ink); margin: 0 0 0.3rem; }
+  .booking-card-sub { font-size: 0.8125rem; color: var(--stay-muted); margin: 0 0 1.1rem; }
   .book-btn {
     display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%;
-    background: var(--stay-button);
-    color: #fff; font-weight: 700; font-size: 1rem; padding: 0.95rem; border-radius: 0.7rem;
-    text-decoration: none; box-shadow: 0 10px 24px rgba(27,42,74,0.3);
-    transition: background 0.15s ease;
+    background: var(--stay-accent); color: #fff; font-weight: 700; font-size: 1rem; padding: 0.95rem; border-radius: 0.7rem;
+    text-decoration: none; box-shadow: 0 10px 24px rgba(240,126,35,0.3); transition: background 0.15s ease;
   }
-  .book-btn:hover { background: var(--stay-button-hover); }
+  .book-btn:hover { background: var(--stay-accent-deep); }
   .book-btn-note { text-align: center; font-size: 0.75rem; color: #8a8074; margin: 0.7rem 0; }
-  .see-reviews-link { display: block; text-align: center; font-size: 0.8438rem; font-weight: 700; color: var(--stay-river); text-decoration: none; }
+  .see-reviews-link { display: block; text-align: center; font-size: 0.8438rem; font-weight: 700; color: var(--stay-ink); text-decoration: none; }
   .see-reviews-link:hover { text-decoration: underline; }
 </style>
