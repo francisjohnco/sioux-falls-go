@@ -45,7 +45,7 @@ const championBenefits = [
 ---
 <BaseLayout
   title="Get Featured"
-  description="Sioux Falls Go is invite-only. See what Basic Listing, Give Back Partner, and Community Champion each include, and apply for consideration."
+  description="Sioux Falls Go is invite-only. See what's included free, and how Give Back Partner and Community Champion add even more visibility."
   canonicalPath="/get-featured"
   schema={schema}
 >
@@ -53,53 +53,94 @@ const championBenefits = [
 
   <section class="hero">
     <div class="container hero-inner">
-      <span class="eyebrow">Apply for Consideration</span>
-      <h1>Get Featured on Sioux Falls Go</h1>
-      <p class="hero-sub">
-        We don't list every business in Sioux Falls. We recommend the ones
-        that have earned their community's trust — and we build every
-        profile from a real conversation, not a form you fill out alone.
-      </p>
+      <span class="hero-eyebrow"><span class="dot"></span> Free to Apply</span>
+      <h1><span class="accent-line">More Eyes.</span> <span class="accent-line">More Clicks.</span> <span class="accent-line highlight">More Customers.</span></h1>
+      <p class="hero-sub">We're on a mission to share Sioux Falls' local gems — the trusted, community-minded businesses that deserve to be found by the people searching for them.</p>
+      <div class="hero-cta-row">
+        <a href="#apply" class="hero-cta">Apply to Be Featured →</a>
+        <span class="hero-free-note">Takes 2 minutes · Completely free</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="free-benefits-section">
+    <div class="container">
+      <div class="free-benefits-header">
+        <span class="eyebrow">What's Included, Free</span>
+        <h2>Everything you need to get found</h2>
+        <p>No cost, no catch — just a real profile built to bring more locals your way.</p>
+      </div>
+      <div class="free-benefits-grid">
+        <div class="free-benefit-card">
+          <div class="free-benefit-icon"><Icon name="layers" size={22} /></div>
+          <h3>Your Own Spotlight Page</h3>
+          <p>A real profile built around your business, so local customers can find you when they're actually looking.</p>
+        </div>
+        <div class="free-benefit-card">
+          <div class="free-benefit-icon"><Icon name="star" size={22} /></div>
+          <h3>RankAPro Review App</h3>
+          <p>A simple way to collect more real Google reviews and strengthen your reputation — on us.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <div class="container page">
     <section class="tiers-section">
-      <span class="eyebrow">Three Ways to Be Featured</span>
-      <h2>Every real listing gets a real profile. Champions get a lot more.</h2>
+      <span class="eyebrow">Want Even More Visibility?</span>
+      <h2>Visibility that grows with your investment in Sioux Falls</h2>
+      <p class="tiers-sub">Give Back Partners and Community Champions get real added exposure, tied to how they show up for this community.</p>
 
-      <div class="tiers-grid">
-        <div class="tier-card">
-          <h3>Basic Listing</h3>
-          <p class="tier-tagline">Your real profile in the directory</p>
-          <ul class="tier-list">
-            <li><Icon name="check" size={15} /> Full business profile</li>
-            <li><Icon name="check" size={15} /> Real hours, contact, story</li>
-            <li><Icon name="check" size={15} /> Reviews shown on your page</li>
-            <li><Icon name="check" size={15} /> Instant quote requests</li>
-          </ul>
+      <div class="tab-switcher">
+        <button class="tab-btn is-active" type="button" data-tab="overview">Quick Overview</button>
+        <button class="tab-btn" type="button" data-tab="full">See the Full Breakdown</button>
+      </div>
+
+      <div class="tab-panel" id="tab-overview">
+        <div class="tiers-grid tiers-grid--two">
+          <div class="tier-card">
+            <h3>Give Back Partner</h3>
+            <p class="tier-tagline">For businesses that show up for this community</p>
+            <ul class="tier-list">
+              <li><Icon name="check" size={15} /> Give Back Partner badge on your profile</li>
+              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
+            </ul>
+          </div>
+          <div class="tier-card tier-card--champion">
+            <span class="tier-badge-pill">Most Visibility</span>
+            <h3>Community Champion</h3>
+            <p class="tier-tagline">More visibility. More traffic. More business.</p>
+            <ul class="tier-list tier-list--champion">
+              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
+              <li><Icon name="check" size={15} /> Spotlight articles, press releases, event listings, and more</li>
+            </ul>
+          </div>
         </div>
+      </div>
 
-        <div class="tier-card">
-          <h3>Give Back Partner</h3>
-          <p class="tier-tagline">For businesses that show up for this community</p>
-          <ul class="tier-list">
-            <li><Icon name="check" size={15} /> Everything in Basic Listing</li>
-            <li><Icon name="check" size={15} /> Give Back Partner badge on your profile</li>
-            <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
-          </ul>
-        </div>
-
-        <div class="tier-card tier-card--champion">
-          <span class="tier-badge-pill">Most Visibility</span>
-          <h3>Community Champion</h3>
-          <p class="tier-tagline">More visibility. More traffic. More business.</p>
-          <ul class="tier-list tier-list--champion">
-            <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
-            {championBenefits.map((b) => (
-              <li><Icon name={b.icon} size={15} /> {b.label}</li>
-            ))}
-          </ul>
+      <div class="tab-panel" id="tab-full" hidden>
+        <div class="tiers-grid tiers-grid--two">
+          <div class="tier-card">
+            <h3>Give Back Partner</h3>
+            <p class="tier-tagline">For businesses that show up for this community</p>
+            <ul class="tier-list">
+              <li><Icon name="check" size={15} /> Spotlight profile</li>
+              <li><Icon name="check" size={15} /> RankAPro review app</li>
+              <li><Icon name="check" size={15} /> Give Back Partner badge</li>
+              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
+            </ul>
+          </div>
+          <div class="tier-card tier-card--champion">
+            <span class="tier-badge-pill">Most Visibility</span>
+            <h3>Community Champion</h3>
+            <p class="tier-tagline">More visibility. More traffic. More business.</p>
+            <ul class="tier-list tier-list--champion">
+              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
+              {championBenefits.map((b) => (
+                <li><Icon name={b.icon} size={15} /> {b.label}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -148,7 +189,7 @@ const championBenefits = [
 
     <div class="contour-divider"></div>
 
-    <section class="apply-section">
+    <section class="apply-section" id="apply">
       <span class="eyebrow">Tell Us About Your Business</span>
       <h2>Apply Now</h2>
       <p class="apply-sub">
@@ -205,17 +246,82 @@ const championBenefits = [
   <SiteFooter slot="footer" />
 </BaseLayout>
 
+<script>
+  document.querySelectorAll('.tab-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('is-active'));
+      document.querySelectorAll('.tab-panel').forEach((p) => { (p as HTMLElement).hidden = true; });
+      btn.classList.add('is-active');
+      const target = document.getElementById('tab-' + (btn as HTMLElement).dataset.tab);
+      if (target) target.hidden = false;
+    });
+  });
+</script>
+
 <style>
-  .hero { background: var(--color-navy); color: #fff; padding-block: var(--space-5); }
-  .hero .eyebrow { color: var(--color-orange); }
-  .hero h1 { color: #fff; margin-block: var(--space-1) var(--space-2); }
-  .hero-sub { max-width: 46ch; color: rgba(255,255,255,0.85); font-size: 1.0625rem; }
+  .hero {
+    position: relative; background: linear-gradient(155deg, var(--color-navy) 0%, #24406b 55%, var(--color-river) 130%);
+    padding: 4.5rem 0 5rem; overflow: hidden; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -6rem; right: -6rem; width: 22rem; height: 22rem;
+    border-radius: 50%; background: var(--color-orange); opacity: 0.16;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -8rem; left: -8rem; width: 20rem; height: 20rem;
+    border-radius: 50%; background: var(--color-gold); opacity: 0.1;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 42rem; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.12);
+    color: #fff; font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.5rem 1.1rem; border-radius: var(--radius-pill); margin-bottom: 1.6rem; backdrop-filter: blur(4px);
+  }
+  .hero-eyebrow .dot { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--color-gold); }
+  .hero h1 { font-family: var(--font-display); font-size: 2.9rem; font-weight: 800; color: #fff; line-height: 1.1; margin: 0; }
+  .hero h1 .accent-line { display: block; }
+  .hero h1 .highlight { color: var(--color-gold); }
+  .hero-sub { font-size: 1.125rem; color: rgba(255,255,255,0.82); max-width: 34rem; margin: 1.3rem auto 2.2rem; }
+  .hero-cta-row { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .hero-cta {
+    background: var(--color-orange); color: #fff; font-weight: 700; font-size: 1.0625rem; padding: 1.05rem 2.1rem;
+    border-radius: 0.7rem; text-decoration: none; box-shadow: 0 14px 30px rgba(240,126,35,0.4);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-free-note { color: rgba(255,255,255,0.65); font-size: 0.875rem; }
+
+  .free-benefits-section { padding: 3.2rem 0; }
+  .free-benefits-header { text-align: center; max-width: 34rem; margin: 0 auto 2.4rem; }
+  .free-benefits-header .eyebrow { color: var(--color-orange-dark); }
+  .free-benefits-header h2 { font-size: 1.6rem; color: var(--color-navy); margin: 0.5rem 0 0.7rem; }
+  .free-benefits-header p { color: var(--color-navy-light); font-size: 1rem; margin: 0; }
+  .free-benefits-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; max-width: 54rem; margin: 0 auto; }
+  @media (max-width: 40rem) { .free-benefits-grid { grid-template-columns: 1fr; } }
+  .free-benefit-card { background: var(--color-surface); border-radius: 1rem; padding: 1.8rem; text-align: center; }
+  .free-benefit-icon {
+    width: 3.2rem; height: 3.2rem; border-radius: 50%; background: #fff; display: flex; align-items: center;
+    justify-content: center; margin: 0 auto 1rem; color: var(--color-river); box-shadow: 0 4px 12px rgba(27,42,74,0.08);
+  }
+  .free-benefit-card h3 { font-size: 1.0625rem; color: var(--color-navy); margin-bottom: 0.5rem; }
+  .free-benefit-card p { font-size: 0.9375rem; color: var(--color-navy-light); margin: 0; }
 
   .page { padding-block: var(--space-5) var(--space-6); }
 
   .tiers-section { text-align: center; }
-  .tiers-section h2 { font-size: 1.75rem; color: var(--color-navy); margin-top: 0.5rem; max-width: 40ch; margin-inline: auto; }
+  .tiers-section h2 { font-size: 1.5rem; color: var(--color-navy); margin-top: 0.5rem; max-width: 40ch; margin-inline: auto; }
+  .tiers-sub { color: var(--color-navy-light); font-size: 0.9688rem; max-width: 40ch; margin: 0.6rem auto 0; }
+
+  .tab-switcher { display: flex; justify-content: center; gap: 0.5rem; margin: 1.8rem 0 2rem; }
+  .tab-btn {
+    background: #fff; border: 1.5px solid var(--color-line); color: var(--color-navy-light); font-weight: 700;
+    font-size: 0.875rem; padding: 0.6rem 1.3rem; border-radius: var(--radius-pill); cursor: pointer; font-family: var(--font-body);
+    transition: all 0.15s ease;
+  }
+  .tab-btn.is-active { background: var(--color-navy); border-color: var(--color-navy); color: #fff; }
+  .tab-btn:hover:not(.is-active) { border-color: var(--color-navy-light); }
+
   .tiers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: var(--space-4); text-align: left; align-items: start; }
+  .tiers-grid--two { grid-template-columns: repeat(2, 1fr); max-width: 44rem; margin-inline: auto; }
   @media (max-width: 55rem) { .tiers-grid { grid-template-columns: 1fr; } }
 
   .tier-card { background: #fff; border: 1.5px solid var(--color-line); border-radius: 1.1rem; padding: 1.6rem; }
@@ -228,9 +334,7 @@ const championBenefits = [
   .tier-card--champion {
     position: relative; border: 2px solid var(--color-orange);
     box-shadow: 0 16px 40px rgba(240,126,35,0.18);
-    transform: scale(1.04);
   }
-  @media (max-width: 55rem) { .tier-card--champion { transform: none; } }
   .tier-badge-pill {
     position: absolute; top: -0.9rem; left: 1.5rem;
     background: linear-gradient(120deg, var(--color-orange), var(--color-gold));
