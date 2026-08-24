@@ -54,7 +54,7 @@ const championBenefits = [
   <section class="hero">
     <div class="container hero-inner">
       <span class="hero-eyebrow"><span class="dot"></span> Free to Apply</span>
-      <h1><span class="accent-line">More Eyes.</span> <span class="accent-line">More Clicks.</span> <span class="accent-line highlight">More Customers.</span></h1>
+      <h1><span class="accent-line">More Eyes. More Clicks.</span> <span class="accent-line highlight">More Customers.</span></h1>
       <p class="hero-sub">We're on a mission to share Sioux Falls' local gems — the trusted, community-minded businesses that deserve to be found by the people searching for them.</p>
       <div class="hero-cta-row">
         <a href="#apply" class="hero-cta">Apply to Be Featured →</a>
@@ -86,84 +86,6 @@ const championBenefits = [
   </section>
 
   <div class="container page">
-    <section class="tiers-section">
-      <span class="eyebrow">Want Even More Visibility?</span>
-      <h2>Visibility that grows with your investment in Sioux Falls</h2>
-      <p class="tiers-sub">Give Back Partners and Community Champions get real added exposure, tied to how they show up for this community.</p>
-
-      <div class="tab-switcher">
-        <button class="tab-btn is-active" type="button" data-tab="overview">Quick Overview</button>
-        <button class="tab-btn" type="button" data-tab="full">See the Full Breakdown</button>
-      </div>
-
-      <div class="tab-panel" id="tab-overview">
-        <div class="tiers-grid tiers-grid--two">
-          <div class="tier-card">
-            <h3>Give Back Partner</h3>
-            <p class="tier-tagline">For businesses that show up for this community</p>
-            <ul class="tier-list">
-              <li><Icon name="check" size={15} /> Give Back Partner badge on your profile</li>
-              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
-            </ul>
-          </div>
-          <div class="tier-card tier-card--champion">
-            <span class="tier-badge-pill">Most Visibility</span>
-            <h3>Community Champion</h3>
-            <p class="tier-tagline">More visibility. More traffic. More business.</p>
-            <ul class="tier-list tier-list--champion">
-              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
-              <li><Icon name="check" size={15} /> Spotlight articles, press releases, event listings, and more</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-panel" id="tab-full" hidden>
-        <div class="tiers-grid tiers-grid--two">
-          <div class="tier-card">
-            <h3>Give Back Partner</h3>
-            <p class="tier-tagline">For businesses that show up for this community</p>
-            <ul class="tier-list">
-              <li><Icon name="check" size={15} /> Spotlight profile</li>
-              <li><Icon name="check" size={15} /> RankAPro review app</li>
-              <li><Icon name="check" size={15} /> Give Back Partner badge</li>
-              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
-            </ul>
-          </div>
-          <div class="tier-card tier-card--champion">
-            <span class="tier-badge-pill">Most Visibility</span>
-            <h3>Community Champion</h3>
-            <p class="tier-tagline">More visibility. More traffic. More business.</p>
-            <ul class="tier-list tier-list--champion">
-              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
-              {championBenefits.map((b) => (
-                <li><Icon name={b.icon} size={15} /> {b.label}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="contour-divider"></div>
-
-    <section class="benefits-section">
-      <span class="eyebrow">Why This Isn't Just Another Directory</span>
-      <div class="benefits-list">
-        {benefits.map((b) => (
-          <div class="benefit-row">
-            <span class="benefit-number">{b.number}</span>
-            <div>
-              <h3>{b.title}</h3>
-              <p>{b.body}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <div class="contour-divider"></div>
-
     <section class="qualify-section">
       <span class="eyebrow">Before You Apply</span>
       <h2>To be eligible, your business must be:</h2>
@@ -241,6 +163,84 @@ const championBenefits = [
         isn't guaranteed.
       </p>
     </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="tiers-section">
+      <span class="eyebrow">Want Even More Visibility?</span>
+      <h2>Visibility that grows with your investment in Sioux Falls</h2>
+      <p class="tiers-sub">Give Back Partners and Community Champions get real added exposure, tied to how they show up for this community.</p>
+
+      <div class="tab-switcher">
+        <button class="tab-btn is-active" type="button" data-tab="overview">Quick Overview</button>
+        <button class="tab-btn" type="button" data-tab="full">See the Full Breakdown</button>
+      </div>
+
+      <div class="tab-panel" id="tab-overview">
+        <div class="tiers-grid tiers-grid--two">
+          <div class="tier-card">
+            <h3>Give Back Partner</h3>
+            <p class="tier-tagline">For businesses that show up for this community</p>
+            <ul class="tier-list">
+              <li><Icon name="check" size={15} /> Give Back Partner badge on your profile</li>
+              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
+            </ul>
+          </div>
+          <div class="tier-card tier-card--champion">
+            <span class="tier-badge-pill">Most Visibility</span>
+            <h3>Community Champion</h3>
+            <p class="tier-tagline">More visibility. More traffic. More business.</p>
+            <ul class="tier-list tier-list--champion">
+              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
+              <li><Icon name="check" size={15} /> Spotlight articles, press releases, event listings, and more</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-full" hidden>
+        <div class="tiers-grid tiers-grid--two">
+          <div class="tier-card">
+            <h3>Give Back Partner</h3>
+            <p class="tier-tagline">For businesses that show up for this community</p>
+            <ul class="tier-list">
+              <li><Icon name="check" size={15} /> Spotlight profile</li>
+              <li><Icon name="check" size={15} /> RankAPro review app</li>
+              <li><Icon name="check" size={15} /> Give Back Partner badge</li>
+              <li><Icon name="check" size={15} /> Up to 2 giveaway campaigns a year</li>
+            </ul>
+          </div>
+          <div class="tier-card tier-card--champion">
+            <span class="tier-badge-pill">Most Visibility</span>
+            <h3>Community Champion</h3>
+            <p class="tier-tagline">More visibility. More traffic. More business.</p>
+            <ul class="tier-list tier-list--champion">
+              <li><Icon name="check" size={15} /> Everything in Give Back Partner</li>
+              {championBenefits.map((b) => (
+                <li><Icon name={b.icon} size={15} /> {b.label}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="contour-divider"></div>
+
+    <section class="benefits-section">
+      <span class="eyebrow">Why This Isn't Just Another Directory</span>
+      <div class="benefits-list">
+        {benefits.map((b) => (
+          <div class="benefit-row">
+            <span class="benefit-number">{b.number}</span>
+            <div>
+              <h3>{b.title}</h3>
+              <p>{b.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   </div>
 
   <SiteFooter slot="footer" />
@@ -271,7 +271,7 @@ const championBenefits = [
     content: ''; position: absolute; bottom: -8rem; left: -8rem; width: 20rem; height: 20rem;
     border-radius: 50%; background: var(--color-gold); opacity: 0.1;
   }
-  .hero-inner { position: relative; z-index: 1; max-width: 42rem; margin: 0 auto; }
+  .hero-inner { position: relative; z-index: 1; max-width: 50rem; margin: 0 auto; }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.12);
     color: #fff; font-weight: 700; font-size: 0.8125rem; text-transform: uppercase; letter-spacing: 0.06em;
