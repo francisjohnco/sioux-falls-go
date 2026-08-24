@@ -98,8 +98,8 @@ const schema = {
 };
 ---
 <BaseLayout
-  title={business.data.name}
-  description={`${business.data.name} — ${category.data.name} in Sioux Falls. Hours, contact info, and services.`}
+  title={business.data.seo?.title || business.data.name}
+  description={business.data.seo?.description || `${business.data.name} — ${category.data.name} in Sioux Falls. Hours, contact info, and services.`}
   canonicalPath={`/businesses/${business.id}`}
   schema={schema}
 >

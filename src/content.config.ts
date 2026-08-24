@@ -99,6 +99,11 @@ const businesses = defineCollection({
     ownerName: z.string().optional(), // powers the "Meet the Owner" card — omitted entirely if not provided, never inferred or guessed
     ownerQuote: z.string().optional(), // short personal line for that same card, distinct from pullQuote
     responseTime: z.string().optional(), // lowercase phrase completing "Usually responds ___", e.g. "within 1 hour", "within 24 hours" — set by the business owner to describe their own real response time, never a universal default
+    excerpt: z.string().optional(), // 1-2 sentence summary, distinct from the full profile body — for card previews and social sharing
+    seo: z.object({
+      title: z.string(),
+      description: z.string(),
+    }).optional(), // real, hand-crafted meta title/description — omitted businesses fall back to a generated default, never silently blank
 
     // ── Profile enhancements ──
     gallery: z.array(z.string()).default([]), // additional photos beyond heroImage — Champion tier only, gated in the template
