@@ -37,15 +37,15 @@ reviews:
   - author: "Corey Thorson"
     rating: 5
     text: "Francis was very knowledgeable. He took the time to go over everything and explain in detail how everything works.  It was a pleasure working with him."
+    date: "5 months ago"
+  - author: "Bryce Vining"
+    rating: 5
+    text: "I’ve never seen someone so passionate about spreading so much love into the community! I wish I could put it in words as beautiful as they do. But nothing will ever top the skills they provide!"
     date: "4 months ago"
   - author: "Daniel Brunz"
     rating: 5
     text: "Francis was super helpful in helping me identify best ways to optimize my Google ranking!"
-    date: "3 months ago"
-  - author: "eli K"
-    rating: 5
-    text: "It was great working with Francis! He knows how to help get your business on the map!"
-    date: "5 months ago"
+    date: "4 months ago"
 ---
 
 ## **Marketing Services in Sioux Falls That Help Your Business Get Found and Grow**
