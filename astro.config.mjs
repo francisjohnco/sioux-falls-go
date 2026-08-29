@@ -9,7 +9,7 @@ export default defineConfig({
   site: 'https://siouxfallsgo.com',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/admin') && !page.includes('/login'),
+      filter: (page) => !page.includes('/admin') && !page.includes('/login') && !page.includes('/host-dashboard') && !page.includes('/host-login'),
     }),
   ],
 });
