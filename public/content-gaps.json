@@ -1,6 +1,19 @@
 {
-  "generatedAt": "2026-08-31T13:28:01.689Z",
+  "generatedAt": "2026-08-31T13:38:39.515Z",
   "categories": [
+    {
+      "slug": "auto-repair",
+      "name": "Auto Repair",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
     {
       "slug": "dentists",
       "name": "Dentists",
@@ -80,16 +93,6 @@
     {
       "slug": "auto-parts",
       "name": "Auto Parts",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "auto-repair",
-      "name": "Auto Repair",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
