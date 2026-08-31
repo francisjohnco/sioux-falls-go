@@ -1,0 +1,23 @@
+{
+  "name": "Dentists",
+  "slug": "dentists",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Dentists in Sioux Falls, SD",
+    "description": "Discover dentists in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

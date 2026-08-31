@@ -1,0 +1,23 @@
+{
+  "name": "Community Groups",
+  "slug": "community-groups",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Community Groups in Sioux Falls, SD",
+    "description": "Discover community groups in Sioux Falls."
+  },
+  "icon": "handshake",
+  "parentCategory": "community-local-resources"
+}

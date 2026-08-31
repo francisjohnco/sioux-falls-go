@@ -1,0 +1,22 @@
+{
+  "name": "Automotive",
+  "slug": "automotive",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Automotive in Sioux Falls, SD",
+    "description": "Sioux Falls automotive services"
+  },
+  "icon": "wrench"
+}

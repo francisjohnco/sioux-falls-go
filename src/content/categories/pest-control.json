@@ -1,0 +1,23 @@
+{
+  "name": "Pest Control",
+  "slug": "pest-control",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Pest Control in Sioux Falls, SD",
+    "description": "Discover pest control in Sioux Falls."
+  },
+  "icon": "wrench",
+  "parentCategory": "home-services"
+}

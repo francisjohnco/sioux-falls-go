@@ -1,0 +1,23 @@
+{
+  "name": "Insurance Agents",
+  "slug": "insurance-agents",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Insurance Agents in Sioux Falls, SD",
+    "description": "Discover insurance agents in Sioux Falls."
+  },
+  "icon": "briefcase",
+  "parentCategory": "professional-services"
+}

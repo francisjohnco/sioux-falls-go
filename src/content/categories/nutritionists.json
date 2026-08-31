@@ -1,0 +1,23 @@
+{
+  "name": "Nutritionists",
+  "slug": "nutritionists",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Nutritionists in Sioux Falls, SD",
+    "description": "Discover nutritionists in Sioux Falls."
+  },
+  "icon": "leaf",
+  "parentCategory": "health-wellness"
+}

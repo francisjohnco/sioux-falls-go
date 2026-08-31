@@ -1,0 +1,23 @@
+{
+  "name": "IT Services",
+  "slug": "it-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated IT Services in Sioux Falls, SD",
+    "description": "Discover it services in Sioux Falls."
+  },
+  "icon": "plug",
+  "parentCategory": "professional-services"
+}

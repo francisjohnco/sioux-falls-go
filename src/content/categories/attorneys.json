@@ -1,0 +1,23 @@
+{
+  "name": "Attorneys",
+  "slug": "attorneys",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Attorneys in Sioux Falls, SD",
+    "description": "Discover attorneys in Sioux Falls."
+  },
+  "icon": "briefcase",
+  "parentCategory": "professional-services"
+}

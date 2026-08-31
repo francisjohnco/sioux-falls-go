@@ -1,0 +1,23 @@
+{
+  "name": "Financial Advisors",
+  "slug": "financial-advisors",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Financial Advisors in Sioux Falls, SD",
+    "description": "Discover financial advisors in Sioux Falls."
+  },
+  "icon": "briefcase",
+  "parentCategory": "professional-services"
+}

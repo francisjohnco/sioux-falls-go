@@ -1,0 +1,23 @@
+{
+  "name": "Fitness Centers",
+  "slug": "fitness-centers",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Fitness Centers in Sioux Falls, SD",
+    "description": "Discover fitness centers in Sioux Falls."
+  },
+  "icon": "activity",
+  "parentCategory": "health-wellness"
+}

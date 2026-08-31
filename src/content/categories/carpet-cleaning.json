@@ -1,0 +1,23 @@
+{
+  "name": "Carpet Cleaning",
+  "slug": "carpet-cleaning",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Carpet Cleaning in Sioux Falls, SD",
+    "description": "Discover carpet cleaning in Sioux Falls."
+  },
+  "icon": "sparkles",
+  "parentCategory": "home-services"
+}

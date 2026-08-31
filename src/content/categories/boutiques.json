@@ -1,0 +1,23 @@
+{
+  "name": "Boutiques",
+  "slug": "boutiques",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Boutiques in Sioux Falls, SD",
+    "description": "Discover boutiques in Sioux Falls."
+  },
+  "icon": "star",
+  "parentCategory": "shopping-retail"
+}

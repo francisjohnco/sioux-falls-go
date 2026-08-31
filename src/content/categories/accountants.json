@@ -1,0 +1,23 @@
+{
+  "name": "Accountants",
+  "slug": "accountants",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Accountants in Sioux Falls, SD",
+    "description": "Discover accountants in Sioux Falls."
+  },
+  "icon": "briefcase",
+  "parentCategory": "professional-services"
+}

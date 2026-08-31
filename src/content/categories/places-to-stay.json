@@ -1,0 +1,22 @@
+{
+  "name": "Places to Stay",
+  "slug": "places-to-stay",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Places to Stay in Sioux Falls, SD",
+    "description": "Places to stay in Sioux Falls. Hosted by locals and AirBnb."
+  },
+  "icon": "home"
+}

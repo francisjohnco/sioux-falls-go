@@ -1,0 +1,23 @@
+{
+  "name": "Optometrists",
+  "slug": "optometrists",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Optometrists in Sioux Falls, SD",
+    "description": "Discover optometrists in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

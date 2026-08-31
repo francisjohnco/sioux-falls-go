@@ -1,0 +1,23 @@
+{
+  "name": "Dealerships",
+  "slug": "dealerships",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Dealerships in Sioux Falls, SD",
+    "description": "Sioux falls auto dealers"
+  },
+  "icon": "key",
+  "parentCategory": "automotive"
+}

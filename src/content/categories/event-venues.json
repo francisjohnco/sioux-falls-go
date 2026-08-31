@@ -1,0 +1,23 @@
+{
+  "name": "Event Venues",
+  "slug": "event-venues",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Event Venues in Sioux Falls, SD",
+    "description": "Discover event venues in Sioux Falls."
+  },
+  "icon": "star",
+  "parentCategory": "things-to-do"
+}

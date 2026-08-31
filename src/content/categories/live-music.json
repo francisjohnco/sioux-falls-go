@@ -1,0 +1,23 @@
+{
+  "name": "Live Music",
+  "slug": "live-music",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Live Music in Sioux Falls, SD",
+    "description": "Discover live music in Sioux Falls."
+  },
+  "icon": "mic",
+  "parentCategory": "things-to-do"
+}

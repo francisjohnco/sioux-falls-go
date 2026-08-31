@@ -1,0 +1,23 @@
+{
+  "name": "Gift Shops",
+  "slug": "gift-shops",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Gift Shops in Sioux Falls, SD",
+    "description": "Discover gift shops in Sioux Falls."
+  },
+  "icon": "gift",
+  "parentCategory": "shopping-retail"
+}

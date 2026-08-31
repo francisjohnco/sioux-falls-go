@@ -1,0 +1,22 @@
+{
+  "name": "Mortgage Brokers",
+  "slug": "mortgage-brokers",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Mortgage Brokers in Sioux Falls, SD",
+    "description": "Discover mortgage brokers in Sioux Falls."
+  },
+  "icon": "briefcase"
+}

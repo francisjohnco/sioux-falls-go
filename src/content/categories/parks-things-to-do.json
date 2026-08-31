@@ -1,0 +1,23 @@
+{
+  "name": "Parks",
+  "slug": "parks-things-to-do",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Parks in Sioux Falls, SD",
+    "description": "Discover parks in Sioux Falls."
+  },
+  "icon": "tree",
+  "parentCategory": "things-to-do"
+}

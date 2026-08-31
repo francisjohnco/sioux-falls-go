@@ -1,0 +1,23 @@
+{
+  "name": "Yoga Studios",
+  "slug": "yoga-studios",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Yoga Studios in Sioux Falls, SD",
+    "description": "Discover yoga studios in Sioux Falls."
+  },
+  "icon": "activity",
+  "parentCategory": "health-wellness"
+}

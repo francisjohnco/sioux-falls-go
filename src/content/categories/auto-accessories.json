@@ -1,0 +1,23 @@
+{
+  "name": "Accessories",
+  "slug": "auto-accessories",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Accessories in Sioux Falls, SD",
+    "description": "Sioux Falls auto accessories"
+  },
+  "icon": "wrench",
+  "parentCategory": "automotive"
+}

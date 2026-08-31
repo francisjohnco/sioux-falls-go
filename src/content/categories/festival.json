@@ -1,0 +1,22 @@
+{
+  "name": "Festival",
+  "slug": "festival",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Festival in Sioux Falls, SD",
+    "description": "Discover festival in Sioux Falls."
+  },
+  "icon": "star"
+}

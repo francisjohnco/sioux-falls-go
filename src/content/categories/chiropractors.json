@@ -1,0 +1,23 @@
+{
+  "name": "Chiropractors",
+  "slug": "chiropractors",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Chiropractors in Sioux Falls, SD",
+    "description": "Discover chiropractors in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

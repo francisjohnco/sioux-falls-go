@@ -1,6 +1,6 @@
 {
-  "name": "Coffee Shops",
-  "slug": "coffee-shops",
+  "name": "Food Trucks",
+  "slug": "food-trucks",
   "aliases": [],
   "playbook": {
     "topics": [
@@ -15,9 +15,9 @@
     ]
   },
   "seo": {
-    "title": "Top-Rated Coffee Shops in Sioux Falls, SD",
-    "description": "Find trusted coffee shops in Sioux Falls, plus local guides and resources."
+    "title": "Top-Rated Food Trucks in Sioux Falls, SD",
+    "description": "Discover food trucks in Sioux Falls."
   },
-  "icon": "coffee",
+  "icon": "utensils",
   "parentCategory": "restaurants-dining"
 }

@@ -1,0 +1,22 @@
+{
+  "name": "Handyman",
+  "slug": "handyman",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Handyman in Sioux Falls, SD",
+    "description": "Find the local's favorite handyman to get all your repairs done in a timely manner."
+  },
+  "icon": "wrench"
+}

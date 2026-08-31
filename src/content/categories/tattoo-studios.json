@@ -1,0 +1,23 @@
+{
+  "name": "Tattoo Studios",
+  "slug": "tattoo-studios",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Tattoo Studios in Sioux Falls, SD",
+    "description": "Discover tattoo studios in Sioux Falls."
+  },
+  "icon": "sparkles",
+  "parentCategory": "beauty-personal-care"
+}

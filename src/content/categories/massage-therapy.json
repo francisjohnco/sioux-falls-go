@@ -1,0 +1,23 @@
+{
+  "name": "Massage Therapy",
+  "slug": "massage-therapy",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Massage Therapy in Sioux Falls, SD",
+    "description": "Discover massage therapy in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

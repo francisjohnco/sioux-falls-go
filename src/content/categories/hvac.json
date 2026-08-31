@@ -1,0 +1,23 @@
+{
+  "name": "HVAC",
+  "slug": "hvac",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated HVAC in Sioux Falls, SD",
+    "description": "Discover hvac in Sioux Falls."
+  },
+  "icon": "wrench",
+  "parentCategory": "home-services"
+}

@@ -1,9 +1,819 @@
 {
-  "generatedAt": "2026-08-31T03:23:02.855Z",
+  "generatedAt": "2026-08-31T11:24:38.617Z",
   "categories": [
+    {
+      "slug": "accountants",
+      "name": "Accountants",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "attorneys",
+      "name": "Attorneys",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "attractions",
+      "name": "Attractions",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "auto-accessories",
+      "name": "Accessories",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "auto-detailing",
+      "name": "Auto Detailing",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "auto-parts",
+      "name": "Auto Parts",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "auto-repair",
+      "name": "Auto Repair",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "automotive",
+      "name": "Automotive",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "bakeries",
+      "name": "Bakeries",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "bank-services",
+      "name": "Bank",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "barbershops",
+      "name": "Barbershops",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "bars-and-pubs",
+      "name": "Bars & Pubs",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "beauty-personal-care",
+      "name": "Beauty & Personal Care",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "boutiques",
+      "name": "Boutiques",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "breakfast-and-brunch",
+      "name": "Breakfast & Brunch",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "business-consulting",
+      "name": "Business Consulting",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "car-wash",
+      "name": "Car Washes",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "carpet-cleaning",
+      "name": "Carpet Cleaning",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "catering",
+      "name": "Catering",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "chiropractors",
+      "name": "Chiropractors",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "churches",
+      "name": "Churches",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "community-groups",
+      "name": "Community Groups",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "community-local-resources",
+      "name": "Community & Local Resources",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "dealerships",
+      "name": "Dealerships",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "dentists",
+      "name": "Dentists",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "electronics-stores",
+      "name": "Electronics Stores",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "entertainment",
+      "name": "Entertainment",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "event-venues",
+      "name": "Event Venues",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "family-activities",
+      "name": "Family Activities",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "feature",
+      "name": "Featured",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "festival",
+      "name": "Festival",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "financial-advisors",
+      "name": "Financial Advisors",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "fitness-centers",
+      "name": "Fitness Centers",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
     {
       "slug": "food-retail",
       "name": "Food & Retail",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "food-trucks",
+      "name": "Food Trucks",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "food",
+      "name": "Food",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "furniture-stores",
+      "name": "Furniture Stores",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "garage-door-repair",
+      "name": "Garage Door Repair",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "gift-shops",
+      "name": "Gift Shops",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "hair-salons",
+      "name": "Hair Salons",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "handyman",
+      "name": "Handyman",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "health-wellness",
+      "name": "Health & Wellness",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "home-inspectors",
+      "name": "Home Inspectors",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "home-remodeling",
+      "name": "Home Remodeling",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "hotels",
+      "name": "Hotels",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "hvac",
+      "name": "HVAC",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "ice-cream-and-dessert",
+      "name": "Ice Cream & Dessert",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "insurance-agents",
+      "name": "Insurance Agents",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "it-services",
+      "name": "IT Services",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "landscaping-home-services",
+      "name": "Landscaping",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "live-music",
+      "name": "Live Music",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "local-news",
+      "name": "Local News",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "massage-therapy",
+      "name": "Massage Therapy",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "medical-clinics",
+      "name": "Medical Clinics",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "mental-health-services",
+      "name": "Mental Health Services",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "mortgage-brokers",
+      "name": "Mortgage Brokers",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "museums",
+      "name": "Museums",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "nail-salons",
+      "name": "Nail Salons",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "nonprofits",
+      "name": "Nonprofits",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "nutritionists",
+      "name": "Nutritionists",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "optometrists",
+      "name": "Optometrists",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "outdoor-recreation",
+      "name": "Outdoor Recreation",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "parks-things-to-do",
+      "name": "Parks",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "pest-control",
+      "name": "Pest Control",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "photography",
+      "name": "Photography",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "physical-therapy",
+      "name": "Physical Therapy",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "places-to-stay",
+      "name": "Places to Stay",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "plumbing",
+      "name": "Plumbing",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "pressure-washing",
+      "name": "Pressure Washing",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "printing-services",
+      "name": "Printing Services",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "property-management",
+      "name": "Property Management",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "roofing",
+      "name": "Roofing",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "skin-care-clinics",
+      "name": "Skin Care Clinics",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "spas",
+      "name": "Spas",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "sporting-goods-stores",
+      "name": "Sporting Goods Stores",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "tattoo-studios",
+      "name": "Tattoo Studios",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "things-to-do",
+      "name": "Things To Do",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "towing",
+      "name": "Towing",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "videos",
+      "name": "Videos",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "volunteer-organizations",
+      "name": "Volunteer Organizations",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "web-design",
+      "name": "Web Design",
+      "articleCount": 0,
+      "businessCount": 0,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 0,
+      "reasons": []
+    },
+    {
+      "slug": "yoga-studios",
+      "name": "Yoga Studios",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",

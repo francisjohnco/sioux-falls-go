@@ -1,0 +1,23 @@
+{
+  "name": "Entertainment",
+  "slug": "entertainment",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Entertainment in Sioux Falls, SD",
+    "description": "Sioux Falls entertainment"
+  },
+  "icon": "star",
+  "parentCategory": "attractions"
+}

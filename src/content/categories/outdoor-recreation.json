@@ -1,0 +1,23 @@
+{
+  "name": "Outdoor Recreation",
+  "slug": "outdoor-recreation",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Outdoor Recreation in Sioux Falls, SD",
+    "description": "Discover outdoor recreation in Sioux Falls."
+  },
+  "icon": "tree",
+  "parentCategory": "things-to-do"
+}

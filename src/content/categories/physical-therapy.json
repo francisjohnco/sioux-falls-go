@@ -1,0 +1,23 @@
+{
+  "name": "Physical Therapy",
+  "slug": "physical-therapy",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Physical Therapy in Sioux Falls, SD",
+    "description": "Discover physical therapy in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

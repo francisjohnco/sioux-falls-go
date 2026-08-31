@@ -1,0 +1,23 @@
+{
+  "name": "Medical Clinics",
+  "slug": "medical-clinics",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Medical Clinics in Sioux Falls, SD",
+    "description": "Discover medical clinics in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "health-wellness"
+}

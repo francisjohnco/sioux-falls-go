@@ -1,0 +1,23 @@
+{
+  "name": "Roofing",
+  "slug": "roofing",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Roofing in Sioux Falls, SD",
+    "description": "Discover roofing in Sioux Falls."
+  },
+  "icon": "home",
+  "parentCategory": "home-services"
+}

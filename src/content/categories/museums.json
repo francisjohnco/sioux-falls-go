@@ -1,0 +1,23 @@
+{
+  "name": "Museums",
+  "slug": "museums",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Museums in Sioux Falls, SD",
+    "description": "Discover museums in Sioux Falls."
+  },
+  "icon": "book",
+  "parentCategory": "things-to-do"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Printing Services",
+  "slug": "printing-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Printing Services in Sioux Falls, SD",
+    "description": "Discover printing services in Sioux Falls."
+  },
+  "icon": "edit",
+  "parentCategory": "professional-services"
+}

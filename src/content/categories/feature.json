@@ -1,0 +1,22 @@
+{
+  "name": "Featured",
+  "slug": "feature",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Featured in Sioux Falls, SD",
+    "description": "Discover featured in Sioux Falls."
+  },
+  "icon": "star"
+}

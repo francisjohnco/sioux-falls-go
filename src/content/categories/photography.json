@@ -1,0 +1,23 @@
+{
+  "name": "Photography",
+  "slug": "photography",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Photography in Sioux Falls, SD",
+    "description": "Discover photography in Sioux Falls."
+  },
+  "icon": "star",
+  "parentCategory": "professional-services"
+}

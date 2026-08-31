@@ -1,0 +1,22 @@
+{
+  "name": "Attractions",
+  "slug": "attractions",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Attractions in Sioux Falls, SD",
+    "description": "Discover attractions in Sioux Falls."
+  },
+  "icon": "star"
+}

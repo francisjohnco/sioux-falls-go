@@ -1,0 +1,23 @@
+{
+  "name": "Web Design",
+  "slug": "web-design",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Web Design in Sioux Falls, SD",
+    "description": "Discover web design in Sioux Falls."
+  },
+  "icon": "globe",
+  "parentCategory": "professional-services"
+}

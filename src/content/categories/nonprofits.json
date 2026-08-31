@@ -1,0 +1,23 @@
+{
+  "name": "Nonprofits",
+  "slug": "nonprofits",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Nonprofits in Sioux Falls, SD",
+    "description": "Discover nonprofits in Sioux Falls."
+  },
+  "icon": "handshake",
+  "parentCategory": "community-local-resources"
+}

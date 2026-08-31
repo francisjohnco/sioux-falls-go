@@ -1,0 +1,23 @@
+{
+  "name": "Sporting Goods Stores",
+  "slug": "sporting-goods-stores",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Sporting Goods Stores in Sioux Falls, SD",
+    "description": "Discover sporting goods stores in Sioux Falls."
+  },
+  "icon": "activity",
+  "parentCategory": "shopping-retail"
+}

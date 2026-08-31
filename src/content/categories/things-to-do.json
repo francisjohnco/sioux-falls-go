@@ -1,0 +1,22 @@
+{
+  "name": "Things To Do",
+  "slug": "things-to-do",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Things To Do in Sioux Falls, SD",
+    "description": "Find trusted things to do in Sioux Falls."
+  },
+  "icon": "star"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Auto Detailing",
+  "slug": "auto-detailing",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Auto Detailing in Sioux Falls, SD",
+    "description": "Sioux Falls auto detailing services"
+  },
+  "icon": "sparkles",
+  "parentCategory": "automotive"
+}

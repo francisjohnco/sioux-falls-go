@@ -1,0 +1,23 @@
+{
+  "name": "Hair Salons",
+  "slug": "hair-salons",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Hair Salons in Sioux Falls, SD",
+    "description": "Discover hair salons in Sioux Falls."
+  },
+  "icon": "sparkles",
+  "parentCategory": "beauty-personal-care"
+}

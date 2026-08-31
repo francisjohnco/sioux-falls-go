@@ -1,0 +1,23 @@
+{
+  "name": "Car Washes",
+  "slug": "car-wash",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Car Washes in Sioux Falls, SD",
+    "description": "Sioux Falls car wash, Sioux Falls auto wash services"
+  },
+  "icon": "droplet",
+  "parentCategory": "automotive"
+}

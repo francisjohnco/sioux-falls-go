@@ -1,0 +1,23 @@
+{
+  "name": "Business Consulting",
+  "slug": "business-consulting",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Business Consulting in Sioux Falls, SD",
+    "description": "Discover business consulting in Sioux Falls."
+  },
+  "icon": "briefcase",
+  "parentCategory": "professional-services"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Property Management",
+  "slug": "property-management",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Property Management in Sioux Falls, SD",
+    "description": "Discover property management in Sioux Falls."
+  },
+  "icon": "key"
+}

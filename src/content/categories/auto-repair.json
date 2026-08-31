@@ -1,0 +1,23 @@
+{
+  "name": "Auto Repair",
+  "slug": "auto-repair",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Auto Repair in Sioux Falls, SD",
+    "description": "Discover auto repair in Sioux Falls."
+  },
+  "icon": "wrench",
+  "parentCategory": "automotive"
+}

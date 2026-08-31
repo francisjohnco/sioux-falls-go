@@ -1,0 +1,23 @@
+{
+  "name": "Churches",
+  "slug": "churches",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Churches in Sioux Falls, SD",
+    "description": "Discover churches in Sioux Falls."
+  },
+  "icon": "home",
+  "parentCategory": "community-local-resources"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Bank",
+  "slug": "bank-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Bank in Sioux Falls, SD",
+    "description": "Discover bank in Sioux Falls."
+  },
+  "icon": "briefcase"
+}

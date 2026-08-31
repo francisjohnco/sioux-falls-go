@@ -1,6 +1,6 @@
 {
-  "name": "Coffee Shops",
-  "slug": "coffee-shops",
+  "name": "Breakfast & Brunch",
+  "slug": "breakfast-and-brunch",
   "aliases": [],
   "playbook": {
     "topics": [
@@ -15,9 +15,9 @@
     ]
   },
   "seo": {
-    "title": "Top-Rated Coffee Shops in Sioux Falls, SD",
-    "description": "Find trusted coffee shops in Sioux Falls, plus local guides and resources."
+    "title": "Top-Rated Breakfast & Brunch in Sioux Falls, SD",
+    "description": "Discover breakfast & brunch in Sioux Falls."
   },
-  "icon": "coffee",
+  "icon": "utensils",
   "parentCategory": "restaurants-dining"
 }

@@ -1,0 +1,22 @@
+{
+  "name": "Community & Local Resources",
+  "slug": "community-local-resources",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Community & Local Resources in Sioux Falls, SD",
+    "description": "Find trusted community & local resources in Sioux Falls."
+  },
+  "icon": "handshake"
+}

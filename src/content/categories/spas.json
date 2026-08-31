@@ -1,0 +1,23 @@
+{
+  "name": "Spas",
+  "slug": "spas",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Spas in Sioux Falls, SD",
+    "description": "Discover spas in Sioux Falls."
+  },
+  "icon": "sparkles",
+  "parentCategory": "beauty-personal-care"
+}

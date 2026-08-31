@@ -1,0 +1,23 @@
+{
+  "name": "Auto Parts",
+  "slug": "auto-parts",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Auto Parts in Sioux Falls, SD",
+    "description": "Sioux Falls auto parts"
+  },
+  "icon": "wrench",
+  "parentCategory": "automotive"
+}

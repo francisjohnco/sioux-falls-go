@@ -1,0 +1,23 @@
+{
+  "name": "Local News",
+  "slug": "local-news",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Local News in Sioux Falls, SD",
+    "description": "Discover local news in Sioux Falls."
+  },
+  "icon": "newspaper",
+  "parentCategory": "community-local-resources"
+}

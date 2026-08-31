@@ -1,0 +1,22 @@
+{
+  "name": "Hotels",
+  "slug": "hotels",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Hotels in Sioux Falls, SD",
+    "description": "Discover hotels in Sioux Falls."
+  },
+  "icon": "home"
+}

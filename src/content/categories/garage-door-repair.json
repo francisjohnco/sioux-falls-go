@@ -1,0 +1,23 @@
+{
+  "name": "Garage Door Repair",
+  "slug": "garage-door-repair",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Garage Door Repair in Sioux Falls, SD",
+    "description": "Discover garage door repair in Sioux Falls."
+  },
+  "icon": "wrench",
+  "parentCategory": "home-services"
+}

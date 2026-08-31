@@ -1,0 +1,23 @@
+{
+  "name": "Volunteer Organizations",
+  "slug": "volunteer-organizations",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Volunteer Organizations in Sioux Falls, SD",
+    "description": "Discover volunteer organizations in Sioux Falls."
+  },
+  "icon": "handshake",
+  "parentCategory": "community-local-resources"
+}

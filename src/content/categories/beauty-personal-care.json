@@ -1,0 +1,22 @@
+{
+  "name": "Beauty & Personal Care",
+  "slug": "beauty-personal-care",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Beauty & Personal Care in Sioux Falls, SD",
+    "description": "Find trusted beauty & personal care in Sioux Falls."
+  },
+  "icon": "sparkles"
+}

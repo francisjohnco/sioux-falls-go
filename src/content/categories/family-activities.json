@@ -1,0 +1,23 @@
+{
+  "name": "Family Activities",
+  "slug": "family-activities",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Family Activities in Sioux Falls, SD",
+    "description": "Discover family activities in Sioux Falls."
+  },
+  "icon": "heart",
+  "parentCategory": "things-to-do"
+}

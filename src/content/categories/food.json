@@ -1,0 +1,22 @@
+{
+  "name": "Food",
+  "slug": "food",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Food in Sioux Falls, SD",
+    "description": "Discover food in Sioux Falls."
+  },
+  "icon": "utensils"
+}

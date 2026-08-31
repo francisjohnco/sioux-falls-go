@@ -1,0 +1,23 @@
+{
+  "name": "Landscaping",
+  "slug": "landscaping-home-services",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Landscaping in Sioux Falls, SD",
+    "description": "Discover landscaping in Sioux Falls."
+  },
+  "icon": "leaf",
+  "parentCategory": "home-services"
+}

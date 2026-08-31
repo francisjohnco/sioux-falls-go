@@ -1,0 +1,22 @@
+{
+  "name": "Videos",
+  "slug": "videos",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Videos in Sioux Falls, SD",
+    "description": "Discover videos in Sioux Falls."
+  },
+  "icon": "share"
+}

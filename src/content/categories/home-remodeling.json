@@ -1,0 +1,23 @@
+{
+  "name": "Home Remodeling",
+  "slug": "home-remodeling",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Home Remodeling in Sioux Falls, SD",
+    "description": "Discover home remodeling in Sioux Falls."
+  },
+  "icon": "home",
+  "parentCategory": "home-services"
+}

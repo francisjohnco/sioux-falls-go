@@ -1,0 +1,23 @@
+{
+  "name": "Furniture Stores",
+  "slug": "furniture-stores",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Furniture Stores in Sioux Falls, SD",
+    "description": "Discover furniture stores in Sioux Falls."
+  },
+  "icon": "home",
+  "parentCategory": "shopping-retail"
+}

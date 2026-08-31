@@ -1,0 +1,23 @@
+{
+  "name": "Skin Care Clinics",
+  "slug": "skin-care-clinics",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Skin Care Clinics in Sioux Falls, SD",
+    "description": "Discover skin care clinics in Sioux Falls."
+  },
+  "icon": "sparkles",
+  "parentCategory": "beauty-personal-care"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Health & Wellness",
+  "slug": "health-wellness",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Health & Wellness in Sioux Falls, SD",
+    "description": "Find trusted health & wellness in Sioux Falls."
+  },
+  "icon": "heart"
+}
