@@ -76,7 +76,7 @@ const businesses = defineCollection({
     phone: z.string().optional(),
     website: z.string().url().optional(),
     hours: z.string().optional(),
-    verifiedAt: z.date(), // Data Engine freshness marker
+    verifiedAt: z.date().optional(), // set once Sioux Falls Go has confirmed this listing is real and accurate — omitted entirely for newly-added, not-yet-verified businesses
     claimed: z.boolean().default(false),
     heroImage: z.string().optional(),
     sourceUrl: z.string().optional(), // original WP URL, for migration traceability

@@ -16,8 +16,9 @@ const searchIndex = [
 ];
 const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing' || b.data.partnershipTier === 'community-champion');
 
-const newlyVerified = [...businesses]
-  .sort((a, b) => b.data.verifiedAt.getTime() - a.data.verifiedAt.getTime())
+const newlyVerified = businesses
+  .filter((b) => b.data.verifiedAt)
+  .sort((a, b) => b.data.verifiedAt!.getTime() - a.data.verifiedAt!.getTime())
   .slice(0, 6);
 
 const categoryCounts = categories

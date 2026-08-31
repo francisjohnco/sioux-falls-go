@@ -119,6 +119,15 @@ const schema = {
     </div>
   </div>
 
+  {!business.data.claimed && (
+    <div class="claim-banner">
+      <div class="container claim-banner-inner">
+        <p><Icon name="megaphone" size={16} /> Own this business? This listing hasn't been claimed yet.</p>
+        <a href={`mailto:hello@siouxfallsgo.com?subject=${encodeURIComponent(`Claim my listing: ${business.data.name}`)}`} class="claim-banner-cta">Claim This Listing →</a>
+      </div>
+    </div>
+  )}
+
   <div class="trust-bar">
     <div class="container trust-bar-inner">
       <div class="trust-stats">
@@ -424,6 +433,12 @@ const schema = {
   .badge--category-plain { background: rgba(255,255,255,0.15); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: var(--radius-pill); }
 
   /* Trust bar — sticky, immediate real signals + the smart CTA */
+  .claim-banner { background: var(--color-gold); }
+  .claim-banner-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.7rem; flex-wrap: wrap; }
+  .claim-banner-inner p { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.875rem; color: var(--color-navy); margin: 0; }
+  .claim-banner-cta { background: var(--color-navy); color: #fff; font-weight: 700; font-size: 0.8125rem; padding: 0.5rem 1rem; border-radius: var(--radius); text-decoration: none; white-space: nowrap; }
+  .claim-banner-cta:hover { background: #131f38; }
+
   .trust-bar { background: #fff; border-bottom: 1px solid var(--color-line); padding-block: 0.9rem; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 10px rgba(13,23,48,0.06); }
   .trust-bar-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; }
   .trust-stats { display: flex; gap: 2.2rem; flex-wrap: wrap; }
