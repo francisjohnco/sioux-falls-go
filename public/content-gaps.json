@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T15:06:59.655Z",
+  "generatedAt": "2026-08-31T15:13:02.643Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -95,6 +95,19 @@
     {
       "slug": "carpet-cleaning",
       "name": "Carpet Cleaning",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "catering",
+      "name": "Catering",
       "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
@@ -326,16 +339,6 @@
     {
       "slug": "car-wash",
       "name": "Car Washes",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "catering",
-      "name": "Catering",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
