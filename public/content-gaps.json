@@ -1,9 +1,22 @@
 {
-  "generatedAt": "2026-08-31T18:30:46.343Z",
+  "generatedAt": "2026-08-31T19:02:57.519Z",
   "categories": [
     {
       "slug": "auto-repair",
       "name": "Auto Repair",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "catering",
+      "name": "Catering",
       "articleCount": 0,
       "businessCount": 3,
       "categoryType": "other",
@@ -80,6 +93,19 @@
       ]
     },
     {
+      "slug": "pressure-washing",
+      "name": "Pressure Washing",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "roofing",
       "name": "Roofing",
       "articleCount": 0,
@@ -106,19 +132,6 @@
       ]
     },
     {
-      "slug": "catering",
-      "name": "Catering",
-      "articleCount": 0,
-      "businessCount": 2,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 120,
-      "reasons": [
-        "Has businesses but zero articles",
-        "2 business(es) never mentioned in any article"
-      ]
-    },
-    {
       "slug": "custom-home-builders",
       "name": "Custom Home Builders",
       "articleCount": 0,
@@ -134,19 +147,6 @@
     {
       "slug": "fine-dining",
       "name": "Fine Dining",
-      "articleCount": 0,
-      "businessCount": 2,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 120,
-      "reasons": [
-        "Has businesses but zero articles",
-        "2 business(es) never mentioned in any article"
-      ]
-    },
-    {
-      "slug": "pressure-washing",
-      "name": "Pressure Washing",
       "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
@@ -1048,8 +1048,8 @@
       "reasons": []
     },
     {
-      "slug": "restaurants-dining",
-      "name": "Restaurants & Dining",
+      "slug": "shopping-retail",
+      "name": "Shopping & Retail",
       "articleCount": 5,
       "businessCount": 1,
       "categoryType": "dual",
@@ -1058,13 +1058,13 @@
       "reasons": []
     },
     {
-      "slug": "shopping-retail",
-      "name": "Shopping & Retail",
-      "articleCount": 5,
+      "slug": "restaurants-dining",
+      "name": "Restaurants & Dining",
+      "articleCount": 6,
       "businessCount": 1,
       "categoryType": "dual",
       "missingTypes": [],
-      "priorityScore": -25,
+      "priorityScore": -30,
       "reasons": []
     },
     {
