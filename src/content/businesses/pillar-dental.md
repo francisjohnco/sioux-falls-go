@@ -1,5 +1,6 @@
 ---
 name: "Pillar Dental"
+heroImage: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "dentists"
 claimed: false
 address: "2308 S Westlake Dr, Sioux Falls, South Dakota 57106"

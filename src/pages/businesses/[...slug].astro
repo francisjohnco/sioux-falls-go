@@ -114,7 +114,7 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  <div class="champion-hero-v2">
+  <div class="champion-hero-v2" style={business.data.heroImage ? `background-image: linear-gradient(155deg, rgba(22,35,61,0.55), rgba(61,90,133,0.45)), url(${business.data.heroImage}); background-size: cover; background-position: center;` : undefined}>
     <div class="champion-hero-glow"></div>
     <div class="container champion-hero-inner-v2">
       <p class="hero-status">

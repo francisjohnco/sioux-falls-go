@@ -1,5 +1,6 @@
 ---
 name: "Kappenman Family Dental"
+heroImage: "https://images.unsplash.com/photo-1704455306251-b4634215d98f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "dentists"
 claimed: false
 address: "5704 W 41st St, Sioux Falls, South Dakota 57106"
