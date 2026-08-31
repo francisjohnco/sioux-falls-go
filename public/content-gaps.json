@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T18:23:36.843Z",
+  "generatedAt": "2026-08-31T18:30:46.343Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -132,6 +132,19 @@
       ]
     },
     {
+      "slug": "fine-dining",
+      "name": "Fine Dining",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "pressure-washing",
       "name": "Pressure Washing",
       "articleCount": 0,
@@ -160,19 +173,6 @@
     {
       "slug": "electronics-stores",
       "name": "Electronics Stores",
-      "articleCount": 0,
-      "businessCount": 1,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 110,
-      "reasons": [
-        "Has businesses but zero articles",
-        "1 business(es) never mentioned in any article"
-      ]
-    },
-    {
-      "slug": "fine-dining",
-      "name": "Fine Dining",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
