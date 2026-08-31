@@ -1,0 +1,23 @@
+{
+  "name": "Fine Dining",
+  "slug": "fine-dining",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "reservations",
+      "special occasions",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "local-resource",
+      "visitor-guide"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Fine Dining in Sioux Falls, SD",
+    "description": "Discover Sioux Falls' best fine dining restaurants for special occasions, date nights, and celebrations."
+  },
+  "icon": "utensils",
+  "parentCategory": "restaurants-dining"
+}

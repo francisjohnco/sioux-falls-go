@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T18:11:24.782Z",
+  "generatedAt": "2026-08-31T18:23:36.843Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -160,6 +160,19 @@
     {
       "slug": "electronics-stores",
       "name": "Electronics Stores",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "fine-dining",
+      "name": "Fine Dining",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
