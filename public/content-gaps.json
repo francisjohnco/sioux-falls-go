@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T19:02:57.519Z",
+  "generatedAt": "2026-08-31T19:14:20.384Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -82,6 +82,19 @@
     {
       "slug": "landscaping-home-services",
       "name": "Landscaping",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "parks-things-to-do",
+      "name": "Parks",
       "articleCount": 0,
       "businessCount": 3,
       "categoryType": "other",
@@ -715,16 +728,6 @@
     {
       "slug": "outdoor-recreation",
       "name": "Outdoor Recreation",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "parks-things-to-do",
-      "name": "Parks",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
