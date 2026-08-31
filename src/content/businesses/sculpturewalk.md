@@ -1,6 +1,6 @@
 ---
 name: "SculptureWalk"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "outdoor-recreation"
 claimed: false
 address: "300 S Phillips Ave, Sioux Falls, South Dakota 57104"

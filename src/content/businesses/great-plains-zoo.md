@@ -1,6 +1,6 @@
 ---
 name: "Great Plains Zoo"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1610058017023-6f9f7c1c7a5e?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "family-activities"
 claimed: false
 address: "805 S Kiwanis Ave, Sioux Falls, South Dakota 57104"

@@ -1,6 +1,6 @@
 ---
 name: "Pettigrew Home & Museum"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "museums"
 claimed: false
 address: "131 N Duluth Ave, Sioux Falls, South Dakota 57104"

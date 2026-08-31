@@ -1,6 +1,6 @@
 ---
 name: "Sioux Falls Complete Fitness"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1623874514711-0f321325f318?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "fitness-centers"
 claimed: false
 address: "915 S Marion Rd, Sioux Falls, South Dakota 57106"

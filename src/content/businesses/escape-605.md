@@ -1,6 +1,6 @@
 ---
 name: "Escape 605"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1585504198199-20277593b94f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "entertainment"
 claimed: false
 address: "3718 S Westport Ave, Sioux Falls, South Dakota 57106"
@@ -10,4 +10,4 @@ seo:
   description: "Escape 605 offers escape rooms and axe throwing in Sioux Falls, with a second downtown location. Established in 2016, a favorite for birthdays and team building."
 ---
 
-Escape 605 has grown since 2016 from two escape rooms into two Sioux Falls locations offering escape rooms and axe throwing, popular for birthdays, date nights, and corporate team building. Reviewers consistently call it their favorite escape room experience in the city, praising the pricing and no extra charge for private groups.
+Escape 605 has grown since 2016 into two Sioux Falls locations offering escape rooms and axe throwing, popular for birthdays, date nights, and team building. Reviewers call it their favorite escape room in the city, praising the pricing and no extra charge for private groups.

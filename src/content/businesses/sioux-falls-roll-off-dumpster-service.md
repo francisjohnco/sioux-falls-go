@@ -1,6 +1,6 @@
 ---
 name: "Sioux Falls Roll Off, Dumpster Service"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "waste-garbage-services"
 claimed: false
 address: "719 N Leadale Ave, Sioux Falls, South Dakota 57104"

@@ -1,6 +1,6 @@
 ---
 name: "Terrace Park"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1601058268499-e52658b8bb88?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "parks-things-to-do"
 claimed: false
 address: "3401 S Kiwanis Ave, Sioux Falls, South Dakota 57105"

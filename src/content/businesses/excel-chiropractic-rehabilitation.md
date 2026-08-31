@@ -1,6 +1,6 @@
 ---
 name: "Excel Chiropractic & Rehabilitation"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1706353399656-210cca727a33?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "chiropractors"
 claimed: false
 address: "1610 S Minnesota Ave Ste 1, Sioux Falls, South Dakota 57105"

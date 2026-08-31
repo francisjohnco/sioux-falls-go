@@ -1,6 +1,6 @@
 ---
 name: "Konstant Chiropractic Center"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "chiropractors"
 claimed: false
 address: "2901 E 57th St #104, Sioux Falls, South Dakota 57108"

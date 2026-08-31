@@ -1,6 +1,6 @@
 ---
 name: "SoDak Chiropractic"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1768507423533-b87b62769758?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "chiropractors"
 claimed: false
 address: "4000 S Hawthorne Ave, Sioux Falls, South Dakota 57105"

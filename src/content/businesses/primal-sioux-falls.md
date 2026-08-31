@@ -1,6 +1,6 @@
 ---
 name: "Primal"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "fitness-centers"
 claimed: false
 address: "3600 S Westport Ave #105, Sioux Falls, South Dakota 57106"

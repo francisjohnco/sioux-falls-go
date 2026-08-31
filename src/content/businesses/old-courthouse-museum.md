@@ -1,6 +1,6 @@
 ---
 name: "Old Courthouse Museum"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1491156855053-9cdff72c7f85?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "museums"
 claimed: false
 address: "200 W 6th St, Sioux Falls, South Dakota 57104"

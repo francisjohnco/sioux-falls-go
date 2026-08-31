@@ -1,6 +1,6 @@
 ---
 name: "Washington Pavilion"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1496889196885-5ddcec5eef4d?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "family-activities"
 claimed: false
 address: "301 S Main Ave, Sioux Falls, South Dakota 57104"

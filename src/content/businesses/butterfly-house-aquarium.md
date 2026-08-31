@@ -1,6 +1,6 @@
 ---
 name: "Butterfly House & Aquarium"
-heroImage: "/images/scenic/downtown-1.jpg"
+heroImage: "https://images.unsplash.com/photo-1584844115436-473887b1a71c?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "family-activities"
 claimed: false
 address: "4320 S Oxbow Ave, Sioux Falls, South Dakota 57106"

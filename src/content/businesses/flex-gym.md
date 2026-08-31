@@ -1,6 +1,6 @@
 ---
 name: "Flex Gym"
-heroImage: "/images/scenic/downtown-2.jpg"
+heroImage: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "fitness-centers"
 claimed: false
 address: "3719 N Cliff Ave, Sioux Falls, South Dakota 57104"
