@@ -17,10 +17,28 @@ export async function getStaticPaths() {
 
 const { category } = Astro.props;
 
+const allCategories = await getCollection('categories');
 const allBusinesses = await getCollection('businesses');
-const businesses = allBusinesses.filter((b) => b.data.category.id === category.id);
-
 const allArticles = await getCollection('articles');
+
+// Recursively collect every business under a category, including its
+// children's children, grouped by which category they're actually tagged
+// with. The category's own direct businesses come first as a group, then
+// one group per direct child (itself expanded recursively).
+function collectGroups(cat: typeof category): { key: string; label: string; businesses: typeof allBusinesses }[] {
+  const direct = allBusinesses.filter((b) => b.data.category.id === cat.id);
+  const groups = direct.length > 0 ? [{ key: cat.data.slug, label: cat.data.name, businesses: direct }] : [];
+  const children = allCategories.filter((c) => c.data.parentCategory?.id === cat.id);
+  for (const child of children) {
+    groups.push(...collectGroups(child));
+  }
+  return groups;
+}
+
+const groups = collectGroups(category);
+const businesses = groups.flatMap((g) => g.businesses);
+const isAggregated = groups.length > 1 || (groups.length === 1 && groups[0].key !== category.data.slug);
+
 const articles = allArticles.filter((a) => a.data.category.id === category.id);
 
 const allFaqs = await getCollection('faqs');
@@ -86,19 +104,24 @@ const schema = {
     {businesses.length > 0 ? (
       <section aria-labelledby="biz-heading">
         <h2 id="biz-heading">{category.data.name} businesses</h2>
-        <div class="grid" id="category-business-grid">
-          {businesses.map((business, i) => (
-            <div class="grid-item" data-search={business.data.name.toLowerCase()} data-index={i} hidden={i >= INITIAL_COUNT}>
-              <BusinessCard business={business} />
+        {groups.map((group) => (
+          <div class="category-group" data-group={group.key}>
+            {isAggregated && <h3 class="category-group-heading">{group.label}</h3>}
+            <div class="grid category-business-grid" data-grid={group.key}>
+              {group.businesses.map((business, i) => (
+                <div class="grid-item" data-search={business.data.name.toLowerCase()} data-index={i} hidden={i >= INITIAL_COUNT}>
+                  <BusinessCard business={business} />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <p id="no-results" class="empty-note" hidden>No businesses match your search.</p>
-        {businesses.length > INITIAL_COUNT && (
-          <div class="see-more-wrap">
-            <button id="see-more-btn" class="button button--ghost">See more ({businesses.length - INITIAL_COUNT} more)</button>
+            <p class="empty-note" data-no-results={group.key} hidden>No businesses match your search.</p>
+            {group.businesses.length > INITIAL_COUNT && (
+              <div class="see-more-wrap">
+                <button class="button button--ghost see-more-btn" data-see-more={group.key}>See more ({group.businesses.length - INITIAL_COUNT} more)</button>
+              </div>
+            )}
           </div>
-        )}
+        ))}
       </section>
     ) : (
       <div class="empty-state">
@@ -159,6 +182,9 @@ const schema = {
   .hero-breadcrumbs a { color: rgba(255,255,255,0.7); }
   .hero-breadcrumbs a:hover { color: #fff; }
   .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .category-group { margin-top: var(--space-6); }
+  .category-group:first-child { margin-top: 0; }
+  .category-group-heading { font-size: 1.25rem; margin-bottom: var(--space-3); }
 
   .search-section { padding-block: var(--space-3); display: flex; justify-content: center; }
   .category-search { display: flex; gap: 0.5rem; max-width: 30rem; width: 100%; }
@@ -227,31 +253,41 @@ const schema = {
 
 <script>
   const searchInput = document.getElementById('category-search-input') as HTMLInputElement;
-  const items = Array.from(document.querySelectorAll('#category-business-grid .grid-item'));
-  const noResults = document.getElementById('no-results')!;
-  const seeMoreBtn = document.getElementById('see-more-btn');
+  const groupEls = Array.from(document.querySelectorAll('.category-group'));
   const INITIAL_COUNT = 6;
-  let expanded = false;
+  const expandedGroups = new Set<string>();
 
   function render() {
     const q = searchInput?.value.trim().toLowerCase() || '';
-    let visibleCount = 0;
-    items.forEach((item) => {
-      const el = item as HTMLElement;
-      const index = Number(el.dataset.index);
-      const matchesSearch = !q || el.dataset.search?.includes(q);
-      const withinLimit = expanded || q || index < INITIAL_COUNT;
-      const visible = matchesSearch && withinLimit;
-      el.hidden = !visible;
-      if (visible) visibleCount++;
+    groupEls.forEach((groupEl) => {
+      const key = (groupEl as HTMLElement).dataset.group!;
+      const expanded = expandedGroups.has(key);
+      const items = Array.from(groupEl.querySelectorAll('.grid-item'));
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const el = item as HTMLElement;
+        const index = Number(el.dataset.index);
+        const matchesSearch = !q || el.dataset.search?.includes(q);
+        const withinLimit = expanded || q || index < INITIAL_COUNT;
+        const visible = matchesSearch && withinLimit;
+        el.hidden = !visible;
+        if (visible) visibleCount++;
+      });
+      const noResults = groupEl.querySelector(`[data-no-results="${key}"]`) as HTMLElement | null;
+      if (noResults) noResults.hidden = visibleCount > 0;
+      (groupEl as HTMLElement).hidden = q ? visibleCount === 0 : false;
+      const seeMoreBtn = groupEl.querySelector(`[data-see-more="${key}"]`) as HTMLElement | null;
+      if (seeMoreBtn) seeMoreBtn.style.display = (q || expanded) ? 'none' : '';
     });
-    noResults.hidden = visibleCount > 0;
-    if (seeMoreBtn) (seeMoreBtn as HTMLElement).style.display = (q || expanded) ? 'none' : '';
   }
 
   searchInput?.addEventListener('input', render);
-  seeMoreBtn?.addEventListener('click', () => {
-    expanded = true;
-    render();
+  groupEls.forEach((groupEl) => {
+    const key = (groupEl as HTMLElement).dataset.group!;
+    const seeMoreBtn = groupEl.querySelector(`[data-see-more="${key}"]`);
+    seeMoreBtn?.addEventListener('click', () => {
+      expandedGroups.add(key);
+      render();
+    });
   });
 </script>

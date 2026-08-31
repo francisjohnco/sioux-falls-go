@@ -119,3 +119,4 @@ old_url,new_url,status,notes
 /terms-and-conditions/,/terms-of-use,301,"WP infrastructure page, not content"
 /blog/,/guides,301,"WP infrastructure page, not content"
 /become-a-partner/,/get-featured,301,consolidated into one real partner page
+/plumbing/,/plumbers,301,"Removed duplicate empty category — plumbers has the real listings"

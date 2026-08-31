@@ -21,8 +21,17 @@ const newlyVerified = businesses
   .sort((a, b) => b.data.verifiedAt!.getTime() - a.data.verifiedAt!.getTime())
   .slice(0, 6);
 
+// Recursive count — matches the aggregation on the category pages
+// themselves, so a parent category's count includes every business in its
+// subtree, not just businesses tagged directly to the parent.
+function countForCategory(cat: (typeof categories)[number]): number {
+  const direct = businesses.filter((b) => b.data.category.id === cat.id).length;
+  const children = categories.filter((c) => c.data.parentCategory?.id === cat.id);
+  return direct + children.reduce((sum, child) => sum + countForCategory(child), 0);
+}
+
 const categoryCounts = categories
-  .map((cat) => ({ cat, count: businesses.filter((b) => b.data.category.id === cat.id).length }))
+  .map((cat) => ({ cat, count: countForCategory(cat) }))
   .filter((c) => c.count > 0)
   .sort((a, b) => b.count - a.count);
 

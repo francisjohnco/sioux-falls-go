@@ -3,7 +3,7 @@ name: "Shahi India Grill"
 seo:
   title: "Shahi India Grill: Authentic Indian Food in Sioux Falls"
   description: "Authentic Indian food in Sioux Falls made with fresh halal chicken, fresh vegetables, and real, from-scratch flavor."
-category: "restaurants-dining"
+category: "fine-dining"
 showAddress: true
 verifiedAt: 2026-07-29
 claimed: false
