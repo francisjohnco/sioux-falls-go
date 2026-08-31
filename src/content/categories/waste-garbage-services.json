@@ -1,0 +1,23 @@
+{
+  "name": "Waste & Garbage Services",
+  "slug": "waste-garbage-services",
+  "aliases": ["Garbage", "Trash Pickup", "Sanitation Services"],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Waste & Garbage Services in Sioux Falls, SD",
+    "description": "Find trusted trash pickup, dumpster rental, and waste removal services in Sioux Falls."
+  },
+  "icon": "trash",
+  "parentCategory": "home-services"
+}

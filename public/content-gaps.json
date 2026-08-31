@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T19:44:29.817Z",
+  "generatedAt": "2026-08-31T19:49:09.473Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -329,6 +329,19 @@
     {
       "slug": "sporting-goods-stores",
       "name": "Sporting Goods Stores",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "waste-garbage-services",
+      "name": "Waste & Garbage Services",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
