@@ -109,13 +109,15 @@ const schema = {
     <div class="champion-hero-glow"></div>
     <div class="container champion-hero-inner-v2">
       <div class="hero-badges">
-        {isVerified && <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>}
-        {isChampion && <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>}
+        {isVerified ? (
+          <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>
+        ) : (
+          <span class="badge badge--unverified"><Icon name="clock" size={11} /> Not Verified</span>
+        )}
         {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <span class="badge badge--giveback">Give Back Partner</span>}
-        <span class="badge badge--category-plain">{category.data.name}</span>
       </div>
       <h1>{business.data.name}</h1>
-      <p class="hero-tagline">A Sioux Falls story of trust and real growth.</p>
+      <p class="hero-tagline">Sioux Falls Local Favorite {category.data.name}</p>
     </div>
   </div>
 
@@ -413,6 +415,7 @@ const schema = {
   .breadcrumbs a { color: var(--color-navy-light); }
 
   .badge--verified { background: #E7F6ED; color: var(--color-success); }
+  .badge--unverified { background: rgba(255,255,255,0.14); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
   .badge--giveback { background: #E7F6ED; color: var(--color-success); }
   .badge--champion-solid { background: var(--color-orange); color: #fff; }
   .hero-badges { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
