@@ -45,6 +45,12 @@ const TRADE_CATEGORIES = [
 const CONSULT_CATEGORIES = ['marketing-agencies', 'real-estate-agents', 'professional-services'];
 const MENU_CATEGORIES = ['restaurants-dining'];
 const DIRECTIONS_CATEGORIES = ['coffee-shops', 'shopping-retail'];
+const APPOINTMENT_CATEGORIES = [
+  'dentists', 'chiropractors', 'physical-therapy', 'massage-therapy',
+  'mental-health-services', 'medical-clinics', 'optometrists',
+  'fitness-centers', 'yoga-studios', 'nutritionists',
+  'hair-salons', 'barbershops', 'nail-salons', 'spas', 'tattoo-studios', 'skin-care-clinics',
+];
 
 function getSmartCTA(categorySlug: string, biz: typeof business.data) {
   if (MENU_CATEGORIES.includes(categorySlug) && biz.website) {
@@ -57,6 +63,9 @@ function getSmartCTA(categorySlug: string, biz: typeof business.data) {
         ? `https://maps.google.com/?q=${encodeURIComponent(biz.address)}`
         : null;
     if (mapsHref) return { label: 'Get Directions', href: mapsHref, external: true };
+  }
+  if (APPOINTMENT_CATEGORIES.includes(categorySlug)) {
+    return { label: 'Book an Appointment', href: '#quote-section', external: false };
   }
   if (CONSULT_CATEGORIES.includes(categorySlug)) {
     return { label: 'Schedule a Consultation', href: '#quote-section', external: false };
@@ -108,17 +117,35 @@ const schema = {
   <div class="champion-hero-v2">
     <div class="champion-hero-glow"></div>
     <div class="container champion-hero-inner-v2">
-      <div class="hero-badges">
-        {isVerified ? (
-          <span class="badge badge--verified"><Icon name="check" size={11} /> Verified</span>
-        ) : (
-          <span class="badge badge--unverified"><Icon name="clock" size={11} /> Not Verified</span>
-        )}
-        {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <span class="badge badge--giveback">Give Back Partner</span>}
-      </div>
+      <p class="hero-status">
+        {isVerified ? <span class="status-verified"><Icon name="check" size={13} /> Verified</span> : <span class="status-unverified"><Icon name="clock" size={13} /> Not Verified</span>}
+        {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <> · Give Back Partner</>}
+      </p>
+      <p class="hero-service-label">{category.data.name} in Sioux Falls</p>
       <h1>{business.data.name}</h1>
-      <p class="hero-tagline">Sioux Falls Local Favorite {category.data.name}</p>
+      <div class="hero-cta-row">
+        {smartCTA.external ? (
+          <a href={smartCTA.href} target="_blank" rel="nofollow noopener" class="hero-cta-primary">{smartCTA.label} →</a>
+        ) : (
+          <a href={smartCTA.href} class="hero-cta-primary">{smartCTA.label} →</a>
+        )}
+        {business.data.googleRating && (
+          <span class="hero-cta-rating"><Icon name="star" size={13} /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews)</span>
+        )}
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile-only sticky Call + smart CTA bar -->
+  <div class="hero-sticky-bar">
+    {business.data.phone && (
+      <a href={`tel:${business.data.phone.replace(/[^\d+]/g, '')}`} class="hero-sticky-cta hero-sticky-cta--call"><Icon name="phone" size={14} /> Call Now</a>
+    )}
+    {smartCTA.external ? (
+      <a href={smartCTA.href} target="_blank" rel="nofollow noopener" class="hero-sticky-cta"><Icon name="clipboard" size={14} /> {smartCTA.label}</a>
+    ) : (
+      <a href={smartCTA.href} class="hero-sticky-cta"><Icon name="clipboard" size={14} /> {smartCTA.label}</a>
+    )}
   </div>
 
   {!business.data.claimed && (
@@ -414,15 +441,10 @@ const schema = {
   .breadcrumbs { font-size: 0.8125rem; color: var(--color-navy-light); margin-bottom: var(--space-2); }
   .breadcrumbs a { color: var(--color-navy-light); }
 
-  .badge--verified { background: #E7F6ED; color: var(--color-success); }
-  .badge--unverified { background: rgba(255,255,255,0.14); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
-  .badge--giveback { background: #E7F6ED; color: var(--color-success); }
-  .badge--champion-solid { background: var(--color-orange); color: #fff; }
-  .hero-badges { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-
+  .champion-hero-inner-v2 { width: 100%; position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; }
   /* Champion hero v2 — gradient only, no photo, avoids any collision with a business's own logo/photo text */
   .champion-hero-v2 {
-    position: relative; overflow: hidden; padding-block: 4.5rem; min-height: 32rem;
+    position: relative; overflow: hidden; padding-block: 4.5rem; min-height: 26rem;
     display: flex; align-items: center;
     background: linear-gradient(135deg, #16233d 0%, #2c3f61 55%, #3d5a85 100%);
   }
@@ -430,10 +452,32 @@ const schema = {
     position: absolute; inset: 0;
     background: radial-gradient(circle at 85% 20%, rgba(240,126,35,0.25), transparent 55%);
   }
-  .champion-hero-inner-v2 { width: 100%; position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; }
-  .champion-hero-v2 h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2.8rem; color: #fff; margin: 0; }
-  .hero-tagline { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.0625rem; color: rgba(255,255,255,0.85); margin: 0.6rem 0 0; }
-  .badge--category-plain { background: rgba(255,255,255,0.15); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: var(--radius-pill); }
+  .hero-status { font-size: 0.8125rem; color: rgba(255,255,255,0.65); font-weight: 600; margin: 0 0 1rem; }
+  .hero-status .status-verified { color: #7FE0A8; display: inline-flex; align-items: center; gap: 0.3rem; }
+  .hero-status .status-unverified { color: rgba(255,255,255,0.55); display: inline-flex; align-items: center; gap: 0.3rem; }
+  .hero-service-label { color: var(--color-gold); font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem; }
+  .champion-hero-v2 h1 { font-family: var(--font-display); font-weight: 800; font-size: 2.6rem; color: #fff; margin: 0; }
+  .hero-cta-row { display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .hero-cta-primary { background: var(--color-orange); color: #fff; font-weight: 700; font-size: 0.9375rem; padding: 0.8rem 1.5rem; border-radius: var(--radius); text-decoration: none; }
+  .hero-cta-primary:hover { background: var(--color-orange-dark); }
+  .hero-cta-rating { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; font-weight: 700; font-size: 0.875rem; padding: 0.75rem 1.3rem; border-radius: var(--radius); }
+  .hero-cta-rating :global(svg) { color: var(--color-gold); }
+
+  /* Mobile-only sticky Call + smart CTA bar, matches how Airbnb/most native apps handle a primary action */
+  .hero-sticky-bar { display: none; }
+  @media (max-width: 48rem) {
+    .hero-sticky-bar {
+      display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.15);
+    }
+    body { padding-bottom: 3.4rem; }
+  }
+  .hero-sticky-cta {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    background: var(--color-orange); color: #fff; font-weight: 700; font-size: 0.8125rem;
+    padding: 0.85rem; text-decoration: none;
+  }
+  .hero-sticky-cta--call { background: var(--color-navy); border-right: 1px solid rgba(255,255,255,0.2); }
 
   /* Trust bar — sticky, immediate real signals + the smart CTA */
   .claim-banner { background: var(--color-gold); }
