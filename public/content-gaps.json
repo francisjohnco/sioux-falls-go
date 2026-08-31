@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T13:47:22.822Z",
+  "generatedAt": "2026-08-31T14:01:04.634Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -28,6 +28,19 @@
       ]
     },
     {
+      "slug": "garage-door-repair",
+      "name": "Garage Door Repair",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "hair-salons",
       "name": "Hair Salons",
       "articleCount": 0,
@@ -44,6 +57,19 @@
       "slug": "roofing",
       "name": "Roofing",
       "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "carpet-cleaning",
+      "name": "Carpet Cleaning",
+      "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
       "missingTypes": [],
@@ -51,6 +77,32 @@
       "reasons": [
         "Has businesses but zero articles",
         "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "pressure-washing",
+      "name": "Pressure Washing",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "home-remodeling",
+      "name": "Home Remodeling",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
       ]
     },
     {
@@ -206,16 +258,6 @@
     {
       "slug": "car-wash",
       "name": "Car Washes",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "carpet-cleaning",
-      "name": "Carpet Cleaning",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
@@ -404,16 +446,6 @@
       "reasons": []
     },
     {
-      "slug": "garage-door-repair",
-      "name": "Garage Door Repair",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "gift-shops",
       "name": "Gift Shops",
       "articleCount": 0,
@@ -446,16 +478,6 @@
     {
       "slug": "home-inspectors",
       "name": "Home Inspectors",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "home-remodeling",
-      "name": "Home Remodeling",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
@@ -696,16 +718,6 @@
     {
       "slug": "plumbing",
       "name": "Plumbing",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "pressure-washing",
-      "name": "Pressure Washing",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
