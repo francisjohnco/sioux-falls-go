@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T19:14:20.384Z",
+  "generatedAt": "2026-08-31T19:23:15.260Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -93,6 +93,19 @@
       ]
     },
     {
+      "slug": "museums",
+      "name": "Museums",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "parks-things-to-do",
       "name": "Parks",
       "articleCount": 0,
@@ -158,8 +171,34 @@
       ]
     },
     {
+      "slug": "family-activities",
+      "name": "Family Activities",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "fine-dining",
       "name": "Fine Dining",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "outdoor-recreation",
+      "name": "Outdoor Recreation",
       "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
@@ -456,16 +495,6 @@
       "reasons": []
     },
     {
-      "slug": "family-activities",
-      "name": "Family Activities",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "feature",
       "name": "Featured",
       "articleCount": 0,
@@ -676,16 +705,6 @@
       "reasons": []
     },
     {
-      "slug": "museums",
-      "name": "Museums",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "nail-salons",
       "name": "Nail Salons",
       "articleCount": 0,
@@ -718,16 +737,6 @@
     {
       "slug": "optometrists",
       "name": "Optometrists",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "outdoor-recreation",
-      "name": "Outdoor Recreation",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
