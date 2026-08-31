@@ -1,0 +1,23 @@
+{
+  "name": "Custom Home Builders",
+  "slug": "custom-home-builders",
+  "aliases": [],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Custom Home Builders in Sioux Falls, SD",
+    "description": "Find trusted custom home builders in Sioux Falls, plus local guides and resources."
+  },
+  "icon": "home",
+  "parentCategory": "home-services"
+}
