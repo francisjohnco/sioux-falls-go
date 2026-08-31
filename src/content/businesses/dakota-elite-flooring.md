@@ -1,5 +1,8 @@
 ---
 name: "Dakota Elite Flooring"
+seo:
+  title: "Dakota Elite Flooring: Flooring Installation & Design"
+  description: "Flooring installation and design for Sioux Falls homes, with honest guidance on the right material for your space and budget."
 category: "flooring"
 verifiedAt: 2026-07-29
 claimed: false

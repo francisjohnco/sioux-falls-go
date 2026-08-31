@@ -1,5 +1,8 @@
 ---
 name: "Redstone Electric"
+seo:
+  title: "Redstone Electric: Licensed Sioux Falls Electricians"
+  description: "Licensed electricians serving Sioux Falls homes and businesses with safe, code-compliant electrical work you can rely on."
 category: "electricians"
 hoursSchedule:
   mon: "9:00 AM - 5:00 PM"

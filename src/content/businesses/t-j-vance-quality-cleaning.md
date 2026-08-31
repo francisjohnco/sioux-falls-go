@@ -1,5 +1,8 @@
 ---
 name: "T & J Vance Quality Cleaning"
+seo:
+  title: "T & J Vance: Quality Home & Business Cleaning"
+  description: "Thorough, detail-focused home and business cleaning in Sioux Falls from a team that puts quality ahead of speed."
 category: "cleaning-services"
 heroImage: "/images/businesses/t-j-vance-quality-cleaning.jpg"
 verifiedAt: 2026-07-29

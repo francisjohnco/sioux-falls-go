@@ -1,5 +1,8 @@
 ---
 name: "605 Drain Solutions"
+seo:
+  title: "605 Drain Solutions: Drain Cleaning Equipment Rentals"
+  description: "Rent professional-grade drain cleaning equipment in Sioux Falls and handle clogs yourself, with guidance from a team that wants to save you money."
 category: "plumbers"
 heroImage: "/images/businesses/605-drain-solutions.jpg"
 hoursSchedule:

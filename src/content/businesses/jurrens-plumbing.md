@@ -1,5 +1,8 @@
 ---
 name: "Jurrens Plumbing"
+seo:
+  title: "Jurrens Plumbing: Residential & Commercial Plumbing"
+  description: "Commercial, residential, and service plumbing in Sioux Falls with transparent pricing and honest, straightforward explanations."
 category: "plumbers"
 hoursSchedule:
   mon: "9:00 AM - 5:00 PM"

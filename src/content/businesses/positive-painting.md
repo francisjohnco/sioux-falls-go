@@ -1,5 +1,8 @@
 ---
 name: "Positive Painting"
+seo:
+  title: "Positive Painting: Trusted Sioux Falls House Painters"
+  description: "A Sioux Falls painting company known for careful, quality work and a growing focus on wallcoverings that add real character to a home."
 category: "painters"
 hoursSchedule:
   mon: "8:00 AM - 4:00 PM"

@@ -1,5 +1,8 @@
 ---
 name: "Security National Bank of South Dakota"
+seo:
+  title: "Security National Bank: Local Banking & Trust Services"
+  description: "A locally owned, full-service bank in Sioux Falls offering banking, investment, and trust services built on real community principles."
 category: "professional-services"
 showAddress: true
 heroImage: "/images/businesses/security-national-bank.jpeg"

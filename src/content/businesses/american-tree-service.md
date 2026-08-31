@@ -1,5 +1,8 @@
 ---
 name: "American Tree Service"
+seo:
+  title: "American Tree Service: Trusted Tree Care in Sioux Falls"
+  description: "Licensed, insured tree service in Sioux Falls led by a lifelong local. Safe, thorough work with a focus on protecting your property."
 category: "local-tree-services"
 heroImage: "/images/businesses/american-tree-service.jpg"
 verifiedAt: 2026-07-29

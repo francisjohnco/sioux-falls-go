@@ -1,5 +1,8 @@
 ---
 name: "Sioux Empire Shine"
+seo:
+  title: "Sioux Empire Shine: Professional Window Cleaning"
+  description: "Professional window cleaning in Sioux Falls with a detail-first approach and subscription plans for year-round clarity."
 category: "window-cleaning"
 hoursSchedule:
   mon: "7:00 AM - 9:00 PM"

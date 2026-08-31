@@ -1,5 +1,8 @@
 ---
 name: "La Luna Caf\u00e9"
+seo:
+  title: "La Luna Café: Coffee & Espresso in Uptown Sioux Falls"
+  description: "A family-owned café in Uptown Sioux Falls serving coffee, espresso, pastries, and breakfast in a relaxed, welcoming space."
 category: "coffee-shops"
 showAddress: true
 verifiedAt: 2026-07-29

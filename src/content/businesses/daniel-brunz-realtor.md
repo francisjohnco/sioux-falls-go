@@ -1,5 +1,8 @@
 ---
 name: "Daniel Brunz Realtor"
+seo:
+  title: "Daniel Brunz: Trusted Sioux Falls Real Estate Agent"
+  description: "A trusted Sioux Falls real estate agent who helps you buy or sell with clear communication and real local market knowledge."
 category: "real-estate-agents"
 hoursSchedule:
   mon: "8:00 AM - 8:00 PM"

@@ -1,5 +1,8 @@
 ---
 name: "SAJMedia Marketing"
+seo:
+  title: "SAJMedia Marketing: Local SEO & Marketing Services"
+  description: "Local SEO and marketing services built for Sioux Falls service businesses that want to be found by real customers searching for them."
 googleReviewCount: 9
 googleRating: 5
 category: "marketing-agencies"

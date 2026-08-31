@@ -22,7 +22,7 @@ latitude: 43.518413
 longitude: -96.74625
 excerpt: "Mike and Sue of While Away offer more than home watch services. They provide something deeper, a steady sense of trust and peace of mind, built through experience, consistency, and genuine care for every home they look after."
 seo:
-  title: "While Away Sioux Falls SD | Home Watch & Concierge"
+  title: "While Away: Trusted Home Watch and Concierge Services"
   description: "Meet Mike and Sue, owners of While Away in Sioux Falls. Trusted home watch and concierge services designed to give you peace of mind while you're away."
 ---
 

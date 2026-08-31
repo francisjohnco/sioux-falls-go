@@ -1,5 +1,8 @@
 ---
 name: "Animalwisedco"
+seo:
+  title: "Animalwisedco: Handmade Pet Accessories in Sioux Falls"
+  description: "Handmade pet bandanas and accessories from a Sioux Falls small business — one-of-a-kind pieces that let your pet's personality shine."
 category: "shopping-retail"
 hoursSchedule:
   mon: "9:00 AM - 5:00 PM"
