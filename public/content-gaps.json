@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T13:38:39.515Z",
+  "generatedAt": "2026-08-31T13:47:22.822Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -38,6 +38,19 @@
       "reasons": [
         "Has businesses but zero articles",
         "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "roofing",
+      "name": "Roofing",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
       ]
     },
     {
@@ -713,16 +726,6 @@
     {
       "slug": "property-management",
       "name": "Property Management",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "roofing",
-      "name": "Roofing",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
