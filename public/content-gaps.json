@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T14:34:27.298Z",
+  "generatedAt": "2026-08-31T14:40:39.569Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -116,6 +116,19 @@
       "reasons": [
         "Has businesses but zero articles",
         "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "gift-shops",
+      "name": "Gift Shops",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
       ]
     },
     {
@@ -477,16 +490,6 @@
     {
       "slug": "furniture-stores",
       "name": "Furniture Stores",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "gift-shops",
-      "name": "Gift Shops",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
