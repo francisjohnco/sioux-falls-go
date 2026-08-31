@@ -1,10 +1,11 @@
 ---
 name: "Washington Pavilion"
 heroImage: "/images/scenic/downtown-1.jpg"
-category: "museums"
+category: "family-activities"
 claimed: false
 address: "301 S Main Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 367-6000"
+googleRating: 4.7
 seo:
   title: "Washington Pavilion: Arts, Science & Theater"
   description: "The Washington Pavilion is Sioux Falls' combined arts, science, and theater center in a renovated historic high school. Home to the Kirby Science Discovery Center and CineDome."
