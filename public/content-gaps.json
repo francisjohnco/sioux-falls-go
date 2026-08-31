@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T14:40:39.569Z",
+  "generatedAt": "2026-08-31T14:57:23.703Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -106,8 +106,8 @@
       ]
     },
     {
-      "slug": "pressure-washing",
-      "name": "Pressure Washing",
+      "slug": "gift-shops",
+      "name": "Gift Shops",
       "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
@@ -119,16 +119,16 @@
       ]
     },
     {
-      "slug": "gift-shops",
-      "name": "Gift Shops",
+      "slug": "pressure-washing",
+      "name": "Pressure Washing",
       "articleCount": 0,
-      "businessCount": 1,
+      "businessCount": 2,
       "categoryType": "other",
       "missingTypes": [],
-      "priorityScore": 110,
+      "priorityScore": 120,
       "reasons": [
         "Has businesses but zero articles",
-        "1 business(es) never mentioned in any article"
+        "2 business(es) never mentioned in any article"
       ]
     },
     {
