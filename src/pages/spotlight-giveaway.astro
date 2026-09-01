@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import LayeredHero from '../components/LayeredHero.astro';
+import Icon from '../components/Icon.astro';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Spotlight Giveaway — Sioux Falls Go',
+  description: 'Win gift cards and prizes from real Sioux Falls Go local businesses.',
+};
+---
+<BaseLayout
+  title="Spotlight Giveaway"
+  description="Win gift cards and prizes from real Sioux Falls local businesses. Join Local Legend VIP to be first in line when giveaways go live."
+  canonicalPath="/spotlight-giveaway"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Spotlight Giveaway"
+    title="Win From The Businesses You Already Love"
+    subtitle="Gift cards, prizes, and exclusive deals from real Sioux Falls Go local businesses — no purchase necessary, no strings attached."
+    photoUrl="https://images.unsplash.com/photo-1764385827352-78c20131fd47?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+    centered
+  />
+
+  <div class="container page">
+    <section class="how-it-works">
+      <span class="eyebrow">How It Works</span>
+      <h2>Simple, real, and free</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <h3>Join Local Legend VIP</h3>
+          <p>Sign up below with your name and email. That's the whole entry process — no purchase, no forms to fill out later.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <h3>We announce a giveaway</h3>
+          <p>When a giveaway goes live, Local Legend VIP members hear about it first, straight to their inbox.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <h3>Win from real local businesses</h3>
+          <p>Prizes come directly from Sioux Falls Go's verified local businesses — the same ones you can browse in the directory today.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="legend-section">
+      <div class="legend-card">
+        <div class="legend-copy">
+          <span class="legend-eyebrow"><Icon name="heart" size={13} /> Already Shop Local?</span>
+          <h2>Become a Local Legend</h2>
+          <p>Be first in line for gift cards, prizes, and exclusive deals from real Sioux Falls businesses. <Icon name="sparkles" size={18} class="legend-sparkle" /></p>
+          <p class="legend-sub">Join Local Legend VIP and be the first to know about our next big giveaway. It's 100% free — no strings attached!</p>
+          <span class="legend-badge"><Icon name="gift" size={13} /> Giveaways starting soon</span>
+        </div>
+        <form id="legend-form" class="legend-form">
+          <label for="legend-name">Name</label>
+          <input type="text" id="legend-name" name="name" placeholder="Name" />
+          <label for="legend-email">Email*</label>
+          <input type="email" id="legend-email" name="email" placeholder="Email" required />
+          <button type="submit" class="button legend-submit" id="legend-submit-btn">Start Winning</button>
+          <p class="legend-form-status" id="legend-form-status" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="giveaway-note">
+      <p>We're building the first Spotlight Giveaway right now with real Sioux Falls Go partner businesses. Join the list above and you'll be the first to know exactly what's up for grabs, and when.</p>
+    </section>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  const legendForm = document.getElementById('legend-form') as HTMLFormElement;
+  const legendStatus = document.getElementById('legend-form-status');
+  const legendBtn = document.getElementById('legend-submit-btn') as HTMLButtonElement;
+
+  legendForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = (document.getElementById('legend-name') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('legend-email') as HTMLInputElement).value.trim();
+
+    legendBtn.disabled = true;
+    legendBtn.textContent = 'Joining…';
+    if (legendStatus) { legendStatus.hidden = true; }
+
+    try {
+      const res = await fetch('/api/subscribe-local-legend', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Something went wrong');
+
+      legendForm.reset();
+      if (legendStatus) {
+        legendStatus.textContent = `You're in! Watch your inbox for the next giveaway.`;
+        legendStatus.classList.remove('is-error');
+        legendStatus.classList.add('is-success');
+        legendStatus.hidden = false;
+      }
+    } catch (err: any) {
+      if (legendStatus) {
+        legendStatus.textContent = `Couldn't sign you up: ${err.message}`;
+        legendStatus.classList.remove('is-success');
+        legendStatus.classList.add('is-error');
+        legendStatus.hidden = false;
+      }
+    } finally {
+      legendBtn.disabled = false;
+      legendBtn.textContent = 'Start Winning';
+    }
+  });
+</script>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+
+  .how-it-works { text-align: center; margin-bottom: var(--space-6); }
+  .how-it-works h2 { margin-bottom: var(--space-4); }
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); text-align: left; }
+  @media (max-width: 50rem) { .steps-grid { grid-template-columns: 1fr; } }
+  .step-card { background: var(--color-surface); border-radius: var(--radius); padding: var(--space-3); }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--color-orange); color: #fff;
+    font-weight: 800; margin-bottom: var(--space-2);
+  }
+  .step-card h3 { margin: 0 0 0.4rem; font-size: 1.0625rem; }
+  .step-card p { color: var(--color-navy-light); margin: 0; line-height: 1.55; }
+
+  .legend-section { margin-bottom: var(--space-5); }
+  .legend-card {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-4); align-items: center;
+    background: linear-gradient(120deg, var(--color-navy) 0%, #2c3f61 55%, var(--color-orange) 160%);
+    border-radius: var(--radius); padding: var(--space-5); color: #fff; position: relative; overflow: hidden;
+  }
+  @media (max-width: 50rem) { .legend-card { grid-template-columns: 1fr; padding: var(--space-4); } }
+  .legend-eyebrow { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--color-gold); font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.02em; }
+  .legend-copy h2 { color: #fff; font-size: 2rem; margin: 0.5rem 0 0.9rem; }
+  .legend-copy p { color: rgba(255,255,255,0.9); font-size: 1.0625rem; margin: 0 0 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+  .legend-sparkle { color: var(--color-gold); flex-shrink: 0; }
+  .legend-sub { font-size: 0.9375rem !important; color: rgba(255,255,255,0.78) !important; }
+  .legend-badge {
+    display: inline-flex; align-items: center; gap: 0.4rem; margin-top: var(--space-2);
+    background: rgba(255,255,255,0.15); font-size: 0.8125rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: var(--radius-pill);
+  }
+  .legend-form {
+    background: rgba(255,255,255,0.97); border-radius: var(--radius); padding: var(--space-3);
+    display: flex; flex-direction: column; gap: 0.5rem; position: relative; z-index: 1;
+  }
+  .legend-form label { font-size: 0.75rem; font-weight: 700; color: var(--color-navy); text-transform: uppercase; letter-spacing: 0.02em; }
+  .legend-form input {
+    padding: 0.75rem 1rem; border-radius: 0.6rem; border: 1.5px solid var(--color-line); font-family: var(--font-body); font-size: 0.9375rem;
+  }
+  .legend-submit { margin-top: 0.5rem; background: var(--color-orange); border: none; }
+  .legend-form-status { font-size: 0.8125rem; font-weight: 600; margin: 0.4rem 0 0; }
+  .legend-form-status.is-success { color: var(--color-success); }
+  .legend-form-status.is-error { color: #C0392B; }
+
+  .giveaway-note { text-align: center; max-width: 34rem; margin: 0 auto; color: var(--color-navy-light); }
+</style>

@@ -1,6 +1,6 @@
 ---
 name: "Coffea Roasterie & Espresso Bar"
-heroImage: "https://images.unsplash.com/photo-1758518730384-be3d205838e8?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1690983326555-8b8e27843a32?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "coffee-shops"
 claimed: false
 address: "200 S Phillips Ave, Sioux Falls, South Dakota 57104"

@@ -1,6 +1,6 @@
 ---
 name: "BodyLogic Massage Studio"
-heroImage: "https://images.unsplash.com/photo-1768507423533-b87b62769758?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1772378452022-94ee7971fe80?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "massage-therapy"
 claimed: false
 address: "5709 S Remington Pl #100, Sioux Falls, South Dakota 57108"

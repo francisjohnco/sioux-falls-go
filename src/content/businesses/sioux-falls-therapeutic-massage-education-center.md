@@ -1,6 +1,6 @@
 ---
 name: "Sioux Falls Therapeutic Massage & Education Center"
-heroImage: "https://images.unsplash.com/photo-1706353399656-210cca727a33?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1787651343599-92563927b750?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "massage-therapy"
 claimed: false
 address: "4201 S Oxbow Ave, Sioux Falls, South Dakota 57106"

@@ -236,15 +236,17 @@ const schema = {
   .mini-cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 0.625rem; font-weight: 700; color: var(--color-navy-light); margin-bottom: 0.4rem; }
   .mini-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.15rem; }
   .mini-cal-day {
-    height: 1.55rem; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 0.6875rem; color: var(--color-navy); border-radius: 0.4rem; position: relative; cursor: default;
+    height: 2.25rem; display: flex; align-items: center; justify-content: center;
+    font-size: 0.8125rem; color: var(--color-navy); border-radius: 50%; position: relative; cursor: default;
   }
   .mini-cal-day.is-blank { visibility: hidden; }
-  .mini-cal-day.has-event { cursor: pointer; font-weight: 700; }
-  .mini-cal-day.has-event:hover { background: var(--color-surface); }
-  .mini-cal-dot { width: 5px; height: 5px; border-radius: 50%; margin-top: 1px; position: relative; }
-  .mini-cal-dot::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid currentColor; animation: dot-pulse 2s ease-out infinite; }
-  @keyframes dot-pulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
+  .mini-cal-day.has-event {
+    cursor: pointer; font-weight: 800; color: #fff;
+    background: var(--mini-cal-color, var(--color-orange));
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  }
+  .mini-cal-day.has-event:hover { transform: scale(1.12); }
+  .mini-cal-day.has-event:active { transform: scale(0.96); }
   .mini-cal-legend { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--color-line); font-size: 0.625rem; color: var(--color-navy-light); text-align: center; }
 
   .timeline-wrap { position: relative; padding-block: 3rem; }
@@ -302,16 +304,12 @@ const schema = {
     for (let d = 1; d <= daysInMonth; d++) {
       const cell = document.createElement('div');
       cell.className = 'mini-cal-day';
-      const num = document.createElement('span');
-      num.textContent = String(d);
-      cell.appendChild(num);
+      cell.textContent = String(d);
       if (eventDays[d]) {
         cell.classList.add('has-event');
-        const dot = document.createElement('div');
-        dot.className = 'mini-cal-dot';
-        dot.style.background = eventDays[d];
-        dot.style.color = eventDays[d];
-        cell.appendChild(dot);
+        cell.style.setProperty('--mini-cal-color', eventDays[d]);
+        cell.setAttribute('role', 'button');
+        cell.setAttribute('aria-label', `Jump to event on day ${d}`);
         cell.addEventListener('click', () => {
           const stop = document.querySelector(`.stop[data-day="${d}"]`) as HTMLElement | null;
           stop?.scrollIntoView({ behavior: 'smooth', block: 'center' });

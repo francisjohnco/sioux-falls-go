@@ -1,6 +1,6 @@
 ---
 name: "Z Treatment"
-heroImage: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1656570788675-1de3a58747e6?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "massage-therapy"
 claimed: false
 address: "4201 S Minnesota Ave Suite 2, Sioux Falls, South Dakota 57105"
