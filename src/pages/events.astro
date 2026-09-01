@@ -49,10 +49,12 @@ for (const ev of events) {
   group.events.push(ev);
 }
 
-// Calendar: build a real day-by-day event map for the current month, so this
-// never silently drifts stale the way a hardcoded month/year would.
-const calMonth = now.getMonth();
-const calYear = now.getFullYear();
+// Calendar: show the month of the next upcoming event, not just "whatever
+// month the site happens to be built in." A static build can sit live for
+// days or weeks before someone views it — if all events are in a future
+// month, showing the current (empty) month makes the calendar look broken.
+const calMonth = nextEvent.date.getMonth();
+const calYear = nextEvent.date.getFullYear();
 const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 const firstDow = new Date(calYear, calMonth, 1).getDay();
 const calEventDays: Record<number, string> = {};
