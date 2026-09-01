@@ -106,7 +106,7 @@ const schema = {
         <h2 id="biz-heading">{category.data.name} businesses</h2>
         {groups.map((group) => (
           <div class="category-group" data-group={group.key}>
-            {isAggregated && <h3 class="category-group-heading">{group.label}</h3>}
+            {isAggregated && <h3 class="category-group-heading"><a href={`/${group.key}`} class="category-link">{group.label}</a></h3>}
             <div class="grid category-business-grid" data-grid={group.key}>
               {group.businesses.map((business, i) => (
                 <div class="grid-item" data-search={business.data.name.toLowerCase()} data-index={i} hidden={i >= INITIAL_COUNT}>
@@ -185,6 +185,8 @@ const schema = {
   .category-group { margin-top: var(--space-6); }
   .category-group:first-child { margin-top: 0; }
   .category-group-heading { font-size: 1.25rem; margin-bottom: var(--space-3); }
+  .category-group-heading .category-link { color: inherit; text-decoration: underline; text-decoration-color: rgba(0,0,0,0.25); text-underline-offset: 0.2em; }
+  .category-group-heading .category-link:hover { text-decoration-color: currentColor; }
 
   .search-section { padding-block: var(--space-3); display: flex; justify-content: center; }
   .category-search { display: flex; gap: 0.5rem; max-width: 30rem; width: 100%; }

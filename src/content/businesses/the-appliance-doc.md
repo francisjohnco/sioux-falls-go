@@ -4,6 +4,7 @@ seo:
   title: "The Appliance Doc: Honest Appliance Repair Service"
   description: "Honest appliance repair in Sioux Falls — clear answers about what your appliance actually needs, without unnecessary upsells."
 category: "appliance-repair-service"
+heroImage: "https://images.unsplash.com/photo-1632923565835-6582b54f2105?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 hoursSchedule:
   mon: "7:00 AM - 6:00 PM"
   tue: "7:00 AM - 6:00 PM"

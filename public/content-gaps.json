@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T00:50:50.218Z",
+  "generatedAt": "2026-09-01T02:39:01.506Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -30,6 +30,19 @@
     {
       "slug": "chiropractors",
       "name": "Chiropractors",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "custom-home-builders",
+      "name": "Custom Home Builders",
       "articleCount": 0,
       "businessCount": 3,
       "categoryType": "other",
@@ -132,6 +145,19 @@
       ]
     },
     {
+      "slug": "hvac",
+      "name": "HVAC",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "landscaping-home-services",
       "name": "Landscaping",
       "articleCount": 0,
@@ -199,19 +225,6 @@
     {
       "slug": "carpet-cleaning",
       "name": "Carpet Cleaning",
-      "articleCount": 0,
-      "businessCount": 2,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 120,
-      "reasons": [
-        "Has businesses but zero articles",
-        "2 business(es) never mentioned in any article"
-      ]
-    },
-    {
-      "slug": "custom-home-builders",
-      "name": "Custom Home Builders",
       "articleCount": 0,
       "businessCount": 2,
       "categoryType": "other",
@@ -316,6 +329,19 @@
     {
       "slug": "live-music",
       "name": "Live Music",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "pest-control",
+      "name": "Pest Control",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
@@ -643,16 +669,6 @@
       "reasons": []
     },
     {
-      "slug": "hvac",
-      "name": "HVAC",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "ice-cream-and-dessert",
       "name": "Ice Cream & Dessert",
       "articleCount": 0,
@@ -765,16 +781,6 @@
     {
       "slug": "optometrists",
       "name": "Optometrists",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "pest-control",
-      "name": "Pest Control",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",

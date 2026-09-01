@@ -6,7 +6,6 @@ seo:
 category: "professional-services"
 showAddress: true
 heroImage: "/images/businesses/security-national-bank.jpeg"
-verifiedAt: 2026-07-29
 claimed: false
 sourceUrl: "https://siouxfallsgo.com/places/security-national-bank-of-south-dakota/"
 address: "4621 26th St, Sioux Falls, South Dakota 57110"

@@ -5,7 +5,6 @@ seo:
   description: "Authentic Indian food in Sioux Falls made with fresh halal chicken, fresh vegetables, and real, from-scratch flavor."
 category: "fine-dining"
 showAddress: true
-verifiedAt: 2026-07-29
 claimed: false
 heroImage: "/images/businesses/shahi-india-grill.jpeg"
 address: "2527 S Shirley Ave, Sioux Falls, South Dakota 57106"

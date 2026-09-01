@@ -3,7 +3,7 @@ name: "Thorson Construction"
 seo:
   title: "Thorson Construction: Custom Home Building & Roofing"
   description: "Custom home building and roofing in Sioux Falls from a lifelong local known for quality craftsmanship and a friendly, straightforward approach."
-category: "home-services"
+category: "custom-home-builders"
 hoursSchedule:
   mon: "6:00 AM - 9:00 PM"
   tue: "6:00 AM - 9:00 PM"

@@ -121,7 +121,7 @@ const schema = {
         {isVerified ? <span class="status-verified"><Icon name="check" size={13} /> Verified</span> : <span class="status-unverified"><Icon name="clock" size={13} /> Not Verified</span>}
         {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <> · Give Back Partner</>}
       </p>
-      <p class="hero-service-label">{category.data.name} in Sioux Falls</p>
+      <p class="hero-service-label"><a href={`/${category.data.slug}`} class="category-link">{category.data.name}</a> in Sioux Falls</p>
       <h1>{business.data.name}</h1>
       <div class="hero-cta-row">
         {smartCTA.external ? (
