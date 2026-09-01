@@ -8,7 +8,14 @@ import EventsSection from '../components/EventsSection.astro';
 import HeroRotator from '../components/HeroRotator.astro';
 
 const businesses = await getCollection('businesses');
-const spotlightBusinesses = businesses.filter((b) => b.data.heroImage).slice(0, 3);
+// Only real, verified listings belong on the homepage spotlight — this is
+// the site's most visible real estate, and showing an unverified business
+// here undercuts the whole point of verification. Sorted most-recently
+// verified first, so it also reflects genuinely current activity.
+const spotlightBusinesses = businesses
+  .filter((b) => b.data.heroImage && b.data.verifiedAt)
+  .sort((a, b) => b.data.verifiedAt!.getTime() - a.data.verifiedAt!.getTime())
+  .slice(0, 3);
 
 function makeExcerpt(markdown: string, maxLen = 110): string {
   const plain = markdown
@@ -72,8 +79,8 @@ const schema = {
 
   <div class="container">
     <section class="section">
-      <span class="eyebrow">Our Latest Feature</span>
-      <h2>Check out these hometown favorites</h2>
+      <span class="eyebrow">Recently Verified</span>
+      <h2>Real local businesses, checked by our team</h2>
       <div class="spotlight-grid">
         {spotlightWithCat.map(({ business, category, excerpt }) => (
           <a class="spot-card" href={`/businesses/${business.id}`}>

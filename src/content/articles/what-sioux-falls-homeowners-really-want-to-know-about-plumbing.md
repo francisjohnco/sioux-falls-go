@@ -5,7 +5,7 @@ heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
-relatedBusinesses: []
+relatedBusinesses: ["605-drain-solutions"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false
@@ -70,4 +70,4 @@ These services protect your home and ensure your plumbing runs efficiently.
 
 ## Looking for a plumber locals actually recommend?
 
-Explore trusted Sioux Falls professionals. Handpicked local plumbers recognized for quality service and strong community reputation.
+Explore trusted Sioux Falls professionals. Handpicked local plumbers recognized for quality service and strong community reputation, including [605 Drain Solutions](/businesses/605-drain-solutions), a verified local drain and plumbing specialist.

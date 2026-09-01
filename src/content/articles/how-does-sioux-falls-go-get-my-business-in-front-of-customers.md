@@ -5,7 +5,7 @@ heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
-relatedBusinesses: []
+relatedBusinesses: ["sajmedia-marketing"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false
@@ -201,7 +201,7 @@ And for many businesses, that alone makes it an easy decision.
 
 ## Want to See How It Would Look for Your Business?
 
-If you’re curious how your business would be positioned on Sioux Falls Go, we can start with a simple questionnaire. From there, we’ll craft your profile and review it together before anything goes live.
+If you’re curious how your business would be positioned on Sioux Falls Go, we can start with a simple questionnaire. From there, we’ll craft your profile and review it together before anything goes live. [SAJMedia](/businesses/sajmedia-marketing), a verified local marketing agency, is a real example of what a fully built-out profile looks like once it’s live.
 
 **Want in on this unfair advantage?**
 

@@ -5,7 +5,7 @@ heroImage: "/images/articles/top-10-plumbers-in-sioux-falls-summer-2025-edition.
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
-relatedBusinesses: []
+relatedBusinesses: ["605-drain-solutions"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false

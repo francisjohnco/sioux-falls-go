@@ -5,7 +5,7 @@ heroImage: "/images/articles/how-sioux-falls-go-supports-local-businesses.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
-relatedBusinesses: []
+relatedBusinesses: ["sajmedia-marketing"]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: false
