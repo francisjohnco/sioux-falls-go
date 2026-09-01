@@ -26,17 +26,13 @@ const categoryMeta = {
 // this needs periodic re-checking against the source links, same as the homepage
 // events widget.
 const events: EventItem[] = [
-  { category: 'family', date: new Date('2026-07-31'), title: 'Sioux Empire Fair', description: 'Rides, fair food, livestock shows, and nightly entertainment at the Fairgrounds.', sourceName: 'Sioux Empire Fair', sourceUrl: 'https://en.wikipedia.org/wiki/Sioux_Empire_Fair', photo: '/images/scenic/falls-park-1.jpg', location: 'W. H. Lyon Fairgrounds' },
-  { category: 'downtown', date: new Date('2026-08-07'), title: 'Downtown Open Streets', description: 'Phillips Avenue goes car-free for a day of vendors and family activities.', sourceName: 'Downtown Sioux Falls, Inc.', sourceUrl: 'https://dtsf.com/', photo: '/images/scenic/downtown-1.jpg', location: 'Downtown Phillips Ave' },
-  { category: 'music', date: new Date('2026-08-06'), title: 'Levitt at the Falls: The Fretliners', description: 'Free outdoor concert series right at Falls Park.', sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Falls Park' },
-  { category: 'sports', date: new Date('2026-08-18'), title: 'Canaries vs. Winnipeg Goldeyes', description: 'Home game at Sioux Falls Stadium — three-game series through Aug 20.', sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/scenic/mckennan-park.jpg', location: 'Sioux Falls Stadium' },
-  { category: 'family', date: new Date('2026-08-08'), title: 'Outdoor Campus Fall Fun', description: 'Free hands-on classes in hunting, fishing, outdoor skills, and conservation.', sourceName: "the 'hood magazine", sourceUrl: 'https://thehoodmagazine.com/calendar/', photo: '/images/scenic/mckennan-park.jpg', location: 'Falls Park' },
-  { category: 'downtown', date: new Date('2026-08-21'), title: 'Four Winds Music & Art Fest', description: 'Local, regional, and national bands across several downtown venues.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend', photo: '/images/scenic/downtown-2.jpg', location: 'Downtown Phillips Ave' },
-  { category: 'music', date: new Date('2026-08-14'), title: 'The Crane Wives', description: "Indie folk at The District, one of downtown's newer live venues.", sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/businesses/shahi-india-grill.jpeg', location: 'Denny Sanford Premier Center' },
-  { category: 'sports', date: new Date('2026-08-28'), title: "Women's Volleyball Showcase", description: 'Three days of college volleyball at Sanford Pentagon.', sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls', photo: '/images/scenic/falls-park-1.jpg', location: 'Sanford Pentagon' },
-  { category: 'downtown', date: new Date('2026-08-29'), title: '605 Made Night Market', description: 'An outdoor market of local makers, with performances throughout the evening.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Downtown Phillips Ave' },
-  { category: 'music', date: new Date('2026-08-27'), title: 'Gary Allan', description: "Country headliner at Washington Pavilion's Sommervold Hall.", sourceName: 'ConcertFix', sourceUrl: 'https://concertfix.com/concerts/sioux-falls-sd', photo: '/images/scenic/downtown-1.jpg', location: 'Denny Sanford Premier Center' },
-  { category: 'sports', date: new Date('2026-09-11'), title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/downtown-2.jpg', location: 'Minnehaha Country Club' },
+  { category: 'music', date: new Date('2026-09-03'), title: 'Making Movies at Levitt at the Falls', description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer concert series.', sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Falls Park' },
+  { category: 'downtown', date: new Date('2026-09-11'), title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club, September 11-13.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/downtown-2.jpg', location: 'Minnehaha Country Club' },
+  { category: 'downtown', date: new Date('2026-09-12'), title: 'Downtown Outdoor Arts & Crafts Market', description: 'Over 230 vendors line the streets around Washington Pavilion with custom art, baked goods, and more.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Downtown Phillips Ave' },
+  { category: 'family', date: new Date('2026-09-12'), title: "Remedy Brewing's 10th Annual Oktoberfest", description: 'German food, a stein-holding competition, live music, and games all afternoon.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/mckennan-park.jpg', location: 'Remedy Brewing Company' },
+  { category: 'sports', date: new Date('2026-09-25'), title: 'CINCH Playoffs Rodeo', description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25-27.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/falls-park-1.jpg', location: 'Denny Sanford PREMIER Center' },
+  { category: 'family', date: new Date('2026-09-26'), title: "Fernson Downtown's Oktoberfest", description: 'A downtown Oktoberfest celebration with German fare and live music.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-2.jpg', location: 'Fernson Downtown' },
+  { category: 'family', date: new Date('2026-10-09'), title: "Junkin' Market Days", description: 'Shop from 100 small businesses selling home decor, vintage finds, and handmade jewelry, October 9-10.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Ramkota Exhibit Hall' },
 ];
 
 events.sort((a, b) => a.date.getTime() - b.date.getTime());
@@ -53,9 +49,10 @@ for (const ev of events) {
   group.events.push(ev);
 }
 
-// Calendar: build real day-by-day event map for August 2026 (where most events fall)
-const calMonth = 7; // 0-indexed: August
-const calYear = 2026;
+// Calendar: build a real day-by-day event map for the current month, so this
+// never silently drifts stale the way a hardcoded month/year would.
+const calMonth = now.getMonth();
+const calYear = now.getFullYear();
 const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 const firstDow = new Date(calYear, calMonth, 1).getDay();
 const calEventDays: Record<number, string> = {};

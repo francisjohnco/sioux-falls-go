@@ -2,9 +2,12 @@
 name: "Terrace Park"
 heroImage: "https://images.unsplash.com/photo-1601058268499-e52658b8bb88?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "parks-things-to-do"
+neighborhood: "mckennan-park"
 claimed: false
 address: "3401 S Kiwanis Ave, Sioux Falls, South Dakota 57105"
 googleRating: 4.6
+latitude: 43.55417
+longitude: -96.74167
 googleReviewCount: 782
 seo:
   title: "Terrace Park: Japanese Gardens & Family Aquatic Center"

@@ -2,6 +2,9 @@
 name: "McKennan Park"
 heroImage: "/images/scenic/mckennan-park.jpg"
 category: "parks-things-to-do"
+latitude: 43.5316418
+longitude: -96.7222721
+neighborhood: "mckennan-park"
 claimed: false
 address: "400 E 26th St, Sioux Falls, South Dakota 57105"
 seo:

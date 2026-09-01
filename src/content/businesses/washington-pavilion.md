@@ -2,9 +2,12 @@
 name: "Washington Pavilion"
 heroImage: "https://images.unsplash.com/photo-1496889196885-5ddcec5eef4d?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "family-activities"
+neighborhood: "downtown"
 claimed: false
 address: "301 S Main Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 367-6000"
+latitude: 43.544073
+longitude: -96.729035
 googleRating: 4.7
 seo:
   title: "Washington Pavilion: Arts, Science & Theater"

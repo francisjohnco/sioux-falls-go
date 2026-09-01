@@ -2,6 +2,7 @@
 name: "Levitt at the Falls"
 heroImage: "/images/scenic/levitt-concert-center.jpg"
 category: "live-music"
+neighborhood: "downtown"
 claimed: false
 address: "504 N Phillips Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 271-1560"

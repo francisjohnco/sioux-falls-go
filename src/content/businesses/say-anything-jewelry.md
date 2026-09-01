@@ -2,6 +2,7 @@
 name: "Say Anything Jewelry"
 heroImage: "https://images.unsplash.com/photo-1777195595983-d9efde4c1223?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "gift-shops"
+neighborhood: "downtown"
 claimed: false
 address: "225 S Phillips Ave, Sioux Falls, South Dakota 57104"
 googleRating: 4.8

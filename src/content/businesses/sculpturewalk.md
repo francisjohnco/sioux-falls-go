@@ -2,6 +2,7 @@
 name: "SculptureWalk"
 heroImage: "https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "outdoor-recreation"
+neighborhood: "downtown"
 claimed: false
 address: "300 S Phillips Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 731-2430"

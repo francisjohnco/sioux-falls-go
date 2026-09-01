@@ -2,6 +2,7 @@
 name: "Serendipitous Events"
 heroImage: "https://images.unsplash.com/photo-1628578569073-8ee77295315d?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "wedding-planners"
+neighborhood: "downtown"
 claimed: false
 address: "524 N Main Ave #104, Sioux Falls, South Dakota 57104"
 googleRating: 4.9

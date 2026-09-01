@@ -4,6 +4,7 @@ seo:
   title: "La Luna Café: Coffee & Espresso in Uptown Sioux Falls"
   description: "A family-owned café in Uptown Sioux Falls serving coffee, espresso, pastries, and breakfast in a relaxed, welcoming space."
 category: "coffee-shops"
+neighborhood: "downtown"
 showAddress: true
 claimed: false
 heroImage: "/images/businesses/la-luna-cafe.jpg"

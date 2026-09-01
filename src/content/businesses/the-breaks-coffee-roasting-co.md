@@ -2,6 +2,7 @@
 name: "The Breaks Coffee Roasting Co."
 heroImage: "https://images.unsplash.com/photo-1620830958756-46335282c574?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "coffee-shops"
+neighborhood: "downtown"
 claimed: false
 address: "311 E 12th St, Sioux Falls, South Dakota 57104"
 googleRating: 4.9

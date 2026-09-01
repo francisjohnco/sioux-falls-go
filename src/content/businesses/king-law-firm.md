@@ -2,6 +2,7 @@
 name: "King Law Firm"
 heroImage: "https://images.unsplash.com/photo-1676181739859-08330dea8999?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "attorneys"
+neighborhood: "downtown"
 claimed: false
 address: "101 N Phillips Ave Suite 602, Sioux Falls, South Dakota 57104"
 phone: "(605) 332-4000"

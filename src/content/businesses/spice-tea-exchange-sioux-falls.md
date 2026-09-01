@@ -2,6 +2,7 @@
 name: "The Spice & Tea Exchange of Sioux Falls"
 heroImage: "https://images.unsplash.com/photo-1717607424466-b4d26351a765?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "gift-shops"
+neighborhood: "downtown"
 claimed: false
 address: "328 S Phillips Ave, Sioux Falls, South Dakota 57104"
 googleRating: 4.8

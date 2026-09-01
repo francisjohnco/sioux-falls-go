@@ -2,6 +2,7 @@
 name: "Denny Sanford PREMIER Center"
 heroImage: "https://images.unsplash.com/photo-1533106418989-88406c7cc8ca?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "event-venues"
+neighborhood: "downtown"
 claimed: false
 address: "1201 N West Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 367-7288"

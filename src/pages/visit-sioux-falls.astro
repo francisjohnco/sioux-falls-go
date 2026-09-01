@@ -5,6 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 const allArticles = await getCollection('articles');
+const neighborhoods = await getCollection('neighborhoods');
 
 // Top 3 travel articles for visitors — the two dedicated "explore Sioux
 // Falls" pieces plus the strongest visitor-specific pick, real content only.
@@ -119,6 +120,28 @@ const schema = {
       </a>
     </div>
   </div></div>
+
+  {neighborhoods.length > 0 && (
+    <div class="travel-wrap"><div class="container">
+      <div class="bento-head">
+        <span class="eyebrow">Explore Sioux Falls</span>
+        <h2>Neighborhoods</h2>
+      </div>
+      <div class="travel-grid">
+        {neighborhoods.map((n) => (
+          <a class="travel-card" href={`/neighborhoods/${n.data.slug}`}>
+            <div class="travel-card-media" style={n.data.heroImage ? `background-image: url(${n.data.heroImage})` : undefined}></div>
+            <div class="travel-card-body">
+              <span class="travel-tag">Neighborhood Guide</span>
+              <h3>{n.data.name}</h3>
+              <p>{n.data.summary}</p>
+              <span class="travel-read-more">Read more →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div></div>
+  )}
 
   {travelArticles.length > 0 && (
     <div class="travel-wrap"><div class="container">

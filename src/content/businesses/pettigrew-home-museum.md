@@ -2,6 +2,7 @@
 name: "Pettigrew Home & Museum"
 heroImage: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "museums"
+neighborhood: "cathedral-district"
 claimed: false
 address: "131 N Duluth Ave, Sioux Falls, South Dakota 57104"
 phone: "(605) 367-7097"

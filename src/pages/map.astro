@@ -1,0 +1,96 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import LayeredHero from '../components/LayeredHero.astro';
+
+const allBusinesses = await getCollection('businesses');
+const mappable = allBusinesses.filter((b) => b.data.latitude != null && b.data.longitude != null);
+
+const withCategory = await Promise.all(
+  mappable.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
+);
+
+const points = withCategory.map(({ business, category }) => ({
+  name: business.data.name,
+  slug: business.id,
+  lat: business.data.latitude,
+  lng: business.data.longitude,
+  category: category?.data.name ?? '',
+  rating: business.data.googleRating ?? null,
+}));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Map',
+  name: 'Sioux Falls Go — Business Map',
+};
+---
+<BaseLayout
+  title="Map"
+  description="See Sioux Falls Go's local businesses and attractions on a map — find what's actually near you."
+  canonicalPath="/map"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Explore Sioux Falls"
+    title="Map"
+    subtitle="Every business and attraction we've mapped so far, all in one place. More get pinned as we verify their exact location."
+    photoUrl="/images/scenic/falls-park-2.jpg"
+    centered
+  />
+
+  <div class="container page">
+    <div id="sfg-map" class="sfg-map" role="application" aria-label="Map of Sioux Falls Go businesses"></div>
+    <p class="map-note">Showing {points.length} mapped location{points.length === 1 ? '' : 's'}. Don't see a business you know? <a href="/get-featured">Let us know</a> and we'll add it.</p>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha512-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14BuZ35PMCafs2W54rgnIe46FhSAeZbUJyJJ+bIzq5Y5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script is:inline define:vars={{ points: points }}>
+  window.__sfgMapPoints = points;
+</script>
+<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KNimBTNq1e4tf5nZWndrX3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var points = window.__sfgMapPoints || [];
+    if (!window.L || points.length === 0) return;
+
+    var map = L.map('sfg-map', { scrollWheelZoom: false });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    var bounds = [];
+    points.forEach(function (p) {
+      var marker = L.marker([p.lat, p.lng]).addTo(map);
+      var ratingHtml = p.rating ? '<br>&#9733; ' + p.rating.toFixed(1) : '';
+      marker.bindPopup(
+        '<strong><a href="/businesses/' + p.slug + '">' + p.name + '</a></strong><br>' +
+        '<span style="color:#445070;font-size:0.85em;">' + p.category + '</span>' + ratingHtml
+      );
+      bounds.push([p.lat, p.lng]);
+    });
+
+    if (bounds.length > 0) {
+      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 14 });
+    } else {
+      map.setView([43.5446, -96.7311], 12);
+    }
+  });
+</script>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .sfg-map { width: 100%; height: 32rem; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--color-line); }
+  @media (max-width: 40rem) { .sfg-map { height: 24rem; } }
+  .map-note { margin-top: var(--space-2); font-size: 0.9375rem; color: var(--color-navy-light); text-align: center; }
+  .map-note a { color: var(--color-orange-dark); font-weight: 600; text-decoration: none; }
+  .map-note a:hover { text-decoration: underline; }
+</style>

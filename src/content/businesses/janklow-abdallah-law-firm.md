@@ -2,6 +2,7 @@
 name: "Janklow Abdallah Law Firm"
 heroImage: "https://images.unsplash.com/photo-1593115057322-e94b77572f20?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "attorneys"
+neighborhood: "cathedral-district"
 claimed: false
 address: "101 S Main Ave #100, Sioux Falls, South Dakota 57104"
 phone: "(605) 338-4304"

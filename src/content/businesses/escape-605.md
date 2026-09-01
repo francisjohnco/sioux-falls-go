@@ -2,6 +2,7 @@
 name: "Escape 605"
 heroImage: "https://images.unsplash.com/photo-1585504198199-20277593b94f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "entertainment"
+neighborhood: "downtown"
 claimed: false
 address: "3718 S Westport Ave, Sioux Falls, South Dakota 57106"
 phone: "(605) 271-7717"
