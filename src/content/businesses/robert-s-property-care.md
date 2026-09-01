@@ -3,7 +3,7 @@ name: "Robert's Property Care"
 seo:
   title: "Robert's Property Care: Lawn Care & Property Maintenance"
   description: "Lawn care and property maintenance in Sioux Falls, keeping homes and businesses looking their best through every season."
-category: "lawn-care"
+category: "concrete-contractors"
 heroImage: "/images/businesses/robert-s-property-care.jpg"
 verifiedAt: 2026-07-29
 claimed: true

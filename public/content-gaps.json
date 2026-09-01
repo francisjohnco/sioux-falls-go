@@ -1,6 +1,19 @@
 {
-  "generatedAt": "2026-09-01T12:05:17.475Z",
+  "generatedAt": "2026-09-01T12:18:35.525Z",
   "categories": [
+    {
+      "slug": "massage-therapy",
+      "name": "Massage Therapy",
+      "articleCount": 0,
+      "businessCount": 4,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 140,
+      "reasons": [
+        "Has businesses but zero articles",
+        "4 business(es) never mentioned in any article"
+      ]
+    },
     {
       "slug": "attorneys",
       "name": "Attorneys",
@@ -262,6 +275,19 @@
       ]
     },
     {
+      "slug": "home-remodeling",
+      "name": "Home Remodeling",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "outdoor-recreation",
       "name": "Outdoor Recreation",
       "articleCount": 0,
@@ -327,6 +353,19 @@
       ]
     },
     {
+      "slug": "concrete-contractors",
+      "name": "Concrete Contractors",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "electronics-stores",
       "name": "Electronics Stores",
       "articleCount": 0,
@@ -368,19 +407,6 @@
     {
       "slug": "home-inspectors",
       "name": "Home Inspectors",
-      "articleCount": 0,
-      "businessCount": 1,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 110,
-      "reasons": [
-        "Has businesses but zero articles",
-        "1 business(es) never mentioned in any article"
-      ]
-    },
-    {
-      "slug": "home-remodeling",
-      "name": "Home Remodeling",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
@@ -779,16 +805,6 @@
       "reasons": []
     },
     {
-      "slug": "massage-therapy",
-      "name": "Massage Therapy",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "medical-clinics",
       "name": "Medical Clinics",
       "articleCount": 0,
@@ -1032,7 +1048,7 @@
       "slug": "lawn-care",
       "name": "Lawn Care",
       "articleCount": 4,
-      "businessCount": 1,
+      "businessCount": 0,
       "categoryType": "service",
       "missingTypes": [],
       "priorityScore": -20,

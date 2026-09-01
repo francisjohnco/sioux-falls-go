@@ -1,0 +1,24 @@
+{
+  "name": "Concrete Contractors",
+  "slug": "concrete-contractors",
+  "aliases": ["Concrete", "Hardscaping", "Concrete & Hardscaping"],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "seasonal concerns",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Concrete Contractors in Sioux Falls, SD",
+    "description": "Find trusted concrete and hardscaping contractors in Sioux Falls for driveways, patios, and outdoor projects."
+  },
+  "icon": "layers",
+  "parentCategory": "home-services"
+}
