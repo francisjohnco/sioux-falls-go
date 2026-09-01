@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T02:39:01.506Z",
+  "generatedAt": "2026-09-01T02:48:01.198Z",
   "categories": [
     {
       "slug": "auto-repair",
@@ -186,6 +186,19 @@
     {
       "slug": "parks-things-to-do",
       "name": "Parks",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "photography",
+      "name": "Photography",
       "articleCount": 0,
       "businessCount": 3,
       "categoryType": "other",
@@ -789,16 +802,6 @@
       "reasons": []
     },
     {
-      "slug": "photography",
-      "name": "Photography",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
       "slug": "physical-therapy",
       "name": "Physical Therapy",
       "articleCount": 0,
@@ -929,6 +932,18 @@
       "reasons": []
     },
     {
+      "slug": "coffee-shops",
+      "name": "Coffee Shops",
+      "articleCount": 5,
+      "businessCount": 3,
+      "categoryType": "dual",
+      "missingTypes": [],
+      "priorityScore": -5,
+      "reasons": [
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "explore-sioux-falls",
       "name": "Explore Sioux Falls",
       "articleCount": 2,
@@ -1041,16 +1056,6 @@
       "categoryType": "service",
       "missingTypes": [],
       "priorityScore": -20,
-      "reasons": []
-    },
-    {
-      "slug": "coffee-shops",
-      "name": "Coffee Shops",
-      "articleCount": 5,
-      "businessCount": 1,
-      "categoryType": "dual",
-      "missingTypes": [],
-      "priorityScore": -25,
       "reasons": []
     },
     {
