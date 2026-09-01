@@ -60,6 +60,32 @@ const neighborhoods = defineCollection({
 });
 
 /**
+ * ITINERARIES — curated, ready-made plans stitching together real businesses
+ * already verified elsewhere on the site. Each stop references an existing
+ * business by id, so if that business's info changes, the itinerary stays
+ * accurate automatically.
+ */
+const itineraries = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/itineraries' }),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string(),
+    subtitle: z.string(),
+    heroImage: z.string().optional(),
+    audience: z.enum(['visitors', 'locals', 'both']).default('both'),
+    stops: z.array(z.object({
+      time: z.string(),
+      business: reference('businesses'),
+      note: z.string(),
+    })),
+    seo: z.object({
+      title: z.string(),
+      description: z.string(),
+    }),
+  }),
+});
+
+/**
  * BUSINESSES
  */
 const businesses = defineCollection({
@@ -331,6 +357,7 @@ const communityPicks = defineCollection({
 export const collections = {
   categories,
   neighborhoods,
+  itineraries,
   businesses,
   events,
   articles,

@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import LayeredHero from '../../components/LayeredHero.astro';
+
+const itineraries = await getCollection('itineraries');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Sioux Falls Itineraries',
+};
+---
+<BaseLayout
+  title="Itineraries"
+  description="Ready-made Sioux Falls itineraries — a perfect day downtown, a rainy day plan, and a family day with kids."
+  canonicalPath="/itineraries"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Explore Sioux Falls"
+    title="Itineraries"
+    subtitle="Ready-made plans stitching together our verified local favorites, so you don't have to build the day yourself."
+    photoUrl="/images/scenic/falls-park-2.jpg"
+    centered
+  />
+
+  <div class="container page">
+    <div class="itinerary-grid">
+      {itineraries.map((itinerary) => (
+        <a href={`/itineraries/${itinerary.data.slug}`} class="itinerary-card">
+          <div class="itinerary-card-media" style={itinerary.data.heroImage ? `background-image: url(${itinerary.data.heroImage})` : undefined}></div>
+          <div class="itinerary-card-body">
+            <span class="itinerary-tag">{itinerary.data.stops.length} stops</span>
+            <h3>{itinerary.data.title}</h3>
+            <p>{itinerary.data.subtitle}</p>
+            <span class="itinerary-read-more">See the plan →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .itinerary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  @media (max-width: 55rem) { .itinerary-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .itinerary-grid { grid-template-columns: 1fr; } }
+  .itinerary-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    text-decoration: none; overflow: hidden; box-shadow: 0 1px 2px rgba(13,23,48,0.06);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease;
+  }
+  .itinerary-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.16); }
+  .itinerary-card-media { height: 12.5rem; background-size: cover; background-position: center; background-color: var(--color-navy); }
+  .itinerary-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
+  .itinerary-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
+  .itinerary-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
+  .itinerary-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+  .itinerary-read-more { display: block; margin-top: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-orange-dark); }
+</style>

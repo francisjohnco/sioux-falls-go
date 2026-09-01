@@ -1,0 +1,109 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import LayeredHero from '../../components/LayeredHero.astro';
+import Icon from '../../components/Icon.astro';
+
+export async function getStaticPaths() {
+  const itineraries = await getCollection('itineraries');
+  return itineraries.map((itinerary) => ({
+    params: { itinerary: itinerary.data.slug },
+    props: { itinerary },
+  }));
+}
+
+const { itinerary } = Astro.props;
+
+const stopsWithBusiness = await Promise.all(
+  itinerary.data.stops.map(async (stop) => {
+    const business = await getEntry(stop.business);
+    const category = business ? await getEntry(business.data.category) : null;
+    return { ...stop, business, category };
+  })
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: itinerary.data.title,
+  itemListElement: stopsWithBusiness.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.business?.data.name,
+  })),
+};
+---
+<BaseLayout
+  title={itinerary.data.seo.title}
+  description={itinerary.data.seo.description}
+  canonicalPath={`/itineraries/${itinerary.data.slug}`}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Itinerary"
+    title={itinerary.data.title}
+    subtitle={itinerary.data.subtitle}
+    photoUrl={itinerary.data.heroImage}
+    centered
+  >
+    <nav class="hero-breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/itineraries">Itineraries</a> / <span>{itinerary.data.title}</span>
+    </nav>
+  </LayeredHero>
+
+  <div class="container page">
+    <ol class="timeline">
+      {stopsWithBusiness.map((stop, i) => stop.business && (
+        <li class="timeline-stop">
+          <div class="timeline-marker">
+            <span class="timeline-num">{i + 1}</span>
+            {i < stopsWithBusiness.length - 1 && <span class="timeline-line"></span>}
+          </div>
+          <div class="timeline-card">
+            <span class="timeline-time">{stop.time}</span>
+            <a href={`/businesses/${stop.business.id}`} class="timeline-name">
+              {stop.category && <Icon name={stop.category.data.icon} size={16} />}
+              {stop.business.data.name}
+            </a>
+            {stop.category && <span class="timeline-cat">{stop.category.data.name}</span>}
+            <p class="timeline-note">{stop.note}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="itinerary-cta">
+      <a href="/itineraries" class="button button--ghost">See more itineraries →</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); max-width: 42rem; margin-inline: auto; }
+  .hero-breadcrumbs { font-size: 0.875rem; color: rgba(255,255,255,0.75); margin-bottom: var(--space-2); }
+  .hero-breadcrumbs a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); }
+  .hero-breadcrumbs a:hover { text-decoration-color: currentColor; }
+
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline-stop { display: flex; gap: var(--space-3); }
+  .timeline-marker { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .timeline-num {
+    display: flex; align-items: center; justify-content: center;
+    width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--color-orange);
+    color: #fff; font-weight: 700; flex-shrink: 0;
+  }
+  .timeline-line { flex: 1; width: 2px; background: var(--color-line); margin: 0.25rem 0; }
+  .timeline-card { padding-bottom: var(--space-4); flex: 1; }
+  .timeline-time { font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.03em; }
+  .timeline-name { display: flex; align-items: center; gap: 0.4rem; font-size: 1.1875rem; font-weight: 700; color: var(--color-navy); text-decoration: none; margin-top: 0.25rem; }
+  .timeline-name:hover { text-decoration: underline; }
+  .timeline-cat { display: inline-block; font-size: 0.75rem; color: var(--color-navy-light); margin-top: 0.15rem; }
+  .timeline-note { margin: 0.5rem 0 0; color: var(--color-ink); line-height: 1.6; }
+  .itinerary-cta { text-align: center; margin-top: var(--space-3); }
+</style>

@@ -1,0 +1,181 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import BusinessCard from '../components/BusinessCard.astro';
+import LayeredHero from '../components/LayeredHero.astro';
+import Icon from '../components/Icon.astro';
+
+const allBusinesses = await getCollection('businesses');
+const allArticles = await getCollection('articles');
+const allCategories = await getCollection('categories');
+
+const businessesWithCategory = await Promise.all(
+  allBusinesses.map(async (b) => ({
+    business: b,
+    category: await getEntry(b.data.category),
+  }))
+);
+
+const articlesWithCategory = await Promise.all(
+  allArticles.map(async (a) => ({
+    article: a,
+    category: await getEntry(a.data.category),
+  }))
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SearchResultsPage',
+  name: 'Search Sioux Falls Go',
+};
+---
+<BaseLayout
+  title="Search"
+  description="Search every business, attraction, and guide on Sioux Falls Go in one place."
+  canonicalPath="/search"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Search"
+    title="Find anything on Sioux Falls Go"
+    subtitle="Businesses, attractions, and guides — all in one search."
+    photoUrl="/images/scenic/downtown-2.jpg"
+    centered
+  />
+
+  <div class="container page">
+    <div class="site-search-wrap">
+      <input type="search" id="site-search-input" class="site-search-input" placeholder="Search for a business, category, or guide..." aria-label="Search Sioux Falls Go" autofocus />
+    </div>
+
+    <div id="site-search-prompt" class="search-prompt">
+      <p>Start typing to search {allBusinesses.length} local businesses and {allArticles.length} guides.</p>
+    </div>
+
+    <div id="site-search-results" class="search-results" hidden>
+      <section>
+        <h2>Businesses <span id="biz-result-count" class="result-count"></span></h2>
+        <div class="grid" id="biz-results-grid">
+          {businessesWithCategory.map(({ business, category }) => (
+            <div class="grid-item" data-search={`${business.data.name} ${category?.data.name ?? ''}`.toLowerCase()} hidden>
+              <BusinessCard business={business} />
+            </div>
+          ))}
+        </div>
+        <p class="empty-note" id="biz-empty" hidden>No businesses match.</p>
+      </section>
+
+      <section>
+        <h2>Guides &amp; Articles <span id="article-result-count" class="result-count"></span></h2>
+        <div class="loop-grid" id="article-results-grid">
+          {articlesWithCategory.map(({ article, category }) => (
+            <a href={`/guides/${article.id}`} class="loop-card" data-search={`${article.data.title} ${category?.data.name ?? ''}`.toLowerCase()} hidden>
+              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+                {!article.data.heroImage && category && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+              </div>
+              <div class="loop-card-body">
+                <span class="loop-tag">{category?.data.name}</span>
+                <h3>{article.data.title}</h3>
+                <p>{article.data.seo.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <p class="empty-note" id="article-empty" hidden>No guides match.</p>
+      </section>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('site-search-input') as HTMLInputElement;
+  const prompt = document.getElementById('site-search-prompt') as HTMLElement;
+  const results = document.getElementById('site-search-results') as HTMLElement;
+  const bizGrid = document.getElementById('biz-results-grid');
+  const articleGrid = document.getElementById('article-results-grid');
+  const bizCount = document.getElementById('biz-result-count')!;
+  const articleCount = document.getElementById('article-result-count')!;
+  const bizEmpty = document.getElementById('biz-empty') as HTMLElement;
+  const articleEmpty = document.getElementById('article-empty') as HTMLElement;
+
+  function runSearch() {
+    const q = input.value.trim().toLowerCase();
+    const searching = q.length > 1;
+    prompt.hidden = searching;
+    results.hidden = !searching;
+    if (!searching) return;
+
+    let bizVisible = 0;
+    bizGrid?.querySelectorAll('.grid-item').forEach((el) => {
+      const item = el as HTMLElement;
+      const match = item.dataset.search?.includes(q) ?? false;
+      item.hidden = !match;
+      if (match) bizVisible++;
+    });
+    bizCount.textContent = `(${bizVisible})`;
+    bizEmpty.hidden = bizVisible > 0;
+
+    let articleVisible = 0;
+    articleGrid?.querySelectorAll('.loop-card').forEach((el) => {
+      const item = el as HTMLElement;
+      const match = item.dataset.search?.includes(q) ?? false;
+      item.hidden = !match;
+      if (match) articleVisible++;
+    });
+    articleCount.textContent = `(${articleVisible})`;
+    articleEmpty.hidden = articleVisible > 0;
+  }
+
+  input?.addEventListener('input', runSearch);
+
+  // Support ?q= in the URL so other pages can link straight to a search
+  const params = new URLSearchParams(window.location.search);
+  const initialQ = params.get('q');
+  if (initialQ) {
+    input.value = initialQ;
+    runSearch();
+  }
+</script>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .site-search-wrap { max-width: 36rem; margin: 0 auto var(--space-4); }
+  .site-search-input {
+    width: 100%; padding: 0.9rem 1.25rem; border-radius: var(--radius-pill);
+    border: 1px solid rgba(0,0,0,0.15); font-size: 1.0625rem; font-family: inherit;
+  }
+  .site-search-input:focus { outline: 2px solid var(--color-orange, #E07A3F); outline-offset: 1px; }
+  .search-prompt { text-align: center; color: var(--color-navy-light); padding: var(--space-4) 0; }
+  .search-results section { margin-bottom: var(--space-5); }
+  .search-results h2 { display: flex; align-items: baseline; gap: 0.5rem; }
+  .result-count { font-size: 0.875rem; font-weight: 500; color: var(--color-navy-light); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-2); }
+  .loop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-2); }
+  @media (max-width: 55rem) { .grid, .loop-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .grid, .loop-grid { grid-template-columns: 1fr; } }
+  .empty-note { color: var(--color-navy-light); margin-top: var(--space-2); }
+
+  .loop-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    text-decoration: none; overflow: hidden;
+    box-shadow: 0 1px 2px rgba(13,23,48,0.06);
+    transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .loop-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.16); border-color: transparent; }
+  .loop-card-media {
+    height: 12.5rem; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #16233d 0%, #2c3f61 60%, #F07E23 160%);
+    background-size: cover; background-position: center;
+  }
+  .loop-card-icon { color: #fff; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+  .loop-card-body { padding: var(--space-2) var(--space-3) var(--space-3); }
+  .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
+  .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
+  .loop-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+</style>

@@ -1,0 +1,18 @@
+{
+  "title": "Sioux Falls with Kids",
+  "slug": "sioux-falls-with-kids",
+  "subtitle": "A family-friendly day built around Sioux Falls' best kid magnets.",
+  "heroImage": "/images/scenic/mckennan-park.jpg",
+  "audience": "both",
+  "stops": [
+    { "time": "9:30 AM", "business": "great-plains-zoo", "note": "45 acres and over 1,000 animals, including the attached natural history museum." },
+    { "time": "12:00 PM", "business": "childs-play-toys", "note": "A downtown toy shop kids will want to browse after the zoo." },
+    { "time": "1:00 PM", "business": "washington-pavilion", "note": "The hands-on Kirby Science Discovery Center is a genuine kid favorite." },
+    { "time": "3:30 PM", "business": "butterfly-house-aquarium", "note": "Over 800 free-flying butterflies and a stingray touch pool." },
+    { "time": "5:00 PM", "business": "mckennan-park", "note": "Wind down with a walk through century-old gardens and a playground." }
+  ],
+  "seo": {
+    "title": "Sioux Falls with Kids: A Family Day Itinerary",
+    "description": "A family-friendly day in Sioux Falls hitting the zoo, Washington Pavilion, the Butterfly House, and McKennan Park."
+  }
+}

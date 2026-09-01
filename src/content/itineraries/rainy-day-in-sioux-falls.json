@@ -1,0 +1,18 @@
+{
+  "title": "Rainy Day in Sioux Falls",
+  "slug": "rainy-day-in-sioux-falls",
+  "subtitle": "Everything on this list is indoors, so weather is never a reason to stay home.",
+  "heroImage": "/images/scenic/downtown-1.jpg",
+  "audience": "both",
+  "stops": [
+    { "time": "10:00 AM", "business": "washington-pavilion", "note": "Science, art, and an IMAX-style theater under one roof — easily 3 to 4 hours." },
+    { "time": "1:00 PM", "business": "ch-patisserie", "note": "Lunch and pastries from an award-winning pastry chef, ranked #1 on Tripadvisor locally." },
+    { "time": "2:30 PM", "business": "pettigrew-home-museum", "note": "A free guided tour of an 1889 Queen Anne home, a genuine hidden gem." },
+    { "time": "4:00 PM", "business": "escape-605", "note": "An escape room or axe throwing session, entirely indoors." },
+    { "time": "6:30 PM", "business": "chef-lances-on-phillips", "note": "An elevated comfort-food dinner to close out the day." }
+  ],
+  "seo": {
+    "title": "Rainy Day in Sioux Falls: Indoor Things to Do",
+    "description": "A full day of indoor Sioux Falls activities for a rainy or snowy day — museums, an escape room, and real local dining."
+  }
+}

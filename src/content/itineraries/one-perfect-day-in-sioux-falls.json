@@ -1,0 +1,20 @@
+{
+  "title": "One Perfect Day in Sioux Falls",
+  "slug": "one-perfect-day-in-sioux-falls",
+  "subtitle": "From morning coffee to a downtown fine dining dinner, a full day hitting the city's real highlights.",
+  "heroImage": "/images/scenic/falls-park-1.jpg",
+  "audience": "both",
+  "stops": [
+    { "time": "8:00 AM", "business": "the-breaks-coffee-roasting-co", "note": "Start with small-batch roasted coffee before the day gets moving." },
+    { "time": "9:00 AM", "business": "falls-park", "note": "Sioux Falls' namesake waterfalls — climb the rocks, ride the observation tower elevator." },
+    { "time": "11:00 AM", "business": "sculpturewalk", "note": "Walk downtown Phillips Avenue through the world's largest annual outdoor sculpture exhibit." },
+    { "time": "12:30 PM", "business": "shahi-india-grill", "note": "Lunch at a genuinely authentic, farm-fresh Indian kitchen." },
+    { "time": "2:00 PM", "business": "old-courthouse-museum", "note": "Free admission to three floors of regional history inside a restored 1889 quartzite courthouse." },
+    { "time": "4:00 PM", "business": "the-source-coffee-roastery-taproom", "note": "A mid-afternoon break at a working roastery-and-taproom." },
+    { "time": "7:00 PM", "business": "harvester-kitchen-by-bryan", "note": "Close the day with a chef-driven tasting menu in the historic Harvester Building." }
+  ],
+  "seo": {
+    "title": "One Perfect Day in Sioux Falls: A Local's Itinerary",
+    "description": "A full day in Sioux Falls hitting Falls Park, SculptureWalk, real local coffee, and a fine dining finish — all real, verified stops."
+  }
+}

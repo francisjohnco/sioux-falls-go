@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T04:42:40.359Z",
+  "generatedAt": "2026-09-01T10:58:36.554Z",
   "categories": [
     {
       "slug": "attorneys",
@@ -1146,11 +1146,11 @@
     {
       "slug": "for-locals",
       "name": "For Locals",
-      "articleCount": 9,
+      "articleCount": 10,
       "businessCount": 0,
       "categoryType": "other",
       "missingTypes": [],
-      "priorityScore": -45,
+      "priorityScore": -50,
       "reasons": []
     }
   ]
