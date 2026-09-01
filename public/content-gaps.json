@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T11:43:12.780Z",
+  "generatedAt": "2026-09-01T12:05:17.475Z",
   "categories": [
     {
       "slug": "attorneys",
@@ -454,6 +454,18 @@
       "reasons": [
         "Has businesses but zero articles",
         "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "coffee-shops",
+      "name": "Coffee Shops",
+      "articleCount": 5,
+      "businessCount": 5,
+      "categoryType": "dual",
+      "missingTypes": [],
+      "priorityScore": 15,
+      "reasons": [
+        "4 business(es) never mentioned in any article"
       ]
     },
     {
@@ -965,18 +977,6 @@
       "missingTypes": [],
       "priorityScore": 0,
       "reasons": []
-    },
-    {
-      "slug": "coffee-shops",
-      "name": "Coffee Shops",
-      "articleCount": 5,
-      "businessCount": 3,
-      "categoryType": "dual",
-      "missingTypes": [],
-      "priorityScore": -5,
-      "reasons": [
-        "2 business(es) never mentioned in any article"
-      ]
     },
     {
       "slug": "explore-sioux-falls",

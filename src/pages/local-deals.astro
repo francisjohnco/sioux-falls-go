@@ -7,6 +7,14 @@ import LayeredHero from '../components/LayeredHero.astro';
 import Icon from '../components/Icon.astro';
 
 const allDeals = await getCollection('deals');
+
+// For the empty state — show real category icons so it previews what's
+// coming instead of just apologizing for being empty.
+const allCategoriesForPreview = await getCollection('categories');
+const previewCategorySlugs = ['restaurants-dining', 'home-services', 'shopping-retail', 'health-wellness', 'attractions', 'professional-services'];
+const previewCategories = previewCategorySlugs
+  .map((slug) => allCategoriesForPreview.find((c) => c.data.slug === slug))
+  .filter((c): c is NonNullable<typeof c> => Boolean(c));
 const now = new Date();
 
 // Only ever show deals that haven't expired — an expired deal on a live
@@ -77,7 +85,7 @@ function discountIcon(type: string) {
     eyebrow="Local Deals"
     title="Real Deals from Real Local Businesses"
     subtitle="Every current offer from our verified local businesses, in one place — no expired coupons, no fine print surprises."
-    photoUrl="/images/scenic/downtown-1.jpg"
+    photoUrl="https://images.unsplash.com/photo-1760565030786-91526dff426c?fm=jpg&q=80&w=1600&auto=format&fit=crop"
     centered
   >
     {withBusiness.length > 0 && (
@@ -88,10 +96,22 @@ function discountIcon(type: string) {
   <div class="container page">
     {withBusiness.length === 0 ? (
       <div class="deals-empty">
-        <div class="deals-empty-icon"><Icon name="gift" size={40} /></div>
-        <h2>No active deals right now</h2>
-        <p>We only publish real, confirmed offers from our local businesses — never invented discounts. Check back soon, or if you own a Sioux Falls business, submit a real deal for your customers.</p>
-        <a href="/get-featured" class="button">Submit a Deal →</a>
+        <div class="deals-empty-icon"><Icon name="gift" size={48} /></div>
+        <h2>Real deals are coming</h2>
+        <p>We only publish real, confirmed offers from our local businesses — never invented discounts. When they go live, they'll show up here first, sorted by category, value, and how soon they end.</p>
+
+        {previewCategories.length > 0 && (
+          <div class="deals-preview-chips">
+            {previewCategories.map((cat) => (
+              <span class="deals-preview-chip"><Icon name={cat.data.icon} size={15} /> {cat.data.name}</span>
+            ))}
+          </div>
+        )}
+
+        <div class="deals-empty-ctas">
+          <a href="/get-featured" class="button">Submit a Deal →</a>
+          <a href="/spotlight-giveaway" class="button button--ghost">Join the Giveaway →</a>
+        </div>
       </div>
     ) : (
       <>
@@ -195,16 +215,25 @@ function discountIcon(type: string) {
   .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
 
   .deals-empty {
-    text-align: center; max-width: 32rem; margin: 0 auto; padding: var(--space-6) var(--space-3);
-    background: var(--color-surface); border-radius: var(--radius);
+    text-align: center; max-width: 34rem; margin: 0 auto; padding: var(--space-6) var(--space-4);
+    background: linear-gradient(160deg, var(--color-river-light) 0%, #fff 60%);
+    border: 1px solid var(--color-line); border-radius: var(--radius);
   }
   .deals-empty-icon {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 4rem; height: 4rem; border-radius: 50%; background: var(--color-orange);
-    color: #fff; margin-bottom: var(--space-2);
+    width: 5rem; height: 5rem; border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-orange), var(--color-gold));
+    color: #fff; margin-bottom: var(--space-3); box-shadow: 0 10px 24px rgba(240,126,35,0.3);
   }
-  .deals-empty h2 { margin-bottom: var(--space-1); }
+  .deals-empty h2 { margin-bottom: var(--space-1); font-size: 1.75rem; }
   .deals-empty p { color: var(--color-navy-light); margin-bottom: var(--space-3); line-height: 1.6; }
+  .deals-preview-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: var(--space-4); }
+  .deals-preview-chip {
+    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; font-weight: 600;
+    padding: 0.4rem 0.85rem; border-radius: var(--radius-pill); background: #fff; border: 1px solid var(--color-line);
+    color: var(--color-navy);
+  }
+  .deals-empty-ctas { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
   .featured-deal-wrap { margin-bottom: var(--space-5); }
   .featured-deal-wrap .eyebrow { display: block; margin-bottom: var(--space-2); text-align: center; }
