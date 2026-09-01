@@ -164,19 +164,21 @@ const schema = {
     <div class="container trust-bar-inner">
       <div class="trust-stats">
         {business.data.googleRating && (
-          <span class="trust-stat"><Icon name="star" size={14} class="filled-star" /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews)</span>
+          <span class="trust-stat trust-stat--rating"><Icon name="star" size={14} class="filled-star" /> {business.data.googleRating.toFixed(1)} ({business.data.googleReviewCount} reviews)</span>
         )}
-        {business.data.hoursSchedule && (
-          <p class="trust-stat open-now-indicator" id="open-now-indicator-trust" hidden></p>
-        )}
-        {business.data.responseTime && (
-          <span class="trust-stat"><Icon name="zap" size={14} /> Usually responds {business.data.responseTime}</span>
-        )}
+        <div class="trust-stats-pair">
+          {business.data.hoursSchedule && (
+            <p class="trust-stat open-now-indicator" id="open-now-indicator-trust" hidden></p>
+          )}
+          {business.data.responseTime && (
+            <span class="trust-stat"><Icon name="zap" size={14} /> Usually responds {business.data.responseTime}</span>
+          )}
+        </div>
       </div>
       {smartCTA.external ? (
-        <a class="btn btn--primary" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
+        <a class="btn btn--primary trust-bar-cta" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
       ) : (
-        <a class="btn btn--primary" href={smartCTA.href}>{smartCTA.label}</a>
+        <a class="btn btn--primary trust-bar-cta" href={smartCTA.href}>{smartCTA.label}</a>
       )}
     </div>
   </div>
@@ -496,6 +498,19 @@ const schema = {
   .trust-stat.open-now-indicator { padding: 0; background: none; }
   .trust-stat.open-now-indicator.is-open { color: var(--color-success); }
   .trust-stat.open-now-indicator.is-closed { color: #C0392B; }
+  .trust-stats-pair { display: flex; gap: 2.2rem; flex-wrap: wrap; }
+  @media (max-width: 48rem) {
+    .trust-bar-inner { display: block; }
+    .trust-stat--rating, .trust-bar-cta { display: none; }
+    .trust-stats { display: block; }
+    .trust-stats-pair { gap: 0.6rem; flex-wrap: nowrap; }
+    .trust-stats-pair .trust-stat {
+      flex: 1; justify-content: center; text-align: center; font-size: 0.75rem;
+      padding: 0.5rem 0.6rem; border-radius: 0.5rem; background: var(--color-surface);
+    }
+    .trust-stats-pair .trust-stat.open-now-indicator.is-open { background: #E7F6ED; }
+    .trust-stats-pair .trust-stat.open-now-indicator.is-closed { background: #FBEAEA; }
+  }
   .btn { padding: 0.7rem 1.3rem; border-radius: 0.6rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; display: inline-block; }
   .btn--primary { background: var(--color-orange); color: #fff; }
   .btn--primary:hover { background: var(--color-orange-dark); }
