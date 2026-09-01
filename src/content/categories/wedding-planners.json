@@ -1,0 +1,23 @@
+{
+  "name": "Wedding Planners",
+  "slug": "wedding-planners",
+  "aliases": ["Wedding Planning", "Event Planners"],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Wedding Planners in Sioux Falls, SD",
+    "description": "Find trusted wedding planners in Sioux Falls to help plan your big day."
+  },
+  "icon": "heart",
+  "parentCategory": "professional-services"
+}

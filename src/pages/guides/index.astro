@@ -39,6 +39,9 @@ const localsWithCat = await withCategory(localsArticles);
 const visitorWithCat = await withCategory(visitorArticles);
 const businessWithCat = await withCategory(businessArticles);
 const serviceWithCat = await withCategory(serviceGuides);
+// Full set, for the search bar — independent of the sectioned 6-per-group
+// slices above, so search covers every published article on the site.
+const allWithCat = await withCategory(sortByDateDesc(allArticles));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -55,6 +58,32 @@ const schema = {
   <SiteHeader slot="header" />
 
   <LayeredHero eyebrow="The Loop" title="Stay in The Loop" subtitle="Stories, local guides, community gems, and local wins — for the people who live here and the people just visiting." photoUrl="/images/scenic/downtown-1.jpg" />
+
+  <div class="container loop-search-wrap">
+    <input type="search" id="loop-search-input" class="loop-search-input" placeholder="Search articles and guides..." aria-label="Search articles and guides" />
+  </div>
+
+  <section id="loop-search-results" class="loop-band" hidden>
+    <div class="container">
+      <span class="eyebrow">Search Results</span>
+      <h2 id="loop-search-heading">Articles</h2>
+      <div class="loop-grid" id="loop-search-grid">
+        {allWithCat.map(({ article, category }) => (
+          <a href={`/guides/${article.id}`} class="loop-card" data-search={article.data.title.toLowerCase()} hidden>
+            <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
+              {!article.data.heroImage && category && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+            </div>
+            <div class="loop-card-body">
+              <span class="loop-tag">{category?.data.name}</span>
+              <h3>{article.data.title}</h3>
+              <p>{article.data.seo.description}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p id="loop-search-empty" class="empty-note" hidden>No articles match your search.</p>
+    </div>
+  </section>
 
   {serviceWithCat.length > 0 && (
     <section aria-labelledby="service-heading" class="loop-band">
@@ -177,6 +206,12 @@ const schema = {
 
 <style>
   .page { padding-block: var(--space-4) var(--space-6); }
+  .loop-search-wrap { padding-block: var(--space-3); }
+  .loop-search-input {
+    width: 100%; max-width: 32rem; padding: 0.75rem 1.1rem; border-radius: var(--radius-pill);
+    border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: inherit;
+  }
+  .loop-search-input:focus { outline: 2px solid var(--color-orange, #e07a3f); outline-offset: 1px; }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
   .loop-band { padding-block: var(--space-5); }
   .loop-band--alt { background: var(--color-river-light, #EAF2F8); }
@@ -231,6 +266,34 @@ const schema = {
   .legend-form-status.is-success { color: var(--color-success); }
   .legend-form-status.is-error { color: #C0392B; }
 </style>
+
+<script>
+  // The Loop search — filters the full article set independent of the
+  // sectioned 6-per-group display above. Typing shows matching results
+  // and hides the normal sections; clearing the box restores them.
+  const loopSearchInput = document.getElementById('loop-search-input') as HTMLInputElement;
+  const loopResultsSection = document.getElementById('loop-search-results');
+  const loopSearchGrid = document.getElementById('loop-search-grid');
+  const loopSearchEmpty = document.getElementById('loop-search-empty');
+  const loopNormalSections = Array.from(document.querySelectorAll('.loop-band:not(#loop-search-results)'));
+
+  loopSearchInput?.addEventListener('input', () => {
+    const q = loopSearchInput.value.trim().toLowerCase();
+    const searching = q.length > 0;
+    loopNormalSections.forEach((section) => { (section as HTMLElement).hidden = searching; });
+    if (loopResultsSection) (loopResultsSection as HTMLElement).hidden = !searching;
+    if (!searching) return;
+    const cards = loopSearchGrid ? Array.from(loopSearchGrid.querySelectorAll('.loop-card')) : [];
+    let visibleCount = 0;
+    cards.forEach((card) => {
+      const el = card as HTMLElement;
+      const matches = el.dataset.search?.includes(q) ?? false;
+      el.hidden = !matches;
+      if (matches) visibleCount++;
+    });
+    if (loopSearchEmpty) (loopSearchEmpty as HTMLElement).hidden = visibleCount > 0;
+  });
+</script>
 
 <script>
   // Local Legend VIP signup — real MailerLite subscription, not a static form

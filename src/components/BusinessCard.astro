@@ -37,21 +37,30 @@ const excerpt = makeExcerpt(business.body ?? '');
     </div>
   </a>
   <div class="biz-card-body">
-    <span class="biz-category-tag"><Icon name={category.data.icon} size={14} /> {category.data.name}</span>
+    <div class="biz-card-toprow">
+      <span class="biz-category-tag"><Icon name={category.data.icon} size={14} /> {category.data.name}</span>
+      {business.data.verifiedAt ? (
+        <span class="verify-badge verify-badge--yes"><Icon name="check" size={11} /> Verified</span>
+      ) : (
+        <span class="verify-badge verify-badge--no"><Icon name="clock" size={11} /> Not Verified</span>
+      )}
+    </div>
     <a href={`/businesses/${business.id}`} class="biz-card-name-link">
-      <h3>
-        {business.data.name}
-        {business.data.verifiedAt && <span class="verified-check" title="Verified by Sioux Falls Go"><Icon name="check" size={11} /></span>}
-      </h3>
+      <h3>{business.data.name}</h3>
     </a>
     {tier === 'community-champion' && <span class="badge badge--champion-solid"><Icon name="star" size={11} /> Community Champion</span>}
     {tier === 'community-listing' && <span class="badge badge--giveback">Give Back Partner</span>}
     {business.data.googleRating && (
-      <p class="biz-rating"><Icon name="star" size={13} class="rating-star" /> {business.data.googleRating.toFixed(1)} <span class="biz-rating-count">{business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</span></p>
+      <p class="biz-rating"><Icon name="star" size={13} class="rating-star" /> {business.data.googleRating.toFixed(1)} <span class="biz-rating-count biz-rating-count--desktop">{business.data.googleReviewCount && `(${business.data.googleReviewCount})`}</span></p>
     )}
     {excerpt && <p class="biz-excerpt">{excerpt}</p>}
     <div class="biz-card-footer">
-      <a href={`/businesses/${business.id}`} class="read-more-link">Read more →</a>
+      <span class="footer-start">
+        <a href={`/businesses/${business.id}`} class="read-more-link">Read more →</a>
+        {business.data.googleRating && business.data.googleReviewCount && (
+          <span class="biz-rating-count biz-rating-count--mobile">({business.data.googleReviewCount})</span>
+        )}
+      </span>
       {business.data.phone && <a href={`tel:${business.data.phone}`} class="call-link"><Icon name="phone" size={13} /> Call</a>}
     </div>
   </div>
@@ -79,28 +88,34 @@ const excerpt = makeExcerpt(business.body ?? '');
   }
 
   .biz-card-body { padding: var(--space-2) var(--space-3) var(--space-3); flex: 1; display: flex; flex-direction: column; }
+  .biz-card-toprow { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
   .biz-category-tag { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.02em; }
+  .verify-badge { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.6875rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--radius-pill); flex-shrink: 0; white-space: nowrap; }
+  .verify-badge--yes { background: #E7F6ED; color: var(--color-success); }
+  .verify-badge--no { background: #F1F1F1; color: var(--color-navy-light); }
   .biz-card-name-link { text-decoration: none; }
-  .biz-card h3 { margin: 0.35rem 0 0; font-size: 1.125rem; color: var(--color-navy); display: flex; align-items: center; gap: 0.4rem; }
-  .verified-check {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--color-success);
-    color: #fff; font-size: 0.625rem; font-weight: 700; flex-shrink: 0;
-  }
+  .biz-card h3 { margin: 0.35rem 0 0; font-size: 1.125rem; color: var(--color-navy); }
   .badge--champion-solid { background: var(--color-orange); color: #fff; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
   .badge--champion-solid .icon { fill: currentColor; }
   .badge--giveback { background: #E7F6ED; color: var(--color-success); display: inline-block; margin-top: 0.4rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); width: fit-content; }
   .biz-rating { display: flex; align-items: center; gap: 0.3rem; margin: 0.4rem 0 0; font-size: 0.875rem; color: var(--color-navy); font-weight: 700; }
   .rating-star { fill: #F5B429; color: #F5B429; }
   .biz-rating-count { color: var(--color-navy-light); font-weight: 400; }
+  .biz-rating-count--mobile { display: none; }
   .biz-excerpt { margin: 0.5rem 0 0; font-size: 0.9375rem; color: var(--color-ink); line-height: 1.55; flex: 1; }
 
   .biz-card-footer {
     display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
     margin-top: var(--space-2); padding-top: var(--space-1); border-top: 1px solid var(--color-line);
   }
+  .footer-start { display: flex; align-items: baseline; gap: 0.4rem; }
   .read-more-link { font-size: 0.9375rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
   .read-more-link:hover { text-decoration: underline; }
   .call-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: var(--color-navy-light); text-decoration: none; font-weight: 600; }
   .call-link:hover { color: var(--color-navy); }
+
+  @media (max-width: 30rem) {
+    .biz-rating-count--desktop { display: none; }
+    .biz-rating-count--mobile { display: inline; color: var(--color-navy-light); font-weight: 600; font-size: 0.8125rem; }
+  }
 </style>

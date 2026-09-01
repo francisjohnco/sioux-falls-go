@@ -1,6 +1,6 @@
 ---
 name: "The Source Coffee Roastery + Taproom"
-heroImage: "https://images.unsplash.com/photo-1711672284661-bd70e38f31b2?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1738898326912-83ec04de4ccf?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "coffee-shops"
 claimed: false
 address: "421 N Phillips Ave Suite 101, Sioux Falls, South Dakota 57104"

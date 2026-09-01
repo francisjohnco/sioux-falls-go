@@ -1,6 +1,6 @@
 ---
 name: "Studio Blu Photography"
-heroImage: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1637578035851-c5b169722de1?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "photography"
 claimed: false
 address: "401 E 8th St #1a, Sioux Falls, South Dakota 57103"

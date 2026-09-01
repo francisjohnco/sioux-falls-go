@@ -1,0 +1,23 @@
+{
+  "name": "Business Coaches",
+  "slug": "business-coaches",
+  "aliases": ["Business Coaching", "Executive Coaching"],
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "local-resource",
+      "educational-article"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Business Coaches in Sioux Falls, SD",
+    "description": "Find trusted business coaches in Sioux Falls to help grow and scale your business."
+  },
+  "icon": "trending-up",
+  "parentCategory": "professional-services"
+}

@@ -1,6 +1,19 @@
 {
-  "generatedAt": "2026-09-01T02:48:01.198Z",
+  "generatedAt": "2026-09-01T04:01:01.535Z",
   "categories": [
+    {
+      "slug": "attorneys",
+      "name": "Attorneys",
+      "articleCount": 0,
+      "businessCount": 3,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 130,
+      "reasons": [
+        "Has businesses but zero articles",
+        "3 business(es) never mentioned in any article"
+      ]
+    },
     {
       "slug": "auto-repair",
       "name": "Auto Repair",
@@ -262,8 +275,47 @@
       ]
     },
     {
+      "slug": "wedding-planners",
+      "name": "Wedding Planners",
+      "articleCount": 0,
+      "businessCount": 2,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 120,
+      "reasons": [
+        "Has businesses but zero articles",
+        "2 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "accountants",
+      "name": "Accountants",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "bakeries",
       "name": "Bakeries",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
+      "slug": "business-consulting",
+      "name": "Business Consulting",
       "articleCount": 0,
       "businessCount": 1,
       "categoryType": "other",
@@ -366,6 +418,19 @@
       ]
     },
     {
+      "slug": "printing-services",
+      "name": "Printing Services",
+      "articleCount": 0,
+      "businessCount": 1,
+      "categoryType": "other",
+      "missingTypes": [],
+      "priorityScore": 110,
+      "reasons": [
+        "Has businesses but zero articles",
+        "1 business(es) never mentioned in any article"
+      ]
+    },
+    {
       "slug": "sporting-goods-stores",
       "name": "Sporting Goods Stores",
       "articleCount": 0,
@@ -390,26 +455,6 @@
         "Has businesses but zero articles",
         "1 business(es) never mentioned in any article"
       ]
-    },
-    {
-      "slug": "accountants",
-      "name": "Accountants",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "attorneys",
-      "name": "Attorneys",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
     },
     {
       "slug": "attractions",
@@ -522,8 +567,8 @@
       "reasons": []
     },
     {
-      "slug": "business-consulting",
-      "name": "Business Consulting",
+      "slug": "business-coaches",
+      "name": "Business Coaches",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",
@@ -814,16 +859,6 @@
     {
       "slug": "places-to-stay",
       "name": "Places to Stay",
-      "articleCount": 0,
-      "businessCount": 0,
-      "categoryType": "other",
-      "missingTypes": [],
-      "priorityScore": 0,
-      "reasons": []
-    },
-    {
-      "slug": "printing-services",
-      "name": "Printing Services",
       "articleCount": 0,
       "businessCount": 0,
       "categoryType": "other",

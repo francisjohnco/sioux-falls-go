@@ -42,8 +42,8 @@ const TRADE_CATEGORIES = [
   'window-cleaning', 'flooring', 'home-watch-services', 'appliance-repair-service',
   'cleaning-services', 'home-services',
 ];
-const CONSULT_CATEGORIES = ['marketing-agencies', 'real-estate-agents', 'professional-services'];
-const MENU_CATEGORIES = ['restaurants-dining'];
+const CONSULT_CATEGORIES = ['marketing-agencies', 'real-estate-agents', 'professional-services', 'accountants', 'business-consulting', 'attorneys', 'business-coaches', 'wedding-planners'];
+const MENU_CATEGORIES = ['restaurants-dining', 'fine-dining', 'bakeries', 'bars-and-pubs', 'breakfast-and-brunch', 'ice-cream-and-dessert', 'food-trucks'];
 const DIRECTIONS_CATEGORIES = ['coffee-shops', 'shopping-retail'];
 const APPOINTMENT_CATEGORIES = [
   'dentists', 'chiropractors', 'physical-therapy', 'massage-therapy',
@@ -53,16 +53,19 @@ const APPOINTMENT_CATEGORIES = [
 ];
 
 function getSmartCTA(categorySlug: string, biz: typeof business.data) {
-  if (MENU_CATEGORIES.includes(categorySlug) && biz.website) {
-    return { label: 'View Menu', href: biz.website, external: true };
-  }
-  if (DIRECTIONS_CATEGORIES.includes(categorySlug)) {
-    const mapsHref = biz.latitude && biz.longitude
-      ? `https://maps.google.com/?q=${biz.latitude},${biz.longitude}`
-      : biz.address
-        ? `https://maps.google.com/?q=${encodeURIComponent(biz.address)}`
-        : null;
+  const mapsHref = biz.latitude && biz.longitude
+    ? `https://maps.google.com/?q=${biz.latitude},${biz.longitude}`
+    : biz.address
+      ? `https://maps.google.com/?q=${encodeURIComponent(biz.address)}`
+      : null;
+  if (MENU_CATEGORIES.includes(categorySlug)) {
+    if (biz.website) return { label: 'View Menu', href: biz.website, external: true };
+    // No website on file — Get Directions is still far more useful for a
+    // restaurant than a generic quote form, which doesn't apply here at all.
     if (mapsHref) return { label: 'Get Directions', href: mapsHref, external: true };
+  }
+  if (DIRECTIONS_CATEGORIES.includes(categorySlug) && mapsHref) {
+    return { label: 'Get Directions', href: mapsHref, external: true };
   }
   if (APPOINTMENT_CATEGORIES.includes(categorySlug)) {
     return { label: 'Book an Appointment', href: '#quote-section', external: false };
