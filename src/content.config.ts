@@ -86,6 +86,30 @@ const itineraries = defineCollection({
 });
 
 /**
+ * DEALS — real, business-submitted offers only. Never seed this with
+ * invented discounts; a fake percentage-off on a real business is actively
+ * misleading. Populate from confirmed offers only.
+ */
+const deals = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/deals' }),
+  schema: z.object({
+    business: reference('businesses'),
+    title: z.string(), // short, e.g. "20% Off First Visit"
+    description: z.string(),
+    discountType: z.enum(['percent-off', 'dollar-off', 'bogo', 'free-item', 'bundle', 'other']),
+    // A 1-100 score for the "Most Valuable" sort. Keep this honest and
+    // roughly comparable across deal types (e.g. a $50-off deal on a $60
+    // service scores higher than $50 off a $2,000 service) — don't just
+    // rank by raw discount value, which would even favor small purchases
+    // unfairly. Ask the business or use your judgment on relative value.
+    valueScore: z.number().min(1).max(100),
+    expiresAt: z.coerce.date().optional(), // omit for an ongoing/standing offer
+    terms: z.string().optional(),
+    submittedBy: z.enum(['business-owner', 'verified-by-team']).default('business-owner'),
+  }),
+});
+
+/**
  * BUSINESSES
  */
 const businesses = defineCollection({
@@ -358,6 +382,7 @@ export const collections = {
   categories,
   neighborhoods,
   itineraries,
+  deals,
   businesses,
   events,
   articles,

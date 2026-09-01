@@ -1,0 +1,268 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import LayeredHero from '../components/LayeredHero.astro';
+import Icon from '../components/Icon.astro';
+
+const allDeals = await getCollection('deals');
+const now = new Date();
+
+// Only ever show deals that haven't expired — an expired deal on a live
+// page is worse than no deal at all.
+const activeDeals = allDeals.filter((d) => !d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime());
+
+const dealsWithContext = await Promise.all(
+  activeDeals.map(async (deal) => {
+    const business = await getEntry(deal.data.business);
+    const category = business ? await getEntry(business.data.category) : null;
+    const daysLeft = deal.data.expiresAt
+      ? Math.ceil((deal.data.expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+    return { deal, business, category, daysLeft };
+  })
+);
+
+const withBusiness = dealsWithContext.filter((d) => d.business);
+
+// Group by category for the "By Category" view
+const byCategory = new Map<string, typeof withBusiness>();
+for (const d of withBusiness) {
+  const key = d.category?.data.name ?? 'Other';
+  if (!byCategory.has(key)) byCategory.set(key, []);
+  byCategory.get(key)!.push(d);
+}
+const categoryGroups = Array.from(byCategory.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+
+const mostValuable = [...withBusiness].sort((a, b) => b.deal.data.valueScore - a.deal.data.valueScore);
+const endingSoon = withBusiness
+  .filter((d) => d.daysLeft !== null)
+  .sort((a, b) => (a.daysLeft ?? 0) - (b.daysLeft ?? 0));
+
+const featured = mostValuable[0] ?? null;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Sioux Falls Local Deals',
+  itemListElement: withBusiness.map((d, i) => ({
+    '@type': 'Offer',
+    position: i + 1,
+    name: d.deal.data.title,
+    seller: { '@type': 'LocalBusiness', name: d.business!.data.name },
+  })),
+};
+
+function discountIcon(type: string) {
+  switch (type) {
+    case 'percent-off': return 'trending-up';
+    case 'dollar-off': return 'gift';
+    case 'bogo': return 'layers';
+    case 'free-item': return 'star';
+    case 'bundle': return 'briefcase';
+    default: return 'gift';
+  }
+}
+---
+<BaseLayout
+  title="Local Deals"
+  description="Every real deal from Sioux Falls Go's verified local businesses, all in one place — sorted by category, value, and how soon they end."
+  canonicalPath="/local-deals"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Local Deals"
+    title="Real Deals from Real Local Businesses"
+    subtitle="Every current offer from our verified local businesses, in one place — no expired coupons, no fine print surprises."
+    photoUrl="/images/scenic/downtown-1.jpg"
+    centered
+  >
+    {withBusiness.length > 0 && (
+      <p class="hero-stats">{withBusiness.length} active deal{withBusiness.length === 1 ? '' : 's'} from local businesses</p>
+    )}
+  </LayeredHero>
+
+  <div class="container page">
+    {withBusiness.length === 0 ? (
+      <div class="deals-empty">
+        <div class="deals-empty-icon"><Icon name="gift" size={40} /></div>
+        <h2>No active deals right now</h2>
+        <p>We only publish real, confirmed offers from our local businesses — never invented discounts. Check back soon, or if you own a Sioux Falls business, submit a real deal for your customers.</p>
+        <a href="/get-featured" class="button">Submit a Deal →</a>
+      </div>
+    ) : (
+      <>
+        {featured && (
+          <section class="featured-deal-wrap">
+            <span class="eyebrow">Deal of the Day</span>
+            <a href={`/businesses/${featured.business!.id}`} class="featured-deal">
+              <div class="featured-deal-media" style={featured.business!.data.heroImage ? `background-image: url(${featured.business!.data.heroImage})` : undefined}></div>
+              <div class="featured-deal-body">
+                <span class="deal-badge deal-badge--featured"><Icon name={discountIcon(featured.deal.data.discountType)} size={14} /> {featured.category?.data.name}</span>
+                <h2>{featured.deal.data.title}</h2>
+                <p>{featured.deal.data.description}</p>
+                <p class="featured-deal-biz">at <strong>{featured.business!.data.name}</strong></p>
+                {featured.daysLeft !== null && <span class="deal-urgency">{featured.daysLeft <= 1 ? 'Ends today' : `${featured.daysLeft} days left`}</span>}
+              </div>
+            </a>
+          </section>
+        )}
+
+        <div class="deals-tabs" role="tablist">
+          <button class="deals-tab is-active" data-tab="category" role="tab" aria-selected="true">By Category</button>
+          <button class="deals-tab" data-tab="value" role="tab" aria-selected="false">Most Valuable</button>
+          <button class="deals-tab" data-tab="soon" role="tab" aria-selected="false">Ending Soon</button>
+        </div>
+
+        <div class="deals-panel" data-panel="category">
+          {categoryGroups.map(([catName, deals]) => (
+            <div class="deals-category-group">
+              <h3>{catName}</h3>
+              <div class="deals-grid">
+                {deals.map((d) => (
+                  <a href={`/businesses/${d.business!.id}`} class="deal-card">
+                    <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
+                    <p class="deal-desc">{d.deal.data.description}</p>
+                    <p class="deal-biz">{d.business!.data.name}</p>
+                    {d.daysLeft !== null && <span class="deal-urgency deal-urgency--small">{d.daysLeft <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="deals-panel" data-panel="value" hidden>
+          <div class="deals-grid">
+            {mostValuable.map((d) => (
+              <a href={`/businesses/${d.business!.id}`} class="deal-card">
+                <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
+                <p class="deal-desc">{d.deal.data.description}</p>
+                <p class="deal-biz">{d.business!.data.name} · {d.category?.data.name}</p>
+                {d.daysLeft !== null && <span class="deal-urgency deal-urgency--small">{d.daysLeft <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div class="deals-panel" data-panel="soon" hidden>
+          {endingSoon.length > 0 ? (
+            <div class="deals-grid">
+              {endingSoon.map((d) => (
+                <a href={`/businesses/${d.business!.id}`} class="deal-card deal-card--urgent">
+                  <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
+                  <p class="deal-desc">{d.deal.data.description}</p>
+                  <p class="deal-biz">{d.business!.data.name} · {d.category?.data.name}</p>
+                  <span class="deal-urgency deal-urgency--small">{(d.daysLeft ?? 0) <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p class="empty-note">No time-limited deals right now — everything active is a standing offer.</p>
+          )}
+        </div>
+
+        <div class="deals-submit-cta">
+          <p>Own a Sioux Falls business? Get your real offer in front of local customers, free.</p>
+          <a href="/get-featured" class="button button--ghost">Submit a Deal →</a>
+        </div>
+      </>
+    )}
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  const tabs = document.querySelectorAll('.deals-tab');
+  const panels = document.querySelectorAll('.deals-panel');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.tab;
+      tabs.forEach((t) => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+      panels.forEach((p) => { (p as HTMLElement).hidden = (p as HTMLElement).dataset.panel !== target; });
+    });
+  });
+</script>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); }
+  .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+
+  .deals-empty {
+    text-align: center; max-width: 32rem; margin: 0 auto; padding: var(--space-6) var(--space-3);
+    background: var(--color-surface); border-radius: var(--radius);
+  }
+  .deals-empty-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 4rem; height: 4rem; border-radius: 50%; background: var(--color-orange);
+    color: #fff; margin-bottom: var(--space-2);
+  }
+  .deals-empty h2 { margin-bottom: var(--space-1); }
+  .deals-empty p { color: var(--color-navy-light); margin-bottom: var(--space-3); line-height: 1.6; }
+
+  .featured-deal-wrap { margin-bottom: var(--space-5); }
+  .featured-deal-wrap .eyebrow { display: block; margin-bottom: var(--space-2); text-align: center; }
+  .featured-deal {
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 0; background: var(--color-navy); border-radius: var(--radius);
+    overflow: hidden; text-decoration: none; box-shadow: 0 20px 40px rgba(13,23,48,0.2);
+    transition: transform 0.2s ease;
+  }
+  .featured-deal:hover { transform: translateY(-3px); }
+  @media (max-width: 40rem) { .featured-deal { grid-template-columns: 1fr; } }
+  .featured-deal-media { min-height: 14rem; background-size: cover; background-position: center; background-color: var(--color-river); }
+  .featured-deal-body { padding: var(--space-4); color: #fff; }
+  .featured-deal-body h2 { color: #fff; margin: var(--space-2) 0 var(--space-1); font-size: 1.75rem; }
+  .featured-deal-body p { color: rgba(255,255,255,0.85); }
+  .featured-deal-biz { font-size: 0.9375rem; }
+  .featured-deal-biz strong { color: var(--color-gold); }
+
+  .deal-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700;
+    padding: 0.3rem 0.75rem; border-radius: var(--radius-pill); background: var(--color-orange); color: #fff;
+  }
+  .deal-badge--featured { background: var(--color-gold); color: var(--color-navy); }
+
+  .deals-tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: var(--space-4); flex-wrap: wrap; }
+  .deals-tab {
+    padding: 0.6rem 1.25rem; border-radius: var(--radius-pill); border: 1px solid var(--color-line);
+    background: #fff; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy-light); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .deals-tab.is-active { background: var(--color-navy); color: #fff; border-color: var(--color-navy); }
+  .deals-tab:hover:not(.is-active) { border-color: var(--color-navy-light); }
+
+  .deals-category-group { margin-bottom: var(--space-4); }
+  .deals-category-group h3 { margin-bottom: var(--space-2); }
+  .deals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  @media (max-width: 55rem) { .deals-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 36rem) { .deals-grid { grid-template-columns: 1fr; } }
+
+  .deal-card {
+    display: block; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius);
+    padding: var(--space-3); text-decoration: none; box-shadow: 0 1px 2px rgba(13,23,48,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .deal-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(13,23,48,0.14); }
+  .deal-card--urgent { border-color: var(--color-orange); }
+  .deal-desc { color: var(--color-ink); font-size: 0.9375rem; margin: 0.6rem 0 0.4rem; line-height: 1.5; }
+  .deal-biz { color: var(--color-navy-light); font-size: 0.8125rem; font-weight: 600; margin: 0; }
+  .deal-urgency {
+    display: inline-block; margin-top: var(--space-2); font-size: 0.8125rem; font-weight: 700;
+    color: var(--color-orange-dark);
+  }
+  .deal-urgency--small { margin-top: 0.5rem; }
+
+  .empty-note { color: var(--color-navy-light); text-align: center; padding: var(--space-4) 0; }
+
+  .deals-submit-cta {
+    text-align: center; margin-top: var(--space-6); padding: var(--space-4); background: var(--color-river-light);
+    border-radius: var(--radius);
+  }
+  .deals-submit-cta p { font-weight: 600; color: var(--color-navy); margin-bottom: var(--space-2); }
+</style>
