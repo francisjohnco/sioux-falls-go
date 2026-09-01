@@ -1,0 +1,180 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import LayeredHero from '../components/LayeredHero.astro';
+import Icon from '../components/Icon.astro';
+
+const allCategories = await getCollection('categories');
+const allBusinesses = await getCollection('businesses');
+
+// Only offer categories that actually have 2+ businesses — comparing
+// against yourself isn't useful, so there's no point listing those.
+const categoriesWithCounts = allCategories
+  .map((cat) => ({
+    cat,
+    businesses: allBusinesses.filter((b) => b.data.category.id === cat.id),
+  }))
+  .filter((c) => c.businesses.length >= 2)
+  .sort((a, b) => a.cat.data.name.localeCompare(b.cat.data.name));
+
+// Serialize just what the comparison table needs, keyed by category slug,
+// so the client script has everything without extra fetches.
+const compareData = Object.fromEntries(
+  categoriesWithCounts.map(({ cat, businesses }) => [
+    cat.data.slug,
+    businesses.map((b) => ({
+      id: b.id,
+      name: b.data.name,
+      address: b.data.address ?? null,
+      phone: b.data.phone ?? null,
+      rating: b.data.googleRating ?? null,
+      reviewCount: b.data.googleReviewCount ?? null,
+      verified: !!b.data.verifiedAt,
+      excerpt: (b.body ?? '').replace(/[#*_`]/g, '').trim().slice(0, 160),
+    })),
+  ])
+);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Compare Local Businesses — Sioux Falls Go',
+};
+---
+<BaseLayout
+  title="Compare Businesses"
+  description="Compare Sioux Falls Go businesses side by side — ratings, reviews, and contact info in one view."
+  canonicalPath="/compare"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <LayeredHero
+    eyebrow="Compare"
+    title="Compare Local Businesses"
+    subtitle="Pick a category, check off 2 or 3 businesses, and see them side by side."
+    photoUrl="/images/scenic/downtown-1.jpg"
+    centered
+  />
+
+  <div class="container page">
+    <div class="compare-picker">
+      <label for="compare-category-select" class="compare-label">Choose a category</label>
+      <select id="compare-category-select" class="compare-select">
+        <option value="">Select a category...</option>
+        {categoriesWithCounts.map(({ cat, businesses }) => (
+          <option value={cat.data.slug}>{cat.data.name} ({businesses.length})</option>
+        ))}
+      </select>
+    </div>
+
+    <div id="compare-checklist" class="compare-checklist" hidden>
+      <p class="compare-hint">Select 2 or 3 to compare:</p>
+      <div id="compare-checklist-items" class="compare-checklist-items"></div>
+    </div>
+
+    <div id="compare-table-wrap" class="compare-table-wrap" hidden>
+      <div class="compare-table-scroll">
+        <table class="compare-table" id="compare-table"></table>
+      </div>
+    </div>
+
+    <p id="compare-empty-prompt" class="compare-empty-prompt">Pick a category above to get started.</p>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script is:inline define:vars={{ compareData }}>
+  window.__sfgCompareData = compareData;
+</script>
+<script>
+  const data = (window as any).__sfgCompareData as Record<string, Array<{
+    id: string; name: string; address: string | null; phone: string | null;
+    rating: number | null; reviewCount: number | null; verified: boolean; excerpt: string;
+  }>>;
+
+  const select = document.getElementById('compare-category-select') as HTMLSelectElement;
+  const checklistWrap = document.getElementById('compare-checklist') as HTMLElement;
+  const checklistItems = document.getElementById('compare-checklist-items') as HTMLElement;
+  const tableWrap = document.getElementById('compare-table-wrap') as HTMLElement;
+  const table = document.getElementById('compare-table') as HTMLTableElement;
+  const emptyPrompt = document.getElementById('compare-empty-prompt') as HTMLElement;
+
+  function renderChecklist(slug: string) {
+    const businesses = data[slug] || [];
+    checklistItems.innerHTML = businesses.map((b) => `
+      <label class="compare-check-item">
+        <input type="checkbox" class="compare-check" value="${b.id}" />
+        <span>${b.name}${b.rating ? ` — ★ ${b.rating.toFixed(1)}` : ''}</span>
+      </label>
+    `).join('');
+    checklistWrap.hidden = businesses.length === 0;
+    tableWrap.hidden = true;
+    emptyPrompt.hidden = true;
+
+    checklistItems.querySelectorAll('.compare-check').forEach((cb) => {
+      cb.addEventListener('change', () => {
+        const checked = Array.from(checklistItems.querySelectorAll('.compare-check:checked')) as HTMLInputElement[];
+        if (checked.length > 3) {
+          (cb as HTMLInputElement).checked = false;
+          return;
+        }
+        renderTable(slug, checked.map((c) => c.value));
+      });
+    });
+  }
+
+  function renderTable(slug: string, ids: string[]) {
+    if (ids.length < 2) { tableWrap.hidden = true; return; }
+    const businesses = (data[slug] || []).filter((b) => ids.includes(b.id));
+    const rows: [string, (b: typeof businesses[0]) => string][] = [
+      ['', (b) => `<a href="/businesses/${b.id}"><strong>${b.name}</strong></a>`],
+      ['Rating', (b) => b.rating ? `★ ${b.rating.toFixed(1)}${b.reviewCount ? ` (${b.reviewCount})` : ''}` : '—'],
+      ['Verified', (b) => b.verified ? '<span class="compare-yes">✓ Verified</span>' : 'Not Verified'],
+      ['Address', (b) => b.address || '—'],
+      ['Phone', (b) => b.phone ? `<a href="tel:${b.phone}">${b.phone}</a>` : '—'],
+      ['About', (b) => b.excerpt ? b.excerpt + '…' : '—'],
+      ['', (b) => `<a href="/businesses/${b.id}" class="button button--ghost compare-view-btn">View Profile</a>`],
+    ];
+    table.innerHTML = rows.map(([label, fn]) => `
+      <tr>
+        <th>${label}</th>
+        ${businesses.map((b) => `<td>${fn(b)}</td>`).join('')}
+      </tr>
+    `).join('');
+    tableWrap.hidden = false;
+  }
+
+  select?.addEventListener('change', () => {
+    if (select.value) {
+      renderChecklist(select.value);
+    } else {
+      checklistWrap.hidden = true;
+      tableWrap.hidden = true;
+      emptyPrompt.hidden = false;
+    }
+  });
+</script>
+
+<style>
+  .page { padding-block: var(--space-4) var(--space-6); max-width: 52rem; margin-inline: auto; }
+  .compare-picker { margin-bottom: var(--space-3); }
+  .compare-label { display: block; font-weight: 700; margin-bottom: 0.4rem; color: var(--color-navy); }
+  .compare-select {
+    width: 100%; max-width: 24rem; padding: 0.75rem 1rem; border-radius: var(--radius);
+    border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: inherit; background: #fff;
+  }
+  .compare-hint { font-weight: 600; color: var(--color-navy); margin-bottom: 0.5rem; }
+  .compare-checklist-items { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: var(--space-3); }
+  .compare-check-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem; background: var(--color-surface); border-radius: var(--radius); cursor: pointer; }
+  .compare-empty-prompt { color: var(--color-navy-light); }
+  .compare-table-scroll { overflow-x: auto; }
+  .compare-table { width: 100%; border-collapse: collapse; }
+  .compare-table th, .compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-line); text-align: left; vertical-align: top; }
+  .compare-table th { color: var(--color-navy-light); font-weight: 600; white-space: nowrap; width: 7rem; }
+  .compare-yes { color: var(--color-success); font-weight: 600; }
+  .compare-view-btn { display: inline-block; }
+</style>
