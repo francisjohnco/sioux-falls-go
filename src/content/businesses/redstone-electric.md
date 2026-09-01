@@ -13,7 +13,7 @@ hoursSchedule:
   sat: "Closed"
   sun: "Closed"
 heroImage: "/images/businesses/redstone-electric.jpg"
-verifiedAt: 2026-07-29
+verifiedAt: 2026-09-01
 claimed: true
 sourceUrl: "https://siouxfallsgo.com/places/redstone-electric/"
 address: "728 S West Ave, Sioux Falls, South Dakota 57104"

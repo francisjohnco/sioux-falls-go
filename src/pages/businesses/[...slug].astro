@@ -151,7 +151,7 @@ const schema = {
     )}
   </div>
 
-  {!business.data.claimed && (
+  {!business.data.claimed && !business.data.verifiedAt && (
     <div class="claim-banner">
       <div class="container claim-banner-inner">
         <p><Icon name="megaphone" size={16} /> Own this business? This listing hasn't been claimed yet.</p>

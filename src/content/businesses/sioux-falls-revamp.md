@@ -2,8 +2,8 @@
 name: "Sioux Falls Revamp"
 heroImage: "https://siouxfallsrevamp.com/wp-content/uploads/2025/10/716E9F82-6A51-40D1-B0FD-4305B741B9BB-1024x683.png"
 category: "home-remodeling"
-claimed: false
-verifiedAt: 2026-09-01
+claimed: true
+verifiedAt: 2026-07-29
 website: "https://siouxfallsrevamp.com"
 seo:
   title: "Sioux Falls Revamp: Renovation Guides & Local Pro Directory"
