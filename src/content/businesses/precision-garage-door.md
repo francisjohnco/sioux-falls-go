@@ -1,6 +1,6 @@
 ---
 name: "Precision Garage Door Service"
-heroImage: "https://images.unsplash.com/photo-1643509867448-57001e0c333d?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1508450859948-4e04fabaa4ea?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "garage-door-repair"
 claimed: false
 address: "3712 North 10th Avenue, Sioux Falls, South Dakota 57104"

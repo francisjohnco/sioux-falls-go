@@ -1,6 +1,6 @@
 ---
 name: "Glammeier Homes"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1587582423116-ec07293f0395?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "custom-home-builders"
 claimed: false
 address: "3701 W 49th St, Sioux Falls, South Dakota 57106"

@@ -1,6 +1,6 @@
 ---
 name: "Anderson Landscaping"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1734303023491-db8037a21f09?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "landscaping-home-services"
 claimed: false
 address: "7508 E 10th St, Sioux Falls, South Dakota 57110"

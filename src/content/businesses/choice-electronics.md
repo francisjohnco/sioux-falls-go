@@ -1,6 +1,6 @@
 ---
 name: "Choice Electronics"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1746017240064-188b45641552?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "electronics-stores"
 claimed: false
 address: "7500 W 15th St, Sioux Falls, South Dakota 57106"

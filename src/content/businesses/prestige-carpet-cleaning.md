@@ -1,6 +1,6 @@
 ---
 name: "Prestige Carpet Cleaning"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "carpet-cleaning"
 claimed: false
 address: "5505 W Clay St, Sioux Falls, South Dakota 57106"

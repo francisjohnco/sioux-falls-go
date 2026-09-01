@@ -1,6 +1,6 @@
 ---
 name: "The Event Company"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1680643784436-71a49203783b?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "catering"
 claimed: false
 address: "212 S Phillips Ave Suite 200, Sioux Falls, South Dakota 57104"

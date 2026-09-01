@@ -1,6 +1,6 @@
 ---
 name: "Vespa Catering"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1786206570631-5ab96f60fd14?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "catering"
 claimed: false
 address: "322 E 8th St, Sioux Falls, South Dakota 57103"

@@ -1,6 +1,6 @@
 ---
 name: "Hardscapes Outlet"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1597201278257-3687be27d954?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "landscaping-home-services"
 claimed: false
 address: "7019 100 N Ellis Rd, Sioux Falls, South Dakota 57107"

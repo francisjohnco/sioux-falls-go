@@ -1,6 +1,6 @@
 ---
 name: "INTEK Cleaning & Restoration"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1686178827149-6d55c72d81df?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "carpet-cleaning"
 claimed: false
 address: "501 N Harlem Ave, Sioux Falls, South Dakota 57104"

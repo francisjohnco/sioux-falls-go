@@ -1,6 +1,6 @@
 ---
 name: "Harvester Kitchen by Bryan"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "fine-dining"
 claimed: false
 address: "196 E 6th St Ste 101, Sioux Falls, South Dakota 57104"

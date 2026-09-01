@@ -1,6 +1,6 @@
 ---
 name: "Jane Rae Events"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1555244162-803834f70033?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "catering"
 claimed: false
 address: "301 S Minnesota Ave Unit 2, Sioux Falls, South Dakota 57104"

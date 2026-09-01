@@ -1,6 +1,6 @@
 ---
 name: "4D Design + Consulting"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "custom-home-builders"
 claimed: false
 address: "4301 W 57th St #110b, Sioux Falls, South Dakota 57108"

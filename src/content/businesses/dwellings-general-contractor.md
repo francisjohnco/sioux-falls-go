@@ -1,6 +1,6 @@
 ---
 name: "Dwellings"
-heroImage: "https://images.unsplash.com/photo-1643509867448-57001e0c333d?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1502005097973-6a7082348e28?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "home-remodeling"
 claimed: false
 address: "100 S Fairfax Ave Suite 101, Sioux Falls, South Dakota 57103"

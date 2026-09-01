@@ -1,6 +1,6 @@
 ---
 name: "605 Running Company"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1760302318631-a8d342cd4951?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "sporting-goods-stores"
 claimed: false
 address: "124 S Phillips Ave, Sioux Falls, South Dakota 57104"

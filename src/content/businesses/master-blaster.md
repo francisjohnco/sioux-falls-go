@@ -1,6 +1,6 @@
 ---
 name: "Master Blaster"
-heroImage: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1781637590564-01c65dbf2039?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "pressure-washing"
 claimed: false
 address: "25782 Dawson Ave, Sioux Falls, South Dakota 57107"

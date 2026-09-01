@@ -1,6 +1,6 @@
 ---
 name: "CH Patisserie"
-heroImage: "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1711672284661-bd70e38f31b2?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "bakeries"
 claimed: false
 address: "309 S Phillips Ave, Sioux Falls, South Dakota 57104"

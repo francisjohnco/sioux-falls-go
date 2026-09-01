@@ -1,6 +1,6 @@
 ---
 name: "Baumgartner Trees & Landscaping"
-heroImage: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1605117882932-f9e32b03fea9?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "landscaping-home-services"
 claimed: false
 address: "1701 W Madison St, Sioux Falls, South Dakota 57104"

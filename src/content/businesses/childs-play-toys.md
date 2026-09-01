@@ -1,6 +1,6 @@
 ---
 name: "Child's Play Toys"
-heroImage: "https://images.unsplash.com/photo-1633681926022-84c23e8cb2d6?fm=jpg&q=80&w=1600&auto=format&fit=crop"
+heroImage: "https://images.unsplash.com/photo-1598305762558-328f599df683?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 category: "gift-shops"
 claimed: false
 address: "233 S Phillips Ave, Sioux Falls, South Dakota 57104"
