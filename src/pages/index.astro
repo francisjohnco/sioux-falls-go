@@ -169,20 +169,20 @@ const schema = {
     position: absolute; inset: 0;
     background: url('/images/scenic/falls-park-editorial.jpg') center 58%/cover;
   }
-  /* Directional gradient — dark behind the text, progressively clearer toward the photo.
-     No flat dark wash over the whole image. */
+  /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
+     Uses the brand navy so the tint reads intentional, with stronger opacity for contrast. */
   .hero-gradient {
     position: absolute; inset: 0;
     background: linear-gradient(90deg,
-      rgba(8,12,20,0.88) 0%,
-      rgba(8,12,20,0.72) 30%,
-      rgba(8,12,20,0.4) 55%,
-      rgba(8,12,20,0.08) 78%,
-      rgba(8,12,20,0) 100%);
+      rgba(12,20,38,0.94) 0%,
+      rgba(14,23,43,0.86) 32%,
+      rgba(18,29,52,0.62) 58%,
+      rgba(20,32,58,0.22) 80%,
+      rgba(20,32,58,0.05) 100%);
   }
   .hero-gradient-bottom {
     position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(8,12,20,0.35) 0%, transparent 22%);
+    background: linear-gradient(0deg, rgba(10,17,32,0.5) 0%, transparent 26%);
   }
   .hero-inner { position: relative; z-index: 3; width: 100%; }
   .hero-eyebrow-text { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.75); margin-bottom: 1.375rem; text-transform: uppercase; }
@@ -212,7 +212,7 @@ const schema = {
 
   @media (max-width: 780px) {
     .hero { min-height: 35rem; align-items: flex-end; }
-    .hero-gradient { background: linear-gradient(0deg, rgba(8,12,20,0.92) 0%, rgba(8,12,20,0.55) 45%, rgba(8,12,20,0.15) 75%, rgba(8,12,20,0) 100%); }
+    .hero-gradient { background: linear-gradient(0deg, rgba(10,17,32,0.95) 0%, rgba(12,20,38,0.68) 45%, rgba(14,23,43,0.28) 75%, rgba(14,23,43,0.05) 100%); }
     .hero-inner { padding-bottom: 3.5rem; }
     .hero h1 { font-size: 2rem; }
     .hero-sub { font-size: 0.9375rem; max-width: 100%; margin-bottom: 2rem; }
