@@ -120,28 +120,27 @@ const schema = {
 
   <EventsSection />
 
-  <section class="cta-split">
-    <div class="cta-panel cta-panel--business">
-      <div class="cta-panel-inner">
-        <span class="eyebrow eyebrow--light">For Business Owners</span>
-        <h2>Own a local business? Get featured.</h2>
-        <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
-        <a href="/get-featured" class="button button--navy">Get Featured →</a>
-      </div>
+  <section class="get-featured-band">
+    <div class="container gf-copy">
+      <span class="eyebrow eyebrow--light">For Business Owners</span>
+      <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
+      <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
+      <a href="/get-featured" class="button button--navy">Get Featured →</a>
     </div>
-    <div class="cta-panel cta-panel--community">
-      <div class="cta-panel-inner">
-        <span class="eyebrow">For Locals</span>
-        <h2>Join the Community</h2>
-        <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
-        <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
-          <input type="hidden" name="form-name" value="join-community" />
-          <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
-          <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
-          <button type="submit" class="button">Join Free</button>
-        </form>
-        <p class="join-fine">Free forever. Unsubscribe anytime.</p>
-      </div>
+  </section>
+
+  <section class="join-section">
+    <div class="container join-inner">
+      <span class="eyebrow">For Locals</span>
+      <h2>Join the Community</h2>
+      <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
+      <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
+        <input type="hidden" name="form-name" value="join-community" />
+        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
+        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
+        <button type="submit" class="button">Join Free</button>
+      </form>
+      <p class="join-fine">Free forever. Unsubscribe anytime.</p>
     </div>
   </section>
 
@@ -275,28 +274,28 @@ const schema = {
     }
   }
 
-  /* SECTIONS 5+6 — UNIFIED SPLIT CTA (business + community, one flowing section) */
-  .cta-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 26rem; }
-  @media (max-width: 55rem) { .cta-split { grid-template-columns: 1fr; } }
-
-  .cta-panel { display: flex; align-items: center; padding: 3.5rem 3rem; }
-  .cta-panel-inner { max-width: 26rem; }
-
-  .cta-panel--business {
+  /* SECTION 5 — GET FEATURED (separate section, muted photo treatment, not a solid orange wash) */
+  .get-featured-band {
     background:
-      linear-gradient(120deg, rgba(20,30,52,0.88) 0%, rgba(20,30,52,0.72) 55%, rgba(211,102,15,0.55) 100%),
+      linear-gradient(120deg, rgba(20,30,52,0.86) 0%, rgba(20,30,52,0.68) 55%, rgba(211,102,15,0.45) 100%),
       url('/images/scenic/levitt-concert-center.jpg') center/cover;
+    padding-block: 4.5rem;
   }
-  .cta-panel--business .eyebrow--light { color: var(--color-gold); }
-  .cta-panel--business h2 { color: #fff; font-size: 1.9rem; margin: 0.5rem 0 0.9rem; max-width: 12ch; }
-  .cta-panel--business p { color: rgba(255,255,255,0.82); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
+  .get-featured-band .gf-copy { text-align: center; max-width: 34rem; margin: 0 auto; }
+  .eyebrow--light { color: var(--color-gold); }
+  .gf-copy h2 { color: #fff; font-size: 2rem; margin: 0.4rem 0 0.9rem; }
+  .gf-copy p { color: rgba(255,255,255,0.85); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
   .button--navy { background: #fff; color: var(--color-navy); }
   .button--navy:hover { background: var(--color-gold); color: var(--color-navy); }
 
-  .cta-panel--community { background: var(--color-surface); }
-  .cta-panel--community .eyebrow { color: var(--color-orange-dark); }
-  .cta-panel--community h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.5rem 0 0.9rem; }
-  .cta-panel--community p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
+  /* SECTION 6 — JOIN THE COMMUNITY (separate section, light and calm, follows naturally after the darker band above) */
+  .join-section {
+    background: var(--color-surface); padding-block: 5rem; text-align: center;
+  }
+  .join-inner { max-width: 34rem; margin: 0 auto; }
+  .join-inner .eyebrow { color: var(--color-orange-dark); }
+  .join-section h2 { font-size: 2.1rem; color: var(--color-navy); margin: 0.5rem 0 0.9rem; }
+  .join-inner > p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin-bottom: 1.8rem; }
 
   .join-form { display: flex; gap: 0.7rem; }
   @media (max-width: 30rem) { .join-form { flex-direction: column; } }
