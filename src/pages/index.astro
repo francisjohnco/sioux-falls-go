@@ -64,6 +64,7 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
+    <div class="hero-spotlight"></div>
     <div class="hero-timelapse"></div>
     <div class="hero-overlay"></div>
     <div class="container hero-inner">
@@ -75,6 +76,41 @@ const schema = {
       </div>
     </div>
     <HeroRotator />
+  </section>
+
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div>
+        <h2>What Is Sioux Falls Go?</h2>
+        <div class="about-copy" id="about-copy">
+          <p>Sioux Falls Go helps locals discover trusted businesses, local favorites, special offers, and giveaways&mdash;all while supporting the businesses that make our community great.</p>
+          <p>We hand-pick trusted local businesses and introduce them to more people through business spotlights, local content, special offers, and giveaways. Because the best businesses in Sioux Falls aren&rsquo;t always the ones with the biggest advertising budgets.</p>
+          <div class="about-more">
+            <p>They&rsquo;re often the ones quietly doing great work, earning trust, supporting their customers, and making an impact in our community. They shouldn&rsquo;t have to compete with deep pockets just to keep doing what they do best.</p>
+            <p class="pull">When local businesses win, our community wins.</p>
+            <p>Our listings are free, but invitation-only. That means you&rsquo;re not seeing who paid the most to be here. You&rsquo;re discovering business owners who value quality, honesty, and community&mdash;and who are helping build our local economy.</p>
+            <p>Sioux Falls Go is building a stronger Sioux Falls, one local business at a time.</p>
+          </div>
+        </div>
+        <button class="about-toggle" id="aboutToggle" aria-expanded="false">Read more</button>
+      </div>
+
+      <div class="about-steps">
+        <span class="about-steps-kicker">How It Works</span>
+        <div class="about-step">
+          <span class="about-step-num">1</span>
+          <div><h3>We find them</h3><p>Hand-picked businesses already earning trust in the community &mdash; not the ones with the biggest ad budget.</p></div>
+        </div>
+        <div class="about-step">
+          <span class="about-step-num">2</span>
+          <div><h3>We introduce them</h3><p>Spotlights, local content, offers, and giveaways put them in front of more locals.</p></div>
+        </div>
+        <div class="about-step">
+          <span class="about-step-num">3</span>
+          <div><h3>Sioux Falls wins</h3><p>Free, invitation-only listings mean you&rsquo;re discovering real local businesses, not the highest bidder.</p></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div class="container">
@@ -158,27 +194,33 @@ const schema = {
     </div>
   )}
 
-  <section class="about-section">
-    <div class="container about-inner">
-      <div class="about-copy">
-        <span class="eyebrow">About Sioux Falls Go</span>
-        <h2>Built by neighbors, for neighbors</h2>
-        <p>Sioux Falls Go isn't a database, and it isn't ad space for the highest bidder. It's a real, curated recommendation from people who live here — connecting the businesses that show up for this community with the residents who want to support them.</p>
+  <section class="get-featured-band">
+    <div class="container get-featured-inner">
+      <div class="gf-copy">
+        <span class="eyebrow eyebrow--light">For Business Owners</span>
+        <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
+        <p>Join the businesses already earning trust with locals &mdash; spotlights, local content, and offers that put you in front of people actively looking for what you do. Applications are free, and we don&rsquo;t take everyone.</p>
+        <a href="/get-featured" class="button button--navy">Get Featured →</a>
       </div>
-      <div class="about-ctas">
-        <a href="/businesses" class="about-cta-card about-cta-card--locals">
-          <div class="icon-badge"><Icon name="heart" size={20} /></div>
-          <h3>I'm a Local</h3>
-          <p>Find trusted businesses, enter giveaways, and support the neighbors building this city.</p>
-          <span class="button">Explore as a Local →</span>
-        </a>
-        <a href="/get-featured" class="about-cta-card about-cta-card--business">
-          <div class="icon-badge"><Icon name="briefcase" size={20} /></div>
-          <h3>I Own a Business</h3>
-          <p>Get real visibility with a community that actually wants to shop local first.</p>
-          <span class="button button--navy">Get Featured →</span>
-        </a>
+      <div class="gf-points">
+        <div class="gf-point"><Icon name="check" size={18} /> Free, invitation-only listings</div>
+        <div class="gf-point"><Icon name="check" size={18} /> Business spotlights &amp; local content</div>
+        <div class="gf-point"><Icon name="check" size={18} /> Real locals, not paid placement</div>
       </div>
+    </div>
+  </section>
+
+  <section class="join-section">
+    <div class="container join-inner">
+      <h2>Join the Community</h2>
+      <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
+      <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
+        <input type="hidden" name="form-name" value="join-community" />
+        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
+        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
+        <button type="submit" class="button">Join Free</button>
+      </form>
+      <p class="join-fine">Free forever. Unsubscribe anytime.</p>
     </div>
   </section>
 
@@ -194,15 +236,25 @@ const schema = {
   .hero { position: relative; min-height: 46rem; display: flex; align-items: center; overflow: hidden; flex-wrap: wrap; }
   .hero-photo {
     position: absolute; inset: -2%; width: 104%; height: 104%;
-    background: url('/images/scenic/downtown-1.jpg') center/cover;
+    background: url('/images/scenic/falls-park-1.jpg') center 42%/cover;
     animation: hero-kenburns 30s ease-in-out infinite alternate;
     will-change: transform;
+    /* Color grade: lifts contrast/saturation and deepens shadows slightly so
+       the photo reads as produced/editorial rather than an unedited shot. */
+    filter: contrast(1.1) saturate(1.18) brightness(0.98) sepia(0.05);
   }
   @keyframes hero-kenburns {
     0%   { transform: scale(1) translate(0, 0); }
     100% { transform: scale(1.1) translate(-1.5%, -1%); }
   }
   @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
+  /* Warm spotlight centered on the falls themselves, lifting them above the
+     surrounding storm sky and rock so they read as the clear focal point. */
+  .hero-spotlight {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 55% 45% at 42% 58%, rgba(255,225,170,0.22) 0%, rgba(255,225,170,0.06) 45%, transparent 75%);
+    mix-blend-mode: soft-light;
+  }
   .hero-timelapse { position: absolute; inset: 0; animation: hero-timelapse 10s ease-in-out infinite alternate; }
   @keyframes hero-timelapse {
     0%   { background: linear-gradient(100deg, rgba(20,30,50,0.6) 0%, rgba(20,30,50,0.32) 50%, rgba(255,150,80,0.14) 100%); }
@@ -218,6 +270,14 @@ const schema = {
   .hero-actions { display: flex; gap: 0.9rem; margin-top: 1.8rem; flex-wrap: wrap; }
   .hero-actions .button--ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
   @media (max-width: 60rem) { .hero-inner { max-width: 100%; padding-left: 3.25rem; } }
+  /* Stronger, more solid overlay on mobile so the headline stays legible
+     over the photo on small screens, matching the reviewed mobile mockup. */
+  @media (max-width: 45rem) {
+    .hero-overlay { background: linear-gradient(0deg, rgba(6,9,20,0.94) 0%, rgba(6,9,20,0.78) 40%, rgba(6,9,20,0.4) 70%, rgba(6,9,20,0.15) 100%); }
+    .hero { align-items: flex-end; }
+    .hero-inner { padding-block: 3rem 3.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+
 
   /* SPOTLIGHT */
   .spotlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
@@ -297,30 +357,71 @@ const schema = {
   .resource-body h3 { font-size: 1.0625rem; margin-top: 0.4rem; color: var(--color-navy); }
   .resource-body p { color: var(--color-navy-light); font-size: 0.875rem; margin-top: 0.4rem; }
 
-  /* ABOUT + DUAL CTA */
-  .about-section { background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-river-light) 100%); padding-block: 4.5rem; border-top: 1px solid var(--color-line); }
-  .about-inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 3rem; align-items: center; }
-  @media (max-width: 55rem) { .about-inner { grid-template-columns: 1fr; } }
-  .about-copy h2 { font-size: 2rem; margin-top: 0.5rem; color: var(--color-navy); }
-  .about-copy p { font-size: 1.0625rem; color: var(--color-navy-light); margin-top: 1rem; line-height: 1.6; max-width: 34ch; }
-  .about-ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
-  @media (max-width: 55rem) { .about-ctas { grid-template-columns: 1fr; } }
-  .about-cta-card {
-    display: block; text-decoration: none;
-    background: #fff; border-radius: 1.1rem; padding: 1.8rem; border: 1px solid var(--color-line);
-    box-shadow: 0 1px 3px rgba(13,23,48,0.06);
-    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+  /* SECTION 1 — WHAT IS SIOUX FALLS GO (white) */
+  .about { background: #fff; padding-block: 5rem; }
+  .about-grid { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: 4rem; align-items: start; }
+  @media (max-width: 55rem) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+  .about h2 { font-size: 2.1rem; max-width: 12ch; margin-bottom: 1.4rem; color: var(--color-navy); }
+  .about-copy p { font-size: 1.0625rem; line-height: 1.72; color: var(--color-navy-light); max-width: 60ch; margin: 0 0 1.1rem; }
+  .about-copy .pull {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; line-height: 1.4; color: var(--color-navy);
+    border-left: 3px solid var(--color-orange); padding-left: 1.2rem; margin: 1.6rem 0; max-width: 38ch;
   }
-  .about-cta-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(13,23,48,0.14); }
-  .about-cta-card--locals:hover { border-color: var(--color-orange); }
-  .about-cta-card--business:hover { border-color: var(--color-navy); }
-  .about-cta-card .icon-badge {
-    width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: #fff;
+  .about-toggle { display: none; }
+
+  .about-steps { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.8rem; }
+  .about-steps-kicker { display: block; font-weight: 700; font-size: 0.8125rem; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem; }
+  .about-step { display: flex; gap: 0.9rem; padding: 0.9rem 0; border-bottom: 1px solid var(--color-line); }
+  .about-step:last-child { border-bottom: none; }
+  .about-step-num { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--color-orange-dark); width: 1.6rem; flex-shrink: 0; }
+  .about-step h3 { font-size: 0.9375rem; font-family: var(--font-body); font-weight: 700; color: var(--color-navy); margin: 0 0 0.25rem; }
+  .about-step p { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0; line-height: 1.5; }
+
+  @media (max-width: 45rem) {
+    .about { padding-block: 3rem; }
+    .about-more { display: none; }
+    .about-copy.is-expanded .about-more { display: block; }
+    .about-toggle {
+      display: inline-block; margin-top: 0.2rem; background: none; border: none;
+      font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark); cursor: pointer; padding: 0.4rem 0;
+    }
   }
-  .about-cta-card--locals .icon-badge { background: linear-gradient(135deg, var(--color-orange), var(--color-prairie, #F5B429)); }
-  .about-cta-card--business .icon-badge { background: linear-gradient(135deg, var(--color-navy), #2c3f61); }
-  .about-cta-card h3 { font-size: 1.1875rem; color: var(--color-navy); margin: 0; }
-  .about-cta-card p { font-size: 0.9375rem; color: var(--color-navy-light); margin: 0.5rem 0 1.2rem; }
-  .about-cta-card .button { font-size: 0.875rem; padding: 0.65rem 1.2rem; }
+
+  /* SECTION 5 — GET FEATURED */
+  .get-featured-band { background: linear-gradient(135deg, var(--color-orange-dark) 0%, var(--color-orange) 100%); padding-block: 4.5rem; }
+  .get-featured-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
+  @media (max-width: 50rem) { .get-featured-inner { grid-template-columns: 1fr; } }
+  .eyebrow--light { color: rgba(255,255,255,0.85); }
+  .gf-copy h2 { color: #fff; font-size: 2rem; max-width: 15ch; margin: 0.4rem 0 1rem; }
   .button--navy { background: var(--color-navy); }
+  .button--navy:hover { background: #2c3f61; }
+  .gf-copy p { color: rgba(255,255,255,0.92); font-size: 1.0625rem; line-height: 1.6; max-width: 46ch; margin: 0 0 1.6rem; }
+  .gf-points { display: flex; flex-direction: column; gap: 0.9rem; }
+  .gf-point { display: flex; align-items: center; gap: 0.6rem; color: #fff; font-weight: 600; font-size: 0.9375rem; }
+  .gf-point :global(svg) { flex-shrink: 0; }
+
+  /* SECTION 6 — JOIN THE COMMUNITY */
+  .join-section { background: #fff; padding-block: 5rem; text-align: center; border-top: 1px solid var(--color-line); }
+  .join-inner { max-width: 34rem; margin: 0 auto; }
+  .join-section h2 { font-size: 2.1rem; color: var(--color-navy); margin-bottom: 0.8rem; }
+  .join-section > .container > p, .join-inner > p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin-bottom: 1.8rem; }
+  .join-form { display: flex; gap: 0.7rem; }
+  @media (max-width: 30rem) { .join-form { flex-direction: column; } }
+  .join-form input {
+    flex: 1; padding: 0.85rem 1rem; border-radius: 0.7rem; border: 1px solid var(--color-line);
+    font-family: var(--font-body); font-size: 0.9375rem; background: var(--color-surface);
+  }
+  .join-form input:focus { outline: 2px solid var(--color-orange); outline-offset: 1px; }
+  .join-fine { font-size: 0.75rem !important; color: var(--color-navy-light); opacity: 0.75; margin-top: 0.9rem !important; margin-bottom: 0 !important; }
+  .honeypot-field { position: absolute; left: -9999px; }
 </style>
+
+<script>
+  const aboutToggle = document.getElementById('aboutToggle');
+  const aboutCopy = document.getElementById('about-copy');
+  aboutToggle?.addEventListener('click', () => {
+    const expanded = aboutCopy!.classList.toggle('is-expanded');
+    aboutToggle.textContent = expanded ? 'Read less' : 'Read more';
+    aboutToggle.setAttribute('aria-expanded', String(expanded));
+  });
+</script>

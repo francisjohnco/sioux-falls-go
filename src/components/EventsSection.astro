@@ -6,170 +6,91 @@ interface EventItem {
   day: string;
   title: string;
   description: string;
+  location: string;
+  category: string;
   sourceName: string;
   sourceUrl: string;
 }
-interface EventCategory {
-  id: string;
-  label: string;
-  subtitle: string;
-  icon: string;
-  iconClass: string;
-  seeAllUrl: string;
-  events: EventItem[];
-}
 
-// Real, sourced events — see docs/content-strategy.md for the refresh cadence note.
-const categories: EventCategory[] = [
-  {
-    id: 'family', label: 'Family', subtitle: 'Fairs & kid-friendly', icon: 'heart', iconClass: 'tab-icon--family',
-    seeAllUrl: 'https://www.experiencesiouxfalls.com/events',
-    events: [
-      { month: 'Jul', day: '31', title: 'Sioux Empire Fair', description: 'Rides, fair food, livestock shows, and nightly entertainment at the Fairgrounds.', sourceName: 'Sioux Empire Fair', sourceUrl: 'https://en.wikipedia.org/wiki/Sioux_Empire_Fair' },
-      { month: 'Aug', day: '14', title: 'Heartland Corn Maze Opening Weekend', description: 'An 11-acre maze shaped like an eagle, with clues to find along the way.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend' },
-      { month: 'Aug', day: '22', title: 'Great Plains Zoo Family Day', description: 'A family outing at the zoo, part of the local family events calendar.', sourceName: "the 'hood magazine", sourceUrl: 'https://thehoodmagazine.com/calendar/' },
-    ],
-  },
-  {
-    id: 'downtown', label: 'Downtown', subtitle: 'Markets & street fests', icon: 'home', iconClass: 'tab-icon--downtown',
-    seeAllUrl: 'https://dtsf.com/events/',
-    events: [
-      { month: 'Aug', day: '7', title: 'Downtown Open Streets', description: 'Phillips Avenue goes car-free for a day of vendors and family activities.', sourceName: 'Downtown Sioux Falls, Inc.', sourceUrl: 'https://dtsf.com/' },
-      { month: 'Aug', day: '21', title: 'Four Winds Music & Art Fest', description: 'Local, regional, and national bands across several downtown venues.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend' },
-      { month: 'Aug', day: '29', title: '605 Made Night Market', description: 'An outdoor market of local makers, with performances throughout the evening.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/6-upcoming-events-festivals-to-attend' },
-    ],
-  },
-  {
-    id: 'music', label: 'Live Music', subtitle: 'Concerts & shows', icon: 'mic', iconClass: 'tab-icon--music',
-    seeAllUrl: 'https://www.travelsouthdakota.com/things-to-do/events',
-    events: [
-      { month: 'Aug', day: '6', title: 'Levitt at the Falls: The Fretliners', description: 'Free outdoor concert series right at Falls Park.', sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events' },
-      { month: 'Thru', day: 'Sep', title: 'Municipal Band Summer Concerts', description: "Sioux Falls's own municipal band, playing free shows through September.", sourceName: 'Travel South Dakota', sourceUrl: 'https://www.travelsouthdakota.com/things-to-do/events' },
-      { month: 'Aug', day: '16', title: 'The Red Clay Strays', description: 'With Dylan Gossett and Sweet Talk, at Denny Sanford Premier Center.', sourceName: 'SeatGeek', sourceUrl: 'https://seatgeek.com/cities/sioux-falls' },
-    ],
-  },
+// Real, sourced events, refreshed for the current window — see
+// docs/content-strategy.md for the refresh cadence note. Ordered
+// chronologically rather than split into tabs, since "what's happening"
+// reads most naturally as one running list of what's coming up next.
+const events: EventItem[] = [
+  { month: 'Sep', day: '3', title: 'Making Movies at Levitt at the Falls', description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer concert series.', location: 'Falls Park', category: 'Music', sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/' },
+  { month: 'Sep', day: '11', title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club, September 11–13.', location: 'Minnehaha Country Club', category: 'Sports', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events' },
+  { month: 'Sep', day: '12', title: 'Downtown Outdoor Arts & Crafts Market', description: 'Over 230 vendors line the streets around Washington Pavilion with custom art, baked goods, and more.', location: 'Downtown Phillips Ave', category: 'Downtown', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
+  { month: 'Sep', day: '12', title: "Remedy Brewing's 10th Annual Oktoberfest", description: 'German food, a stein-holding competition, live music, and games all afternoon.', location: 'Remedy Brewing Company', category: 'Family', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
+  { month: 'Sep', day: '25', title: 'CINCH Playoffs Rodeo', description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25–27.', location: 'Denny Sanford PREMIER Center', category: 'Sports', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events' },
+  { month: 'Sep', day: '26', title: "Fernson Downtown's Oktoberfest", description: 'A downtown Oktoberfest celebration with German fare and live music.', location: 'Fernson Downtown', category: 'Family', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
 ];
+
+const categoryIcon: Record<string, string> = {
+  Music: 'zap',
+  Sports: 'star',
+  Downtown: 'home',
+  Family: 'heart',
+};
 ---
-<section class="events-section">
+<section class="happening-section">
   <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Community Calendar</span>
-      <h2>What's Happening in Sioux Falls</h2>
-      <p>Real events, pulled from the local organizations that actually run them.</p>
-      <a href="/events" class="events-full-link">View the full calendar →</a>
+    <div class="happening-head">
+      <div>
+        <span class="eyebrow eyebrow--light">Community Calendar</span>
+        <h2>What's Happening in Sioux Falls</h2>
+        <p>A running list of the concerts, markets, and community events worth putting on your calendar — pulled from the local organizations that actually run them.</p>
+      </div>
+      <a href="/events" class="happening-full-link">Full calendar →</a>
     </div>
 
-    <div class="events-card">
-      <div class="tab-bar" role="tablist">
-        {categories.map((cat, i) => (
-          <button class={`tab-btn ${i === 0 ? 'is-active' : ''}`} data-tab={cat.id} role="tab" aria-selected={i === 0}>
-            <span class={`tab-icon ${cat.iconClass}`}><Icon name={cat.icon} size={18} /></span>
-            <span class="tab-label">{cat.label}<small>{cat.subtitle}</small></span>
-          </button>
-        ))}
-      </div>
-
-      <div class="tab-panels">
-        {categories.map((cat, i) => (
-          <div class={`tab-panel ${i === 0 ? 'is-active' : ''}`} id={`panel-${cat.id}`}>
-            <div class="event-grid">
-              {cat.events.map((ev) => (
-                <div class="event-card">
-                  <a class="event-card-link" href={ev.sourceUrl} target="_blank" rel="noopener">
-                    <div class="event-card-top">
-                      <div class="event-date"><span class="month">{ev.month}</span><span class="day">{ev.day}</span></div>
-                      <div class="event-body"><h4>{ev.title}</h4><p>{ev.description}</p></div>
-                    </div>
-                  </a>
-                  <div class="event-source">Source: <a href={ev.sourceUrl} target="_blank" rel="noopener">{ev.sourceName}</a></div>
-                </div>
-              ))}
-            </div>
-            <div class="see-all-row"><a class="see-all-btn" href={cat.seeAllUrl} target="_blank" rel="noopener">See all {cat.label} events →</a></div>
+    <div class="events-list">
+      {events.map((ev) => (
+        <a class="event-row" href={ev.sourceUrl} target="_blank" rel="noopener">
+          <div class="event-date">
+            <span class="event-day">{ev.day}</span>
+            <span class="event-month">{ev.month.toUpperCase()}</span>
           </div>
-        ))}
-      </div>
+          <div class="event-main">
+            <h3>{ev.title}</h3>
+            <p>{ev.description}</p>
+            <span class="event-loc"><Icon name="map" size={13} /> {ev.location}</span>
+          </div>
+          <span class="event-cat"><Icon name={categoryIcon[ev.category] ?? 'star'} size={13} /> {ev.category}</span>
+        </a>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .events-section { padding-block: 3.5rem; background: var(--color-river-light); }
-  .section-head { text-align: center; margin-bottom: 2.2rem; }
-  .section-head h2 { font-size: 1.9rem; margin-top: 0.4rem; color: var(--color-navy); }
-  .section-head p { color: var(--color-navy-light); font-size: 1.0625rem; max-width: 40ch; margin: 0.7rem auto 0; }
-  .events-full-link { display: inline-block; margin-top: 1rem; font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark); text-decoration: none; }
-  .events-full-link:hover { text-decoration: underline; }
+  .happening-section { background: var(--color-navy); padding-block: 4.5rem; }
+  .happening-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+  .eyebrow--light { color: rgba(255,255,255,0.7); }
+  .happening-head h2 { color: #fff; font-size: 1.9rem; margin-top: 0.3rem; }
+  .happening-head p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 48ch; margin-top: 0.6rem; }
+  .happening-full-link { font-weight: 700; font-size: 0.9375rem; color: var(--color-gold); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--color-gold); padding-bottom: 2px; }
 
-  .events-card { border-radius: 1.3rem; border: 1px solid var(--color-line); background: #fff; box-shadow: 0 16px 40px rgba(13,23,48,0.08); overflow: hidden; }
-
-  .tab-bar { display: flex; background: var(--color-surface); border-bottom: 1px solid var(--color-line); padding: 0.6rem; gap: 0.5rem; }
-  .tab-btn {
-    flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
-    padding: 0.9rem 1rem; border-radius: 0.85rem; border: none; background: transparent; cursor: pointer;
-    font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem; color: var(--color-navy-light);
-    transition: background 0.25s ease, color 0.25s ease;
+  .events-list { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1); }
+  .event-row {
+    display: grid; grid-template-columns: 4.6rem 1fr auto; gap: 1.6rem; align-items: center;
+    padding: 1.3rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-decoration: none;
+    border-radius: 0.6rem; transition: background 0.2s ease;
   }
-  .tab-btn:hover { color: var(--color-navy); }
-  .tab-btn.is-active { background: #fff; color: var(--color-navy); box-shadow: 0 4px 14px rgba(13,23,48,0.1); }
-  .tab-icon {
-    width: 2.1rem; height: 2.1rem; border-radius: 0.6rem; display: flex; align-items: center; justify-content: center;
-    color: #fff; flex-shrink: 0; transition: transform 0.3s cubic-bezier(.2,.8,.2,1);
+  .event-row:hover { background: rgba(255,255,255,0.04); }
+  .event-date { text-align: center; }
+  .event-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; line-height: 1; color: var(--color-gold); }
+  .event-month { display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
+  .event-main h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: #fff; margin: 0 0 0.25rem; }
+  .event-main p { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5; max-width: 56ch; }
+  .event-loc { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: rgba(255,255,255,0.4); margin-top: 0.4rem; }
+  .event-cat {
+    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; padding: 0.4rem 0.8rem; white-space: nowrap;
   }
-  .tab-btn.is-active .tab-icon { transform: scale(1.08) rotate(-4deg); }
-  .tab-icon--family { background: linear-gradient(135deg, var(--color-orange), var(--color-gold)); }
-  .tab-icon--downtown { background: linear-gradient(135deg, var(--color-river), #4a8fc4); }
-  .tab-icon--music { background: linear-gradient(135deg, #7B4FA0, #A66BC9); }
-  .tab-label { display: flex; flex-direction: column; align-items: flex-start; }
-  .tab-label small { font-weight: 500; font-size: 0.6875rem; color: var(--color-navy-light); font-family: var(--font-body); }
-
-  .tab-panels { padding: 1.8rem; }
-  .tab-panel { display: none; animation: eventsFadeIn 0.35s ease; }
-  .tab-panel.is-active { display: block; }
-  @keyframes eventsFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-  .event-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
-  .event-card {
-    display: flex; flex-direction: column; border-radius: 0.85rem; border: 1px solid var(--color-line); overflow: hidden;
-    background: var(--color-surface); transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
-  }
-  .event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(13,23,48,0.12); border-color: transparent; background: #fff; }
-  .event-card-link { display: block; text-decoration: none; color: inherit; }
-  .event-card-top { display: flex; gap: 0.8rem; padding: 0.9rem; }
-  .event-date {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; width: 3.4rem; height: 3.4rem;
-    background: var(--color-navy); color: #fff; border-radius: 0.65rem; flex-shrink: 0;
-  }
-  .event-date .month { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
-  .event-date .day { font-size: 1.15rem; font-weight: 800; line-height: 1; font-family: var(--font-display); }
-  .event-body h4 { font-size: 0.9375rem; font-family: var(--font-body); font-weight: 700; color: var(--color-navy); line-height: 1.3; margin: 0; }
-  .event-body p { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0.35rem 0 0; }
-  .event-source { display: block; padding: 0.6rem 0.9rem; border-top: 1px dashed var(--color-line); font-size: 0.6875rem; color: var(--color-navy-light); }
-  .event-source a { color: var(--color-orange-dark); font-weight: 600; text-decoration: none; }
-
-  .see-all-row { text-align: center; margin-top: 1.4rem; }
-  .see-all-btn {
-    display: inline-block; font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark);
-    text-decoration: none; padding: 0.6rem 1.4rem; border: 1.5px solid var(--color-orange); border-radius: 999px;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .see-all-btn:hover { background: var(--color-orange); color: #fff; }
 
   @media (max-width: 45rem) {
-    .event-grid { grid-template-columns: 1fr; }
-    .tab-label small { display: none; }
-    .tab-btn { flex-direction: column; padding: 0.7rem 0.4rem; }
+    .event-row { grid-template-columns: 3.4rem 1fr; }
+    .event-cat { display: none; }
+    .event-day { font-size: 1.5rem; }
   }
 </style>
-
-<script>
-  document.querySelectorAll('.tab-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const tab = (btn as HTMLElement).dataset.tab;
-      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('is-active'));
-      document.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      document.getElementById(`panel-${tab}`)?.classList.add('is-active');
-    });
-  });
-</script>
