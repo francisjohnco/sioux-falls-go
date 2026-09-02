@@ -10,28 +10,12 @@ import Icon from '../components/Icon.astro';
 // turn-the-sioux-falls-go-postcard-into-a-power-sales-machine). None of
 // those ever state a dollar figure — they consistently funnel to "contact
 // us" for pricing — so this page follows the same pattern rather than
-// inventing a number. Swap in real pricing whenever it's ready.
-
-const benefits = [
-  {
-    icon: 'gift',
-    title: 'Half the Cost, None of the Guesswork',
-    body: "By sharing the postcard with other trusted local businesses, participants typically pay 60–90% less than a solo direct mail campaign — professionally designed, with no hidden fees.",
-  },
-  {
-    icon: 'star',
-    title: 'Built-In Credibility',
-    body: 'Your business is featured alongside other reputable local brands — instant trust by association, not just another ad in the mailbox.',
-  },
-  {
-    icon: 'zap',
-    title: 'A Landing Page, Not a Dead End',
-    body: "Every postcard directs recipients to a dedicated redemption landing page with a QR code — so you can actually track scans, clicks, and redemptions instead of hoping it worked.",
-  },
-];
+// inventing a number. The reference photo is a real example of the same
+// shared-postcard product from a sibling market, used here to show the
+// actual print format — not a Sioux Falls-specific mailing.
 
 const steps = [
-  { num: '1', title: 'Apply for a spot', body: 'One business per industry — tell us about yours below and we\u2019ll confirm eligibility and availability.' },
+  { num: '1', title: 'Pick your spot size', body: 'From a standard square to a featured double-wide placement near the top — you choose what fits your budget.' },
   { num: '2', title: 'We build your space', body: 'Professional design, a neighborhood-specific offer if you want one, and a QR code tied to your own redemption page.' },
   { num: '3', title: 'It lands in 5,000 mailboxes', body: 'The oversized postcard mails to targeted ZIP codes across Sioux Falls — then results roll in on your landing page.' },
 ];
@@ -46,25 +30,31 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'The Sioux Falls Spotlight Postcard',
-  description: 'A shared direct-mail postcard reaching 5,000 Sioux Falls households — one business per industry.',
+  description: 'A shared direct-mail postcard reaching 5,000 Sioux Falls households — one business per industry, multiple ad sizes available.',
 };
 ---
 <BaseLayout
   title="The Sioux Falls Spotlight Postcard — Direct Mail, Done Together"
-  description="Reach 5,000 Sioux Falls households for a fraction of the cost of a solo direct mail campaign. Shared, professionally designed, and limited to one business per industry."
+  description="Reach 5,000 Sioux Falls households for a fraction of the cost of a solo direct mail campaign. Pick your size, share the postcard, split the cost."
   canonicalPath="/postcard"
   schema={schema}
 >
   <SiteHeader slot="header" />
 
   <section class="hero">
-    <div class="container hero-inner">
-      <span class="hero-eyebrow"><span class="dot"></span> Only 16 Spots Per Mailing</span>
-      <h1>Get your business into 5,000 Sioux Falls mailboxes — for a fraction of the cost.</h1>
-      <p class="hero-sub">The Sioux Falls Spotlight Postcard is a shared, professionally designed direct-mail piece featuring a curated group of local businesses. One spot per industry. No solo direct-mail price tag.</p>
-      <div class="hero-cta-row">
-        <a href="#apply" class="hero-cta">Apply for a Spot →</a>
-        <span class="hero-free-note">Free to apply · One business per industry</span>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="hero-eyebrow"><span class="dot"></span> Only 16 Spots Per Mailing</span>
+        <h1>One postcard.<br>5,000 mailboxes.<br><span class="hero-highlight">Your business, right there.</span></h1>
+        <p class="hero-sub">The Sioux Falls Spotlight Postcard is a shared, professionally printed direct-mail piece featuring a curated group of local businesses &mdash; sized to fit your budget, split across everyone on it.</p>
+        <div class="hero-cta-row">
+          <a href="#apply" class="hero-cta">Claim Your Spot →</a>
+          <span class="hero-free-note">Free to apply &middot; one business per industry</span>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <img src="/images/postcard-example.png" alt="A real example of the shared Spotlight postcard, front and back, showing local business ad spots of varying sizes" class="hero-postcard-photo" />
+        <span class="hero-photo-caption">A real example of the Spotlight postcard from a sibling market &mdash; same format, same sizes, printed for a different city.</span>
       </div>
     </div>
   </section>
@@ -78,24 +68,54 @@ const schema = {
   </section>
 
   <div class="container page">
+    <section class="sizing-section">
+      <span class="eyebrow">Pick Your Spot</span>
+      <h2>The postcard is one shared canvas &mdash; you choose how much of it is yours</h2>
+      <p class="sizing-sub">Every mailing is divided into ad spots of different sizes. A Standard Spot puts you on the card at the lowest cost per business; a Feature Spot gives you a bigger, higher-visibility placement near the top. Apply and we'll walk you through what's open for the next mailing.</p>
+
+      <div class="size-diagram">
+        <div class="size-card size-card--feature">
+          <span class="size-tag">Feature Spot</span>
+          <span class="size-desc">Bigger placement, top of the card, more visibility</span>
+        </div>
+        <div class="size-mini">
+          <div class="size-card size-card--standard"><span class="size-tag">Standard</span></div>
+          <div class="size-card size-card--standard"><span class="size-tag">Standard</span></div>
+        </div>
+        <div class="size-mini">
+          <div class="size-card size-card--standard"><span class="size-tag">Standard</span></div>
+          <div class="size-card size-card--standard"><span class="size-tag">Standard</span></div>
+        </div>
+      </div>
+      <p class="sizing-note">Illustrative only &mdash; actual layout depends on how many businesses are in the mailing and which spots are still open.</p>
+    </section>
+
+    <div class="cut-divider"><span>Why This Isn't Typical Direct Mail</span></div>
+
     <section class="benefits-section">
-      <span class="eyebrow">Why This Isn't Typical Direct Mail</span>
       <h2>Three things you won't get mailing solo</h2>
-      <div class="benefits-grid">
-        {benefits.map((b) => (
-          <div class="benefit-card">
-            <div class="benefit-icon"><Icon name={b.icon} size={22} /></div>
-            <h3>{b.title}</h3>
-            <p>{b.body}</p>
-          </div>
-        ))}
+      <div class="benefits-strip">
+        <div class="benefit-stub">
+          <span class="stub-num">01</span>
+          <div><h3>Half the Cost, None of the Guesswork</h3>
+          <p>By sharing the postcard with other trusted local businesses, participants typically pay 60&ndash;90% less than a solo direct mail campaign &mdash; professionally designed, with no hidden fees.</p></div>
+        </div>
+        <div class="benefit-stub">
+          <span class="stub-num">02</span>
+          <div><h3>Built-In Credibility</h3>
+          <p>Your business is featured alongside other reputable local brands &mdash; instant trust by association, not just another ad in the mailbox.</p></div>
+        </div>
+        <div class="benefit-stub">
+          <span class="stub-num">03</span>
+          <div><h3>A Landing Page, Not a Dead End</h3>
+          <p>Every postcard directs recipients to a dedicated redemption landing page with a QR code &mdash; so you can actually track scans, clicks, and redemptions instead of hoping it worked.</p></div>
+        </div>
       </div>
     </section>
 
-    <div class="contour-divider"></div>
+    <div class="cut-divider"><span>How It Works</span></div>
 
     <section class="how-section">
-      <span class="eyebrow">How It Works</span>
       <h2>From mailbox to customer, in three steps</h2>
       <div class="how-grid">
         {steps.map((s) => (
@@ -108,26 +128,24 @@ const schema = {
       </div>
     </section>
 
-    <div class="contour-divider"></div>
+    <div class="cut-divider"><span>A Note From Francis</span></div>
 
     <section class="founder-section">
       <div class="founder-photo" style="background-image: url('/images/scenic/francis-founder.jpg')"></div>
       <div class="founder-copy">
-        <span class="eyebrow">A Note From Francis</span>
-        <p>"I started Sioux Falls Go because the best businesses in this city usually aren't the ones with the biggest ad budgets — they're the ones quietly doing great work and earning trust one customer at a time. The Spotlight Postcard is the same idea applied to direct mail: instead of every business fighting alone for space in a mailbox, we share it, split the cost, and all show up stronger together. If that sounds like your business, I'd like to hear from you."</p>
+        <p>"I started Sioux Falls Go because the best businesses in this city usually aren't the ones with the biggest ad budgets &mdash; they're the ones quietly doing great work and earning trust one customer at a time. The Spotlight Postcard is the same idea applied to direct mail: instead of every business fighting alone for space in a mailbox, we share it, split the cost, and all show up stronger together. If that sounds like your business, I'd like to hear from you."</p>
         <p class="founder-sign">&mdash; Francis, Sioux Falls Go</p>
       </div>
     </section>
 
-    <div class="contour-divider"></div>
+    <div class="cut-divider"><span>Before You Apply</span></div>
 
     <section class="qualify-section">
-      <span class="eyebrow">Before You Apply</span>
       <h2>We don't take everyone</h2>
-      <p class="qualify-sub">Participation isn't just about advertising — it's about aligning with values that foster trust in the community. To be eligible, your business should be:</p>
+      <p class="qualify-sub">Participation isn't just about advertising &mdash; it's about aligning with values that foster trust in the community. To be eligible, your business should be:</p>
       <div class="qualify-grid">
         {qualifications.map((q) => (
-          <div class="qualify-item card">
+          <div class="qualify-item">
             <h3><Icon name={q.icon} size={20} /> {q.title}</h3>
             <p>{q.body}</p>
           </div>
@@ -135,80 +153,15 @@ const schema = {
       </div>
     </section>
 
-    <div class="contour-divider"></div>
-
-    <section class="mockup-section">
-      <span class="eyebrow">What You Actually Get</span>
-      <h2>Here's what a business spot looks like</h2>
-      <p class="mockup-sub">Every business gets its own tile on the shared postcard &mdash; photo, name, category, rating, and a QR code straight to their offer. This is what real Sioux Falls Go businesses already look like on it.</p>
-
-      <div class="postcard-mock">
-        <div class="postcard-mock-head">
-          <span class="postcard-mock-logo">sioux falls <strong>go</strong></span>
-          <span class="postcard-mock-tag">Locals&rsquo; Favorite Places &mdash; September Edition</span>
-        </div>
-        <div class="postcard-mock-grid">
-          <div class="postcard-tile">
-            <div class="postcard-tile-photo" style="background-image: url('/images/businesses/redstone-electric.jpg')"></div>
-            <div class="postcard-tile-body">
-              <span class="postcard-tile-cat">Electricians</span>
-              <h3>Redstone Electric</h3>
-              <p class="postcard-tile-offer">$25 off your first service call</p>
-            </div>
-            <div class="postcard-tile-qr" aria-hidden="true">
-              <svg viewBox="0 0 60 60" width="34" height="34"><rect width="60" height="60" fill="#fff"/><g fill="#12181f"><rect x="4" y="4" width="16" height="16"/><rect x="40" y="4" width="16" height="16"/><rect x="4" y="40" width="16" height="16"/><rect x="8" y="8" width="8" height="8" fill="#fff"/><rect x="44" y="8" width="8" height="8" fill="#fff"/><rect x="8" y="44" width="8" height="8" fill="#fff"/><rect x="24" y="4" width="4" height="4"/><rect x="32" y="4" width="4" height="4"/><rect x="24" y="12" width="4" height="4"/><rect x="24" y="24" width="4" height="4"/><rect x="32" y="24" width="4" height="4"/><rect x="40" y="24" width="4" height="4"/><rect x="48" y="24" width="4" height="4"/><rect x="24" y="32" width="4" height="4"/><rect x="24" y="40" width="4" height="4"/><rect x="24" y="48" width="4" height="4"/><rect x="32" y="48" width="4" height="4"/><rect x="40" y="40" width="4" height="4"/><rect x="48" y="48" width="4" height="4"/></g></svg>
-            </div>
-          </div>
-
-          <div class="postcard-tile">
-            <div class="postcard-tile-photo" style="background-image: url('/images/businesses/605-drain-solutions.jpg')"></div>
-            <div class="postcard-tile-body">
-              <span class="postcard-tile-cat">Plumbers</span>
-              <h3>605 Drain Solutions</h3>
-              <p class="postcard-tile-offer">4.9★ (47 reviews) &mdash; Free estimates</p>
-            </div>
-            <div class="postcard-tile-qr" aria-hidden="true">
-              <svg viewBox="0 0 60 60" width="34" height="34"><rect width="60" height="60" fill="#fff"/><g fill="#12181f"><rect x="4" y="4" width="16" height="16"/><rect x="40" y="4" width="16" height="16"/><rect x="4" y="40" width="16" height="16"/><rect x="8" y="8" width="8" height="8" fill="#fff"/><rect x="44" y="8" width="8" height="8" fill="#fff"/><rect x="8" y="44" width="8" height="8" fill="#fff"/><rect x="24" y="8" width="4" height="4"/><rect x="32" y="8" width="4" height="4"/><rect x="24" y="16" width="4" height="4"/><rect x="40" y="24" width="4" height="4"/><rect x="24" y="28" width="4" height="4"/><rect x="32" y="28" width="4" height="4"/><rect x="48" y="28" width="4" height="4"/><rect x="24" y="36" width="4" height="4"/><rect x="32" y="44" width="4" height="4"/><rect x="24" y="48" width="4" height="4"/><rect x="40" y="48" width="4" height="4"/><rect x="48" y="40" width="4" height="4"/></g></svg>
-            </div>
-          </div>
-
-          <div class="postcard-tile">
-            <div class="postcard-tile-photo" style="background-image: url('/images/businesses/american-tree-service.jpg')"></div>
-            <div class="postcard-tile-body">
-              <span class="postcard-tile-cat">Tree Services</span>
-              <h3>American Tree Service</h3>
-              <p class="postcard-tile-offer">Free quote on any removal</p>
-            </div>
-            <div class="postcard-tile-qr" aria-hidden="true">
-              <svg viewBox="0 0 60 60" width="34" height="34"><rect width="60" height="60" fill="#fff"/><g fill="#12181f"><rect x="4" y="4" width="16" height="16"/><rect x="40" y="4" width="16" height="16"/><rect x="4" y="40" width="16" height="16"/><rect x="8" y="8" width="8" height="8" fill="#fff"/><rect x="44" y="8" width="8" height="8" fill="#fff"/><rect x="8" y="44" width="8" height="8" fill="#fff"/><rect x="28" y="4" width="4" height="4"/><rect x="24" y="20" width="4" height="4"/><rect x="32" y="20" width="4" height="4"/><rect x="40" y="28" width="4" height="4"/><rect x="48" y="20" width="4" height="4"/><rect x="24" y="32" width="4" height="4"/><rect x="32" y="36" width="4" height="4"/><rect x="24" y="44" width="4" height="4"/><rect x="44" y="44" width="4" height="4"/><rect x="36" y="48" width="4" height="4"/></g></svg>
-            </div>
-          </div>
-
-          <div class="postcard-tile postcard-tile--open">
-            <div class="postcard-tile-photo postcard-tile-photo--empty">
-              <Icon name="briefcase" size={26} />
-            </div>
-            <div class="postcard-tile-body">
-              <span class="postcard-tile-cat postcard-tile-cat--open">Your Industry</span>
-              <h3>Your Business Here</h3>
-              <p class="postcard-tile-offer">This spot is open &mdash; one per industry</p>
-            </div>
-            <a href="#apply" class="postcard-tile-cta">Claim It →</a>
-          </div>
-        </div>
-      </div>
-      <p class="mockup-caption">A mockup showing real Sioux Falls Go businesses as they'd appear on the shared mailer. Final layout and business count vary by mailing.</p>
-    </section>
-
-    <div class="contour-divider"></div>
+    <div class="cut-divider"><span>Claim Your Spot</span></div>
 
     <section class="apply-section" id="apply">
-      <span class="eyebrow">Claim Your Spot</span>
+      <div class="apply-stamp"><Icon name="mail" size={22} /></div>
       <h2>Apply for the Next Mailing</h2>
       <p class="apply-sub">
         Spots are limited to one business per industry. Tell us about your
-        business below and we'll follow up with availability and pricing
-        for the next drop.
+        business below and we'll follow up with availability, sizes, and
+        pricing for the next drop.
       </p>
 
       <form name="postcard-apply" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="apply-form">
@@ -248,6 +201,14 @@ const schema = {
           </label>
         </div>
         <label>
+          Preferred spot size
+          <select name="preferred_size">
+            <option value="not-sure">Not sure yet &mdash; tell me what's available</option>
+            <option value="standard">Standard Spot</option>
+            <option value="feature">Feature Spot</option>
+          </select>
+        </label>
+        <label>
           Anything else we should know?
           <textarea name="notes" rows="3" placeholder="Neighborhood you'd like to target, timing, questions — anything."></textarea>
         </label>
@@ -258,7 +219,7 @@ const schema = {
       <p class="apply-fine">
         Your information stays private. We'll never spam you or sell your
         details. See our <a href="/privacy-policy">privacy policy</a>.
-        Spots are limited and go quickly by industry — applying doesn't
+        Spots are limited and go quickly by industry &mdash; applying doesn't
         guarantee a spot in the next mailing.
       </p>
     </section>
@@ -268,21 +229,41 @@ const schema = {
 </BaseLayout>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
   .page { padding-block: 3.5rem; }
   .eyebrow { display: block; font-weight: 700; font-size: 0.8125rem; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-  .contour-divider { height: 1px; background: var(--color-line); margin-block: 3.5rem; }
 
-  /* HERO */
-  .hero { background: linear-gradient(135deg, var(--color-navy) 0%, #24365c 100%); padding-block: 5rem; position: relative; overflow: hidden; }
-  .hero-inner { position: relative; max-width: 42rem; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.8125rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  /* Dashed "cut line" divider — a print/postal motif, used as the section
+     rhythm instead of a plain hairline, since this whole page is about a
+     physical printed object. */
+  .cut-divider {
+    display: flex; align-items: center; gap: 1rem; margin-block: 3.5rem;
+    color: var(--color-navy-light); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .cut-divider::before, .cut-divider::after { content: ''; flex: 1; border-top: 2px dashed var(--color-line); }
+  .cut-divider span { white-space: nowrap; }
+
+  /* HERO — two column, real postcard photo on the right */
+  .hero { background: var(--color-navy); padding-block: 4rem; position: relative; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  @media (max-width: 60rem) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.8125rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.2rem; }
   .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-gold); }
-  .hero h1 { color: #fff; font-size: 2.5rem; line-height: 1.14; max-width: 18ch; margin: 0; }
-  .hero-sub { color: rgba(255,255,255,0.82); font-size: 1.0625rem; line-height: 1.6; max-width: 48ch; margin-top: 1.2rem; }
+  .hero h1 { font-family: 'Anton', var(--font-display); font-weight: 400; color: #fff; font-size: 3rem; line-height: 1.08; margin: 0; letter-spacing: 0.01em; text-transform: uppercase; }
+  .hero-highlight { color: var(--color-gold); }
+  .hero-sub { color: rgba(255,255,255,0.78); font-size: 1.0625rem; line-height: 1.6; max-width: 32rem; margin-top: 1.3rem; }
   .hero-cta-row { display: flex; align-items: center; gap: 1.1rem; margin-top: 1.8rem; flex-wrap: wrap; }
   .hero-cta { display: inline-block; background: var(--color-orange); color: #fff; font-weight: 700; font-size: 0.9375rem; padding: 0.85rem 1.8rem; border-radius: var(--radius-pill); text-decoration: none; transition: background 0.15s ease; }
   .hero-cta:hover { background: var(--color-orange-dark); }
-  .hero-free-note { color: rgba(255,255,255,0.6); font-size: 0.875rem; }
+  .hero-free-note { color: rgba(255,255,255,0.55); font-size: 0.875rem; }
+
+  .hero-photo-wrap { position: relative; }
+  .hero-postcard-photo {
+    width: 100%; border-radius: 0.5rem; box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    transform: rotate(1.2deg); border: 6px solid #fff; display: block;
+  }
+  .hero-photo-caption { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); text-align: center; margin-top: 1.2rem; max-width: 26rem; margin-inline: auto; line-height: 1.5; }
 
   /* STAT BAND */
   .stat-band { background: var(--color-surface); border-bottom: 1px solid var(--color-line); padding-block: 2.4rem; }
@@ -291,48 +272,32 @@ const schema = {
   .stat-num { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; color: var(--color-navy); }
   .stat-label { display: block; font-size: 0.875rem; color: var(--color-navy-light); margin-top: 0.3rem; max-width: 22ch; margin-inline: auto; }
 
-  /* BENEFITS */
-  .benefits-section h2, .how-section h2, .qualify-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.6rem; }
+  /* SIZING DIAGRAM — to-scale abstract blocks, not fake business names */
+  .sizing-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1rem; max-width: 24ch; }
+  .sizing-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 62ch; margin-bottom: 2.2rem; line-height: 1.6; }
+  .size-diagram {
+    display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 0.9rem;
+    background: var(--color-navy); padding: 1.4rem; border-radius: 1rem; max-width: 46rem;
+  }
+  @media (max-width: 40rem) { .size-diagram { grid-template-columns: 1fr; } }
+  .size-mini { display: flex; flex-direction: column; gap: 0.9rem; }
+  .size-card {
+    border-radius: 0.6rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 1rem 1.1rem; gap: 0.3rem;
+  }
+  .size-card--feature { background: var(--color-orange); color: #fff; min-height: 12.4rem; }
+  .size-card--standard { background: rgba(255,255,255,0.08); color: #fff; flex: 1; min-height: 5.7rem; justify-content: center; }
+  .size-tag { font-weight: 700; font-size: 0.9375rem; }
+  .size-desc { font-size: 0.8125rem; opacity: 0.85; max-width: 18ch; }
+  .sizing-note { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.9rem; }
 
-  /* POSTCARD MOCKUP */
-  .mockup-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 58ch; margin-bottom: 2rem; }
-  .postcard-mock {
-    background: #fff; border-radius: 1.2rem; box-shadow: 0 24px 60px rgba(13,23,48,0.16), 0 2px 8px rgba(13,23,48,0.08);
-    border: 1px solid var(--color-line); overflow: hidden; transform: rotate(-0.6deg); max-width: 46rem; margin: 0 auto;
-  }
-  .postcard-mock-head {
-    background: var(--color-navy); padding: 1.1rem 1.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-  }
-  .postcard-mock-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: #fff; text-transform: lowercase; }
-  .postcard-mock-logo strong { color: var(--color-gold); }
-  .postcard-mock-tag { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 600; }
-  .postcard-mock-grid { display: grid; grid-template-columns: 1fr 1fr; }
-  @media (max-width: 40rem) { .postcard-mock-grid { grid-template-columns: 1fr; } }
-  .postcard-tile { border-right: 1px dashed var(--color-line); border-bottom: 1px dashed var(--color-line); padding: 1.1rem; position: relative; }
-  .postcard-tile:nth-child(2) { border-right: none; }
-  .postcard-tile:nth-child(4) { border-right: none; }
-  .postcard-tile-photo { height: 6.5rem; border-radius: 0.6rem; background-size: cover; background-position: center; margin-bottom: 0.8rem; }
-  .postcard-tile-cat { font-size: 0.6875rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.04em; }
-  .postcard-tile h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--color-navy); margin: 0.2rem 0 0.3rem; }
-  .postcard-tile-offer { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0; }
-  .postcard-tile-qr { position: absolute; bottom: 1.1rem; right: 1.1rem; }
-  .postcard-tile--open { background: var(--color-surface); }
-  .postcard-tile-photo--empty {
-    background: repeating-linear-gradient(45deg, var(--color-line), var(--color-line) 8px, transparent 8px, transparent 16px);
-    display: flex; align-items: center; justify-content: center; color: var(--color-navy-light); border: 1.5px dashed var(--color-navy-light);
-  }
-  .postcard-tile-cat--open { color: var(--color-navy-light); }
-  .postcard-tile-cta {
-    display: inline-block; margin-top: 0.5rem; font-weight: 700; font-size: 0.8125rem; color: #fff;
-    background: var(--color-orange); padding: 0.45rem 0.9rem; border-radius: var(--radius-pill); text-decoration: none;
-  }
-  .mockup-caption { font-size: 0.8125rem; color: var(--color-navy-light); text-align: center; margin-top: 1.6rem; }
-  .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  @media (max-width: 55rem) { .benefits-grid { grid-template-columns: 1fr; } }
-  .benefit-card { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.6rem; box-shadow: 0 1px 3px rgba(13,23,48,0.06); }
-  .benefit-icon { width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--color-orange), var(--color-gold)); color: #fff; margin-bottom: 1rem; }
-  .benefit-card h3 { font-size: 1.0625rem; color: var(--color-navy); margin: 0 0 0.5rem; }
-  .benefit-card p { font-size: 0.9375rem; color: var(--color-navy-light); line-height: 1.55; margin: 0; }
+  /* BENEFITS — printed-receipt style stubs, not icon-circle cards */
+  .benefits-section h2, .how-section h2, .qualify-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.6rem; }
+  .benefits-strip { border-top: 1px solid var(--color-line); }
+  .benefit-stub { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--color-line); }
+  .stub-num { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--color-line); }
+  .benefit-stub h3 { font-size: 1.0625rem; color: var(--color-navy); margin: 0 0 0.4rem; }
+  .benefit-stub p { font-size: 0.9375rem; color: var(--color-navy-light); line-height: 1.55; margin: 0; max-width: 60ch; }
 
   /* HOW IT WORKS */
   .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -353,22 +318,28 @@ const schema = {
   .qualify-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 56ch; margin-bottom: 1.8rem; }
   .qualify-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
   @media (max-width: 55rem) { .qualify-grid { grid-template-columns: 1fr; } }
-  .qualify-item.card { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(13,23,48,0.06); }
+  .qualify-item { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(13,23,48,0.06); }
   .qualify-item h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; color: var(--color-navy); margin: 0 0 0.5rem; }
   .qualify-item p { font-size: 0.875rem; color: var(--color-navy-light); margin: 0; line-height: 1.5; }
 
-  /* APPLY FORM */
+  /* APPLY FORM — styled like a mail-in coupon: dashed border, stamp icon */
+  .apply-section { position: relative; border: 2px dashed var(--color-line); border-radius: 1.2rem; padding: 2.4rem; }
+  .apply-stamp {
+    position: absolute; top: -1.3rem; right: 2.4rem; width: 2.8rem; height: 2.8rem; border-radius: 0.4rem;
+    background: var(--color-orange); color: #fff; display: flex; align-items: center; justify-content: center;
+    transform: rotate(6deg); box-shadow: 0 8px 20px rgba(240,126,35,0.4);
+  }
   .apply-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 0.6rem; }
   .apply-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 56ch; margin-bottom: 1.6rem; }
   .apply-form { max-width: 34rem; display: flex; flex-direction: column; gap: 1rem; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   @media (max-width: 30rem) { .form-row { grid-template-columns: 1fr; } }
   .apply-form label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy); }
-  .apply-form input, .apply-form textarea {
+  .apply-form input, .apply-form textarea, .apply-form select {
     padding: 0.75rem 0.9rem; border-radius: 0.6rem; border: 1px solid var(--color-line);
     font-family: var(--font-body); font-size: 0.9375rem; background: var(--color-surface); resize: vertical;
   }
-  .apply-form input:focus, .apply-form textarea:focus { border-color: var(--color-orange); outline: none; }
+  .apply-form input:focus, .apply-form textarea:focus, .apply-form select:focus { border-color: var(--color-orange); outline: none; }
   .apply-form button { align-self: flex-start; margin-top: 0.3rem; }
   .apply-fine { font-size: 0.8125rem; color: var(--color-navy-light); max-width: 40rem; margin-top: 1.3rem; line-height: 1.5; }
   .apply-fine a { color: var(--color-orange-dark); }
