@@ -184,9 +184,9 @@ const schema = {
     position: absolute; inset: 0;
     background: linear-gradient(0deg, rgba(8,12,20,0.35) 0%, transparent 22%);
   }
-  .hero-inner { position: relative; z-index: 3; padding: 0 4rem; max-width: 640px; margin: 0; }
+  .hero-inner { position: relative; z-index: 3; width: 100%; }
   .hero-eyebrow-text { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.75); margin-bottom: 1.375rem; text-transform: uppercase; }
-  .hero h1 { font-family: var(--font-display); font-weight: 700; font-size: 3.25rem; line-height: 1.12; color: #fff; margin: 0 0 1.5rem; letter-spacing: -0.01em; }
+  .hero h1 { font-family: var(--font-display); font-weight: 700; font-size: 3.25rem; line-height: 1.12; color: #fff; margin: 0 0 1.5rem; letter-spacing: -0.01em; max-width: 16ch; }
   .hero-sub { font-size: 1.0625rem; line-height: 1.6; color: rgba(255,255,255,0.82); max-width: 30rem; margin: 0 0 2.5rem; font-weight: 400; }
   .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
@@ -213,7 +213,7 @@ const schema = {
   @media (max-width: 780px) {
     .hero { min-height: 35rem; align-items: flex-end; }
     .hero-gradient { background: linear-gradient(0deg, rgba(8,12,20,0.92) 0%, rgba(8,12,20,0.55) 45%, rgba(8,12,20,0.15) 75%, rgba(8,12,20,0) 100%); }
-    .hero-inner { padding: 0 1.5rem; max-width: 100%; padding-bottom: 3.5rem; }
+    .hero-inner { padding-bottom: 3.5rem; }
     .hero h1 { font-size: 2rem; }
     .hero-sub { font-size: 0.9375rem; max-width: 100%; margin-bottom: 2rem; }
     .hero-actions { flex-direction: column; align-items: stretch; }
