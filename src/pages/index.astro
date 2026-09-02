@@ -53,6 +53,7 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
+    <div class="hero-water-shimmer"></div>
     <div class="hero-gradient"></div>
     <div class="hero-gradient-bottom"></div>
     <div class="container hero-inner">
@@ -165,6 +166,30 @@ const schema = {
     position: absolute; inset: 0;
     background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
   }
+  /* Subtle animated shimmer positioned over the falls themselves (they run
+     diagonally through the right two-thirds of this photo) — a repeating
+     highlight streak drifting across, blended into the existing texture
+     rather than laid flatly on top, to suggest moving water. */
+  .hero-water-shimmer {
+    position: absolute; left: 38%; right: 0; top: 4%; height: 66%;
+    background-image: repeating-linear-gradient(
+      115deg,
+      transparent 0px, transparent 14px,
+      rgba(255,255,255,0.42) 14px, rgba(255,255,255,0.42) 19px,
+      transparent 19px, transparent 36px,
+      rgba(255,255,255,0.26) 36px, rgba(255,255,255,0.26) 41px
+    );
+    background-size: 160% 100%;
+    mix-blend-mode: soft-light;
+    opacity: 0.9;
+    animation: water-drift 4s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes water-drift {
+    0%   { background-position: 0% 0; }
+    100% { background-position: -160px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-water-shimmer { animation: none; } }
   /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
      Uses the brand navy so the tint reads intentional, with strong opacity for contrast. */
   .hero-gradient {
