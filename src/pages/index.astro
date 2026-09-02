@@ -5,7 +5,6 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 import EventsSection from '../components/EventsSection.astro';
-import HeroRotator from '../components/HeroRotator.astro';
 
 const businesses = await getCollection('businesses');
 // Only real, verified listings belong on the homepage spotlight — this is
@@ -64,18 +63,21 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
-    <div class="hero-spotlight"></div>
-    <div class="hero-timelapse"></div>
-    <div class="hero-overlay"></div>
+    <div class="hero-gradient"></div>
+    <div class="hero-gradient-bottom"></div>
     <div class="container hero-inner">
-      <span class="hero-eyebrow-text">Welcome to Sioux Falls Go</span>
-      <h1>Discover and Support Local Businesses in Sioux Falls, SD</h1>
-      <p class="hero-sub"><strong>Businesses gain</strong> visibility and community support. <strong>Locals discover</strong> trusted companies and earn rewards. Together, we build a stronger Sioux Falls.</p>
+      <span class="hero-eyebrow-text">Locals&rsquo; Favorite Places</span>
+      <h1>Explore and Experience Sioux Falls Like a Local</h1>
+      <p class="hero-sub">Discover hidden gems, support local businesses, and find more reasons to love Sioux Falls. A hand-picked guide to the places locals know and love.</p>
       <div class="hero-actions">
-        <a class="button" href="/businesses#legend">Join the Community</a>
+        <a class="btn-primary" href="/businesses">Explore Sioux Falls</a>
+        <a class="btn-secondary" href="/get-featured">Get Featured</a>
       </div>
     </div>
-    <HeroRotator />
+    <div class="scroll-cue">
+      Explore Sioux Falls
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </section>
 
   <section class="about" id="about">
@@ -138,39 +140,6 @@ const schema = {
     </section>
   </div>
 
-  <section class="locals-section">
-    <div class="container">
-      <div class="locals-head">
-        <span class="eyebrow">For Locals</span>
-        <h2>This Is Your Sioux Falls</h2>
-        <p>The people who make this city home — this whole platform exists for you.</p>
-      </div>
-      <div class="locals-bento">
-        <a href="/businesses#legend" class="locals-hero-card">
-          <div class="locals-hero-overlay"></div>
-          <div class="locals-hero-content">
-            <span class="locals-hero-badge"><Icon name="sparkles" size={14} /> 100% Free Forever</span>
-            <h3>Become a Local Legend</h3>
-            <p>Exclusive deals, gift cards, and prizes from the businesses that make Sioux Falls, Sioux Falls.</p>
-            <span class="button">Join the Community →</span>
-          </div>
-        </a>
-        <a href="/spotlight-giveaway" class="locals-small-card">
-          <div class="icon-badge"><Icon name="gift" size={22} /></div>
-          <h3>Enter Giveaways</h3>
-          <p>Free prizes from top-rated Sioux Falls businesses. No strings attached.</p>
-          <span class="locals-link">Check our giveaways →</span>
-        </a>
-        <a href="/businesses" class="locals-small-card">
-          <div class="icon-badge"><Icon name="search" size={22} /></div>
-          <h3>Explore the Directory</h3>
-          <p>Community-first businesses across every category in Sioux Falls.</p>
-          <span class="locals-link">Browse the directory →</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <EventsSection />
 
   {resourceArticles.length > 0 && (
@@ -195,18 +164,11 @@ const schema = {
   )}
 
   <section class="get-featured-band">
-    <div class="container get-featured-inner">
-      <div class="gf-copy">
-        <span class="eyebrow eyebrow--light">For Business Owners</span>
-        <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
-        <p>Join the businesses already earning trust with locals &mdash; spotlights, local content, and offers that put you in front of people actively looking for what you do. Applications are free, and we don&rsquo;t take everyone.</p>
-        <a href="/get-featured" class="button button--navy">Get Featured →</a>
-      </div>
-      <div class="gf-points">
-        <div class="gf-point"><Icon name="check" size={18} /> Free, invitation-only listings</div>
-        <div class="gf-point"><Icon name="check" size={18} /> Business spotlights &amp; local content</div>
-        <div class="gf-point"><Icon name="check" size={18} /> Real locals, not paid placement</div>
-      </div>
+    <div class="container gf-copy">
+      <span class="eyebrow eyebrow--light">For Business Owners</span>
+      <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
+      <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
+      <a href="/get-featured" class="button button--navy">Get Featured →</a>
     </div>
   </section>
 
@@ -232,52 +194,63 @@ const schema = {
   .section h2 { font-size: 1.9rem; margin-top: 0.3rem; }
   .eyebrow { display: block; }
 
-  /* HERO */
-  .hero { position: relative; min-height: 46rem; display: flex; align-items: center; overflow: hidden; flex-wrap: wrap; }
+  /* HERO — exact port of the approved editorial hero mockup */
+  .hero { position: relative; min-height: 40rem; display: flex; align-items: center; overflow: hidden; }
   .hero-photo {
-    position: absolute; inset: -2%; width: 104%; height: 104%;
-    background: url('/images/scenic/falls-park-1.jpg') center 42%/cover;
-    animation: hero-kenburns 30s ease-in-out infinite alternate;
-    will-change: transform;
-    /* Color grade: lifts contrast/saturation and deepens shadows slightly so
-       the photo reads as produced/editorial rather than an unedited shot. */
-    filter: contrast(1.1) saturate(1.18) brightness(0.98) sepia(0.05);
-  }
-  @keyframes hero-kenburns {
-    0%   { transform: scale(1) translate(0, 0); }
-    100% { transform: scale(1.1) translate(-1.5%, -1%); }
-  }
-  @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
-  /* Warm spotlight centered on the falls themselves, lifting them above the
-     surrounding storm sky and rock so they read as the clear focal point. */
-  .hero-spotlight {
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 55% 45% at 42% 58%, rgba(255,225,170,0.22) 0%, rgba(255,225,170,0.06) 45%, transparent 75%);
-    mix-blend-mode: soft-light;
+    background: url('/images/scenic/falls-park-editorial.jpg') center 58%/cover;
   }
-  .hero-timelapse { position: absolute; inset: 0; animation: hero-timelapse 10s ease-in-out infinite alternate; }
-  @keyframes hero-timelapse {
-    0%   { background: linear-gradient(100deg, rgba(20,30,50,0.6) 0%, rgba(20,30,50,0.32) 50%, rgba(255,150,80,0.14) 100%); }
-    50%  { background: linear-gradient(100deg, rgba(10,14,28,0.88) 0%, rgba(10,14,28,0.6) 50%, rgba(46,111,158,0.24) 100%); }
-    100% { background: linear-gradient(100deg, rgba(6,9,20,0.94) 0%, rgba(6,9,20,0.72) 50%, rgba(245,180,41,0.12) 100%); }
+  /* Directional gradient — dark behind the text, progressively clearer toward the photo.
+     No flat dark wash over the whole image. */
+  .hero-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg,
+      rgba(8,12,20,0.88) 0%,
+      rgba(8,12,20,0.72) 30%,
+      rgba(8,12,20,0.4) 55%,
+      rgba(8,12,20,0.08) 78%,
+      rgba(8,12,20,0) 100%);
   }
-  @media (prefers-reduced-motion: reduce) { .hero-timelapse { animation: none; background: rgba(10,14,28,0.8); } }
-  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.82) 0%, rgba(13,23,48,0.62) 45%, rgba(13,23,48,0.28) 75%); }
-  .hero-inner { position: relative; z-index: 1; padding-block: 4rem; padding-left: 4rem; color: #fff; max-width: 700px; margin-left: 0; margin-right: auto; }
-  .hero-eyebrow-text { display: block; font-weight: 700; font-size: 0.9375rem; color: var(--color-prairie, #F5B429); text-transform: uppercase; letter-spacing: 0.01em; margin-bottom: 0.6rem; }
-  .hero h1 { font-size: 2.75rem; max-width: 20ch; line-height: 1.12; color: #fff; margin: 0; }
-  .hero-sub { max-width: 66ch; color: rgba(255,255,255,0.9); font-size: 1.125rem; margin-top: 1rem; }
-  .hero-actions { display: flex; gap: 0.9rem; margin-top: 1.8rem; flex-wrap: wrap; }
-  .hero-actions .button--ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
-  @media (max-width: 60rem) { .hero-inner { max-width: 100%; padding-left: 3.25rem; } }
-  /* Stronger, more solid overlay on mobile so the headline stays legible
-     over the photo on small screens, matching the reviewed mobile mockup. */
-  @media (max-width: 45rem) {
-    .hero-overlay { background: linear-gradient(0deg, rgba(6,9,20,0.94) 0%, rgba(6,9,20,0.78) 40%, rgba(6,9,20,0.4) 70%, rgba(6,9,20,0.15) 100%); }
-    .hero { align-items: flex-end; }
-    .hero-inner { padding-block: 3rem 3.5rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+  .hero-gradient-bottom {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(8,12,20,0.35) 0%, transparent 22%);
   }
+  .hero-inner { position: relative; z-index: 3; padding: 0 4rem; max-width: 640px; margin: 0; }
+  .hero-eyebrow-text { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.75); margin-bottom: 1.375rem; text-transform: uppercase; }
+  .hero h1 { font-family: var(--font-display); font-weight: 700; font-size: 3.25rem; line-height: 1.12; color: #fff; margin: 0 0 1.5rem; letter-spacing: -0.01em; }
+  .hero-sub { font-size: 1.0625rem; line-height: 1.6; color: rgba(255,255,255,0.82); max-width: 30rem; margin: 0 0 2.5rem; font-weight: 400; }
+  .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block; background: #fff; color: #101826; font-weight: 600; font-size: 0.906rem;
+    padding: 0.9375rem 2rem; border-radius: 4px; text-decoration: none; letter-spacing: 0.01em;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+  .btn-secondary {
+    display: inline-block; background: transparent; color: #fff; font-weight: 600; font-size: 0.906rem;
+    padding: 0.875rem 1.875rem; border-radius: 4px; text-decoration: none; letter-spacing: 0.01em;
+    border: 1.5px solid rgba(255,255,255,0.55); transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
+  .scroll-cue {
+    position: absolute; left: 4rem; bottom: 2rem; z-index: 3;
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.5);
+    text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;
+  }
+  .scroll-cue svg { animation: heroNudge 2s ease-in-out infinite; }
+  @keyframes heroNudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
 
+  @media (max-width: 780px) {
+    .hero { min-height: 35rem; align-items: flex-end; }
+    .hero-gradient { background: linear-gradient(0deg, rgba(8,12,20,0.92) 0%, rgba(8,12,20,0.55) 45%, rgba(8,12,20,0.15) 75%, rgba(8,12,20,0) 100%); }
+    .hero-inner { padding: 0 1.5rem; max-width: 100%; padding-bottom: 3.5rem; }
+    .hero h1 { font-size: 2rem; }
+    .hero-sub { font-size: 0.9375rem; max-width: 100%; margin-bottom: 2rem; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .btn-primary, .btn-secondary { text-align: center; }
+    .scroll-cue { display: none; }
+  }
 
   /* SPOTLIGHT */
   .spotlight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
@@ -293,58 +266,6 @@ const schema = {
   .spot-readmore { display: inline-block; margin-top: 0.7rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); }
   :global(.filled-star) { fill: #F5B429; color: #F5B429; }
   .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
-
-  /* FOR LOCALS */
-  .locals-section { background: linear-gradient(180deg, #0d1730 0%, #1B2A4A 100%); padding-block: 5rem; position: relative; overflow: hidden; }
-  .locals-section::before {
-    content: ''; position: absolute; inset: 0;
-    background-image: radial-gradient(circle, rgba(245,180,41,0.5) 1.5px, transparent 1.5px);
-    background-size: 34px 34px; opacity: 0.25; animation: drift-bg 22s linear infinite;
-  }
-  @keyframes drift-bg { from { background-position: 0 0; } to { background-position: 200px 200px; } }
-  @media (prefers-reduced-motion: reduce) { .locals-section::before { animation: none; } }
-  .locals-head { position: relative; z-index: 1; text-align: center; margin-bottom: 3rem; }
-  .locals-head .eyebrow { color: var(--color-prairie, #F5B429); }
-  .locals-head h2 { color: #fff; font-size: 2.3rem; margin-top: 0.4rem; }
-  .locals-head p { color: rgba(255,255,255,0.75); font-size: 1.0625rem; max-width: 40ch; margin: 0.8rem auto 0; }
-
-  .locals-bento { position: relative; z-index: 1; display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: auto auto; gap: 1.4rem; }
-  @media (max-width: 55rem) { .locals-bento { grid-template-columns: 1fr; } }
-  .locals-hero-card {
-    grid-row: span 2; border-radius: 1.4rem; overflow: hidden; position: relative; text-decoration: none;
-    background: url('/images/scenic/downtown-1.jpg') center/cover;
-    min-height: 26rem; display: flex; align-items: flex-end;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
-  }
-  .locals-hero-card:hover { transform: scale(1.015); }
-  .locals-hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,23,48,0.92) 10%, rgba(13,23,48,0.15) 65%); }
-  .locals-hero-content { position: relative; z-index: 1; padding: 2.2rem; }
-  .locals-hero-badge {
-    display: inline-flex; align-items: center; gap: 0.4rem; background: var(--color-prairie, #F5B429); color: #1B2A4A;
-    font-weight: 800; font-size: 0.8125rem; padding: 0.4rem 1rem; border-radius: 999px; margin-bottom: 1rem;
-    animation: badge-float 3s ease-in-out infinite;
-  }
-  @keyframes badge-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-  @media (prefers-reduced-motion: reduce) { .locals-hero-badge { animation: none; } }
-  .locals-hero-content h3 { color: #fff; font-size: 1.9rem; margin-bottom: 0.6rem; }
-  .locals-hero-content p { color: rgba(255,255,255,0.85); font-size: 1.0625rem; max-width: 30ch; margin-bottom: 1.4rem; }
-
-  .locals-small-card {
-    display: flex; flex-direction: column; gap: 0.7rem; text-decoration: none;
-    border-radius: 1.2rem; background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.12); padding: 1.6rem;
-    transition: transform 0.3s cubic-bezier(.2,.8,.2,1), background 0.3s ease, border-color 0.3s ease;
-  }
-  .locals-small-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.1); border-color: rgba(245,180,41,0.5); }
-  .locals-small-card .icon-badge {
-    width: 3.2rem; height: 3.2rem; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, var(--color-orange), var(--color-prairie, #F5B429)); flex-shrink: 0;
-    box-shadow: 0 8px 20px rgba(240,126,35,0.4); color: #fff;
-  }
-  .locals-small-card h3 { color: #fff; font-size: 1.15rem; margin: 0; }
-  .locals-small-card p { color: rgba(255,255,255,0.7); font-size: 0.9375rem; margin: 0; }
-  .locals-link { color: var(--color-prairie, #F5B429); font-weight: 700; font-size: 0.875rem; margin-top: auto; }
 
   /* BUSINESS RESOURCES */
   .resource-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.8rem; }
@@ -388,20 +309,22 @@ const schema = {
   }
 
   /* SECTION 5 — GET FEATURED */
-  .get-featured-band { background: linear-gradient(135deg, var(--color-orange-dark) 0%, var(--color-orange) 100%); padding-block: 4.5rem; }
-  .get-featured-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center; }
-  @media (max-width: 50rem) { .get-featured-inner { grid-template-columns: 1fr; } }
+  .get-featured-band {
+    background: linear-gradient(135deg, rgba(211,102,15,0.93) 0%, rgba(240,126,35,0.93) 100%), url('/images/scenic/levitt-concert-center.jpg') center/cover;
+    padding-block: 4.5rem;
+  }
+  .get-featured-band .gf-copy { text-align: center; max-width: 34rem; margin: 0 auto; }
   .eyebrow--light { color: rgba(255,255,255,0.85); }
-  .gf-copy h2 { color: #fff; font-size: 2rem; max-width: 15ch; margin: 0.4rem 0 1rem; }
+  .gf-copy h2 { color: #fff; font-size: 2rem; margin: 0.4rem 0 0.9rem; }
+  .gf-copy p { color: rgba(255,255,255,0.92); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
   .button--navy { background: var(--color-navy); }
   .button--navy:hover { background: #2c3f61; }
-  .gf-copy p { color: rgba(255,255,255,0.92); font-size: 1.0625rem; line-height: 1.6; max-width: 46ch; margin: 0 0 1.6rem; }
-  .gf-points { display: flex; flex-direction: column; gap: 0.9rem; }
-  .gf-point { display: flex; align-items: center; gap: 0.6rem; color: #fff; font-weight: 600; font-size: 0.9375rem; }
-  .gf-point :global(svg) { flex-shrink: 0; }
 
   /* SECTION 6 — JOIN THE COMMUNITY */
-  .join-section { background: #fff; padding-block: 5rem; text-align: center; border-top: 1px solid var(--color-line); }
+  .join-section {
+    background: linear-gradient(0deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 100%), url('/images/scenic/falls-park-golden.jpg') center 30%/cover;
+    padding-block: 5rem; text-align: center; border-top: 1px solid var(--color-line);
+  }
   .join-inner { max-width: 34rem; margin: 0 auto; }
   .join-section h2 { font-size: 2.1rem; color: var(--color-navy); margin-bottom: 0.8rem; }
   .join-section > .container > p, .join-inner > p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin-bottom: 1.8rem; }
