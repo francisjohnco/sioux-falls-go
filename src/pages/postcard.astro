@@ -74,10 +74,22 @@ const schema = {
 
   <div class="container page">
     <section class="greet-section">
-      <span class="eyebrow">Hello, Sioux Falls Business Owner</span>
-      <h2>A full-color postcard, hand-delivered to 5,000 mailboxes</h2>
-      <p>The Spotlight is a full-color, oversized postcard mailed directly to targeted ZIP codes across Sioux Falls &mdash; no envelope to open, no page to flip past. It lands right in the mailbox.</p>
-      <p>Only one business per industry is featured on each mailing, so when a neighbor pulls the Spotlight out of their mailbox, your business is the only one like it on the card. No competitors, no crowded page &mdash; just your name in front of people already looking for what you do.</p>
+      <div class="greet-text">
+        <span class="eyebrow">Hello, Sioux Falls Business Owner</span>
+        <h2>A full-color postcard, hand-delivered to 5,000 mailboxes</h2>
+        <p>The Spotlight is a full-color, oversized postcard mailed directly to targeted ZIP codes across Sioux Falls &mdash; no envelope to open, no page to flip past. It lands right in the mailbox.</p>
+        <p>Only one business per industry is featured on each mailing, so when a neighbor pulls the Spotlight out of their mailbox, your business is the only one like it on the card. No competitors, no crowded page &mdash; just your name in front of people already looking for what you do.</p>
+      </div>
+      <div class="greet-photo-wrap">
+        <div class="greet-collage">
+          <img src="/images/businesses/redstone-electric.jpg" alt="A real Sioux Falls business already featured on Sioux Falls Go" class="collage-photo collage-photo--top" />
+          <img src="/images/businesses/thorson-construction.jpg" alt="A real Sioux Falls business already featured on Sioux Falls Go" class="collage-photo collage-photo--bottom" />
+          <div class="greet-badge">
+            <span class="badge-line1">Could Be</span>
+            <span class="badge-line2">You</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <div class="cut-divider"><span>What's Included</span></div>
@@ -284,9 +296,35 @@ const schema = {
   .stat-num { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; color: var(--color-navy); }
   .stat-label { display: block; font-size: 0.875rem; color: var(--color-navy-light); margin-top: 0.3rem; max-width: 22ch; margin-inline: auto; }
 
-  /* GREETING */
-  .greet-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.2rem; max-width: 26ch; }
-  .greet-section p { font-size: 1.0625rem; color: var(--color-navy-light); line-height: 1.65; max-width: 62ch; margin: 0 0 1rem; }
+  /* GREETING — two-column with real photo collage */
+  .greet-section {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center;
+    background: linear-gradient(135deg, #FBF3EA 0%, #fff 60%); border-radius: 1.4rem; padding: 2.8rem;
+  }
+  @media (max-width: 55rem) { .greet-section { grid-template-columns: 1fr; gap: 2rem; padding: 1.8rem; } }
+  .greet-text h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.2rem; max-width: 20ch; }
+  .greet-text p { font-size: 1.0625rem; color: var(--color-navy-light); line-height: 1.65; max-width: 62ch; margin: 0 0 1rem; }
+
+  .greet-collage { position: relative; }
+  .collage-photo {
+    width: 82%; object-fit: cover; border-radius: 1rem; display: block;
+    box-shadow: 0 20px 40px rgba(13,23,48,0.18); border: 5px solid #fff;
+  }
+  .collage-photo--top { aspect-ratio: 5/4; position: relative; z-index: 1; }
+  .collage-photo--bottom { aspect-ratio: 5/4; margin: -3rem 0 0 auto; position: relative; z-index: 2; }
+  .greet-badge {
+    position: absolute; top: -1.2rem; right: -0.6rem; z-index: 3;
+    width: 6rem; height: 6rem; border-radius: 50%; background: var(--color-navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; box-shadow: 0 12px 26px rgba(13,23,48,0.35); transform: rotate(7deg);
+  }
+  .badge-line1, .badge-line2 { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; line-height: 1.15; }
+  @media (max-width: 55rem) {
+    .collage-photo { width: 74%; }
+    .collage-photo--bottom { margin-top: -2.2rem; }
+    .greet-badge { width: 5rem; height: 5rem; }
+    .badge-line1, .badge-line2 { font-size: 0.9375rem; }
+  }
 
   /* WHAT'S INCLUDED — stamped checklist, not icon cards */
   .included-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.6rem; }
@@ -356,7 +394,8 @@ const schema = {
   /* WHY JOIN */
   .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
   @media (max-width: 45rem) { .reasons-grid { grid-template-columns: 1fr; } }
-  .reason-card { padding: 1.5rem; border: 1px solid var(--color-line); border-radius: 1rem; }
+  .reason-card { padding: 1.7rem; background: var(--color-surface); border-radius: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .reason-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(13,23,48,0.1); }
   .reason-card :global(svg) { color: var(--color-orange-dark); }
   .reason-card h3 { font-size: 1.0625rem; color: var(--color-navy); margin: 0.7rem 0 0.5rem; }
   .reason-card p { font-size: 0.9375rem; color: var(--color-navy-light); line-height: 1.55; margin: 0; }
