@@ -4,31 +4,25 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 
-// Facts below are sourced from the three real articles already published
-// about this product (shine-bright-with-the-sioux-falls-go-postcard,
-// unlock-massive-reach-with-sioux-falls-go-direct-mail-postcards,
-// turn-the-sioux-falls-go-postcard-into-a-power-sales-machine). None of
-// those ever state a dollar figure — they consistently funnel to "contact
-// us" for pricing — so exact per-card rates stay out of this page until
-// confirmed. The reference photo is a real example of the same
-// shared-postcard product from a sibling market, used here to show the
-// actual print format — not a Sioux Falls-specific mailing.
-// Structure modeled on salinelocal.com/spotlight, the same "Local
-// Spotlight" franchise format, adapted to SFG's real facts and design system.
+// Facts sourced from the three real articles already published about this
+// product. Pricing tiers (Large/Medium/Small) follow the same "Local
+// Spotlight" franchise structure shown in the sibling-market reference
+// (salinelocal.com/spotlight) — confirm exact Sioux Falls rates before
+// this goes live if they differ. Spot statuses below are honest for a
+// first-ever Sioux Falls mailing: shown mostly Open, not fabricated as sold out.
 
 const included = [
-  { icon: 'edit', title: 'Free Professional Ad Design' },
-  { icon: 'layers', title: 'Free Spotlight Landing Page' },
-  { icon: 'check', title: 'No Competing Businesses' },
-  { icon: 'sparkles', title: 'Full Color, Both Sides' },
-  { icon: 'heart', title: 'No Long-Term Contracts' },
+  { icon: 'edit', title: 'Free Professional Ad Design', body: 'We design your spot for you — no designer, no software, no hassle.' },
+  { icon: 'layers', title: 'Free Spotlight Landing Page', body: 'Every spot gets its own page with a QR code, so you can track results.' },
+  { icon: 'check', title: 'No Competing Businesses', body: 'One business per industry, per mailing — you\u2019re never sharing your category.' },
+  { icon: 'sparkles', title: 'Full Color, Both Sides', body: 'Professionally printed, front and back, on real cardstock.' },
 ];
 
 const reasons = [
-  { icon: 'star', title: 'No Competitors Allowed', body: 'One business per industry, per mailing — you\u2019re never sharing the card with someone doing what you do.' },
-  { icon: 'mail', title: 'No Pages to Flip Past', body: 'It\u2019s a postcard, not an envelope to open or a page to scroll past. Your ad is right there, every time.' },
-  { icon: 'wrench' , title: 'We Handle Everything', body: 'Design, printing, postage \u2014 all handled. You just show up and answer the phone.' },
-  { icon: 'zap', title: 'Real, Trackable Results', body: 'Every spot gets a QR code to its own redemption landing page, so you see exactly what the postcard drove.' },
+  { icon: 'star', title: 'No Competitors Allowed', body: 'Your business is the only one in its category, so you\u2019re never sharing the card with a competitor.' },
+  { icon: 'mail', title: 'No Pages to Flip Through', body: 'It\u2019s a postcard, not an envelope to open or a page to flip past. Your ad is right there, every time.' },
+  { icon: 'wrench', title: 'We Handle Everything', body: 'Design, printing, postage \u2014 all handled. You just show up and answer the phone.' },
+  { icon: 'zap', title: 'Real, Trackable Results', body: 'Every spot gets a QR code to its own redemption page, so you see exactly what it drove.' },
 ];
 
 const schema = {
@@ -46,112 +40,93 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <span class="hero-eyebrow"><span class="dot"></span> Only 16 Spots Per Mailing</span>
-        <h1>Get your business in front of 5,000 Sioux Falls homes</h1>
-        <p class="hero-sub">The Sioux Falls Spotlight is a shared, professionally printed direct-mail postcard &mdash; no massive ad budget required, and no competing business in your category.</p>
-        <div class="hero-cta-row">
-          <a href="#apply" class="hero-cta">Claim Your Spot →</a>
-          <span class="hero-free-note">Free to apply &middot; one business per industry</span>
-        </div>
-      </div>
-      <div class="hero-photo-wrap">
-        <img src="/images/postcard-example.png" alt="A real example of the Spotlight postcard, showing local business ad spots of varying sizes" class="hero-postcard-photo" />
-        <span class="hero-photo-caption">A real example of the Spotlight postcard from a sibling market &mdash; same format, same sizes, printed for a different city.</span>
-      </div>
+  <section class="sl-hero">
+    <div class="container sl-hero-inner">
+      <span class="sl-eyebrow">The Sioux Falls Spotlight</span>
+      <h1>Get Your Business in Front of 5,000 Sioux Falls Homes</h1>
+      <p class="sl-hero-sub">Need a budget-friendly way to connect with local customers? The Spotlight is a direct-mail postcard that puts your business in front of 5,000 Sioux Falls households &mdash; no massive ad budget required.</p>
+      <a href="#apply" class="sl-cta">Claim Your Spot</a>
+    </div>
+
+    <div class="sl-postcard-stack">
+      <img src="/images/postcard-example.png" alt="The back of the Sioux Falls Spotlight postcard" class="sl-stack-photo sl-stack-photo--back" />
+      <img src="/images/postcard-example.png" alt="The Sioux Falls Spotlight postcard, showing local business ad spots of varying sizes" class="sl-stack-photo sl-stack-photo--front" />
     </div>
   </section>
 
-  <section class="stat-band">
-    <div class="container stat-grid">
-      <div class="stat"><span class="stat-num">5,000</span><span class="stat-label">Households mailed, targeted ZIP codes across Sioux Falls</span></div>
-      <div class="stat"><span class="stat-num">60&ndash;90%</span><span class="stat-label">Typically saved vs. a solo direct mail campaign</span></div>
-      <div class="stat"><span class="stat-num">1 of 16</span><span class="stat-label">Spots per mailing, one business per industry</span></div>
-    </div>
-  </section>
-
-  <div class="container page">
-    <section class="greet-section">
-      <div class="greet-text">
-        <span class="eyebrow">Hello, Sioux Falls Business Owner</span>
-        <h2>A full-color postcard, hand-delivered to 5,000 mailboxes</h2>
-        <p>The Spotlight is a full-color, oversized postcard mailed directly to targeted ZIP codes across Sioux Falls &mdash; no envelope to open, no page to flip past. It lands right in the mailbox.</p>
-        <p>Only one business per industry is featured on each mailing, so when a neighbor pulls the Spotlight out of their mailbox, your business is the only one like it on the card. No competitors, no crowded page &mdash; just your name in front of people already looking for what you do.</p>
-      </div>
-      <div class="greet-photo-wrap">
-        <div class="greet-collage">
-          <img src="/images/businesses/redstone-electric.jpg" alt="A real Sioux Falls business already featured on Sioux Falls Go" class="collage-photo collage-photo--top" />
-          <img src="/images/businesses/thorson-construction.jpg" alt="A real Sioux Falls business already featured on Sioux Falls Go" class="collage-photo collage-photo--bottom" />
-          <div class="greet-badge">
-            <span class="badge-line1">Could Be</span>
-            <span class="badge-line2">You</span>
-          </div>
-        </div>
-      </div>
+  <div class="container sl-page">
+    <section class="sl-greet">
+      <h2>Hello, Sioux Falls business owner!</h2>
+      <p>The Spotlight is a full-color, <strong>oversized postcard</strong> hand-delivered to every mailbox on the mailing route &mdash; no envelope to open, no page to flip past. It lands right in front of 5,000 local households.</p>
+      <p>Best of all, only one business per category is featured on each mailer &mdash; so when a neighbor pulls the Spotlight out of their mailbox, your business is the star of your category. No competitors, no crowded page, just your name in front of the people already looking for what you offer.</p>
     </section>
 
-    <div class="cut-divider"><span>What's Included</span></div>
-
-    <section class="included-section">
-      <h2>Everything you need, nothing you don't</h2>
-      <div class="included-grid">
+    <section class="sl-included">
+      <span class="sl-eyebrow sl-eyebrow--dark">What's Included</span>
+      <h2>Everything You Need, Nothing You Don't</h2>
+      <div class="sl-included-grid">
         {included.map((item) => (
-          <div class="included-item">
-            <Icon name={item.icon} size={18} />
-            <span>{item.title}</span>
+          <div class="sl-card">
+            <div class="sl-icon-badge"><Icon name={item.icon} size={24} /></div>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
           </div>
         ))}
       </div>
     </section>
 
-    <div class="cut-divider"><span>September Mailing</span></div>
+    <section class="sl-spots">
+      <span class="sl-date-pill"><Icon name="star" size={14} /> September Mailing</span>
+      <h2>Live View of Open Spots &mdash; Claim Yours Now!</h2>
+      <p class="sl-spots-sub">Only one business per category makes it onto each mailer, and spots for the next drop are going fast. Reach out today to lock in your category before someone else does.</p>
 
-    <section class="spots-section">
-      <h2>Live View of Open Spots &mdash; Claim Yours Now</h2>
-      <p class="spots-sub">Only one business per industry makes it onto each mailer, and spots for the next drop go fast. This is a to-scale replica of the actual card &mdash; reach out today to lock in your category before someone else does.</p>
-
-      <div class="replica-card">
-        <div class="replica-tile replica-tile--feature replica-tile--open" style="grid-area: f1;">
-          <span class="replica-size">Feature Spot</span>
-          <span class="replica-status"><Icon name="check" size={13} /> Open</span>
+      <div class="sl-mock-card">
+        <div class="sl-mock-tile sl-mock-tile--medium sl-mock-tile--open" style="grid-area: m1;">
+          <span class="sl-mock-price">$550</span><span class="sl-mock-size">MEDIUM</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
         </div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s1;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s2;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s3;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s4;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-
-        <div class="replica-mast" style="grid-area: mast;">
-          <span class="replica-mast-logo">sioux falls <strong>go</strong></span>
-          <span class="replica-mast-tag">SPOTLIGHT</span>
-          <span class="replica-mast-cta">Want to advertise?<br /><a href="#apply">Claim a spot →</a></span>
+        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s1;">
+          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
         </div>
-
-        <div class="replica-tile replica-tile--open" style="grid-area: s5;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s6;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s7;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--open" style="grid-area: s8;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
-        <div class="replica-tile replica-tile--feature replica-tile--open" style="grid-area: f2;">
-          <span class="replica-size">Feature Spot</span>
-          <span class="replica-status"><Icon name="check" size={13} /> Open</span>
+        <div class="sl-mock-tile sl-mock-indicia" style="grid-area: ind;">
+          <span class="sl-mock-mast">sioux falls <strong>go</strong><br/><em>SPOTLIGHT</em></span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--large sl-mock-tile--open" style="grid-area: lg;">
+          <span class="sl-mock-price">$900</span><span class="sl-mock-size">LARGE</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--sold" style="grid-area: s2;">
+          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
+          <span class="sl-mock-stamp sl-mock-stamp--sold">CLAIMED</span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--medium sl-mock-tile--open" style="grid-area: m2;">
+          <span class="sl-mock-price">$550</span><span class="sl-mock-size">MEDIUM</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s3;">
+          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s4;">
+          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        </div>
+        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s5;">
+          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
+          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
         </div>
       </div>
-
-      <div class="replica-legend">
-        <span class="legend-item"><span class="legend-swatch legend-swatch--open"></span> Open &mdash; apply to claim it</span>
-        <span class="legend-item"><span class="legend-swatch legend-swatch--sold"></span> Sold &mdash; already claimed</span>
-      </div>
-      <p class="spots-fine">Live for the next mailing &mdash; updated as spots are claimed. All 10 shown are open for the very first Sioux Falls run. Apply below and we'll confirm exactly what's open in your industry.</p>
+      <p class="sl-mock-fine">Pricing shown matches the standard Spotlight rate card &mdash; confirm current availability when you apply. All spots shown are open for Sioux Falls' first run, except where noted.</p>
     </section>
 
-    <div class="cut-divider"><span>Why Join the Sioux Falls Spotlight?</span></div>
-
-    <section class="reasons-section">
-      <div class="reasons-grid">
+    <section class="sl-why">
+      <span class="sl-eyebrow sl-eyebrow--dark">Why Join</span>
+      <h2>Why Join the Sioux Falls Spotlight?</h2>
+      <div class="sl-why-grid">
         {reasons.map((r) => (
-          <div class="reason-card">
-            <Icon name={r.icon} size={20} />
+          <div class="sl-card">
+            <div class="sl-icon-badge sl-icon-badge--gold"><Icon name={r.icon} size={24} /></div>
             <h3>{r.title}</h3>
             <p>{r.body}</p>
           </div>
@@ -159,97 +134,58 @@ const schema = {
       </div>
     </section>
 
-    <div class="cut-divider"><span>A Note From Francis</span></div>
+    <section class="sl-founder">
+      <img src="/images/scenic/francis-founder.jpg" alt="Francis, founder of Sioux Falls Go" class="sl-founder-photo" />
+      <span class="sl-eyebrow sl-eyebrow--dark">A Note From The Founder</span>
+      <h2>Hey, Francis here.</h2>
+      <p>You don't need a massive ad budget to get noticed here. My goal is simple: I connect good local businesses with the neighbors who are already looking for what they offer.</p>
+      <p>That's it. No frills, no long-term commitment, just a straightforward way to get your name in front of people nearby.</p>
+      <p class="sl-founder-sign">&mdash; Francis, Sioux Falls Go</p>
+    </section>
 
-    <section class="founder-section">
-      <div class="founder-photo" style="background-image: url('/images/scenic/francis-founder.jpg')"></div>
-      <div class="founder-copy">
-        <p>"You don't need a massive ad budget to get noticed here. My goal is simple &mdash; connect good local businesses with the neighbors who are already looking for what they offer. That's it. No frills, no long-term commitment, just a straightforward way to get your name in front of people nearby."</p>
-        <p class="founder-sign">&mdash; Francis, Sioux Falls Go</p>
+    <section class="sl-qualify">
+      <h2>We Don't Take Everyone</h2>
+      <p class="sl-qualify-sub">Participation isn't just about advertising &mdash; it's about aligning with values that foster trust in the community. To be eligible, your business should be:</p>
+      <div class="sl-qualify-grid">
+        <div class="sl-card"><div class="sl-icon-badge"><Icon name="home" size={22} /></div><h3>Locally Owned &amp; Operated</h3><p>Rooted in Sioux Falls, not a national chain with a local storefront.</p></div>
+        <div class="sl-card"><div class="sl-icon-badge"><Icon name="rocket" size={22} /></div><h3>Ready to Serve More Customers</h3><p>5,000 households means real interest &mdash; you should be ready to answer it.</p></div>
+        <div class="sl-card"><div class="sl-icon-badge"><Icon name="heart" size={22} /></div><h3>Ethical &amp; Trustworthy</h3><p>We spotlight businesses that already operate with integrity, not just anyone who can pay.</p></div>
       </div>
     </section>
 
-    <div class="cut-divider"><span>Before You Apply</span></div>
+    <section class="sl-apply-band" id="apply">
+      <h2>Claim Your Spot</h2>
+      <p>Ready to get your business in front of 5,000 local homes? Spots for the next mailing are limited &mdash; fill out the form below to get started.</p>
 
-    <section class="qualify-section">
-      <h2>We don't take everyone</h2>
-      <p class="qualify-sub">Participation isn't just about advertising &mdash; it's about aligning with values that foster trust in the community. To be eligible, your business should be:</p>
-      <div class="qualify-grid">
-        <div class="qualify-item"><h3><Icon name="home" size={20} /> Locally Owned &amp; Operated</h3><p>Rooted in Sioux Falls, not a national chain with a local storefront.</p></div>
-        <div class="qualify-item"><h3><Icon name="rocket" size={20} /> Ready to Serve More Customers</h3><p>5,000 households means real interest &mdash; you should be ready to answer it.</p></div>
-        <div class="qualify-item"><h3><Icon name="heart" size={20} /> Ethical &amp; Trustworthy</h3><p>We spotlight businesses that already operate with integrity, not just anyone who can pay.</p></div>
-      </div>
-    </section>
-
-    <div class="cut-divider"><span>Claim Your Spot</span></div>
-
-    <section class="apply-section" id="apply">
-      <div class="apply-stamp"><Icon name="mail" size={22} /></div>
-      <h2>Apply for the Next Mailing</h2>
-      <p class="apply-sub">
-        Spots are limited to one business per industry. Tell us about your
-        business below and we'll follow up with availability, sizes, and
-        pricing for the next drop.
-      </p>
-
-      <form name="postcard-apply" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="apply-form">
+      <form name="postcard-apply" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="sl-form">
         <input type="hidden" name="form-name" value="postcard-apply" />
-        <p class="honeypot-field">
-          <label>Don't fill this out if you're human: <input name="not_human" /></label>
-        </p>
+        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
 
-        <div class="form-row">
-          <label>
-            First name *
-            <input type="text" name="first_name" required />
-          </label>
-          <label>
-            Last name *
-            <input type="text" name="last_name" required />
-          </label>
+        <div class="sl-form-row">
+          <label>First Name<input type="text" name="first_name" required /></label>
+          <label>Last Name<input type="text" name="last_name" required /></label>
         </div>
-        <div class="form-row">
-          <label>
-            Business name *
-            <input type="text" name="business_name" required />
-          </label>
-          <label>
-            Industry / category *
-            <input type="text" name="industry" placeholder="e.g. Roofing, Dentist, Coffee Shop" required />
-          </label>
+        <div class="sl-form-row">
+          <label>Business Name<input type="text" name="business_name" required /></label>
+          <label>Industry / Category<input type="text" name="industry" placeholder="e.g. Roofing, Dentist, Coffee Shop" required /></label>
         </div>
-        <div class="form-row">
-          <label>
-            Email *
-            <input type="email" name="email" required />
-          </label>
-          <label>
-            Phone
-            <input type="tel" name="phone" />
-          </label>
+        <div class="sl-form-row">
+          <label>Email<input type="email" name="email" required /></label>
+          <label>Phone<input type="tel" name="phone" /></label>
         </div>
-        <label>
-          Preferred spot size
+        <label>Preferred Spot Size
           <select name="preferred_size">
             <option value="not-sure">Not sure yet &mdash; tell me what's available</option>
-            <option value="standard">Standard Spot</option>
-            <option value="feature">Feature Spot</option>
+            <option value="small">Small ($300)</option>
+            <option value="medium">Medium ($550)</option>
+            <option value="large">Large ($900)</option>
           </select>
         </label>
-        <label>
-          Anything else we should know?
-          <textarea name="notes" rows="3" placeholder="Neighborhood you'd like to target, timing, questions — anything."></textarea>
-        </label>
+        <label>Message<textarea name="notes" rows="3" placeholder="Anything else we should know?"></textarea></label>
 
-        <button type="submit" class="button">Apply for a Spot →</button>
+        <button type="submit" class="sl-cta sl-cta--form">Send</button>
       </form>
-
-      <p class="apply-fine">
-        Your information stays private. We'll never spam you or sell your
-        details. See our <a href="/privacy-policy">privacy policy</a>.
-        Spots are limited and go quickly by industry &mdash; applying doesn't
-        guarantee a spot in the next mailing.
-      </p>
+      <p class="sl-form-fine">Your information stays private. See our <a href="/privacy-policy">privacy policy</a>. Applying doesn't guarantee a spot in the next mailing.</p>
     </section>
   </div>
 
@@ -257,185 +193,144 @@ const schema = {
 </BaseLayout>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Lora:ital,wght@0,400;0,500;1,500&display=swap');
 
-  .page { padding-block: 3.5rem; }
-  .eyebrow { display: block; font-weight: 700; font-size: 0.8125rem; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-
-  .cut-divider {
-    display: flex; align-items: center; gap: 1rem; margin-block: 3.5rem;
-    color: var(--color-navy-light); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  :root {
+    --sl-green: #1f3d2f;
+    --sl-green-light: #2a4d3a;
+    --sl-cream: #f6efe0;
+    --sl-cream-line: #e9dfc8;
+    --sl-gold: #c9922f;
+    --sl-gold-dark: #a8791f;
+    --sl-ink: #262420;
+    --sl-ink-light: #5c584f;
   }
-  .cut-divider::before, .cut-divider::after { content: ''; flex: 1; border-top: 2px dashed var(--color-line); }
-  .cut-divider span { white-space: nowrap; }
+
+  .sl-page :global(h1), .sl-page :global(h2), .sl-page :global(h3),
+  .sl-hero h1, .sl-hero h2 { font-family: 'Playfair Display', serif; }
+  .sl-page, .sl-hero { font-family: 'Lora', serif; color: var(--sl-ink); }
+
+  .sl-eyebrow { display: block; font-family: 'Lora', serif; font-weight: 600; font-size: 0.8125rem; color: var(--sl-gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.8rem; }
+  .sl-eyebrow--dark { text-align: center; }
+
+  .sl-cta {
+    display: inline-block; background: var(--sl-gold); color: #fff; font-weight: 700; font-size: 1rem;
+    padding: 1rem 2.2rem; border-radius: 0.6rem; text-decoration: none; transition: background 0.15s ease;
+    font-family: 'Lora', serif;
+  }
+  .sl-cta:hover { background: var(--sl-gold-dark); }
 
   /* HERO */
-  .hero { background: var(--color-navy); padding-block: 4rem; position: relative; overflow: hidden; }
-  .hero-grid { display: grid; grid-template-columns: 1fr 1.18fr; gap: 3rem; align-items: center; }
-  @media (max-width: 60rem) { .hero-grid { grid-template-columns: 1fr; } }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 0.8125rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.2rem; }
-  .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-gold); }
-  .hero h1 { font-family: 'Anton', var(--font-display); font-weight: 400; color: #fff; font-size: 2.75rem; line-height: 1.12; margin: 0; letter-spacing: 0.01em; text-transform: uppercase; max-width: 14ch; }
-  .hero-sub { color: rgba(255,255,255,0.78); font-size: 1.0625rem; line-height: 1.6; max-width: 32rem; margin-top: 1.3rem; }
-  .hero-cta-row { display: flex; align-items: center; gap: 1.1rem; margin-top: 1.8rem; flex-wrap: wrap; }
-  .hero-cta { display: inline-block; background: var(--color-orange); color: #fff; font-weight: 700; font-size: 0.9375rem; padding: 0.85rem 1.8rem; border-radius: var(--radius-pill); text-decoration: none; transition: background 0.15s ease; }
-  .hero-cta:hover { background: var(--color-orange-dark); }
-  .hero-free-note { color: rgba(255,255,255,0.55); font-size: 0.875rem; }
+  .sl-hero { background: var(--sl-green); padding: 4.5rem 0 0; text-align: center; }
+  .sl-hero-inner { max-width: 44rem; margin: 0 auto; }
+  .sl-hero h1 { color: #fff; font-size: 2.6rem; font-weight: 700; line-height: 1.2; margin: 0 0 1.2rem; }
+  .sl-hero-sub { color: rgba(255,255,255,0.75); font-size: 1.125rem; line-height: 1.65; margin-bottom: 2rem; }
 
-  .hero-photo-wrap { position: relative; }
-  .hero-postcard-photo {
-    width: 100%; border-radius: 0.5rem; box-shadow: 0 30px 70px rgba(0,0,0,0.5);
-    transform: rotate(1.2deg); border: 6px solid #fff; display: block;
+  .sl-postcard-stack { position: relative; max-width: 46rem; margin: 3.5rem auto 0; padding-bottom: 3.5rem; }
+  .sl-stack-photo { width: 100%; border-radius: 0.6rem; box-shadow: 0 30px 60px rgba(0,0,0,0.35); display: block; }
+  .sl-stack-photo--back { position: absolute; inset: 0; transform: rotate(4deg) translateX(2%); opacity: 0.85; filter: brightness(0.85); }
+  .sl-stack-photo--front { position: relative; transform: rotate(-2deg); }
+
+  /* SHARED SECTION RHYTHM */
+  .sl-page { padding-block: 4rem; }
+  .sl-page > section { padding-block: 3.5rem; text-align: center; }
+  .sl-page > section h2 { font-size: 2rem; color: var(--sl-ink); margin: 0 0 1.2rem; max-width: 26ch; margin-inline: auto; }
+  .sl-page > section p { color: var(--sl-ink-light); font-size: 1.0625rem; line-height: 1.7; max-width: 60ch; margin: 0 auto 1rem; }
+
+  .sl-greet strong { color: var(--sl-ink); }
+
+  /* CARDS SHARED */
+  .sl-card {
+    background: #fff; border-radius: 1rem; padding: 2.2rem 1.8rem; box-shadow: 0 6px 20px rgba(38,36,32,0.06);
   }
-  .hero-photo-caption { display: block; font-size: 0.75rem; color: rgba(255,255,255,0.45); text-align: center; margin-top: 1.2rem; max-width: 26rem; margin-inline: auto; line-height: 1.5; }
-
-  /* STAT BAND */
-  .stat-band { background: var(--color-surface); border-bottom: 1px solid var(--color-line); padding-block: 2.4rem; }
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center; }
-  @media (max-width: 45rem) { .stat-grid { grid-template-columns: 1fr; } }
-  .stat-num { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.1rem; color: var(--color-navy); }
-  .stat-label { display: block; font-size: 0.875rem; color: var(--color-navy-light); margin-top: 0.3rem; max-width: 22ch; margin-inline: auto; }
-
-  /* GREETING — two-column with real photo collage */
-  .greet-section {
-    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3.5rem; align-items: center;
-    background: linear-gradient(135deg, #FBF3EA 0%, #fff 60%); border-radius: 1.4rem; padding: 2.8rem;
+  .sl-card h3 { font-size: 1.1875rem; color: var(--sl-ink); margin: 0 0 0.6rem; }
+  .sl-card p { font-size: 0.9375rem; margin: 0; max-width: none; }
+  .sl-icon-badge {
+    width: 3.6rem; height: 3.6rem; border-radius: 0.9rem; background: var(--sl-cream); color: var(--sl-green);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem;
   }
-  @media (max-width: 55rem) { .greet-section { grid-template-columns: 1fr; gap: 2rem; padding: 1.8rem; } }
-  .greet-text h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.2rem; max-width: 20ch; }
-  .greet-text p { font-size: 1.0625rem; color: var(--color-navy-light); line-height: 1.65; max-width: 62ch; margin: 0 0 1rem; }
+  .sl-icon-badge--gold { background: #f7e9d2; color: var(--sl-gold-dark); }
 
-  .greet-collage { position: relative; }
-  .collage-photo {
-    width: 82%; object-fit: cover; border-radius: 1rem; display: block;
-    box-shadow: 0 20px 40px rgba(13,23,48,0.18); border: 5px solid #fff;
+  /* INCLUDED + WHY (cream bg sections) */
+  .sl-included, .sl-why, .sl-spots { background: var(--sl-cream); border-radius: 1.4rem; margin-inline: -1rem; padding-inline: 1rem; }
+  .sl-included-grid, .sl-why-grid, .sl-qualify-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; margin-top: 2rem; text-align: left;
   }
-  .collage-photo--top { aspect-ratio: 5/4; position: relative; z-index: 1; }
-  .collage-photo--bottom { aspect-ratio: 5/4; margin: -3rem 0 0 auto; position: relative; z-index: 2; }
-  .greet-badge {
-    position: absolute; top: -1.2rem; right: -0.6rem; z-index: 3;
-    width: 6rem; height: 6rem; border-radius: 50%; background: var(--color-navy);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    color: #fff; box-shadow: 0 12px 26px rgba(13,23,48,0.35); transform: rotate(7deg);
-  }
-  .badge-line1, .badge-line2 { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; line-height: 1.15; }
-  @media (max-width: 55rem) {
-    .collage-photo { width: 74%; }
-    .collage-photo--bottom { margin-top: -2.2rem; }
-    .greet-badge { width: 5rem; height: 5rem; }
-    .badge-line1, .badge-line2 { font-size: 0.9375rem; }
-  }
+  .sl-qualify-grid { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 55rem) { .sl-included-grid, .sl-why-grid, .sl-qualify-grid { grid-template-columns: 1fr; } }
+  .sl-included-grid .sl-card, .sl-why-grid .sl-card { text-align: center; }
 
-  /* WHAT'S INCLUDED — stamped checklist, not icon cards */
-  .included-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1.6rem; }
-  .included-grid { display: flex; flex-wrap: wrap; gap: 0.9rem; }
-  .included-item {
-    display: flex; align-items: center; gap: 0.6rem; background: var(--color-surface); border: 1px solid var(--color-line);
-    border-radius: var(--radius-pill); padding: 0.7rem 1.3rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy);
+  /* LIVE SPOTS MOCK CARD */
+  .sl-date-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; border-radius: 999px;
+    padding: 0.5rem 1.2rem; font-size: 0.8125rem; font-weight: 700; color: var(--sl-ink); margin-bottom: 1.2rem;
   }
-  .included-item :global(svg) { color: var(--color-orange-dark); flex-shrink: 0; }
+  .sl-date-pill :global(svg) { color: var(--sl-gold); }
+  .sl-spots-sub { margin-bottom: 2.2rem !important; }
 
-  /* LIVE VIEW OF OPEN SPOTS */
-  .spots-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1rem; max-width: 26ch; }
-  .spots-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 60ch; margin-bottom: 2rem; line-height: 1.6; }
-
-  /* Replica card — a to-scale mock of the actual postcard grid, echoing
-     the real reference photo's layout: a feature tile top-left, a masthead
-     band cutting across the middle, a mirrored feature tile bottom-right. */
-  .replica-card {
-    display: grid; gap: 0.5rem; background: #0c1220; border-radius: 0.9rem; padding: 0.9rem;
-    box-shadow: 0 24px 60px rgba(13,23,48,0.25); border: 1px solid #1c2436;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(2, 5.5rem) auto repeat(2, 5.5rem);
+  .sl-mock-card {
+    max-width: 40rem; margin: 0 auto; background: #fdf6df; border: 3px solid #f0dfa0; border-radius: 1rem;
+    padding: 0.7rem; box-shadow: 0 20px 50px rgba(38,36,32,0.15);
+    display: grid; gap: 0.5rem; text-align: left;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 5.2rem) repeat(2, 5.2rem);
     grid-template-areas:
-      "f1 f1 f1 s1 s2 s3"
-      "f1 f1 f1 s1 s2 s3"
-      "mast mast mast mast mast mast"
-      "s5 s5 s6 s6 f2 f2"
-      "s7 s7 s8 s8 f2 f2";
+      "m1 s1 ind ind"
+      "m1 lg lg s2"
+      "m2 lg lg s3"
+      "m2 s4 s5 s5";
   }
-  @media (max-width: 40rem) {
-    .replica-card {
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, 4.5rem) repeat(2, 3.4rem) auto repeat(2, 3.4rem) repeat(2, 4.5rem);
-      grid-template-areas:
-        "f1 f1 f1" "f1 f1 f1"
-        "s1 s2 s3" "s1 s2 s3"
-        "mast mast mast"
-        "s5 s6 s7" "s5 s6 s7"
-        "f2 f2 f2" "f2 f2 f2";
-    }
+  @media (max-width: 30rem) {
+    .sl-mock-card { grid-template-rows: repeat(2, 4.2rem) repeat(2, 4.2rem); }
   }
-  .replica-tile {
-    border-radius: 0.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
-    text-align: center; padding: 0.5rem;
+  .sl-mock-tile {
+    position: relative; background: #fff; border-radius: 0.5rem; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; overflow: hidden; border: 1px solid #f0dfa0;
   }
-  .replica-tile--open { background: rgba(46,158,91,0.14); border: 1.5px dashed rgba(111,214,153,0.55); }
-  .replica-tile--feature .replica-size { color: #fff; font-weight: 700; font-size: 0.875rem; }
-  .replica-tile:not(.replica-tile--feature) .replica-size { display: none; }
-  .replica-status { color: #6fd699; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
-  .replica-mast {
-    grid-area: mast; background: #000; border-radius: 0.4rem; display: flex; align-items: center; justify-content: space-between;
-    padding: 0.9rem 1.4rem; flex-wrap: wrap; gap: 0.6rem;
+  .sl-mock-price { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: #2e9e5b; margin-top: -1.2rem; }
+  .sl-mock-tile--sold .sl-mock-price { color: var(--sl-ink-light); }
+  .sl-mock-size { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--sl-ink-light); margin-top: 0.1rem; }
+  .sl-mock-stamp {
+    position: absolute; bottom: 0.4rem; font-family: 'Playfair Display', serif; font-weight: 800; font-size: 0.9rem;
+    transform: rotate(-10deg); padding: 0.05rem 0.7rem; border: 2.5px solid; border-radius: 0.3rem;
+    background: rgba(255,255,255,0.75); letter-spacing: 0.03em;
   }
-  .replica-mast-logo { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: #fff; }
-  .replica-mast-logo strong { color: var(--color-gold); }
-  .replica-mast-tag { font-family: 'Anton', var(--font-display); color: var(--color-gold); font-size: 1.3rem; letter-spacing: 0.03em; }
-  .replica-mast-cta { color: rgba(255,255,255,0.65); font-size: 0.6875rem; line-height: 1.4; text-align: right; }
-  .replica-mast-cta a { color: var(--color-gold); font-weight: 700; text-decoration: none; }
+  .sl-mock-stamp--open { color: #2e9e5b; border-color: #2e9e5b; }
+  .sl-mock-stamp--sold { color: #c1442e; border-color: #c1442e; }
+  .sl-mock-indicia {
+    background: var(--sl-green) !important; border: none !important;
+  }
+  .sl-mock-mast { font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; font-size: 0.75rem; text-align: center; line-height: 1.5; }
+  .sl-mock-mast strong { color: var(--sl-gold); }
+  .sl-mock-mast em { display: block; font-style: normal; letter-spacing: 0.1em; font-size: 0.5625rem; color: rgba(255,255,255,0.6); }
+  .sl-mock-fine { font-size: 0.8125rem !important; color: var(--sl-ink-light); margin-top: 1.6rem !important; }
 
-  .replica-legend { display: flex; gap: 1.6rem; margin-top: 1.4rem; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--color-navy-light); }
-  .legend-swatch { width: 0.9rem; height: 0.9rem; border-radius: 0.25rem; display: inline-block; }
-  .legend-swatch--open { background: rgba(46,158,91,0.18); border: 1.5px dashed #2e9e5b; }
-  .legend-swatch--sold { background: var(--color-line); border: 1.5px solid var(--color-navy-light); }
-  .spots-fine { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 1.4rem; }
-
-  /* WHY JOIN */
-  .reasons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
-  @media (max-width: 45rem) { .reasons-grid { grid-template-columns: 1fr; } }
-  .reason-card { padding: 1.7rem; background: var(--color-surface); border-radius: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-  .reason-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(13,23,48,0.1); }
-  .reason-card :global(svg) { color: var(--color-orange-dark); }
-  .reason-card h3 { font-size: 1.0625rem; color: var(--color-navy); margin: 0.7rem 0 0.5rem; }
-  .reason-card p { font-size: 0.9375rem; color: var(--color-navy-light); line-height: 1.55; margin: 0; }
-
-  /* FOUNDER NOTE */
-  .founder-section { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 2.5rem; align-items: center; }
-  @media (max-width: 45rem) { .founder-section { grid-template-columns: 1fr; } }
-  .founder-photo { aspect-ratio: 4/5; border-radius: 1rem; background-size: cover; background-position: center; box-shadow: 0 16px 40px rgba(13,23,48,0.14); }
-  .founder-copy p { font-family: var(--font-display); font-size: 1.15rem; line-height: 1.55; color: var(--color-navy); font-style: italic; margin: 0 0 1rem; max-width: 48ch; }
-  .founder-sign { font-family: var(--font-body) !important; font-style: normal !important; font-weight: 700; font-size: 0.9375rem !important; color: var(--color-navy-light) !important; }
-
-  /* QUALIFY */
-  .qualify-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1rem; }
-  .qualify-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 56ch; margin-bottom: 1.8rem; }
-  .qualify-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
-  @media (max-width: 55rem) { .qualify-grid { grid-template-columns: 1fr; } }
-  .qualify-item { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(13,23,48,0.06); }
-  .qualify-item h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 1rem; color: var(--color-navy); margin: 0 0 0.5rem; }
-  .qualify-item p { font-size: 0.875rem; color: var(--color-navy-light); margin: 0; line-height: 1.5; }
+  /* FOUNDER */
+  .sl-founder-photo {
+    width: 8.5rem; height: 8.5rem; border-radius: 50%; object-fit: cover; margin: 0 auto 1.4rem;
+    border: 4px solid #fff; box-shadow: 0 10px 30px rgba(38,36,32,0.15); display: block;
+  }
+  .sl-founder p { font-style: italic; }
+  .sl-founder-sign { font-style: italic; font-weight: 600; color: var(--sl-ink) !important; }
 
   /* APPLY FORM */
-  .apply-section { position: relative; border: 2px dashed var(--color-line); border-radius: 1.2rem; padding: 2.4rem; }
-  .apply-stamp {
-    position: absolute; top: -1.3rem; right: 2.4rem; width: 2.8rem; height: 2.8rem; border-radius: 0.4rem;
-    background: var(--color-orange); color: #fff; display: flex; align-items: center; justify-content: center;
-    transform: rotate(6deg); box-shadow: 0 8px 20px rgba(240,126,35,0.4);
+  .sl-apply-band { background: var(--sl-green); border-radius: 1.4rem; margin-inline: -1rem; padding: 3rem 1.5rem !important; }
+  .sl-apply-band h2 { color: #fff !important; }
+  .sl-apply-band > p { color: rgba(255,255,255,0.75) !important; }
+  .sl-form {
+    max-width: 30rem; margin: 0 auto; background: #fff; border-radius: 1rem; padding: 2rem;
+    display: flex; flex-direction: column; gap: 1rem; text-align: left;
   }
-  .apply-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 0.6rem; }
-  .apply-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 56ch; margin-bottom: 1.6rem; }
-  .apply-form { max-width: 34rem; display: flex; flex-direction: column; gap: 1rem; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  @media (max-width: 30rem) { .form-row { grid-template-columns: 1fr; } }
-  .apply-form label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 600; font-size: 0.9375rem; color: var(--color-navy); }
-  .apply-form input, .apply-form textarea, .apply-form select {
-    padding: 0.75rem 0.9rem; border-radius: 0.6rem; border: 1px solid var(--color-line);
-    font-family: var(--font-body); font-size: 0.9375rem; background: var(--color-surface); resize: vertical;
+  .sl-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 28rem) { .sl-form-row { grid-template-columns: 1fr; } }
+  .sl-form label { display: flex; flex-direction: column; gap: 0.4rem; font-weight: 600; font-size: 0.9375rem; color: var(--sl-ink); }
+  .sl-form input, .sl-form select, .sl-form textarea {
+    padding: 0.75rem 0.9rem; border-radius: 0.5rem; border: 1px solid #ddd6c4; font-family: 'Lora', serif;
+    font-size: 0.9375rem; resize: vertical;
   }
-  .apply-form input:focus, .apply-form textarea:focus, .apply-form select:focus { border-color: var(--color-orange); outline: none; }
-  .apply-form button { align-self: flex-start; margin-top: 0.3rem; }
-  .apply-fine { font-size: 0.8125rem; color: var(--color-navy-light); max-width: 40rem; margin-top: 1.3rem; line-height: 1.5; }
-  .apply-fine a { color: var(--color-orange-dark); }
+  .sl-form input:focus, .sl-form select:focus, .sl-form textarea:focus { outline: 2px solid var(--sl-gold); border-color: var(--sl-gold); }
+  .sl-cta--form { align-self: center; width: 100%; text-align: center; border: none; cursor: pointer; margin-top: 0.4rem; }
+  .sl-form-fine { color: rgba(255,255,255,0.6) !important; font-size: 0.8125rem !important; margin-top: 1.2rem !important; }
+  .sl-form-fine a { color: var(--sl-gold); }
   .honeypot-field { position: absolute; left: -9999px; }
 </style>
