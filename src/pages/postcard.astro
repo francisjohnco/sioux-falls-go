@@ -42,10 +42,10 @@ const schema = {
 
   <section class="sl-hero">
     <div class="container sl-hero-inner">
-      <span class="sl-eyebrow">The Sioux Falls Spotlight</span>
-      <h1>Get Your Business in Front of 5,000 Sioux Falls Homes</h1>
-      <p class="sl-hero-sub">Need a budget-friendly way to connect with local customers? The Spotlight is a direct-mail postcard that puts your business in front of 5,000 Sioux Falls households &mdash; no massive ad budget required.</p>
-      <a href="#apply" class="sl-cta">Claim Your Spot</a>
+      <span class="sl-eyebrow">Only 16 Spots Per Mailing</span>
+      <h1>One Postcard. 5,000 Mailboxes. Your Business, Right There.</h1>
+      <p class="sl-hero-sub">The Sioux Falls Spotlight is a shared, professionally printed direct-mail postcard &mdash; no massive ad budget required, and no competing business in your category.</p>
+      <a href="#apply" class="sl-cta">Apply for a Spot →</a>
     </div>
 
     <div class="sl-postcard-stack">
@@ -56,9 +56,9 @@ const schema = {
 
   <div class="container sl-page">
     <section class="sl-greet">
-      <h2>Hello, Sioux Falls business owner!</h2>
-      <p>The Spotlight is a full-color, <strong>oversized postcard</strong> hand-delivered to every mailbox on the mailing route &mdash; no envelope to open, no page to flip past. It lands right in front of 5,000 local households.</p>
-      <p>Best of all, only one business per category is featured on each mailer &mdash; so when a neighbor pulls the Spotlight out of their mailbox, your business is the star of your category. No competitors, no crowded page, just your name in front of the people already looking for what you offer.</p>
+      <h2>A Full-Color Postcard, Hand-Delivered to 5,000 Mailboxes</h2>
+      <p>The Spotlight is a full-color, <strong>oversized postcard</strong> mailed directly to targeted ZIP codes across Sioux Falls &mdash; no envelope to open, no page to flip past. It lands right in the mailbox.</p>
+      <p>Only one business per industry is featured on each mailing, so when a neighbor pulls the Spotlight out of their mailbox, your business is the only one like it on the card. No competitors, no crowded page &mdash; just your name in front of people already looking for what you do.</p>
     </section>
 
     <section class="sl-included">
@@ -122,7 +122,7 @@ const schema = {
 
     <section class="sl-why">
       <span class="sl-eyebrow sl-eyebrow--dark">Why Join</span>
-      <h2>Why Join the Sioux Falls Spotlight?</h2>
+      <h2>What Makes This Different From Mailing Solo</h2>
       <div class="sl-why-grid">
         {reasons.map((r) => (
           <div class="sl-card">
@@ -136,9 +136,9 @@ const schema = {
 
     <section class="sl-founder">
       <img src="/images/scenic/francis-founder.jpg" alt="Francis, founder of Sioux Falls Go" class="sl-founder-photo" />
-      <span class="sl-eyebrow sl-eyebrow--dark">A Note From The Founder</span>
-      <h2>Hey, Francis here.</h2>
-      <p>You don't need a massive ad budget to get noticed here. My goal is simple: I connect good local businesses with the neighbors who are already looking for what they offer.</p>
+      <span class="sl-eyebrow sl-eyebrow--dark">A Note From Francis</span>
+      <h2>You don't need a big budget to get noticed here.</h2>
+      <p>My goal is simple: connect good local businesses with the neighbors who are already looking for what they offer.</p>
       <p>That's it. No frills, no long-term commitment, just a straightforward way to get your name in front of people nearby.</p>
       <p class="sl-founder-sign">&mdash; Francis, Sioux Falls Go</p>
     </section>
@@ -183,7 +183,7 @@ const schema = {
         </label>
         <label>Message<textarea name="notes" rows="3" placeholder="Anything else we should know?"></textarea></label>
 
-        <button type="submit" class="sl-cta sl-cta--form">Send</button>
+        <button type="submit" class="sl-cta sl-cta--form">Apply for a Spot →</button>
       </form>
       <p class="sl-form-fine">Your information stays private. See our <a href="/privacy-policy">privacy policy</a>. Applying doesn't guarantee a spot in the next mailing.</p>
     </section>
@@ -193,30 +193,28 @@ const schema = {
 </BaseLayout>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Lora:ital,wght@0,400;0,500;1,500&display=swap');
-
   :root {
-    --sl-green: #1f3d2f;
-    --sl-green-light: #2a4d3a;
-    --sl-cream: #f6efe0;
-    --sl-cream-line: #e9dfc8;
-    --sl-gold: #c9922f;
-    --sl-gold-dark: #a8791f;
-    --sl-ink: #262420;
-    --sl-ink-light: #5c584f;
+    --sl-green: var(--color-navy);
+    --sl-green-light: #2c3f61;
+    --sl-cream: var(--color-surface);
+    --sl-cream-line: var(--color-line);
+    --sl-gold: var(--color-orange);
+    --sl-gold-dark: var(--color-orange-dark);
+    --sl-ink: var(--color-navy);
+    --sl-ink-light: var(--color-navy-light);
   }
 
   .sl-page :global(h1), .sl-page :global(h2), .sl-page :global(h3),
-  .sl-hero h1, .sl-hero h2 { font-family: 'Playfair Display', serif; }
-  .sl-page, .sl-hero { font-family: 'Lora', serif; color: var(--sl-ink); }
+  .sl-hero h1, .sl-hero h2 { font-family: var(--font-display); }
+  .sl-page, .sl-hero { font-family: var(--font-body); color: var(--sl-ink); }
 
-  .sl-eyebrow { display: block; font-family: 'Lora', serif; font-weight: 600; font-size: 0.8125rem; color: var(--sl-gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.8rem; }
+  .sl-eyebrow { display: block; font-family: var(--font-body); font-weight: 600; font-size: 0.8125rem; color: var(--sl-gold); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.8rem; }
   .sl-eyebrow--dark { text-align: center; }
 
   .sl-cta {
     display: inline-block; background: var(--sl-gold); color: #fff; font-weight: 700; font-size: 1rem;
     padding: 1rem 2.2rem; border-radius: 0.6rem; text-decoration: none; transition: background 0.15s ease;
-    font-family: 'Lora', serif;
+    font-family: var(--font-body);
   }
   .sl-cta:hover { background: var(--sl-gold-dark); }
 
@@ -249,7 +247,7 @@ const schema = {
     width: 3.6rem; height: 3.6rem; border-radius: 0.9rem; background: var(--sl-cream); color: var(--sl-green);
     display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem;
   }
-  .sl-icon-badge--gold { background: #f7e9d2; color: var(--sl-gold-dark); }
+  .sl-icon-badge--gold { background: #FDEAD8; color: var(--sl-gold-dark); }
 
   /* INCLUDED + WHY (cream bg sections) */
   .sl-included, .sl-why, .sl-spots { background: var(--sl-cream); border-radius: 1.4rem; margin-inline: -1rem; padding-inline: 1rem; }
@@ -287,11 +285,11 @@ const schema = {
     position: relative; background: #fff; border-radius: 0.5rem; display: flex; flex-direction: column;
     align-items: center; justify-content: center; overflow: hidden; border: 1px solid #f0dfa0;
   }
-  .sl-mock-price { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem; color: #2e9e5b; margin-top: -1.2rem; }
+  .sl-mock-price { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: #2e9e5b; margin-top: -1.2rem; }
   .sl-mock-tile--sold .sl-mock-price { color: var(--sl-ink-light); }
   .sl-mock-size { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--sl-ink-light); margin-top: 0.1rem; }
   .sl-mock-stamp {
-    position: absolute; bottom: 0.4rem; font-family: 'Playfair Display', serif; font-weight: 800; font-size: 0.9rem;
+    position: absolute; bottom: 0.4rem; font-family: var(--font-display); font-weight: 800; font-size: 0.9rem;
     transform: rotate(-10deg); padding: 0.05rem 0.7rem; border: 2.5px solid; border-radius: 0.3rem;
     background: rgba(255,255,255,0.75); letter-spacing: 0.03em;
   }
@@ -300,7 +298,7 @@ const schema = {
   .sl-mock-indicia {
     background: var(--sl-green) !important; border: none !important;
   }
-  .sl-mock-mast { font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; font-size: 0.75rem; text-align: center; line-height: 1.5; }
+  .sl-mock-mast { font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.75rem; text-align: center; line-height: 1.5; }
   .sl-mock-mast strong { color: var(--sl-gold); }
   .sl-mock-mast em { display: block; font-style: normal; letter-spacing: 0.1em; font-size: 0.5625rem; color: rgba(255,255,255,0.6); }
   .sl-mock-fine { font-size: 0.8125rem !important; color: var(--sl-ink-light); margin-top: 1.6rem !important; }
@@ -325,7 +323,7 @@ const schema = {
   @media (max-width: 28rem) { .sl-form-row { grid-template-columns: 1fr; } }
   .sl-form label { display: flex; flex-direction: column; gap: 0.4rem; font-weight: 600; font-size: 0.9375rem; color: var(--sl-ink); }
   .sl-form input, .sl-form select, .sl-form textarea {
-    padding: 0.75rem 0.9rem; border-radius: 0.5rem; border: 1px solid #ddd6c4; font-family: 'Lora', serif;
+    padding: 0.75rem 0.9rem; border-radius: 0.5rem; border: 1px solid var(--color-line); font-family: var(--font-body);
     font-size: 0.9375rem; resize: vertical;
   }
   .sl-form input:focus, .sl-form select:focus, .sl-form textarea:focus { outline: 2px solid var(--sl-gold); border-color: var(--sl-gold); }
