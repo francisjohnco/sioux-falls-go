@@ -24,13 +24,6 @@ const included = [
   { icon: 'heart', title: 'No Long-Term Contracts' },
 ];
 
-// Illustrative spot map for the next mailing. All shown open since this
-// is the first Sioux Falls run — swap statuses here once real spots sell.
-const spotTiers = [
-  { name: 'Feature Spot', count: 4, note: 'Bigger placement, top of the card', status: 'open' },
-  { name: 'Standard Spot', count: 12, note: 'Everyone else on the card', status: 'open' },
-];
-
 const reasons = [
   { icon: 'star', title: 'No Competitors Allowed', body: 'One business per industry, per mailing — you\u2019re never sharing the card with someone doing what you do.' },
   { icon: 'mail', title: 'No Pages to Flip Past', body: 'It\u2019s a postcard, not an envelope to open or a page to scroll past. Your ad is right there, every time.' },
@@ -105,28 +98,39 @@ const schema = {
 
     <section class="spots-section">
       <h2>Live View of Open Spots &mdash; Claim Yours Now</h2>
-      <p class="spots-sub">Only one business per industry makes it onto each mailer, and spots for the next drop go fast. Reach out today to lock in your category before someone else does.</p>
+      <p class="spots-sub">Only one business per industry makes it onto each mailer, and spots for the next drop go fast. This is a to-scale replica of the actual card &mdash; reach out today to lock in your category before someone else does.</p>
 
-      <div class="spot-map">
-        {spotTiers.map((tier) => (
-          <div class="spot-tier">
-            <div class="spot-tier-head">
-              <h3>{tier.name}</h3>
-              <span class="spot-tier-count">{tier.count} on this mailing</span>
-            </div>
-            <div class={`spot-cells spot-cells--${tier.name === 'Feature Spot' ? 'feature' : 'standard'}`}>
-              {Array.from({ length: tier.count }).map((_, i) => (
-                <div class="spot-cell spot-cell--open">
-                  <Icon name="check" size={14} />
-                  <span>Open</span>
-                </div>
-              ))}
-            </div>
-            <p class="spot-tier-note">{tier.note}</p>
-          </div>
-        ))}
+      <div class="replica-card">
+        <div class="replica-tile replica-tile--feature replica-tile--open" style="grid-area: f1;">
+          <span class="replica-size">Feature Spot</span>
+          <span class="replica-status"><Icon name="check" size={13} /> Open</span>
+        </div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s1;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s2;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s3;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s4;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+
+        <div class="replica-mast" style="grid-area: mast;">
+          <span class="replica-mast-logo">sioux falls <strong>go</strong></span>
+          <span class="replica-mast-tag">SPOTLIGHT</span>
+          <span class="replica-mast-cta">Want to advertise?<br /><a href="#apply">Claim a spot →</a></span>
+        </div>
+
+        <div class="replica-tile replica-tile--open" style="grid-area: s5;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s6;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s7;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--open" style="grid-area: s8;"><span class="replica-status"><Icon name="check" size={13} /> Open</span></div>
+        <div class="replica-tile replica-tile--feature replica-tile--open" style="grid-area: f2;">
+          <span class="replica-size">Feature Spot</span>
+          <span class="replica-status"><Icon name="check" size={13} /> Open</span>
+        </div>
       </div>
-      <p class="spots-fine">Live for the next mailing &mdash; updated as spots are claimed. Apply below and we'll confirm exactly what's open in your industry.</p>
+
+      <div class="replica-legend">
+        <span class="legend-item"><span class="legend-swatch legend-swatch--open"></span> Open &mdash; apply to claim it</span>
+        <span class="legend-item"><span class="legend-swatch legend-swatch--sold"></span> Sold &mdash; already claimed</span>
+      </div>
+      <p class="spots-fine">Live for the next mailing &mdash; updated as spots are claimed. All 10 shown are open for the very first Sioux Falls run. Apply below and we'll confirm exactly what's open in your industry.</p>
     </section>
 
     <div class="cut-divider"><span>Why Join the Sioux Falls Spotlight?</span></div>
@@ -296,21 +300,57 @@ const schema = {
   /* LIVE VIEW OF OPEN SPOTS */
   .spots-section h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.3rem 0 1rem; max-width: 26ch; }
   .spots-sub { color: var(--color-navy-light); font-size: 1rem; max-width: 60ch; margin-bottom: 2rem; line-height: 1.6; }
-  .spot-map { display: flex; flex-direction: column; gap: 1.6rem; }
-  .spot-tier { background: var(--color-navy); border-radius: 1rem; padding: 1.6rem; }
-  .spot-tier-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.4rem; }
-  .spot-tier-head h3 { color: #fff; font-size: 1.125rem; margin: 0; }
-  .spot-tier-count { color: rgba(255,255,255,0.55); font-size: 0.8125rem; font-weight: 600; }
-  .spot-cells { display: grid; gap: 0.6rem; }
-  .spot-cells--feature { grid-template-columns: repeat(4, 1fr); }
-  .spot-cells--standard { grid-template-columns: repeat(6, 1fr); }
-  @media (max-width: 40rem) { .spot-cells--feature { grid-template-columns: repeat(2, 1fr); } .spot-cells--standard { grid-template-columns: repeat(3, 1fr); } }
-  .spot-cell {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
-    border-radius: 0.5rem; padding: 0.9rem 0.5rem; font-size: 0.75rem; font-weight: 700;
+
+  /* Replica card — a to-scale mock of the actual postcard grid, echoing
+     the real reference photo's layout: a feature tile top-left, a masthead
+     band cutting across the middle, a mirrored feature tile bottom-right. */
+  .replica-card {
+    display: grid; gap: 0.5rem; background: #0c1220; border-radius: 0.9rem; padding: 0.9rem;
+    box-shadow: 0 24px 60px rgba(13,23,48,0.25); border: 1px solid #1c2436;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 5.5rem) auto repeat(2, 5.5rem);
+    grid-template-areas:
+      "f1 f1 f1 s1 s2 s3"
+      "f1 f1 f1 s1 s2 s3"
+      "mast mast mast mast mast mast"
+      "s5 s5 s6 s6 f2 f2"
+      "s7 s7 s8 s8 f2 f2";
   }
-  .spot-cell--open { background: rgba(46,158,91,0.18); color: #6fd699; border: 1.5px dashed rgba(111,214,153,0.5); }
-  .spot-tier-note { color: rgba(255,255,255,0.5); font-size: 0.8125rem; margin: 1rem 0 0; }
+  @media (max-width: 40rem) {
+    .replica-card {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 4.5rem) repeat(2, 3.4rem) auto repeat(2, 3.4rem) repeat(2, 4.5rem);
+      grid-template-areas:
+        "f1 f1 f1" "f1 f1 f1"
+        "s1 s2 s3" "s1 s2 s3"
+        "mast mast mast"
+        "s5 s6 s7" "s5 s6 s7"
+        "f2 f2 f2" "f2 f2 f2";
+    }
+  }
+  .replica-tile {
+    border-radius: 0.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem;
+    text-align: center; padding: 0.5rem;
+  }
+  .replica-tile--open { background: rgba(46,158,91,0.14); border: 1.5px dashed rgba(111,214,153,0.55); }
+  .replica-tile--feature .replica-size { color: #fff; font-weight: 700; font-size: 0.875rem; }
+  .replica-tile:not(.replica-tile--feature) .replica-size { display: none; }
+  .replica-status { color: #6fd699; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
+  .replica-mast {
+    grid-area: mast; background: #000; border-radius: 0.4rem; display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 1.4rem; flex-wrap: wrap; gap: 0.6rem;
+  }
+  .replica-mast-logo { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: #fff; }
+  .replica-mast-logo strong { color: var(--color-gold); }
+  .replica-mast-tag { font-family: 'Anton', var(--font-display); color: var(--color-gold); font-size: 1.3rem; letter-spacing: 0.03em; }
+  .replica-mast-cta { color: rgba(255,255,255,0.65); font-size: 0.6875rem; line-height: 1.4; text-align: right; }
+  .replica-mast-cta a { color: var(--color-gold); font-weight: 700; text-decoration: none; }
+
+  .replica-legend { display: flex; gap: 1.6rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .legend-swatch { width: 0.9rem; height: 0.9rem; border-radius: 0.25rem; display: inline-block; }
+  .legend-swatch--open { background: rgba(46,158,91,0.18); border: 1.5px dashed #2e9e5b; }
+  .legend-swatch--sold { background: var(--color-line); border: 1.5px solid var(--color-navy-light); }
   .spots-fine { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 1.4rem; }
 
   /* WHY JOIN */
