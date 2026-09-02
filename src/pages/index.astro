@@ -75,8 +75,15 @@ const schema = {
       <div class="about-grid">
         <h2>What Is Sioux Falls Go?</h2>
         <div class="about-photo-wrap">
-          <img src="/images/businesses/la-luna-cafe.jpg" alt="A local Sioux Falls coffee shop storefront at golden hour, welcoming customers in" class="about-photo" />
-          <span class="about-photo-caption">La Luna Cafe &mdash; one of the local businesses on Sioux Falls Go</span>
+          <div class="shop-local-collage">
+            <img src="/images/businesses/la-luna-cafe.jpg" alt="A local Sioux Falls storefront welcoming customers" class="collage-photo collage-photo--top" />
+            <img src="/images/businesses/shahi-india-grill.jpeg" alt="A spread of dishes from a local Sioux Falls restaurant" class="collage-photo collage-photo--bottom" />
+            <div class="shop-local-badge">
+              <span class="badge-line1">Shop</span>
+              <span class="badge-line2">Local</span>
+            </div>
+          </div>
+          <span class="about-photo-caption">Every dollar spent local stays local &mdash; that's the whole idea</span>
         </div>
         <div class="about-copy" id="about-copy">
           <p>Sioux Falls Go helps locals discover trusted businesses, local favorites, special offers, and giveaways&mdash;all while supporting the businesses that make our community great.</p>
@@ -90,6 +97,21 @@ const schema = {
         </div>
         <button class="about-toggle" id="aboutToggle" aria-expanded="false">Read more</button>
       </div>
+    </div>
+  </section>
+
+  <section class="join-section">
+    <div class="container join-inner">
+      <span class="eyebrow">For Locals</span>
+      <h2>Join the Community</h2>
+      <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
+      <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
+        <input type="hidden" name="form-name" value="join-community" />
+        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
+        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
+        <button type="submit" class="button">Join Free</button>
+      </form>
+      <p class="join-fine">Free forever. Unsubscribe anytime.</p>
     </div>
   </section>
 
@@ -126,21 +148,6 @@ const schema = {
       <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
       <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
       <a href="/get-featured" class="button button--navy">Get Featured →</a>
-    </div>
-  </section>
-
-  <section class="join-section">
-    <div class="container join-inner">
-      <span class="eyebrow">For Locals</span>
-      <h2>Join the Community</h2>
-      <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
-      <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
-        <input type="hidden" name="form-name" value="join-community" />
-        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
-        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
-        <button type="submit" class="button">Join Free</button>
-      </form>
-      <p class="join-fine">Free forever. Unsubscribe anytime.</p>
     </div>
   </section>
 
@@ -226,7 +233,7 @@ const schema = {
   .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 
   /* SECTION 1 — WHAT IS SIOUX FALLS GO (white, two-column with photo) */
-  .about { background: #fff; padding-block: 5.5rem; }
+  .about { background: linear-gradient(180deg, #FBF3EA 0%, #fff 55%); padding-block: 5.5rem; }
   .about-grid {
     display: grid; max-width: 68rem; column-gap: 3.5rem; row-gap: 1.4rem;
     grid-template-columns: 1.05fr 0.95fr;
@@ -254,15 +261,30 @@ const schema = {
   }
   .about-toggle { display: none; }
 
-  .about-photo {
-    width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 1.2rem;
-    box-shadow: 0 24px 50px rgba(13,23,48,0.16); display: block;
+  .shop-local-collage { position: relative; }
+  .collage-photo {
+    width: 88%; object-fit: cover; border-radius: 1rem; display: block;
+    box-shadow: 0 20px 40px rgba(13,23,48,0.18); border: 5px solid #fff;
   }
+  .collage-photo--top { aspect-ratio: 5/4; position: relative; z-index: 1; }
+  .collage-photo--bottom { aspect-ratio: 5/4; margin: -3rem 0 0 auto; position: relative; z-index: 2; }
+  .shop-local-badge {
+    position: absolute; top: -1.2rem; left: -1.2rem; z-index: 3;
+    width: 6.5rem; height: 6.5rem; border-radius: 50%; background: var(--color-orange);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; box-shadow: 0 12px 26px rgba(240,126,35,0.4); transform: rotate(-8deg);
+  }
+  .badge-line1, .badge-line2 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.15; }
   .about-photo-caption {
     display: block; font-size: 0.8125rem; color: var(--color-navy-light); text-align: center;
-    margin-top: 0.9rem; font-style: italic;
+    margin-top: 2.2rem; font-style: italic;
   }
-  @media (max-width: 60rem) { .about-photo { aspect-ratio: 16/10; } }
+  @media (max-width: 60rem) {
+    .collage-photo { width: 78%; }
+    .collage-photo--bottom { margin-top: -2.2rem; }
+    .shop-local-badge { width: 5.5rem; height: 5.5rem; }
+    .badge-line1, .badge-line2 { font-size: 1rem; }
+  }
 
   @media (max-width: 45rem) {
     .about { padding-block: 3rem; }
