@@ -14,8 +14,8 @@ interface EventItem {
 
 // Real, sourced events, refreshed for the current window — see
 // docs/content-strategy.md for the refresh cadence note. Ordered
-// chronologically rather than split into tabs, since "what's happening"
-// reads most naturally as one running list of what's coming up next.
+// chronologically, with the very next one featured — reads most
+// naturally as "here's what's coming up," not a flat list.
 const events: EventItem[] = [
   { month: 'Sep', day: '3', title: 'Making Movies at Levitt at the Falls', description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer concert series.', location: 'Falls Park', category: 'Music', sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/' },
   { month: 'Sep', day: '11', title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club, September 11–13.', location: 'Minnehaha Country Club', category: 'Sports', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events' },
@@ -25,11 +25,19 @@ const events: EventItem[] = [
   { month: 'Sep', day: '26', title: "Fernson Downtown's Oktoberfest", description: 'A downtown Oktoberfest celebration with German fare and live music.', location: 'Fernson Downtown', category: 'Family', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
 ];
 
+const [featured, ...rest] = events;
+
 const categoryIcon: Record<string, string> = {
   Music: 'zap',
   Sports: 'star',
   Downtown: 'home',
   Family: 'heart',
+};
+const categoryColor: Record<string, string> = {
+  Music: '#F5B429',
+  Sports: '#2E9E5B',
+  Downtown: '#2E6F9E',
+  Family: '#F07E23',
 };
 ---
 <section class="happening-section">
@@ -43,9 +51,28 @@ const categoryIcon: Record<string, string> = {
       <a href="/events" class="happening-full-link">Full calendar →</a>
     </div>
 
+    <a class="featured-event" href={featured.sourceUrl} target="_blank" rel="noopener">
+      <div class="featured-glow"></div>
+      <span class="featured-tag">Up Next</span>
+      <div class="featured-body">
+        <div class="featured-date">
+          <span class="featured-day">{featured.day}</span>
+          <span class="featured-month">{featured.month.toUpperCase()}</span>
+        </div>
+        <div class="featured-main">
+          <h3>{featured.title}</h3>
+          <p>{featured.description}</p>
+          <span class="featured-loc"><Icon name="map" size={14} /> {featured.location}</span>
+        </div>
+        <span class="featured-cat" style={`background:${categoryColor[featured.category]}22; color:${categoryColor[featured.category]}; border-color:${categoryColor[featured.category]}55;`}>
+          <Icon name={categoryIcon[featured.category] ?? 'star'} size={14} /> {featured.category}
+        </span>
+      </div>
+    </a>
+
     <div class="events-list">
-      {events.map((ev) => (
-        <a class="event-row" href={ev.sourceUrl} target="_blank" rel="noopener">
+      {rest.map((ev) => (
+        <a class="event-row" href={ev.sourceUrl} target="_blank" rel="noopener" style={`--cat-color:${categoryColor[ev.category]}`}>
           <div class="event-date">
             <span class="event-day">{ev.day}</span>
             <span class="event-month">{ev.month.toUpperCase()}</span>
@@ -55,7 +82,7 @@ const categoryIcon: Record<string, string> = {
             <p>{ev.description}</p>
             <span class="event-loc"><Icon name="map" size={13} /> {ev.location}</span>
           </div>
-          <span class="event-cat"><Icon name={categoryIcon[ev.category] ?? 'star'} size={13} /> {ev.category}</span>
+          <span class="event-cat" style={`color:${categoryColor[ev.category]}`}><Icon name={categoryIcon[ev.category] ?? 'star'} size={13} /> {ev.category}</span>
         </a>
       ))}
     </div>
@@ -63,20 +90,52 @@ const categoryIcon: Record<string, string> = {
 </section>
 
 <style>
-  .happening-section { background: var(--color-navy); padding-block: 4.5rem; }
-  .happening-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+  .happening-section { background: var(--color-navy); padding-block: 4.5rem; position: relative; overflow: hidden; }
+  .happening-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; position: relative; }
   .eyebrow--light { color: rgba(255,255,255,0.7); }
   .happening-head h2 { color: #fff; font-size: 1.9rem; margin-top: 0.3rem; }
   .happening-head p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 48ch; margin-top: 0.6rem; }
   .happening-full-link { font-weight: 700; font-size: 0.9375rem; color: var(--color-gold); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--color-gold); padding-bottom: 2px; }
 
+  /* FEATURED "UP NEXT" CARD */
+  .featured-event {
+    position: relative; display: block; text-decoration: none; border-radius: 1.1rem; overflow: hidden;
+    background: linear-gradient(120deg, #1c2b4d 0%, #263a63 100%);
+    border: 1px solid rgba(245,180,41,0.3);
+    margin-bottom: 1.6rem; transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .featured-event:hover { transform: translateY(-3px); box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
+  .featured-glow {
+    position: absolute; top: -40%; right: -10%; width: 24rem; height: 24rem; border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,180,41,0.28) 0%, transparent 70%); pointer-events: none;
+  }
+  .featured-tag {
+    position: relative; display: inline-block; margin: 1.4rem 0 0 1.6rem; font-size: 0.75rem; font-weight: 700;
+    color: #1c2b4d; background: var(--color-gold); padding: 0.3rem 0.8rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .featured-body { position: relative; display: grid; grid-template-columns: 6rem 1fr auto; gap: 1.8rem; align-items: center; padding: 0.8rem 1.6rem 1.8rem; }
+  .featured-date { text-align: center; }
+  .featured-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; line-height: 1; color: #fff; }
+  .featured-month { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--color-gold); margin-top: 0.3rem; }
+  .featured-main h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: #fff; margin: 0 0 0.4rem; }
+  .featured-main p { font-size: 0.9375rem; color: rgba(255,255,255,0.75); margin: 0; line-height: 1.55; max-width: 46ch; }
+  .featured-loc { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; color: rgba(255,255,255,0.5); margin-top: 0.6rem; }
+  .featured-cat { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; font-weight: 700; border: 1px solid; border-radius: 999px; padding: 0.5rem 1rem; white-space: nowrap; }
+
+  @media (max-width: 45rem) {
+    .featured-body { grid-template-columns: 4rem 1fr; }
+    .featured-cat { display: none; }
+    .featured-day { font-size: 2rem; }
+  }
+
+  /* REST OF THE LIST */
   .events-list { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1); }
   .event-row {
     display: grid; grid-template-columns: 4.6rem 1fr auto; gap: 1.6rem; align-items: center;
-    padding: 1.3rem 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-decoration: none;
-    border-radius: 0.6rem; transition: background 0.2s ease;
+    padding: 1.3rem 1rem 1.3rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-decoration: none;
+    border-radius: 0.6rem; border-left: 3px solid transparent; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
-  .event-row:hover { background: rgba(255,255,255,0.04); }
+  .event-row:hover { background: rgba(255,255,255,0.05); border-left-color: var(--cat-color); transform: translateX(3px); }
   .event-date { text-align: center; }
   .event-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; line-height: 1; color: var(--color-gold); }
   .event-month { display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
@@ -84,8 +143,8 @@ const categoryIcon: Record<string, string> = {
   .event-main p { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5; max-width: 56ch; }
   .event-loc { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: rgba(255,255,255,0.4); margin-top: 0.4rem; }
   .event-cat {
-    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: rgba(255,255,255,0.8);
-    border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; padding: 0.4rem 0.8rem; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700;
+    border: 1px solid currentColor; border-radius: 999px; padding: 0.4rem 0.8rem; white-space: nowrap; opacity: 0.9;
   }
 
   @media (max-width: 45rem) {

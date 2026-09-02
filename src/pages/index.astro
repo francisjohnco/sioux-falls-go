@@ -74,6 +74,10 @@ const schema = {
     <div class="container">
       <div class="about-grid">
         <h2>What Is Sioux Falls Go?</h2>
+        <div class="about-photo-wrap">
+          <img src="/images/businesses/la-luna-cafe.jpg" alt="A local Sioux Falls coffee shop storefront at golden hour, welcoming customers in" class="about-photo" />
+          <span class="about-photo-caption">La Luna Cafe &mdash; one of the local businesses on Sioux Falls Go</span>
+        </div>
         <div class="about-copy" id="about-copy">
           <p>Sioux Falls Go helps locals discover trusted businesses, local favorites, special offers, and giveaways&mdash;all while supporting the businesses that make our community great.</p>
           <p>We hand-pick trusted local businesses and introduce them to more people through business spotlights, local content, special offers, and giveaways. Because the best businesses in Sioux Falls aren&rsquo;t always the ones with the biggest advertising budgets.</p>
@@ -116,26 +120,28 @@ const schema = {
 
   <EventsSection />
 
-  <section class="get-featured-band">
-    <div class="container gf-copy">
-      <span class="eyebrow eyebrow--light">For Business Owners</span>
-      <h2>Own a local business? Get featured on Sioux Falls Go.</h2>
-      <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
-      <a href="/get-featured" class="button button--navy">Get Featured →</a>
+  <section class="cta-split">
+    <div class="cta-panel cta-panel--business">
+      <div class="cta-panel-inner">
+        <span class="eyebrow eyebrow--light">For Business Owners</span>
+        <h2>Own a local business? Get featured.</h2>
+        <p>Free, invitation-only spotlights that put you in front of people actively looking for what you do.</p>
+        <a href="/get-featured" class="button button--navy">Get Featured →</a>
+      </div>
     </div>
-  </section>
-
-  <section class="join-section">
-    <div class="container join-inner">
-      <h2>Join the Community</h2>
-      <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
-      <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
-        <input type="hidden" name="form-name" value="join-community" />
-        <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
-        <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
-        <button type="submit" class="button">Join Free</button>
-      </form>
-      <p class="join-fine">Free forever. Unsubscribe anytime.</p>
+    <div class="cta-panel cta-panel--community">
+      <div class="cta-panel-inner">
+        <span class="eyebrow">For Locals</span>
+        <h2>Join the Community</h2>
+        <p>Get the newest local spotlights, offers, and giveaways sent straight to your inbox as a Local Legend VIP &mdash; no spam, just Sioux Falls.</p>
+        <form name="join-community" method="POST" data-netlify="true" data-netlify-honeypot="not_human" class="join-form">
+          <input type="hidden" name="form-name" value="join-community" />
+          <p class="honeypot-field"><label>Don't fill this out if you're human: <input name="not_human" /></label></p>
+          <input type="email" name="email" placeholder="you@email.com" aria-label="Email address" required>
+          <button type="submit" class="button">Join Free</button>
+        </form>
+        <p class="join-fine">Free forever. Unsubscribe anytime.</p>
+      </div>
     </div>
   </section>
 
@@ -151,7 +157,7 @@ const schema = {
   .hero { position: relative; min-height: 40rem; display: flex; align-items: center; overflow: hidden; }
   .hero-photo {
     position: absolute; inset: 0;
-    background: url('/images/scenic/falls-park-editorial.jpg') center 58%/cover;
+    background: url('/images/scenic/downtown-2.jpg') center 42%/cover;
   }
   /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
      Uses the brand navy so the tint reads intentional, with strong opacity for contrast. */
@@ -220,16 +226,44 @@ const schema = {
   :global(.filled-star) { fill: #F5B429; color: #F5B429; }
   .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 
-  /* SECTION 1 — WHAT IS SIOUX FALLS GO (white) */
-  .about { background: #fff; padding-block: 5rem; }
-  .about-grid { max-width: 44rem; }
-  .about h2 { font-size: 2.1rem; max-width: 12ch; margin-bottom: 1.4rem; color: var(--color-navy); }
+  /* SECTION 1 — WHAT IS SIOUX FALLS GO (white, two-column with photo) */
+  .about { background: #fff; padding-block: 5.5rem; }
+  .about-grid {
+    display: grid; max-width: 68rem; column-gap: 3.5rem; row-gap: 1.4rem;
+    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-areas: "h2 photo" "copy photo" "toggle photo";
+    align-items: start;
+  }
+  .about-grid h2 { grid-area: h2; }
+  .about-photo-wrap { grid-area: photo; align-self: center; }
+  .about-copy { grid-area: copy; }
+  .about-toggle { grid-area: toggle; }
+
+  @media (max-width: 60rem) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      grid-template-areas: "h2" "photo" "copy" "toggle";
+      row-gap: 1.6rem;
+    }
+  }
+
+  .about h2 { font-size: 2.1rem; max-width: 14ch; margin-bottom: 0; color: var(--color-navy); }
   .about-copy p { font-size: 1.0625rem; line-height: 1.72; color: var(--color-navy-light); max-width: 60ch; margin: 0 0 1.1rem; }
   .about-copy .pull {
     font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; line-height: 1.4; color: var(--color-navy);
     border-left: 3px solid var(--color-orange); padding-left: 1.2rem; margin: 1.6rem 0; max-width: 38ch;
   }
   .about-toggle { display: none; }
+
+  .about-photo {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 1.2rem;
+    box-shadow: 0 24px 50px rgba(13,23,48,0.16); display: block;
+  }
+  .about-photo-caption {
+    display: block; font-size: 0.8125rem; color: var(--color-navy-light); text-align: center;
+    margin-top: 0.9rem; font-style: italic;
+  }
+  @media (max-width: 60rem) { .about-photo { aspect-ratio: 16/10; } }
 
   @media (max-width: 45rem) {
     .about { padding-block: 3rem; }
@@ -241,31 +275,34 @@ const schema = {
     }
   }
 
-  /* SECTION 5 — GET FEATURED */
-  .get-featured-band {
-    background: linear-gradient(135deg, rgba(211,102,15,0.93) 0%, rgba(240,126,35,0.93) 100%), url('/images/scenic/levitt-concert-center.jpg') center/cover;
-    padding-block: 4.5rem;
-  }
-  .get-featured-band .gf-copy { text-align: center; max-width: 34rem; margin: 0 auto; }
-  .eyebrow--light { color: rgba(255,255,255,0.85); }
-  .gf-copy h2 { color: #fff; font-size: 2rem; margin: 0.4rem 0 0.9rem; }
-  .gf-copy p { color: rgba(255,255,255,0.92); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
-  .button--navy { background: var(--color-navy); }
-  .button--navy:hover { background: #2c3f61; }
+  /* SECTIONS 5+6 — UNIFIED SPLIT CTA (business + community, one flowing section) */
+  .cta-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 26rem; }
+  @media (max-width: 55rem) { .cta-split { grid-template-columns: 1fr; } }
 
-  /* SECTION 6 — JOIN THE COMMUNITY */
-  .join-section {
-    background: linear-gradient(0deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 100%), url('/images/scenic/falls-park-golden.jpg') center 30%/cover;
-    padding-block: 5rem; text-align: center; border-top: 1px solid var(--color-line);
+  .cta-panel { display: flex; align-items: center; padding: 3.5rem 3rem; }
+  .cta-panel-inner { max-width: 26rem; }
+
+  .cta-panel--business {
+    background:
+      linear-gradient(120deg, rgba(20,30,52,0.88) 0%, rgba(20,30,52,0.72) 55%, rgba(211,102,15,0.55) 100%),
+      url('/images/scenic/levitt-concert-center.jpg') center/cover;
   }
-  .join-inner { max-width: 34rem; margin: 0 auto; }
-  .join-section h2 { font-size: 2.1rem; color: var(--color-navy); margin-bottom: 0.8rem; }
-  .join-section > .container > p, .join-inner > p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin-bottom: 1.8rem; }
+  .cta-panel--business .eyebrow--light { color: var(--color-gold); }
+  .cta-panel--business h2 { color: #fff; font-size: 1.9rem; margin: 0.5rem 0 0.9rem; max-width: 12ch; }
+  .cta-panel--business p { color: rgba(255,255,255,0.82); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
+  .button--navy { background: #fff; color: var(--color-navy); }
+  .button--navy:hover { background: var(--color-gold); color: var(--color-navy); }
+
+  .cta-panel--community { background: var(--color-surface); }
+  .cta-panel--community .eyebrow { color: var(--color-orange-dark); }
+  .cta-panel--community h2 { font-size: 1.9rem; color: var(--color-navy); margin: 0.5rem 0 0.9rem; }
+  .cta-panel--community p { color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; margin: 0 0 1.6rem; }
+
   .join-form { display: flex; gap: 0.7rem; }
   @media (max-width: 30rem) { .join-form { flex-direction: column; } }
   .join-form input {
     flex: 1; padding: 0.85rem 1rem; border-radius: 0.7rem; border: 1px solid var(--color-line);
-    font-family: var(--font-body); font-size: 0.9375rem; background: var(--color-surface);
+    font-family: var(--font-body); font-size: 0.9375rem; background: #fff;
   }
   .join-form input:focus { outline: 2px solid var(--color-orange); outline-offset: 1px; }
   .join-fine { font-size: 0.75rem !important; color: var(--color-navy-light); opacity: 0.75; margin-top: 0.9rem !important; margin-bottom: 0 !important; }
