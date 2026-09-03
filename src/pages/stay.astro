@@ -90,6 +90,17 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="foliage-sway-filter" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" numOctaves="2" seed="4" baseFrequency="0.008 0.02" result="noise">
+            <animate attributeName="baseFrequency" dur="18s" values="0.008 0.02;0.011 0.026;0.008 0.02" repeatCount="indefinite" />
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="hero-foliage-sway"></div>
     <div class="hero-overlay"></div>
     <div class="container">
       <div class="hero-content">
@@ -197,6 +208,18 @@ const schema = {
 
   .hero { position: relative; min-height: 28rem; display: flex; align-items: center; overflow: hidden; }
   .hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/stock/rustic-bedroom.jpg') center/cover; }
+  /* Gentle sway on the trees visible through the window — much lower
+     displacement scale than water, since wind-stirred leaves move far
+     less dramatically than a rushing river. Masked to the window so the
+     room's furniture and walls stay perfectly still. */
+  .hero-foliage-sway {
+    position: absolute; inset: -2%; width: 104%; height: 104%;
+    background: url('/images/stock/rustic-bedroom.jpg') center/cover;
+    -webkit-mask-image: radial-gradient(ellipse 24% 34% at 24% 32%, black 40%, transparent 78%);
+    mask-image: radial-gradient(ellipse 24% 34% at 24% 32%, black 40%, transparent 78%);
+    filter: url(#foliage-sway-filter);
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-foliage-sway { filter: none; } }
   .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.85) 0%, rgba(13,23,48,0.55) 55%, rgba(13,23,48,0.25) 100%); }
   .hero-content { position: relative; z-index: 2; padding-block: 3.5rem; color: #fff; max-width: 40rem; }
   .hero-content h1 { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.15; margin: 0.6rem 0 1rem; color: #fff; }

@@ -87,6 +87,17 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="river-ripple-filter" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" numOctaves="2" seed="9" baseFrequency="0.02 0.05" result="noise">
+            <animate attributeName="baseFrequency" dur="10s" values="0.02 0.05;0.03 0.065;0.02 0.05" repeatCount="indefinite" />
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="hero-river-ripple"></div>
     <div class="hero-overlay"></div>
     <div class="starfield" id="starfield"></div>
     <div class="container">
@@ -200,6 +211,19 @@ const schema = {
 
   .hero { position: relative; overflow: hidden; min-height: 22rem; display: flex; align-items: center; }
   .hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/downtown-2.jpg') center/cover; animation: ev-kb 26s ease-in-out infinite alternate; }
+  /* The river running through the middle of this skyline shot gets the
+     same real refraction treatment as the homepage falls — synced to the
+     same Ken Burns pan so it never drifts out of registration with the
+     base photo underneath. */
+  .hero-river-ripple {
+    position: absolute; inset: -2%; width: 104%; height: 104%;
+    background: url('/images/scenic/downtown-2.jpg') center/cover;
+    animation: ev-kb 26s ease-in-out infinite alternate;
+    -webkit-mask-image: linear-gradient(0deg, transparent 0%, black 42%, black 58%, transparent 75%);
+    mask-image: linear-gradient(0deg, transparent 0%, black 42%, black 58%, transparent 75%);
+    filter: url(#river-ripple-filter);
+  }
+  @media (prefers-reduced-motion: reduce) { .hero-river-ripple { filter: none; animation: none; } }
   @keyframes ev-kb { 0% { transform: scale(1); } 100% { transform: scale(1.08) translate(-1%,-1%); } }
   @media (prefers-reduced-motion: reduce) { .hero-photo { animation: none; } }
   .hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.92) 0%, rgba(13,23,48,0.6) 55%, rgba(13,23,48,0.2) 100%); }
