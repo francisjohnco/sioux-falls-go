@@ -53,8 +53,17 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
-    <div class="hero-water-shimmer"></div>
-    <div class="hero-water-sparkle"></div>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="water-ripple-filter" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" numOctaves="2" seed="7" baseFrequency="0.012 0.04" result="noise">
+            <animate attributeName="baseFrequency" dur="14s" values="0.012 0.04;0.018 0.055;0.012 0.04" repeatCount="indefinite" />
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="hero-water-ripple"></div>
     <div class="hero-gradient"></div>
     <div class="hero-gradient-bottom"></div>
     <div class="container hero-inner">
@@ -167,58 +176,21 @@ const schema = {
     position: absolute; inset: 0;
     background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
   }
-  /* Two layers working together: a slow broad highlight suggesting the
-     general glint of light on moving water, plus a finer, faster sparkle
-     layer at a slightly different angle so the motion doesn't read as one
-     mechanical stripe sliding sideways — real light on water is layered
-     and irregular, not a single uniform pattern. */
-  .hero-water-shimmer {
-    position: absolute; left: 38%; right: 0; top: 4%; height: 66%;
-    background-image: repeating-linear-gradient(
-      115deg,
-      transparent 0px, transparent 14px,
-      rgba(255,255,255,0.42) 14px, rgba(255,255,255,0.42) 19px,
-      transparent 19px, transparent 36px,
-      rgba(255,255,255,0.26) 36px, rgba(255,255,255,0.26) 41px
-    );
-    background-size: 160% 100%;
-    mix-blend-mode: soft-light;
-    animation: water-drift 4.5s ease-in-out infinite, water-pulse 2.6s ease-in-out infinite;
-    pointer-events: none;
-  }
-  .hero-water-sparkle {
-    position: absolute; left: 38%; right: 0; top: 4%; height: 66%;
-    background-image: repeating-linear-gradient(
-      104deg,
-      transparent 0px, transparent 7px,
-      rgba(255,255,255,0.5) 7px, rgba(255,255,255,0.5) 8.5px,
-      transparent 8.5px, transparent 21px
-    );
-    background-size: 130% 100%;
-    mix-blend-mode: soft-light;
-    opacity: 0.55;
-    animation: water-drift-fast 2.3s linear infinite reverse, water-pulse-fast 1.4s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes water-drift {
-    0%   { background-position: 0% 0; }
-    50%  { background-position: -90px 6px; }
-    100% { background-position: -160px 0; }
-  }
-  @keyframes water-drift-fast {
-    0%   { background-position: 0% 0; }
-    100% { background-position: -130px -4px; }
-  }
-  @keyframes water-pulse {
-    0%, 100% { opacity: 0.75; }
-    50%      { opacity: 1; }
-  }
-  @keyframes water-pulse-fast {
-    0%, 100% { opacity: 0.4; }
-    50%      { opacity: 0.7; }
+  /* The falls actually ripple here: a second copy of the same photo,
+     clipped to just the water (so rocks/people/buildings never warp),
+     with an SVG feTurbulence + feDisplacementMap filter genuinely
+     refracting its pixels — the real technique behind "living photo"
+     water effects, not a highlight sliding on top of a static image. */
+  .hero-water-ripple {
+    position: absolute; inset: 0;
+    background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
+    -webkit-mask-image: radial-gradient(ellipse 42% 38% at 68% 32%, black 35%, transparent 72%);
+    mask-image: radial-gradient(ellipse 42% 38% at 68% 32%, black 35%, transparent 72%);
+    filter: url(#water-ripple-filter);
+    will-change: filter;
   }
   @media (prefers-reduced-motion: reduce) {
-    .hero-water-shimmer, .hero-water-sparkle { animation: none; }
+    .hero-water-ripple { filter: none; }
   }
   /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
      Uses the brand navy so the tint reads intentional, with strong opacity for contrast. */
