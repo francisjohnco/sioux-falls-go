@@ -29,6 +29,34 @@ const giveBackCount = businesses.filter(
 const champions = businesses
   .filter((b) => b.data.partnershipTier === 'community-champion')
   .sort((a, b) => a.data.name.localeCompare(b.data.name));
+
+// Full sponsorship picture, grouped by sponsoring business, with a plain
+// mismatch flag when a sponsor's own category doesn't match the article's
+// category (e.g. a marketing agency sponsoring an electrician guide) —
+// still allowed, just surfaced so it's a deliberate choice, not an accident.
+const allArticlesForSponsors = await getCollection('articles');
+const articleCategoryCache = new Map<string, Awaited<ReturnType<typeof getEntry>>>();
+for (const a of allArticlesForSponsors) {
+  if (!articleCategoryCache.has(a.data.category.id)) {
+    articleCategoryCache.set(a.data.category.id, await getEntry(a.data.category));
+  }
+}
+const sponsoredArticles = allArticlesForSponsors.filter((a) => a.data.sponsoredBy);
+const sponsorshipsByBusiness = champions.map((champion) => {
+  const articlesSponsored = sponsoredArticles
+    .filter((a) => a.data.sponsoredBy?.id === champion.id)
+    .map((a) => ({
+      article: a,
+      categoryMatch: a.data.category.id === champion.data.category.id,
+      categoryName: articleCategoryCache.get(a.data.category.id)?.data.name ?? a.data.category.id,
+    }));
+  return { business: champion, articlesSponsored };
+});
+const totalSponsoredArticles = sponsoredArticles.length;
+const totalMismatches = sponsorshipsByBusiness.reduce(
+  (sum, s) => sum + s.articlesSponsored.filter((a) => !a.categoryMatch).length, 0
+);
+const activeSponsorCount = sponsorshipsByBusiness.filter((s) => s.articlesSponsored.length > 0).length;
 const allArticles = await getCollection('articles');
 const allCategories = await getCollection('categories');
 const allStays = await getCollection('stays');
@@ -87,6 +115,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </button>
         <button class="nav-item" data-tab="drafts">
           <span class="nav-icon"><Icon name="clipboard" size={18} /></span> Drafts &amp; Articles
+        </button>
+        <button class="nav-item" data-tab="sponsorships">
+          <span class="nav-icon"><Icon name="star" size={18} /></span> Sponsorships
         </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
@@ -372,6 +403,60 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
         </div>
       </div>
+
+      <!-- ── SPONSORSHIPS ── -->
+      <section class="tab-panel" id="panel-sponsorships">
+        <h1>Sponsorships</h1>
+        <p class="panel-sub">Every article a Community Champion is sponsoring, at a glance — no need to open each one.</p>
+
+        <div class="sponsor-stats">
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{totalSponsoredArticles}</span>
+            <span class="sponsor-stat-label">Articles sponsored</span>
+          </div>
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{activeSponsorCount}</span>
+            <span class="sponsor-stat-label">Active sponsors</span>
+          </div>
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{champions.length - activeSponsorCount}</span>
+            <span class="sponsor-stat-label">Champions not sponsoring yet</span>
+          </div>
+          <div class={`sponsor-stat ${totalMismatches > 0 ? 'sponsor-stat--warn' : ''}`}>
+            <span class="sponsor-stat-num">{totalMismatches}</span>
+            <span class="sponsor-stat-label">Off-industry matches</span>
+          </div>
+        </div>
+
+        <h3 class="section-heading">By Business</h3>
+        <div class="sponsor-business-list">
+          {sponsorshipsByBusiness.map(({ business, articlesSponsored }) => (
+            <div class="sponsor-business-card">
+              <div class="sponsor-business-head">
+                <span class="sponsor-business-name">{business.data.name}</span>
+                <span class="sponsor-business-count">
+                  {articlesSponsored.length === 0 ? 'Not sponsoring anything' : `Sponsoring ${articlesSponsored.length} article${articlesSponsored.length === 1 ? '' : 's'}`}
+                </span>
+              </div>
+              {articlesSponsored.length > 0 && (
+                <div class="sponsor-article-rows">
+                  {articlesSponsored.map(({ article, categoryMatch, categoryName }) => (
+                    <button class="sponsor-article-row" data-jump-to-article={article.data.title}>
+                      <span class="sponsor-article-title">{article.data.title}</span>
+                      <span class="sponsor-article-cat">{categoryName}</span>
+                      {categoryMatch ? (
+                        <span class="match-badge match-badge--ok"><Icon name="check" size={12} /> Same industry</span>
+                      ) : (
+                        <span class="match-badge match-badge--warn"><Icon name="zap" size={12} /> Off-industry</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
 
       <!-- ── DIRECTORY ── -->
       <section class="tab-panel" id="panel-directory">
@@ -757,6 +842,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
   .articles-list { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.8rem; max-height: 30rem; overflow-y: auto; }
   .article-row { display: flex; flex-direction: column; align-items: flex-start; text-align: left; background: #fff; border: 1px solid var(--color-line); border-radius: 0.5rem; padding: 0.6rem 0.9rem; cursor: pointer; width: 100%; }
+  .article-row[hidden] { display: none; }
   .article-row:hover { border-color: var(--color-orange); }
   .article-row-title { font-weight: 600; font-size: 0.9rem; color: var(--color-navy); }
   .article-row-meta { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
@@ -765,6 +851,33 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     background: var(--color-gold, #F5B429); color: #1B2A4A; font-weight: 700; text-transform: none;
     padding: 0.15rem 0.55rem; border-radius: var(--radius-pill); font-size: 0.6875rem;
   }
+
+  /* SPONSORSHIPS PANEL */
+  .sponsor-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin: 1.2rem 0 1.8rem; }
+  @media (max-width: 55rem) { .sponsor-stats { grid-template-columns: 1fr 1fr; } }
+  .sponsor-stat { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1.1rem; text-align: center; }
+  .sponsor-stat--warn { border-color: #E9B44C; background: #FFF9EC; }
+  .sponsor-stat-num { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: var(--color-navy); }
+  .sponsor-stat--warn .sponsor-stat-num { color: #B8860B; }
+  .sponsor-stat-label { display: block; font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.2rem; }
+
+  .sponsor-business-list { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem; }
+  .sponsor-business-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1rem 1.2rem; }
+  .sponsor-business-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
+  .sponsor-business-name { font-weight: 700; color: var(--color-navy); font-size: 1rem; }
+  .sponsor-business-count { font-size: 0.8125rem; color: var(--color-navy-light); }
+  .sponsor-article-rows { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--color-line); }
+  .sponsor-article-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 0.7rem; flex-wrap: wrap;
+    background: var(--color-surface); border: none; border-radius: 0.5rem; padding: 0.6rem 0.8rem;
+    cursor: pointer; text-align: left; width: 100%; transition: background 0.15s ease;
+  }
+  .sponsor-article-row:hover { background: #EAF2F8; }
+  .sponsor-article-title { font-weight: 600; font-size: 0.875rem; color: var(--color-navy); flex: 1; min-width: 12rem; }
+  .sponsor-article-cat { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
+  .match-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: var(--radius-pill); white-space: nowrap; }
+  .match-badge--ok { background: #E1E9DE; color: #4F6B52; }
+  .match-badge--warn { background: #FBE7C6; color: #8a5a1e; }
   .gap-item { display: grid; grid-template-columns: 1.75rem 1fr auto; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--color-surface); border-radius: var(--radius); }
   .gap-rank { font-family: var(--font-display); font-weight: 700; color: var(--color-orange); text-align: center; }
   .gap-item p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
@@ -970,6 +1083,20 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   tabs.forEach((btn) => {
     if (!btn.classList.contains('nav-item') && !btn.classList.contains('bottomnav-item')) return;
     btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
+  });
+
+  // ── Sponsorships: jump straight to an article in Drafts & Articles ──
+  document.querySelectorAll('[data-jump-to-article]').forEach((row) => {
+    row.addEventListener('click', () => {
+      const title = (row as HTMLElement).dataset.jumpToArticle!;
+      activateTab('drafts');
+      const search = document.getElementById('article-search') as HTMLInputElement;
+      if (search) {
+        search.value = title;
+        search.dispatchEvent(new Event('input'));
+        search.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
   });
 
   // ── Directory: search filter ──
