@@ -92,6 +92,14 @@ const articleIndexForEngine = allArticles.map((a) => ({
 // actually do instead of pretending to show you what happened.
 const missingPlaceId = businesses.filter((b) => !b.data.placeId);
 const missingHours = businesses.filter((b) => !b.data.hoursSchedule);
+
+// Mailer deals expiring within a week — genuinely time-sensitive, since
+// these are paid postcard offers that quietly go dead if no one notices.
+const sevenDaysOut = new Date();
+sevenDaysOut.setDate(sevenDaysOut.getDate() + 7);
+const mailerDealsExpiringSoon = mailerDealsWithBusiness.filter(
+  ({ deal, isExpired }) => !isExpired && deal.data.expiresAt && deal.data.expiresAt.getTime() <= sevenDaysOut.getTime()
+);
 const missingReviews = businesses.filter((b) => b.data.reviews.length === 0);
 
 let topContentGap: { name: string; priorityScore: number } | null = null;
@@ -119,7 +127,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   <div class="admin-shell">
     <!-- Desktop sidebar / mobile top bar -->
     <header class="admin-topbar">
-      <span class="admin-logo">Sioux Falls <span>Go</span> <em>Admin</em></span>
+      <a href="/" class="admin-logo-link">
+        <img src="/images/sfg-logo.png" alt="Sioux Falls Go" class="admin-logo-img" />
+        <em>Admin</em>
+      </a>
       <button class="admin-avatar" aria-label="Account">FJ</button>
     </header>
 
@@ -183,6 +194,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <span class="stat-number">{allArticles.length}</span>
             <span class="stat-label">Articles &amp; Guides</span>
           </div>
+          <button class="stat-card stat-card--link" data-jump-tab="mailer-deals">
+            <span class="stat-icon stat-icon--mail"><Icon name="mail" size={18} /></span>
+            <span class="stat-number">{activeMailerCount}</span>
+            <span class="stat-label">Active Mailer Deals</span>
+          </button>
         </div>
 
         <h2 class="section-heading">Search Traffic <span class="section-heading-sub">Last 28 days, from Google Search Console</span></h2>
@@ -219,6 +235,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <li>
               <span class="activity-dot"></span>
               <strong>{missingHours.length} business{missingHours.length === 1 ? '' : 'es'}</strong> missing real hours — showing "Not listed" on their profile
+            </li>
+          )}
+          {mailerDealsExpiringSoon.length > 0 && (
+            <li>
+              <span class="activity-dot activity-dot--new"></span>
+              <strong>{mailerDealsExpiringSoon.length} mailer deal{mailerDealsExpiringSoon.length === 1 ? '' : 's'}</strong> expiring within a week — {mailerDealsExpiringSoon.map((d) => d.business?.data.name).join(', ')}
+              <button class="attention-link attention-link--btn" data-jump-tab="mailer-deals">Review in Mailer Deals →</button>
             </li>
           )}
           {topContentGap && (
@@ -907,9 +930,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     display: flex; align-items: center; justify-content: space-between;
     padding: 0.85rem var(--space-3);
   }
-  .admin-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; }
-  .admin-logo span { color: var(--color-orange); }
-  .admin-logo em { font-style: normal; opacity: 0.6; font-weight: 400; margin-left: 0.4rem; font-size: 0.875rem; }
+  .admin-logo-link { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+  .admin-logo-img { height: 2.4rem; width: auto; filter: brightness(0) invert(1); display: block; }
+  .admin-logo-link em { font-style: normal; opacity: 0.6; font-weight: 400; font-size: 0.875rem; color: #fff; padding-top: 0.15rem; }
   .admin-avatar {
     width: 2.2rem; height: 2.2rem; border-radius: 50%;
     background: var(--color-orange); color: #fff; border: none;
@@ -964,6 +987,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .activity-dot--new { background: var(--color-orange); }
   .activity-list time { margin-left: auto; font-size: 0.8125rem; color: var(--color-navy-light); white-space: nowrap; }
   .attention-link { margin-left: auto; font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; white-space: nowrap; }
+  .attention-link--btn { background: none; border: none; cursor: pointer; font-family: var(--font-body); }
+  .stat-card--link { cursor: pointer; text-align: left; font-family: var(--font-body); }
+  .stat-icon--mail { background: #FFF3E0; color: var(--color-orange-dark); }
   .attention-link:hover { text-decoration: underline; }
 
   /* Content Engine */
@@ -1247,6 +1273,12 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   tabs.forEach((btn) => {
     if (!btn.classList.contains('nav-item') && !btn.classList.contains('bottomnav-item')) return;
     btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
+  });
+
+  // Any element with data-jump-tab (dashboard stat cards, attention items)
+  // switches tabs in-page without a reload.
+  document.querySelectorAll('[data-jump-tab]').forEach((el) => {
+    el.addEventListener('click', () => activateTab((el as HTMLElement).dataset.jumpTab!));
   });
 
   // ── Sponsorships: jump straight to an article in Drafts & Articles ──
