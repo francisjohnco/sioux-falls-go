@@ -15,7 +15,7 @@ const SCALAR_FIELDS = [
   'name', 'address', 'showAddress', 'placeId', 'latitude', 'longitude',
   'phone', 'website', 'verifiedAt', 'claimed', 'heroImage', 'partnershipTier',
   'googleRating', 'googleReviewCount', 'giveawaysPerYear',
-  'pullQuote', 'ownerName', 'ownerQuote', 'responseTime',
+  'pullQuote', 'ownerName', 'ownerQuote', 'responseTime', 'couponStyle',
 ] as const;
 type ScalarField = (typeof SCALAR_FIELDS)[number];
 

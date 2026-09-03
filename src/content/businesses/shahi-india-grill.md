@@ -1,4 +1,5 @@
 ---
+couponStyle: "ticket-stub"
 name: "Shahi India Grill"
 seo:
   title: "Shahi India Grill: Authentic Indian Food in Sioux Falls"

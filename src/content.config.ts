@@ -106,6 +106,13 @@ const deals = defineCollection({
     expiresAt: z.coerce.date().optional(), // omit for an ongoing/standing offer
     terms: z.string().optional(),
     submittedBy: z.enum(['business-owner', 'verified-by-team']).default('business-owner'),
+    // Set only when this deal came from a physical Spotlight postcard
+    // mailing — the value is a human label for that mailing cycle (e.g.
+    // "September 2026"). Presence of this field is what makes a deal
+    // show up on /mailer-deals, the business's Postcard Offer tab, and
+    // its own dedicated redemption page. A deal a business manages
+    // themselves through ordinary Specials never sets this.
+    mailerCampaign: z.string().optional(),
   }),
 });
 
@@ -154,6 +161,13 @@ const businesses = defineCollection({
       title: z.string(),
       description: z.string(),
     }).optional(), // real, hand-crafted meta title/description — omitted businesses fall back to a generated default, never silently blank
+
+    // ── Deal card presentation ──
+    // Which of the 5 coupon templates this business's deals render as,
+    // wherever they appear (their own Specials tab, Local Deals, Mailer
+    // Deals). Chosen by the business, set on their behalf by an admin
+    // until self-service login exists. Falls back to 'ticket-stub' if unset.
+    couponStyle: z.enum(['ticket-stub', 'torn-corner', 'rubber-stamp', 'clip-coupon', 'price-tag']).optional(),
 
     // ── Profile enhancements ──
     gallery: z.array(z.string()).default([]), // additional photos beyond heroImage — Champion tier only, gated in the template

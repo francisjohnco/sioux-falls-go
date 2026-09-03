@@ -1,4 +1,5 @@
 ---
+couponStyle: "price-tag"
 name: "American Tree Service"
 seo:
   title: "American Tree Service: Trusted Tree Care in Sioux Falls"

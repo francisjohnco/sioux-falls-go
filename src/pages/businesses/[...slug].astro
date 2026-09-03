@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Icon from '../../components/Icon.astro';
+import DealCard from '../../components/DealCard.astro';
 
 export async function getStaticPaths() {
   const businesses = await getCollection('businesses');
@@ -31,6 +32,16 @@ const spotlights = allArticles.filter(
     (a.data.contentType === 'business-spotlight' || a.data.contentType === 'press-release') &&
     a.data.relatedBusinesses.some((ref) => ref.id === business.id)
 );
+
+// This business's own deals — split into the postcard-exclusive kind
+// (auto-generated when they book a Spotlight mailing spot) and ordinary
+// self-managed specials. Both only show while still active.
+const now = new Date();
+const allDeals = await getCollection('deals');
+const businessDeals = allDeals.filter((d) => d.data.business.id === business.id);
+const activeDeals = businessDeals.filter((d) => !d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime());
+const mailerDeal = activeDeals.find((d) => d.data.mailerCampaign) ?? null;
+const regularDeals = activeDeals.filter((d) => !d.data.mailerCampaign);
 
 // "Verified" = we've confirmed this business's info recently — distinct from partnership tier
 const isVerified = !!business.data.verifiedAt;
@@ -188,6 +199,7 @@ const schema = {
       <button class="tab is-active" data-tab="story" role="tab">Story</button>
       <button class="tab" data-tab="photos" role="tab">Photos</button>
       <button class="tab" data-tab="specials" role="tab">Specials</button>
+      {mailerDeal && <button class="tab tab--postcard" data-tab="postcard" role="tab"><Icon name="mail" size={13} /> Postcard Offer</button>}
     </div>
 
     <div class="champion-grid-v2">
@@ -237,8 +249,68 @@ const schema = {
         </div>
 
         <div class="tab-panel" data-panel="specials">
-          <p class="empty-note">No active specials right now.</p>
+          {mailerDeal && (
+            <div class="postcard-specials-block">
+              <span class="postcard-specials-label"><Icon name="mail" size={14} /> Postcard Specials</span>
+              <DealCard
+                style={business.data.couponStyle}
+                businessName={business.data.name}
+                businessSlug={business.id}
+                categoryName={category.data.name}
+                heroImage={business.data.heroImage}
+                title={mailerDeal.data.title}
+                description={mailerDeal.data.description}
+                expiresAt={mailerDeal.data.expiresAt}
+                isMailerExclusive={true}
+                href={`/mailer-deals/${business.id}`}
+              />
+            </div>
+          )}
+
+          {regularDeals.length > 0 ? (
+            <div class="regular-specials-grid">
+              {regularDeals.map((deal) => (
+                <DealCard
+                  style={business.data.couponStyle}
+                  businessName={business.data.name}
+                  businessSlug={business.id}
+                  categoryName={category.data.name}
+                  heroImage={business.data.heroImage}
+                  title={deal.data.title}
+                  description={deal.data.description}
+                  expiresAt={deal.data.expiresAt}
+                />
+              ))}
+            </div>
+          ) : !mailerDeal && (
+            <p class="empty-note">No active specials right now.</p>
+          )}
         </div>
+
+        {mailerDeal && (
+          <div class="tab-panel" data-panel="postcard">
+            <div class="postcard-tab-intro">
+              <Icon name="mail" size={24} class="postcard-tab-icon" />
+              <div>
+                <h3>This business is on the current Spotlight postcard</h3>
+                <p>Scan the QR code on your mailer, or claim the offer right here.</p>
+              </div>
+            </div>
+            <DealCard
+              style={business.data.couponStyle}
+              businessName={business.data.name}
+              businessSlug={business.id}
+              categoryName={category.data.name}
+              heroImage={business.data.heroImage}
+              title={mailerDeal.data.title}
+              description={mailerDeal.data.description}
+              expiresAt={mailerDeal.data.expiresAt}
+              isMailerExclusive={true}
+              href={`/mailer-deals/${business.id}`}
+            />
+            <a href={`/mailer-deals/${business.id}`} class="button postcard-full-link">Open the full redemption page →</a>
+          </div>
+        )}
       </div>
 
       <aside class="champion-side-v2">
@@ -523,6 +595,23 @@ const schema = {
   .tab-panel.is-active { display: block; animation: fadeIn 0.25s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
   .empty-note { color: var(--color-navy-light); font-style: italic; }
+
+  .tab--postcard { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--color-orange-dark); }
+  .tab--postcard.is-active { color: var(--color-orange); }
+
+  .postcard-specials-block { margin-bottom: var(--space-3); }
+  .postcard-specials-label {
+    display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange-dark); margin-bottom: 0.7rem;
+  }
+  .regular-specials-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+  @media (max-width: 40rem) { .regular-specials-grid { grid-template-columns: 1fr; } }
+
+  .postcard-tab-intro { display: flex; gap: 0.9rem; align-items: flex-start; margin-bottom: 1.3rem; padding: 1rem; background: #FFF3E0; border-radius: var(--radius); }
+  .postcard-tab-icon { color: var(--color-orange-dark); flex-shrink: 0; margin-top: 0.15rem; }
+  .postcard-tab-intro h3 { font-size: 1rem; color: var(--color-navy); margin: 0 0 0.3rem; }
+  .postcard-tab-intro p { font-size: 0.875rem; color: var(--color-navy-light); margin: 0; }
+  .postcard-full-link { display: inline-block; margin-top: 1rem; background: var(--color-navy); color: #fff; }
 
   /* Wider sidebar (18rem -> 22rem) */
   .champion-grid-v2 { display: grid; grid-template-columns: 1fr 22rem; gap: var(--space-4); margin-top: var(--space-3); align-items: start; }

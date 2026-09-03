@@ -5,6 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import LayeredHero from '../components/LayeredHero.astro';
 import Icon from '../components/Icon.astro';
+import DealCard from '../components/DealCard.astro';
 
 const allDeals = await getCollection('deals');
 
@@ -93,6 +94,13 @@ function discountIcon(type: string) {
     )}
   </LayeredHero>
 
+  <div class="container">
+    <a href="/mailer-deals" class="mailer-banner">
+      <Icon name="mail" size={18} />
+      <span>Got a Spotlight postcard in the mail? See every mailer-exclusive deal →</span>
+    </a>
+  </div>
+
   <div class="container page">
     {withBusiness.length === 0 ? (
       <div class="deals-empty">
@@ -143,12 +151,16 @@ function discountIcon(type: string) {
               <h3>{catName}</h3>
               <div class="deals-grid">
                 {deals.map((d) => (
-                  <a href={`/businesses/${d.business!.id}`} class="deal-card">
-                    <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
-                    <p class="deal-desc">{d.deal.data.description}</p>
-                    <p class="deal-biz">{d.business!.data.name}</p>
-                    {d.daysLeft !== null && <span class="deal-urgency deal-urgency--small">{d.daysLeft <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>}
-                  </a>
+                  <DealCard
+                    style={d.business!.data.couponStyle}
+                    businessName={d.business!.data.name}
+                    businessSlug={d.business!.id}
+                    categoryName={d.category?.data.name}
+                    heroImage={d.business!.data.heroImage}
+                    title={d.deal.data.title}
+                    description={d.deal.data.description}
+                    expiresAt={d.deal.data.expiresAt}
+                  />
                 ))}
               </div>
             </div>
@@ -158,12 +170,16 @@ function discountIcon(type: string) {
         <div class="deals-panel" data-panel="value" hidden>
           <div class="deals-grid">
             {mostValuable.map((d) => (
-              <a href={`/businesses/${d.business!.id}`} class="deal-card">
-                <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
-                <p class="deal-desc">{d.deal.data.description}</p>
-                <p class="deal-biz">{d.business!.data.name} · {d.category?.data.name}</p>
-                {d.daysLeft !== null && <span class="deal-urgency deal-urgency--small">{d.daysLeft <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>}
-              </a>
+              <DealCard
+                style={d.business!.data.couponStyle}
+                businessName={d.business!.data.name}
+                businessSlug={d.business!.id}
+                categoryName={d.category?.data.name}
+                heroImage={d.business!.data.heroImage}
+                title={d.deal.data.title}
+                description={d.deal.data.description}
+                expiresAt={d.deal.data.expiresAt}
+              />
             ))}
           </div>
         </div>
@@ -172,12 +188,16 @@ function discountIcon(type: string) {
           {endingSoon.length > 0 ? (
             <div class="deals-grid">
               {endingSoon.map((d) => (
-                <a href={`/businesses/${d.business!.id}`} class="deal-card deal-card--urgent">
-                  <span class="deal-badge"><Icon name={discountIcon(d.deal.data.discountType)} size={13} /> {d.deal.data.title}</span>
-                  <p class="deal-desc">{d.deal.data.description}</p>
-                  <p class="deal-biz">{d.business!.data.name} · {d.category?.data.name}</p>
-                  <span class="deal-urgency deal-urgency--small">{(d.daysLeft ?? 0) <= 1 ? 'Ends today' : `${d.daysLeft} days left`}</span>
-                </a>
+                <DealCard
+                  style={d.business!.data.couponStyle}
+                  businessName={d.business!.data.name}
+                  businessSlug={d.business!.id}
+                  categoryName={d.category?.data.name}
+                  heroImage={d.business!.data.heroImage}
+                  title={d.deal.data.title}
+                  description={d.deal.data.description}
+                  expiresAt={d.deal.data.expiresAt}
+                />
               ))}
             </div>
           ) : (
@@ -211,6 +231,13 @@ function discountIcon(type: string) {
 </script>
 
 <style>
+  .mailer-banner {
+    display: flex; align-items: center; gap: 0.6rem; justify-content: center;
+    background: #FFF3E0; color: var(--color-orange-dark); font-weight: 700; font-size: 0.9375rem;
+    padding: 0.9rem 1.2rem; border-radius: var(--radius); text-decoration: none; margin-top: var(--space-3);
+    transition: background 0.15s ease;
+  }
+  .mailer-banner:hover { background: #FCE5C3; }
   .page { padding-block: var(--space-4) var(--space-6); }
   .hero-stats { margin-top: var(--space-2); font-size: 0.9375rem; color: rgba(255,255,255,0.85); font-weight: 600; }
 

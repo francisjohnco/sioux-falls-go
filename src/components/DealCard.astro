@@ -1,0 +1,196 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  style?: 'ticket-stub' | 'torn-corner' | 'rubber-stamp' | 'clip-coupon' | 'price-tag';
+  businessName: string;
+  businessSlug: string;
+  categoryName?: string;
+  heroImage?: string;
+  title: string;
+  description?: string;
+  expiresAt?: Date;
+  isMailerExclusive?: boolean;
+  href?: string;
+}
+
+const {
+  style = 'ticket-stub',
+  businessName,
+  businessSlug,
+  categoryName,
+  heroImage,
+  title,
+  description,
+  expiresAt,
+  isMailerExclusive = false,
+  href,
+} = Astro.props;
+
+const link = href ?? `/businesses/${businessSlug}`;
+const isUrgent = Boolean(expiresAt);
+const expiryLabel = expiresAt
+  ? `Ends ${expiresAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`
+  : 'No expiration';
+---
+
+{style === 'ticket-stub' && (
+  <a href={link} class="deal-card t1">
+    <div class="t1-stub" style={heroImage ? `background-image:url(${heroImage})` : 'background:#1B2A4A'}>
+      <span class="t1-biz">{businessName}</span>
+    </div>
+    <div class="t1-perf"></div>
+    <div class="t1-main">
+      <span class={`t1-badge ${isUrgent ? 't1-badge--urgent' : 't1-badge--standing'}`}>
+        {isMailerExclusive ? 'Postcard Exclusive' : isUrgent ? 'Limited Time' : 'Standing Offer'}
+      </span>
+      <span class="t1-discount">{title}</span>
+      {description && <span class="t1-terms">{description}</span>}
+      <span class={`t1-expiry ${isUrgent ? 't1-expiry--urgent' : 't1-expiry--standing'}`}>{expiryLabel}</span>
+    </div>
+  </a>
+)}
+
+{style === 'torn-corner' && (
+  <a href={link} class="deal-card t2">
+    <div class={`t2-corner ${isUrgent ? 't2-corner--urgent' : 't2-corner--standing'}`}></div>
+    <span class="t2-corner-text">SAVE</span>
+    {categoryName && <span class="t2-cat">{categoryName}</span>}
+    <div class="t2-biz">{businessName}</div>
+    <div class="t2-discount">{title}</div>
+    {description && <p class="t2-desc">{description}</p>}
+    <div class="t2-footer">
+      <span class={isUrgent ? 't2-expiry t2-expiry--urgent' : 't2-expiry t2-expiry--standing'}>{expiryLabel}</span>
+      <span class="t2-cta">Claim this deal</span>
+    </div>
+  </a>
+)}
+
+{style === 'rubber-stamp' && (
+  <a href={link} class="deal-card t3">
+    <div class={`t3-stamp ${isUrgent ? 't3-stamp--urgent' : 't3-stamp--standing'}`}>
+      <span class="t3-stamp-pct">{title.match(/^\S+/)?.[0] ?? '★'}</span>
+      <span class="t3-stamp-label">{isMailerExclusive ? 'Mailer' : 'Deal'}</span>
+    </div>
+    <span class="t3-eyebrow">{isMailerExclusive ? 'Postcard Exclusive' : isUrgent ? 'Limited Time' : 'Standing Offer'}</span>
+    <div class="t3-biz">{businessName}</div>
+    {description && <p class="t3-desc">{description}</p>}
+    <span class={isUrgent ? 't3-expiry t3-expiry--urgent' : 't3-expiry t3-expiry--standing'}>{expiryLabel}</span>
+  </a>
+)}
+
+{style === 'clip-coupon' && (
+  <a href={link} class="deal-card t4">
+    <span class="t4-scissors">✂︎</span>
+    <div class="t4-top">
+      <div class="t4-photo" style={heroImage ? `background-image:url(${heroImage})` : 'background:#1B2A4A'}></div>
+      <span class={`t4-flag ${isUrgent ? 't4-flag--urgent' : 't4-flag--standing'}`}>
+        {isMailerExclusive ? 'Postcard' : isUrgent ? 'Ends Soon' : 'Standing'}
+      </span>
+    </div>
+    <span class="t4-biz">{businessName}</span>
+    <span class="t4-discount">{title}</span>
+    {description && <p class="t4-desc">{description}</p>}
+    <div class="t4-bottom">
+      <span class={isUrgent ? 't4-expiry t4-expiry--urgent' : 't4-expiry t4-expiry--standing'}>{expiryLabel}</span>
+    </div>
+  </a>
+)}
+
+{style === 'price-tag' && (
+  <a href={link} class="deal-card-wrap t5-wrap">
+    <div class={`deal-card t5 ${isUrgent ? 't5--urgent' : 't5--standing'}`}>
+      <span class="t5-hole"></span>
+      {categoryName && <span class="t5-cat">{categoryName}</span>}
+      <div class="t5-biz">{businessName}</div>
+      <div class="t5-discount-row">
+        <span class="t5-discount">{title}</span>
+      </div>
+      {description && <p class="t5-desc">{description}</p>}
+      <span class={isUrgent ? 't5-expiry t5-expiry--urgent' : 't5-expiry t5-expiry--standing'}>{expiryLabel}</span>
+    </div>
+  </a>
+)}
+
+<style>
+  .deal-card, .deal-card-wrap { text-decoration: none; color: inherit; display: block; }
+  :global(.deal-card), :global(.deal-card-wrap .deal-card) { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  a.deal-card:hover, .deal-card-wrap:hover .deal-card { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(13,23,48,0.16); }
+
+  /* ============ TEMPLATE 1: TICKET STUB ============ */
+  .t1 { display: flex; background: #fff; border-radius: 0.9rem; overflow: visible; position: relative; box-shadow: 0 6px 18px rgba(13,23,48,0.08); min-height: 10rem; }
+  .t1-stub { width: 35%; background-size: cover; background-position: center; border-radius: 0.9rem 0 0 0.9rem; position: relative; display: flex; align-items: flex-end; padding: 0.8rem; flex-shrink: 0; }
+  .t1-stub::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,23,48,0.75) 0%, rgba(13,23,48,0.1) 60%); border-radius: 0.9rem 0 0 0.9rem; }
+  .t1-biz { position: relative; z-index: 1; color: #fff; font-weight: 700; font-size: 0.875rem; line-height: 1.25; }
+  .t1-perf { width: 0; border-left: 2px dashed #D8DCE4; position: relative; }
+  .t1-perf::before, .t1-perf::after { content: ''; position: absolute; left: -0.5rem; width: 1rem; height: 1rem; background: var(--color-surface, #F7F8FA); border-radius: 50%; }
+  .t1-perf::before { top: -0.5rem; } .t1-perf::after { bottom: -0.5rem; }
+  .t1-main { flex: 1; padding: 1.1rem 1.2rem; display: flex; flex-direction: column; justify-content: center; }
+  .t1-badge { display: inline-flex; align-self: flex-start; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.25rem 0.6rem; border-radius: 999px; margin-bottom: 0.5rem; }
+  .t1-badge--standing { background: #EAF2F8; color: var(--color-river, #2E6F9E); }
+  .t1-badge--urgent { background: #FBE2E2; color: #A82C2C; }
+  .t1-discount { font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; line-height: 1.15; color: var(--color-navy); }
+  .t1-terms { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.35rem; }
+  .t1-expiry { font-size: 0.75rem; font-weight: 700; margin-top: 0.5rem; }
+  .t1-expiry--urgent { color: #D63B3B; } .t1-expiry--standing { color: var(--color-navy-light); font-weight: 500; }
+
+  /* ============ TEMPLATE 2: TORN CORNER ============ */
+  .t2 { position: relative; background: #fff; border-radius: 0.9rem; padding: 1.3rem; box-shadow: 0 6px 18px rgba(13,23,48,0.08); overflow: hidden; min-height: 10rem; }
+  .t2-corner { position: absolute; top: 0; right: 0; width: 5rem; height: 5rem; clip-path: polygon(100% 0, 0 0, 100% 100%); }
+  .t2-corner--standing { background: linear-gradient(135deg, var(--color-navy) 0%, #2c3f61 100%); }
+  .t2-corner--urgent { background: linear-gradient(135deg, #D63B3B 0%, #A82C2C 100%); }
+  .t2-corner-text { position: absolute; top: 0.8rem; right: 0.6rem; color: #fff; font-family: var(--font-display); font-weight: 800; font-size: 0.625rem; }
+  .t2-cat { display: inline-flex; font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.4rem; }
+  .t2-biz { font-weight: 700; font-size: 0.875rem; color: var(--color-navy); margin-bottom: 0.3rem; }
+  .t2-discount { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--color-navy); line-height: 1.15; max-width: 78%; }
+  .t2-desc { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.4rem; max-width: 88%; }
+  .t2-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.9rem; padding-top: 0.7rem; border-top: 1px dashed var(--color-line); }
+  .t2-expiry { font-size: 0.75rem; font-weight: 700; }
+  .t2-expiry--urgent { color: #D63B3B; } .t2-expiry--standing { color: var(--color-navy-light); font-weight: 500; }
+  .t2-cta { font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); }
+
+  /* ============ TEMPLATE 3: RUBBER STAMP ============ */
+  .t3 { background: #FBF6EC; border: 1px solid #E9DFC8; border-radius: 0.6rem; padding: 1.3rem; position: relative; min-height: 10rem; display: flex; flex-direction: column; justify-content: center; background-image: radial-gradient(circle, rgba(27,42,74,0.035) 1px, transparent 1px); background-size: 14px 14px; }
+  .t3-stamp { position: absolute; top: 0.9rem; right: 1.1rem; width: 4.8rem; height: 4.8rem; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2.5px solid; transform: rotate(9deg); opacity: 0.92; text-align: center; }
+  .t3-stamp--standing { border-color: var(--color-navy); color: var(--color-navy); }
+  .t3-stamp--urgent { border-color: #D63B3B; color: #D63B3B; }
+  .t3-stamp-pct { font-family: 'Anton', var(--font-display); font-size: 1.2rem; line-height: 1; padding: 0 0.3rem; }
+  .t3-stamp-label { font-size: 0.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.15rem; }
+  .t3-eyebrow { font-weight: 700; letter-spacing: 0.04em; color: var(--color-orange-dark); font-size: 0.75rem; text-transform: uppercase; }
+  .t3-biz { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--color-navy); margin: 0.3rem 0 0.5rem; max-width: 68%; }
+  .t3-desc { font-size: 0.8125rem; color: var(--color-navy-light); max-width: 66%; line-height: 1.5; }
+  .t3-expiry { font-size: 0.75rem; font-weight: 700; margin-top: 0.8rem; }
+  .t3-expiry--urgent { color: #D63B3B; } .t3-expiry--standing { color: var(--color-navy-light); font-weight: 500; }
+
+  /* ============ TEMPLATE 4: CLIP COUPON ============ */
+  .t4 { background: #fff; border-radius: 0.7rem; padding: 1.2rem 1.2rem 1rem; border: 1.5px dashed #C7CEDB; position: relative; min-height: 10rem; display: flex; flex-direction: column; box-shadow: 0 4px 14px rgba(13,23,48,0.06); }
+  .t4-scissors { position: absolute; top: -0.7rem; left: 1.3rem; background: #fff; padding: 0 0.4rem; color: #9AA3B5; font-size: 0.875rem; }
+  .t4-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .t4-photo { width: 3.2rem; height: 3.2rem; border-radius: 0.5rem; background-size: cover; background-position: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(13,23,48,0.15); }
+  .t4-flag { font-size: 0.6875rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.3rem 0.6rem; border-radius: 0.35rem; }
+  .t4-flag--standing { background: var(--color-navy); color: #fff; }
+  .t4-flag--urgent { background: #D63B3B; color: #fff; }
+  .t4-biz { font-weight: 700; font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.6rem; }
+  .t4-discount { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; color: var(--color-navy); margin-top: 0.15rem; line-height: 1.2; }
+  .t4-desc { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.4rem; flex: 1; }
+  .t4-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 0.7rem; }
+  .t4-expiry { font-size: 0.75rem; font-weight: 700; }
+  .t4-expiry--urgent { color: #D63B3B; } .t4-expiry--standing { color: var(--color-navy-light); font-weight: 500; }
+
+  /* ============ TEMPLATE 5: PRICE TAG ============ */
+  .t5-wrap { display: block; }
+  .t5 { position: relative; background: #fff; border-radius: 0 0.9rem 0.9rem 0.9rem; padding: 1.3rem 1.3rem 1.2rem 1.8rem; box-shadow: 0 6px 18px rgba(13,23,48,0.08); min-height: 9rem; display: flex; flex-direction: column; justify-content: center; }
+  .t5::before { content: ''; position: absolute; left: 0; top: 0; width: 1.5rem; height: 1.5rem; background: inherit; clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .t5-hole { position: absolute; top: 0.5rem; left: 0.5rem; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-surface, #F7F8FA); z-index: 2; }
+  .t5--standing { border-left: 5px solid var(--color-navy); }
+  .t5--urgent { border-left: 5px solid #D63B3B; }
+  .t5-cat { font-size: 0.75rem; font-weight: 700; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.03em; }
+  .t5-biz { font-weight: 700; font-size: 0.9375rem; color: var(--color-navy); margin: 0.2rem 0 0.5rem; }
+  .t5-discount-row { display: flex; align-items: baseline; gap: 0.5rem; }
+  .t5-discount { font-family: 'Anton', var(--font-display); font-size: 1.5rem; line-height: 1.2; }
+  .t5--standing .t5-discount { color: var(--color-navy); }
+  .t5--urgent .t5-discount { color: #D63B3B; }
+  .t5-desc { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 0.3rem; }
+  .t5-expiry { font-size: 0.75rem; font-weight: 700; margin-top: 0.5rem; }
+  .t5-expiry--urgent { color: #D63B3B; } .t5-expiry--standing { color: var(--color-navy-light); font-weight: 500; }
+</style>

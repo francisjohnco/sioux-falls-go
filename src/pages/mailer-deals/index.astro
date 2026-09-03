@@ -1,0 +1,125 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import DealCard from '../../components/DealCard.astro';
+import Icon from '../../components/Icon.astro';
+
+const now = new Date();
+const allDeals = await getCollection('deals');
+
+// The whole point of this page: every deal that came from a physical
+// Spotlight postcard mailing, and hasn't expired yet.
+const mailerDeals = allDeals.filter(
+  (d) => d.data.mailerCampaign && (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+);
+
+const dealsWithContext = await Promise.all(
+  mailerDeals.map(async (deal) => {
+    const business = await getEntry(deal.data.business);
+    const category = business ? await getEntry(business.data.category) : null;
+    return { deal, business, category };
+  })
+);
+const withBusiness = dealsWithContext.filter((d) => d.business);
+
+// Group by mailing cycle so past and current campaigns stay legible as
+// this runs quarterly, then monthly.
+const byCampaign = new Map<string, typeof withBusiness>();
+for (const d of withBusiness) {
+  const key = d.deal.data.mailerCampaign!;
+  if (!byCampaign.has(key)) byCampaign.set(key, []);
+  byCampaign.get(key)!.push(d);
+}
+const campaigns = Array.from(byCampaign.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Sioux Falls Go Mailer Deals',
+  itemListElement: withBusiness.map((d, i) => ({
+    '@type': 'Offer',
+    position: i + 1,
+    name: d.deal.data.title,
+    seller: { '@type': 'LocalBusiness', name: d.business!.data.name },
+  })),
+};
+---
+<BaseLayout
+  title="Mailer Deals — Offers from the Sioux Falls Spotlight Postcard"
+  description="Every current offer from businesses featured on the Sioux Falls Go Spotlight postcard, all in one place."
+  canonicalPath="/mailer-deals"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="mailer-hero">
+    <div class="container mailer-hero-inner">
+      <span class="eyebrow eyebrow--light"><Icon name="mail" size={14} /> From the Spotlight Postcard</span>
+      <h1>Mailer Deals</h1>
+      <p>If you got a Sioux Falls Spotlight postcard in the mail, this is where every business on it redeems their offer — all in one place.</p>
+    </div>
+  </section>
+
+  <div class="container mailer-body">
+    {withBusiness.length === 0 ? (
+      <div class="mailer-empty">
+        <Icon name="mail" size={40} class="mailer-empty-icon" />
+        <h2>No active mailer deals right now</h2>
+        <p>Nothing's currently running from a postcard mailing. Check back after the next drop, or see every local deal on <a href="/local-deals">Local Deals</a>.</p>
+      </div>
+    ) : (
+      campaigns.map(([campaign, deals]) => (
+        <section class="campaign-group">
+          <h2 class="campaign-heading">{campaign} Mailing</h2>
+          <div class="mailer-grid">
+            {deals.map(({ deal, business, category }) => (
+              <DealCard
+                style={business!.data.couponStyle}
+                businessName={business!.data.name}
+                businessSlug={business!.id}
+                categoryName={category?.data.name}
+                heroImage={business!.data.heroImage}
+                title={deal.data.title}
+                description={deal.data.description}
+                expiresAt={deal.data.expiresAt}
+                isMailerExclusive={true}
+                href={`/mailer-deals/${business!.id}`}
+              />
+            ))}
+          </div>
+        </section>
+      ))
+    )}
+
+    <div class="mailer-footer-link">
+      <a href="/local-deals">See every local deal, not just postcard offers →</a>
+    </div>
+  </div>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .mailer-hero { background: var(--color-navy); padding-block: 3.5rem; }
+  .eyebrow--light { color: var(--color-gold); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .mailer-hero-inner h1 { font-family: var(--font-display); color: #fff; font-size: 2.4rem; margin: 0.5rem 0 0.8rem; }
+  .mailer-hero-inner p { color: rgba(255,255,255,0.78); font-size: 1.0625rem; max-width: 42ch; margin: 0; }
+
+  .mailer-body { padding-block: var(--space-5); }
+  .campaign-group { margin-bottom: var(--space-5); }
+  .campaign-heading { font-family: var(--font-display); font-size: 1.4rem; color: var(--color-navy); margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--color-line); }
+  .mailer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; }
+  @media (max-width: 55rem) { .mailer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 36rem) { .mailer-grid { grid-template-columns: 1fr; } }
+
+  .mailer-empty { text-align: center; padding: var(--space-6) var(--space-3); }
+  .mailer-empty-icon { color: var(--color-line); margin-bottom: 1rem; }
+  .mailer-empty h2 { font-size: 1.4rem; color: var(--color-navy); margin-bottom: 0.6rem; }
+  .mailer-empty p { color: var(--color-navy-light); max-width: 40ch; margin: 0 auto; }
+  .mailer-empty a { color: var(--color-orange-dark); font-weight: 700; }
+
+  .mailer-footer-link { text-align: center; padding-top: var(--space-3); border-top: 1px solid var(--color-line); }
+  .mailer-footer-link a { color: var(--color-orange-dark); font-weight: 700; text-decoration: none; }
+</style>

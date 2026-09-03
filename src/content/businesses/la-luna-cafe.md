@@ -1,4 +1,5 @@
 ---
+couponStyle: "rubber-stamp"
 name: "La Luna Caf\u00e9"
 seo:
   title: "La Luna Café: Coffee & Espresso in Uptown Sioux Falls"

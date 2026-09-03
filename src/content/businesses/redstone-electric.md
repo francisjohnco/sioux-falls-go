@@ -1,4 +1,5 @@
 ---
+couponStyle: "clip-coupon"
 name: "Redstone Electric"
 seo:
   title: "Redstone Electric: Licensed Sioux Falls Electricians"

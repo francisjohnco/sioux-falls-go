@@ -1,0 +1,9 @@
+{
+  "business": "shahi-india-grill",
+  "title": "15% Off Dinner, Tue-Thu",
+  "description": "Dine-in only, valid on entrees.",
+  "discountType": "percent-off",
+  "valueScore": 40,
+  "expiresAt": "2026-09-30",
+  "submittedBy": "business-owner"
+}

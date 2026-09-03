@@ -506,6 +506,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                   googleReviewCount: business.data.googleReviewCount ?? '',
                   giveawaysPerYear: business.data.giveawaysPerYear ?? 0,
                   hoursSchedule: business.data.hoursSchedule || {},
+                  couponStyle: business.data.couponStyle || '',
                   body: business.body || '',
                 })}
               >{business.data.name}</button>
@@ -570,6 +571,18 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
             <label class="edit-field-full">Owner Quote <textarea id="edit-ownerQuote" rows="2"></textarea></label>
             <label class="edit-field-full">Pull Quote (editorial highlight) <textarea id="edit-pullQuote" rows="2"></textarea></label>
+
+            <label class="edit-field-full coupon-style-field">
+              <span class="coupon-style-label"><Icon name="gift" size={14} /> Deal Card Style <span class="coupon-style-hint">(how this business's deals render on Local Deals, Mailer Deals, and their own Specials tab)</span></span>
+              <select id="edit-couponStyle">
+                <option value="">Ticket Stub (default)</option>
+                <option value="ticket-stub">Ticket Stub</option>
+                <option value="torn-corner">Torn Corner</option>
+                <option value="rubber-stamp">Rubber Stamp</option>
+                <option value="clip-coupon">Clip Coupon</option>
+                <option value="price-tag">Price Tag</option>
+              </select>
+            </label>
 
             <h3 class="edit-section-heading">Hours</h3>
             <div class="edit-hours-grid">
@@ -1054,6 +1067,15 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   #article-edit-sponsor {
     margin-top: 0.5rem; padding: 0.6rem 0.8rem; border-radius: 0.5rem; border: 1px solid var(--color-line);
     font-family: var(--font-body); font-size: 0.9375rem; background: #fff;
+  }
+  .coupon-style-field {
+    background: #EAF2F8; border: 1.5px solid #C6DCEC; border-radius: var(--radius); padding: 0.8rem 0.9rem;
+  }
+  .coupon-style-label { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; color: var(--color-river, #2E6F9E); font-size: 0.875rem; }
+  .coupon-style-hint { font-weight: 500; color: #5f88a3; font-size: 0.75rem; }
+  #edit-couponStyle {
+    margin-top: 0.5rem; padding: 0.6rem 0.8rem; border-radius: 0.5rem; border: 1px solid var(--color-line);
+    font-family: var(--font-body); font-size: 0.9375rem; background: #fff; width: 100%;
   }
   .edit-section-heading { font-size: 0.9375rem; margin: 1.2rem 0 0.7rem; padding-top: 0.9rem; border-top: 1px solid var(--color-line); }
   .edit-hours-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin-bottom: 0.5rem; }
@@ -1543,7 +1565,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   const SCALAR_EDIT_IDS = [
     'name', 'phone', 'address', 'website', 'heroImage', 'latitude', 'longitude',
     'googleRating', 'googleReviewCount', 'giveawaysPerYear', 'responseTime',
-    'ownerName', 'ownerQuote', 'pullQuote',
+    'ownerName', 'ownerQuote', 'pullQuote', 'couponStyle',
   ];
   const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   const NUMBER_FIELDS = ['latitude', 'longitude', 'googleRating', 'googleReviewCount', 'giveawaysPerYear'];

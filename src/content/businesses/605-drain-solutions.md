@@ -1,4 +1,5 @@
 ---
+couponStyle: "torn-corner"
 name: "605 Drain Solutions"
 seo:
   title: "605 Drain Solutions: Drain Cleaning Equipment Rentals"
