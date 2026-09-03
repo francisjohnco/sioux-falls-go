@@ -127,6 +127,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   <div class="admin-shell">
     <!-- Desktop sidebar / mobile top bar -->
     <header class="admin-topbar">
+      <button class="admin-hamburger" id="admin-hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
       <a href="/" class="admin-logo-link">
         <img src="/images/sfg-logo.png" alt="Sioux Falls Go" class="admin-logo-img" />
         <em>Admin</em>
@@ -134,7 +137,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       <button class="admin-avatar" aria-label="Account">FJ</button>
     </header>
 
-    <aside class="admin-sidebar">
+    <div class="admin-sidebar-backdrop" id="admin-sidebar-backdrop"></div>
+
+    <aside class="admin-sidebar" id="admin-sidebar">
       <nav>
         <button class="nav-item is-active" data-tab="dashboard">
           <span class="nav-icon"><Icon name="dashboard" size={18} /></span> Dashboard
@@ -928,16 +933,28 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     background: var(--color-navy);
     color: #fff;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0.85rem var(--space-3);
+    padding: 0.5rem var(--space-3);
   }
   .admin-logo-link { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-  .admin-logo-img { height: 2.4rem; width: auto; filter: brightness(0) invert(1); display: block; }
+  .admin-logo-img { height: 4.8rem; width: auto; filter: brightness(0) invert(1); display: block; }
   .admin-logo-link em { font-style: normal; opacity: 0.6; font-weight: 400; font-size: 0.875rem; color: #fff; padding-top: 0.15rem; }
   .admin-avatar {
     width: 2.2rem; height: 2.2rem; border-radius: 50%;
     background: var(--color-orange); color: #fff; border: none;
     font-weight: 700; font-size: 0.8125rem; cursor: pointer;
   }
+
+  .admin-hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 4px;
+    width: 2.4rem; height: 2.4rem; background: none; border: none; cursor: pointer; flex-shrink: 0;
+  }
+  .admin-hamburger span { display: block; width: 1.4rem; height: 2px; background: #fff; border-radius: 2px; }
+
+  .admin-sidebar-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(13,23,48,0.5); z-index: 40;
+    opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+  .admin-sidebar-backdrop.is-open { opacity: 1; visibility: visible; }
 
   .admin-sidebar { grid-area: sidebar; background: #fff; border-right: 1px solid var(--color-line); padding: var(--space-2); }
   .admin-sidebar nav { display: flex; flex-direction: column; gap: 0.15rem; }
@@ -1165,7 +1182,15 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       grid-template-areas: "topbar" "main";
       padding-bottom: 4.5rem; /* room for bottom nav */
     }
-    .admin-sidebar { display: none; }
+    .admin-hamburger { display: flex; }
+    .admin-sidebar-backdrop { display: block; }
+    .admin-sidebar {
+      position: fixed; top: 0; left: 0; bottom: 0; width: 17rem; max-width: 82vw;
+      z-index: 50; overflow-y: auto; transform: translateX(-100%);
+      transition: transform 0.25s ease; box-shadow: 0 0 30px rgba(0,0,0,0.2);
+      padding-top: 5.5rem; /* clears the fixed-height topbar with the larger logo */
+    }
+    .admin-sidebar.is-open { transform: translateX(0); }
     .admin-main { padding: var(--space-2) var(--space-2) var(--space-4); }
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .engine-layout { grid-template-columns: 1fr; }
@@ -1175,6 +1200,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     .biz-row--header { display: none; }
     .biz-row { border: 1px solid var(--color-line); border-radius: var(--radius); margin-bottom: 0.5rem; }
     .panel-header-row .button { width: 100%; }
+    .panel-header-row { flex-direction: column; align-items: stretch; }
+
+    /* Newer components that hadn't been given mobile treatment yet */
+    .sponsor-business-head { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+    .sponsor-article-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .mailer-deal-row { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .mailer-deal-link { align-self: flex-start; }
 
     .admin-bottomnav {
       display: flex;
@@ -1272,8 +1304,25 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
   tabs.forEach((btn) => {
     if (!btn.classList.contains('nav-item') && !btn.classList.contains('bottomnav-item')) return;
-    btn.addEventListener('click', () => activateTab((btn as HTMLElement).dataset.tab!));
+    btn.addEventListener('click', () => {
+      activateTab((btn as HTMLElement).dataset.tab!);
+      closeSidebarDrawer();
+    });
   });
+
+  // ── Mobile sidebar drawer ──
+  const adminSidebar = document.getElementById('admin-sidebar');
+  const sidebarBackdrop = document.getElementById('admin-sidebar-backdrop');
+  function openSidebarDrawer() {
+    adminSidebar?.classList.add('is-open');
+    sidebarBackdrop?.classList.add('is-open');
+  }
+  function closeSidebarDrawer() {
+    adminSidebar?.classList.remove('is-open');
+    sidebarBackdrop?.classList.remove('is-open');
+  }
+  document.getElementById('admin-hamburger')?.addEventListener('click', openSidebarDrawer);
+  sidebarBackdrop?.addEventListener('click', closeSidebarDrawer);
 
   // Any element with data-jump-tab (dashboard stat cards, attention items)
   // switches tabs in-page without a reload.
