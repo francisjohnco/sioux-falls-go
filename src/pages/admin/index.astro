@@ -23,6 +23,12 @@ const championCount = businesses.filter((b) => b.data.partnershipTier === 'commu
 const giveBackCount = businesses.filter(
   (b) => b.data.partnershipTier === 'community-champion' || b.data.partnershipTier === 'community-listing'
 ).length;
+
+// Article sponsorship is a paid Community Champion perk — only Champions
+// are eligible to appear in the "Sponsored By" picker on an article.
+const champions = businesses
+  .filter((b) => b.data.partnershipTier === 'community-champion')
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
 const allArticles = await getCollection('articles');
 const allCategories = await getCollection('categories');
 const allStays = await getCollection('stays');
@@ -318,10 +324,16 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                   seoTitle: a.data.seo.title,
                   seoDescription: a.data.seo.description,
                   bodyMarkdown: a.body || '',
+                  sponsoredBy: a.data.sponsoredBy?.id ?? '',
                 })}
               >
                 <span class="article-row-title">{a.data.title}</span>
-                <span class="article-row-meta">{a.data.contentType} · {a.data.publishedAt?.toString().slice(0, 10)}</span>
+                <span class="article-row-meta">
+                  {a.data.contentType} · {a.data.publishedAt?.toString().slice(0, 10)}
+                  {a.data.sponsoredBy && (
+                    <span class="sponsor-chip"><Icon name="star" size={11} /> Sponsored by {champions.find((c) => c.id === a.data.sponsoredBy?.id)?.data.name ?? a.data.sponsoredBy.id}</span>
+                  )}
+                </span>
               </button>
             ))}
         </div>
@@ -338,6 +350,17 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <label class="edit-field-full">Title <input type="text" id="article-edit-title" /></label>
             <label class="edit-field-full">SEO Title <input type="text" id="article-edit-seo-title" /></label>
             <label class="edit-field-full">SEO Description <textarea id="article-edit-seo-description" rows="2"></textarea></label>
+
+            <label class="edit-field-full sponsor-field">
+              <span class="sponsor-field-label"><Icon name="star" size={14} /> Sponsored By <span class="sponsor-field-hint">(paid Community Champion perk — shows a labeled banner on this article)</span></span>
+              <select id="article-edit-sponsor">
+                <option value="">— No sponsor (open spot) —</option>
+                {champions.map((c) => (
+                  <option value={c.id}>{c.data.name}</option>
+                ))}
+              </select>
+            </label>
+
             <label class="edit-field-full">Body
               <textarea id="article-edit-body" rows="14" class="edit-body-textarea"></textarea>
             </label>
@@ -737,6 +760,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .article-row:hover { border-color: var(--color-orange); }
   .article-row-title { font-weight: 600; font-size: 0.9rem; color: var(--color-navy); }
   .article-row-meta { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
+  .sponsor-chip {
+    display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.6rem;
+    background: var(--color-gold, #F5B429); color: #1B2A4A; font-weight: 700; text-transform: none;
+    padding: 0.15rem 0.55rem; border-radius: var(--radius-pill); font-size: 0.6875rem;
+  }
   .gap-item { display: grid; grid-template-columns: 1.75rem 1fr auto; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--color-surface); border-radius: var(--radius); }
   .gap-rank { font-family: var(--font-display); font-weight: 700; color: var(--color-orange); text-align: center; }
   .gap-item p { margin: 0.1rem 0 0; font-size: 0.8125rem; color: var(--color-navy-light); }
@@ -905,6 +933,15 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .edit-modal label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.75rem; font-weight: 700; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.02em; }
   .edit-modal input, .edit-modal textarea { font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400; text-transform: none; letter-spacing: normal; color: var(--color-navy); padding: 0.55rem 0.7rem; border-radius: 0.5rem; border: 1.5px solid var(--color-line); }
   .edit-field-full { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
+  .sponsor-field {
+    background: #FFF7E2; border: 1.5px solid #E9D9A8; border-radius: var(--radius); padding: 0.8rem 0.9rem;
+  }
+  .sponsor-field-label { display: flex; align-items: center; gap: 0.4rem; font-weight: 700; color: #5A4A1E; font-size: 0.875rem; }
+  .sponsor-field-hint { font-weight: 500; color: #8a7647; font-size: 0.75rem; }
+  #article-edit-sponsor {
+    margin-top: 0.5rem; padding: 0.6rem 0.8rem; border-radius: 0.5rem; border: 1px solid var(--color-line);
+    font-family: var(--font-body); font-size: 0.9375rem; background: #fff;
+  }
   .edit-section-heading { font-size: 0.9375rem; margin: 1.2rem 0 0.7rem; padding-top: 0.9rem; border-top: 1px solid var(--color-line); }
   .edit-hours-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin-bottom: 0.5rem; }
   @media (max-width: 40rem) { .edit-hours-grid { grid-template-columns: repeat(2, 1fr); } .edit-field-grid { grid-template-columns: 1fr; } }
@@ -1727,6 +1764,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     (document.getElementById('article-edit-seo-title') as HTMLInputElement).value = data.seoTitle || '';
     (document.getElementById('article-edit-seo-description') as HTMLTextAreaElement).value = data.seoDescription || '';
     (document.getElementById('article-edit-body') as HTMLTextAreaElement).value = data.bodyMarkdown || '';
+    (document.getElementById('article-edit-sponsor') as HTMLSelectElement).value = data.sponsoredBy || '';
     if (articleEditStatus) articleEditStatus.hidden = true;
     articleModalBackdrop?.classList.add('is-open');
   }
@@ -1759,6 +1797,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       seoTitle: 'article-edit-seo-title',
       seoDescription: 'article-edit-seo-description',
       bodyMarkdown: 'article-edit-body',
+      sponsoredBy: 'article-edit-sponsor',
     };
     for (const [key, elId] of Object.entries(fieldMap)) {
       const el = document.getElementById(elId) as HTMLInputElement | HTMLTextAreaElement;

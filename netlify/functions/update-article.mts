@@ -23,6 +23,13 @@ function setFrontmatterField(frontmatter: string, field: string, value: string):
   return lines.join('\n');
 }
 
+function removeFrontmatterField(frontmatter: string, field: string): string {
+  const lines = frontmatter.split('\n');
+  const idx = lines.findIndex((l) => l.match(new RegExp(`^${field}:\\s`)));
+  if (idx !== -1) lines.splice(idx, 1);
+  return lines.join('\n');
+}
+
 function setNestedSeoField(frontmatter: string, field: 'title' | 'description', value: string): string {
   const lines = frontmatter.split('\n');
   const seoIdx = lines.findIndex((l) => l.match(/^seo:/));
@@ -94,6 +101,15 @@ export default async (req: Request) => {
     }
     if (typeof updates.seoDescription === 'string') {
       updatedFrontmatter = setNestedSeoField(updatedFrontmatter, 'description', updates.seoDescription);
+    }
+    // sponsoredBy is a paid Community Champion perk — a plain business-id
+    // string, same shape as other reference fields. Empty string means
+    // "no sponsor," which removes the line entirely rather than writing
+    // an empty value (keeps the field truly optional, matching the schema).
+    if (typeof updates.sponsoredBy === 'string') {
+      updatedFrontmatter = updates.sponsoredBy.trim() === ''
+        ? removeFrontmatterField(updatedFrontmatter, 'sponsoredBy')
+        : setFrontmatterField(updatedFrontmatter, 'sponsoredBy', updates.sponsoredBy.trim());
     }
     // updatedAt reflects the real edit, not the original publish date
     updatedFrontmatter = setUnquotedDateField(updatedFrontmatter, 'updatedAt', new Date().toISOString().split('T')[0]);
