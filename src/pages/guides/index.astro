@@ -16,9 +16,17 @@ function sortByDateDesc(articles: typeof allArticles) {
   return [...articles].sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
 }
 
-const localsArticles = sortByDateDesc(allArticles.filter((a) => LOCALS_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
-const visitorArticles = sortByDateDesc(allArticles.filter((a) => VISITOR_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
-const businessArticles = sortByDateDesc(allArticles.filter((a) => BUSINESS_CATEGORIES.includes(a.data.category.id))).slice(0, 6);
+const allSorted = sortByDateDesc(allArticles);
+const featured = allSorted[0];
+const featuredCategory = await getEntry(featured.data.category);
+
+const localsAll = sortByDateDesc(allArticles.filter((a) => LOCALS_CATEGORIES.includes(a.data.category.id)));
+const visitorAll = sortByDateDesc(allArticles.filter((a) => VISITOR_CATEGORIES.includes(a.data.category.id)));
+const businessAll = sortByDateDesc(allArticles.filter((a) => BUSINESS_CATEGORIES.includes(a.data.category.id) && a.id !== featured.id));
+
+const localsArticles = localsAll.filter((a) => a.id !== featured.id).slice(0, 6);
+const visitorArticles = visitorAll.filter((a) => a.id !== featured.id).slice(0, 6);
+const businessArticles = businessAll.slice(0, 6);
 
 async function withCategory(articles: typeof allArticles) {
   return Promise.all(
@@ -29,9 +37,22 @@ async function withCategory(articles: typeof allArticles) {
 const localsWithCat = await withCategory(localsArticles);
 const visitorWithCat = await withCategory(visitorArticles);
 const businessWithCat = await withCategory(businessArticles);
-// Full set, for the search bar — independent of the sectioned 6-per-group
-// slices above, so search covers every published article on the site.
-const allWithCat = await withCategory(sortByDateDesc(allArticles));
+// Full set, for the search bar — independent of the sectioned display
+// above, so search covers every published article on the site.
+const allWithCat = await withCategory(allSorted);
+
+// Every real topic articles are actually tagged with, grouped with a
+// live count — this is the real "find everything" path beyond search,
+// since the curated sections above only cover a fraction of all topics.
+const categoryCounts = new Map<string, number>();
+for (const a of allArticles) {
+  categoryCounts.set(a.data.category.id, (categoryCounts.get(a.data.category.id) ?? 0) + 1);
+}
+const allCategories = await getCollection('categories');
+const topicList = Array.from(categoryCounts.entries())
+  .map(([id, count]) => ({ category: allCategories.find((c) => c.id === id), count }))
+  .filter((t) => t.category)
+  .sort((a, b) => b.count - a.count);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -49,19 +70,31 @@ const schema = {
 
   <section class="loop-hero">
     <div class="loop-hero-photo"></div>
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <filter id="loop-water-filter" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" numOctaves="2" seed="6" baseFrequency="0.014 0.04" result="noise">
+            <animate attributeName="baseFrequency" dur="13s" values="0.014 0.04;0.02 0.055;0.014 0.04" repeatCount="indefinite" />
+          </feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="13" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="loop-water-ripple"></div>
     <div class="loop-hero-overlay"></div>
     <div class="container">
       <div class="loop-hero-content">
         <span class="eyebrow">The Loop</span>
         <h1>Stay in The Loop</h1>
         <p>Real stories, community wins, and what's actually happening — for the people who live here and the people just visiting.</p>
+
+        <div class="loop-search-wrap">
+          <Icon name="search" size={18} class="loop-search-icon" />
+          <input type="search" id="loop-search-input" class="loop-search-input" placeholder="Search every article and guide..." aria-label="Search articles and guides" />
+        </div>
       </div>
     </div>
   </section>
-
-  <div class="container loop-search-wrap">
-    <input type="search" id="loop-search-input" class="loop-search-input" placeholder="Search articles and guides..." aria-label="Search articles and guides" />
-  </div>
 
   <section id="loop-search-results" class="loop-band" hidden>
     <div class="container">
@@ -69,7 +102,7 @@ const schema = {
       <h2 id="loop-search-heading">Articles</h2>
       <div class="loop-grid" id="loop-search-grid">
         {allWithCat.map(({ article, category }) => (
-          <a href={`/guides/${article.id}`} class="loop-card" data-search={article.data.title.toLowerCase()} hidden>
+          <a href={`/guides/${article.id}`} class="loop-card" data-search={`${article.data.title} ${category?.data.name ?? ''}`.toLowerCase()} hidden>
             <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
               {!article.data.heroImage && category && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
             </div>
@@ -85,11 +118,30 @@ const schema = {
     </div>
   </section>
 
-  {localsWithCat.length > 0 && (
-    <section aria-labelledby="locals-heading" class="loop-band loop-band--alt">
-      <div class="container">
-        <span class="eyebrow">Locals</span>
-        <h2 id="locals-heading">Discover local gems</h2>
+  <div class="container" id="loop-main-content">
+    <section class="featured-story">
+      <a href={`/guides/${featured.id}`} class="featured-card">
+        <div class="featured-media" style={featured.data.heroImage ? `background-image: url(${featured.data.heroImage})` : undefined}>
+          {!featured.data.heroImage && <Icon name={featuredCategory.data.icon} size={40} class="featured-icon" />}
+        </div>
+        <div class="featured-body">
+          <span class="featured-tag">Latest · {featuredCategory.data.name}</span>
+          <h2>{featured.data.title}</h2>
+          <p>{featured.data.seo.description}</p>
+          <span class="featured-link">Read the full story →</span>
+        </div>
+      </a>
+    </section>
+
+    {localsWithCat.length > 0 && (
+      <section aria-labelledby="locals-heading" class="loop-band loop-band--alt">
+        <div class="sec-head">
+          <div>
+            <span class="eyebrow">Locals</span>
+            <h2 id="locals-heading">Discover local gems</h2>
+          </div>
+          {localsAll.length > 6 && <a href={`/search?q=${encodeURIComponent('local')}`} class="sec-view-all">View all →</a>}
+        </div>
         <div class="loop-grid">
           {localsWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
@@ -104,16 +156,19 @@ const schema = {
             </a>
           ))}
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )}
 
-  {visitorWithCat.length > 0 && (
-    <section aria-labelledby="visitors-heading" class="loop-band">
-      <div class="container">
-        <span class="eyebrow">Visitors</span>
-        <h2 id="visitors-heading">Explore Sioux Falls</h2>
-        <p class="section-sub">Maximize your visit — explore, experience, and discover Sioux Falls.</p>
+    {visitorWithCat.length > 0 && (
+      <section aria-labelledby="visitors-heading" class="loop-band">
+        <div class="sec-head">
+          <div>
+            <span class="eyebrow">Visitors</span>
+            <h2 id="visitors-heading">Explore Sioux Falls</h2>
+            <p class="section-sub">Maximize your visit — explore, experience, and discover Sioux Falls.</p>
+          </div>
+          {visitorAll.length > 6 && <a href="/visit-sioux-falls" class="sec-view-all">View all →</a>}
+        </div>
         <div class="loop-grid">
           {visitorWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
@@ -128,16 +183,19 @@ const schema = {
             </a>
           ))}
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )}
 
-  {businessWithCat.length > 0 && (
-    <section aria-labelledby="business-heading" class="loop-band loop-band--alt">
-      <div class="container">
-        <span class="eyebrow">For Business Owners</span>
-        <h2 id="business-heading">Grow your business</h2>
-        <p class="section-sub">Tactics, marketing tools, and strategies from Sioux Falls Go.</p>
+    {businessWithCat.length > 0 && (
+      <section aria-labelledby="business-heading" class="loop-band loop-band--alt">
+        <div class="sec-head">
+          <div>
+            <span class="eyebrow">For Business Owners</span>
+            <h2 id="business-heading">Grow your business</h2>
+            <p class="section-sub">Tactics, marketing tools, and strategies from Sioux Falls Go.</p>
+          </div>
+          {businessAll.length > 6 && <a href={`/search?q=${encodeURIComponent('business')}`} class="sec-view-all">View all →</a>}
+        </div>
         <div class="loop-grid">
           {businessWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
@@ -152,9 +210,24 @@ const schema = {
             </a>
           ))}
         </div>
+      </section>
+    )}
+
+    <section class="topics-section" aria-labelledby="topics-heading">
+      <span class="eyebrow">Every Topic</span>
+      <h2 id="topics-heading">Browse everything, by topic</h2>
+      <p class="section-sub">Every guide on Sioux Falls Go, sorted by what it's actually about — {allArticles.length} articles across {topicList.length} topics.</p>
+      <div class="topics-grid">
+        {topicList.map(({ category, count }) => (
+          <a href={`/${category!.data.slug}`} class="topic-pill">
+            <span class="topic-icon"><Icon name={category!.data.icon} size={16} /></span>
+            <span class="topic-name">{category!.data.name}</span>
+            <span class="topic-count">{count}</span>
+          </a>
+        ))}
       </div>
     </section>
-  )}
+  </div>
 
   <div class="container">
     <section class="legend-section">
@@ -182,27 +255,62 @@ const schema = {
 </BaseLayout>
 
 <style>
-  .loop-hero { position: relative; min-height: 24rem; display: flex; align-items: center; overflow: hidden; }
+  .loop-hero { position: relative; min-height: 27rem; display: flex; align-items: center; overflow: hidden; }
   .loop-hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/falls-park-2.jpg') center/cover; animation: loop-kb 26s ease-in-out infinite alternate; }
   @keyframes loop-kb { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
   @media (prefers-reduced-motion: reduce) { .loop-hero-photo { animation: none; } }
-  .loop-hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.85) 0%, rgba(13,23,48,0.5) 55%, rgba(13,23,48,0.2) 100%); }
+  .loop-water-ripple {
+    position: absolute; inset: -2%; width: 104%; height: 104%;
+    background: url('/images/scenic/falls-park-2.jpg') center/cover;
+    animation: loop-kb 26s ease-in-out infinite alternate;
+    -webkit-mask-image: radial-gradient(ellipse 46% 50% at 42% 55%, black 40%, transparent 75%);
+    mask-image: radial-gradient(ellipse 46% 50% at 42% 55%, black 40%, transparent 75%);
+    filter: url(#loop-water-filter);
+  }
+  @media (prefers-reduced-motion: reduce) { .loop-water-ripple { filter: none; animation: none; } }
+  .loop-hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.85) 0%, rgba(13,23,48,0.55) 55%, rgba(13,23,48,0.25) 100%); }
   .loop-hero-content { position: relative; z-index: 2; padding-block: 3.5rem; color: #fff; max-width: 40rem; }
   .loop-hero-content h1 { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.12; margin: 0.6rem 0 1rem; color: #fff; }
-  .loop-hero-content p { font-size: 1.125rem; color: rgba(255,255,255,0.9); }
+  .loop-hero-content p { font-size: 1.125rem; color: rgba(255,255,255,0.9); margin: 0 0 1.6rem; }
   .loop-hero-content .eyebrow { color: rgba(255,255,255,0.9); }
 
-  .page { padding-block: var(--space-4) var(--space-6); }
-  .loop-search-wrap { padding-block: var(--space-3); }
+  .loop-search-wrap { position: relative; max-width: 30rem; }
+  .loop-search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-navy-light); pointer-events: none; }
   .loop-search-input {
-    width: 100%; max-width: 32rem; padding: 0.75rem 1.1rem; border-radius: var(--radius-pill);
-    border: 1px solid rgba(0,0,0,0.15); font-size: 1rem; font-family: inherit;
+    width: 100%; padding: 0.9rem 1.1rem 0.9rem 2.7rem; border-radius: var(--radius-pill);
+    border: none; font-size: 1rem; font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
   .loop-search-input:focus { outline: 2px solid var(--color-orange, #e07a3f); outline-offset: 1px; }
+
+  .page, #loop-main-content { padding-block: var(--space-4) var(--space-6); }
   .page :global(.eyebrow) { display: block; margin-bottom: 0.2rem; }
   .loop-band { padding-block: var(--space-5); }
-  .loop-band--alt { background: var(--color-river-light, #EAF2F8); }
+  .loop-band--alt { background: var(--color-river-light, #EAF2F8); margin-inline: calc(-1 * var(--space-3)); padding-inline: var(--space-3); border-radius: var(--radius); }
   .section-sub { color: var(--color-navy-light); margin-top: -0.3rem; }
+
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-2); flex-wrap: wrap; }
+  .sec-view-all { font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--color-orange-dark); padding-bottom: 2px; }
+
+  /* FEATURED STORY — one bold editorial moment instead of another grid card */
+  .featured-story { padding-block: var(--space-4) var(--space-5); }
+  .featured-card {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--space-4); align-items: stretch;
+    text-decoration: none; background: var(--color-navy); border-radius: var(--radius); overflow: hidden;
+    box-shadow: 0 20px 50px rgba(13,23,48,0.18);
+  }
+  @media (max-width: 45rem) { .featured-card { grid-template-columns: 1fr; } }
+  .featured-media {
+    min-height: 16rem; background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center;
+    background-color: #16233d;
+  }
+  .featured-icon { color: rgba(255,255,255,0.5); }
+  .featured-body { padding: var(--space-4) var(--space-4) var(--space-4) 0; display: flex; flex-direction: column; justify-content: center; color: #fff; }
+  @media (max-width: 45rem) { .featured-body { padding: var(--space-3); } }
+  .featured-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-gold); margin-bottom: 0.6rem; }
+  .featured-body h2 { font-family: var(--font-display); font-size: 1.75rem; line-height: 1.2; margin: 0 0 0.8rem; color: #fff; }
+  .featured-body p { color: rgba(255,255,255,0.75); font-size: 1.0625rem; margin: 0 0 1.2rem; max-width: 40ch; }
+  .featured-link { font-weight: 700; color: var(--color-gold); }
 
   .loop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); margin-top: var(--space-3); }
   @media (max-width: 55rem) { .loop-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -213,6 +321,7 @@ const schema = {
     box-shadow: 0 1px 2px rgba(13,23,48,0.06);
     transition: transform 0.2s cubic-bezier(.2,.8,.2,1), box-shadow 0.2s ease, border-color 0.2s ease;
   }
+  .loop-card[hidden] { display: none; }
   .loop-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(13,23,48,0.16); border-color: transparent; }
   .loop-card-media {
     height: 12.5rem; display: flex; align-items: center; justify-content: center;
@@ -224,6 +333,20 @@ const schema = {
   .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .loop-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+
+  /* BROWSE BY TOPIC — the real "find everything" path beyond search */
+  .topics-section { padding-block: var(--space-5); }
+  .topics-grid { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: var(--space-3); }
+  .topic-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;
+    background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-pill);
+    padding: 0.6rem 1rem 0.6rem 0.8rem; color: var(--color-navy); font-weight: 600; font-size: 0.9375rem;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  }
+  .topic-pill:hover { border-color: var(--color-orange); background: #fff; transform: translateY(-2px); }
+  .topic-icon { color: var(--color-orange-dark); display: flex; }
+  .topic-count { color: var(--color-navy-light); font-weight: 700; font-size: 0.8125rem; background: rgba(13,23,48,0.06); border-radius: var(--radius-pill); padding: 0.1rem 0.5rem; }
+
   .legend-section { margin-top: var(--space-5); margin-bottom: var(--space-6); }
   .legend-card {
     display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--space-4); align-items: center;
@@ -254,20 +377,25 @@ const schema = {
   .legend-form-status.is-error { color: #C0392B; }
 </style>
 
+<style>
+  #loop-search-results { display: none; }
+  #loop-search-results:not([hidden]) { display: block; }
+</style>
+
 <script>
   // The Loop search — filters the full article set independent of the
-  // sectioned 6-per-group display above. Typing shows matching results
-  // and hides the normal sections; clearing the box restores them.
+  // sectioned display above. Typing shows matching results and hides the
+  // normal sections; clearing the box restores them.
   const loopSearchInput = document.getElementById('loop-search-input') as HTMLInputElement;
   const loopResultsSection = document.getElementById('loop-search-results');
   const loopSearchGrid = document.getElementById('loop-search-grid');
   const loopSearchEmpty = document.getElementById('loop-search-empty');
-  const loopNormalSections = Array.from(document.querySelectorAll('.loop-band:not(#loop-search-results)'));
+  const loopMainContent = document.getElementById('loop-main-content');
 
   loopSearchInput?.addEventListener('input', () => {
     const q = loopSearchInput.value.trim().toLowerCase();
     const searching = q.length > 0;
-    loopNormalSections.forEach((section) => { (section as HTMLElement).hidden = searching; });
+    if (loopMainContent) (loopMainContent as HTMLElement).hidden = searching;
     if (loopResultsSection) (loopResultsSection as HTMLElement).hidden = !searching;
     if (!searching) return;
     const cards = loopSearchGrid ? Array.from(loopSearchGrid.querySelectorAll('.loop-card')) : [];
@@ -280,6 +408,15 @@ const schema = {
     });
     if (loopSearchEmpty) (loopSearchEmpty as HTMLElement).hidden = visibleCount > 0;
   });
+
+  // Support ?q= in the URL so other pages (like the "View all" links) can
+  // link straight into a live search on this page.
+  const params = new URLSearchParams(window.location.search);
+  const initialQ = params.get('q');
+  if (initialQ && loopSearchInput) {
+    loopSearchInput.value = initialQ;
+    loopSearchInput.dispatchEvent(new Event('input'));
+  }
 </script>
 
 <script>
