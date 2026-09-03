@@ -93,6 +93,10 @@ const exploreItems = [
 
     <a href="/get-featured" class="button header-cta desktop-cta">Get Featured</a>
 
+    <a href="/search" class="mobile-search-link" aria-label="Search Sioux Falls Go">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </a>
+
     <button class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
       <span></span>
       <span></span>
@@ -102,7 +106,6 @@ const exploreItems = [
 
   <div class="mobile-menu" id="mobile-menu">
     <nav aria-label="Mobile primary">
-      <a class="mobile-flat-link" href="/search">Search</a>
       <a class="mobile-flat-link" href="/guides">The Loop</a>
 
       <div class="mobile-accordion">
@@ -231,6 +234,12 @@ const exploreItems = [
     transition: background 0.15s;
   }
   .nav-search-link:hover { background: var(--color-surface); }
+  .mobile-search-link {
+    display: none; align-items: center; justify-content: center;
+    width: 2.5rem; height: 2.5rem; border-radius: 50%; color: var(--color-navy);
+    transition: background 0.15s;
+  }
+  .mobile-search-link:hover, .mobile-search-link:active { background: var(--color-surface); }
   .header-cta {
     padding: 0.65rem 1.5rem; font-size: 0.9375rem; font-weight: 700;
     background: var(--color-river); color: #fff; border-radius: 0.5rem;
@@ -310,6 +319,7 @@ const exploreItems = [
   @media (max-width: 62rem) {
     .desktop-nav, .desktop-cta, .nav-search-link { display: none; }
     .hamburger-btn { display: flex; }
+    .mobile-search-link { display: inline-flex; }
   }
 </style>
 
