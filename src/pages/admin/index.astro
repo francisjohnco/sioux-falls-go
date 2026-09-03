@@ -57,6 +57,24 @@ const totalMismatches = sponsorshipsByBusiness.reduce(
   (sum, s) => sum + s.articlesSponsored.filter((a) => !a.categoryMatch).length, 0
 );
 const activeSponsorCount = sponsorshipsByBusiness.filter((s) => s.articlesSponsored.length > 0).length;
+
+// Mailer Deals — real data for the admin's create/manage view.
+const allDealsForAdmin = await getCollection('deals');
+const nowForDeals = new Date();
+const mailerDealsAll = allDealsForAdmin.filter((d) => d.data.mailerCampaign);
+const mailerDealsWithBusiness = await Promise.all(
+  mailerDealsAll.map(async (d) => ({
+    deal: d,
+    business: await getEntry(d.data.business),
+    isExpired: d.data.expiresAt ? d.data.expiresAt.getTime() < nowForDeals.getTime() : false,
+  }))
+);
+mailerDealsWithBusiness.sort((a, b) => (a.isExpired === b.isExpired ? 0 : a.isExpired ? 1 : -1));
+const activeMailerCount = mailerDealsWithBusiness.filter((d) => !d.isExpired).length;
+// Verified businesses are eligible to receive a postcard offer, regardless of tier
+const verifiedBusinesses = businessesWithCategory
+  .filter(({ business }) => business.data.verifiedAt)
+  .sort((a, b) => a.business.data.name.localeCompare(b.business.data.name));
 const allArticles = await getCollection('articles');
 const allCategories = await getCollection('categories');
 const allStays = await getCollection('stays');
@@ -119,6 +137,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <button class="nav-item" data-tab="sponsorships">
           <span class="nav-icon"><Icon name="star" size={18} /></span> Sponsorships
         </button>
+        <button class="nav-item" data-tab="mailer-deals">
+          <span class="nav-icon"><Icon name="mail" size={18} /></span> Mailer Deals
+        </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
         </button>
@@ -143,18 +164,22 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
         <div class="stat-grid">
           <div class="stat-card">
+            <span class="stat-icon"><Icon name="folder" size={18} /></span>
             <span class="stat-number">{businesses.length}</span>
             <span class="stat-label">Businesses Live</span>
           </div>
           <div class="stat-card stat-card--accent">
+            <span class="stat-icon stat-icon--accent"><Icon name="star" size={18} /></span>
             <span class="stat-number">{championCount}</span>
             <span class="stat-label">Community Champions</span>
           </div>
           <div class="stat-card">
+            <span class="stat-icon"><Icon name="heart" size={18} /></span>
             <span class="stat-number">{giveBackCount}</span>
             <span class="stat-label">Give Back Partners</span>
           </div>
           <div class="stat-card">
+            <span class="stat-icon"><Icon name="edit" size={18} /></span>
             <span class="stat-number">{allArticles.length}</span>
             <span class="stat-label">Articles &amp; Guides</span>
           </div>
@@ -457,6 +482,100 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           ))}
         </div>
       </section>
+
+      <!-- ── MAILER DEALS ── -->
+      <section class="tab-panel" id="panel-mailer-deals">
+        <div class="panel-header-row">
+          <div>
+            <h1>Mailer Deals</h1>
+            <p class="panel-sub">Postcard-exclusive offers. Create one the moment a business actually pays for a spot — everything else (their redemption page, the Mailer Deals hub, their profile tab) builds itself from there.</p>
+          </div>
+          <button class="button" id="open-create-deal-btn"><Icon name="mail" size={16} /> New Mailer Deal</button>
+        </div>
+
+        <div class="sponsor-stats">
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{activeMailerCount}</span>
+            <span class="sponsor-stat-label">Active mailer deals</span>
+          </div>
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{mailerDealsWithBusiness.length - activeMailerCount}</span>
+            <span class="sponsor-stat-label">Expired</span>
+          </div>
+          <div class="sponsor-stat">
+            <span class="sponsor-stat-num">{verifiedBusinesses.length}</span>
+            <span class="sponsor-stat-label">Verified businesses eligible</span>
+          </div>
+        </div>
+
+        {mailerDealsWithBusiness.length === 0 ? (
+          <p class="empty-note">No mailer deals yet — create the first one once a business books a spot.</p>
+        ) : (
+          <div class="mailer-deal-list">
+            {mailerDealsWithBusiness.map(({ deal, business, isExpired }) => (
+              <div class={`mailer-deal-row ${isExpired ? 'mailer-deal-row--expired' : ''}`}>
+                <div>
+                  <span class="mailer-deal-biz">{business?.data.name ?? deal.data.business.id}</span>
+                  <span class="mailer-deal-title">{deal.data.title}</span>
+                  <span class="mailer-deal-meta">
+                    {deal.data.mailerCampaign} mailing
+                    {deal.data.expiresAt && ` · ${isExpired ? 'expired' : 'expires'} ${deal.data.expiresAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`}
+                  </span>
+                </div>
+                {isExpired ? (
+                  <span class="match-badge match-badge--warn">Expired</span>
+                ) : (
+                  <a href={`/mailer-deals/${business?.id}`} target="_blank" class="mailer-deal-link">View page →</a>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <!-- ── CREATE MAILER DEAL MODAL ── -->
+      <div class="edit-modal-backdrop" id="create-deal-modal-backdrop">
+        <div class="edit-modal">
+          <div class="edit-modal-header">
+            <h2>New Mailer Deal</h2>
+            <button class="edit-modal-close" id="create-deal-close" aria-label="Close">✕</button>
+          </div>
+          <div class="edit-modal-body">
+            <label class="edit-field-full">Business
+              <select id="deal-business">
+                <option value="">Select a verified business…</option>
+                {verifiedBusinesses.map(({ business }) => (
+                  <option value={business.id}>{business.data.name}</option>
+                ))}
+              </select>
+            </label>
+            <label class="edit-field-full">Mailing Cycle <input type="text" id="deal-campaign" placeholder="e.g. September 2026" /></label>
+            <label class="edit-field-full">Offer Title <input type="text" id="deal-title" placeholder="e.g. $25 Off Any Drain Service" /></label>
+            <label class="edit-field-full">Description <textarea id="deal-description" rows="2" placeholder="One sentence describing the offer"></textarea></label>
+            <div class="edit-field-grid">
+              <label>Discount Type
+                <select id="deal-discountType">
+                  <option value="percent-off">Percent off</option>
+                  <option value="dollar-off">Dollar off</option>
+                  <option value="bogo">Buy one, get one</option>
+                  <option value="free-item">Free item</option>
+                  <option value="bundle">Bundle</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <label>Expires
+                <input type="date" id="deal-expiresAt" />
+              </label>
+            </div>
+            <label class="edit-field-full">Terms (optional) <input type="text" id="deal-terms" placeholder="e.g. One per household." /></label>
+            <p class="edit-modal-status" id="create-deal-status" hidden></p>
+          </div>
+          <div class="edit-modal-footer">
+            <button class="button button--ghost" id="create-deal-cancel">Cancel</button>
+            <button class="button" id="create-deal-save">Create Deal</button>
+          </div>
+        </div>
+      </div>
 
       <!-- ── DIRECTORY ── -->
       <section class="tab-panel" id="panel-directory">
@@ -798,18 +917,18 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   }
 
   .admin-sidebar { grid-area: sidebar; background: #fff; border-right: 1px solid var(--color-line); padding: var(--space-2); }
-  .admin-sidebar nav { display: flex; flex-direction: column; gap: 0.25rem; }
+  .admin-sidebar nav { display: flex; flex-direction: column; gap: 0.15rem; }
   .nav-item, .queue-item, .bottomnav-item { font-family: var(--font-body); }
   .nav-item {
     display: flex; align-items: center; gap: 0.65rem;
     padding: 0.7rem 0.85rem; border-radius: var(--radius);
-    background: none; border: none; text-align: left;
+    background: none; border: none; border-left: 3px solid transparent; text-align: left;
     font-size: 0.9375rem; font-weight: 600; color: var(--color-navy-light);
-    cursor: pointer;
+    cursor: pointer; transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
-  .nav-item:hover { background: var(--color-surface); }
-  .nav-item.is-active { background: #FEF3E2; color: var(--color-orange-dark); }
-  .nav-icon { font-size: 1.1rem; width: 1.2rem; text-align: center; }
+  .nav-item:hover { background: var(--color-surface); color: var(--color-navy); }
+  .nav-item.is-active { background: #FEF3E2; color: var(--color-orange-dark); border-left-color: var(--color-orange); }
+  .nav-icon { font-size: 1.1rem; width: 1.2rem; text-align: center; display: inline-flex; }
 
   .admin-main { grid-area: main; padding: var(--space-3) var(--space-4) var(--space-6); overflow-x: hidden; }
   .admin-main h1 { margin-bottom: 0.2rem; }
@@ -819,11 +938,21 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .tab-panel { display: none; }
   .tab-panel.is-active { display: block; }
 
-  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); }
-  .stat-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); display: flex; flex-direction: column; }
-  .stat-card--accent { border-color: var(--color-orange); border-width: 2px; }
-  .stat-number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--color-navy); }
-  .stat-label { font-size: 0.8125rem; color: var(--color-navy-light); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-3); }
+  .stat-card {
+    background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.5rem; position: relative; overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(13,23,48,0.08); }
+  .stat-card--accent { border-color: var(--color-orange); background: linear-gradient(160deg, #fff 60%, #FFF3E0 100%); }
+  .stat-icon {
+    width: 2.2rem; height: 2.2rem; border-radius: 0.6rem; background: var(--color-surface); color: var(--color-navy-light);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 0.2rem;
+  }
+  .stat-icon--accent { background: var(--color-orange); color: #fff; }
+  .stat-number { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--color-navy); line-height: 1; }
+  .stat-label { font-size: 0.8125rem; color: var(--color-navy-light); font-weight: 500; }
 
   .section-heading { margin-top: var(--space-4); font-size: 1.1875rem; }
   .section-heading-sub { font-size: 0.75rem; font-weight: 500; color: var(--color-navy-light); text-transform: none; margin-left: 0.6rem; }
@@ -889,6 +1018,19 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .sponsor-article-title { font-weight: 600; font-size: 0.875rem; color: var(--color-navy); flex: 1; min-width: 12rem; }
   .sponsor-article-cat { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
   .match-badge { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: var(--radius-pill); white-space: nowrap; }
+
+  .mailer-deal-list { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.2rem; }
+  .mailer-deal-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+    background: #fff; border: 1px solid var(--color-line); border-left: 4px solid var(--color-orange);
+    border-radius: var(--radius); padding: 0.9rem 1.1rem;
+  }
+  .mailer-deal-row--expired { border-left-color: var(--color-line); opacity: 0.7; }
+  .mailer-deal-row > div { display: flex; flex-direction: column; gap: 0.15rem; }
+  .mailer-deal-biz { font-weight: 700; color: var(--color-navy); font-size: 0.9375rem; }
+  .mailer-deal-title { font-size: 0.875rem; color: var(--color-navy-light); }
+  .mailer-deal-meta { font-size: 0.75rem; color: var(--color-navy-light); opacity: 0.8; }
+  .mailer-deal-link { font-weight: 700; font-size: 0.8125rem; color: var(--color-orange-dark); white-space: nowrap; }
   .match-badge--ok { background: #E1E9DE; color: #4F6B52; }
   .match-badge--warn { background: #FBE7C6; color: #8a5a1e; }
   .gap-item { display: grid; grid-template-columns: 1.75rem 1fr auto; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; background: var(--color-surface); border-radius: var(--radius); }
@@ -1556,6 +1698,79 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   });
 
   // FULL BUSINESS EDIT MODAL
+  // ── Create Mailer Deal ──
+  const createDealBackdrop = document.getElementById('create-deal-modal-backdrop');
+  const createDealStatus = document.getElementById('create-deal-status');
+  const createDealSaveBtn = document.getElementById('create-deal-save') as HTMLButtonElement;
+
+  document.getElementById('open-create-deal-btn')?.addEventListener('click', () => {
+    (document.getElementById('deal-business') as HTMLSelectElement).value = '';
+    (document.getElementById('deal-campaign') as HTMLInputElement).value = '';
+    (document.getElementById('deal-title') as HTMLInputElement).value = '';
+    (document.getElementById('deal-description') as HTMLTextAreaElement).value = '';
+    (document.getElementById('deal-discountType') as HTMLSelectElement).value = 'percent-off';
+    (document.getElementById('deal-terms') as HTMLInputElement).value = '';
+    // Default expiry: 30 days out, matching the current standard mailer-deal window
+    const defaultExpiry = new Date();
+    defaultExpiry.setDate(defaultExpiry.getDate() + 30);
+    (document.getElementById('deal-expiresAt') as HTMLInputElement).value = defaultExpiry.toISOString().split('T')[0];
+    if (createDealStatus) createDealStatus.hidden = true;
+    createDealBackdrop?.classList.add('is-open');
+  });
+
+  function closeCreateDealModal() {
+    createDealBackdrop?.classList.remove('is-open');
+  }
+  document.getElementById('create-deal-close')?.addEventListener('click', closeCreateDealModal);
+  document.getElementById('create-deal-cancel')?.addEventListener('click', closeCreateDealModal);
+  createDealBackdrop?.addEventListener('click', (e) => { if (e.target === createDealBackdrop) closeCreateDealModal(); });
+
+  createDealSaveBtn?.addEventListener('click', async () => {
+    const business = (document.getElementById('deal-business') as HTMLSelectElement).value;
+    const mailerCampaign = (document.getElementById('deal-campaign') as HTMLInputElement).value.trim();
+    const title = (document.getElementById('deal-title') as HTMLInputElement).value.trim();
+    const description = (document.getElementById('deal-description') as HTMLTextAreaElement).value.trim();
+    const discountType = (document.getElementById('deal-discountType') as HTMLSelectElement).value;
+    const expiresAt = (document.getElementById('deal-expiresAt') as HTMLInputElement).value;
+    const terms = (document.getElementById('deal-terms') as HTMLInputElement).value.trim();
+
+    if (!business || !mailerCampaign || !title) {
+      if (createDealStatus) {
+        createDealStatus.textContent = 'Business, mailing cycle, and offer title are required.';
+        createDealStatus.className = 'edit-modal-status is-error';
+        createDealStatus.hidden = false;
+      }
+      return;
+    }
+
+    createDealSaveBtn.setAttribute('disabled', 'true');
+    createDealSaveBtn.textContent = 'Creating…';
+    try {
+      const res = await fetch('/api/create-mailer-deal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ business, title, description, discountType, expiresAt, terms, mailerCampaign, valueScore: 50 }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Create failed');
+      if (createDealStatus) {
+        createDealStatus.textContent = `Created! ${data.redeemUrl} will go live on the next deploy.`;
+        createDealStatus.className = 'edit-modal-status is-success';
+        createDealStatus.hidden = false;
+      }
+      setTimeout(() => { closeCreateDealModal(); window.location.reload(); }, 1600);
+    } catch (err: any) {
+      if (createDealStatus) {
+        createDealStatus.textContent = `Couldn't create: ${err.message}`;
+        createDealStatus.className = 'edit-modal-status is-error';
+        createDealStatus.hidden = false;
+      }
+    } finally {
+      createDealSaveBtn.removeAttribute('disabled');
+      createDealSaveBtn.textContent = 'Create Deal';
+    }
+  });
+
   const editBackdrop = document.getElementById('edit-modal-backdrop');
   const editStatus = document.getElementById('edit-modal-status');
   const editSaveBtn = document.getElementById('edit-modal-save');
