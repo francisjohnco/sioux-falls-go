@@ -113,6 +113,11 @@ const deals = defineCollection({
     // its own dedicated redemption page. A deal a business manages
     // themselves through ordinary Specials never sets this.
     mailerCampaign: z.string().optional(),
+    // Which physical spot size this business bought on the postcard
+    // (Large/Medium/Small) — only meaningful alongside mailerCampaign.
+    // This is what drives the real "Live View of Open Spots" grid on the
+    // postcard page: it's how a booking actually maps to a specific tile.
+    spotSize: z.enum(['large', 'medium', 'small']).optional(),
   }),
 });
 

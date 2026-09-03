@@ -1,4 +1,5 @@
 ---
+import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -8,8 +9,50 @@ import Icon from '../components/Icon.astro';
 // product. Pricing tiers (Large/Medium/Small) follow the same "Local
 // Spotlight" franchise structure shown in the sibling-market reference
 // (salinelocal.com/spotlight) — confirm exact Sioux Falls rates before
-// this goes live if they differ. Spot statuses below are honest for a
-// first-ever Sioux Falls mailing: shown mostly Open, not fabricated as sold out.
+// this goes live if they differ.
+
+// ── Live spot availability ──
+// Real, not staged: reads actual mailer deals (created in the admin's
+// Mailer Deals tab whenever a business books a spot) and maps each one
+// to its actual tile by spotSize. Capacity per mailing: 1 Large, 2
+// Medium, 5 Small — matches the physical postcard layout below.
+const SPOT_PRICES = { large: 900, medium: 550, small: 300 } as const;
+const CAPACITY = { large: 1, medium: 2, small: 5 } as const;
+
+const now = new Date();
+const allDealsForSpots = await getCollection('deals');
+const activeMailerDeals = allDealsForSpots.filter(
+  (d) => d.data.mailerCampaign && d.data.spotSize && (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+);
+
+// Which mailing this page is currently selling — the most recently
+// dated active mailer deal's campaign name, or a sensible default if
+// nothing's booked yet.
+const currentCampaign = activeMailerDeals.length > 0
+  ? activeMailerDeals[activeMailerDeals.length - 1].data.mailerCampaign!
+  : 'September 2026';
+
+const claimedForCampaign = await Promise.all(
+  activeMailerDeals
+    .filter((d) => d.data.mailerCampaign === currentCampaign)
+    .map(async (d) => ({ business: await getEntry(d.data.business), spotSize: d.data.spotSize! }))
+);
+
+// Build each size's tile list: claimed ones first (real business name),
+// then fill remaining capacity with open tiles.
+function buildTiles(size: keyof typeof CAPACITY) {
+  const claimed = claimedForCampaign.filter((c) => c.spotSize === size);
+  const openCount = Math.max(0, CAPACITY[size] - claimed.length);
+  return [
+    ...claimed.map((c) => ({ size, claimed: true, businessName: c.business?.data.name ?? 'Claimed' })),
+    ...Array.from({ length: openCount }, () => ({ size, claimed: false, businessName: null })),
+  ];
+}
+const largeTiles = buildTiles('large');
+const mediumTiles = buildTiles('medium');
+const smallTiles = buildTiles('small');
+const totalOpen = [...largeTiles, ...mediumTiles, ...smallTiles].filter((t) => !t.claimed).length;
+const totalSpots = CAPACITY.large + CAPACITY.medium + CAPACITY.small;
 
 const included = [
   { icon: 'edit', title: 'Free Professional Ad Design', body: 'We design your spot for you — no designer, no software, no hassle.' },
@@ -76,48 +119,52 @@ const schema = {
     </section>
 
     <section class="sl-spots">
-      <span class="sl-date-pill"><Icon name="star" size={14} /> September Mailing</span>
+      <span class="sl-date-pill"><Icon name="star" size={14} /> {currentCampaign} Mailing</span>
       <h2>Live View of Open Spots &mdash; Claim Yours Now!</h2>
-      <p class="sl-spots-sub">Only one business per category makes it onto each mailer, and spots for the next drop are going fast. Reach out today to lock in your category before someone else does.</p>
+      <p class="sl-spots-sub">Only one business per category makes it onto each mailer. {totalOpen} of {totalSpots} spots are currently open for the {currentCampaign} mailing — reach out today to lock in your category before someone else does.</p>
 
       <div class="sl-mock-card">
-        <div class="sl-mock-tile sl-mock-tile--medium sl-mock-tile--open" style="grid-area: m1;">
-          <span class="sl-mock-price">$550</span><span class="sl-mock-size">MEDIUM</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--medium ${mediumTiles[0]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: m1;">
+          <span class="sl-mock-price">${SPOT_PRICES.medium}</span><span class="sl-mock-size">MEDIUM</span>
+          {mediumTiles[0]?.claimed ? (
+            <span class="sl-mock-stamp sl-mock-stamp--sold">CLAIMED</span>
+          ) : (
+            <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+          )}
         </div>
-        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s1;">
-          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--small ${smallTiles[0]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: s1;">
+          <span class="sl-mock-price">${SPOT_PRICES.small}</span><span class="sl-mock-size">SMALL</span>
+          <span class={`sl-mock-stamp ${smallTiles[0]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{smallTiles[0]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
         <div class="sl-mock-tile sl-mock-indicia" style="grid-area: ind;">
           <span class="sl-mock-mast">sioux falls <strong>go</strong><br/><em>SPOTLIGHT</em></span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--large sl-mock-tile--open" style="grid-area: lg;">
-          <span class="sl-mock-price">$900</span><span class="sl-mock-size">LARGE</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--large ${largeTiles[0]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: lg;">
+          <span class="sl-mock-price">${SPOT_PRICES.large}</span><span class="sl-mock-size">LARGE</span>
+          <span class={`sl-mock-stamp ${largeTiles[0]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{largeTiles[0]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--sold" style="grid-area: s2;">
-          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
-          <span class="sl-mock-stamp sl-mock-stamp--sold">CLAIMED</span>
+        <div class={`sl-mock-tile sl-mock-tile--small ${smallTiles[1]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: s2;">
+          <span class="sl-mock-price">${SPOT_PRICES.small}</span><span class="sl-mock-size">SMALL</span>
+          <span class={`sl-mock-stamp ${smallTiles[1]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{smallTiles[1]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--medium sl-mock-tile--open" style="grid-area: m2;">
-          <span class="sl-mock-price">$550</span><span class="sl-mock-size">MEDIUM</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--medium ${mediumTiles[1]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: m2;">
+          <span class="sl-mock-price">${SPOT_PRICES.medium}</span><span class="sl-mock-size">MEDIUM</span>
+          <span class={`sl-mock-stamp ${mediumTiles[1]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{mediumTiles[1]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s3;">
-          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--small ${smallTiles[2]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: s3;">
+          <span class="sl-mock-price">${SPOT_PRICES.small}</span><span class="sl-mock-size">SMALL</span>
+          <span class={`sl-mock-stamp ${smallTiles[2]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{smallTiles[2]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s4;">
-          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--small ${smallTiles[3]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: s4;">
+          <span class="sl-mock-price">${SPOT_PRICES.small}</span><span class="sl-mock-size">SMALL</span>
+          <span class={`sl-mock-stamp ${smallTiles[3]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{smallTiles[3]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
-        <div class="sl-mock-tile sl-mock-tile--small sl-mock-tile--open" style="grid-area: s5;">
-          <span class="sl-mock-price">$300</span><span class="sl-mock-size">SMALL</span>
-          <span class="sl-mock-stamp sl-mock-stamp--open">OPEN</span>
+        <div class={`sl-mock-tile sl-mock-tile--small ${smallTiles[4]?.claimed ? 'sl-mock-tile--sold' : 'sl-mock-tile--open'}`} style="grid-area: s5;">
+          <span class="sl-mock-price">${SPOT_PRICES.small}</span><span class="sl-mock-size">SMALL</span>
+          <span class={`sl-mock-stamp ${smallTiles[4]?.claimed ? 'sl-mock-stamp--sold' : 'sl-mock-stamp--open'}`}>{smallTiles[4]?.claimed ? 'CLAIMED' : 'OPEN'}</span>
         </div>
       </div>
-      <p class="sl-mock-fine">Pricing shown matches the standard Spotlight rate card &mdash; confirm current availability when you apply. All spots shown are open for Sioux Falls' first run, except where noted.</p>
+      <p class="sl-mock-fine">Live from the same system your application goes into — a spot flips to Claimed the moment it's booked in the admin, no manual updates needed. Pricing shown matches the standard Spotlight rate card.</p>
     </section>
 
     <section class="sl-why">

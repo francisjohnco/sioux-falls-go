@@ -7,5 +7,6 @@
   "expiresAt": "2026-10-03",
   "terms": "One per household. Cannot be combined with other offers.",
   "submittedBy": "verified-by-team",
-  "mailerCampaign": "September 2026"
+  "mailerCampaign": "September 2026",
+  "spotSize": "medium"
 }

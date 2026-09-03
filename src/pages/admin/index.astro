@@ -578,6 +578,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               </select>
             </label>
             <label class="edit-field-full">Mailing Cycle <input type="text" id="deal-campaign" placeholder="e.g. September 2026" /></label>
+            <label class="edit-field-full">Postcard Spot Size
+              <select id="deal-spotSize">
+                <option value="medium">Medium ($550)</option>
+                <option value="large">Large ($900)</option>
+                <option value="small">Small ($300)</option>
+              </select>
+            </label>
             <label class="edit-field-full">Offer Title <input type="text" id="deal-title" placeholder="e.g. $25 Off Any Drain Service" /></label>
             <label class="edit-field-full">Description <textarea id="deal-description" rows="2" placeholder="One sentence describing the offer"></textarea></label>
             <div class="edit-field-grid">
@@ -1790,6 +1797,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     (document.getElementById('deal-title') as HTMLInputElement).value = '';
     (document.getElementById('deal-description') as HTMLTextAreaElement).value = '';
     (document.getElementById('deal-discountType') as HTMLSelectElement).value = 'percent-off';
+    (document.getElementById('deal-spotSize') as HTMLSelectElement).value = 'medium';
     (document.getElementById('deal-terms') as HTMLInputElement).value = '';
     // Default expiry: 30 days out, matching the current standard mailer-deal window
     const defaultExpiry = new Date();
@@ -1812,6 +1820,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     const title = (document.getElementById('deal-title') as HTMLInputElement).value.trim();
     const description = (document.getElementById('deal-description') as HTMLTextAreaElement).value.trim();
     const discountType = (document.getElementById('deal-discountType') as HTMLSelectElement).value;
+    const spotSize = (document.getElementById('deal-spotSize') as HTMLSelectElement).value;
     const expiresAt = (document.getElementById('deal-expiresAt') as HTMLInputElement).value;
     const terms = (document.getElementById('deal-terms') as HTMLInputElement).value.trim();
 
@@ -1830,7 +1839,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       const res = await fetch('/api/create-mailer-deal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ business, title, description, discountType, expiresAt, terms, mailerCampaign, valueScore: 50 }),
+        body: JSON.stringify({ business, title, description, discountType, expiresAt, terms, mailerCampaign, spotSize, valueScore: 50 }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Create failed');

@@ -51,6 +51,7 @@ export default async (req: Request) => {
     expiresAt,
     terms,
     mailerCampaign,
+    spotSize,
   } = body;
 
   const deal: Record<string, unknown> = {
@@ -62,6 +63,7 @@ export default async (req: Request) => {
     submittedBy: 'verified-by-team',
     mailerCampaign,
   };
+  if (spotSize) deal.spotSize = spotSize;
   if (expiresAt) deal.expiresAt = expiresAt;
   if (terms) deal.terms = terms;
 
