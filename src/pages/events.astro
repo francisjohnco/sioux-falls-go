@@ -5,7 +5,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 
 interface EventItem {
-  category: 'family' | 'downtown' | 'music' | 'sports';
+  category: 'family' | 'downtown' | 'music' | 'sports' | 'market';
   date: Date;
   title: string;
   description: string;
@@ -20,6 +20,7 @@ const categoryMeta = {
   downtown: { label: 'Downtown', color: 'var(--color-river)', icon: 'home' },
   music: { label: 'Live Music', color: '#7B4FA0', icon: 'mic' },
   sports: { label: 'Sports', color: '#2E9E5B', icon: 'activity' },
+  market: { label: 'Market', color: '#B8860B', icon: 'gift' },
 };
 
 // Real, sourced events. See docs/content-strategy.md for the refresh cadence note —
@@ -27,12 +28,13 @@ const categoryMeta = {
 // events widget.
 const events: EventItem[] = [
   { category: 'music', date: new Date('2026-09-03'), title: 'Making Movies at Levitt at the Falls', description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer concert series.', sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Falls Park' },
+  { category: 'market', date: new Date('2026-09-05'), title: 'Falls Park Farmers Market', description: 'Fresh flowers, vegetables, meat, and baked goods from local growers — the weekly Saturday market runs through October.', sourceName: 'Falls Park Farmers Market', sourceUrl: 'https://www.fallsparkfarmersmarket.com/', photo: '/images/scenic/falls-park-golden.jpg', location: 'Falls Park' },
   { category: 'downtown', date: new Date('2026-09-11'), title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club, September 11-13.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/downtown-2.jpg', location: 'Minnehaha Country Club' },
-  { category: 'downtown', date: new Date('2026-09-12'), title: 'Downtown Outdoor Arts & Crafts Market', description: 'Over 230 vendors line the streets around Washington Pavilion with custom art, baked goods, and more.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Downtown Phillips Ave' },
+  { category: 'market', date: new Date('2026-09-12'), title: 'Downtown Outdoor Arts & Crafts Market', description: 'Over 230 vendors line the streets around Washington Pavilion with custom art, baked goods, and more.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Downtown Phillips Ave' },
   { category: 'family', date: new Date('2026-09-12'), title: "Remedy Brewing's 10th Annual Oktoberfest", description: 'German food, a stein-holding competition, live music, and games all afternoon.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/mckennan-park.jpg', location: 'Remedy Brewing Company' },
   { category: 'sports', date: new Date('2026-09-25'), title: 'CINCH Playoffs Rodeo', description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25-27.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events', photo: '/images/scenic/falls-park-1.jpg', location: 'Denny Sanford PREMIER Center' },
   { category: 'family', date: new Date('2026-09-26'), title: "Fernson Downtown's Oktoberfest", description: 'A downtown Oktoberfest celebration with German fare and live music.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-2.jpg', location: 'Fernson Downtown' },
-  { category: 'family', date: new Date('2026-10-09'), title: "Junkin' Market Days", description: 'Shop from 100 small businesses selling home decor, vintage finds, and handmade jewelry, October 9-10.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Ramkota Exhibit Hall' },
+  { category: 'market', date: new Date('2026-10-09'), title: "Junkin' Market Days", description: 'Shop from 100 small businesses selling home decor, vintage finds, and handmade jewelry, October 9-10.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide', photo: '/images/scenic/downtown-1.jpg', location: 'Ramkota Exhibit Hall' },
 ];
 
 events.sort((a, b) => a.date.getTime() - b.date.getTime());

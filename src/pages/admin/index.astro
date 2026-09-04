@@ -542,21 +542,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         ) : (
           <div class="mailer-deal-list">
             {mailerDealsWithBusiness.map(({ deal, business, isExpired, isScheduled }) => (
-              <button
-                class={`mailer-deal-row ${isExpired ? 'mailer-deal-row--expired' : ''}`}
-                data-open-deal-edit={deal.id}
-                data-deal={JSON.stringify({
-                  business: deal.data.business.id,
-                  title: deal.data.title,
-                  description: deal.data.description,
-                  discountType: deal.data.discountType,
-                  spotSize: deal.data.spotSize ?? 'medium',
-                  mailerCampaign: deal.data.mailerCampaign,
-                  activatesAt: deal.data.activatesAt ? deal.data.activatesAt.toISOString().split('T')[0] : '',
-                  expiresAt: deal.data.expiresAt ? deal.data.expiresAt.toISOString().split('T')[0] : '',
-                  terms: deal.data.terms ?? '',
-                })}
-              >
+              <div class={`mailer-deal-row ${isExpired ? 'mailer-deal-row--expired' : ''}`}>
                 <div>
                   <span class="mailer-deal-biz">{business?.data.name ?? deal.data.business.id}</span>
                   <span class="mailer-deal-title">{deal.data.title}</span>
@@ -574,9 +560,26 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                   ) : (
                     <span class="match-badge match-badge--ok">Active</span>
                   )}
-                  <span class="mailer-deal-edit-hint">Click to edit</span>
+                  <a href={`/mailer-deals/${business?.id}`} target="_blank" class="mailer-deal-view-btn">View</a>
+                  <button
+                    class="mailer-deal-edit-btn"
+                    data-open-deal-edit={deal.id}
+                    data-deal={JSON.stringify({
+                      business: deal.data.business.id,
+                      title: deal.data.title,
+                      description: deal.data.description,
+                      discountType: deal.data.discountType,
+                      spotSize: deal.data.spotSize ?? 'medium',
+                      mailerCampaign: deal.data.mailerCampaign,
+                      activatesAt: deal.data.activatesAt ? deal.data.activatesAt.toISOString().split('T')[0] : '',
+                      expiresAt: deal.data.expiresAt ? deal.data.expiresAt.toISOString().split('T')[0] : '',
+                      terms: deal.data.terms ?? '',
+                    })}
+                  >
+                    Edit
+                  </button>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
         )}
@@ -1102,17 +1105,23 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
     background: #fff; border: 1px solid var(--color-line); border-left: 4px solid var(--color-orange);
     border-radius: var(--radius); padding: 0.9rem 1.1rem; width: 100%; text-align: left;
-    font-family: var(--font-body); cursor: pointer; transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    font-family: var(--font-body);
   }
-  .mailer-deal-row:hover { box-shadow: 0 4px 14px rgba(13,23,48,0.08); border-color: var(--color-orange); }
   .mailer-deal-row--expired { border-left-color: var(--color-line); opacity: 0.7; }
   .mailer-deal-row > div { display: flex; flex-direction: column; gap: 0.15rem; }
   .mailer-deal-row-right { display: flex; align-items: center; gap: 0.7rem; }
   .mailer-deal-biz { font-weight: 700; color: var(--color-navy); font-size: 0.9375rem; }
   .mailer-deal-title { font-size: 0.875rem; color: var(--color-navy-light); }
   .mailer-deal-meta { font-size: 0.75rem; color: var(--color-navy-light); opacity: 0.8; }
-  .mailer-deal-edit-hint { font-size: 0.75rem; color: var(--color-navy-light); opacity: 0; transition: opacity 0.15s ease; }
-  .mailer-deal-row:hover .mailer-deal-edit-hint { opacity: 1; }
+  .mailer-deal-view-btn, .mailer-deal-edit-btn {
+    font-size: 0.8125rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 0.4rem;
+    font-family: var(--font-body); cursor: pointer; text-decoration: none; white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+  .mailer-deal-view-btn { background: none; border: 1.5px solid var(--color-line); color: var(--color-navy); }
+  .mailer-deal-view-btn:hover { background: var(--color-surface); }
+  .mailer-deal-edit-btn { background: var(--color-navy); border: 1.5px solid var(--color-navy); color: #fff; }
+  .mailer-deal-edit-btn:hover { background: #2c3f61; }
   .match-badge--ok { background: #E1E9DE; color: #4F6B52; }
   .match-badge--warn { background: #FBE7C6; color: #8a5a1e; }
   .match-badge--scheduled { background: #DDE7F5; color: #3A5A8C; }

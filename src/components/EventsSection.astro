@@ -7,38 +7,40 @@ interface EventItem {
   title: string;
   description: string;
   location: string;
-  category: string;
+  category: 'Market' | 'Music' | 'Sports';
+  photo: string;
   sourceName: string;
   sourceUrl: string;
 }
 
-// Real, sourced events, refreshed for the current window — see
-// docs/content-strategy.md for the refresh cadence note. Ordered
-// chronologically, with the very next one featured — reads most
-// naturally as "here's what's coming up," not a flat list.
-const events: EventItem[] = [
-  { month: 'Sep', day: '3', title: 'Making Movies at Levitt at the Falls', description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer concert series.', location: 'Falls Park', category: 'Music', sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/' },
-  { month: 'Sep', day: '11', title: 'Sanford International', description: 'PGA TOUR Champions returns to Minnehaha Country Club, September 11–13.', location: 'Minnehaha Country Club', category: 'Sports', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events' },
-  { month: 'Sep', day: '12', title: 'Downtown Outdoor Arts & Crafts Market', description: 'Over 230 vendors line the streets around Washington Pavilion with custom art, baked goods, and more.', location: 'Downtown Phillips Ave', category: 'Downtown', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
-  { month: 'Sep', day: '12', title: "Remedy Brewing's 10th Annual Oktoberfest", description: 'German food, a stein-holding competition, live music, and games all afternoon.', location: 'Remedy Brewing Company', category: 'Family', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
-  { month: 'Sep', day: '25', title: 'CINCH Playoffs Rodeo', description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25–27.', location: 'Denny Sanford PREMIER Center', category: 'Sports', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events' },
-  { month: 'Sep', day: '26', title: "Fernson Downtown's Oktoberfest", description: 'A downtown Oktoberfest celebration with German fare and live music.', location: 'Fernson Downtown', category: 'Family', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/fall-events-guide' },
+// Three real, sourced events — fewer than before, on purpose. This is a
+// preview, not the full list (that's what /events is for), so it should
+// read like a hand-picked spotlight, not a dense feed. See
+// docs/content-strategy.md for the refresh cadence note.
+const featured: EventItem = {
+  month: 'Sep', day: '5', title: 'Falls Park Farmers Market',
+  description: 'Fresh flowers, vegetables, meat, and baked goods from local growers — every Saturday through October.',
+  location: 'Falls Park', category: 'Market', photo: '/images/scenic/falls-park-golden.jpg',
+  sourceName: 'Falls Park Farmers Market', sourceUrl: 'https://www.fallsparkfarmersmarket.com/',
+};
+
+const supporting: EventItem[] = [
+  {
+    month: 'Sep', day: '3', title: 'Making Movies at Levitt at the Falls',
+    description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer series.',
+    location: 'Falls Park', category: 'Music', photo: '/images/scenic/levitt-concert-center.jpg',
+    sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/',
+  },
+  {
+    month: 'Sep', day: '25', title: 'CINCH Playoffs Rodeo',
+    description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25–27.',
+    location: 'Denny Sanford PREMIER Center', category: 'Sports', photo: '/images/scenic/falls-park-1.jpg',
+    sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events',
+  },
 ];
 
-const [featured, ...rest] = events;
-
-const categoryIcon: Record<string, string> = {
-  Music: 'zap',
-  Sports: 'star',
-  Downtown: 'home',
-  Family: 'heart',
-};
-const categoryColor: Record<string, string> = {
-  Music: '#F5B429',
-  Sports: '#2E9E5B',
-  Downtown: '#2E6F9E',
-  Family: '#F07E23',
-};
+const categoryIcon: Record<string, string> = { Market: 'gift', Music: 'mic', Sports: 'activity' };
+const categoryColor: Record<string, string> = { Market: '#F5B429', Music: '#B98CE0', Sports: '#5FCB8C' };
 ---
 <section class="happening-section">
   <div class="container">
@@ -46,110 +48,123 @@ const categoryColor: Record<string, string> = {
       <div>
         <span class="eyebrow eyebrow--light">Community Calendar</span>
         <h2>What's Happening in Sioux Falls</h2>
-        <p>A running list of the concerts, markets, and community events worth putting on your calendar — pulled from the local organizations that actually run them.</p>
+        <p>A hand-picked look at what's coming up — see everything on the full calendar.</p>
       </div>
       <a href="/events" class="happening-full-link">Full calendar →</a>
     </div>
 
-    <a class="featured-event" href={featured.sourceUrl} target="_blank" rel="noopener">
-      <div class="featured-glow"></div>
-      <span class="featured-tag">Up Next</span>
-      <div class="featured-body">
-        <div class="featured-date">
-          <span class="featured-day">{featured.day}</span>
-          <span class="featured-month">{featured.month.toUpperCase()}</span>
-        </div>
-        <div class="featured-main">
-          <h3>{featured.title}</h3>
-          <p>{featured.description}</p>
-          <span class="featured-loc"><Icon name="map" size={14} /> {featured.location}</span>
-        </div>
-        <span class="featured-cat" style={`background:${categoryColor[featured.category]}22; color:${categoryColor[featured.category]}; border-color:${categoryColor[featured.category]}55;`}>
-          <Icon name={categoryIcon[featured.category] ?? 'star'} size={14} /> {featured.category}
+    <div class="happening-grid">
+      <a class="spotlight-card" href={featured.sourceUrl} target="_blank" rel="noopener" style={`background-image: url(${featured.photo})`}>
+        <div class="spotlight-scrim"></div>
+        <span class="spotlight-tag">Up Next</span>
+        <span class="spotlight-cat" style={`background:${categoryColor[featured.category]};`}>
+          <Icon name={categoryIcon[featured.category]} size={13} /> {featured.category}
         </span>
-      </div>
-    </a>
+        <div class="spotlight-body">
+          <div class="spotlight-date">
+            <span class="spotlight-day">{featured.day}</span>
+            <span class="spotlight-month">{featured.month.toUpperCase()}</span>
+          </div>
+          <div>
+            <h3>{featured.title}</h3>
+            <p>{featured.description}</p>
+            <span class="spotlight-loc"><Icon name="map" size={13} /> {featured.location}</span>
+          </div>
+        </div>
+      </a>
 
-    <div class="events-list">
-      {rest.map((ev) => (
-        <a class="event-row" href={ev.sourceUrl} target="_blank" rel="noopener" style={`--cat-color:${categoryColor[ev.category]}`}>
-          <div class="event-date">
-            <span class="event-day">{ev.day}</span>
-            <span class="event-month">{ev.month.toUpperCase()}</span>
-          </div>
-          <div class="event-main">
-            <h3>{ev.title}</h3>
-            <p>{ev.description}</p>
-            <span class="event-loc"><Icon name="map" size={13} /> {ev.location}</span>
-          </div>
-          <span class="event-cat" style={`color:${categoryColor[ev.category]}`}><Icon name={categoryIcon[ev.category] ?? 'star'} size={13} /> {ev.category}</span>
-        </a>
-      ))}
+      <div class="support-stack">
+        {supporting.map((ev) => (
+          <a class="support-card" href={ev.sourceUrl} target="_blank" rel="noopener" style={`background-image: url(${ev.photo})`}>
+            <div class="support-scrim"></div>
+            <span class="support-cat" style={`color:${categoryColor[ev.category]};`}>
+              <Icon name={categoryIcon[ev.category]} size={12} /> {ev.category}
+            </span>
+            <div class="support-body">
+              <div class="support-date">
+                <span class="support-day">{ev.day}</span>
+                <span class="support-month">{ev.month.toUpperCase()}</span>
+              </div>
+              <div>
+                <h3>{ev.title}</h3>
+                <span class="support-loc"><Icon name="map" size={12} /> {ev.location}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .happening-section { background: var(--color-navy); padding-block: 4.5rem; position: relative; overflow: hidden; }
-  .happening-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; position: relative; }
+  .happening-section { background: var(--color-navy); padding-block: 4.5rem; }
+  .happening-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
   .eyebrow--light { color: rgba(255,255,255,0.7); }
   .happening-head h2 { color: #fff; font-size: 1.9rem; margin-top: 0.3rem; }
-  .happening-head p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 48ch; margin-top: 0.6rem; }
+  .happening-head p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 44ch; margin-top: 0.6rem; }
   .happening-full-link { font-weight: 700; font-size: 0.9375rem; color: var(--color-gold); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--color-gold); padding-bottom: 2px; }
 
-  /* FEATURED "UP NEXT" CARD */
-  .featured-event {
+  .happening-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.3rem; align-items: stretch; }
+
+  /* FEATURED — a real photo, kept clear. A gentle scrim only where the
+     text sits, not a wash over the whole image. */
+  .spotlight-card {
     position: relative; display: block; text-decoration: none; border-radius: 1.1rem; overflow: hidden;
-    background: linear-gradient(120deg, #1c2b4d 0%, #263a63 100%);
-    border: 1px solid rgba(245,180,41,0.3);
-    margin-bottom: 1.6rem; transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background-size: cover; background-position: center; min-height: 22rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .featured-event:hover { transform: translateY(-3px); box-shadow: 0 20px 45px rgba(0,0,0,0.35); }
-  .featured-glow {
-    position: absolute; top: -40%; right: -10%; width: 24rem; height: 24rem; border-radius: 50%;
-    background: radial-gradient(circle, rgba(245,180,41,0.28) 0%, transparent 70%); pointer-events: none;
+  .spotlight-card:hover { transform: translateY(-4px); box-shadow: 0 24px 50px rgba(0,0,0,0.4); }
+  .spotlight-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(10,16,32,0.92) 0%, rgba(10,16,32,0.55) 38%, rgba(10,16,32,0) 62%);
   }
-  .featured-tag {
-    position: relative; display: inline-block; margin: 1.4rem 0 0 1.6rem; font-size: 0.75rem; font-weight: 700;
-    color: #1c2b4d; background: var(--color-gold); padding: 0.3rem 0.8rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em;
+  .spotlight-tag {
+    position: absolute; top: 1.3rem; left: 1.3rem; font-size: 0.75rem; font-weight: 700;
+    color: #1c2b4d; background: var(--color-gold); padding: 0.3rem 0.8rem; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.04em; z-index: 1;
   }
-  .featured-body { position: relative; display: grid; grid-template-columns: 6rem 1fr auto; gap: 1.8rem; align-items: center; padding: 0.8rem 1.6rem 1.8rem; }
-  .featured-date { text-align: center; }
-  .featured-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; line-height: 1; color: #fff; }
-  .featured-month { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--color-gold); margin-top: 0.3rem; }
-  .featured-main h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: #fff; margin: 0 0 0.4rem; }
-  .featured-main p { font-size: 0.9375rem; color: rgba(255,255,255,0.75); margin: 0; line-height: 1.55; max-width: 46ch; }
-  .featured-loc { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; color: rgba(255,255,255,0.5); margin-top: 0.6rem; }
-  .featured-cat { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; font-weight: 700; border: 1px solid; border-radius: 999px; padding: 0.5rem 1rem; white-space: nowrap; }
+  .spotlight-cat {
+    position: absolute; top: 1.3rem; right: 1.3rem; display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.75rem; font-weight: 700; color: #1c2b4d; padding: 0.35rem 0.8rem; border-radius: 999px; z-index: 1;
+  }
+  .spotlight-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; gap: 1.2rem; align-items: flex-end; padding: 1.6rem; }
+  .spotlight-date { text-align: center; flex-shrink: 0; }
+  .spotlight-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.6rem; line-height: 1; color: #fff; }
+  .spotlight-month { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: var(--color-gold); margin-top: 0.2rem; }
+  .spotlight-body h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: #fff; margin: 0 0 0.4rem; line-height: 1.2; }
+  .spotlight-body p { font-size: 0.9375rem; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.5; max-width: 32ch; }
+  .spotlight-loc { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8125rem; color: rgba(255,255,255,0.65); margin-top: 0.55rem; }
 
-  @media (max-width: 45rem) {
-    .featured-body { grid-template-columns: 4rem 1fr; }
-    .featured-cat { display: none; }
-    .featured-day { font-size: 2rem; }
+  /* SUPPORTING — two smaller photo cards stacked beside the spotlight. */
+  .support-stack { display: flex; flex-direction: column; gap: 1.3rem; }
+  .support-card {
+    position: relative; display: block; text-decoration: none; border-radius: 1rem; overflow: hidden;
+    background-size: cover; background-position: center; flex: 1; min-height: 10rem;
+    transition: transform 0.25s ease;
   }
+  .support-card:hover { transform: translateY(-3px); }
+  .support-scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(0deg, rgba(10,16,32,0.88) 0%, rgba(10,16,32,0.35) 55%, rgba(10,16,32,0) 78%);
+  }
+  .support-cat {
+    position: absolute; top: 0.9rem; right: 0.9rem; display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.6875rem; font-weight: 700; background: rgba(13,23,48,0.55); padding: 0.25rem 0.6rem; border-radius: 999px; z-index: 1;
+  }
+  .support-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; gap: 0.8rem; align-items: flex-end; padding: 1rem 1.1rem; }
+  .support-date { text-align: center; flex-shrink: 0; }
+  .support-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; line-height: 1; color: #fff; }
+  .support-month { display: block; font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; color: var(--color-gold); margin-top: 0.15rem; }
+  .support-body h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: #fff; margin: 0 0 0.25rem; line-height: 1.25; }
+  .support-loc { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: rgba(255,255,255,0.6); }
 
-  /* REST OF THE LIST */
-  .events-list { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.1); }
-  .event-row {
-    display: grid; grid-template-columns: 4.6rem 1fr auto; gap: 1.6rem; align-items: center;
-    padding: 1.3rem 1rem 1.3rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-decoration: none;
-    border-radius: 0.6rem; border-left: 3px solid transparent; transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  @media (max-width: 55rem) {
+    .happening-grid { grid-template-columns: 1fr; }
+    .support-stack { flex-direction: row; }
   }
-  .event-row:hover { background: rgba(255,255,255,0.05); border-left-color: var(--cat-color); transform: translateX(3px); }
-  .event-date { text-align: center; }
-  .event-day { display: block; font-family: var(--font-display); font-weight: 700; font-size: 1.9rem; line-height: 1; color: var(--color-gold); }
-  .event-month { display: block; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(255,255,255,0.5); margin-top: 0.3rem; }
-  .event-main h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: #fff; margin: 0 0 0.25rem; }
-  .event-main p { font-size: 0.875rem; color: rgba(255,255,255,0.6); margin: 0; line-height: 1.5; max-width: 56ch; }
-  .event-loc { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.8125rem; color: rgba(255,255,255,0.4); margin-top: 0.4rem; }
-  .event-cat {
-    display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700;
-    border: 1px solid currentColor; border-radius: 999px; padding: 0.4rem 0.8rem; white-space: nowrap; opacity: 0.9;
-  }
-
-  @media (max-width: 45rem) {
-    .event-row { grid-template-columns: 3.4rem 1fr; }
-    .event-cat { display: none; }
-    .event-day { font-size: 1.5rem; }
+  @media (max-width: 32rem) {
+    .support-stack { flex-direction: column; }
+    .spotlight-body p { display: none; }
   }
 </style>
