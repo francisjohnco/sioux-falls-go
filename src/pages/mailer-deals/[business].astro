@@ -17,9 +17,14 @@ export async function getStaticPaths() {
 const { deal, business } = Astro.props;
 const now = new Date();
 const isExpired = deal.data.expiresAt ? deal.data.expiresAt.getTime() < now.getTime() : false;
+const isScheduled = deal.data.activatesAt ? deal.data.activatesAt.getTime() > now.getTime() : false;
 const expiryLabel = deal.data.expiresAt
   ? deal.data.expiresAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   : null;
+const activatesLabel = deal.data.activatesAt
+  ? deal.data.activatesAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  : null;
+const postmarkDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 <BaseLayout
   title={`Redeem Your Offer — ${business.data.name} | Sioux Falls Go`}
@@ -28,46 +33,61 @@ const expiryLabel = deal.data.expiresAt
 >
   <main class="redeem-page">
     <div class="redeem-card">
-      <a href="/" class="redeem-logo">
-        <img src="/images/sfg-logo.png" alt="Sioux Falls Go" />
-      </a>
-
-      <span class="redeem-eyebrow"><Icon name="mail" size={14} /> Spotlight Postcard Offer</span>
-
-      {business.data.heroImage && (
-        <div class="redeem-photo" style={`background-image: url(${business.data.heroImage})`}></div>
-      )}
-
-      <h1>{business.data.name}</h1>
-
-      {isExpired ? (
-        <div class="redeem-expired">
-          <Icon name="clock" size={28} />
-          <p>This offer has expired. Businesses on the current Spotlight mailing can be found on <a href="/mailer-deals">Mailer Deals</a>.</p>
+      <div class="redeem-hero" style={business.data.heroImage ? `background-image: url(${business.data.heroImage})` : ''}>
+        <div class="redeem-hero-overlay"></div>
+        <a href="/" class="redeem-logo">
+          <img src="/images/sfg-logo.png" alt="Sioux Falls Go" />
+        </a>
+        <div class="postmark" aria-hidden="true">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2.5" />
+            <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <text x="50" y="34" text-anchor="middle" font-size="9" font-weight="700" letter-spacing="1.5" fill="currentColor">SIOUX FALLS</text>
+            <text x="50" y="57" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor">SPOTLIGHT</text>
+            <text x="50" y="72" text-anchor="middle" font-size="7" letter-spacing="1" fill="currentColor">{postmarkDate}</text>
+          </svg>
         </div>
-      ) : (
-        <>
-          <div class="redeem-offer">
-            <span class="redeem-offer-title">{deal.data.title}</span>
-            {deal.data.description && <p class="redeem-offer-desc">{deal.data.description}</p>}
+        <h1 class="redeem-hero-name">{business.data.name}</h1>
+      </div>
+
+      <div class="redeem-tear" aria-hidden="true"></div>
+
+      <div class="redeem-body">
+        {isExpired ? (
+          <div class="redeem-state">
+            <Icon name="clock" size={26} />
+            <p>This offer has expired. See what's currently running on <a href="/mailer-deals">Mailer Deals</a>.</p>
           </div>
+        ) : isScheduled ? (
+          <div class="redeem-state">
+            <Icon name="mail" size={26} />
+            <p>This offer isn't live yet — it starts <strong>{activatesLabel}</strong>. Check back then, or see what's currently active on <a href="/mailer-deals">Mailer Deals</a>.</p>
+          </div>
+        ) : (
+          <>
+            <span class="redeem-eyebrow"><Icon name="mail" size={13} /> Spotlight Postcard Offer</span>
+            <div class="redeem-offer">
+              <span class="redeem-offer-title">{deal.data.title}</span>
+              {deal.data.description && <p class="redeem-offer-desc">{deal.data.description}</p>}
+            </div>
 
-          {deal.data.terms && <p class="redeem-terms">{deal.data.terms}</p>}
+            {deal.data.terms && <p class="redeem-terms">{deal.data.terms}</p>}
 
-          <div class="redeem-actions">
-            {business.data.phone && (
-              <a href={`tel:${business.data.phone}`} class="button redeem-btn redeem-btn--primary">
-                <Icon name="phone" size={16} /> Call to Redeem
+            <div class="redeem-actions">
+              {business.data.phone && (
+                <a href={`tel:${business.data.phone}`} class="button redeem-btn redeem-btn--primary">
+                  <Icon name="phone" size={16} /> Call to Redeem
+                </a>
+              )}
+              <a href={`/businesses/${business.id}`} class="button redeem-btn redeem-btn--ghost">
+                View Full Profile
               </a>
-            )}
-            <a href={`/businesses/${business.id}`} class="button redeem-btn redeem-btn--ghost">
-              View Full Profile
-            </a>
-          </div>
+            </div>
 
-          {expiryLabel && <p class="redeem-expiry">Offer valid through {expiryLabel}</p>}
-        </>
-      )}
+            {expiryLabel && <p class="redeem-expiry">Offer valid through {expiryLabel}</p>}
+          </>
+        )}
+      </div>
     </div>
 
     <p class="redeem-footer-link"><a href="/mailer-deals">See every business on this mailing →</a></p>
@@ -80,17 +100,45 @@ const expiryLabel = deal.data.expiresAt
     padding: 2rem 1.2rem; background: linear-gradient(160deg, var(--color-navy) 0%, #16233d 100%);
   }
   .redeem-card {
-    background: #fff; border-radius: 1.2rem; padding: 2rem 1.8rem; max-width: 26rem; width: 100%;
-    text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    background: #fff; border-radius: 1.2rem; max-width: 26rem; width: 100%; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
   }
-  .redeem-logo { display: inline-block; margin-bottom: 1.2rem; }
-  .redeem-logo img { height: 2.4rem; width: auto; }
+
+  /* Hero: the business's real photo, with a postmark stamped over it —
+     the moment this page opens should feel like the postcard itself. */
+  .redeem-hero {
+    position: relative; background-color: var(--color-navy); background-size: cover; background-position: center;
+    padding: 1.3rem 1.5rem 2.6rem; min-height: 11rem; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .redeem-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(13,23,48,0.55) 0%, rgba(13,23,48,0.25) 40%, rgba(13,23,48,0.75) 100%);
+  }
+  .redeem-logo { position: relative; z-index: 1; display: inline-block; align-self: flex-start; }
+  .redeem-logo img { height: 1.9rem; width: auto; filter: brightness(0) invert(1); }
+  .redeem-hero-name {
+    position: relative; z-index: 1; font-family: var(--font-display); font-size: 1.6rem; color: #fff;
+    margin: 0; line-height: 1.15; text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+  .postmark {
+    position: absolute; top: 1.1rem; right: 1.3rem; width: 4.6rem; height: 4.6rem; color: rgba(255,255,255,0.92);
+    transform: rotate(8deg); z-index: 1; opacity: 0.95;
+  }
+
+  /* A torn/perforated seam between the photo and the offer — like tearing
+     open the envelope this postcard arrived in. */
+  .redeem-tear {
+    height: 0.9rem; margin-top: -0.9rem; position: relative; z-index: 2;
+    background-image: radial-gradient(circle at 8px 0, transparent 8px, #fff 8.5px);
+    background-size: 16px 16px; background-repeat: repeat-x; background-position: 0 -8px;
+  }
+
+  .redeem-body { padding: 0.4rem 1.8rem 2rem; text-align: center; }
+
   .redeem-eyebrow {
     display: inline-flex; align-items: center; gap: 0.4rem; background: #FFF3E0; color: var(--color-orange-dark);
-    font-size: 0.75rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: 999px; margin-bottom: 1rem;
+    font-size: 0.75rem; font-weight: 700; padding: 0.4rem 0.9rem; border-radius: 999px; margin-bottom: 1.1rem;
   }
-  .redeem-photo { width: 100%; aspect-ratio: 16/9; border-radius: 0.8rem; background-size: cover; background-position: center; margin-bottom: 1.2rem; }
-  .redeem-card h1 { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-navy); margin: 0 0 1.2rem; }
 
   .redeem-offer { background: var(--color-surface); border-radius: 0.8rem; padding: 1.3rem; margin-bottom: 1rem; }
   .redeem-offer-title { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: var(--color-navy); }
@@ -105,8 +153,8 @@ const expiryLabel = deal.data.expiresAt
 
   .redeem-expiry { font-size: 0.8125rem; color: var(--color-navy-light); margin-top: 1.1rem; }
 
-  .redeem-expired { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1.5rem 0; color: var(--color-navy-light); }
-  .redeem-expired a { color: var(--color-orange-dark); font-weight: 700; }
+  .redeem-state { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1.6rem 0 0.6rem; color: var(--color-navy-light); }
+  .redeem-state a { color: var(--color-orange-dark); font-weight: 700; }
 
   .redeem-footer-link { margin-top: 1.3rem; }
   .redeem-footer-link a { color: rgba(255,255,255,0.7); font-size: 0.875rem; text-decoration: none; }

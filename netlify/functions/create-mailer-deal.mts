@@ -49,6 +49,7 @@ export default async (req: Request) => {
     discountType,
     valueScore,
     expiresAt,
+    activatesAt,
     terms,
     mailerCampaign,
     spotSize,
@@ -64,6 +65,7 @@ export default async (req: Request) => {
     mailerCampaign,
   };
   if (spotSize) deal.spotSize = spotSize;
+  if (activatesAt) deal.activatesAt = activatesAt;
   if (expiresAt) deal.expiresAt = expiresAt;
   if (terms) deal.terms = terms;
 

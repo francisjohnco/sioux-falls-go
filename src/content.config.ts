@@ -103,6 +103,10 @@ const deals = defineCollection({
     // rank by raw discount value, which would even favor small purchases
     // unfairly. Ask the business or use your judgment on relative value.
     valueScore: z.number().min(1).max(100),
+    // When this deal should start showing publicly. Omit to make it live
+    // immediately. Useful for scheduling a postcard offer to go live exactly
+    // when the physical mailer actually arrives, not the moment it's entered.
+    activatesAt: z.coerce.date().optional(),
     expiresAt: z.coerce.date().optional(), // omit for an ongoing/standing offer
     terms: z.string().optional(),
     submittedBy: z.enum(['business-owner', 'verified-by-team']).default('business-owner'),

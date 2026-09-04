@@ -10,9 +10,12 @@ const now = new Date();
 const allDeals = await getCollection('deals');
 
 // The whole point of this page: every deal that came from a physical
-// Spotlight postcard mailing, and hasn't expired yet.
+// Spotlight postcard mailing, has actually activated, and hasn't expired yet.
 const mailerDeals = allDeals.filter(
-  (d) => d.data.mailerCampaign && (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+  (d) =>
+    d.data.mailerCampaign &&
+    (!d.data.activatesAt || d.data.activatesAt.getTime() <= now.getTime()) &&
+    (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
 );
 
 const dealsWithContext = await Promise.all(

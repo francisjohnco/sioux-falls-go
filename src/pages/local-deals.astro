@@ -20,7 +20,11 @@ const now = new Date();
 
 // Only ever show deals that haven't expired — an expired deal on a live
 // page is worse than no deal at all.
-const activeDeals = allDeals.filter((d) => !d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime());
+const activeDeals = allDeals.filter(
+  (d) =>
+    (!d.data.activatesAt || d.data.activatesAt.getTime() <= now.getTime()) &&
+    (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+);
 
 const dealsWithContext = await Promise.all(
   activeDeals.map(async (deal) => {

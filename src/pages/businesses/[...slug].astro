@@ -39,7 +39,11 @@ const spotlights = allArticles.filter(
 const now = new Date();
 const allDeals = await getCollection('deals');
 const businessDeals = allDeals.filter((d) => d.data.business.id === business.id);
-const activeDeals = businessDeals.filter((d) => !d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime());
+const activeDeals = businessDeals.filter(
+  (d) =>
+    (!d.data.activatesAt || d.data.activatesAt.getTime() <= now.getTime()) &&
+    (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+);
 const mailerDeal = activeDeals.find((d) => d.data.mailerCampaign) ?? null;
 const regularDeals = activeDeals.filter((d) => !d.data.mailerCampaign);
 
