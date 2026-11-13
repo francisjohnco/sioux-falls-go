@@ -17,12 +17,34 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content } = await render(article);
 
-// For splitting content around the sponsor banner, get the raw rendered HTML
-const rawHtml = article.rendered?.html ?? '';
+const category = await getEntry(article.data.category);
+
+// Every live article, used for cluster navigation and link checking.
+const liveArticles = await getLiveArticles();
+const liveSlugs = new Set(liveArticles.map((a) => a.id));
+const byDate = (a: any, b: any) => a.data.publishedAt.getTime() - b.data.publishedAt.getTime();
+
+// Links to a guide that is not live yet (scheduled) are shown as plain text
+// until that guide publishes. The site rebuilds daily, so each link turns on
+// by itself on the day its article goes live, and there is never a broken link.
+function unwrapUnpublishedLinks(html: string): string {
+  return html.replace(/<a href="\/guides\/([a-z0-9-]+)\/?"[^>]*>([\s\S]*?)<\/a>/g, (whole, slug, text) => (liveSlugs.has(slug) ? whole : text));
+}
+
+// Topic cluster: one main guide (pillar) plus supporting articles.
+const clusterKey = (a: any) => a.data.cluster ?? a.data.category.id;
+const myCluster = clusterKey(article);
+const clusterLive = liveArticles.filter((a) => clusterKey(a) === myCluster);
+const pillar = clusterLive.find((a) => a.data.clusterRole === 'pillar') ?? null;
+const isPillar = pillar?.id === article.id;
+const clusterSupports = pillar ? clusterLive.filter((a) => a.id !== pillar.id).sort(byDate) : [];
+const siblings = clusterSupports.filter((a) => a.id !== article.id);
+
+// For splitting content around the sponsor banner, get the rendered HTML
+const rawHtml = unwrapUnpublishedLinks(article.rendered?.html ?? '');
 const firstParaEnd = rawHtml.indexOf('</p>');
 const introHtml = firstParaEnd !== -1 ? rawHtml.slice(0, firstParaEnd + 4) : '';
 const restHtml = firstParaEnd !== -1 ? rawHtml.slice(firstParaEnd + 4) : rawHtml;
-const category = await getEntry(article.data.category);
 
 // Resolve explicit relatedArticles references first
 const explicitRelated = (
@@ -30,10 +52,10 @@ const explicitRelated = (
 ).filter((r) => r && isLive(r)); // a scheduled article must never be linked before it exists
 
 // Fill out to 3 with same-category articles if the author didn't set enough explicit links
-let related = [...explicitRelated];
+let related = [...siblings.slice(0, 3)];
+for (const r of explicitRelated) if (related.length < 3 && !related.some((x) => x.id === r.id)) related.push(r);
 if (related.length < 3) {
-  const allArticles = await getLiveArticles();
-  const sameCategory = allArticles.filter(
+  const sameCategory = liveArticles.filter(
     (a) => a.data.category.id === category.id && a.id !== article.id && !related.some((r) => r.id === a.id)
   );
   related = [...related, ...sameCategory.slice(0, 3 - related.length)];
@@ -50,32 +72,38 @@ const relatedBusinesses = await Promise.all(
 // Resolve sponsor — Community Champion perk
 const sponsor = article.data.sponsoredBy ? await getEntry(article.data.sponsoredBy) : null;
 
-const schema = article.data.embeddedFaqs.length > 0 ? [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.data.title,
-    datePublished: article.data.publishedAt.toISOString(),
-    dateModified: article.data.updatedAt.toISOString(),
-    author: { '@type': 'Person', name: article.data.author },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: article.data.embeddedFaqs.map((f) => ({
-      '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: { '@type': 'Answer', text: f.answer },
-    })),
-  },
-] : {
+const site = 'https://siouxfallsgo.com';
+const pageUrl = `${site}/guides/${article.id}`;
+const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: article.data.title,
+  description: article.data.seo.description,
   datePublished: article.data.publishedAt.toISOString(),
   dateModified: article.data.updatedAt.toISOString(),
-  author: { '@type': 'Person', name: article.data.author },
+  author: { '@type': 'Organization', name: article.data.author, url: site },
+  publisher: { '@type': 'Organization', name: 'Sioux Falls Go', url: site, logo: { '@type': 'ImageObject', url: `${site}/images/sfg-logo.png` } },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+  ...(article.data.heroImage ? { image: new URL(article.data.heroImage, site).toString() } : {}),
+  ...(pillar && !isPillar ? { isPartOf: { '@type': 'Article', headline: pillar.data.title, url: `${site}/guides/${pillar.id}` } } : {}),
+  about: { '@type': 'Place', name: 'Sioux Falls, South Dakota' },
 };
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: site },
+    { '@type': 'ListItem', position: 2, name: category.data.name, item: `${site}/${category.data.slug}` },
+    ...(pillar && !isPillar ? [{ '@type': 'ListItem', position: 3, name: pillar.data.title, item: `${site}/guides/${pillar.id}` }] : []),
+    { '@type': 'ListItem', position: pillar && !isPillar ? 4 : 3, name: article.data.title, item: pageUrl },
+  ],
+};
+const faqSchema = article.data.embeddedFaqs.length > 0 ? [{
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: article.data.embeddedFaqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+}] : [];
+const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
 ---
 <BaseLayout
   title={article.data.seo.title}
@@ -87,7 +115,7 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
 
   <article class="container article">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="/">Home</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / <span>{article.data.title}</span>
+      <a href="/">Home</a> / <a href={`/${category.data.slug}`}>{category.data.name}</a> / {pillar && !isPillar && <><a href={`/guides/${pillar.id}`}>{pillar.data.title}</a> / </>}<span>{article.data.title}</span>
     </nav>
 
     <span class="eyebrow">{article.data.contentType.replace('-', ' ')}</span>
@@ -101,6 +129,22 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
       <p class="hero-image-credit">
         Photo by <a href={article.data.heroImageCredit.profileUrl} target="_blank" rel="noopener">{article.data.heroImageCredit.photographer}</a> on Unsplash
       </p>
+    )}
+
+    {pillar && !isPillar && (
+      <a class="cluster-parent" href={`/guides/${pillar.id}`}>
+        <span class="cluster-parent-label">Part of the guide</span>
+        <span class="cluster-parent-title">{pillar.data.title} →</span>
+      </a>
+    )}
+
+    {isPillar && clusterSupports.length > 0 && (
+      <nav class="cluster-toc" aria-label="In this guide">
+        <span class="cluster-toc-label">In this guide</span>
+        <ol>
+          {clusterSupports.map((a) => <li><a href={`/guides/${a.id}`}>{a.data.title}</a></li>)}
+        </ol>
+      </nav>
     )}
 
     <div class="prose">
@@ -157,6 +201,16 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
           </details>
         ))}
       </section>
+    )}
+
+    {pillar && !isPillar && (
+      <nav class="cluster-more" aria-label="More in this guide">
+        <h2>More in this guide</h2>
+        <ul>
+          <li><a href={`/guides/${pillar.id}`}><strong>Start here:</strong> {pillar.data.title}</a></li>
+          {siblings.map((a) => <li><a href={`/guides/${a.id}`}>{a.data.title}</a></li>)}
+        </ul>
+      </nav>
     )}
 
     <div class="resource-cta card">
@@ -279,6 +333,19 @@ const schema = article.data.embeddedFaqs.length > 0 ? [
   }
   .business-chip:hover { border-color: var(--color-orange); color: var(--color-orange); }
 
+  .cluster-parent { display: flex; flex-direction: column; gap: 0.15rem; margin: 1rem 0 1.4rem; padding: 0.85rem 1.1rem; border: 1px solid var(--color-line); border-left: 4px solid var(--color-orange); border-radius: 0.6rem; background: #FFF8F1; text-decoration: none; }
+  .cluster-parent-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-orange-dark); }
+  .cluster-parent-title { font-weight: 700; color: var(--color-navy); }
+  .cluster-toc { margin: 1rem 0 1.6rem; padding: 1.1rem 1.3rem; border: 1px solid var(--color-line); border-radius: 0.7rem; background: #F7F9FC; }
+  .cluster-toc-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-navy-light); margin-bottom: 0.5rem; }
+  .cluster-toc ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.35rem; }
+  .cluster-toc a, .cluster-more a { color: var(--color-navy); font-weight: 600; }
+  .cluster-more { margin-top: var(--space-5); padding: 1.2rem 1.4rem; border-radius: 0.8rem; background: var(--color-navy); }
+  .cluster-more h2 { color: #fff; font-size: 1.25rem; margin: 0 0 0.7rem; }
+  .cluster-more ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+  .cluster-more a { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.25); }
+  .cluster-more a:hover { border-bottom-color: var(--color-gold); }
+  .cluster-more strong { color: var(--color-gold); }
   .related-block { margin-top: var(--space-5); }
   .related-wrap { max-width: 60rem; margin-inline: auto; padding-block: var(--space-5); }
   .related-block { padding-top: var(--space-4); border-top: 1px solid var(--color-line); }
