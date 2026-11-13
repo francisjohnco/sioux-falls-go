@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, fetchHeroImage } from './_shared/draft-generator.mts';
-import { buildArticleFile, commitNewFile, cleanDraft, validateDraft } from './_shared/article-file.mts';
+import { buildArticleFile, commitNewFile, cleanDraft, validateDraft, isNearDuplicate } from './_shared/article-file.mts';
 import { chicagoToday, planNextSlot } from './_shared/schedule.mts';
 
 // A Netlify SCHEDULED function. "0 14 * * 1,3" is 2 PM UTC every Monday and
@@ -20,9 +20,29 @@ import { chicagoToday, planNextSlot } from './_shared/schedule.mts';
 // fails the check, or any draft while auto-publish is off, lands in the
 // pending review queue for a human, exactly as before.
 
+// Never let unreviewed drafts pile up. Past this many waiting, a run does nothing.
+const MAX_PENDING = 6;
+
+async function loadPending(): Promise<any[]> {
+  const store = getStore('pending-drafts');
+  const { blobs } = await store.list();
+  return (await Promise.all(blobs.map((b) => store.get(b.key, { type: 'json' })))).filter(Boolean) as any[];
+}
+
 export default async () => {
   const siteUrl = process.env.URL || process.env.DEPLOY_URL;
   if (!siteUrl) return new Response('Missing site URL env var', { status: 500 });
+
+  // A draft waiting for review counts as "taken". Without this, the same
+  // topic was picked every run, because a waiting draft is not an article yet.
+  const pending = await loadPending();
+  if (pending.length >= MAX_PENDING) {
+    console.log(`${pending.length} drafts already waiting for review, skipping this run.`);
+    return new Response('Review queue full, skipped', { status: 200 });
+  }
+  const pendingSlugs = new Set(pending.map((p) => p.slug).filter(Boolean));
+  const pendingCategories = new Set(pending.map((p) => p.categorySlug).filter(Boolean));
+  const pendingTitles = pending.map((p) => p.draft?.title).filter(Boolean);
 
   const articleIndexRes = await fetch(`${siteUrl}/article-index.json`);
   const articleIndex: any[] = articleIndexRes.ok ? await articleIndexRes.json() : [];
@@ -33,12 +53,12 @@ export default async () => {
   const queueRes = await fetch(`${siteUrl}/topic-queue.json`);
   if (queueRes.ok) {
     const queue = await queueRes.json();
-    const next = (queue.topics || []).find((t: any) => !allSlugs.has(t.slug));
+    const next = (queue.topics || []).find((t: any) => !allSlugs.has(t.slug) && !pendingSlugs.has(t.slug));
     if (next) return await runQueuedTopic(next, queue, articleIndex, linkable, liveSlugs);
     console.log('Topic queue is complete, falling back to gap-driven generation.');
   }
 
-  return await runGapDriven(siteUrl, linkable);
+  return await runGapDriven(siteUrl, linkable, pendingCategories, [...articleIndex.map((a) => a.title), ...pendingTitles]);
 };
 
 async function runQueuedTopic(next: any, queue: any, articleIndex: any[], linkable: any[], liveSlugs: Set<string>) {
@@ -109,12 +129,13 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[], linkab
   return new Response(`Queued "${draft.title}" for review`, { status: 200 });
 }
 
-async function runGapDriven(siteUrl: string, linkable: any[]) {
+async function runGapDriven(siteUrl: string, linkable: any[], pendingCategories: Set<string>, takenTitles: string[]) {
   const gapsRes = await fetch(`${siteUrl}/content-gaps.json`);
   if (!gapsRes.ok) return new Response('Could not fetch content-gaps.json', { status: 500 });
   const gaps = await gapsRes.json();
 
-  const topGap = gaps.categories.find((c: any) => c.priorityScore > 0);
+  // Skip any category that already has a draft waiting for review.
+  const topGap = gaps.categories.find((c: any) => c.priorityScore > 0 && !pendingCategories.has(c.slug));
   if (!topGap) {
     console.log('No positive-priority content gaps right now, nothing to generate.');
     return new Response('Nothing to do', { status: 200 });
@@ -139,6 +160,10 @@ async function runGapDriven(siteUrl: string, linkable: any[]) {
   }
 
   draft = cleanDraft(draft);
+  if (isNearDuplicate(draft.title, takenTitles)) {
+    console.warn(`Discarded "${draft.title}": too close to an existing article or waiting draft.`);
+    return new Response('Discarded a near-duplicate draft', { status: 200 });
+  }
   const heroImage = await fetchHeroImage(`${topGap.name} ${contentTypeToGenerate.replace(/-/g, ' ')}`.trim());
   const draftWithImage = { ...draft, heroImage: heroImage?.url, heroImageCredit: heroImage?.credit };
 

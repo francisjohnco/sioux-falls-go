@@ -451,7 +451,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <p class="panel-sub">Review what's waiting, and edit anything already published.</p>
 
         <h3 class="section-heading">Pending Review <span id="pending-drafts-count" class="live-tag"></span></h3>
-        <p class="panel-note">Drafts from the Monday/Wednesday auto-generation — nothing here has published itself, review and approve each one.</p>
+        <div class="dedupe-bar"><button class="button button--ghost" id="dedupe-drafts-btn" type="button">Remove duplicates</button><span class="dedupe-note" id="dedupe-note" hidden></span></div>
+        <p class="panel-note">Drafts from the Monday and Wednesday runs. Nothing here goes live until you approve it. At most six wait at a time, and a topic that already has a draft here is never written again.</p>
         <div id="pending-drafts-list" class="pending-drafts-list">
           <p class="empty-note">Loading…</p>
         </div>
@@ -1145,6 +1146,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .pending-draft-note { font-size: 0.8125rem; color: #B45309; font-weight: 600; margin: 0.3rem 0; }
   .pending-date { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 700; margin: 0.5rem 0 0; color: var(--color-navy); }
   .pending-date input { padding: 0.35rem 0.5rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
+  .dedupe-bar { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 0.2rem 0 0.8rem; }
+  .dedupe-note { font-size: 0.875rem; font-weight: 600; color: #2E7D4F; }
   .sched-chip { display: inline-block; margin-left: 0.5rem; font-size: 0.6875rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 999px; background: #DDE7F5; color: #3A5A8C; }
   .sponsor-chip {
     display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.6rem;
@@ -2309,6 +2312,22 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   });
 
   // DRAFTS & ARTICLES TAB
+  document.getElementById('dedupe-drafts-btn')?.addEventListener('click', async () => {
+    const btn = document.getElementById('dedupe-drafts-btn') as HTMLButtonElement;
+    const note = document.getElementById('dedupe-note')!;
+    if (!confirm('Keep the newest draft for each topic and remove the repeats? This cannot be undone.')) return;
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/dedupe-pending-drafts', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Cleanup failed');
+      note.textContent = data.removed ? `Removed ${data.removed} repeat${data.removed === 1 ? '' : 's'}. ${data.kept} draft${data.kept === 1 ? '' : 's'} left to review.` : 'No repeats found.';
+      note.hidden = false;
+      loadPendingDrafts();
+    } catch (err: any) { note.textContent = `Could not clean up: ${err.message}`; note.hidden = false; }
+    finally { btn.disabled = false; }
+  });
+
   async function loadPendingDrafts() {
     const listEl = document.getElementById('pending-drafts-list')!;
     const countEl = document.getElementById('pending-drafts-count')!;

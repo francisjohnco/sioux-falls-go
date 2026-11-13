@@ -112,6 +112,33 @@ export function buildArticleFile(input: BuildInput): { path: string; slug: strin
   return { path: `src/content/articles/${slug}.md`, slug, publishDate, content: `${frontmatter}\n\n${draft.bodyMarkdown}\n` };
 }
 
+// Rough topic fingerprint of a title: lowercase words, minus filler and the
+// city name, with simple endings trimmed so "finding", "find", "therapist",
+// and "therapy" collapse together.
+const STOP = new Set('a an and the to of in for on at by with your you what know before book how why when guide local locals sioux falls sd south dakota 2026 2027 vs or is are do does it its from about without up more can get'.split(' '));
+function fingerprint(title: string): Set<string> {
+  return new Set(
+    title.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/)
+      .filter((w) => w && !STOP.has(w))
+      .map((w) => w.replace(/(ings|ing|ists|ist|ies|ers|er|es|s|y)$/, '').slice(0, 7))
+      .filter((w) => w.length > 1)
+  );
+}
+
+// True when a new title is about the same thing as one already written or
+// waiting for review. Catches reworded repeats like "How to Find a Good
+// Massage Therapist" vs "Finding Massage Therapy, What to Know".
+export function isNearDuplicate(title: string, others: string[], threshold = 0.5): boolean {
+  const a = fingerprint(title);
+  if (a.size === 0) return false;
+  return others.some((o) => {
+    const b = fingerprint(o);
+    const shared = [...a].filter((w) => b.has(w)).length;
+    const union = new Set([...a, ...b]).size;
+    return shared >= 2 && shared / union >= threshold;
+  });
+}
+
 // Turns a GitHub API status into something a person can act on.
 export function explainGitHubError(status: number): string {
   if (status === 401) return 'GitHub rejected the site\'s key (GITHUB_TOKEN in Netlify). It has most likely expired. Create a new token and replace it in Netlify, then try again.';
