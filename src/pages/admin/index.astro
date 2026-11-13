@@ -2,6 +2,12 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import SchedulePanel from '../../components/admin/SchedulePanel.astro';
+import EventsPanel from '../../components/admin/EventsPanel.astro';
+import { isLive, publishDay } from '../../lib/articles';
+import { todayCentral, dateKey } from '../../lib/dates';
+import nodePath from 'node:path';
+import nodeFs from 'node:fs';
 
 const businesses = await getCollection('businesses');
 const businessesWithCategory = await Promise.all(
@@ -77,9 +83,51 @@ const verifiedBusinesses = businessesWithCategory
   .filter(({ business }) => business.data.verifiedAt)
   .sort((a, b) => a.business.data.name.localeCompare(b.business.data.name));
 const allArticles = await getCollection('articles');
+
+// Scheduled publishing: articles dated in the future exist in the repo but
+// have no page yet. The admin sees them; the public site does not.
+const scheduledArticles = allArticles.filter((a) => !isLive(a)).sort((a, b) => publishDay(a).localeCompare(publishDay(b)));
+const liveArticleCount = allArticles.length - scheduledArticles.length;
+const scheduledDatesJson = JSON.stringify(scheduledArticles.map((a) => publishDay(a)));
+const niceDay = (key: string, withWeekday = true) =>
+  new Date(`${key}T12:00:00Z`).toLocaleDateString('en-US', { ...(withWeekday ? { weekday: 'short' } : {}), month: 'short', day: 'numeric', timeZone: 'UTC' });
+const scheduledForPanel = scheduledArticles.map((a) => ({ slug: a.id, title: a.data.title, date: publishDay(a), dateLabel: niceDay(publishDay(a)) }));
+const builtAtIso = new Date().toISOString();
+
+let topicQueue: { campaign: string; items: { slug: string; title: string; status: 'live' | 'scheduled' | 'queued'; date?: string }[] } | null = null;
+try {
+  const q = JSON.parse(nodeFs.readFileSync(nodePath.join(process.cwd(), 'data/topic-queue.json'), 'utf-8'));
+  topicQueue = {
+    campaign: q.campaign,
+    items: q.topics.map((t: any) => {
+      const a = allArticles.find((x) => x.id === t.slug);
+      return { slug: t.slug, title: t.title, status: !a ? 'queued' : isLive(a) ? 'live' : 'scheduled', date: a ? publishDay(a) : undefined };
+    }),
+  };
+} catch {}
+
+// Events: every event with its exact dates, flagged past or upcoming.
+const todayForEvents = todayCentral();
+const adminEvents = (await getCollection('events')).map((e) => {
+  const occ = e.data.occurrences
+    .map((o) => ({ date: dateKey(o.date), endDate: o.endDate ? dateKey(o.endDate) : undefined, time: o.time }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  const idx = occ.findIndex((o) => (o.endDate ?? o.date) >= todayForEvents);
+  const isPast = idx === -1;
+  const shown = isPast ? occ[occ.length - 1] : occ[idx];
+  return {
+    id: e.id, title: e.data.title, description: e.data.description, category: e.data.category,
+    occurrences: occ, location: e.data.location, photo: e.data.photo,
+    sourceName: e.data.sourceName, sourceUrl: e.data.sourceUrl, note: e.data.note,
+    nextLabel: shown.endDate ? `${niceDay(shown.date, false)} to ${niceDay(shown.endDate, false)}` : niceDay(shown.date),
+    isPast, remaining: isPast ? 0 : occ.length - idx,
+    sortKey: shown.date,
+  };
+}).sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+const upcomingEventCount = adminEvents.filter((e) => !e.isPast).length;
 const allCategories = await getCollection('categories');
 const allStays = await getCollection('stays');
-const articleIndexForEngine = allArticles.map((a) => ({
+const articleIndexForEngine = allArticles.filter((a) => isLive(a)).map((a) => ({
   title: a.data.title,
   slug: a.id,
   category: a.data.category.id,
@@ -157,6 +205,12 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <button class="nav-item" data-tab="mailer-deals">
           <span class="nav-icon"><Icon name="mail" size={18} /></span> Mailer Deals
         </button>
+        <button class="nav-item" data-tab="schedule">
+          <span class="nav-icon"><Icon name="clock" size={18} /></span> Schedule
+        </button>
+        <button class="nav-item" data-tab="events">
+          <span class="nav-icon"><Icon name="sparkles" size={18} /></span> Events
+        </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
         </button>
@@ -197,7 +251,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
           <div class="stat-card">
             <span class="stat-icon"><Icon name="edit" size={18} /></span>
-            <span class="stat-number">{allArticles.length}</span>
+            <span class="stat-number">{liveArticleCount}</span>
             <span class="stat-label">Articles &amp; Guides</span>
           </div>
           <button class="stat-card stat-card--link" data-jump-tab="mailer-deals">
@@ -250,6 +304,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <button class="attention-link attention-link--btn" data-jump-tab="mailer-deals">Review in Mailer Deals →</button>
             </li>
           )}
+          {upcomingEventCount < 4 && (
+            <li>
+              <span class="activity-dot activity-dot--new"></span>
+              <strong>Only {upcomingEventCount} upcoming event{upcomingEventCount === 1 ? '' : 's'}</strong> on the calendar, add more or review the suggestions
+              <button class="attention-link attention-link--btn" data-jump-tab="events">Open Events →</button>
+            </li>
+          )}
           {topContentGap && (
             <li>
               <span class="activity-dot activity-dot--new"></span>
@@ -264,7 +325,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <a href="/admin?tab=newsletter" class="attention-link">Generate one →</a>
             </li>
           )}
-          {missingPlaceId.length === 0 && missingHours.length === 0 && !topContentGap && !newsletterOverdue && (
+          {missingPlaceId.length === 0 && missingHours.length === 0 && !topContentGap && !newsletterOverdue && upcomingEventCount >= 4 && (
             <li><span class="activity-dot"></span> Nothing urgent right now — everything's covered.</li>
           )}
         </ul>
@@ -374,6 +435,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                 <textarea id="output-body" rows="12" class="edit-body-textarea"></textarea>
               </label>
               <div class="output-actions">
+                <label class="publish-date-field">Go live on <input type="date" id="approve-date" /> <span class="publish-date-hint">Leave blank to publish today.</span></label>
                 <button class="button" id="approve-btn">Approve &amp; Publish</button>
               </div>
               <p class="engine-error" id="publish-error" hidden></p>
@@ -414,7 +476,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               >
                 <span class="article-row-title">{a.data.title}</span>
                 <span class="article-row-meta">
-                  {a.data.contentType} · {a.data.publishedAt?.toString().slice(0, 10)}
+                  {a.data.contentType} · {publishDay(a)}
+                  {!isLive(a) && <span class="sched-chip">Scheduled for {niceDay(publishDay(a))}</span>}
                   {a.data.sponsoredBy && (
                     <span class="sponsor-chip"><Icon name="star" size={11} /> Sponsored by {champions.find((c) => c.id === a.data.sponsoredBy?.id)?.data.name ?? a.data.sponsoredBy.id}</span>
                   )}
@@ -584,6 +647,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
         )}
       </section>
+
+      <SchedulePanel builtAt={builtAtIso} scheduled={scheduledForPanel} queue={topicQueue} />
+      <EventsPanel events={adminEvents} />
+      <div id="schedule-data" data-dates={scheduledDatesJson} hidden></div>
 
       <!-- ── CREATE / EDIT MAILER DEAL MODAL ── -->
       <div class="edit-modal-backdrop" id="create-deal-modal-backdrop">
@@ -1069,6 +1136,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .article-row:hover { border-color: var(--color-orange); }
   .article-row-title { font-weight: 600; font-size: 0.9rem; color: var(--color-navy); }
   .article-row-meta { font-size: 0.75rem; color: var(--color-navy-light); text-transform: capitalize; }
+  .publish-date-field { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-size: 0.875rem; font-weight: 700; color: var(--color-navy); margin-bottom: 0.7rem; }
+  .publish-date-field input { padding: 0.45rem 0.6rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
+  .publish-date-hint { font-weight: 500; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .pending-draft-note { font-size: 0.8125rem; color: #B45309; font-weight: 600; margin: 0.3rem 0; }
+  .pending-date { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 700; margin: 0.5rem 0 0; color: var(--color-navy); }
+  .pending-date input { padding: 0.35rem 0.5rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
+  .sched-chip { display: inline-block; margin-left: 0.5rem; font-size: 0.6875rem; font-weight: 700; padding: 0.12rem 0.5rem; border-radius: 999px; background: #DDE7F5; color: #3A5A8C; }
   .sponsor-chip {
     display: inline-flex; align-items: center; gap: 0.3rem; margin-left: 0.6rem;
     background: var(--color-gold, #F5B429); color: #1B2A4A; font-weight: 700; text-transform: none;
@@ -1346,6 +1420,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 </style>
 
 <script>
+  import { planNextSlot, chicagoToday } from '../../../netlify/functions/_shared/schedule.mts';
+  const scheduledDates: string[] = JSON.parse(document.getElementById('schedule-data')?.dataset.dates || '[]');
   const tabs = document.querySelectorAll('[data-tab]');
   const panels = document.querySelectorAll('.tab-panel');
 
@@ -1823,11 +1899,12 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           categorySlug: currentDraft.categorySlug,
           contentType: currentDraft.contentType,
           author: 'Sioux Falls Go Editorial',
+          publishDate: (document.getElementById('approve-date') as HTMLInputElement)?.value || undefined,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error + (data.detail ? `: ${data.detail}` : ''));
-      successEl.textContent = `Published! Committed to ${data.path} — site will rebuild automatically.`;
+      successEl.textContent = data.scheduled ? `Scheduled for ${data.publishDate}. It is saved now and goes live that morning on its own.` : `Published. Committed to ${data.path}, and the site rebuilds automatically.`;
       successEl.removeAttribute('hidden');
     } catch (err: any) {
       errorEl.textContent = `Publish failed: ${err.message}`;
@@ -2251,9 +2328,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <strong>${d.draft?.title || '(untitled)'}</strong>
             <p class="pending-draft-meta">${d.categoryName} · ${d.contentType} · generated ${new Date(d.generatedAt).toLocaleDateString()}</p>
             <p class="pending-draft-excerpt">${(d.draft?.bodyMarkdown || '').slice(0, 200)}…</p>
+            ${d.reviewNote ? `<p class="pending-draft-note">${d.reviewNote}</p>` : ''}
+            <label class="pending-date">Go live on <input type="date" class="pending-date-input" data-id="${d.id}" value="${planNextSlot(scheduledDates, chicagoToday())}" /></label>
           </div>
           <div class="pending-draft-actions">
-            <button class="button pending-publish-btn" data-id="${d.id}">Approve &amp; Publish</button>
+            <button class="button pending-publish-btn" data-id="${d.id}">Approve &amp; Schedule</button>
             <button class="button button--ghost pending-discard-btn" data-id="${d.id}">Discard</button>
           </div>
         </div>`
@@ -2276,10 +2355,14 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                 categorySlug: draftData.categorySlug,
                 contentType: draftData.contentType,
                 pendingDraftId: id,
+                slug: draftData.slug,
+                relatedBusinesses: draftData.relatedBusinesses,
+                publishDate: (document.querySelector(`.pending-date-input[data-id="${id}"]`) as HTMLInputElement | null)?.value || undefined,
               }),
             });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || 'Publish failed');
+            if (data.publishDate) scheduledDates.push(data.publishDate);
             loadPendingDrafts();
           } catch (err: any) {
             alert(`Couldn't publish: ${err.message}`);

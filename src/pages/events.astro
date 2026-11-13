@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
+import { getUpcomingEvents } from '../lib/events';
+import { siteNow } from '../lib/dates';
 
 interface EventItem {
   category: 'family' | 'downtown' | 'music' | 'sports' | 'market';
@@ -23,22 +25,24 @@ const categoryMeta = {
   market: { label: 'Market', color: '#B8860B', icon: 'gift' },
 };
 
-// Real, sourced events. See docs/content-strategy.md for the refresh cadence note —
-// this needs periodic re-checking against the source links, same as the homepage
-// events widget.
-const events: EventItem[] = [
-  { category: 'market', date: new Date('2026-11-13T12:00:00'), title: 'Sioux Empire Arts & Crafts Show', description: 'Art, crafts, and holiday gifts from regional makers at the Lyon Fairgrounds Expo Building, November 13 and 14.', sourceName: 'Vendors Map', sourceUrl: 'https://vendorsmap.com/cities/sioux-falls', photo: '/images/scenic/downtown-1.jpg', location: 'W.H. Lyon Fairgrounds' },
-  { category: 'market', date: new Date('2026-11-18T12:00:00'), title: 'Falls Park Winter Farmers Market', description: 'The indoor winter market opens at Mosaic Arts & Events with produce, baked goods, and handmade finds. Check the market for later winter dates.', sourceName: 'KELOLAND News', sourceUrl: 'https://www.keloland.com/news/local-news/second-annual-falls-park-winter-farmers-market/', photo: '/images/scenic/falls-park-golden.jpg', location: 'Mosaic Arts & Events' },
-  { category: 'market', date: new Date('2026-11-21T12:00:00'), title: 'Holiday Village Market', description: 'More than 65 local artisans fill the Mosaic District streets, November 21 and 22 and again December 12 and 13.', sourceName: 'Mosaic District', sourceUrl: 'https://mosaicdistrict.com/event/holiday-village-market/2026-11-22/', photo: '/images/scenic/falls-park-editorial.jpg', location: 'Mosaic District' },
-  { category: 'family', date: new Date('2026-12-04T12:00:00'), title: 'Disney On Ice: Find Your Hero', description: 'Disney On Ice skates into the PREMIER Center, December 4 through 6.', sourceName: 'StayHappening', sourceUrl: 'https://stayhappening.com/sioux+falls', photo: '/images/scenic/downtown-2.jpg', location: 'Denny Sanford PREMIER Center' },
-  { category: 'market', date: new Date('2026-12-05T12:00:00'), title: '605 Made Holiday Market', description: 'A free pop-up shop of local makers inside the underground ramp at Cherapa Place, alongside the new Downtown Christmas Market.', sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/articles/upcoming-holiday-events', photo: '/images/scenic/mckennan-park.jpg', location: 'Cherapa Place' },
-  { category: 'music', date: new Date('2026-12-10T12:00:00'), title: 'Christmas at the Cathedral', description: 'The 30th annual holiday concert series at the Cathedral of Saint Joseph, December 10 through 13.', sourceName: 'AllEvents', sourceUrl: 'https://allevents.in/sioux-falls/christmas', photo: '/images/scenic/levitt-concert-center.jpg', location: 'Cathedral of Saint Joseph' },
-];
+// Events live in src/content/events as data files with exact dates. This
+// page shows whatever is still upcoming at build time, and the site rebuilds
+// every morning, so past events leave the page by themselves.
+const events: EventItem[] = (await getUpcomingEvents()).map((e) => ({
+  category: e.category,
+  date: e.date,
+  title: e.title,
+  description: e.description,
+  sourceName: e.sourceName,
+  sourceUrl: e.sourceUrl,
+  photo: e.photo,
+  location: e.location,
+}));
 
 events.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-const now = new Date();
-const nextEvent = events.find((e) => e.date.getTime() >= now.getTime()) || events[events.length - 1];
+const nextEvent = events[0];
+const anchorDate = nextEvent?.date ?? siteNow();
 
 // Group by month for the timeline's month dividers
 const monthGroups: { label: string; events: EventItem[] }[] = [];
@@ -53,14 +57,14 @@ for (const ev of events) {
 // month the site happens to be built in." A static build can sit live for
 // days or weeks before someone views it — if all events are in a future
 // month, showing the current (empty) month makes the calendar look broken.
-const calMonth = nextEvent.date.getMonth();
-const calYear = nextEvent.date.getFullYear();
+const calMonth = anchorDate.getUTCMonth();
+const calYear = anchorDate.getUTCFullYear();
 const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 const firstDow = new Date(calYear, calMonth, 1).getDay();
 const calEventDays: Record<number, string> = {};
 for (const ev of events) {
-  if (ev.date.getFullYear() === calYear && ev.date.getMonth() === calMonth) {
-    calEventDays[ev.date.getDate()] = categoryMeta[ev.category].color;
+  if (ev.date.getUTCFullYear() === calYear && ev.date.getUTCMonth() === calMonth) {
+    calEventDays[ev.date.getUTCDate()] = categoryMeta[ev.category].color;
   }
 }
 
@@ -112,7 +116,11 @@ const schema = {
   <div class="spotlight-strip">
     <div class="container">
       <div class="spotlight-pulse"></div>
-      <span><strong>Coming up next:</strong> {nextEvent.title} — {nextEvent.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at {nextEvent.location}</span>
+      {nextEvent ? (
+        <span><strong>Coming up next:</strong> {nextEvent.title}, {nextEvent.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })} at {nextEvent.location}</span>
+      ) : (
+        <span><strong>Nothing on the calendar yet.</strong> New events are added every week, so check back soon.</span>
+      )}
     </div>
   </div>
 
@@ -139,7 +147,7 @@ const schema = {
           <>
             <div class="timeline-month"><span>{group.label}</span></div>
             {group.events.map((ev, i) => (
-              <div class={`stop ${i % 2 === 0 ? 'is-left' : 'is-right'}`} data-day={ev.date.getDate()}>
+              <div class={`stop ${i % 2 === 0 ? 'is-left' : 'is-right'}`} data-day={ev.date.getUTCDate()}>
                 {i % 2 === 0 ? (
                   <>
                     <div class="stop-card">
@@ -151,13 +159,13 @@ const schema = {
                       </div>
                     </div>
                     <div class="stop-node" style={`background:${categoryMeta[ev.category].color}`}>
-                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short' })}</span><span class="day">{ev.date.getDate()}</span></span>
+                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })}</span><span class="day">{ev.date.getUTCDate()}</span></span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div class="stop-node" style={`background:${categoryMeta[ev.category].color}`}>
-                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short' })}</span><span class="day">{ev.date.getDate()}</span></span>
+                      <span><span class="mon">{ev.date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })}</span><span class="day">{ev.date.getUTCDate()}</span></span>
                     </div>
                     <div class="stop-card">
                       <div class="stop-photo" style={`background-image:url(${ev.photo})`}></div>

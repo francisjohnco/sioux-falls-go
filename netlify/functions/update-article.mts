@@ -89,6 +89,18 @@ export default async (req: Request) => {
       return new Response(JSON.stringify({ error: `Article file not found: ${slug}` }), { status: 404 });
     }
     const fileData = await getRes.json();
+
+    // Removing a scheduled article from the calendar entirely.
+    if (updates.delete === true) {
+      const delRes = await fetch(apiUrl, {
+        method: 'DELETE',
+        headers: { ...ghHeaders, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: `Admin: remove article "${slug}"`, sha: fileData.sha }),
+      });
+      if (!delRes.ok) return new Response(JSON.stringify({ error: 'GitHub delete failed', detail: await delRes.text() }), { status: 502 });
+      return new Response(JSON.stringify({ ok: true, deleted: slug }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }
+
     const currentRaw = Buffer.from(fileData.content, 'base64').toString('utf-8');
     const { frontmatter, body: currentBody } = parseFrontmatter(currentRaw);
 
@@ -111,8 +123,20 @@ export default async (req: Request) => {
         ? removeFrontmatterField(updatedFrontmatter, 'sponsoredBy')
         : setFrontmatterField(updatedFrontmatter, 'sponsoredBy', updates.sponsoredBy.trim());
     }
-    // updatedAt reflects the real edit, not the original publish date
-    updatedFrontmatter = setUnquotedDateField(updatedFrontmatter, 'updatedAt', new Date().toISOString().split('T')[0]);
+    // Rescheduling. Only a plain calendar date is accepted, and the page the
+    // article lives on follows it: move it later and it stays hidden longer.
+    if (typeof updates.publishedAt === 'string') {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(updates.publishedAt)) {
+        return new Response(JSON.stringify({ error: 'publishedAt must be YYYY-MM-DD' }), { status: 400 });
+      }
+      updatedFrontmatter = setUnquotedDateField(updatedFrontmatter, 'publishedAt', updates.publishedAt);
+    }
+    // updatedAt reflects the real edit. Never let it land before publishedAt
+    // (a scheduled article has a future one).
+    const todayChicago = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+    const publishedLine = updatedFrontmatter.split('\n').find((l) => /^publishedAt:\s/.test(l));
+    const publishedValue = publishedLine ? publishedLine.replace(/^publishedAt:\s*/, '').trim() : todayChicago;
+    updatedFrontmatter = setUnquotedDateField(updatedFrontmatter, 'updatedAt', publishedValue > todayChicago ? publishedValue : todayChicago);
 
     const finalBody = typeof updates.bodyMarkdown === 'string' ? updates.bodyMarkdown : currentBody;
     const newRaw = `---\n${updatedFrontmatter}\n---\n${finalBody}`;

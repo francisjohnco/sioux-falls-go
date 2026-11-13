@@ -1,0 +1,267 @@
+---
+import Icon from '../Icon.astro';
+
+interface Occurrence { date: string; endDate?: string; time?: string }
+interface AdminEvent {
+  id: string; title: string; description: string; category: string;
+  occurrences: Occurrence[]; location: string; photo: string;
+  sourceName: string; sourceUrl: string; note?: string;
+  nextLabel: string; isPast: boolean; remaining: number;
+}
+interface Props { events: AdminEvent[] }
+const { events } = Astro.props;
+const upcoming = events.filter((e) => !e.isPast);
+const past = events.filter((e) => e.isPast);
+const photos = ['downtown-1', 'downtown-2', 'falls-park-1', 'falls-park-2', 'falls-park-aerial', 'falls-park-editorial', 'falls-park-golden', 'levitt-concert-center', 'mckennan-park'];
+const categories = [['family', 'Family'], ['downtown', 'Downtown'], ['music', 'Live music'], ['sports', 'Sports'], ['market', 'Market']];
+const catLabel = Object.fromEntries(categories);
+---
+<section class="tab-panel" id="panel-events">
+  <h1>Events</h1>
+  <p class="ev-lede">The calendar page and the homepage both read from this list. Each event keeps its exact dates, shows the next one that has not passed, and drops off by itself afterward. A weekly search looks for new events and puts them below for you to approve.</p>
+
+  <div class="ev-bar">
+    <button class="ev-btn ev-btn--primary" id="ev-add"><Icon name="sparkles" size={15} /> Add an event</button>
+    <span class="ev-count">{upcoming.length} upcoming</span>
+  </div>
+
+  <h2 class="ev-h2">Suggested events <span class="ev-h2-note" id="ev-sugg-count"></span></h2>
+  <div id="ev-suggestions" class="ev-list"><p class="ev-empty">Checking for suggestions...</p></div>
+
+  <h2 class="ev-h2">Upcoming</h2>
+  {upcoming.length === 0 ? (
+    <p class="ev-empty">No upcoming events. Add one above.</p>
+  ) : (
+    <div class="ev-list">
+      {upcoming.map((e) => (
+        <div class="ev-row" data-event={JSON.stringify(e)}>
+          <span class={`ev-chip ev-chip--${e.category}`}>{catLabel[e.category]}</span>
+          <div class="ev-main">
+            <strong>{e.title}</strong>
+            <span class="ev-meta">{e.nextLabel}{e.remaining > 1 ? ` (${e.remaining} dates left)` : ''} · {e.location}</span>
+          </div>
+          <button class="ev-btn" data-edit>Edit</button>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {past.length > 0 && (
+    <details class="ev-past">
+      <summary>{past.length} past event{past.length === 1 ? '' : 's'} (hidden from the site)</summary>
+      <div class="ev-list">
+        {past.map((e) => (
+          <div class="ev-row ev-row--past" data-event={JSON.stringify(e)}>
+            <span class={`ev-chip ev-chip--${e.category}`}>{catLabel[e.category]}</span>
+            <div class="ev-main"><strong>{e.title}</strong><span class="ev-meta">Ended {e.nextLabel}</span></div>
+            <button class="ev-btn" data-edit>Edit</button>
+          </div>
+        ))}
+      </div>
+    </details>
+  )}
+
+  <div class="ev-backdrop" id="ev-backdrop">
+    <div class="ev-modal" role="dialog" aria-modal="true" aria-labelledby="ev-modal-title">
+      <div class="ev-modal-head"><h2 id="ev-modal-title">Add an event</h2><button class="ev-x" id="ev-close" aria-label="Close">&times;</button></div>
+      <div class="ev-modal-body">
+        <label>Title <input type="text" id="ev-title" /></label>
+        <label>Description <textarea id="ev-desc" rows="2" placeholder="One plain sentence about what it is"></textarea></label>
+        <div class="ev-two">
+          <label>Category
+            <select id="ev-cat">{categories.map(([v, l]) => <option value={v}>{l}</option>)}</select>
+          </label>
+          <label>Photo
+            <select id="ev-photo">{photos.map((p) => <option value={`/images/scenic/${p}.jpg`}>{p.replace(/-/g, ' ')}</option>)}</select>
+          </label>
+        </div>
+        <label>Dates, one per line
+          <textarea id="ev-dates" rows="4" placeholder={'2026-12-05\n2026-12-12 | Open 9 AM to 1 PM\n2026-12-18 to 2026-12-20'}></textarea>
+        </label>
+        <p class="ev-help">Format is YYYY-MM-DD. Add a range with "to" and an optional note after a bar, like <code>2026-12-05 | Starts at 7 PM</code>. A series with irregular dates just gets one line per date.</p>
+        <label>Location <input type="text" id="ev-loc" /></label>
+        <div class="ev-two">
+          <label>Source name <input type="text" id="ev-src-name" placeholder="Who confirms this" /></label>
+          <label>Source link <input type="url" id="ev-src-url" placeholder="https://" /></label>
+        </div>
+        <label>Extra note (optional) <input type="text" id="ev-note" placeholder="Tickets, or check the page for the start time" /></label>
+        <p class="ev-status" id="ev-status" hidden></p>
+      </div>
+      <div class="ev-modal-foot">
+        <button class="ev-btn ev-btn--danger" id="ev-delete" hidden>Delete event</button>
+        <span class="ev-foot-right"><button class="ev-btn" id="ev-cancel">Cancel</button><button class="ev-btn ev-btn--primary" id="ev-save">Save event</button></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #panel-events { display: none; }
+  #panel-events.is-active { display: block; }
+</style>
+<style is:global>
+  #panel-events h1 { font-family: var(--font-display); font-size: 2.2rem; color: var(--color-navy); margin: 0 0 0.4rem; }
+  #panel-events .ev-lede { color: var(--color-navy-light); max-width: 62ch; margin: 0 0 1.2rem; }
+  #panel-events .ev-h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-navy); margin: 1.8rem 0 0.7rem; }
+  #panel-events .ev-h2-note { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); margin-left: 0.4rem; }
+  #panel-events .ev-bar { display: flex; align-items: center; gap: 1rem; }
+  #panel-events .ev-count { font-size: 0.875rem; color: var(--color-navy-light); font-weight: 600; }
+  #panel-events .ev-empty { color: var(--color-navy-light); background: #fff; border: 1px dashed var(--color-line); border-radius: var(--radius); padding: 0.9rem 1.1rem; margin: 0; }
+  #panel-events .ev-list { display: flex; flex-direction: column; gap: 0.55rem; }
+  #panel-events .ev-row { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.9rem; }
+  #panel-events .ev-row--past { opacity: 0.6; }
+  #panel-events .ev-main { flex: 1; display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  #panel-events .ev-main strong { color: var(--color-navy); }
+  #panel-events .ev-meta { font-size: 0.8125rem; color: var(--color-navy-light); }
+  #panel-events .ev-chip { font-size: 0.6875rem; font-weight: 700; padding: 0.22rem 0.6rem; border-radius: 999px; white-space: nowrap; background: #EEF1F6; color: var(--color-navy); }
+  #panel-events .ev-chip--market { background: #FBEFC9; color: #8A6A00; }
+  #panel-events .ev-chip--music { background: #EADDF5; color: #6A3E94; }
+  #panel-events .ev-chip--sports { background: #DCEFE3; color: #2E7D4F; }
+  #panel-events .ev-chip--downtown { background: #DCEAF6; color: #2E6F9E; }
+  #panel-events .ev-chip--family { background: #FCE6D5; color: #B4570F; }
+  #panel-events .ev-sugg { align-items: flex-start; border-left: 4px solid var(--color-orange); }
+  #panel-events .ev-sugg-actions { display: flex; gap: 0.5rem; }
+  #panel-events .ev-sugg-actions a { align-self: center; font-size: 0.8125rem; font-weight: 700; color: var(--color-orange-dark); }
+  #panel-events [hidden] { display: none !important; } /* a display rule must never beat the hidden attribute */
+  #panel-events .ev-btn { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; padding: 0.45rem 0.9rem; border-radius: 0.4rem; border: 1.5px solid var(--color-line); background: #fff; color: var(--color-navy); cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.4rem; }
+  #panel-events .ev-btn:hover { background: var(--color-surface); }
+  #panel-events .ev-btn--primary { background: var(--color-orange); border-color: var(--color-orange); color: #fff; }
+  #panel-events .ev-btn--primary:hover { background: var(--color-orange-dark); }
+  #panel-events .ev-btn--danger { color: #C0392B; border-color: #E8B4AE; }
+  #panel-events .ev-btn[disabled] { opacity: 0.55; cursor: default; }
+  #panel-events .ev-past { margin-top: 1.4rem; }
+  #panel-events .ev-past summary { cursor: pointer; font-weight: 700; color: var(--color-navy-light); margin-bottom: 0.7rem; }
+
+  #panel-events .ev-backdrop { position: fixed; inset: 0; background: rgba(13,23,48,0.55); display: none; align-items: center; justify-content: center; padding: 1rem; z-index: 200; }
+  #panel-events .ev-backdrop.is-open { display: flex; }
+  #panel-events .ev-modal { background: #fff; border-radius: 0.9rem; width: 100%; max-width: 36rem; max-height: 92vh; display: flex; flex-direction: column; }
+  #panel-events .ev-modal-head { display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--color-line); }
+  #panel-events .ev-modal-head h2 { margin: 0; font-size: 1.25rem; font-family: var(--font-display); color: var(--color-navy); }
+  #panel-events .ev-x { background: none; border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--color-navy-light); }
+  #panel-events .ev-modal-body { padding: 1.1rem 1.4rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+  #panel-events .ev-modal-body label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-navy-light); }
+  #panel-events .ev-modal-body input, #panel-events .ev-modal-body textarea, #panel-events .ev-modal-body select { font-family: var(--font-body); font-size: 0.9375rem; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--color-navy); padding: 0.55rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.45rem; width: 100%; }
+  #panel-events .ev-two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  #panel-events .ev-help { font-size: 0.78rem; color: var(--color-navy-light); margin: -0.3rem 0 0; }
+  #panel-events .ev-help code { background: #EEF1F6; padding: 0.05rem 0.3rem; border-radius: 0.25rem; }
+  #panel-events .ev-status { margin: 0; font-size: 0.875rem; font-weight: 600; color: #2E7D4F; }
+  #panel-events .ev-status.is-error { color: #C0392B; }
+  #panel-events .ev-modal-foot { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.4rem; border-top: 1px solid var(--color-line); }
+  #panel-events .ev-foot-right { display: flex; gap: 0.6rem; margin-left: auto; }
+  @media (max-width: 36rem) { #panel-events .ev-two { grid-template-columns: 1fr; } #panel-events .ev-row { flex-wrap: wrap; } }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as any;
+  const backdrop = $('ev-backdrop');
+  const status = $('ev-status');
+  let editingId: string | null = null;
+  let acceptingSuggestion: string | null = null;
+
+  function say(text: string, error = false) { status.textContent = text; status.classList.toggle('is-error', error); status.hidden = false; }
+
+  function datesToText(occ: { date: string; endDate?: string; time?: string }[]): string {
+    return occ.map((o) => `${o.date}${o.endDate ? ` to ${o.endDate}` : ''}${o.time ? ` | ${o.time}` : ''}`).join('\n');
+  }
+
+  function parseDates(text: string): { date: string; endDate?: string; time?: string }[] {
+    const out: { date: string; endDate?: string; time?: string }[] = [];
+    for (const raw of text.split('\n')) {
+      const line = raw.trim();
+      if (!line) continue;
+      const m = line.match(/^(\d{4}-\d{2}-\d{2})(?:\s+to\s+(\d{4}-\d{2}-\d{2}))?(?:\s*\|\s*(.+))?$/);
+      if (!m) throw new Error(`Could not read this date line: "${line}". Use YYYY-MM-DD.`);
+      out.push({ date: m[1], ...(m[2] ? { endDate: m[2] } : {}), ...(m[3] ? { time: m[3].trim() } : {}) });
+    }
+    return out;
+  }
+
+  function open(ev?: any, suggestionId?: string) {
+    editingId = ev?.id ?? null;
+    acceptingSuggestion = suggestionId ?? null;
+    $('ev-modal-title').textContent = editingId ? 'Edit event' : suggestionId ? 'Review suggested event' : 'Add an event';
+    $('ev-title').value = ev?.title ?? '';
+    $('ev-desc').value = ev?.description ?? '';
+    $('ev-cat').value = ev?.category ?? 'family';
+    $('ev-photo').value = ev?.photo ?? '/images/scenic/downtown-1.jpg';
+    $('ev-dates').value = ev ? datesToText(ev.occurrences) : '';
+    $('ev-loc').value = ev?.location ?? '';
+    $('ev-src-name').value = ev?.sourceName ?? '';
+    $('ev-src-url').value = ev?.sourceUrl ?? '';
+    $('ev-note').value = ev?.note ?? '';
+    $('ev-delete').hidden = !editingId;
+    status.hidden = true;
+    backdrop.classList.add('is-open');
+  }
+  const close = () => backdrop.classList.remove('is-open');
+
+  $('ev-add').addEventListener('click', () => open());
+  $('ev-close').addEventListener('click', close);
+  $('ev-cancel').addEventListener('click', close);
+  backdrop.addEventListener('click', (e: Event) => { if (e.target === backdrop) close(); });
+  document.querySelectorAll('#panel-events .ev-row [data-edit]').forEach((btn) => {
+    btn.addEventListener('click', () => open(JSON.parse((btn.closest('.ev-row') as HTMLElement).dataset.event!)));
+  });
+
+  async function post(url: string, body: unknown) {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  $('ev-save').addEventListener('click', async () => {
+    let occurrences;
+    try { occurrences = parseDates($('ev-dates').value); } catch (err: any) { return say(err.message, true); }
+    const event = {
+      title: $('ev-title').value, description: $('ev-desc').value, category: $('ev-cat').value, occurrences,
+      location: $('ev-loc').value, photo: $('ev-photo').value, sourceName: $('ev-src-name').value,
+      sourceUrl: $('ev-src-url').value, note: $('ev-note').value,
+    };
+    $('ev-save').disabled = true;
+    try {
+      await post('/api/manage-event', { action: 'save', ...(editingId ? { id: editingId } : {}), event });
+      if (acceptingSuggestion) await post('/api/event-suggestions', { id: acceptingSuggestion, action: 'accept' }).catch(() => {});
+      say('Saved. It appears on the site after the next rebuild, about a minute.');
+      setTimeout(() => location.reload(), 1600);
+    } catch (err: any) { say(`Could not save: ${err.message}`, true); $('ev-save').disabled = false; }
+  });
+
+  $('ev-delete').addEventListener('click', async () => {
+    if (!editingId || !confirm('Delete this event? This cannot be undone.')) return;
+    try {
+      await post('/api/manage-event', { action: 'delete', id: editingId });
+      say('Deleted. It leaves the site after the next rebuild.');
+      setTimeout(() => location.reload(), 1400);
+    } catch (err: any) { say(`Could not delete: ${err.message}`, true); }
+  });
+
+  // Suggestions found by the weekly search
+  const suggBox = $('ev-suggestions');
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  fetch('/api/event-suggestions').then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); }).then((d) => {
+    const list: any[] = d.suggestions || [];
+    $('ev-sugg-count').textContent = list.length ? `${list.length} waiting` : '';
+    if (!list.length) { suggBox.innerHTML = '<p class="ev-empty">Nothing waiting. The search runs every Monday, and anything it finds shows up here for you to approve.</p>'; return; }
+    suggBox.innerHTML = list.map((s) => `
+      <div class="ev-row ev-sugg" data-id="${esc(s.id)}">
+        <span class="ev-chip ev-chip--${esc(s.category)}">${esc(s.category)}</span>
+        <div class="ev-main"><strong>${esc(s.title)}</strong>
+          <span class="ev-meta">${esc(s.startDate)}${s.endDate ? ' to ' + esc(s.endDate) : ''} · ${esc(s.location)}</span>
+          <span class="ev-meta">${esc(s.description)}</span></div>
+        <div class="ev-sugg-actions"><a href="${esc(s.sourceUrl)}" target="_blank" rel="noopener">Check source</a>
+          <button class="ev-btn ev-btn--primary" data-add>Review and add</button><button class="ev-btn" data-dismiss>Dismiss</button></div>
+      </div>`).join('');
+    suggBox.querySelectorAll('.ev-sugg').forEach((row: any, i: number) => {
+      const s = list[i];
+      row.querySelector('[data-add]').addEventListener('click', () => open({
+        title: s.title, description: s.description, category: s.category, location: s.location,
+        sourceName: s.sourceName, sourceUrl: s.sourceUrl, photo: '/images/scenic/downtown-1.jpg',
+        occurrences: [{ date: s.startDate, ...(s.endDate ? { endDate: s.endDate } : {}), ...(s.time ? { time: s.time } : {}) }],
+      }, s.id));
+      row.querySelector('[data-dismiss]').addEventListener('click', async () => {
+        try { await post('/api/event-suggestions', { id: s.id, action: 'dismiss' }); row.remove(); } catch { alert('Could not dismiss that one. Try again.'); }
+      });
+    });
+  }).catch(() => { suggBox.innerHTML = '<p class="ev-empty">Suggestions load on the live site once you are signed in.</p>'; });
+</script>

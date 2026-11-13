@@ -1,46 +1,44 @@
 ---
 import Icon from './Icon.astro';
+import { getUpcomingEvents, type UpcomingEvent } from '../lib/events';
 
-interface EventItem {
-  month: string;
-  day: string;
-  title: string;
-  description: string;
-  location: string;
-  category: 'Market' | 'Family' | 'Sports';
-  photo: string;
-  sourceName: string;
-  sourceUrl: string;
+// A preview, not the full list (that is what /events is for). Three events,
+// soonest first, then the next soonest from different categories so the
+// homepage shows range instead of three markets in a row. Everything comes
+// from the same event data as the calendar page, so it stays current.
+const upcoming = await getUpcomingEvents();
+
+function pickThree(list: UpcomingEvent[]): UpcomingEvent[] {
+  if (list.length === 0) return [];
+  const chosen = [list[0]];
+  const usedCategories = new Set([list[0].category]);
+  for (const e of list.slice(1)) {
+    if (chosen.length === 3) break;
+    if (!usedCategories.has(e.category)) { chosen.push(e); usedCategories.add(e.category); }
+  }
+  for (const e of list.slice(1)) {
+    if (chosen.length === 3) break;
+    if (!chosen.includes(e)) chosen.push(e);
+  }
+  return chosen;
 }
 
-// Three real, sourced events (checked against current listings on Nov 12, 2026) — fewer than before, on purpose. This is a
-// preview, not the full list (that's what /events is for), so it should
-// read like a hand-picked spotlight, not a dense feed. See
-// docs/content-strategy.md for the refresh cadence note.
-const featured: EventItem = {
-  month: 'Nov', day: '13', title: 'Sioux Empire Arts & Crafts Show',
-  description: 'Art, crafts, and holiday gifts from regional makers at the Lyon Fairgrounds, November 13 and 14.',
-  location: 'W.H. Lyon Fairgrounds', category: 'Market', photo: '/images/scenic/downtown-1.jpg',
-  sourceName: 'Vendors Map', sourceUrl: 'https://vendorsmap.com/cities/sioux-falls',
-};
+const label: Record<string, string> = { family: 'Family', downtown: 'Downtown', music: 'Music', sports: 'Sports', market: 'Market' };
+const categoryIcon: Record<string, string> = { family: 'heart', downtown: 'home', music: 'mic', sports: 'activity', market: 'gift' };
+const categoryColor: Record<string, string> = { family: '#F5A66B', downtown: '#7DB8E8', music: '#B98CE0', sports: '#5FCB8C', market: '#F5B429' };
 
-const supporting: EventItem[] = [
-  {
-    month: 'Nov', day: '21', title: 'Holiday Village Market',
-    description: 'More than 65 local artisans fill the Mosaic District streets, November 21 and 22 and again December 12 and 13.',
-    location: 'Mosaic District', category: 'Market', photo: '/images/scenic/falls-park-editorial.jpg',
-    sourceName: 'Mosaic District', sourceUrl: 'https://mosaicdistrict.com/event/holiday-village-market/2026-11-22/',
-  },
-  {
-    month: 'Dec', day: '4', title: 'Disney On Ice: Find Your Hero',
-    description: 'Disney On Ice skates into the PREMIER Center, December 4 through 6.',
-    location: 'Denny Sanford PREMIER Center', category: 'Family', photo: '/images/scenic/downtown-2.jpg',
-    sourceName: 'StayHappening', sourceUrl: 'https://stayhappening.com/sioux+falls',
-  },
-];
+const toCard = (e: UpcomingEvent) => ({
+  day: String(e.date.getUTCDate()),
+  month: e.date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' }),
+  title: e.title,
+  description: e.description,
+  location: e.location,
+  category: e.category,
+  photo: e.photo,
+  sourceUrl: e.sourceUrl,
+});
 
-const categoryIcon: Record<string, string> = { Market: 'gift', Family: 'heart', Sports: 'activity' };
-const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A267', Sports: '#5FCB8C' };
+const [featured, ...supporting] = pickThree(upcoming).map(toCard);
 ---
 <section class="happening-section">
   <div class="container">
@@ -53,12 +51,13 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A
       <a href="/events" class="happening-full-link">Full calendar →</a>
     </div>
 
+    {featured ? (
     <div class="happening-grid">
       <a class="spotlight-card" href={featured.sourceUrl} target="_blank" rel="noopener" style={`background-image: url(${featured.photo})`}>
         <div class="spotlight-scrim"></div>
         <span class="spotlight-tag">Up Next</span>
         <span class="spotlight-cat" style={`background:${categoryColor[featured.category]};`}>
-          <Icon name={categoryIcon[featured.category]} size={13} /> {featured.category}
+          <Icon name={categoryIcon[featured.category]} size={13} /> {label[featured.category]}
         </span>
         <div class="spotlight-body">
           <div class="spotlight-date">
@@ -78,7 +77,7 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A
           <a class="support-card" href={ev.sourceUrl} target="_blank" rel="noopener" style={`background-image: url(${ev.photo})`}>
             <div class="support-scrim"></div>
             <span class="support-cat" style={`color:${categoryColor[ev.category]};`}>
-              <Icon name={categoryIcon[ev.category]} size={12} /> {ev.category}
+              <Icon name={categoryIcon[ev.category]} size={12} /> {label[ev.category]}
             </span>
             <div class="support-body">
               <div class="support-date">
@@ -94,6 +93,9 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A
         ))}
       </div>
     </div>
+    ) : (
+      <p class="happening-empty">New events are added every week. See the <a href="/events">full calendar</a> or check back soon.</p>
+    )}
   </div>
 </section>
 
@@ -105,6 +107,8 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A
   .happening-head p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 44ch; margin-top: 0.6rem; }
   .happening-full-link { font-weight: 700; font-size: 0.9375rem; color: var(--color-gold); white-space: nowrap; text-decoration: none; border-bottom: 1px solid var(--color-gold); padding-bottom: 2px; }
 
+  .happening-empty { color: rgba(255,255,255,0.75); font-size: 1rem; }
+  .happening-empty a { color: var(--color-gold); font-weight: 700; }
   .happening-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.3rem; align-items: stretch; }
 
   /* FEATURED — a real photo, kept clear. A gentle scrim only where the

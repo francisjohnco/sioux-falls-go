@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { getLiveArticles } from '../lib/articles';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -19,7 +20,7 @@ const { category } = Astro.props;
 
 const allCategories = await getCollection('categories');
 const allBusinesses = await getCollection('businesses');
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 
 // Recursively collect every business under a category, including its
 // children's children, grouped by which category they're actually tagged

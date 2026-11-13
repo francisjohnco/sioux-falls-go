@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -16,7 +17,7 @@ const { hub } = Astro.props;
 
 const allFaqs = await getCollection('faqs');
 const allCategories = await getCollection('categories');
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 
 // Canonical dedup: drop any entry that points elsewhere, then only keep
 // entries tagged for this hub and marked featured (the "5-10 questions" cut).

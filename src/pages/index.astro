@@ -53,17 +53,8 @@ const schema = {
 
   <section class="hero">
     <div class="hero-photo"></div>
-    <svg width="0" height="0" style="position:absolute">
-      <defs>
-        <filter id="water-ripple-filter" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" numOctaves="2" seed="7" baseFrequency="0.012 0.04" result="noise">
-            <animate attributeName="baseFrequency" dur="14s" values="0.012 0.04;0.018 0.055;0.012 0.04" repeatCount="indefinite" />
-          </feTurbulence>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-    </svg>
-    <div class="hero-water-ripple"></div>
+    <div class="hero-flow hero-flow--water" aria-hidden="true"><span></span></div>
+    <div class="hero-flow hero-flow--drops" aria-hidden="true"><span></span></div>
     <div class="hero-gradient"></div>
     <div class="hero-gradient-bottom"></div>
     <div class="container hero-inner">
@@ -176,21 +167,48 @@ const schema = {
     position: absolute; inset: 0;
     background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
   }
-  /* The falls actually ripple here: a second copy of the same photo,
-     clipped to just the water (so rocks/people/buildings never warp),
-     with an SVG feTurbulence + feDisplacementMap filter genuinely
-     refracting its pixels — the real technique behind "living photo"
-     water effects, not a highlight sliding on top of a static image. */
-  .hero-water-ripple {
-    position: absolute; inset: 0;
-    background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
-    -webkit-mask-image: radial-gradient(ellipse 42% 38% at 68% 32%, black 35%, transparent 72%);
-    mask-image: radial-gradient(ellipse 42% 38% at 68% 32%, black 35%, transparent 72%);
-    filter: url(#water-ripple-filter);
-    will-change: filter;
+  /* Moving water, done the way real cinemagraphs do it: the photo stays
+     perfectly still and only the water moves. Two masks are cut from this
+     exact photo. The water mask covers every bright, neutral area in the band
+     where the river is, minus small patches like white shirts and lamp globes,
+     and gets a slow, soft shimmer. The drops mask covers only the places where
+     water actually falls, and gets fast streaks pouring downward. The masks sit
+     on still wrappers while the textures slide inside them, so the motion never
+     leaks onto rocks, trees, or people. Transforms only, so it stays smooth on
+     phones. */
+  .hero-flow {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+    -webkit-mask-size: cover; mask-size: cover;
+    -webkit-mask-position: center 38%; mask-position: center 38%;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
   }
+  .hero-flow--water {
+    -webkit-mask-image: url('/images/scenic/falls-park-aerial-water-mask.png');
+    mask-image: url('/images/scenic/falls-park-aerial-water-mask.png');
+  }
+  .hero-flow--drops {
+    -webkit-mask-image: url('/images/scenic/falls-park-aerial-drops-mask.png');
+    mask-image: url('/images/scenic/falls-park-aerial-drops-mask.png');
+  }
+  .hero-flow span { position: absolute; left: 0; right: 0; bottom: 0; will-change: transform; }
+  .hero-flow--water span {
+    top: -384px;
+    background: url('/images/scenic/water-shimmer.webp') repeat;
+    background-size: 384px 384px;
+    opacity: 0.3;
+    animation: heroFlowSlow 9s linear infinite;
+  }
+  .hero-flow--drops span {
+    top: -512px;
+    background: url('/images/scenic/water-streaks.webp') repeat;
+    background-size: 256px 512px;
+    opacity: 0.6;
+    animation: heroFlowFast 2.6s linear infinite;
+  }
+  @keyframes heroFlowFast { to { transform: translateY(512px); } }
+  @keyframes heroFlowSlow { to { transform: translateY(384px); } }
   @media (prefers-reduced-motion: reduce) {
-    .hero-water-ripple { filter: none; }
+    .hero-flow { display: none; }
   }
   /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
      Uses the brand navy so the tint reads intentional, with strong opacity for contrast. */

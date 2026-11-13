@@ -1,0 +1,15 @@
+{
+  "title": "Mannheim Steamroller Christmas",
+  "description": "The long-running holiday concert tradition at the Washington Pavilion.",
+  "category": "music",
+  "occurrences": [
+    {
+      "date": "2026-12-29"
+    }
+  ],
+  "location": "Washington Pavilion, Mary W. Sommervold Hall",
+  "photo": "/images/scenic/downtown-1.jpg",
+  "sourceName": "Washington Pavilion",
+  "sourceUrl": "https://www.washingtonpavilion.org/event/mannheim-steamroller-christmas/",
+  "note": "Check the Washington Pavilion page for the show time and tickets."
+}

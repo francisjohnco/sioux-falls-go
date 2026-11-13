@@ -1,11 +1,12 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Icon from '../../components/Icon.astro';
 
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 
 // Real category groupings, matching how the original site segmented "The Loop"
 const LOCALS_CATEGORIES = ['consumer-guide', 'for-locals', 'community-spotlight', 'local-spotlights'];

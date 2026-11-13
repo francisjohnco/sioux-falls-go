@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -21,7 +22,7 @@ const neighborhood = business.data.neighborhood ? await getEntry(business.data.n
 const isChampion = business.data.partnershipTier === 'community-champion';
 
 // Related guides: same category
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 const relatedGuides = allArticles.filter(
   (a) => a.data.category.id === business.data.category.id && a.data.contentType !== 'business-spotlight'
 );

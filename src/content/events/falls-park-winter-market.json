@@ -1,0 +1,59 @@
+{
+  "title": "Falls Park Farmers Market Winter Market",
+  "description": "Fresh produce, hot food, warm drinks, and unique gifts from local vendors, held indoors at Monick Yards.",
+  "category": "market",
+  "occurrences": [
+    {
+      "date": "2026-11-18",
+      "time": "Open 4 to 8 PM"
+    },
+    {
+      "date": "2026-11-28",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2026-12-09",
+      "time": "Open 4 to 8 PM"
+    },
+    {
+      "date": "2026-12-19",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-01-09",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-01-30",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-02-13",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-02-27",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-03-06",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-03-20",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-04-10",
+      "time": "Open 9 AM to 1 PM"
+    },
+    {
+      "date": "2027-04-14",
+      "time": "Open 4 to 8 PM"
+    }
+  ],
+  "location": "Monick Yards, 605 E 8th St",
+  "photo": "/images/scenic/downtown-1.jpg",
+  "sourceName": "Falls Park Farmers Market",
+  "sourceUrl": "https://www.fallsparkfarmersmarket.com/winter-market/"
+}

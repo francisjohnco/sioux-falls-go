@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -51,7 +52,7 @@ const insightSlugs = [
   'how-to-choose-a-tree-service-in-sioux-falls',
   'how-to-choose-a-painting-contractor-in-sioux-falls',
 ];
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 const localInsights = await Promise.all(
   insightSlugs
     .map((slug) => allArticles.find((a) => a.id === slug))

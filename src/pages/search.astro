@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import { getLiveArticles } from '../lib/articles';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -8,7 +9,7 @@ import LayeredHero from '../components/LayeredHero.astro';
 import Icon from '../components/Icon.astro';
 
 const allBusinesses = await getCollection('businesses');
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 const allCategories = await getCollection('categories');
 
 const businessesWithCategory = await Promise.all(

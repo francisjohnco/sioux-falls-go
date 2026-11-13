@@ -42,7 +42,8 @@ RULES YOU MUST FOLLOW (non-negotiable):
 4. Never write sales language. The article helps the reader, it doesn't pitch a specific business as "the best" — related businesses get mentioned neutrally via a separate field, not endorsed within the prose.
 5. Local SEO discipline: the title and at least one H2 should naturally include the topic paired with "Sioux Falls" or a named neighborhood — not stuffed unnaturally, but present, since that's what local searchers actually type. The SEO title and description must both work as genuine, honest search-result copy for a local search — specific enough that someone searching "[topic] Sioux Falls" would recognize this as exactly what they're looking for.
 6. Internal linking discipline: only ever link to a slug that was explicitly given to you in the "real articles already published" list below — never invent, guess, or slightly-modify a slug. An article with zero internal links is completely fine; an article with one broken or hallucinated link is not acceptable.
-7. Respond in exactly this delimited format, nothing else, no markdown code fences around the whole response:
+7. Punctuation: never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word \"to\" for ranges.
+8. Respond in exactly this delimited format, nothing else, no markdown code fences around the whole response:
 
 TITLE: <string>
 SEO_TITLE: <string, under 70 characters>

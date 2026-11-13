@@ -1,0 +1,16 @@
+{
+  "title": "Autumn Festival, An Arts and Crafts Affair",
+  "description": "An arts and crafts show where artists and crafters sell handmade work.",
+  "category": "market",
+  "occurrences": [
+    {
+      "date": "2026-11-20",
+      "endDate": "2026-11-22"
+    }
+  ],
+  "location": "Denny Sanford Convention Center",
+  "photo": "/images/scenic/downtown-2.jpg",
+  "sourceName": "Sioux Falls Events",
+  "sourceUrl": "https://siouxfallsevents.com/events/category/community/conventionsfestivals/",
+  "note": "Tickets are listed at $8 to $10."
+}

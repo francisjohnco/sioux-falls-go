@@ -1,0 +1,215 @@
+{
+  "campaign": "Drain cleaning in Sioux Falls",
+  "category": "plumbers",
+  "categoryName": "Plumbers",
+  "relatedBusinesses": [
+    "605-drain-solutions",
+    "jurrens-plumbing"
+  ],
+  "note": "Articles are written in this order, one per scheduled run. A topic counts as done as soon as an article with its slug exists, whether it is live or scheduled.",
+  "topics": [
+    {
+      "slug": "drain-cleaning-cost-sioux-falls",
+      "title": "Drain Cleaning Cost in Sioux Falls, SD (2026 Guide)",
+      "contentType": "cost-guide",
+      "keywords": [
+        "how much does drain cleaning cost Sioux Falls",
+        "drain cleaning cost Sioux Falls",
+        "how much should it cost to clean a drain"
+      ],
+      "brief": "Cover typical costs by drain type and method, what changes the price, and how to get a quote you can trust."
+    },
+    {
+      "slug": "is-professional-drain-cleaning-worth-it-sioux-falls",
+      "title": "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro",
+      "contentType": "comparison",
+      "keywords": [
+        "is professional drain cleaning worth it",
+        "when to call a plumber for a clogged drain Sioux Falls"
+      ],
+      "brief": "Compare DIY fixes and a professional visit on effectiveness, risk to pipes, and long-term cost. End with clear decision criteria."
+    },
+    {
+      "slug": "hydro-jetting-vs-snaking-sioux-falls",
+      "title": "Hydro Jetting vs. Snaking for Sioux Falls Homes",
+      "contentType": "comparison",
+      "keywords": [
+        "hydro jetting Sioux Falls",
+        "drain snaking vs hydro jetting",
+        "what cleans out drains the best"
+      ],
+      "brief": "Explain both methods, when each fits, the role of a camera inspection, and why local roots, hard water scale, and shifting clay soil matter."
+    },
+    {
+      "slug": "what-to-do-when-your-drain-backs-up-sioux-falls",
+      "title": "What to Do When Your Drain Backs Up in Sioux Falls (Emergency Guide)",
+      "contentType": "safety-information",
+      "keywords": [
+        "clogged drain Sioux Falls",
+        "emergency drain cleaning Sioux Falls",
+        "sewer backup what to do"
+      ],
+      "brief": "A calm step by step guide for the first hour, how to tell an emergency from something that can wait, and what to ask when calling a company."
+    },
+    {
+      "slug": "kitchen-sink-clogs-sioux-falls-homes",
+      "title": "Kitchen Sink Clogs in Sioux Falls Homes (Grease, Disposals, and What Actually Works)",
+      "contentType": "educational-article",
+      "keywords": [
+        "kitchen sink clogged Sioux Falls",
+        "kitchen drain clogs grease disposal"
+      ],
+      "brief": "Why kitchen lines clog, what not to put down a disposal, what a homeowner can safely try, and when to call."
+    },
+    {
+      "slug": "clear-hair-clogged-bathroom-drain",
+      "title": "How to Clear a Hair Clog From a Bathroom Sink or Shower in Sioux Falls",
+      "contentType": "checklist",
+      "keywords": [
+        "shower drain clogged hair",
+        "bathroom sink slow drain fix"
+      ],
+      "brief": "A practical checklist of safe tools and steps, and the signs that the problem is deeper than hair."
+    },
+    {
+      "slug": "main-sewer-line-cleaning-cost-sioux-falls",
+      "title": "Main Sewer Line Cleaning Cost in Sioux Falls (and Why It Costs More)",
+      "contentType": "cost-guide",
+      "keywords": [
+        "main sewer line cleaning cost",
+        "sewer line cleaning Sioux Falls"
+      ],
+      "brief": "Explain why a main line costs more than a fixture, what drives the quote, and the red flags in an estimate."
+    },
+    {
+      "slug": "tree-roots-in-sioux-falls-sewer-lines",
+      "title": "Tree Roots in Sioux Falls Sewer Lines (Signs, Fixes, and Costs)",
+      "contentType": "educational-article",
+      "keywords": [
+        "tree roots in sewer line",
+        "roots in drain pipes Sioux Falls"
+      ],
+      "brief": "How roots get in, warning signs, the difference between clearing and repairing, and how often roots return."
+    },
+    {
+      "slug": "sewer-camera-inspection-sioux-falls",
+      "title": "Sewer Camera Inspection in Sioux Falls (When It Is Worth Paying For)",
+      "contentType": "buying-guide",
+      "keywords": [
+        "sewer camera inspection Sioux Falls",
+        "drain camera inspection cost"
+      ],
+      "brief": "When a camera inspection earns its price, what a good report includes, and how buyers can use one before closing on a home."
+    },
+    {
+      "slug": "why-do-my-drains-keep-clogging",
+      "title": "Why Do My Drains Keep Clogging? Recurring Clogs Explained for Sioux Falls Homes",
+      "contentType": "educational-article",
+      "keywords": [
+        "why does my drain keep clogging",
+        "recurring drain clogs"
+      ],
+      "brief": "The usual causes of repeat clogs, from grease and scale to roots and sagging pipe, and how to find the real one."
+    },
+    {
+      "slug": "spring-sewer-backups-sioux-falls",
+      "title": "Spring Sewer Backups in Sioux Falls (Thaw, Heavy Rain, and Sump Pump Problems)",
+      "contentType": "seasonal-guide",
+      "keywords": [
+        "sewer backup spring Sioux Falls",
+        "basement sewer backup heavy rain"
+      ],
+      "brief": "Why backups cluster in spring, what homeowners can check ahead of time, and what to do during a heavy rain."
+    },
+    {
+      "slug": "winter-drain-problems-sioux-falls",
+      "title": "Winter Drain Problems in Sioux Falls (Freezing Temperatures and Slow Drains)",
+      "contentType": "seasonal-guide",
+      "keywords": [
+        "winter drain problems",
+        "frozen drain pipe Sioux Falls"
+      ],
+      "brief": "How a Sioux Falls winter affects drains and vent lines, what to do on the coldest nights, and what to avoid."
+    },
+    {
+      "slug": "drain-cleaner-chemicals-vs-plumbing-snake",
+      "title": "Chemical Drain Cleaners vs. a Plumbing Snake (What Plumbers Recommend)",
+      "contentType": "comparison",
+      "keywords": [
+        "do plumbers recommend drain cleaners",
+        "chemical drain cleaner vs snake"
+      ],
+      "brief": "Compare chemical cleaners and mechanical tools on safety, pipe damage, and results, and say plainly when each is a poor choice."
+    },
+    {
+      "slug": "how-to-choose-a-drain-cleaning-company-sioux-falls",
+      "title": "How to Choose a Drain Cleaning Company in Sioux Falls (Questions to Ask Before You Book)",
+      "contentType": "buying-guide",
+      "keywords": [
+        "best drain cleaning Sioux Falls",
+        "drain cleaning company Sioux Falls"
+      ],
+      "brief": "A list of questions to ask, how to read a quote, and signs of a company that explains its work."
+    },
+    {
+      "slug": "commercial-drain-cleaning-sioux-falls",
+      "title": "Commercial Drain Cleaning in Sioux Falls (Restaurants, Grease Traps, and Floor Drains)",
+      "contentType": "local-resource",
+      "keywords": [
+        "commercial drain cleaning Sioux Falls",
+        "restaurant grease trap cleaning"
+      ],
+      "brief": "What commercial drain service involves, how often it is needed, and what a business owner should have in writing."
+    },
+    {
+      "slug": "basement-floor-drain-backing-up-sioux-falls",
+      "title": "Basement Floor Drain Backing Up in Sioux Falls (Causes and Fixes)",
+      "contentType": "educational-article",
+      "keywords": [
+        "basement floor drain backing up",
+        "floor drain sewage smell"
+      ],
+      "brief": "Common causes, what is safe to do first, and when a floor drain backup points to the main line."
+    },
+    {
+      "slug": "toilet-keeps-clogging-sioux-falls",
+      "title": "Toilet Keeps Clogging in Your Sioux Falls Home (Causes and When to Call a Plumber)",
+      "contentType": "educational-article",
+      "keywords": [
+        "toilet keeps clogging",
+        "toilet clogged repeatedly"
+      ],
+      "brief": "Why a toilet clogs again and again, what to try, and the signs that the problem is the line and not the toilet."
+    },
+    {
+      "slug": "hard-water-buildup-in-sioux-falls-pipes",
+      "title": "Hard Water Buildup in Sioux Falls Pipes (Scale, Slow Drains, and Prevention)",
+      "contentType": "maintenance-guide",
+      "keywords": [
+        "hard water pipes Sioux Falls",
+        "mineral buildup in drains"
+      ],
+      "brief": "How hard water from the Big Sioux Aquifer leaves scale in pipes over time, what it does to drains, and sensible prevention."
+    },
+    {
+      "slug": "drain-maintenance-checklist-sioux-falls-homeowners",
+      "title": "Yearly Drain Maintenance Checklist for Sioux Falls Homeowners",
+      "contentType": "checklist",
+      "keywords": [
+        "drain maintenance checklist",
+        "how to prevent clogged drains"
+      ],
+      "brief": "A season by season checklist a homeowner can actually follow, plus what is worth hiring out."
+    },
+    {
+      "slug": "older-sioux-falls-homes-drain-problems",
+      "title": "Older Sioux Falls Homes and Drain Problems (Cast Iron, Clay, and Aging Pipe)",
+      "contentType": "educational-article",
+      "keywords": [
+        "old house drain problems",
+        "cast iron drain pipe problems"
+      ],
+      "brief": "What aging drain pipe looks like, what an inspection can show, and how to plan for repairs without panic."
+    }
+  ]
+}

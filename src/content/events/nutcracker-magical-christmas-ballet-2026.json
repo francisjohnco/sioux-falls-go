@@ -1,0 +1,15 @@
+{
+  "title": "Nutcracker! Magical Christmas Ballet",
+  "description": "A holiday ballet performance at the Washington Pavilion.",
+  "category": "family",
+  "occurrences": [
+    {
+      "date": "2026-12-02",
+      "time": "Starts at 7 PM"
+    }
+  ],
+  "location": "Washington Pavilion, Mary W. Sommervold Hall",
+  "photo": "/images/scenic/downtown-1.jpg",
+  "sourceName": "Washington Pavilion",
+  "sourceUrl": "https://www.washingtonpavilion.org/?p=8795"
+}

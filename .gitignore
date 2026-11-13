@@ -3,3 +3,7 @@ dist/
 .astro/
 .env
 .DS_Store
+
+# generated at build time
+public/topic-queue.json
+public/events-index.json

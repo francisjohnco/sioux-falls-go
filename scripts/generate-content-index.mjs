@@ -71,6 +71,13 @@ function readFrontmatter(mdPath) {
   return data;
 }
 
+// "Today" in Sioux Falls, not UTC. SFG_NOW (YYYY-MM-DD) lets a test build pretend it is another day.
+function chicagoToday() {
+  const o = process.env.SFG_NOW;
+  const d = o && /^\d{4}-\d{2}-\d{2}$/.test(o) ? new Date(`${o}T18:00:00Z`) : new Date();
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(d);
+}
+
 function main() {
   const catDir = path.join(ROOT, 'src/content/categories');
   const artDir = path.join(ROOT, 'src/content/articles');
@@ -160,13 +167,33 @@ function main() {
   // Real article index — used by the scheduled auto-generation function for
   // internal linking and avoiding duplicate angles, the same real data the
   // admin UI already gets directly via getCollection().
+  const todayStr = chicagoToday();
   const articleIndex = articles.map((a) => ({
     title: a.title,
     slug: a.file.replace(/\.md$/, ''),
     category: a.category,
     description: a.seo?.description || '',
+    publishedAt: a.publishedAt || '',
+    // false means scheduled: the file exists but the page is not built yet,
+    // so nothing should link to it and it must not be written about as live.
+    live: (a.publishedAt || '0000-00-00') <= todayStr,
   }));
   fs.writeFileSync(path.join(ROOT, 'public/article-index.json'), JSON.stringify(articleIndex, null, 2));
+
+  // What is already on the events calendar, read by the weekly event search
+  // so it does not suggest duplicates.
+  const evDir = path.join(ROOT, 'src/content/events');
+  const eventsIndex = fs.existsSync(evDir)
+    ? fs.readdirSync(evDir).filter((f) => f.endsWith('.json')).map((f) => {
+        const e = readJson(path.join(evDir, f));
+        return { id: f.replace(/\.json$/, ''), title: e.title, dates: (e.occurrences || []).map((o) => o.date) };
+      })
+    : [];
+  fs.writeFileSync(path.join(ROOT, 'public/events-index.json'), JSON.stringify(eventsIndex, null, 2));
+
+  // The planned topic queue, read by the scheduled generator.
+  const queueSrc = path.join(ROOT, 'data/topic-queue.json');
+  if (fs.existsSync(queueSrc)) fs.copyFileSync(queueSrc, path.join(ROOT, 'public/topic-queue.json'));
 
   // Community picks — the shared host-community flyer content, exposed as
   // a static asset so the PDF-generation function can read it at runtime

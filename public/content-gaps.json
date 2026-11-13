@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T15:04:57.002Z",
+  "generatedAt": "2026-11-13T11:39:16.611Z",
   "categories": [
     {
       "slug": "massage-therapy",
@@ -1080,16 +1080,6 @@
       "reasons": []
     },
     {
-      "slug": "plumbers",
-      "name": "Plumbers",
-      "articleCount": 4,
-      "businessCount": 2,
-      "categoryType": "service",
-      "missingTypes": [],
-      "priorityScore": -20,
-      "reasons": []
-    },
-    {
       "slug": "real-estate-agents",
       "name": "Real Estate Agents",
       "articleCount": 4,
@@ -1157,6 +1147,16 @@
       "categoryType": "dual",
       "missingTypes": [],
       "priorityScore": -30,
+      "reasons": []
+    },
+    {
+      "slug": "plumbers",
+      "name": "Plumbers",
+      "articleCount": 8,
+      "businessCount": 2,
+      "categoryType": "service",
+      "missingTypes": [],
+      "priorityScore": -40,
       "reasons": []
     },
     {

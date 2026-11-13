@@ -1,10 +1,11 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import { getLiveArticles } from '../lib/articles';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
-const allArticles = await getCollection('articles');
+const allArticles = await getLiveArticles();
 const neighborhoods = await getCollection('neighborhoods');
 
 // Top 3 travel articles for visitors — the two dedicated "explore Sioux

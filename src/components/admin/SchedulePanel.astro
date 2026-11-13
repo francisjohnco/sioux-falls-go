@@ -1,0 +1,220 @@
+---
+import Icon from '../Icon.astro';
+
+interface QueueItem { slug: string; title: string; status: 'live' | 'scheduled' | 'queued'; date?: string }
+interface Scheduled { slug: string; title: string; date: string; dateLabel: string }
+interface Props {
+  builtAt: string;
+  scheduled: Scheduled[];
+  queue: { campaign: string; items: QueueItem[] } | null;
+}
+const { builtAt, scheduled, queue } = Astro.props;
+const done = queue ? queue.items.filter((i) => i.status !== 'queued').length : 0;
+const statusLabel = { live: 'Live', scheduled: 'Scheduled', queued: 'Waiting' };
+---
+<section class="tab-panel" id="panel-schedule">
+  <h1>Publishing Schedule</h1>
+  <p class="sch-lede">Every article has a go-live date. The site rebuilds itself every morning, so anything dated for today appears on its own, with nobody pressing publish.</p>
+
+  <div class="sch-cards">
+    <div class="sch-card" id="sch-health" data-built-at={builtAt}>
+      <div class="sch-card-head"><Icon name="clock" size={18} /> <strong>Daily refresh</strong></div>
+      <p class="sch-status" id="sch-health-text">Checking...</p>
+      <button class="sch-btn sch-btn--primary" id="sch-refresh-btn">Refresh site now</button>
+      <p class="sch-note" id="sch-refresh-note" hidden></p>
+    </div>
+
+    <div class="sch-card">
+      <div class="sch-card-head"><Icon name="rocket" size={18} /> <strong>Auto-publish</strong></div>
+      <label class="sch-toggle">
+        <input type="checkbox" id="sch-auto" />
+        <span class="sch-switch"></span>
+        <span id="sch-auto-label">Off</span>
+      </label>
+      <p class="sch-note">On: each planned article that passes a quality check is scheduled for the next open Tuesday or Thursday and goes live by itself. Off: they wait in the Content Engine for your approval. Articles that fail the check always wait for you.</p>
+      <p class="sch-note" id="sch-auto-note" hidden></p>
+    </div>
+  </div>
+
+  <h2 class="sch-h2">Coming up</h2>
+  {scheduled.length === 0 ? (
+    <p class="sch-empty">Nothing is scheduled right now. Approved drafts can be given a future date, and planned articles are added automatically when auto-publish is on.</p>
+  ) : (
+    <div class="sch-list">
+      {scheduled.map((s) => (
+        <div class="sch-row" data-slug={s.slug} data-date={s.date}>
+          <span class="sch-date">{s.dateLabel}</span>
+          <span class="sch-title">{s.title}</span>
+          <span class="sch-actions">
+            <button class="sch-btn" data-jump-to-article={s.title}>Read and edit</button>
+            <button class="sch-btn" data-act="change">Change date</button>
+            <button class="sch-btn sch-btn--danger" data-act="remove">Remove</button>
+          </span>
+          <div class="sch-edit" hidden>
+            <input type="date" value={s.date} />
+            <button class="sch-btn sch-btn--primary" data-act="save">Save date</button>
+            <button class="sch-btn" data-act="cancel">Cancel</button>
+          </div>
+          <p class="sch-msg" hidden></p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {queue && (
+    <>
+      <h2 class="sch-h2">{queue.campaign}</h2>
+      <p class="sch-note">{done} of {queue.items.length} written. One more is written every Monday and Wednesday, in this order.</p>
+      <ol class="sch-queue">
+        {queue.items.map((i) => (
+          <li class={`sch-q sch-q--${i.status}`}>
+            <span class="sch-q-title">{i.title}</span>
+            <span class="sch-q-status">{statusLabel[i.status]}{i.date && i.status !== 'queued' ? ` ${i.date.slice(5)}` : ''}</span>
+          </li>
+        ))}
+      </ol>
+    </>
+  )}
+</section>
+
+<style is:global>
+  #panel-schedule { display: none; }
+  #panel-schedule.is-active { display: block; }
+</style>
+<style>
+  h1 { font-family: var(--font-display); font-size: 2.2rem; color: var(--color-navy); margin: 0 0 0.4rem; }
+  .sch-lede { color: var(--color-navy-light); max-width: 60ch; margin: 0 0 1.4rem; }
+  .sch-h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-navy); margin: 2rem 0 0.7rem; }
+  .sch-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1rem; }
+  .sch-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: 1.1rem 1.2rem; }
+  .sch-card-head { display: flex; align-items: center; gap: 0.5rem; color: var(--color-navy); margin-bottom: 0.6rem; }
+  .sch-status { margin: 0 0 0.8rem; font-weight: 600; }
+  .sch-status.is-ok { color: #2E7D4F; }
+  .sch-status.is-warn { color: #B45309; }
+  .sch-note { font-size: 0.8125rem; color: var(--color-navy-light); margin: 0.6rem 0 0; line-height: 1.5; }
+  .sch-empty { color: var(--color-navy-light); background: #fff; border: 1px dashed var(--color-line); border-radius: var(--radius); padding: 1rem 1.2rem; }
+
+  .sch-toggle { display: inline-flex; align-items: center; gap: 0.7rem; cursor: pointer; font-weight: 700; color: var(--color-navy); }
+  .sch-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .sch-switch { width: 2.7rem; height: 1.5rem; border-radius: 999px; background: #CBD3DF; position: relative; transition: background 0.2s; }
+  .sch-switch::after { content: ''; position: absolute; top: 0.18rem; left: 0.2rem; width: 1.14rem; height: 1.14rem; border-radius: 50%; background: #fff; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+  .sch-toggle input:checked + .sch-switch { background: var(--color-orange); }
+  .sch-toggle input:checked + .sch-switch::after { transform: translateX(1.2rem); }
+  .sch-toggle input:focus-visible + .sch-switch { outline: 2px solid var(--color-navy); outline-offset: 2px; }
+
+  .sch-btn { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 700; padding: 0.42rem 0.85rem; border-radius: 0.4rem; border: 1.5px solid var(--color-line); background: #fff; color: var(--color-navy); cursor: pointer; white-space: nowrap; }
+  .sch-btn:hover { background: var(--color-surface); }
+  .sch-btn--primary { background: var(--color-navy); border-color: var(--color-navy); color: #fff; }
+  .sch-btn--primary:hover { background: #2c3f61; }
+  .sch-btn--danger { color: #C0392B; border-color: #E8B4AE; }
+  .sch-btn[disabled] { opacity: 0.55; cursor: default; }
+
+  .sch-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .sch-row { background: #fff; border: 1px solid var(--color-line); border-left: 4px solid #3A5A8C; border-radius: var(--radius); padding: 0.8rem 1rem; display: grid; grid-template-columns: 8.5rem 1fr auto; gap: 0.8rem; align-items: center; }
+  .sch-date { font-weight: 700; color: #3A5A8C; font-size: 0.875rem; }
+  .sch-title { color: var(--color-navy); font-weight: 600; }
+  .sch-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
+  [hidden] { display: none !important; } /* a display rule must never beat the hidden attribute */
+  .sch-edit { grid-column: 1 / -1; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .sch-edit input { padding: 0.4rem 0.6rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
+  .sch-msg { grid-column: 1 / -1; margin: 0; font-size: 0.8125rem; color: #2E7D4F; }
+  .sch-msg.is-error { color: #C0392B; }
+
+  .sch-queue { list-style: none; counter-reset: q; padding: 0; margin: 0.6rem 0 0; display: flex; flex-direction: column; gap: 0.35rem; }
+  .sch-q { counter-increment: q; display: flex; justify-content: space-between; gap: 1rem; background: #fff; border: 1px solid var(--color-line); border-radius: 0.4rem; padding: 0.5rem 0.8rem; font-size: 0.875rem; }
+  .sch-q::before { content: counter(q); width: 1.5rem; flex-shrink: 0; font-weight: 700; color: var(--color-orange-dark); }
+  .sch-q-title { flex: 1; color: var(--color-navy); }
+  .sch-q-status { font-weight: 700; font-size: 0.75rem; white-space: nowrap; }
+  .sch-q--live .sch-q-status { color: #2E7D4F; }
+  .sch-q--scheduled .sch-q-status { color: #3A5A8C; }
+  .sch-q--queued { opacity: 0.65; }
+  .sch-q--queued .sch-q-status { color: var(--color-navy-light); }
+
+  @media (max-width: 40rem) {
+    .sch-row { grid-template-columns: 1fr; }
+    .sch-actions { justify-content: flex-start; }
+  }
+</style>
+
+<script>
+  const health = document.getElementById('sch-health');
+  const healthText = document.getElementById('sch-health-text');
+  if (health && healthText) {
+    const hours = (Date.now() - new Date(health.dataset.builtAt!).getTime()) / 36e5;
+    if (hours < 30) {
+      healthText.textContent = `Working. The site was last rebuilt ${hours < 1 ? 'less than an hour' : `about ${Math.round(hours)} hour${Math.round(hours) === 1 ? '' : 's'}`} ago.`;
+      healthText.classList.add('is-ok');
+    } else {
+      healthText.textContent = `The site was last rebuilt about ${Math.round(hours / 24)} day${Math.round(hours / 24) === 1 ? '' : 's'} ago. The daily refresh may not be running. Press the button to rebuild now.`;
+      healthText.classList.add('is-warn');
+    }
+  }
+
+  async function post(url: string, body: unknown) {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  const refreshBtn = document.getElementById('sch-refresh-btn') as HTMLButtonElement | null;
+  const refreshNote = document.getElementById('sch-refresh-note');
+  refreshBtn?.addEventListener('click', async () => {
+    refreshBtn.disabled = true;
+    try {
+      await post('/api/refresh-site', {});
+      if (refreshNote) { refreshNote.textContent = 'Rebuild started. The live site updates in about a minute.'; refreshNote.hidden = false; }
+    } catch (err: any) {
+      if (refreshNote) { refreshNote.textContent = `Could not start a rebuild: ${err.message}`; refreshNote.hidden = false; }
+    } finally { refreshBtn.disabled = false; }
+  });
+
+  const auto = document.getElementById('sch-auto') as HTMLInputElement | null;
+  const autoLabel = document.getElementById('sch-auto-label');
+  const autoNote = document.getElementById('sch-auto-note');
+  const showAuto = () => { if (autoLabel && auto) autoLabel.textContent = auto.checked ? 'On' : 'Off'; };
+  fetch('/api/get-admin-setting?key=auto-publish').then((r) => r.json()).then((d) => { if (auto) { auto.checked = d.value === 'on'; showAuto(); } }).catch(() => {});
+  auto?.addEventListener('change', async () => {
+    showAuto();
+    try {
+      await post('/api/save-admin-setting', { key: 'auto-publish', value: auto.checked ? 'on' : 'off' });
+      if (autoNote) { autoNote.textContent = auto.checked ? 'Saved. Planned articles will now schedule themselves.' : 'Saved. Planned articles will wait for your approval.'; autoNote.hidden = false; }
+    } catch (err: any) {
+      auto.checked = !auto.checked; showAuto();
+      if (autoNote) { autoNote.textContent = `Could not save: ${err.message}`; autoNote.hidden = false; }
+    }
+  });
+
+  document.querySelectorAll<HTMLElement>('#panel-schedule .sch-row').forEach((row) => {
+    const slug = row.dataset.slug!;
+    const edit = row.querySelector<HTMLElement>('.sch-edit')!;
+    const msg = row.querySelector<HTMLElement>('.sch-msg')!;
+    const say = (text: string, error = false) => { msg.textContent = text; msg.classList.toggle('is-error', error); msg.hidden = false; };
+    row.addEventListener('click', async (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-act]');
+      if (!btn) return;
+      const act = btn.dataset.act;
+      if (act === 'change') edit.hidden = false;
+      if (act === 'cancel') edit.hidden = true;
+      if (act === 'save') {
+        const value = edit.querySelector('input')!.value;
+        if (!value) return say('Pick a date first.', true);
+        btn.disabled = true;
+        try {
+          await post('/api/update-article', { slug, updates: { publishedAt: value } });
+          edit.hidden = true;
+          say(`Saved. It will go live on ${value}. This list updates after the next rebuild, about a minute.`);
+        } catch (err: any) { say(`Could not save: ${err.message}`, true); } finally { btn.disabled = false; }
+      }
+      if (act === 'remove') {
+        if (!confirm('Remove this scheduled article completely? This deletes the article file and cannot be undone.')) return;
+        btn.disabled = true;
+        try {
+          await post('/api/update-article', { slug, updates: { delete: true } });
+          row.style.opacity = '0.5';
+          say('Removed. The topic goes back in the queue and will be written again unless you edit the queue.');
+        } catch (err: any) { say(`Could not remove: ${err.message}`, true); btn.disabled = false; }
+      }
+    });
+  });
+</script>

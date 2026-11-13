@@ -208,16 +208,26 @@ const businesses = defineCollection({
  * EVENTS
  */
 const events = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
+  loader: glob({ pattern: '**/*.json', base: './src/content/events' }),
   schema: z.object({
     title: z.string(),
-    startDate: z.date(),
-    endDate: z.date().optional(),
-    neighborhood: reference('neighborhoods').optional(),
-    relatedBusiness: reference('businesses').optional(),
-    category: reference('categories').optional(),
-    source: z.enum(['manual', 'data-engine-import']).default('manual'),
-    heroImage: z.string().optional(),
+    description: z.string(),
+    category: z.enum(['family', 'downtown', 'music', 'sports', 'market']),
+    // Every date the event happens. A one-day event has one entry, a
+    // multi-day event uses endDate on that entry, and a series with an
+    // irregular schedule (like a winter market) lists each date. The site
+    // shows the next date that has not passed yet and hides the event once
+    // all of them have.
+    occurrences: z.array(z.object({
+      date: z.coerce.date(),
+      endDate: z.coerce.date().optional(),
+      time: z.string().optional(), // a complete phrase, e.g. "Open 4 to 8 PM"
+    })).min(1),
+    location: z.string(),
+    photo: z.string().default('/images/scenic/downtown-1.jpg'),
+    sourceName: z.string(),
+    sourceUrl: z.string().url(),
+    note: z.string().optional(), // one short extra sentence, e.g. tickets or "check the page for the start time"
   }),
 });
 

@@ -1,12 +1,13 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import { getLiveArticles, isLive } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
-  const articles = await getCollection('articles');
+  const articles = await getLiveArticles();
   return articles.map((article) => ({
     params: { slug: article.id },
     props: { article },
@@ -24,14 +25,14 @@ const restHtml = firstParaEnd !== -1 ? rawHtml.slice(firstParaEnd + 4) : rawHtml
 const category = await getEntry(article.data.category);
 
 // Resolve explicit relatedArticles references first
-const explicitRelated = await Promise.all(
-  (article.data.relatedArticles ?? []).map((ref) => getEntry(ref))
-);
+const explicitRelated = (
+  await Promise.all((article.data.relatedArticles ?? []).map((ref) => getEntry(ref)))
+).filter((r) => r && isLive(r)); // a scheduled article must never be linked before it exists
 
 // Fill out to 3 with same-category articles if the author didn't set enough explicit links
 let related = [...explicitRelated];
 if (related.length < 3) {
-  const allArticles = await getCollection('articles');
+  const allArticles = await getLiveArticles();
   const sameCategory = allArticles.filter(
     (a) => a.data.category.id === category.id && a.id !== article.id && !related.some((r) => r.id === a.id)
   );

@@ -1,51 +1,126 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, fetchHeroImage } from './_shared/draft-generator.mts';
+import { buildArticleFile, commitNewFile, cleanDraft, validateDraft } from './_shared/article-file.mts';
+import { chicagoToday, planNextSlot } from './_shared/schedule.mts';
 
-// This is a Netlify SCHEDULED function — the cron schedule below controls
-// when it runs automatically. "0 14 * * 1,3" = 2pm UTC every Monday and
-// Wednesday (the rotating pattern requested). Change the cron string to
-// adjust the schedule; no code change needed elsewhere.
+// A Netlify SCHEDULED function. "0 14 * * 1,3" is 2 PM UTC every Monday and
+// Wednesday. Change the cron string to change how often articles are made.
 //
-// This function NEVER auto-publishes. It generates a draft and puts it in
-// the "pending review" queue (Netlify Blobs) — a human still has to open
-// the admin dashboard and hit Approve. That's a deliberate quality gate,
-// not a limitation: "every content must be the best in topic" (your words)
-// isn't compatible with fully unsupervised publishing.
+// Order of work on each run:
+//   1. If there is a topic queue (data/topic-queue.json, served at
+//      /topic-queue.json), take the first topic that has no article yet.
+//      That is how a planned campaign, like the drain cleaning series, gets
+//      written one article per run, in order.
+//   2. Otherwise fall back to the original behavior: pick the category with
+//      the biggest content gap.
+//
+// Auto-publish. When the "auto-publish" admin setting is on, a queued draft
+// that passes the quality check is committed straight to the repo, dated for
+// the next open Tuesday or Thursday, so it goes live on its own. A draft that
+// fails the check, or any draft while auto-publish is off, lands in the
+// pending review queue for a human, exactly as before.
 
 export default async () => {
   const siteUrl = process.env.URL || process.env.DEPLOY_URL;
-  if (!siteUrl) {
-    return new Response('Missing site URL env var', { status: 500 });
+  if (!siteUrl) return new Response('Missing site URL env var', { status: 500 });
+
+  const articleIndexRes = await fetch(`${siteUrl}/article-index.json`);
+  const articleIndex: any[] = articleIndexRes.ok ? await articleIndexRes.json() : [];
+  const allSlugs = new Set(articleIndex.map((a) => a.slug));
+  const liveSlugs = new Set(articleIndex.filter((a) => a.live !== false).map((a) => a.slug));
+  const linkable = articleIndex.filter((a) => a.live !== false);
+
+  const queueRes = await fetch(`${siteUrl}/topic-queue.json`);
+  if (queueRes.ok) {
+    const queue = await queueRes.json();
+    const next = (queue.topics || []).find((t: any) => !allSlugs.has(t.slug));
+    if (next) return await runQueuedTopic(next, queue, articleIndex, linkable, liveSlugs);
+    console.log('Topic queue is complete, falling back to gap-driven generation.');
   }
 
-  // 1. Fetch the current gap report (generated at every build by
-  //    scripts/generate-content-index.mjs, served as a static asset)
+  return await runGapDriven(siteUrl, linkable);
+};
+
+async function runQueuedTopic(next: any, queue: any, articleIndex: any[], linkable: any[], liveSlugs: Set<string>) {
+  const categorySlug = next.category || queue.category;
+  const categoryName = next.categoryName || queue.categoryName || categorySlug;
+  const relatedBusinesses = next.relatedBusinesses || queue.relatedBusinesses || [];
+
+  const direction = [
+    `Write this exact article. Use this exact title: ${next.title}`,
+    next.keywords?.length ? `Work these search phrases in naturally, without stuffing: ${next.keywords.join('; ')}.` : '',
+    next.brief || '',
+    'Never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word "to" for ranges.',
+    'Do not present any price as a Sioux Falls average unless you were given a source for it. If you mention costs, call them typical national ranges and tell the reader to get a written quote.',
+  ].filter(Boolean).join('\n');
+
+  let draft;
+  try {
+    draft = await runDraftGeneration({
+      categoryName,
+      categorySlug,
+      contentType: next.contentType,
+      direction,
+      existingArticles: [
+        ...linkable.filter((a) => a.category === categorySlug),
+        ...linkable.filter((a) => a.category !== categorySlug).slice(0, 15),
+      ],
+    });
+  } catch (err: any) {
+    console.error('Queued draft generation failed:', err?.message || err);
+    return new Response('Generation failed', { status: 500 });
+  }
+
+  draft = cleanDraft(draft);
+  const hero = await fetchHeroImage(`${categoryName} ${next.title}`.slice(0, 80));
+  const withImage = { ...draft, heroImage: hero?.url, heroImageCredit: hero?.credit };
+
+  const autoPublish = (await getStore('admin-settings').get('auto-publish')) === 'on';
+  const problems = validateDraft(withImage, liveSlugs);
+
+  if (autoPublish && problems.length === 0) {
+    const publishDate = planNextSlot(articleIndex.map((a) => a.publishedAt).filter(Boolean), chicagoToday());
+    const file = buildArticleFile({ draft: withImage, categorySlug, contentType: next.contentType, relatedBusinesses, publishDate, slug: next.slug });
+    const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
+    if (res.ok) {
+      console.log(`Auto-scheduled "${draft.title}" for ${publishDate}`);
+      return new Response(`Scheduled "${draft.title}" for ${publishDate}`, { status: 200 });
+    }
+    console.error('Auto-publish commit failed, sending to review instead:', res.status, res.detail);
+  } else if (autoPublish) {
+    console.warn(`Draft for "${next.title}" failed the quality check, sending to review: ${problems.join('; ')}`);
+  }
+
+  const store = getStore('pending-drafts');
+  const id = `${next.slug}-${Date.now()}`;
+  await store.setJSON(id, {
+    id,
+    categorySlug,
+    categoryName,
+    contentType: next.contentType,
+    draft: withImage,
+    slug: next.slug,
+    relatedBusinesses,
+    generatedAt: new Date().toISOString(),
+    status: 'pending-review',
+    reviewNote: problems.length ? `Held for review: ${problems.join('; ')}` : autoPublish ? 'Held for review: commit failed' : 'Auto-publish is off',
+  });
+  console.log(`Queued "${draft.title}" for review as ${id}`);
+  return new Response(`Queued "${draft.title}" for review`, { status: 200 });
+}
+
+async function runGapDriven(siteUrl: string, linkable: any[]) {
   const gapsRes = await fetch(`${siteUrl}/content-gaps.json`);
   if (!gapsRes.ok) return new Response('Could not fetch content-gaps.json', { status: 500 });
   const gaps = await gapsRes.json();
 
-  // Real article index for internal linking and deduplication — same file,
-  // same generation script, as what the admin UI uses directly.
-  const articleIndexRes = await fetch(`${siteUrl}/article-index.json`);
-  const articleIndex = articleIndexRes.ok ? await articleIndexRes.json() : [];
-
   const topGap = gaps.categories.find((c: any) => c.priorityScore > 0);
   if (!topGap) {
-    console.log('No positive-priority content gaps right now — nothing to generate.');
+    console.log('No positive-priority content gaps right now, nothing to generate.');
     return new Response('Nothing to do', { status: 200 });
   }
 
-  // 2. Call the same generation endpoint the admin UI uses, internally.
-  // The content type to generate comes straight from the real gap report
-  // (topGap.missingTypes), not a hardcoded guess — for service categories
-  // this picks the first missing required type; for dual/other categories
-  // it defaults to a general local-resource piece.
-  const contentTypeToGenerate =
-    topGap.categoryType === 'service' && topGap.missingTypes?.length > 0
-      ? topGap.missingTypes[0]
-      : topGap.categoryType === 'dual'
-      ? 'local-resource'
-      : 'local-resource';
+  const contentTypeToGenerate = topGap.categoryType === 'service' && topGap.missingTypes?.length > 0 ? topGap.missingTypes[0] : 'local-resource';
 
   let draft;
   try {
@@ -54,8 +129,8 @@ export default async () => {
       categorySlug: topGap.slug,
       contentType: contentTypeToGenerate,
       existingArticles: [
-        ...articleIndex.filter((a: any) => a.category === topGap.slug),
-        ...articleIndex.filter((a: any) => a.category !== topGap.slug).slice(0, 15),
+        ...linkable.filter((a: any) => a.category === topGap.slug),
+        ...linkable.filter((a: any) => a.category !== topGap.slug).slice(0, 15),
       ],
     });
   } catch (err: any) {
@@ -63,27 +138,22 @@ export default async () => {
     return new Response('Generation failed', { status: 500 });
   }
 
+  draft = cleanDraft(draft);
   const heroImage = await fetchHeroImage(`${topGap.name} ${contentTypeToGenerate.replace(/-/g, ' ')}`.trim());
   const draftWithImage = { ...draft, heroImage: heroImage?.url, heroImageCredit: heroImage?.credit };
 
-  // 3. Store in the pending-review queue — NOT published yet
   const store = getStore('pending-drafts');
   const id = `${topGap.slug}-${Date.now()}`;
   await store.setJSON(id, {
-    id,
-    categorySlug: topGap.slug,
-    categoryName: topGap.name,
-    contentType: contentTypeToGenerate,
-    draft: draftWithImage,
-    generatedAt: new Date().toISOString(),
-    status: 'pending-review',
+    id, categorySlug: topGap.slug, categoryName: topGap.name, contentType: contentTypeToGenerate,
+    draft: draftWithImage, generatedAt: new Date().toISOString(), status: 'pending-review',
   });
 
   console.log(`Generated draft "${draft.title}" for ${topGap.name}, queued for review as ${id}`);
   return new Response(`Generated draft for ${topGap.name}: ${draft.title}`, { status: 200 });
-};
+}
 
 export const config = {
   schedule: '0 14 * * 1,3', // 2pm UTC, Monday and Wednesday
-  background: true, // the actual generation call can take longer than the 10s synchronous limit
+  background: true, // generation can take longer than the 10s synchronous limit
 };
