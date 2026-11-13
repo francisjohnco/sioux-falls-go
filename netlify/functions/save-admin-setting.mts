@@ -1,4 +1,5 @@
 import { getStore } from '@netlify/blobs';
+import { isAdmin } from './_shared/auth.mts';
 
 export default async (req: Request) => {
   if (req.method !== 'POST') {
@@ -6,7 +7,7 @@ export default async (req: Request) => {
   }
 
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) {
+  if (!isAdmin(cookieHeader)) {
     return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
   }
 

@@ -1,8 +1,13 @@
+import { isAdmin } from './_shared/auth.mts';
+
 // TEMPORARY diagnostic endpoint — reveals only whether each GitHub env var
 // is present and its length, never the actual token value. Delete once
 // the issue is resolved.
 
-export default async (req) => {
+export default async (req: Request) => {
+  if (!isAdmin(req.headers.get('cookie') || '')) {
+    return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
+  }
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env;
 
   const info = {

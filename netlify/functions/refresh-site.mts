@@ -1,10 +1,11 @@
 import { triggerRefresh } from './_shared/refresh.mts';
+import { isAdmin } from './_shared/auth.mts';
 
 // The admin's "Refresh site now" button.
 export default async (req: Request) => {
   if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
+  if (!isAdmin(cookieHeader)) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
   try {
     await triggerRefresh('manual');
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { 'Content-Type': 'application/json' } });

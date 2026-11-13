@@ -1,3 +1,4 @@
+import { isAdmin } from './_shared/auth.mts';
 // Env vars required (same as update-business.mts): GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO
 //
 // Lets the admin dashboard edit an already-published article's title, SEO
@@ -63,7 +64,7 @@ export default async (req: Request) => {
   }
 
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) {
+  if (!isAdmin(cookieHeader)) {
     return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
   }
 

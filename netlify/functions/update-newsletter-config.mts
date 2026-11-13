@@ -1,3 +1,4 @@
+import { isAdmin } from './_shared/auth.mts';
 // Lets the admin panel change the newsletter frequency. Writes to
 // data/newsletter-config.json via GitHub's Contents API, same
 // read-sha-then-write pattern as update-business.mts.
@@ -11,7 +12,7 @@ export default async (req: Request) => {
   }
 
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) {
+  if (!isAdmin(cookieHeader)) {
     return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
   }
 

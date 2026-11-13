@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { isNearDuplicate } from './_shared/article-file.mts';
+import { isAdmin } from './_shared/auth.mts';
 
 // One-click cleanup for the review queue. Drafts about the same topic (same
 // planned slug, or same category with a closely matching title) are grouped,
@@ -7,7 +8,7 @@ import { isNearDuplicate } from './_shared/article-file.mts';
 export default async (req: Request) => {
   if (req.method !== 'POST') return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
+  if (!isAdmin(cookieHeader)) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
 
   const store = getStore('pending-drafts');
   const { blobs } = await store.list();

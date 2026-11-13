@@ -8,6 +8,7 @@
 // real 2-3 day processing delay regardless of window size.
 
 import { getStore } from '@netlify/blobs';
+import { isAdmin } from './_shared/auth.mts';
 
 async function getAccessToken(refreshToken: string): Promise<string> {
   const res = await fetch('https://oauth2.googleapis.com/token', {
@@ -27,7 +28,7 @@ async function getAccessToken(refreshToken: string): Promise<string> {
 
 export default async (req: Request) => {
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) {
+  if (!isAdmin(cookieHeader)) {
     return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
   }
 

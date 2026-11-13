@@ -1,11 +1,12 @@
 import { getStore } from '@netlify/blobs';
+import { isAdmin } from './_shared/auth.mts';
 
 // The review list for events the weekly search found. GET returns what is
 // waiting. POST removes one: "accept" after the admin has saved it as a real
 // event, "dismiss" to reject it (remembered, so it is not suggested again).
 export default async (req: Request) => {
   const cookieHeader = req.headers.get('cookie') || '';
-  if (!cookieHeader.includes('sfg_admin_session=')) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
+  if (!isAdmin(cookieHeader)) return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401 });
 
   const pending = getStore('pending-events');
   const json = (obj: unknown, status = 200) => new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json' } });

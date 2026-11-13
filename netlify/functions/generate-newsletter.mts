@@ -3,6 +3,7 @@
 // function on this site.
 
 import { generateAndDraftNewsletter } from './_shared/newsletter-generator.mts';
+import { isAdmin } from './_shared/auth.mts';
 
 const GITHUB_API = 'https://api.github.com';
 
@@ -13,7 +14,7 @@ export default async (req: Request) => {
     }
 
     const cookieHeader = req.headers.get('cookie') || '';
-    if (!cookieHeader.includes('sfg_admin_session=')) {
+    if (!isAdmin(cookieHeader)) {
       return new Response(JSON.stringify({ error: 'Not authenticated' }), { status: 401, headers: { 'Content-Type': 'application/json' } });
     }
 

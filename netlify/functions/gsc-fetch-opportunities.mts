@@ -11,6 +11,7 @@
 // genuine content gap the static file-count analysis can't see.
 
 import { getStore } from '@netlify/blobs';
+import { isAdmin } from './_shared/auth.mts';
 
 async function getAccessToken(refreshToken: string): Promise<string> {
   const res = await fetch('https://oauth2.googleapis.com/token', {
@@ -31,7 +32,7 @@ async function getAccessToken(refreshToken: string): Promise<string> {
 export default async (req: Request) => {
   const cookieHeader = req.headers.get('cookie') || '';
   const internalToken = req.headers.get('x-internal-token');
-  const hasValidCookie = cookieHeader.includes('sfg_admin_session=');
+  const hasValidCookie = isAdmin(cookieHeader);
   const hasValidInternalToken =
     internalToken && process.env.INTERNAL_FUNCTION_TOKEN && internalToken === process.env.INTERNAL_FUNCTION_TOKEN;
   if (!hasValidCookie && !hasValidInternalToken) {
