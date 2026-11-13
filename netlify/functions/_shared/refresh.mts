@@ -20,5 +20,11 @@ export async function triggerRefresh(reason: string): Promise<void> {
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({ message: `Site refresh (${reason})`, content: Buffer.from(content).toString('base64'), sha }),
   });
-  if (!res.ok) throw new Error(`GitHub refresh commit failed: ${res.status} ${await res.text()}`);
+  if (!res.ok) {
+    const detail = await res.text();
+    console.error('refresh: GitHub commit failed', res.status, detail);
+    throw new Error(res.status === 401
+      ? 'GitHub rejected the site\'s key (GITHUB_TOKEN in Netlify). It has most likely expired. Replace it in Netlify.'
+      : `GitHub refused the refresh commit (status ${res.status}).`);
+  }
 }

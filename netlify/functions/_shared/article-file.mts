@@ -112,6 +112,14 @@ export function buildArticleFile(input: BuildInput): { path: string; slug: strin
   return { path: `src/content/articles/${slug}.md`, slug, publishDate, content: `${frontmatter}\n\n${draft.bodyMarkdown}\n` };
 }
 
+// Turns a GitHub API status into something a person can act on.
+export function explainGitHubError(status: number): string {
+  if (status === 401) return 'GitHub rejected the site\'s key (GITHUB_TOKEN in Netlify). It has most likely expired. Create a new token and replace it in Netlify, then try again.';
+  if (status === 403 || status === 404) return 'The site\'s GitHub key (GITHUB_TOKEN in Netlify) is not allowed to write to the repository. A new token with Contents read and write access will fix it.';
+  if (status === 409 || status === 422) return 'An article with this web address already exists, so nothing was overwritten. Change the title and try again.';
+  return `GitHub refused the save (status ${status}). Try again in a minute.`;
+}
+
 export async function commitNewFile(path: string, content: string, message: string): Promise<{ ok: boolean; status: number; detail?: string }> {
   const { GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO } = process.env;
   if (!GITHUB_TOKEN || !GITHUB_OWNER || !GITHUB_REPO) throw new Error('GITHUB_TOKEN / GITHUB_OWNER / GITHUB_REPO not configured');

@@ -62,7 +62,12 @@ export default async (req: Request) => {
 
     const gscData = await gscRes.json();
     if (!gscRes.ok) {
-      return new Response(JSON.stringify({ error: 'Search Console query failed', detail: gscData }), { status: 502 });
+      const googleMessage = gscData?.error?.message || '';
+      console.error('Search Console query failed', gscRes.status, googleMessage);
+      const plain = gscRes.status === 403
+        ? `The Google account you connected does not have access to the Search Console property "${SITE_URL_PROPERTY}". Reconnect with the Google account that owns that property in Search Console, or add your account as a user on it.`
+        : `Search Console said: ${googleMessage || 'unknown error'} (property "${SITE_URL_PROPERTY}")`;
+      return new Response(JSON.stringify({ error: plain, googleStatus: gscRes.status, googleMessage }), { status: 502 });
     }
 
     const totals = gscData.rows?.[0] || { clicks: 0, impressions: 0, ctr: 0, position: 0 };

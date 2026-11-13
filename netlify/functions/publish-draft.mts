@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { buildArticleFile, commitNewFile, cleanDraft } from './_shared/article-file.mts';
+import { buildArticleFile, commitNewFile, cleanDraft, explainGitHubError } from './_shared/article-file.mts';
 import { chicagoToday } from './_shared/schedule.mts';
 
 // Env vars required: GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO
@@ -36,7 +36,8 @@ export default async (req: Request) => {
     );
 
     if (!res.ok) {
-      return new Response(JSON.stringify({ error: 'GitHub commit failed', detail: res.detail }), { status: 502, headers: { 'Content-Type': 'application/json' } });
+      console.error('publish-draft: GitHub commit failed', res.status, res.detail);
+      return new Response(JSON.stringify({ error: explainGitHubError(res.status), githubStatus: res.status }), { status: 502, headers: { 'Content-Type': 'application/json' } });
     }
 
     if (pendingDraftId) await getStore('pending-drafts').delete(pendingDraftId);

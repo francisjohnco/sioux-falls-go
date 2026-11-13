@@ -20,6 +20,7 @@ const statusLabel = { live: 'Live', scheduled: 'Scheduled', queued: 'Waiting' };
     <div class="sch-card" id="sch-health" data-built-at={builtAt}>
       <div class="sch-card-head"><Icon name="clock" size={18} /> <strong>Daily refresh</strong></div>
       <p class="sch-status" id="sch-health-text">Checking...</p>
+      <p class="sch-status" id="sch-github-text">Checking the GitHub connection...</p>
       <button class="sch-btn sch-btn--primary" id="sch-refresh-btn">Refresh site now</button>
       <p class="sch-note" id="sch-refresh-note" hidden></p>
     </div>
@@ -149,6 +150,20 @@ const statusLabel = { live: 'Live', scheduled: 'Scheduled', queued: 'Waiting' };
       healthText.classList.add('is-warn');
     }
   }
+
+  // Scheduled publishing, the daily refresh, and every admin save depend on
+  // the site's GitHub key. Test it live so an expired key is obvious here.
+  const ghText = document.getElementById('sch-github-text');
+  fetch('/api/debug-github-config').then((r) => r.json()).then((d) => {
+    if (!ghText) return;
+    if (d?.liveTest?.ok) {
+      ghText.textContent = 'GitHub connection working. Saves and scheduled publishing can go through.';
+      ghText.classList.add('is-ok');
+    } else {
+      ghText.textContent = `GitHub connection failed (${d?.liveTest?.message || 'no answer'}). Nothing can be saved or published until GITHUB_TOKEN is replaced in Netlify.`;
+      ghText.classList.add('is-warn');
+    }
+  }).catch(() => { if (ghText) ghText.textContent = 'Could not check the GitHub connection from here.'; });
 
   async function post(url: string, body: unknown) {
     const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });

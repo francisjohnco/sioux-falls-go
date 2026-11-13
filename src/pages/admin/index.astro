@@ -1012,11 +1012,14 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       <button class="bottomnav-item" data-tab="content-engine">
         <span><Icon name="edit" size={20} /></span> Content
       </button>
-      <button class="bottomnav-item" data-tab="directory">
-        <span><Icon name="folder" size={20} /></span> Directory
+      <button class="bottomnav-item" data-tab="schedule">
+        <span><Icon name="clock" size={20} /></span> Schedule
       </button>
-      <button class="bottomnav-item" data-tab="giveaways">
-        <span><Icon name="gift" size={20} /></span> Giveaways
+      <button class="bottomnav-item" data-tab="events">
+        <span><Icon name="sparkles" size={20} /></span> Events
+      </button>
+      <button class="bottomnav-item bottomnav-more" id="bottomnav-more" type="button">
+        <span><Icon name="layers" size={20} /></span> More
       </button>
     </nav>
   </div>
@@ -1455,6 +1458,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     sidebarBackdrop?.classList.remove('is-open');
   }
   document.getElementById('admin-hamburger')?.addEventListener('click', openSidebarDrawer);
+  document.getElementById('bottomnav-more')?.addEventListener('click', openSidebarDrawer);
+  adminSidebar?.querySelectorAll('[data-tab]').forEach((el) => el.addEventListener('click', closeSidebarDrawer));
   sidebarBackdrop?.addEventListener('click', closeSidebarDrawer);
 
   // Any element with data-jump-tab (dashboard stat cards, attention items)
@@ -1903,7 +1908,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error + (data.detail ? `: ${data.detail}` : ''));
+      if (!res.ok) throw new Error(data.error || 'Publish failed');
       successEl.textContent = data.scheduled ? `Scheduled for ${data.publishDate}. It is saved now and goes live that morning on its own.` : `Published. Committed to ${data.path}, and the site rebuilds automatically.`;
       successEl.removeAttribute('hidden');
     } catch (err: any) {
