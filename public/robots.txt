@@ -3,5 +3,7 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 Disallow: /api/
+Disallow: /business-login
+Disallow: /my-business
 
 Sitemap: https://siouxfallsgo.com/sitemap-index.xml

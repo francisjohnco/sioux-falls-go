@@ -195,7 +195,7 @@
     "contentType": "cost-guide",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": true
+    "live": false
   },
   {
     "title": "The Sioux Falls Homeowner's Guide to Drain Cleaning",
@@ -206,7 +206,7 @@
     "contentType": "local-resource",
     "cluster": "drain-cleaning",
     "clusterRole": "pillar",
-    "live": true
+    "live": false
   },
   {
     "title": "Electrical Safety and South Dakota Winters: What Every Sioux Falls Homeowner Should Know",
@@ -624,7 +624,7 @@
     "contentType": "comparison",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": true
+    "live": false
   },
   {
     "title": "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro",
@@ -635,7 +635,7 @@
     "contentType": "comparison",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": true
+    "live": false
   },
   {
     "title": "Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions",
@@ -1119,7 +1119,7 @@
     "contentType": "safety-information",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": true
+    "live": false
   },
   {
     "title": "Where to Eat in Downtown Sioux Falls If You're Just Passing Through",

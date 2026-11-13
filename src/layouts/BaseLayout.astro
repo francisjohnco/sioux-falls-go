@@ -41,8 +41,18 @@ const ORG_SCHEMA = {
   areaServed: { '@type': 'City', name: 'Sioux Falls', containedInPlace: { '@type': 'State', name: 'South Dakota' } },
 };
 
+// WebSite schema tells Google the site's name and how its search works,
+// which is what can show a site name and search box in results.
+const WEBSITE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Sioux Falls Go',
+  url: site,
+  potentialAction: { '@type': 'SearchAction', target: `${site}/search?q={search_term_string}`, 'query-input': 'required name=search_term_string' },
+};
+
 const pageSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
-const allSchemas = [ORG_SCHEMA, ...pageSchemas];
+const allSchemas = [ORG_SCHEMA, WEBSITE_SCHEMA, ...pageSchemas];
 ---
 
 <!doctype html>
@@ -52,8 +62,9 @@ const allSchemas = [ORG_SCHEMA, ...pageSchemas];
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} | Sioux Falls Go</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="Sioux Falls Go Guides" href="/rss.xml" />
 
     <meta name="geo.position" content={`${GEO.lat};${GEO.lng}`} />
     <meta name="geo.placename" content={GEO.placename} />
