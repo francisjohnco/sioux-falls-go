@@ -135,14 +135,16 @@ function fingerprint(title: string): Set<string> {
 // True when a new title is about the same thing as one already written or
 // waiting for review. Catches reworded repeats like "How to Find a Good
 // Massage Therapist" vs "Finding Massage Therapy, What to Know".
-export function isNearDuplicate(title: string, others: string[], threshold = 0.5): boolean {
+export function isNearDuplicate(title: string, others: string[], threshold = 0.6): boolean {
   const a = fingerprint(title);
   if (a.size === 0) return false;
   return others.some((o) => {
     const b = fingerprint(o);
     const shared = [...a].filter((w) => b.has(w)).length;
     const union = new Set([...a, ...b]).size;
-    return shared >= 2 && shared / union >= threshold;
+    // Three shared words, not two: two shared words is usually just the topic
+    // name ("massage therapy"), which every article in a category has.
+    return shared >= 3 && shared / union >= threshold;
   });
 }
 
