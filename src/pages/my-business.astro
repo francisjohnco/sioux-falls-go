@@ -1,0 +1,293 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
+
+const days = [['mon', 'Monday'], ['tue', 'Tuesday'], ['wed', 'Wednesday'], ['thu', 'Thursday'], ['fri', 'Friday'], ['sat', 'Saturday'], ['sun', 'Sunday']];
+const styles = [['ticket-stub', 'Ticket stub'], ['torn-corner', 'Torn corner'], ['rubber-stamp', 'Rubber stamp'], ['clip-coupon', 'Clip coupon'], ['price-tag', 'Price tag']];
+const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'], ['bogo', 'Buy one, get one'], ['free-item', 'Free item'], ['bundle', 'Bundle'], ['other', 'Other']];
+---
+<BaseLayout title="My Business | Sioux Falls Go" description="Update your Sioux Falls Go listing." canonicalPath="/my-business" noindex>
+  <SiteHeader slot="header" />
+
+  <main class="mb">
+    <p class="mb-loading" id="mb-loading">Loading your listing...</p>
+
+    <div id="mb-app" hidden>
+      <header class="mb-head">
+        <div>
+          <span class="mb-eyebrow"><Icon name="star" size={13} /> Community Champion</span>
+          <h1 id="mb-name">Your business</h1>
+          <p class="mb-sub">Changes to contact info, hours, photos, and specials show on your listing about a minute after you save.</p>
+        </div>
+        <div class="mb-head-actions">
+          <a class="mb-btn mb-btn--ghost" id="mb-view" href="#" target="_blank" rel="noopener">View my listing</a>
+          <button class="mb-btn mb-btn--ghost" id="mb-signout" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <section class="mb-card">
+        <h2><Icon name="phone" size={18} /> Contact and hours</h2>
+        <div class="mb-grid">
+          <label>Phone <input id="f-phone" type="tel" /></label>
+          <label>Website <input id="f-website" type="url" placeholder="https://" /></label>
+          <label>Hours summary <input id="f-hours" placeholder="Mon to Fri 9am to 5pm" /></label>
+          <label>Usual response time <input id="f-responseTime" placeholder="within 24 hours" /></label>
+        </div>
+        <h3>Hours by day</h3>
+        <div class="mb-days">
+          {days.map(([k, label]) => <label>{label} <input data-day={k} placeholder="9:00 AM - 5:00 PM or Closed" /></label>)}
+        </div>
+        <label class="mb-inline">Coupon style for your specials
+          <select id="f-couponStyle">{styles.map(([v, l]) => <option value={v}>{l}</option>)}</select>
+        </label>
+        <div class="mb-actions"><button class="mb-btn" id="save-contact" type="button">Save contact and hours</button><span class="mb-note" data-for="save-contact"></span></div>
+      </section>
+
+      <section class="mb-card">
+        <h2><Icon name="window" size={18} /> Photos</h2>
+        <div class="mb-hero">
+          <div class="mb-hero-img" id="hero-img"></div>
+          <div>
+            <h3>Main photo</h3>
+            <p class="mb-help">The large photo at the top of your listing. Wide photos look best.</p>
+            <label class="mb-btn mb-btn--ghost mb-file">Replace main photo <input type="file" accept="image/*" data-photo="hero" /></label>
+          </div>
+        </div>
+        <h3>Gallery <span class="mb-count" id="gallery-count"></span></h3>
+        <div class="mb-gallery" id="gallery"></div>
+        <label class="mb-btn mb-btn--ghost mb-file">Add a photo <input type="file" accept="image/*" data-photo="gallery" /></label>
+        <span class="mb-note" data-for="photos"></span>
+      </section>
+
+      <section class="mb-card">
+        <h2><Icon name="gift" size={18} /> Specials</h2>
+        <p class="mb-help">Offers you are running now. They show on your listing and on the Local Deals page.</p>
+        <div id="deals" class="mb-deals"></div>
+        <details class="mb-dealform" id="deal-form-wrap">
+          <summary class="mb-btn mb-btn--ghost">Add a special</summary>
+          <div class="mb-grid">
+            <input type="hidden" id="d-id" />
+            <label>Title <input id="d-title" maxlength="80" placeholder="15% Off Your First Visit" /></label>
+            <label>Type <select id="d-type">{discounts.map(([v, l]) => <option value={v}>{l}</option>)}</select></label>
+            <label class="mb-span">Description <input id="d-desc" maxlength="300" placeholder="One sentence about the offer" /></label>
+            <label>Ends on (optional) <input id="d-exp" type="date" /></label>
+            <label>Fine print (optional) <input id="d-terms" maxlength="200" /></label>
+          </div>
+          <div class="mb-actions"><button class="mb-btn" id="save-deal" type="button">Save special</button><button class="mb-btn mb-btn--ghost" id="cancel-deal" type="button">Cancel</button><span class="mb-note" data-for="save-deal"></span></div>
+        </details>
+      </section>
+
+      <section class="mb-card">
+        <h2><Icon name="book" size={18} /> Your story</h2>
+        <p class="mb-help">Your story was written with you to sound like you. Edits here are reviewed by Sioux Falls Go before they go live, usually within a day or two.</p>
+        <p class="mb-pending" id="story-pending" hidden></p>
+        <label>Short description (shown on cards and when shared) <textarea id="f-excerpt" rows="2" maxlength="400"></textarea></label>
+        <div class="mb-grid">
+          <label>Highlighted quote <input id="f-pullQuote" maxlength="400" /></label>
+          <label>Owner name <input id="f-ownerName" maxlength="200" /></label>
+          <label class="mb-span">Owner quote <input id="f-ownerQuote" maxlength="400" /></label>
+        </div>
+        <label>Full story <textarea id="f-body" rows="12"></textarea></label>
+        <div class="mb-actions"><button class="mb-btn" id="send-story" type="button">Send for review</button><span class="mb-note" data-for="send-story"></span></div>
+      </section>
+    </div>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .mb { max-width: 58rem; margin: 0 auto; padding: 2.2rem 1rem 4rem; }
+  .mb-loading { color: var(--color-navy-light); text-align: center; padding: 4rem 0; }
+  .mb-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
+  .mb-eyebrow { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); background: #FFF1E3; padding: 0.3rem 0.7rem; border-radius: 999px; }
+  .mb h1 { font-family: var(--font-display); font-size: 2rem; color: var(--color-navy); margin: 0.5rem 0 0.3rem; }
+  .mb-sub, .mb-help { color: var(--color-navy-light); margin: 0; line-height: 1.5; font-size: 0.9375rem; }
+  .mb-help { margin-bottom: 0.9rem; }
+  .mb-head-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .mb-card { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.4rem 1.5rem; margin-bottom: 1.2rem; }
+  .mb-card h2 { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.25rem; color: var(--color-navy); margin: 0 0 0.9rem; }
+  .mb-card h3 { font-size: 0.9375rem; color: var(--color-navy); margin: 1.2rem 0 0.6rem; }
+  .mb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .mb-span { grid-column: 1 / -1; }
+  .mb-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 0.6rem; }
+  .mb label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .mb input, .mb select, .mb textarea { font: inherit; font-weight: 400; font-size: 0.9375rem; color: var(--color-navy); padding: 0.6rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; width: 100%; background: #fff; }
+  .mb textarea { resize: vertical; line-height: 1.5; }
+  .mb-inline { margin-top: 1rem; max-width: 18rem; }
+  .mb-actions { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.1rem; }
+  .mb-btn { display: inline-flex; align-items: center; justify-content: center; font: inherit; font-weight: 700; font-size: 0.9rem; padding: 0.65rem 1.1rem; border-radius: 0.55rem; border: 1.5px solid var(--color-orange); background: var(--color-orange); color: #fff; cursor: pointer; text-decoration: none; }
+  .mb-btn:hover { background: var(--color-orange-dark); border-color: var(--color-orange-dark); }
+  .mb-btn--ghost { background: #fff; color: var(--color-navy); border-color: var(--color-line); }
+  .mb-btn--ghost:hover { background: var(--color-surface); border-color: var(--color-line); }
+  .mb-btn[disabled] { opacity: 0.55; cursor: default; }
+  .mb-file { position: relative; overflow: hidden; width: fit-content; flex-direction: row; }
+  .mb-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .mb-note { font-size: 0.875rem; font-weight: 600; color: #2E7D4F; }
+  .mb-note.is-error { color: #A93226; }
+  .mb-hero { display: grid; grid-template-columns: 14rem 1fr; gap: 1.2rem; align-items: center; }
+  .mb-hero-img { aspect-ratio: 16 / 10; border-radius: 0.6rem; background: #EEF1F6 center/cover; }
+  .mb-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.6rem; margin-bottom: 0.8rem; }
+  .mb-thumb { position: relative; aspect-ratio: 1; border-radius: 0.5rem; background: #EEF1F6 center/cover; }
+  .mb-thumb button { position: absolute; top: 0.35rem; right: 0.35rem; font: inherit; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: 0.35rem; border: 0; background: rgba(13,23,48,0.75); color: #fff; cursor: pointer; }
+  .mb-count { font-weight: 500; color: var(--color-navy-light); }
+  .mb-deals { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.9rem; }
+  .mb-deal { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.8rem 1rem; border: 1px solid var(--color-line); border-left: 4px solid var(--color-orange); border-radius: 0.6rem; }
+  .mb-deal strong { color: var(--color-navy); }
+  .mb-deal span { display: block; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .mb-deal div:last-child { display: flex; gap: 0.5rem; }
+  .mb-empty { color: var(--color-navy-light); font-size: 0.9rem; margin: 0 0 0.6rem; }
+  .mb-dealform summary { list-style: none; width: fit-content; }
+  .mb-dealform summary::-webkit-details-marker { display: none; }
+  .mb-dealform[open] summary { margin-bottom: 1rem; }
+  .mb-pending { background: #FFF6E5; border: 1px solid #F3D9A4; color: #8A5A00; border-radius: 0.5rem; padding: 0.7rem 0.9rem; font-size: 0.875rem; font-weight: 600; margin: 0 0 1rem; }
+  #f-excerpt { margin-bottom: 0.8rem; }
+  .mb-card > label { margin-top: 0.8rem; }
+  [hidden] { display: none !important; }
+  @media (max-width: 40rem) { .mb-grid, .mb-hero { grid-template-columns: 1fr; } .mb h1 { font-size: 1.6rem; } }
+</style>
+
+<script>
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
+  let data: any = null;
+
+  function note(key: string, text: string, error = false) {
+    const el = document.querySelector<HTMLElement>(`.mb-note[data-for="${key}"]`);
+    if (!el) return;
+    el.textContent = text;
+    el.classList.toggle('is-error', error);
+  }
+
+  async function api(body?: unknown) {
+    const res = await fetch('/api/biz-portal', body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const json = await res.json().catch(() => ({}));
+    if (res.status === 401) { location.href = '/business-login/'; throw new Error('signed out'); }
+    if (!res.ok) throw new Error(json.error || 'Something went wrong. Try again.');
+    return json;
+  }
+
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+
+  function render() {
+    $('mb-name').textContent = data.name;
+    ($('mb-view') as unknown as HTMLAnchorElement).href = `/businesses/${data.slug}/`;
+    for (const k of ['phone', 'website', 'hours', 'responseTime', 'couponStyle', 'excerpt', 'pullQuote', 'ownerQuote', 'ownerName', 'body']) {
+      const el = document.getElementById(`f-${k}`) as HTMLInputElement | null;
+      if (el) el.value = data[k] || '';
+    }
+    document.querySelectorAll<HTMLInputElement>('[data-day]').forEach((el) => { el.value = data.hoursSchedule?.[el.dataset.day!] || ''; });
+    $('hero-img').style.backgroundImage = data.heroImage ? `url(${data.heroImage})` : '';
+    $('gallery-count').textContent = `${data.gallery.length} of 12`;
+    $('gallery').innerHTML = data.gallery.length
+      ? data.gallery.map((g: string) => `<div class="mb-thumb" style="background-image:url('${esc(g)}')"><button type="button" data-remove="${esc(g)}">Remove</button></div>`).join('')
+      : '<p class="mb-empty">No gallery photos yet.</p>';
+    $('deals').innerHTML = data.deals.length
+      ? data.deals.map((d: any) => `<div class="mb-deal"><div><strong>${esc(d.title)}</strong><span>${esc(d.description)}${d.expiresAt ? ` · ends ${esc(d.expiresAt)}` : ''}</span></div><div><button class="mb-btn mb-btn--ghost" type="button" data-edit-deal="${esc(d.id)}">Edit</button><button class="mb-btn mb-btn--ghost" type="button" data-delete-deal="${esc(d.id)}">Remove</button></div></div>`).join('')
+      : '<p class="mb-empty">No specials running right now.</p>';
+    const pend = $('story-pending');
+    if (data.pendingReview) {
+      pend.textContent = `Your story changes sent on ${new Date(data.pendingReview.submittedAt).toLocaleDateString()} are waiting for review. Sending again replaces them.`;
+      pend.hidden = false;
+      for (const [k, v] of Object.entries(data.pendingReview.changes || {})) {
+        const el = document.getElementById(`f-${k}`) as HTMLInputElement | null;
+        if (el) el.value = v as string;
+      }
+    } else pend.hidden = true;
+  }
+
+  async function load() {
+    data = await api();
+    $('mb-loading').hidden = true;
+    $('mb-app').hidden = false;
+    render();
+  }
+
+  async function withButton(btn: HTMLButtonElement, key: string, fn: () => Promise<string | void>) {
+    btn.disabled = true; note(key, 'Saving...');
+    try { const m = await fn(); note(key, m || 'Saved.'); }
+    catch (err: any) { if (err.message !== 'signed out') note(key, err.message, true); }
+    finally { btn.disabled = false; }
+  }
+
+  $('save-contact').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-contact', async () => {
+    const hoursSchedule: Record<string, string> = {};
+    document.querySelectorAll<HTMLInputElement>('[data-day]').forEach((el) => { hoursSchedule[el.dataset.day!] = el.value; });
+    const r = await api({ action: 'save', phone: $('f-phone').value, website: $('f-website').value, hours: $('f-hours').value, responseTime: $('f-responseTime').value, couponStyle: ($('f-couponStyle') as unknown as HTMLSelectElement).value, hoursSchedule });
+    return r.message;
+  }));
+
+  $('send-story').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'send-story', async () => {
+    const r = await api({ action: 'submit-review', businessName: data.name, body: ($('f-body') as unknown as HTMLTextAreaElement).value, excerpt: ($('f-excerpt') as unknown as HTMLTextAreaElement).value, pullQuote: $('f-pullQuote').value, ownerQuote: $('f-ownerQuote').value, ownerName: $('f-ownerName').value });
+    data = await api(); render();
+    return r.message;
+  }));
+
+  // Photos are resized in the browser before upload, so phone photos stay small and fast.
+  function resize(file: File, max = 1600): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+        c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', 0.85).split(',')[1]);
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = () => reject(new Error('That file could not be read as a photo.'));
+      img.src = URL.createObjectURL(file);
+    });
+  }
+  document.querySelectorAll<HTMLInputElement>('[data-photo]').forEach((input) => {
+    input.addEventListener('change', async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      note('photos', 'Uploading...');
+      try {
+        const r = await api({ action: 'photo', kind: input.dataset.photo, data: await resize(file) });
+        if (input.dataset.photo === 'hero') data.heroImage = r.url; else data.gallery.push(r.url);
+        render();
+        note('photos', 'Uploaded. It shows on your listing in about a minute.');
+      } catch (err: any) { if (err.message !== 'signed out') note('photos', err.message, true); }
+      input.value = '';
+    });
+  });
+
+  document.addEventListener('click', async (e) => {
+    const t = e.target as HTMLElement;
+    const remove = t.closest<HTMLElement>('[data-remove]');
+    if (remove && confirm('Remove this photo from your gallery?')) {
+      try { await api({ action: 'remove-photo', url: remove.dataset.remove }); data.gallery = data.gallery.filter((g: string) => g !== remove.dataset.remove); render(); note('photos', 'Removed.'); }
+      catch (err: any) { note('photos', err.message, true); }
+    }
+    const edit = t.closest<HTMLElement>('[data-edit-deal]');
+    if (edit) {
+      const d = data.deals.find((x: any) => x.id === edit.dataset.editDeal);
+      $('d-id').value = d.id; $('d-title').value = d.title; $('d-desc').value = d.description;
+      ($('d-type') as unknown as HTMLSelectElement).value = d.discountType; $('d-exp').value = d.expiresAt || ''; $('d-terms').value = d.terms || '';
+      ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = true;
+    }
+    const del = t.closest<HTMLElement>('[data-delete-deal]');
+    if (del && confirm('Remove this special from your listing?')) {
+      try { await api({ action: 'delete-deal', id: del.dataset.deleteDeal }); data.deals = data.deals.filter((x: any) => x.id !== del.dataset.deleteDeal); render(); }
+      catch (err: any) { alert(err.message); }
+    }
+  });
+
+  function clearDeal() { for (const id of ['d-id', 'd-title', 'd-desc', 'd-exp', 'd-terms']) $(id).value = ''; ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = false; }
+  $('cancel-deal').addEventListener('click', clearDeal);
+  $('save-deal').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-deal', async () => {
+    await api({ action: 'save-deal', deal: { id: $('d-id').value || undefined, title: $('d-title').value, description: $('d-desc').value, discountType: ($('d-type') as unknown as HTMLSelectElement).value, expiresAt: $('d-exp').value || undefined, terms: $('d-terms').value } });
+    data = await api(); clearDeal(); render();
+    return 'Saved. It shows on your listing in about a minute.';
+  }));
+
+  $('mb-signout').addEventListener('click', async () => {
+    await fetch('/api/biz-auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'logout' }) });
+    location.href = '/business-login/';
+  });
+
+  load().catch((err) => { if (err.message !== 'signed out') $('mb-loading').textContent = err.message; });
+</script>

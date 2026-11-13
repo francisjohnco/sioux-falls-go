@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
+---
+<BaseLayout title="Business Owner Sign In | Sioux Falls Go" description="Sign in to update your Sioux Falls Go listing." canonicalPath="/business-login" noindex>
+  <SiteHeader slot="header" />
+
+  <main class="bl-wrap">
+    <div class="bl-card">
+      <span class="bl-badge"><Icon name="star" size={14} /> Community Champion</span>
+
+      <section id="bl-invite" hidden>
+        <h1>Welcome to your listing</h1>
+        <p class="bl-lede">Choose a password. You will use it with your email to sign in and update your hours, photos, and specials anytime.</p>
+        <form id="bl-invite-form" class="bl-form">
+          <label>New password <input type="password" id="bl-new-pass" autocomplete="new-password" minlength="10" required /></label>
+          <label>Type it again <input type="password" id="bl-new-pass2" autocomplete="new-password" minlength="10" required /></label>
+          <p class="bl-hint">At least 10 characters. A short phrase is easy to remember and hard to guess.</p>
+          <button class="bl-btn" type="submit">Set password and continue</button>
+        </form>
+      </section>
+
+      <section id="bl-login">
+        <h1>Update your listing</h1>
+        <p class="bl-lede">Sign in to change your hours, photos, specials, and contact details.</p>
+        <form id="bl-login-form" class="bl-form">
+          <label>Email <input type="email" id="bl-email" autocomplete="email" required /></label>
+          <label>Password <input type="password" id="bl-pass" autocomplete="current-password" required /></label>
+          <button class="bl-btn" type="submit">Sign in</button>
+        </form>
+        <p class="bl-foot">Forgot your password or need access? <a href="/contact">Contact Sioux Falls Go</a> and we will send you a new sign-in link.</p>
+      </section>
+
+      <p class="bl-msg" id="bl-msg" role="alert" hidden></p>
+    </div>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .bl-wrap { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding: 3rem 1rem; background: linear-gradient(160deg, #F7F9FC 0%, #FFF8F1 100%); }
+  .bl-card { width: 100%; max-width: 27rem; background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 2rem 1.8rem; box-shadow: 0 18px 40px rgba(13,23,48,0.08); }
+  .bl-badge { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-weight: 700; color: var(--color-orange-dark); background: #FFF1E3; padding: 0.3rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; }
+  h1 { font-family: var(--font-display); font-size: 1.7rem; color: var(--color-navy); margin: 0 0 0.4rem; }
+  .bl-lede { color: var(--color-navy-light); margin: 0 0 1.3rem; line-height: 1.5; }
+  .bl-form { display: flex; flex-direction: column; gap: 0.9rem; }
+  .bl-form label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .bl-form input { font: inherit; font-weight: 400; font-size: 1rem; padding: 0.75rem 0.85rem; border: 1px solid var(--color-line); border-radius: 0.55rem; }
+  .bl-form input:focus { outline: 2px solid var(--color-orange); outline-offset: 1px; border-color: transparent; }
+  .bl-hint { font-size: 0.8125rem; color: var(--color-navy-light); margin: -0.3rem 0 0; }
+  .bl-btn { margin-top: 0.3rem; font: inherit; font-weight: 700; font-size: 1rem; padding: 0.85rem; border: 0; border-radius: 0.6rem; background: var(--color-orange); color: #fff; cursor: pointer; }
+  .bl-btn:hover { background: var(--color-orange-dark); }
+  .bl-btn[disabled] { opacity: 0.6; cursor: default; }
+  .bl-foot { font-size: 0.875rem; color: var(--color-navy-light); margin: 1.2rem 0 0; }
+  .bl-foot a { color: var(--color-orange-dark); font-weight: 700; }
+  .bl-msg { margin: 1rem 0 0; padding: 0.7rem 0.9rem; border-radius: 0.5rem; background: #FDECEA; color: #A93226; font-size: 0.9rem; font-weight: 600; }
+  [hidden] { display: none !important; }
+</style>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const invite = params.get('invite');
+  const slug = params.get('b');
+  const msg = document.getElementById('bl-msg')!;
+  const show = (text: string) => { msg.textContent = text; msg.hidden = false; };
+
+  async function call(body: unknown) {
+    const res = await fetch('/api/biz-auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 429) throw new Error('Too many tries. Wait a minute and try again.');
+    if (!res.ok) throw new Error(data.error || 'Something went wrong. Try again.');
+    return data;
+  }
+
+  if (invite && slug) {
+    document.getElementById('bl-invite')!.hidden = false;
+    document.getElementById('bl-login')!.hidden = true;
+  }
+
+  document.getElementById('bl-invite-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const a = (document.getElementById('bl-new-pass') as HTMLInputElement).value;
+    const b = (document.getElementById('bl-new-pass2') as HTMLInputElement).value;
+    if (a !== b) return show('Those two passwords do not match.');
+    const btn = (e.target as HTMLFormElement).querySelector('button')!;
+    btn.disabled = true;
+    try { await call({ action: 'accept', slug, invite, password: a }); location.href = '/my-business/'; }
+    catch (err: any) { show(err.message); btn.disabled = false; }
+  });
+
+  document.getElementById('bl-login-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = (e.target as HTMLFormElement).querySelector('button')!;
+    btn.disabled = true;
+    try {
+      await call({ action: 'login', email: (document.getElementById('bl-email') as HTMLInputElement).value, password: (document.getElementById('bl-pass') as HTMLInputElement).value });
+      location.href = '/my-business/';
+    } catch (err: any) { show(err.message); btn.disabled = false; }
+  });
+</script>
