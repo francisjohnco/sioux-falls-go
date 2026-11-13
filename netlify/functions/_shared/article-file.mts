@@ -35,17 +35,20 @@ export function cleanDraft<T extends Draft>(draft: T): T {
 // Returns a list of problems. An empty list means the draft is safe to
 // publish without a human reading it first. Anything else goes to the
 // manual review queue instead of going live on its own.
-export function validateDraft(draft: Draft, knownLiveSlugs: Set<string>): string[] {
+// knownSlugs: every article that exists or is planned. Linking to a planned
+// article is fine (the link stays plain text until it goes live); linking to
+// a made-up address is not.
+export function validateDraft(draft: Draft, knownSlugs: Set<string>): string[] {
   const problems: string[] = [];
   const words = (draft.bodyMarkdown || '').split(/\s+/).filter(Boolean).length;
   if (!draft.title) problems.push('missing title');
   if (words < 600) problems.push(`body too short (${words} words)`);
   const desc = draft.seoDescription || '';
   if (desc.length < 50 || desc.length > 175) problems.push(`SEO description length ${desc.length}`);
-  if ((draft.embeddedFaqs || []).length < 3) problems.push('fewer than 3 FAQs');
+  if ((draft.embeddedFaqs || []).length < 4) problems.push('fewer than 4 FAQs');
   if (/lorem ipsum|\bTODO\b|\[insert/i.test(draft.bodyMarkdown || '')) problems.push('placeholder text');
   for (const m of (draft.bodyMarkdown || '').matchAll(/\]\(\/guides\/([a-z0-9-]+)\/?\)/g)) {
-    if (!knownLiveSlugs.has(m[1])) problems.push(`link to a guide that is not live: ${m[1]}`);
+    if (!knownSlugs.has(m[1])) problems.push(`link to a guide that does not exist: ${m[1]}`);
   }
   return problems;
 }
@@ -80,10 +83,12 @@ export interface BuildInput {
   sponsoredBy?: string;
   publishDate?: string; // YYYY-MM-DD. Future date means scheduled.
   slug?: string;
+  cluster?: string;
+  clusterRole?: 'pillar' | 'support';
 }
 
 export function buildArticleFile(input: BuildInput): { path: string; slug: string; content: string; publishDate: string } {
-  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy } = input;
+  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy, cluster, clusterRole } = input;
   const slug = input.slug || slugify(draft.title);
   // "Today" is today in Sioux Falls. The UTC date would stamp an evening
   // approval with tomorrow's date and hide it until the next rebuild.
@@ -93,6 +98,8 @@ export function buildArticleFile(input: BuildInput): { path: string; slug: strin
     title: draft.title,
     category: categorySlug,
     contentType,
+    cluster: cluster || undefined,
+    clusterRole: clusterRole || undefined,
     relatedNeighborhoods: [],
     relatedArticles: [],
     relatedBusinesses: relatedBusinesses || [],

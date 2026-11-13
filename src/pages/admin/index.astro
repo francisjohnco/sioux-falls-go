@@ -2381,6 +2381,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                 pendingDraftId: id,
                 slug: draftData.slug,
                 relatedBusinesses: draftData.relatedBusinesses,
+                cluster: draftData.cluster,
+                clusterRole: draftData.clusterRole,
                 publishDate: (document.querySelector(`.pending-date-input[data-id="${id}"]`) as HTMLInputElement | null)?.value || undefined,
               }),
             });

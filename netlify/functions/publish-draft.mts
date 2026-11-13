@@ -23,10 +23,10 @@ export default async (req: Request) => {
   const body = await req.json().catch(() => null);
   if (!body?.draft) return new Response(JSON.stringify({ error: 'Missing draft in request body' }), { status: 400 });
 
-  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy, pendingDraftId, publishDate, slug } = body;
+  const { draft, categorySlug, contentType, author, relatedBusinesses, sponsoredBy, pendingDraftId, publishDate, slug, cluster, clusterRole } = body;
 
   try {
-    const file = buildArticleFile({ draft: cleanDraft(draft), categorySlug, contentType, author, relatedBusinesses, sponsoredBy, publishDate, slug });
+    const file = buildArticleFile({ draft: cleanDraft(draft), categorySlug, contentType, author, relatedBusinesses, sponsoredBy, publishDate, slug, cluster, clusterRole });
     const scheduled = file.publishDate > chicagoToday();
 
     const res = await commitNewFile(

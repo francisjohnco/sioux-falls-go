@@ -57,8 +57,12 @@ Q: <question 2>
 A: <answer, 1-3 sentences>
 Q: <question 3>
 A: <answer, 1-3 sentences>
+Q: <question 4>
+A: <answer, 1-3 sentences>
+Q: <question 5>
+A: <answer, 1-3 sentences>
 
-Use exactly 3 FAQs, each answering something NOT already covered by the category's existing dedicated FAQ article if one is mentioned in context — narrower, more specific questions than a general category FAQ. This format matters: article bodies naturally contain quotes and apostrophes that break JSON parsing, so use these plain delimiters instead, not JSON.`;
+Use exactly 5 FAQs, written the way people actually type questions into Google (the "People also ask" style), each answering something NOT already covered by the category's existing dedicated FAQ article if one is mentioned in context — narrower, more specific questions than a general category FAQ. This format matters: article bodies naturally contain quotes and apostrophes that break JSON parsing, so use these plain delimiters instead, not JSON.`;
 
 export interface GenerateDraftInput {
   categoryName: string;

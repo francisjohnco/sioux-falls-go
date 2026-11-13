@@ -6,7 +6,7 @@
     "605-drain-solutions",
     "jurrens-plumbing"
   ],
-  "note": "Articles are written in this order, one per scheduled run. A topic counts as done as soon as an article with its slug exists, whether it is live or scheduled.",
+  "note": "One main guide (pillar) plus supporting articles, written in this order, one per scheduled run. Each supporting article links to the main guide and to related articles in the cluster. A topic counts as done once an article with its slug exists or a draft for it is waiting for review.",
   "topics": [
     {
       "slug": "drain-cleaning-cost-sioux-falls",
@@ -211,5 +211,10 @@
       ],
       "brief": "What aging drain pipe looks like, what an inspection can show, and how to plan for repairs without panic."
     }
-  ]
+  ],
+  "cluster": "drain-cleaning",
+  "pillar": {
+    "slug": "drain-cleaning-sioux-falls",
+    "title": "The Sioux Falls Homeowner's Guide to Drain Cleaning"
+  }
 }

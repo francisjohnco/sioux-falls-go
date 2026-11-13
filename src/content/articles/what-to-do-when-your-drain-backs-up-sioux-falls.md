@@ -1,22 +1,24 @@
 ---
 title: "What to Do When Your Drain Backs Up in Sioux Falls (Emergency Guide)"
 category: "plumbers"
+cluster: "drain-cleaning"
+clusterRole: "support"
 contentType: "safety-information"
 relatedNeighborhoods: []
 relatedArticles: ["drain-cleaning-cost-sioux-falls", "hydro-jetting-vs-snaking-sioux-falls", "plumbing-south-dakota-winters-sioux-falls-homeowners"]
 relatedBusinesses: ["605-drain-solutions", "jurrens-plumbing"]
-embeddedFaqs: [{"question": "Who is responsible for a sewer backup, me or the city?", "answer": "In most cities the homeowner is responsible for the private line from the house to the city main, and the city maintains the main under the street. Responsibility can vary by situation, so confirm with the City of Sioux Falls if a backup may involve the city line."}, {"question": "Will homeowners insurance cover a sewer backup?", "answer": "Often not by default. Sewer and drain backup coverage is typically a separate endorsement. Check your policy before a backup happens, and ask your agent exactly what it covers."}, {"question": "Can I keep using my bathroom if only one drain is slow?", "answer": "A single slow drain can usually be used lightly while you wait for an appointment. Stop using all water if more than one fixture is affected or if water starts coming up anywhere."}]
+embeddedFaqs: [{"question": "Who is responsible for a sewer backup, me or the city?", "answer": "In most cities the homeowner is responsible for the private line from the house to the city main, and the city maintains the main under the street. Responsibility can vary by situation, so confirm with the City of Sioux Falls if a backup may involve the city line."}, {"question": "Will homeowners insurance cover a sewer backup?", "answer": "Often not by default. Sewer and drain backup coverage is typically a separate endorsement. Check your policy before a backup happens, and ask your agent exactly what it covers."}, {"question": "Can I keep using my bathroom if only one drain is slow?", "answer": "A single slow drain can usually be used lightly while you wait for an appointment. Stop using all water if more than one fixture is affected or if water starts coming up anywhere."}, {"question": "Is sewage backup water dangerous?", "answer": "It can carry bacteria, so keep children and pets away, wear gloves and boots if you must go near it, and wash well afterward. Clean hard surfaces with a disinfectant once the line is clear."}, {"question": "Should I call a plumber or a restoration company first?", "answer": "Call a drain or plumbing company first to stop the backup. If water reached finished space, a water damage restoration company can handle drying and cleanup afterward."}]
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true
-publishedAt: 2026-12-01
-updatedAt: 2026-12-01
+publishedAt: 2026-12-03
+updatedAt: 2026-12-03
 seo:
   title: "Drain Backing Up in Sioux Falls? What to Do Now"
   description: "A calm first-hour checklist for a backed-up drain in Sioux Falls, how to tell an emergency from a slow sink, and what to ask when you call."
 ---
 
-A drain backing up is stressful, and the first few minutes matter. The right moves can limit the mess, protect your family, and make the repair faster and cheaper. Here is what to do right now, how to tell whether it is a true emergency, and what to ask when you call a company in Sioux Falls.
+A drain backing up is stressful, and the first few minutes matter. The right moves can limit the mess, protect your family, and make the repair faster and cheaper. Here is what to do right now, how to tell whether it is a true emergency, and what to ask when you call a company in Sioux Falls. Once things are under control, our [complete guide to drain cleaning in Sioux Falls](/guides/drain-cleaning-sioux-falls) explains causes, fixes, and costs.
 
 ## First Steps When a Drain Backs Up
 
