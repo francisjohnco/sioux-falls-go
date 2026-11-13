@@ -7,40 +7,40 @@ interface EventItem {
   title: string;
   description: string;
   location: string;
-  category: 'Market' | 'Music' | 'Sports';
+  category: 'Market' | 'Family' | 'Sports';
   photo: string;
   sourceName: string;
   sourceUrl: string;
 }
 
-// Three real, sourced events — fewer than before, on purpose. This is a
+// Three real, sourced events (checked against current listings on Nov 12, 2026) — fewer than before, on purpose. This is a
 // preview, not the full list (that's what /events is for), so it should
 // read like a hand-picked spotlight, not a dense feed. See
 // docs/content-strategy.md for the refresh cadence note.
 const featured: EventItem = {
-  month: 'Sep', day: '5', title: 'Falls Park Farmers Market',
-  description: 'Fresh flowers, vegetables, meat, and baked goods from local growers — every Saturday through October.',
-  location: 'Falls Park', category: 'Market', photo: '/images/scenic/falls-park-golden.jpg',
-  sourceName: 'Falls Park Farmers Market', sourceUrl: 'https://www.fallsparkfarmersmarket.com/',
+  month: 'Nov', day: '13', title: 'Sioux Empire Arts & Crafts Show',
+  description: 'Art, crafts, and holiday gifts from regional makers at the Lyon Fairgrounds, November 13 and 14.',
+  location: 'W.H. Lyon Fairgrounds', category: 'Market', photo: '/images/scenic/downtown-1.jpg',
+  sourceName: 'Vendors Map', sourceUrl: 'https://vendorsmap.com/cities/sioux-falls',
 };
 
 const supporting: EventItem[] = [
   {
-    month: 'Sep', day: '3', title: 'Making Movies at Levitt at the Falls',
-    description: 'Free outdoor concert from the Latin GRAMMY-nominated group, closing out the summer series.',
-    location: 'Falls Park', category: 'Music', photo: '/images/scenic/levitt-concert-center.jpg',
-    sourceName: 'Sioux Falls Events', sourceUrl: 'https://siouxfallsevents.com/',
+    month: 'Nov', day: '21', title: 'Holiday Village Market',
+    description: 'More than 65 local artisans fill the Mosaic District streets, November 21 and 22 and again December 12 and 13.',
+    location: 'Mosaic District', category: 'Market', photo: '/images/scenic/falls-park-editorial.jpg',
+    sourceName: 'Mosaic District', sourceUrl: 'https://mosaicdistrict.com/event/holiday-village-market/2026-11-22/',
   },
   {
-    month: 'Sep', day: '25', title: 'CINCH Playoffs Rodeo',
-    description: '$1.5 million on the line, plus a free pre-show and free concerts, September 25–27.',
-    location: 'Denny Sanford PREMIER Center', category: 'Sports', photo: '/images/scenic/falls-park-1.jpg',
-    sourceName: 'Experience Sioux Falls', sourceUrl: 'https://www.experiencesiouxfalls.com/events',
+    month: 'Dec', day: '4', title: 'Disney On Ice: Find Your Hero',
+    description: 'Disney On Ice skates into the PREMIER Center, December 4 through 6.',
+    location: 'Denny Sanford PREMIER Center', category: 'Family', photo: '/images/scenic/downtown-2.jpg',
+    sourceName: 'StayHappening', sourceUrl: 'https://stayhappening.com/sioux+falls',
   },
 ];
 
-const categoryIcon: Record<string, string> = { Market: 'gift', Music: 'mic', Sports: 'activity' };
-const categoryColor: Record<string, string> = { Market: '#F5B429', Music: '#B98CE0', Sports: '#5FCB8C' };
+const categoryIcon: Record<string, string> = { Market: 'gift', Family: 'heart', Sports: 'activity' };
+const categoryColor: Record<string, string> = { Market: '#F5B429', Family: '#F5A267', Sports: '#5FCB8C' };
 ---
 <section class="happening-section">
   <div class="container">
@@ -48,7 +48,7 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Music: '#B98C
       <div>
         <span class="eyebrow eyebrow--light">Community Calendar</span>
         <h2>What's Happening in Sioux Falls</h2>
-        <p>A hand-picked look at what's coming up — see everything on the full calendar.</p>
+        <p>A hand-picked look at what's coming up. See everything on the full calendar.</p>
       </div>
       <a href="/events" class="happening-full-link">Full calendar →</a>
     </div>
@@ -150,7 +150,7 @@ const categoryColor: Record<string, string> = { Market: '#F5B429', Music: '#B98C
   }
   .support-cat {
     position: absolute; top: 0.9rem; right: 0.9rem; display: inline-flex; align-items: center; gap: 0.3rem;
-    font-size: 0.6875rem; font-weight: 700; background: rgba(13,23,48,0.55); padding: 0.25rem 0.6rem; border-radius: 999px; z-index: 1;
+    font-size: 0.6875rem; font-weight: 700; background: rgba(13,23,48,0.78); padding: 0.25rem 0.6rem; border-radius: 999px; z-index: 1;
   }
   .support-body { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; gap: 0.8rem; align-items: flex-end; padding: 1rem 1.1rem; }
   .support-date { text-align: center; flex-shrink: 0; }
