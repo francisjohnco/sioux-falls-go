@@ -98,7 +98,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   <SiteFooter slot="footer" />
 </BaseLayout>
 
-<style>
+<style is:global>
   .mb { max-width: 58rem; margin: 0 auto; padding: 2.2rem 1rem 4rem; }
   .mb-loading { color: var(--color-navy-light); text-align: center; padding: 4rem 0; }
   .mb-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem; }
@@ -146,7 +146,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   #f-excerpt { margin-bottom: 0.8rem; }
   .mb-card > label { margin-top: 0.8rem; }
   [hidden] { display: none !important; }
-  @media (max-width: 40rem) { .mb-grid, .mb-hero { grid-template-columns: 1fr; } .mb h1 { font-size: 1.6rem; } }
+  @media (max-width: 40rem) { .mb-grid, .mb-hero { grid-template-columns: 1fr; } .mb-deal { flex-direction: column; align-items: flex-start; } .mb h1 { font-size: 1.6rem; } }
 </style>
 
 <script>

@@ -2,6 +2,7 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
 import { isLive, publishDay } from '../../lib/articles';
@@ -284,6 +285,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
         <h2 class="section-heading">Needs Your Attention</h2>
         <ul class="activity-list">
+          <li id="attention-owner-changes" hidden>
+            <span class="activity-dot activity-dot--new"></span>
+            <strong>Owner story changes</strong> waiting for your approval
+            <button class="attention-link attention-link--btn" data-jump-tab="directory">Review in Directory →</button>
+          </li>
           {missingPlaceId.length > 0 && (
             <li>
               <span class="activity-dot activity-dot--new"></span>
@@ -720,6 +726,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
         </div>
         <p class="save-note">Changes here commit directly to your live site's content and go live on the next deploy (usually under a minute).</p>
+
+        <OwnerAccess champions={businesses.filter((b) => b.data.partnershipTier === 'community-champion').map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name))} />
 
         <div class="gsc-widget" id="reviews-sync-widget">
           <div class="gsc-widget-header">

@@ -1,0 +1,144 @@
+---
+// Directory tab block: owner change requests to approve, and sign-in links
+// for Community Champion owners.
+interface Props { champions: { slug: string; name: string }[] }
+const { champions } = Astro.props;
+---
+<div class="oa" id="owner-access">
+  <div class="oa-head">
+    <h3>Business owner access</h3>
+    <p>Community Champions can sign in to update their own hours, photos, contact details, and specials. Story changes wait here for your approval.</p>
+  </div>
+
+  <div class="oa-requests" id="oa-requests" hidden>
+    <h4>Story changes waiting for you</h4>
+    <div id="oa-request-list"></div>
+  </div>
+
+  <div class="oa-invite">
+    <h4>Create a sign-in link</h4>
+    <div class="oa-row">
+      <select id="oa-biz">
+        <option value="">Choose a Champion</option>
+        {champions.map((c) => <option value={c.slug}>{c.name}</option>)}
+      </select>
+      <input id="oa-email" type="email" placeholder="Owner's email" />
+      <button class="button" id="oa-create" type="button">Create link</button>
+    </div>
+    <p class="oa-hint">The link works for 7 days. Send it to the owner yourself by text or email. Making a new link for the same business also works as a password reset.</p>
+    <div class="oa-link" id="oa-link" hidden>
+      <input id="oa-link-input" readonly />
+      <button class="button button--ghost" id="oa-copy" type="button">Copy</button>
+    </div>
+    <p class="oa-msg" id="oa-msg" hidden></p>
+  </div>
+
+  <h4>Owners with access</h4>
+  <div id="oa-accounts"><p class="oa-empty">Loading...</p></div>
+</div>
+
+<style is:global>
+  .oa { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+  .oa h3 { margin: 0 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); }
+  .oa h4 { margin: 1.2rem 0 0.6rem; font-size: 0.9375rem; color: var(--color-navy); }
+  .oa-head p, .oa-hint, .oa-empty { margin: 0; color: var(--color-navy-light); font-size: 0.875rem; line-height: 1.5; }
+  .oa-hint { margin-top: 0.5rem; }
+  .oa-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .oa select, .oa input { font: inherit; font-size: 0.9rem; padding: 0.55rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; min-width: 0; }
+  .oa-row select { flex: 1 1 13rem; } .oa-row input { flex: 1 1 15rem; }
+  .oa-link { display: flex; gap: 0.6rem; margin-top: 0.7rem; }
+  .oa-link input { flex: 1; background: #F5F7FA; }
+  .oa-msg { margin: 0.6rem 0 0; font-size: 0.875rem; font-weight: 600; color: #A93226; }
+  .oa-msg.is-ok { color: #2E7D4F; }
+  .oa-requests { background: #FFF8EC; border: 1px solid #F3D9A4; border-radius: 0.7rem; padding: 0.2rem 1rem 1rem; margin-top: 1rem; }
+  .oa-req { border-top: 1px solid #F0E2C4; padding-top: 0.8rem; margin-top: 0.8rem; }
+  .oa-req:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+  .oa-req-top { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .oa-req-top div { display: flex; gap: 0.5rem; }
+  .oa-req details { margin-top: 0.5rem; font-size: 0.875rem; }
+  .oa-req dt { font-weight: 700; color: var(--color-navy); margin-top: 0.5rem; }
+  .oa-req dd { margin: 0.2rem 0 0; white-space: pre-wrap; color: var(--color-navy-light); max-height: 14rem; overflow: auto; }
+  .oa-acc { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; padding: 0.6rem 0; border-top: 1px solid var(--color-line); font-size: 0.875rem; flex-wrap: wrap; }
+  .oa-acc span { color: var(--color-navy-light); }
+  .oa-badge { font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 999px; margin-left: 0.4rem; }
+  .oa-badge--active { background: #E6F4EC; color: #2E7D4F; } .oa-badge--invited { background: #FFF1E3; color: #B05A00; } .oa-badge--expired { background: #F1F1F1; color: #666; }
+  [hidden] { display: none !important; }
+</style>
+
+<script>
+  const names: Record<string, string> = {};
+  document.querySelectorAll<HTMLOptionElement>('#oa-biz option').forEach((o) => { if (o.value) names[o.value] = o.textContent || o.value; });
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  const LABELS: Record<string, string> = { body: 'Full story', excerpt: 'Short description', pullQuote: 'Highlighted quote', ownerQuote: 'Owner quote', ownerName: 'Owner name' };
+
+  async function call(url: string, body?: unknown) {
+    const res = await fetch(url, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+    return data;
+  }
+
+  async function loadAccounts() {
+    const box = document.getElementById('oa-accounts')!;
+    try {
+      const { accounts } = await call('/api/biz-account');
+      box.innerHTML = accounts.length ? accounts.map((a: any) => `
+        <div class="oa-acc"><div><strong>${esc(names[a.slug] || a.slug)}</strong><span class="oa-badge oa-badge--${a.status}">${a.status === 'active' ? 'Signed up' : a.status === 'invited' ? 'Link sent' : 'Link expired'}</span><br><span>${esc(a.email || '')}${a.lastLoginAt ? ` · last signed in ${new Date(a.lastLoginAt).toLocaleDateString()}` : ''}</span></div>
+        <button class="button button--ghost" type="button" data-oa-revoke="${esc(a.slug)}">Turn off</button></div>`).join('')
+        : '<p class="oa-empty">No owners have access yet.</p>';
+    } catch (err: any) { box.innerHTML = `<p class="oa-empty">${esc(err.message)}</p>`; }
+  }
+
+  async function loadRequests() {
+    try {
+      const { requests } = await call('/api/biz-changes');
+      const wrap = document.getElementById('oa-requests')!;
+      wrap.hidden = !requests.length;
+      document.getElementById('oa-request-list')!.innerHTML = requests.map((r: any) => `
+        <div class="oa-req"><div class="oa-req-top"><strong>${esc(r.businessName || r.slug)}</strong><span>${new Date(r.submittedAt).toLocaleDateString()}</span>
+        <div><button class="button" type="button" data-oa-approve="${esc(r.slug)}">Approve</button><button class="button button--ghost" type="button" data-oa-reject="${esc(r.slug)}">Reject</button></div></div>
+        <details><summary>See what they wrote</summary><dl>${Object.entries(r.changes).map(([k, v]) => `<dt>${LABELS[k] || k}</dt><dd>${esc(v as string)}</dd>`).join('')}</dl></details></div>`).join('');
+      const att = document.getElementById('attention-owner-changes');
+      if (att) { att.hidden = !requests.length; const n = att.querySelector('strong'); if (n) n.textContent = `${requests.length} owner story change${requests.length === 1 ? '' : 's'}`; }
+    } catch {}
+  }
+
+  const msg = (t: string, ok = false) => { const m = document.getElementById('oa-msg')!; m.textContent = t; m.hidden = false; m.classList.toggle('is-ok', ok); };
+
+  document.getElementById('oa-create')!.addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const slug = (document.getElementById('oa-biz') as HTMLSelectElement).value;
+    const email = (document.getElementById('oa-email') as HTMLInputElement).value.trim();
+    if (!slug) return msg('Choose a business first.');
+    btn.disabled = true;
+    try {
+      const r = await call('/api/biz-account', { action: 'invite', slug, email });
+      (document.getElementById('oa-link-input') as HTMLInputElement).value = r.link;
+      document.getElementById('oa-link')!.hidden = false;
+      msg(`Link ready for ${names[slug]}. Copy it and send it to ${email}.`, true);
+      loadAccounts();
+    } catch (err: any) { msg(err.message); }
+    btn.disabled = false;
+  });
+
+  document.getElementById('oa-copy')!.addEventListener('click', async () => {
+    const input = document.getElementById('oa-link-input') as HTMLInputElement;
+    try { await navigator.clipboard.writeText(input.value); } catch { input.select(); document.execCommand('copy'); }
+    msg('Copied.', true);
+  });
+
+  document.getElementById('owner-access')!.addEventListener('click', async (e) => {
+    const t = e.target as HTMLElement;
+    const revoke = t.closest<HTMLElement>('[data-oa-revoke]')?.dataset.oaRevoke;
+    const approve = t.closest<HTMLElement>('[data-oa-approve]')?.dataset.oaApprove;
+    const reject = t.closest<HTMLElement>('[data-oa-reject]')?.dataset.oaReject;
+    try {
+      if (revoke && confirm(`Turn off sign-in for ${names[revoke] || revoke}? They can be given a new link later.`)) { await call('/api/biz-account', { action: 'revoke', slug: revoke }); loadAccounts(); }
+      if (approve) { (t as HTMLButtonElement).disabled = true; await call('/api/biz-changes', { action: 'approve', slug: approve }); loadRequests(); msg('Approved. The profile updates in about a minute.', true); }
+      if (reject && confirm('Reject these changes? The owner keeps their current story.')) { await call('/api/biz-changes', { action: 'reject', slug: reject }); loadRequests(); }
+    } catch (err: any) { msg(err.message); (t as HTMLButtonElement).disabled = false; }
+  });
+
+  loadAccounts();
+  loadRequests();
+</script>
