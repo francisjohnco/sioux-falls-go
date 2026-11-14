@@ -1,0 +1,94 @@
+---
+// Black Friday deals businesses sent from /local-deals/black-friday/.
+// Approve (after any edits) to publish, or reject.
+interface Props { businesses: { slug: string; name: string }[]; liveCount: number }
+const { businesses, liveCount } = Astro.props;
+---
+<div class="ds" id="deal-submissions">
+  <div class="ds-head">
+    <div>
+      <h3>Black Friday deals from businesses</h3>
+      <p>Businesses send these from the <a href="/local-deals/black-friday/" target="_blank">Black Friday page</a>. Fix anything you want, match it to the right listing, then approve. {liveCount} Black Friday deal{liveCount === 1 ? ' is' : 's are'} on the page now.</p>
+    </div>
+  </div>
+  <div id="ds-list"><p class="ds-empty">Loading...</p></div>
+  <datalist id="ds-biz">{businesses.map((b) => <option value={b.slug}>{b.name}</option>)}</datalist>
+</div>
+
+<style is:global>
+  .ds { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+  .ds h3 { margin: 0 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); }
+  .ds-head p, .ds-empty { margin: 0; color: var(--color-navy-light); font-size: 0.875rem; line-height: 1.5; }
+  .ds-head a { color: var(--color-orange-dark); font-weight: 700; }
+  #ds-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  .ds-item { border: 1px solid var(--color-line); border-left: 4px solid #0E1424; border-radius: 0.6rem; padding: 0.9rem 1rem; }
+  .ds-meta { font-size: 0.8rem; color: var(--color-navy-light); margin: 0 0 0.7rem; }
+  .ds-meta strong { color: var(--color-navy); font-size: 0.95rem; }
+  .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .ds-grid label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.75rem; font-weight: 700; color: var(--color-navy); }
+  .ds-grid .ds-span { grid-column: 1 / -1; }
+  .ds-grid input, .ds-grid textarea { font: inherit; font-weight: 400; font-size: 0.875rem; padding: 0.5rem 0.6rem; border: 1px solid var(--color-line); border-radius: 0.45rem; }
+  .ds-actions { display: flex; gap: 0.6rem; align-items: center; margin-top: 0.8rem; flex-wrap: wrap; }
+  .ds-note { font-size: 0.85rem; font-weight: 600; color: #A93226; }
+  .ds-note.is-ok { color: #2E7D4F; }
+  .ds-warn { font-size: 0.78rem; color: #B45309; font-weight: 700; }
+  @media (max-width: 40rem) { .ds-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  const known = new Set([...document.querySelectorAll<HTMLOptionElement>('#ds-biz option')].map((o) => o.value));
+
+  async function call(body?: unknown) {
+    const res = await fetch('/api/deal-submissions', body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+    return data;
+  }
+
+  async function load() {
+    const list = document.getElementById('ds-list')!;
+    try {
+      const { submissions } = await call();
+      const att = document.getElementById('attention-bf-deals');
+      if (att) { att.hidden = !submissions.length; const n = att.querySelector('strong'); if (n) n.textContent = `${submissions.length} Black Friday deal${submissions.length === 1 ? '' : 's'}`; }
+      list.innerHTML = submissions.length ? submissions.map((s: any) => `
+        <div class="ds-item" data-id="${esc(s.id)}">
+          <p class="ds-meta"><strong>${esc(s.businessName)}</strong> · from ${esc(s.contactName)}, <a href="mailto:${esc(s.email)}">${esc(s.email)}</a>${s.phone ? `, ${esc(s.phone)}` : ''} · sent ${new Date(s.submittedAt).toLocaleDateString()}</p>
+          <div class="ds-grid">
+            <label>Listing <input data-k="businessSlug" list="ds-biz" value="${esc(s.businessSlug)}" placeholder="Start typing the business" />
+              ${s.businessSlug && known.has(s.businessSlug) ? '' : '<span class="ds-warn">Not matched to a listing yet. Pick one, or add the business in Directory first.</span>'}</label>
+            <label>Deal title <input data-k="title" value="${esc(s.title)}" maxlength="80" /></label>
+            <label class="ds-span">Description <textarea data-k="description" rows="2" maxlength="300">${esc(s.description)}</textarea></label>
+            <label>Starts <input data-k="startsAt" type="date" value="${esc(s.startsAt)}" /></label>
+            <label>Ends <input data-k="endsAt" type="date" value="${esc(s.endsAt)}" /></label>
+            <label class="ds-span">Fine print <input data-k="terms" value="${esc(s.terms)}" maxlength="200" /></label>
+          </div>
+          <div class="ds-actions">
+            <button class="button" type="button" data-ds="approve">Approve and publish</button>
+            <button class="button button--ghost" type="button" data-ds="reject">Reject</button>
+            <span class="ds-note"></span>
+          </div>
+        </div>`).join('') : '<p class="ds-empty">No Black Friday deals waiting right now.</p>';
+    } catch (err: any) { list.innerHTML = `<p class="ds-empty">${esc(err.message)}</p>`; }
+  }
+
+  document.getElementById('deal-submissions')!.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-ds]');
+    if (!btn) return;
+    const item = btn.closest<HTMLElement>('.ds-item')!;
+    const note = item.querySelector<HTMLElement>('.ds-note')!;
+    const action = btn.dataset.ds;
+    if (action === 'reject' && !confirm('Reject this deal? It will not be published.')) return;
+    const edits: Record<string, string> = {};
+    item.querySelectorAll<HTMLInputElement>('[data-k]').forEach((el) => { edits[el.dataset.k!] = el.value.trim(); });
+    btn.disabled = true; note.textContent = 'Working...'; note.classList.remove('is-ok');
+    try {
+      const r = await call({ action, id: item.dataset.id, ...edits });
+      note.textContent = r.message || 'Done.'; note.classList.add('is-ok');
+      setTimeout(load, 1200);
+    } catch (err: any) { note.textContent = err.message; btn.disabled = false; }
+  });
+
+  load();
+</script>

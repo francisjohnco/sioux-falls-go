@@ -16,7 +16,7 @@ import { getStore } from '@netlify/blobs';
 // genuinely change daily.
 
 const KEY = '45c2b02b06ee673f761f5b3d274bec61'; // public by design; the matching file is /45c2b02b06ee673f761f5b3d274bec61.txt
-const ALWAYS = ['/', '/events/', '/guides/', '/local-deals/', '/mailer-deals/'];
+const ALWAYS = ['/', '/events/', '/guides/', '/local-deals/', '/local-deals/black-friday/', '/mailer-deals/'];
 
 export function pickUrls(entries: { loc: string; lastmod: string }[], sent: Record<string, string>, site: string): string[] {
   const out: string[] = [];

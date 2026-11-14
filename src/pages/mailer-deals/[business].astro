@@ -1,4 +1,5 @@
 ---
+import { todayCentral as todayCentral } from '../../lib/dates';
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
 
 const { deal, business } = Astro.props;
 const now = new Date();
-const isExpired = deal.data.expiresAt ? deal.data.expiresAt.getTime() < now.getTime() : false;
+const isExpired = deal.data.expiresAt ? deal.data.expiresAt.toISOString().slice(0, 10) < todayCentral() : false;
 const isScheduled = deal.data.activatesAt ? deal.data.activatesAt.getTime() > now.getTime() : false;
 const expiryLabel = deal.data.expiresAt
   ? deal.data.expiresAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })

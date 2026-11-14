@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import HeroPhotos from '../../components/admin/HeroPhotos.astro';
 import { articleHero } from '../../lib/hero';
+import DealSubmissions from '../../components/admin/DealSubmissions.astro';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
@@ -75,7 +76,7 @@ const mailerDealsWithBusiness = await Promise.all(
   mailerDealsAll.map(async (d) => ({
     deal: d,
     business: await getEntry(d.data.business),
-    isExpired: d.data.expiresAt ? d.data.expiresAt.getTime() < nowForDeals.getTime() : false,
+    isExpired: d.data.expiresAt ? d.data.expiresAt.toISOString().slice(0, 10) < todayCentral() : false,
     isScheduled: d.data.activatesAt ? d.data.activatesAt.getTime() > nowForDeals.getTime() : false,
   }))
 );
@@ -91,6 +92,7 @@ const allArticles = await getCollection('articles');
 // have no page yet. The admin sees them; the public site does not.
 const scheduledArticles = allArticles.filter((a) => !isLive(a)).sort((a, b) => publishDay(a).localeCompare(publishDay(b)));
 const liveArticleCount = allArticles.length - scheduledArticles.length;
+const blackFridayLiveCount = (await getCollection('deals')).filter((d) => d.data.promotion === 'black-friday').length;
 const heroItems = allArticles.map((a) => {
   const h = articleHero(a);
   const state = h.isFallback ? 'fallback' : a.data.heroImageLocked ? 'locked' : a.data.heroImageAlt ? 'chosen' : 'review';
@@ -292,6 +294,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
         <h2 class="section-heading">Needs Your Attention</h2>
         <ul class="activity-list">
+          <li id="attention-bf-deals" hidden>
+            <span class="activity-dot activity-dot--new"></span>
+            <strong>Black Friday deals</strong> from businesses waiting for your approval
+            <button class="attention-link attention-link--btn" data-jump-tab="mailer-deals">Review →</button>
+          </li>
           <li id="attention-owner-changes" hidden>
             <span class="activity-dot activity-dot--new"></span>
             <strong>Owner story changes</strong> waiting for your approval
@@ -600,6 +607,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
           <button class="button" id="open-create-deal-btn"><Icon name="mail" size={16} /> New Mailer Deal</button>
         </div>
+
+        <DealSubmissions
+          businesses={businesses.map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name))}
+          liveCount={blackFridayLiveCount}
+        />
 
         <div class="sponsor-stats">
           <div class="sponsor-stat">

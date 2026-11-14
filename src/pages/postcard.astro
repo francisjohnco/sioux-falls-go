@@ -1,4 +1,5 @@
 ---
+import { todayCentral as todayCentral } from '../lib/dates';
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -22,7 +23,7 @@ const CAPACITY = { large: 1, medium: 2, small: 5 } as const;
 const now = new Date();
 const allDealsForSpots = await getCollection('deals');
 const activeMailerDeals = allDealsForSpots.filter(
-  (d) => d.data.mailerCampaign && d.data.spotSize && (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+  (d) => d.data.mailerCampaign && d.data.spotSize && (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= todayCentral())
 );
 
 // Which mailing this page is currently selling — the most recently

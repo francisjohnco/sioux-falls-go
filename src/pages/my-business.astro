@@ -72,8 +72,10 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
             <label>Title <input id="d-title" maxlength="80" placeholder="15% Off Your First Visit" /></label>
             <label>Type <select id="d-type">{discounts.map(([v, l]) => <option value={v}>{l}</option>)}</select></label>
             <label class="mb-span">Description <input id="d-desc" maxlength="300" placeholder="One sentence about the offer" /></label>
+            <label>Starts on (optional) <input id="d-start" type="date" /></label>
             <label>Ends on (optional) <input id="d-exp" type="date" /></label>
             <label>Fine print (optional) <input id="d-terms" maxlength="200" /></label>
+            <label class="mb-span mb-check"><input id="d-bf" type="checkbox" /> <span>This is a Black Friday weekend deal (shows on the <a href="/local-deals/black-friday/" target="_blank">Black Friday deals page</a>)</span></label>
           </div>
           <div class="mb-actions"><button class="mb-btn" id="save-deal" type="button">Save special</button><button class="mb-btn mb-btn--ghost" id="cancel-deal" type="button">Cancel</button><span class="mb-note" data-for="save-deal"></span></div>
         </details>
@@ -142,6 +144,10 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   .mb-dealform summary { list-style: none; width: fit-content; }
   .mb-dealform summary::-webkit-details-marker { display: none; }
   .mb-dealform[open] summary { margin-bottom: 1rem; }
+  .mb-check { flex-direction: row !important; align-items: center; gap: 0.5rem !important; font-weight: 600 !important; }
+  .mb-check input { width: auto; }
+  .mb-check a { color: var(--color-orange-dark); }
+  .mb-bf { font-style: normal; font-size: 0.7rem; font-weight: 700; background: #111; color: #FFD23F; padding: 0.1rem 0.45rem; border-radius: 999px; margin-left: 0.3rem; vertical-align: middle; }
   .mb-pending { background: #FFF6E5; border: 1px solid #F3D9A4; color: #8A5A00; border-radius: 0.5rem; padding: 0.7rem 0.9rem; font-size: 0.875rem; font-weight: 600; margin: 0 0 1rem; }
   #f-excerpt { margin-bottom: 0.8rem; }
   .mb-card > label { margin-top: 0.8rem; }
@@ -184,7 +190,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
       ? data.gallery.map((g: string) => `<div class="mb-thumb" style="background-image:url('${esc(g)}')"><button type="button" data-remove="${esc(g)}">Remove</button></div>`).join('')
       : '<p class="mb-empty">No gallery photos yet.</p>';
     $('deals').innerHTML = data.deals.length
-      ? data.deals.map((d: any) => `<div class="mb-deal"><div><strong>${esc(d.title)}</strong><span>${esc(d.description)}${d.expiresAt ? ` · ends ${esc(d.expiresAt)}` : ''}</span></div><div><button class="mb-btn mb-btn--ghost" type="button" data-edit-deal="${esc(d.id)}">Edit</button><button class="mb-btn mb-btn--ghost" type="button" data-delete-deal="${esc(d.id)}">Remove</button></div></div>`).join('')
+      ? data.deals.map((d: any) => `<div class="mb-deal"><div><strong>${esc(d.title)}</strong>${d.promotion === 'black-friday' ? ' <em class="mb-bf">Black Friday</em>' : ''}<span>${esc(d.description)}${d.expiresAt ? ` · ends ${esc(d.expiresAt)}` : ''}</span></div><div><button class="mb-btn mb-btn--ghost" type="button" data-edit-deal="${esc(d.id)}">Edit</button><button class="mb-btn mb-btn--ghost" type="button" data-delete-deal="${esc(d.id)}">Remove</button></div></div>`).join('')
       : '<p class="mb-empty">No specials running right now.</p>';
     const pend = $('story-pending');
     if (data.pendingReview) {
@@ -266,7 +272,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     if (edit) {
       const d = data.deals.find((x: any) => x.id === edit.dataset.editDeal);
       $('d-id').value = d.id; $('d-title').value = d.title; $('d-desc').value = d.description;
-      ($('d-type') as unknown as HTMLSelectElement).value = d.discountType; $('d-exp').value = d.expiresAt || ''; $('d-terms').value = d.terms || '';
+      ($('d-type') as unknown as HTMLSelectElement).value = d.discountType; $('d-exp').value = d.expiresAt || ''; $('d-start').value = d.activatesAt || ''; $('d-terms').value = d.terms || ''; ($('d-bf') as HTMLInputElement).checked = d.promotion === 'black-friday';
       ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = true;
     }
     const del = t.closest<HTMLElement>('[data-delete-deal]');
@@ -276,10 +282,10 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     }
   });
 
-  function clearDeal() { for (const id of ['d-id', 'd-title', 'd-desc', 'd-exp', 'd-terms']) $(id).value = ''; ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = false; }
+  function clearDeal() { for (const id of ['d-id', 'd-title', 'd-desc', 'd-exp', 'd-start', 'd-terms']) $(id).value = ''; ($('d-bf') as HTMLInputElement).checked = false; ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = false; }
   $('cancel-deal').addEventListener('click', clearDeal);
   $('save-deal').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-deal', async () => {
-    await api({ action: 'save-deal', deal: { id: $('d-id').value || undefined, title: $('d-title').value, description: $('d-desc').value, discountType: ($('d-type') as unknown as HTMLSelectElement).value, expiresAt: $('d-exp').value || undefined, terms: $('d-terms').value } });
+    await api({ action: 'save-deal', deal: { id: $('d-id').value || undefined, title: $('d-title').value, description: $('d-desc').value, discountType: ($('d-type') as unknown as HTMLSelectElement).value, expiresAt: $('d-exp').value || undefined, activatesAt: $('d-start').value || undefined, promotion: ($('d-bf') as HTMLInputElement).checked ? 'black-friday' : undefined, terms: $('d-terms').value } });
     data = await api(); clearDeal(); render();
     return 'Saved. It shows on your listing in about a minute.';
   }));

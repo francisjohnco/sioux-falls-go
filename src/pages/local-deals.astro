@@ -6,6 +6,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 import LayeredHero from '../components/LayeredHero.astro';
 import Icon from '../components/Icon.astro';
 import DealCard from '../components/DealCard.astro';
+import { todayCentral } from '../lib/dates';
+import { currentBlackFriday, shortDate, isoDay } from '../lib/black-friday';
+
+const bfToday = todayCentral();
+const bfSeason = currentBlackFriday(bfToday);
+const showBlackFriday = bfToday >= `${bfSeason.year}-11-01` && bfToday <= isoDay(bfSeason.cyberMonday);
 
 const allDeals = await getCollection('deals');
 
@@ -22,8 +28,9 @@ const now = new Date();
 // page is worse than no deal at all.
 const activeDeals = allDeals.filter(
   (d) =>
-    (!d.data.activatesAt || d.data.activatesAt.getTime() <= now.getTime()) &&
-    (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+    // Compare calendar days in Sioux Falls time, so a deal ending Nov 30 shows all day Nov 30.
+    (!d.data.activatesAt || d.data.activatesAt.toISOString().slice(0, 10) <= bfToday) &&
+    (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= bfToday)
 );
 
 const dealsWithContext = await Promise.all(
@@ -99,6 +106,13 @@ function discountIcon(type: string) {
   </LayeredHero>
 
   <div class="container">
+    {showBlackFriday && (
+      <a href="/local-deals/black-friday/" class="bf-banner">
+        <span class="bf-banner-tag">Black Friday {bfSeason.year}</span>
+        <span class="bf-banner-text"><strong>Black Friday deals from Sioux Falls businesses</strong> {shortDate(bfSeason.blackFriday)} through Cyber Monday, {shortDate(bfSeason.cyberMonday)}</span>
+        <span class="bf-banner-go">See the deals →</span>
+      </a>
+    )}
     <a href="/mailer-deals" class="mailer-banner">
       <Icon name="mail" size={18} />
       <span>Got a Spotlight postcard in the mail? See every mailer-exclusive deal →</span>
@@ -235,6 +249,13 @@ function discountIcon(type: string) {
 </script>
 
 <style>
+  .bf-banner { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: var(--space-3); padding: 1rem 1.3rem; border-radius: var(--radius); text-decoration: none; color: #fff;
+    background: radial-gradient(600px 200px at 100% 0%, rgba(240,126,35,0.45), transparent 70%), #0E1424; }
+  .bf-banner-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; background: var(--color-gold); color: #0E1424; padding: 0.25rem 0.6rem; border-radius: 0.3rem; }
+  .bf-banner-text { flex: 1 1 18rem; font-size: 0.95rem; color: rgba(255,255,255,0.85); }
+  .bf-banner-text strong { color: #fff; display: block; font-size: 1.05rem; }
+  .bf-banner-go { font-weight: 800; color: var(--color-orange); white-space: nowrap; }
+  .bf-banner:hover .bf-banner-go { text-decoration: underline; }
   .mailer-banner {
     display: flex; align-items: center; gap: 0.6rem; justify-content: center;
     background: #FFF3E0; color: var(--color-orange-dark); font-weight: 700; font-size: 0.9375rem;

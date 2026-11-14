@@ -5,6 +5,12 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Icon from '../components/Icon.astro';
 import EventsSection from '../components/EventsSection.astro';
+import { todayCentral } from '../lib/dates';
+import { currentBlackFriday, shortDate, isoDay } from '../lib/black-friday';
+
+const bfToday = todayCentral();
+const bfSeason = currentBlackFriday(bfToday);
+const showBlackFriday = bfToday >= `${bfSeason.year}-11-01` && bfToday <= isoDay(bfSeason.cyberMonday);
 
 const businesses = await getCollection('businesses');
 // Only real, verified listings belong on the homepage spotlight — this is
@@ -71,6 +77,14 @@ const schema = {
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
   </section>
+
+  {showBlackFriday && (
+    <a class="home-bf" href="/local-deals/black-friday/">
+      <span class="home-bf-tag">Black Friday {bfSeason.year}</span>
+      <span>Local Black Friday deals, {shortDate(bfSeason.blackFriday)} through {shortDate(bfSeason.cyberMonday)}</span>
+      <strong>See the deals →</strong>
+    </a>
+  )}
 
   <section class="about" id="about">
     <div class="container">
@@ -373,6 +387,10 @@ const schema = {
   .join-form input:focus { outline: 2px solid var(--color-orange); outline-offset: 1px; }
   .join-fine { font-size: 0.75rem !important; color: var(--color-navy-light); opacity: 0.75; margin-top: 0.9rem !important; margin-bottom: 0 !important; }
   .honeypot-field { position: absolute; left: -9999px; }
+  .home-bf { display: flex; align-items: center; justify-content: center; gap: 0.9rem; flex-wrap: wrap; padding: 0.85rem 1rem; background: #0E1424; color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.95rem; text-align: center; }
+  .home-bf-tag { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; background: var(--color-gold); color: #0E1424; padding: 0.22rem 0.55rem; border-radius: 0.3rem; }
+  .home-bf strong { color: var(--color-orange); }
+  .home-bf:hover strong { text-decoration: underline; }
 </style>
 
 <script>

@@ -1,0 +1,339 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+import DealCard from '../../components/DealCard.astro';
+import { todayCentral } from '../../lib/dates';
+import { currentBlackFriday, longDate, shortDate, isoDay } from '../../lib/black-friday';
+
+// Every Black Friday weekend deal from listings in one place. Deals carry
+// promotion: "black-friday" (set when a Champion ticks the box in their
+// dashboard, or when you approve a deal a business sent from this page).
+// The page is evergreen: same URL every year, dates worked out per year.
+
+const today = todayCentral();
+const bf = currentBlackFriday(today);
+const site = 'https://siouxfallsgo.com';
+const pagePath = '/local-deals/black-friday/';
+
+const allDeals = await getCollection('deals');
+const day = (d?: Date) => (d ? d.toISOString().slice(0, 10) : '');
+const notExpired = (d: any) => !d.data.expiresAt || day(d.data.expiresAt) >= today;
+
+async function withContext(list: any[]) {
+  const out = [];
+  for (const deal of list) {
+    const business = await getEntry(deal.data.business);
+    if (!business) continue;
+    const category = await getEntry(business.data.category);
+    out.push({ deal, business, category });
+  }
+  return out;
+}
+
+const bfDeals = (await withContext(allDeals.filter((d) => d.data.promotion === 'black-friday' && notExpired(d))))
+  .sort((a, b) => {
+    const la = !a.deal.data.activatesAt || day(a.deal.data.activatesAt) <= today;
+    const lb = !b.deal.data.activatesAt || day(b.deal.data.activatesAt) <= today;
+    if (la !== lb) return la ? -1 : 1;
+    return b.deal.data.valueScore - a.deal.data.valueScore;
+  });
+
+// When Black Friday deals are still coming in, the page still has something useful.
+const runningNow = bfDeals.length < 3
+  ? (await withContext(allDeals.filter((d) => d.data.promotion !== 'black-friday' && !d.data.mailerCampaign && notExpired(d) && (!d.data.activatesAt || day(d.data.activatesAt) <= today)))).slice(0, 6)
+  : [];
+
+const categories = [...new Map(bfDeals.filter((d) => d.category).map((d) => [d.category!.id, d.category!.data.name])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+const businesses = (await getCollection('businesses')).map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name));
+
+const startsLabel = (d: any) => {
+  const s = d.deal.data.activatesAt;
+  return s && day(s) > today ? `Starts ${s.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' })}` : null;
+};
+
+const faqs = [
+  { q: `When is Black Friday ${bf.year}?`, a: `Black Friday ${bf.year} is ${longDate(bf.blackFriday)}, the day after Thanksgiving (${longDate(bf.thanksgiving)}). Small Business Saturday follows on ${longDate(bf.smallBusinessSaturday)}, and Cyber Monday is ${longDate(bf.cyberMonday)}.` },
+  { q: 'Where can I find Black Friday deals from local Sioux Falls businesses?', a: 'Right here. This page collects the Black Friday weekend offers that Sioux Falls businesses listed on Sioux Falls Go send us, so you can see local deals in one place instead of checking every store separately. New deals are added as businesses submit them.' },
+  { q: 'Are these deals real and current?', a: 'Every deal on this page comes from the business itself and is reviewed before it is posted. Expired deals come off the page automatically. Hours, quantities, and fine print can still change, so check with the business before you go.' },
+  { q: `What is Small Business Saturday in Sioux Falls?`, a: `Small Business Saturday is the Saturday after Thanksgiving (${longDate(bf.smallBusinessSaturday)} this year), a day set aside to shop at independent, locally owned stores. Many of the businesses on this page are locally owned, so it is a good place to plan that day.` },
+  { q: 'How do I add my business’s Black Friday deal?', a: 'Use the form on this page. Tell us the deal, when it starts and ends, and how to reach you. We review it and post it, usually within a day. Community Champion members can add it themselves from their business dashboard and it goes live right away.' },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'CollectionPage',
+    name: `Black Friday Deals in Sioux Falls ${bf.year}`,
+    url: site + pagePath,
+    about: { '@type': 'Place', name: 'Sioux Falls, South Dakota' },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: bfDeals.map((d, i) => ({
+        '@type': 'ListItem', position: i + 1,
+        item: {
+          '@type': 'Offer', name: d.deal.data.title, description: d.deal.data.description,
+          url: `${site}/businesses/${d.business.id}`,
+          ...(d.deal.data.activatesAt ? { validFrom: day(d.deal.data.activatesAt) } : {}),
+          ...(d.deal.data.expiresAt ? { validThrough: day(d.deal.data.expiresAt) } : {}),
+          seller: { '@type': 'LocalBusiness', name: d.business.data.name, ...(d.business.data.address ? { address: d.business.data.address } : {}), url: `${site}/businesses/${d.business.id}` },
+        },
+      })),
+    },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site },
+      { '@type': 'ListItem', position: 2, name: 'Local Deals', item: `${site}/local-deals` },
+      { '@type': 'ListItem', position: 3, name: 'Black Friday', item: site + pagePath },
+    ],
+  },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<BaseLayout
+  title={`Black Friday Deals in Sioux Falls ${bf.year}`}
+  description={`Black Friday ${bf.year} deals from local Sioux Falls businesses, from Black Friday (${shortDate(bf.blackFriday)}) through Small Business Saturday and Cyber Monday. Updated as new deals come in.`}
+  canonicalPath={pagePath}
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="bf-hero">
+    <div class="container bf-hero-inner">
+      <nav class="bf-crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/local-deals">Local Deals</a> / <span>Black Friday</span></nav>
+      <span class="bf-kicker">Sioux Falls · {bf.year}</span>
+      <h1>Black Friday Deals <span>in Sioux Falls</span></h1>
+      <p class="bf-lede">Local deals from Sioux Falls businesses for Black Friday weekend, all in one place. Skip the guesswork, shop the people who live here.</p>
+      <div class="bf-dates">
+        <div><span>Black Friday</span><strong>{shortDate(bf.blackFriday)}</strong></div>
+        <div><span>Small Business Saturday</span><strong>{shortDate(bf.smallBusinessSaturday)}</strong></div>
+        <div><span>Cyber Monday</span><strong>{shortDate(bf.cyberMonday)}</strong></div>
+      </div>
+      <p class="bf-countdown" id="bf-countdown" data-bf={isoDay(bf.blackFriday)} data-cm={isoDay(bf.cyberMonday)}></p>
+      <div class="bf-ctas">
+        <a class="bf-btn" href="#deals">See the deals</a>
+        <a class="bf-btn bf-btn--ghost" href="#add-deal">Add your business’s deal</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container bf-main">
+    <section id="deals" class="bf-section">
+      <div class="bf-head">
+        <h2>{bfDeals.length ? `${bfDeals.length} Black Friday deal${bfDeals.length === 1 ? '' : 's'} from local businesses` : 'Black Friday deals are coming in'}</h2>
+        {categories.length > 1 && (
+          <div class="bf-filters" role="group" aria-label="Filter by category">
+            <button type="button" class="bf-chip is-on" data-filter="all">All</button>
+            {categories.map(([id, name]) => <button type="button" class="bf-chip" data-filter={id}>{name}</button>)}
+          </div>
+        )}
+      </div>
+
+      {bfDeals.length > 0 ? (
+        <div class="bf-grid">
+          {bfDeals.map((d) => (
+            <div class="bf-cell" data-cat={d.category?.id || ''}>
+              {startsLabel(d) && <span class="bf-starts">{startsLabel(d)}</span>}
+              <DealCard
+                style={d.business.data.couponStyle}
+                businessName={d.business.data.name}
+                businessSlug={d.business.id}
+                categoryName={d.category?.data.name}
+                heroImage={d.business.data.heroImage}
+                title={d.deal.data.title}
+                description={d.deal.data.description}
+                expiresAt={d.deal.data.expiresAt}
+              />
+              {d.deal.data.terms && <p class="bf-terms">{d.deal.data.terms}</p>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="bf-empty">
+          <Icon name="gift" size={34} />
+          <p>Local businesses are sending their Black Friday offers now. Check back as {longDate(bf.blackFriday)} gets closer, every deal shows up here the day it is approved.</p>
+          <a class="bf-btn" href="#add-deal">Own a business? Add your deal</a>
+        </div>
+      )}
+    </section>
+
+    {runningNow.length > 0 && (
+      <section class="bf-section">
+        <h2 class="bf-h2-small">Local deals you can use right now</h2>
+        <div class="bf-grid">
+          {runningNow.map((d) => (
+            <DealCard
+              style={d.business.data.couponStyle}
+              businessName={d.business.data.name}
+              businessSlug={d.business.id}
+              categoryName={d.category?.data.name}
+              heroImage={d.business.data.heroImage}
+              title={d.deal.data.title}
+              description={d.deal.data.description}
+              expiresAt={d.deal.data.expiresAt}
+            />
+          ))}
+        </div>
+        <p class="bf-more"><a href="/local-deals">See every local deal →</a></p>
+      </section>
+    )}
+
+    <section class="bf-section bf-local">
+      <h2>Make it a Sioux Falls weekend</h2>
+      <p>Black Friday weekend is the one time of year when nearly every local shop runs something special. Start with the <a href="/local-deals">local deals</a> running all season, plan Small Business Saturday around the independent stores in our <a href="/shopping-retail">shopping and retail directory</a>, and if you want ideas for where to go, our guide to <a href="/guides/best-shopping-in-sioux-falls">the best shopping in Sioux Falls</a> and <a href="/guides/shopping-by-neighborhood-sioux-falls">shopping by neighborhood</a> cover downtown, the Mall District, and beyond. Every dollar spent with a local business stays closer to home, which is the whole idea behind <a href="/guides/how-to-shop-local-and-make-every-dollar-count">shopping local and making every dollar count</a>.</p>
+    </section>
+
+    <section id="add-deal" class="bf-section bf-add">
+      <div class="bf-add-intro">
+        <span class="bf-kicker bf-kicker--dark">For local businesses</span>
+        <h2>Add your Black Friday deal</h2>
+        <p>Free for any Sioux Falls business. Tell us your offer and when it runs, we review it and post it here, usually within a day.</p>
+        <p class="bf-champ"><Icon name="star" size={14} /> Community Champion? <a href="/business-login/">Sign in to your dashboard</a>, add a special, and tick “Black Friday weekend deal.” It goes live right away.</p>
+      </div>
+
+      <form class="bf-form" id="bf-form" novalidate>
+        <div class="bf-grid2">
+          <label class="bf-span">Business name
+            <input name="businessName" list="bf-biz" autocomplete="organization" required />
+            <datalist id="bf-biz">{businesses.map((b) => <option value={b.name} data-slug={b.slug} />)}</datalist>
+          </label>
+          <label>Your name <input name="contactName" autocomplete="name" required /></label>
+          <label>Email <input name="email" type="email" autocomplete="email" required /></label>
+          <label>Phone (optional) <input name="phone" type="tel" autocomplete="tel" /></label>
+          <label>Type of deal
+            <select name="discountType">
+              <option value="percent-off">Percent off</option><option value="dollar-off">Dollar off</option>
+              <option value="bogo">Buy one, get one</option><option value="free-item">Free item or gift</option>
+              <option value="bundle">Bundle</option><option value="other">Other</option>
+            </select>
+          </label>
+          <label class="bf-span">Deal title <input name="title" maxlength="80" placeholder="25% Off Everything in the Store" required /></label>
+          <label class="bf-span">Describe the deal <textarea name="description" rows="3" maxlength="300" placeholder="What customers get, and anything they need to do to get it." required></textarea></label>
+          <label>Starts <input name="startsAt" type="date" value={isoDay(bf.blackFriday)} /></label>
+          <label>Ends <input name="endsAt" type="date" value={isoDay(bf.cyberMonday)} /></label>
+          <label class="bf-span">Fine print (optional) <input name="terms" maxlength="200" placeholder="While supplies last, in store only" /></label>
+          <label class="bf-hp" aria-hidden="true">Website <input name="website_url" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <button class="bf-btn bf-submit" type="submit">Send my deal</button>
+        <p class="bf-msg" id="bf-msg" role="status" hidden></p>
+      </form>
+    </section>
+
+    <section class="bf-section bf-faq">
+      <h2>Black Friday in Sioux Falls, common questions</h2>
+      {faqs.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </section>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .bf-hero { background: radial-gradient(1200px 500px at 85% -10%, rgba(240,126,35,0.35), transparent 60%), radial-gradient(900px 400px at 0% 110%, rgba(245,180,41,0.18), transparent 60%), #0E1424; color: #fff; padding: 2.4rem 0 3.2rem; }
+  .bf-hero-inner { max-width: 60rem; }
+  .bf-crumbs { font-size: 0.8125rem; color: rgba(255,255,255,0.65); margin-bottom: 1.4rem; }
+  .bf-crumbs a { color: rgba(255,255,255,0.8); }
+  .bf-kicker { display: inline-block; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #0E1424; background: var(--color-gold); padding: 0.3rem 0.7rem; border-radius: 0.3rem; }
+  .bf-kicker--dark { background: #0E1424; color: var(--color-gold); }
+  .bf-hero h1 { color: #fff; font-family: var(--font-display); font-size: clamp(2.3rem, 6vw, 4.2rem); line-height: 1.02; margin: 0.9rem 0 0.8rem; letter-spacing: -0.02em; }
+  .bf-hero h1 span { display: block; color: var(--color-orange); }
+  .bf-lede { font-size: 1.125rem; line-height: 1.55; color: rgba(255,255,255,0.82); max-width: 38rem; margin: 0 0 1.6rem; }
+  .bf-dates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; max-width: 40rem; }
+  .bf-dates div { border: 1px solid rgba(255,255,255,0.16); border-radius: 0.7rem; padding: 0.75rem 0.9rem; background: rgba(255,255,255,0.04); }
+  .bf-dates span { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.6); }
+  .bf-dates strong { font-family: var(--font-display); font-size: 1.35rem; }
+  .bf-countdown { font-weight: 700; color: var(--color-gold); margin: 1.1rem 0 0; min-height: 1.4em; }
+  .bf-ctas { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1.3rem; }
+  .bf-btn { display: inline-flex; align-items: center; justify-content: center; font: inherit; font-weight: 800; padding: 0.85rem 1.3rem; border-radius: 0.6rem; background: var(--color-orange); color: #fff; text-decoration: none; border: 2px solid var(--color-orange); cursor: pointer; }
+  .bf-btn:hover { background: #d96a12; border-color: #d96a12; }
+  .bf-btn--ghost { background: transparent; border-color: rgba(255,255,255,0.4); }
+  .bf-btn--ghost:hover { background: rgba(255,255,255,0.08); border-color: #fff; }
+  .bf-main { padding-block: 2.6rem 4rem; }
+  .bf-section { margin-bottom: 3rem; }
+  .bf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .bf-section h2 { font-family: var(--font-display); color: var(--color-navy); font-size: 1.7rem; margin: 0; }
+  .bf-h2-small { font-size: 1.3rem !important; margin-bottom: 1rem !important; }
+  .bf-filters { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .bf-chip { font: inherit; font-size: 0.8125rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 999px; border: 1px solid var(--color-line); background: #fff; color: var(--color-navy); cursor: pointer; }
+  .bf-chip.is-on { background: #0E1424; color: #fff; border-color: #0E1424; }
+  .bf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr)); gap: 1.2rem; }
+  .bf-cell { position: relative; }
+  .bf-cell[hidden] { display: none; }
+  .bf-starts { position: absolute; top: -0.6rem; right: 0.8rem; z-index: 2; font-size: 0.72rem; font-weight: 800; background: var(--color-gold); color: #0E1424; padding: 0.2rem 0.55rem; border-radius: 999px; }
+  .bf-terms { font-size: 0.78rem; color: var(--color-navy-light); margin: 0.45rem 0.2rem 0; }
+  .bf-empty { display: flex; flex-direction: column; align-items: flex-start; gap: 0.9rem; background: #FFF8EF; border: 1px dashed #F3C08F; border-radius: 0.9rem; padding: 1.6rem; color: var(--color-navy); }
+  .bf-empty p { margin: 0; max-width: 40rem; line-height: 1.55; }
+  .bf-more { margin-top: 1rem; font-weight: 700; }
+  .bf-more a, .bf-local a, .bf-champ a { color: var(--color-orange-dark); }
+  .bf-local p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-navy); max-width: 46rem; margin: 0.8rem 0 0; }
+  .bf-add { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem; background: #F6F8FB; border-radius: 1rem; padding: 2rem; }
+  .bf-add-intro p { color: var(--color-navy-light); line-height: 1.55; }
+  .bf-add-intro h2 { margin-top: 0.8rem !important; }
+  .bf-champ { display: block; background: #fff; border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 0.8rem 0.9rem; font-size: 0.9rem; }
+  .bf-form { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.4rem; }
+  .bf-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .bf-span { grid-column: 1 / -1; }
+  .bf-form label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .bf-form input, .bf-form select, .bf-form textarea { font: inherit; font-weight: 400; font-size: 0.95rem; padding: 0.65rem 0.75rem; border: 1px solid var(--color-line); border-radius: 0.5rem; background: #fff; color: var(--color-navy); width: 100%; }
+  .bf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .bf-submit { margin-top: 1.1rem; width: 100%; }
+  .bf-submit[disabled] { opacity: 0.6; }
+  .bf-msg { margin: 0.9rem 0 0; font-weight: 700; font-size: 0.9rem; color: #A93226; }
+  .bf-msg.is-ok { color: #2E7D4F; }
+  .bf-faq details { border-bottom: 1px solid var(--color-line); padding: 0.95rem 0; }
+  .bf-faq summary { cursor: pointer; font-weight: 700; color: var(--color-navy); font-size: 1.0625rem; }
+  .bf-faq details p { margin: 0.6rem 0 0; color: var(--color-navy-light); line-height: 1.6; max-width: 46rem; }
+  .bf-faq h2 { margin-bottom: 0.6rem !important; }
+  @media (max-width: 48rem) {
+    .bf-add { grid-template-columns: 1fr; padding: 1.2rem; }
+    .bf-grid2 { grid-template-columns: 1fr; }
+    .bf-dates { grid-template-columns: 1fr 1fr 1fr; gap: 0.4rem; }
+    .bf-dates div { padding: 0.55rem 0.6rem; }
+    .bf-dates span { font-size: 0.6rem; }
+    .bf-dates strong { font-size: 1.05rem; }
+  }
+</style>
+
+<script>
+  // Countdown, worked out in the visitor's browser so it is right every day.
+  const cd = document.getElementById('bf-countdown')!;
+  const bfDay = cd.dataset.bf!, cmDay = cd.dataset.cm!;
+  const todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date());
+  const days = Math.round((Date.parse(bfDay) - Date.parse(todayStr)) / 86400000);
+  cd.textContent = days > 1 ? `${days} days until Black Friday` : days === 1 ? 'Black Friday is tomorrow' : days === 0 ? 'Black Friday is today' : todayStr <= cmDay ? 'Black Friday weekend is on now' : '';
+
+  // Category filter
+  document.querySelectorAll<HTMLButtonElement>('.bf-chip').forEach((chip) => chip.addEventListener('click', () => {
+    document.querySelectorAll('.bf-chip').forEach((c) => c.classList.toggle('is-on', c === chip));
+    const f = chip.dataset.filter;
+    document.querySelectorAll<HTMLElement>('.bf-cell').forEach((cell) => { cell.hidden = f !== 'all' && cell.dataset.cat !== f; });
+  }));
+
+  // Deal form
+  const form = document.getElementById('bf-form') as HTMLFormElement;
+  const msg = document.getElementById('bf-msg')!;
+  const slugByName = new Map([...document.querySelectorAll<HTMLOptionElement>('#bf-biz option')].map((o) => [o.value.toLowerCase(), o.dataset.slug]));
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    data.businessSlug = slugByName.get((data.businessName || '').trim().toLowerCase()) || '';
+    const btn = form.querySelector('button')!;
+    btn.disabled = true; msg.hidden = true;
+    try {
+      const res = await fetch('/api/deal-submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const out = await res.json().catch(() => ({}));
+      if (res.status === 429) throw new Error('Too many tries. Wait a minute and try again.');
+      if (!res.ok) throw new Error(out.error || 'Something went wrong. Try again.');
+      msg.textContent = out.message; msg.classList.add('is-ok'); form.reset();
+    } catch (err: any) { msg.textContent = err.message; msg.classList.remove('is-ok'); }
+    msg.hidden = false; btn.disabled = false;
+  });
+</script>

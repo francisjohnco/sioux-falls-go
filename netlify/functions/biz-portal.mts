@@ -121,6 +121,8 @@ export default async (req: Request) => {
       if (!title || !description) return json({ error: 'A special needs a title and a description.' }, 400);
       if (!DISCOUNT_TYPES.includes(d.discountType)) return json({ error: 'Pick a discount type.' }, 400);
       if (d.expiresAt && !/^\d{4}-\d{2}-\d{2}$/.test(d.expiresAt)) return json({ error: 'Use a valid end date.' }, 400);
+      if (d.activatesAt && !/^\d{4}-\d{2}-\d{2}$/.test(d.activatesAt)) return json({ error: 'Use a valid start date.' }, 400);
+      if (d.activatesAt && d.expiresAt && d.expiresAt < d.activatesAt) return json({ error: 'The end date is before the start date.' }, 400);
       let id = String(d.id || '');
       let sha: string | undefined;
       if (id) {
@@ -137,7 +139,9 @@ export default async (req: Request) => {
         business: slug, title: title.slice(0, 80), description: description.slice(0, 300), discountType: d.discountType,
         valueScore: 50, submittedBy: 'business-owner',
       };
+      if (d.activatesAt) deal.activatesAt = d.activatesAt;
       if (d.expiresAt) deal.expiresAt = d.expiresAt;
+      if (d.promotion === 'black-friday') deal.promotion = 'black-friday';
       if (d.terms && String(d.terms).trim()) deal.terms = String(d.terms).trim().slice(0, 200);
       await putFile(`src/content/deals/${id}.json`, Buffer.from(JSON.stringify(deal, null, 2) + '\n').toString('base64'), `Owner special: ${slug}`, sha);
       return json({ ok: true, id });

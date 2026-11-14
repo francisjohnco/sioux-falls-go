@@ -122,6 +122,9 @@ const deals = defineCollection({
     // This is what drives the real "Live View of Open Spots" grid on the
     // postcard page: it's how a booking actually maps to a specific tile.
     spotSize: z.enum(['large', 'medium', 'small']).optional(),
+    // Seasonal promotion this deal belongs to. 'black-friday' puts it on
+    // /local-deals/black-friday/ (Black Friday through Cyber Monday).
+    promotion: z.enum(['black-friday']).optional(),
   }),
 });
 

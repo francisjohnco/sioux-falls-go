@@ -1,4 +1,5 @@
 ---
+import { todayCentral as todayCentral } from '../../lib/dates';
 import { getCollection, getEntry, render } from 'astro:content';
 import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -43,7 +44,7 @@ const businessDeals = allDeals.filter((d) => d.data.business.id === business.id)
 const activeDeals = businessDeals.filter(
   (d) =>
     (!d.data.activatesAt || d.data.activatesAt.getTime() <= now.getTime()) &&
-    (!d.data.expiresAt || d.data.expiresAt.getTime() >= now.getTime())
+    (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= todayCentral())
 );
 const mailerDeal = activeDeals.find((d) => d.data.mailerCampaign) ?? null;
 const regularDeals = activeDeals.filter((d) => !d.data.mailerCampaign);
