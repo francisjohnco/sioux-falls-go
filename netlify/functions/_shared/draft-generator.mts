@@ -1,4 +1,19 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { findHeroPhoto } from './hero-photo.mts';
+
+// Header photo fields for a new draft. Never throws: if no photo is found the
+// article still renders with a category safety-net image, and the hourly
+// photo finder tries again after it publishes.
+export async function heroForDraft(a: { title: string; seoDescription?: string; category?: string; exclude?: Set<string> }) {
+  try {
+    const r = await findHeroPhoto({ title: a.title, description: a.seoDescription, category: a.category, exclude: a.exclude });
+    if (r.kind === 'new') return { heroImage: r.choice.heroImage, heroImageAlt: r.choice.heroImageAlt, heroImageCredit: r.choice.heroImageCredit };
+    console.warn(`No header photo for "${a.title}":`, r.kind === 'none' ? r.reason : '');
+  } catch (err: any) {
+    console.warn(`Header photo search failed for "${a.title}":`, err?.message || err);
+  }
+  return {};
+}
 
 export interface HeroImageResult {
   url: string;

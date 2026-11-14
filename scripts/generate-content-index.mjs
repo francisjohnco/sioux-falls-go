@@ -177,6 +177,7 @@ function main() {
     contentType: a.contentType || '',
     cluster: a.cluster || '',
     clusterRole: a.clusterRole || '',
+    heroImage: a.heroImage || '',
     // false means scheduled: the file exists but the page is not built yet,
     // so nothing should link to it and it must not be written about as live.
     live: (a.publishedAt || '0000-00-00') <= todayStr,

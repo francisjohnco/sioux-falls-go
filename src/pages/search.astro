@@ -1,4 +1,5 @@
 ---
+import { articleHero } from '../lib/hero';
 import { getCollection, getEntry } from 'astro:content';
 import { getLiveArticles } from '../lib/articles';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -75,8 +76,7 @@ const schema = {
         <div class="loop-grid" id="article-results-grid">
           {articlesWithCategory.map(({ article, category }) => (
             <a href={`/guides/${article.id}`} class="loop-card" data-search={`${article.data.title} ${category?.data.name ?? ''}`.toLowerCase()} hidden>
-              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
-                {!article.data.heroImage && category && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+              <div class="loop-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category?.data.name}</span>
@@ -180,4 +180,6 @@ const schema = {
   .loop-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .loop-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .loop-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+  .has-photo { position: relative; overflow: hidden; }
+  .has-photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 </style>

@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { runDraftGeneration, fetchHeroImage } from './_shared/draft-generator.mts';
+import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
 import { buildArticleFile, commitNewFile, cleanDraft, validateDraft, isNearDuplicate } from './_shared/article-file.mts';
 import { chicagoToday, planNextSlot } from './_shared/schedule.mts';
 
@@ -43,6 +43,12 @@ const TYPE_BRIEF: Record<string, string> = {
   'checklist': 'a practical step by step checklist a reader can follow',
   'maintenance-guide': 'how to prevent problems and keep things in good shape over time',
 };
+
+// Photos already on an article or a waiting draft, so no two articles share one.
+function usedPhotos(articleIndex: any[], pending: any[] = []): Set<string> {
+  return new Set([...articleIndex.map((a) => a.heroImage), ...pending.map((p) => p.draft?.heroImage)]
+    .filter((u): u is string => typeof u === 'string' && u.startsWith('https://')).map((u) => u.split('?')[0]));
+}
 
 async function loadPending(): Promise<any[]> {
   const store = getStore('pending-drafts');
@@ -121,8 +127,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   }
 
   draft = cleanDraft(draft);
-  const hero = await fetchHeroImage(`${categoryName} ${next.title}`.slice(0, 80));
-  const withImage = { ...draft, heroImage: hero?.url, heroImageCredit: hero?.credit };
+  const withImage = { ...draft, ...(await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: categoryName, exclude: usedPhotos(articleIndex, await loadPending()) })) };
 
   const autoPublish = (await getStore('admin-settings').get('auto-publish')) === 'on';
   const problems = validateDraft(withImage, knownSlugs(articleIndex, queue));
@@ -208,8 +213,7 @@ async function runGapDriven(siteUrl: string, articleIndex: any[], pending: any[]
     console.warn(`Discarded "${draft.title}": too close to an existing article or waiting draft.`);
     return new Response('Discarded a near-duplicate draft', { status: 200 });
   }
-  const heroImage = await fetchHeroImage(`${gap.name} ${contentType.replace(/-/g, ' ')}`.trim());
-  const draftWithImage = { ...draft, heroImage: heroImage?.url, heroImageCredit: heroImage?.credit };
+  const draftWithImage = { ...draft, ...(await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: gap.name, exclude: usedPhotos(articleIndex, pending) })) };
 
   const id = `${gap.slug}-${Date.now()}`;
   await getStore('pending-drafts').setJSON(id, {

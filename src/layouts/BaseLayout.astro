@@ -8,6 +8,11 @@ interface Props {
   ogImage?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[]; // JSON-LD, single object or multiple
   noindex?: boolean; // for private pages like /admin, /login — keeps them out of Google entirely
+  ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  // The page's main photo. Preloading it lets the browser start downloading it
+  // before the CSS is parsed, which is what Google's Largest Contentful Paint measures.
+  preloadImage?: { href: string; srcset?: string; sizes?: string };
 }
 
 const {
@@ -17,7 +22,16 @@ const {
   ogImage = '/images/og-default.jpg',
   schema,
   noindex = false,
+  ogImageAlt,
+  ogType = 'website',
+  preloadImage,
 } = Astro.props;
+
+// Search Console ownership check. Paste the code Google gives you (the
+// content="..." part of the HTML tag) into the GOOGLE_SITE_VERIFICATION
+// environment variable in Netlify, then redeploy.
+const googleVerification = (process.env.GOOGLE_SITE_VERIFICATION || '').replace(/^.*content="([^"]+)".*$/s, '$1').trim();
+const preloadOrigin = preloadImage?.href.startsWith('https://') ? new URL(preloadImage.href).origin : null;
 
 // DNS has switched — confirmed by directly fetching siouxfallsgo.com and
 // verifying it serves the real, current site (not the old WordPress site
@@ -64,6 +78,9 @@ const allSchemas = [ORG_SCHEMA, WEBSITE_SCHEMA, ...pageSchemas];
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
     <link rel="canonical" href={canonicalURL} />
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {preloadOrigin && <link rel="preconnect" href={preloadOrigin} crossorigin />}
+    {preloadImage && <link rel="preload" as="image" href={preloadImage.href} imagesrcset={preloadImage.srcset} imagesizes={preloadImage.sizes} fetchpriority="high" />}
     <link rel="alternate" type="application/rss+xml" title="Sioux Falls Go Guides" href="/rss.xml" />
 
     <meta name="geo.position" content={`${GEO.lat};${GEO.lng}`} />
@@ -71,11 +88,12 @@ const allSchemas = [ORG_SCHEMA, WEBSITE_SCHEMA, ...pageSchemas];
     <meta name="geo.region" content={GEO.region} />
     <meta name="ICBM" content={`${GEO.lat}, ${GEO.lng}`} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={new URL(ogImage, site).toString()} />
+    {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     <meta property="og:site_name" content="Sioux Falls Go" />
 
     <meta name="twitter:card" content="summary_large_image" />

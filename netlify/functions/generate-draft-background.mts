@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { runDraftGeneration, fetchHeroImage } from './_shared/draft-generator.mts';
+import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
 
 export default async (req: Request) => {
   const body = await req.json().catch(() => null);
@@ -11,14 +11,12 @@ export default async (req: Request) => {
   try {
     const draft = await runDraftGeneration(body);
 
-    // Real header image, sourced from the actual topic — never a generic
-    // "local business" query, since that returns irrelevant stock photos.
-    const imageQuery = body.businessName ? body.categoryName : `${body.categoryName} ${body.contentType?.replace(/-/g, ' ') || ''}`;
-    const heroImage = await fetchHeroImage(imageQuery.trim());
+    // Header photo chosen by looking at real candidates for this exact article.
+    const hero = await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: body.categoryName });
 
     await store.setJSON(jobId, {
       status: 'complete',
-      draft: { ...draft, heroImage: heroImage?.url, heroImageCredit: heroImage?.credit },
+      draft: { ...draft, ...hero },
       completedAt: new Date().toISOString(),
     });
   } catch (err: any) {

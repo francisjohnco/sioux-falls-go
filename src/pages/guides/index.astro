@@ -1,4 +1,5 @@
 ---
+import { articleHero } from '../../lib/hero';
 import { getCollection, getEntry } from 'astro:content';
 import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -104,8 +105,7 @@ const schema = {
       <div class="loop-grid" id="loop-search-grid">
         {allWithCat.map(({ article, category }) => (
           <a href={`/guides/${article.id}`} class="loop-card" data-search={`${article.data.title} ${category?.data.name ?? ''}`.toLowerCase()} hidden>
-            <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
-              {!article.data.heroImage && category && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+            <div class="loop-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
             </div>
             <div class="loop-card-body">
               <span class="loop-tag">{category?.data.name}</span>
@@ -122,8 +122,7 @@ const schema = {
   <div class="container" id="loop-main-content">
     <section class="featured-story">
       <a href={`/guides/${featured.id}`} class="featured-card">
-        <div class="featured-media" style={featured.data.heroImage ? `background-image: url(${featured.data.heroImage})` : undefined}>
-          {!featured.data.heroImage && <Icon name={featuredCategory.data.icon} size={40} class="featured-icon" />}
+        <div class="featured-media has-photo"><img src={articleHero(featured).src} alt="" width="960" height="540" loading="lazy" decoding="async" />
         </div>
         <div class="featured-body">
           <span class="featured-tag">Latest · {featuredCategory.data.name}</span>
@@ -146,8 +145,7 @@ const schema = {
         <div class="loop-grid">
           {localsWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
-              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
-                {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+              <div class="loop-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category.data.name}</span>
@@ -173,8 +171,7 @@ const schema = {
         <div class="loop-grid">
           {visitorWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
-              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
-                {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+              <div class="loop-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category.data.name}</span>
@@ -200,8 +197,7 @@ const schema = {
         <div class="loop-grid">
           {businessWithCat.map(({ article, category }) => (
             <a class="loop-card" href={`/guides/${article.id}`}>
-              <div class="loop-card-media" style={article.data.heroImage ? `background-image: url(${article.data.heroImage})` : undefined}>
-                {!article.data.heroImage && <Icon name={category.data.icon} size={28} class="loop-card-icon" />}
+              <div class="loop-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
               </div>
               <div class="loop-card-body">
                 <span class="loop-tag">{category.data.name}</span>
@@ -376,6 +372,8 @@ const schema = {
   .legend-form-status { font-size: 0.8125rem; font-weight: 600; margin: 0.4rem 0 0; }
   .legend-form-status.is-success { color: var(--color-success); }
   .legend-form-status.is-error { color: #C0392B; }
+  .has-photo { position: relative; overflow: hidden; }
+  .has-photo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 </style>
 
 <style>

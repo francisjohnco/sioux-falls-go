@@ -2,6 +2,8 @@
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
+import HeroPhotos from '../../components/admin/HeroPhotos.astro';
+import { articleHero } from '../../lib/hero';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
@@ -89,6 +91,11 @@ const allArticles = await getCollection('articles');
 // have no page yet. The admin sees them; the public site does not.
 const scheduledArticles = allArticles.filter((a) => !isLive(a)).sort((a, b) => publishDay(a).localeCompare(publishDay(b)));
 const liveArticleCount = allArticles.length - scheduledArticles.length;
+const heroItems = allArticles.map((a) => {
+  const h = articleHero(a);
+  const state = h.isFallback ? 'fallback' : a.data.heroImageLocked ? 'locked' : a.data.heroImageAlt ? 'chosen' : 'review';
+  return { slug: a.id, title: a.data.title, card: h.card, state: state as 'chosen' | 'locked' | 'review' | 'fallback', live: isLive(a) };
+});
 const scheduledDatesJson = JSON.stringify(scheduledArticles.map((a) => publishDay(a)));
 const niceDay = (key: string, withWeekday = true) =>
   new Date(`${key}T12:00:00Z`).toLocaleDateString('en-US', { ...(withWeekday ? { weekday: 'short' } : {}), month: 'short', day: 'numeric', timeZone: 'UTC' });
@@ -462,6 +469,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <div id="pending-drafts-list" class="pending-drafts-list">
           <p class="empty-note">Loading…</p>
         </div>
+
+        <HeroPhotos items={heroItems} />
 
         <h3 class="section-heading">All Published Articles</h3>
         <input type="text" id="article-search" class="directory-search" placeholder="Search articles by title…" />
@@ -1151,6 +1160,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .publish-date-field { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-size: 0.875rem; font-weight: 700; color: var(--color-navy); margin-bottom: 0.7rem; }
   .publish-date-field input { padding: 0.45rem 0.6rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
   .publish-date-hint { font-weight: 500; font-size: 0.8125rem; color: var(--color-navy-light); }
+  .pending-draft-thumb { width: 9rem; height: 5.1rem; object-fit: cover; border-radius: 0.45rem; flex-shrink: 0; background: #EEF1F6; }
+  .pending-draft-thumb--none { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--color-navy-light); text-align: center; }
+  @media (max-width: 40rem) { .pending-draft-thumb { display: none; } }
   .pending-draft-note { font-size: 0.8125rem; color: #B45309; font-weight: 600; margin: 0.3rem 0; }
   .pending-date { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 700; margin: 0.5rem 0 0; color: var(--color-navy); }
   .pending-date input { padding: 0.35rem 0.5rem; border: 1px solid var(--color-line); border-radius: 0.4rem; font-family: var(--font-body); }
@@ -1801,9 +1813,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
       const imgPreview = document.getElementById('output-image-preview')!;
       if (data.draft.heroImage) {
-        (document.getElementById('output-image-preview-img') as HTMLImageElement).src = data.draft.heroImage;
+        (document.getElementById('output-image-preview-img') as HTMLImageElement).src = `${data.draft.heroImage}${data.draft.heroImage.includes('?') ? '&' : '?'}w=960&h=540&fit=crop`;
+        (document.getElementById('output-image-preview-img') as HTMLImageElement).alt = data.draft.heroImageAlt || '';
         document.getElementById('output-image-credit')!.textContent = data.draft.heroImageCredit
-          ? `Photo by ${data.draft.heroImageCredit.photographer} on Unsplash`
+          ? `Photo by ${data.draft.heroImageCredit.photographer} on ${data.draft.heroImageCredit.source || 'Unsplash'}`
           : '';
         imgPreview.hidden = false;
       } else {
@@ -2356,7 +2369,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         .map(
           (d: any) => `
         <div class="pending-draft-card" data-id="${d.id}">
-          <div>
+          ${d.draft?.heroImage ? `<img class="pending-draft-thumb" src="${d.draft.heroImage}${d.draft.heroImage.includes('?') ? '&' : '?'}w=320&h=180&fit=crop" alt="" loading="lazy" />` : '<div class="pending-draft-thumb pending-draft-thumb--none">No photo yet</div>'}
+          <div style="flex:1">
             <strong>${d.draft?.title || '(untitled)'}</strong>
             <p class="pending-draft-meta">${d.categoryName} · ${d.contentType} · generated ${new Date(d.generatedAt).toLocaleDateString()}</p>
             <p class="pending-draft-excerpt">${(d.draft?.bodyMarkdown || '').slice(0, 200)}…</p>

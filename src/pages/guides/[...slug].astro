@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import Icon from '../../components/Icon.astro';
+import { articleHero } from '../../lib/hero';
 
 export async function getStaticPaths() {
   const articles = await getLiveArticles();
@@ -18,6 +19,8 @@ const { article } = Astro.props;
 const { Content } = await render(article);
 
 const category = await getEntry(article.data.category);
+const hero = articleHero(article);
+const HERO_SIZES = '(max-width: 52rem) 100vw, 52rem';
 
 // Every live article, used for cluster navigation and link checking.
 const liveArticles = await getLiveArticles();
@@ -84,7 +87,7 @@ const articleSchema = {
   author: { '@type': 'Organization', name: article.data.author, url: site },
   publisher: { '@type': 'Organization', name: 'Sioux Falls Go', url: site, logo: { '@type': 'ImageObject', url: `${site}/images/sfg-logo.png` } },
   mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
-  ...(article.data.heroImage ? { image: new URL(article.data.heroImage, site).toString() } : {}),
+  image: { '@type': 'ImageObject', url: new URL(hero.og, site).toString(), width: 1200, height: 630, caption: hero.alt },
   ...(pillar && !isPillar ? { isPartOf: { '@type': 'Article', headline: pillar.data.title, url: `${site}/guides/${pillar.id}` } } : {}),
   about: { '@type': 'Place', name: 'Sioux Falls, South Dakota' },
 };
@@ -110,6 +113,10 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
   description={article.data.seo.description}
   canonicalPath={`/guides/${article.id}`}
   schema={schema}
+  ogImage={hero.og}
+  ogImageAlt={hero.alt}
+  ogType="article"
+  preloadImage={{ href: hero.src, srcset: hero.srcset, sizes: HERO_SIZES }}
 >
   <SiteHeader slot="header" />
 
@@ -122,14 +129,14 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
     <h1>{article.data.title}</h1>
     <p class="byline">By {article.data.author} · Updated {article.data.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
 
-    {article.data.heroImage && (
-      <img src={article.data.heroImage} alt={article.data.title} class="article-hero-img" />
-    )}
-    {article.data.heroImageCredit && (
-      <p class="hero-image-credit">
-        Photo by <a href={article.data.heroImageCredit.profileUrl} target="_blank" rel="noopener">{article.data.heroImageCredit.photographer}</a> on Unsplash
-      </p>
-    )}
+    <figure class="article-hero">
+      <img src={hero.src} srcset={hero.srcset} sizes={HERO_SIZES} alt={hero.alt} width={hero.width} height={hero.height} fetchpriority="high" decoding="async" class="article-hero-img" />
+      {hero.credit && (
+        <figcaption class="hero-image-credit">
+          Photo by <a href={hero.credit.profileUrl} target="_blank" rel="noopener nofollow">{hero.credit.photographer}</a> on <a href={hero.credit.source === 'Pexels' ? 'https://www.pexels.com' : 'https://unsplash.com/?utm_source=sioux_falls_go&utm_medium=referral'} target="_blank" rel="noopener nofollow">{hero.credit.source}</a>
+        </figcaption>
+      )}
+    </figure>
 
     {pillar && !isPillar && (
       <a class="cluster-parent" href={`/guides/${pillar.id}`}>
@@ -238,9 +245,7 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
         <div class="related-grid">
           {relatedWithCategory.map(({ article: r, category: rCategory }) => (
             <a class="related-card" href={`/guides/${r.id}`}>
-              <div class="related-card-media" style={r.data.heroImage ? `background-image: url(${r.data.heroImage})` : undefined}>
-                {!r.data.heroImage && <Icon name={rCategory.data.icon} size={24} class="related-card-icon" />}
-              </div>
+              <div class="related-card-media"><img src={articleHero(r).card} alt="" width="480" height="270" loading="lazy" decoding="async" /></div>
               <div class="related-card-body">
                 <span class="related-tag">{r.data.contentType.replace('-', ' ')}</span>
                 <h3>{r.data.title}</h3>
@@ -268,10 +273,12 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
     padding-left: var(--space-2);
   }
 
+  .article-hero { margin: var(--space-2) 0 0; }
   .article-hero-img {
-    width: 100%; height: 20rem; object-fit: cover;
-    border-radius: var(--radius); margin-top: var(--space-2);
+    display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+    border-radius: var(--radius); background: #E8EDF3;
   }
+  .related-card-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   .sponsor-banner {
     display: block; text-decoration: none; margin-top: var(--space-3);

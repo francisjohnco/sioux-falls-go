@@ -8,6 +8,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -19,6 +20,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -30,6 +32,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/best-coffee-shops-in-sioux-falls.png",
     "live": true
   },
   {
@@ -41,6 +44,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -52,6 +56,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/restaurant-workers.jpg",
     "live": true
   },
   {
@@ -63,6 +68,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/restaurant-workers.jpg",
     "live": true
   },
   {
@@ -74,6 +80,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/florist-bouquet.jpg",
     "live": true
   },
   {
@@ -85,6 +92,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/store-worker.jpg",
     "live": true
   },
   {
@@ -96,6 +104,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -107,6 +116,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "https://images.unsplash.com/photo-1758518730384-be3d205838e8?fm=jpg&q=80&w=1600&auto=format&fit=crop",
     "live": true
   },
   {
@@ -118,6 +128,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -129,6 +140,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -140,6 +152,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -151,6 +164,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -162,6 +176,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/community-spotlight-siouxfallsflooring-com-helping-homeowners-make-confident-flo.png",
     "live": true
   },
   {
@@ -173,6 +188,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cathedral.jpg",
     "live": true
   },
   {
@@ -184,6 +200,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -195,7 +212,8 @@
     "contentType": "cost-guide",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": false
+    "heroImage": "",
+    "live": true
   },
   {
     "title": "The Sioux Falls Homeowner's Guide to Drain Cleaning",
@@ -206,7 +224,8 @@
     "contentType": "local-resource",
     "cluster": "drain-cleaning",
     "clusterRole": "pillar",
-    "live": false
+    "heroImage": "",
+    "live": true
   },
   {
     "title": "Electrical Safety and South Dakota Winters: What Every Sioux Falls Homeowner Should Know",
@@ -217,6 +236,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cornfield.jpg",
     "live": true
   },
   {
@@ -228,6 +248,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -239,6 +260,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -250,6 +272,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/levitt-concert-center.jpg",
     "live": true
   },
   {
@@ -261,6 +284,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -272,6 +296,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/rustic-bedroom.jpg",
     "live": true
   },
   {
@@ -283,6 +308,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/rustic-bedroom.jpg",
     "live": true
   },
   {
@@ -294,6 +320,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -305,6 +332,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -316,6 +344,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -327,6 +356,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -338,6 +368,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/rustic-bedroom.jpg",
     "live": true
   },
   {
@@ -349,6 +380,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/lawn-mower.jpg",
     "live": true
   },
   {
@@ -360,6 +392,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -371,6 +404,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -382,6 +416,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -393,6 +428,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/real-estate-keys.jpg",
     "live": true
   },
   {
@@ -404,6 +440,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cathedral.jpg",
     "live": true
   },
   {
@@ -415,6 +452,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -426,6 +464,7 @@
     "contentType": "cost-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cornfield.jpg",
     "live": true
   },
   {
@@ -437,6 +476,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -448,6 +488,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -459,6 +500,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/how-sioux-falls-go-supports-local-businesses.png",
     "live": true
   },
   {
@@ -470,6 +512,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -481,6 +524,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/levitt-concert-center.jpg",
     "live": true
   },
   {
@@ -492,6 +536,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/rustic-bedroom.jpg",
     "live": true
   },
   {
@@ -503,6 +548,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/lawn-mower.jpg",
     "live": true
   },
   {
@@ -514,6 +560,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -525,6 +572,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -536,6 +584,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -547,6 +596,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/real-estate-handshake.jpg",
     "live": true
   },
   {
@@ -558,6 +608,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -569,6 +620,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cathedral.jpg",
     "live": true
   },
   {
@@ -580,6 +632,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -591,6 +644,7 @@
     "contentType": "buying-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cornfield.jpg",
     "live": true
   },
   {
@@ -602,6 +656,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/how-to-know-when-a-tree-needs-to-come-down-in-south-dakota.png",
     "live": true
   },
   {
@@ -613,6 +668,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/how-to-shop-local-and-make-every-dollar-count.png",
     "live": true
   },
   {
@@ -624,7 +680,8 @@
     "contentType": "comparison",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": false
+    "heroImage": "",
+    "live": true
   },
   {
     "title": "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro",
@@ -635,7 +692,8 @@
     "contentType": "comparison",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": false
+    "heroImage": "",
+    "live": true
   },
   {
     "title": "Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions",
@@ -646,6 +704,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/lawn-mower.jpg",
     "live": true
   },
   {
@@ -657,6 +716,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/lawn-mower.jpg",
     "live": true
   },
   {
@@ -668,6 +728,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/local-legends-the-heartbeat-of-sioux-falls.png",
     "live": true
   },
   {
@@ -679,6 +740,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -690,6 +752,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -701,6 +764,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -712,6 +776,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -723,6 +788,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/pest-control-faqs-for-sioux-falls-and-surrounding-areas.png",
     "live": true
   },
   {
@@ -734,6 +800,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -745,6 +812,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -756,6 +824,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -767,6 +836,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/real-estate-keys.jpg",
     "live": true
   },
   {
@@ -778,6 +848,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/real-estate-handshake.jpg",
     "live": true
   },
   {
@@ -789,6 +860,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/restaurant-workers.jpg",
     "live": true
   },
   {
@@ -800,6 +872,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -811,6 +884,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -822,6 +896,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/shine-bright-with-the-sioux-falls-go-postcard.png",
     "live": true
   },
   {
@@ -833,6 +908,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/delivery-package.jpg",
     "live": true
   },
   {
@@ -844,6 +920,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/restaurant-workers.jpg",
     "live": true
   },
   {
@@ -855,6 +932,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-2.jpg",
     "live": true
   },
   {
@@ -866,6 +944,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/sioux-falls-hvac-faq-heating-air-conditioning-questions-answered.png",
     "live": true
   },
   {
@@ -877,6 +956,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/sioux-falls-most-trusted-home-inspectors-top-10-picks-for-summer-2025.png",
     "live": true
   },
   {
@@ -888,6 +968,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/florist-bouquet.jpg",
     "live": true
   },
   {
@@ -899,6 +980,7 @@
     "contentType": "business-spotlight",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -910,6 +992,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/the-best-free-things-to-do-in-sioux-falls.png",
     "live": true
   },
   {
@@ -921,6 +1004,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-carpet-upholstery-cleaners-in-sioux-falls-summer-2025.png",
     "live": true
   },
   {
@@ -932,6 +1016,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-garage-door-services-in-sioux-falls.png",
     "live": true
   },
   {
@@ -943,6 +1028,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-handyman-services-in-sioux-falls-summer-2025-edition.png",
     "live": true
   },
   {
@@ -954,6 +1040,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/mckennan-park.jpg",
     "live": true
   },
   {
@@ -965,6 +1052,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-lawn-care-services-in-sioux-falls-for-spring-2025.png",
     "live": true
   },
   {
@@ -976,6 +1064,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -987,6 +1076,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-plumbers-in-sioux-falls-summer-2025-edition.png",
     "live": true
   },
   {
@@ -998,6 +1088,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-reasons-sioux-falls-should-be-on-your-must-visit-list.png",
     "live": true
   },
   {
@@ -1009,6 +1100,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/top-10-residential-cleaning-services-in-sioux-falls-summer-2025.png",
     "live": true
   },
   {
@@ -1020,6 +1112,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cathedral.jpg",
     "live": true
   },
   {
@@ -1031,6 +1124,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/turn-the-sioux-falls-go-postcard-into-a-power-sales-machine.png",
     "live": true
   },
   {
@@ -1042,6 +1136,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/two-paths-to-local-market-dominance-with-sioux-falls-go.png",
     "live": true
   },
   {
@@ -1053,6 +1148,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/articles/unlock-massive-reach-with-sioux-falls-go-direct-mail-postcards.png",
     "live": true
   },
   {
@@ -1064,6 +1160,7 @@
     "contentType": "visitor-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/cornfield.jpg",
     "live": true
   },
   {
@@ -1075,6 +1172,7 @@
     "contentType": "visitor-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/store-worker.jpg",
     "live": true
   },
   {
@@ -1086,6 +1184,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -1097,6 +1196,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   },
   {
@@ -1108,6 +1208,7 @@
     "contentType": "local-resource",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -1119,7 +1220,8 @@
     "contentType": "safety-information",
     "cluster": "drain-cleaning",
     "clusterRole": "support",
-    "live": false
+    "heroImage": "",
+    "live": true
   },
   {
     "title": "Where to Eat in Downtown Sioux Falls If You're Just Passing Through",
@@ -1130,6 +1232,7 @@
     "contentType": "visitor-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/stock/restaurant-workers.jpg",
     "live": true
   },
   {
@@ -1141,6 +1244,7 @@
     "contentType": "educational-article",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-1.jpg",
     "live": true
   },
   {
@@ -1152,6 +1256,7 @@
     "contentType": "faq",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/downtown-2.jpg",
     "live": true
   },
   {
@@ -1163,6 +1268,7 @@
     "contentType": "seasonal-guide",
     "cluster": "",
     "clusterRole": "",
+    "heroImage": "/images/scenic/falls-park-1.jpg",
     "live": true
   }
 ]

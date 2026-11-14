@@ -1,0 +1,198 @@
+---
+// Content Engine block: every article's header photo at a glance, the
+// automatic photo finder's progress, and a picker to choose a photo by hand.
+interface Item { slug: string; title: string; card: string; state: 'chosen' | 'locked' | 'review' | 'fallback'; live: boolean }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+const counts = {
+  good: items.filter((i) => i.state === 'chosen' || i.state === 'locked').length,
+  review: items.filter((i) => i.state === 'review').length,
+  fallback: items.filter((i) => i.state === 'fallback').length,
+};
+const LABEL = { chosen: 'Checked', locked: 'Your pick', review: 'Not checked yet', fallback: 'Temporary photo' };
+const order = { fallback: 0, review: 1, chosen: 2, locked: 3 };
+const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.title.localeCompare(b.title));
+---
+<div class="hp" id="hero-photos">
+  <div class="hp-head">
+    <div>
+      <h3>Header photos</h3>
+      <p>Every article shows a header photo. The photo finder searches Unsplash and Pexels, looks at the choices, and picks the most relevant, best looking one (or keeps the current photo when it already fits). It runs every hour until every article is checked.</p>
+    </div>
+    <button class="button" id="hp-run" type="button">Find photos now</button>
+  </div>
+
+  <div class="hp-stats">
+    <span><strong>{counts.good}</strong> checked</span>
+    <span><strong>{counts.review}</strong> not checked yet</span>
+    <span class={counts.fallback ? 'hp-warn' : ''}><strong>{counts.fallback}</strong> on a temporary photo</span>
+  </div>
+  <p class="hp-status" id="hp-status">Checking the photo finder...</p>
+
+  <details class="hp-all">
+    <summary>See every article's photo</summary>
+    <div class="hp-grid">
+      {sorted.map((i) => (
+        <div class="hp-item">
+          <img src={i.card} alt="" loading="lazy" width="240" height="135" />
+          <div>
+            <span class={`hp-badge hp-badge--${i.state}`}>{LABEL[i.state]}</span>{!i.live && <span class="hp-badge">Scheduled</span>}
+            <p>{i.title}</p>
+            <button class="hp-change" type="button" data-hp-slug={i.slug} data-hp-title={i.title}>Change photo</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </details>
+
+  <div class="hp-modal" id="hp-modal" hidden>
+    <div class="hp-modal-card" role="dialog" aria-modal="true" aria-labelledby="hp-modal-title">
+      <div class="hp-modal-head">
+        <h3 id="hp-modal-title">Choose a header photo</h3>
+        <button type="button" class="hp-x" id="hp-close" aria-label="Close">✕</button>
+      </div>
+      <p class="hp-for" id="hp-for"></p>
+      <form class="hp-search" id="hp-search">
+        <input id="hp-q" placeholder="What should the photo show? e.g. plumber clearing a kitchen drain" />
+        <button class="button" type="submit">Search</button>
+      </form>
+      <div class="hp-results" id="hp-results"></div>
+      <div class="hp-pick" id="hp-pick" hidden>
+        <label>Describe the photo (alt text for Google and screen readers)
+          <input id="hp-alt" maxlength="160" />
+        </label>
+        <button class="button" type="button" id="hp-save">Use this photo</button>
+      </div>
+      <p class="hp-msg" id="hp-msg" hidden></p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .hp { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+  .hp-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+  .hp-head h3 { margin: 0 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); }
+  .hp-head p { margin: 0; color: var(--color-navy-light); font-size: 0.875rem; line-height: 1.5; max-width: 44rem; }
+  .hp-stats { display: flex; gap: 1.4rem; flex-wrap: wrap; margin: 1rem 0 0.4rem; font-size: 0.9rem; color: var(--color-navy-light); }
+  .hp-stats strong { color: var(--color-navy); font-size: 1.15rem; margin-right: 0.2rem; }
+  .hp-stats .hp-warn strong { color: #B45309; }
+  .hp-status { font-size: 0.85rem; color: var(--color-navy-light); margin: 0.3rem 0 0.8rem; }
+  .hp-status.is-error { color: #A93226; font-weight: 600; }
+  .hp-all summary { cursor: pointer; font-weight: 700; font-size: 0.9rem; color: var(--color-orange-dark); }
+  .hp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.9rem; margin-top: 0.9rem; }
+  .hp-item { border: 1px solid var(--color-line); border-radius: 0.6rem; overflow: hidden; display: flex; flex-direction: column; }
+  .hp-item img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: #EEF1F6; }
+  .hp-item > div { padding: 0.6rem 0.7rem 0.7rem; }
+  .hp-item p { margin: 0.35rem 0 0.45rem; font-size: 0.8125rem; font-weight: 600; color: var(--color-navy); line-height: 1.35; }
+  .hp-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 999px; background: #EEF1F6; color: var(--color-navy-light); margin-right: 0.3rem; }
+  .hp-badge--chosen { background: #E6F4EC; color: #2E7D4F; } .hp-badge--locked { background: #E7EEFB; color: #2952A3; }
+  .hp-badge--review { background: #FFF1E3; color: #B05A00; } .hp-badge--fallback { background: #FDECEA; color: #A93226; }
+  .hp-change { font: inherit; font-size: 0.78rem; font-weight: 700; color: var(--color-orange-dark); background: none; border: 0; padding: 0; cursor: pointer; }
+  .hp-modal { position: fixed; inset: 0; background: rgba(13,23,48,0.55); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .hp-modal-card { background: #fff; border-radius: 0.9rem; width: 100%; max-width: 56rem; max-height: 90vh; overflow: auto; padding: 1.3rem 1.4rem; }
+  .hp-modal-head { display: flex; justify-content: space-between; align-items: center; }
+  .hp-modal-head h3 { margin: 0; font-family: var(--font-display); color: var(--color-navy); }
+  .hp-x { border: 0; background: none; font-size: 1.1rem; cursor: pointer; color: var(--color-navy); }
+  .hp-for { margin: 0.3rem 0 0.9rem; color: var(--color-navy-light); font-size: 0.875rem; }
+  .hp-search { display: flex; gap: 0.6rem; }
+  .hp-search input, .hp-pick input { flex: 1; font: inherit; font-size: 0.9rem; padding: 0.6rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; width: 100%; }
+  .hp-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.6rem; margin-top: 0.9rem; }
+  .hp-result { position: relative; border: 3px solid transparent; border-radius: 0.55rem; padding: 0; background: none; cursor: pointer; overflow: hidden; }
+  .hp-result img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .hp-result span { position: absolute; left: 0.3rem; bottom: 0.3rem; font-size: 0.65rem; font-weight: 700; background: rgba(13,23,48,0.7); color: #fff; padding: 0.1rem 0.35rem; border-radius: 0.25rem; }
+  .hp-result.is-picked { border-color: var(--color-orange); }
+  .hp-pick { display: flex; gap: 0.6rem; align-items: flex-end; margin-top: 1rem; flex-wrap: wrap; }
+  .hp-pick label { flex: 1 1 20rem; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8rem; font-weight: 700; color: var(--color-navy); }
+  .hp-msg { margin: 0.8rem 0 0; font-size: 0.875rem; font-weight: 600; color: #A93226; }
+  .hp-msg.is-ok { color: #2E7D4F; }
+  .hp [hidden], .hp-modal[hidden] { display: none !important; }
+</style>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  let slug = '';
+  let results: any[] = [];
+  let picked: any = null;
+
+  async function call(body?: unknown) {
+    const res = await fetch('/api/hero-photo', body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+    return data;
+  }
+
+  async function loadStatus() {
+    const el = $('hp-status');
+    try {
+      const s = await call();
+      el.classList.remove('is-error');
+      if (!s.keys?.unsplash && !s.keys?.pexels) {
+        el.textContent = 'The photo finder needs a free Unsplash or Pexels key. Add UNSPLASH_ACCESS_KEY or PEXELS_API_KEY in Netlify, under Site configuration, Environment variables.';
+        el.classList.add('is-error');
+        return;
+      }
+      const parts = [];
+      parts.push(`Sources: ${[s.keys.unsplash && 'Unsplash', s.keys.pexels && 'Pexels'].filter(Boolean).join(' and ')}.`);
+      if (s.running) parts.push('Running now.');
+      else if (s.lastRun) parts.push(`Last run ${new Date(s.lastRun).toLocaleString()}, updated ${s.lastChanged ?? 0} article${s.lastChanged === 1 ? '' : 's'}.`);
+      else parts.push('Has not run yet.');
+      if (typeof s.remaining === 'number') parts.push(s.remaining ? `${s.remaining} still to check.` : 'Every article is checked.');
+      if (s.waitingForManualPick) parts.push(`${s.waitingForManualPick} had no good match, so pick those by hand or it tries again in a week.`);
+      if (s.error) { parts.push(`Problem: ${s.error}`); el.classList.add('is-error'); }
+      el.textContent = parts.join(' ');
+    } catch (err: any) { el.textContent = err.message; el.classList.add('is-error'); }
+  }
+
+  $('hp-run').addEventListener('click', async (e) => {
+    const b = e.currentTarget as HTMLButtonElement;
+    b.disabled = true;
+    try { const r = await call({ action: 'run' }); $('hp-status').textContent = r.message; } catch (err: any) { $('hp-status').textContent = err.message; }
+    setTimeout(() => { b.disabled = false; loadStatus(); }, 4000);
+  });
+
+  const msg = (t: string, ok = false) => { const m = $('hp-msg'); m.textContent = t; m.hidden = !t; m.classList.toggle('is-ok', ok); };
+
+  async function search(q: string) {
+    $('hp-results').innerHTML = '<p>Searching...</p>';
+    picked = null; $('hp-pick').hidden = true; msg('');
+    try {
+      results = (await call({ action: 'search', q })).candidates;
+      $('hp-results').innerHTML = results.length
+        ? results.map((c, i) => `<button type="button" class="hp-result" data-i="${i}"><img src="${esc(c.thumb)}" alt="${esc(c.description)}" loading="lazy" /><span>${esc(c.provider)}</span></button>`).join('')
+        : '<p>No photos found. Try describing the scene differently.</p>';
+    } catch (err: any) { $('hp-results').innerHTML = ''; msg(err.message); }
+  }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const open = t.closest<HTMLElement>('[data-hp-slug]');
+    if (open) {
+      slug = open.dataset.hpSlug!;
+      $('hp-for').textContent = `For: ${open.dataset.hpTitle}`;
+      ($('hp-q') as HTMLInputElement).value = open.dataset.hpTitle!.replace(/\([^)]*\)/g, '').replace(/\b(in |near )?(Sioux Falls|South Dakota|SD)\b('s)?/gi, '').replace(/[,:?!]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
+      $('hp-modal').hidden = false;
+      search(($('hp-q') as HTMLInputElement).value);
+    }
+    const r = t.closest<HTMLElement>('.hp-result');
+    if (r) {
+      document.querySelectorAll('.hp-result').forEach((x) => x.classList.remove('is-picked'));
+      r.classList.add('is-picked');
+      picked = results[Number(r.dataset.i)];
+      ($('hp-alt') as HTMLInputElement).value = (picked.description || '').replace(/^./, (c: string) => c.toUpperCase());
+      $('hp-pick').hidden = false;
+    }
+    if (t.id === 'hp-close' || t.id === 'hp-modal') $('hp-modal').hidden = true;
+  });
+
+  $('hp-search').addEventListener('submit', (e) => { e.preventDefault(); search(($('hp-q') as HTMLInputElement).value); });
+  $('hp-save').addEventListener('click', async (e) => {
+    const b = e.currentTarget as HTMLButtonElement;
+    b.disabled = true;
+    try { const r = await call({ action: 'set', slug, candidate: picked, alt: ($('hp-alt') as HTMLInputElement).value }); msg(r.message, true); }
+    catch (err: any) { msg(err.message); }
+    b.disabled = false;
+  });
+
+  loadStatus();
+</script>

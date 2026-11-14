@@ -280,7 +280,9 @@ const articles = defineCollection({
       description: z.string(),
     }),
     heroImage: z.string().optional(),
-    heroImageCredit: z.object({ photographer: z.string(), profileUrl: z.string() }).optional(), // required attribution when heroImage comes from Unsplash
+    heroImageAlt: z.string().optional(), // describes the photo for screen readers and Google Images; set by the photo finder
+    heroImageCredit: z.object({ photographer: z.string(), profileUrl: z.string(), source: z.string().optional() }).optional(), // attribution for Unsplash or Pexels photos
+    heroImageLocked: z.boolean().optional(), // true = a person chose this photo, the automatic photo finder leaves it alone
     sourceUrl: z.string().optional(), // original WP URL, for migration traceability
   }),
 });

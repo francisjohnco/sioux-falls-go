@@ -18,7 +18,8 @@ export interface Draft {
   bodyMarkdown: string;
   embeddedFaqs: { question: string; answer: string }[];
   heroImage?: string;
-  heroImageCredit?: { photographer: string; profileUrl: string };
+  heroImageAlt?: string;
+  heroImageCredit?: { photographer: string; profileUrl: string; source?: string };
 }
 
 export function cleanDraft<T extends Draft>(draft: T): T {
@@ -113,6 +114,7 @@ export function buildArticleFile(input: BuildInput): { path: string; slug: strin
     updatedAt: publishDate,
     seo: { title: draft.seoTitle, description: draft.seoDescription },
     heroImage: draft.heroImage || undefined,
+    heroImageAlt: draft.heroImage ? draft.heroImageAlt || undefined : undefined,
     heroImageCredit: draft.heroImageCredit || undefined,
   });
 
