@@ -777,6 +777,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                   address: business.data.address || '',
                   phone: business.data.phone || '',
                   website: business.data.website || '',
+                  googleBusinessUrl: business.data.googleBusinessUrl || '',
                   heroImage: business.data.heroImage || '',
                   latitude: business.data.latitude ?? '',
                   longitude: business.data.longitude ?? '',
@@ -841,6 +842,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <label>Phone <input type="text" id="edit-phone" /></label>
               <label>Address <input type="text" id="edit-address" /></label>
               <label>Website <input type="text" id="edit-website" /></label>
+              <label>Google Business Profile link <input type="text" id="edit-googleBusinessUrl" placeholder="https://maps.app.goo.gl/..." /></label>
               <label>Hero Image URL <input type="text" id="edit-heroImage" /></label>
               <label>Latitude <input type="number" step="any" id="edit-latitude" /></label>
               <label>Longitude <input type="number" step="any" id="edit-longitude" /></label>
@@ -2106,7 +2108,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   let currentEditOriginal: any = null;
 
   const SCALAR_EDIT_IDS = [
-    'name', 'phone', 'address', 'website', 'heroImage', 'latitude', 'longitude',
+    'name', 'phone', 'address', 'website', 'googleBusinessUrl', 'heroImage', 'latitude', 'longitude',
     'googleRating', 'googleReviewCount', 'giveawaysPerYear', 'responseTime',
     'ownerName', 'ownerQuote', 'pullQuote', 'couponStyle',
   ];

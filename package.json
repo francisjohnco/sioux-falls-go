@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/generate-redirects.mjs && node scripts/generate-content-index.mjs && node scripts/optimize-hero-images.mjs && astro build",
+    "build": "node scripts/generate-redirects.mjs && node scripts/generate-content-index.mjs && node scripts/optimize-hero-images.mjs && node scripts/build-badges.mjs && astro build",
     "redirects": "node scripts/generate-redirects.mjs",
     "preview": "astro preview",
     "astro": "astro"
@@ -15,8 +15,10 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource/poppins": "^5.3.0",
     "@netlify/blobs": "^10.7.11",
     "astro": "^7.1.5",
+    "opentype.js": "^1.3.4",
     "pdf-lib": "^1.17.1",
     "sharp": "^0.35.5"
   }

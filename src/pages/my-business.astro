@@ -34,6 +34,8 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
           <label>Website <input id="f-website" type="url" placeholder="https://" /></label>
           <label>Hours summary <input id="f-hours" placeholder="Mon to Fri 9am to 5pm" /></label>
           <label>Usual response time <input id="f-responseTime" placeholder="within 24 hours" /></label>
+          <label class="mb-span">Google Business Profile link <input id="f-googleBusinessUrl" type="url" placeholder="https://maps.app.goo.gl/..." />
+            <span class="mb-hint">In Google Maps, open your business, tap Share, and paste the link here. Your business name in your story will link to it.</span></label>
         </div>
         <h3>Hours by day</h3>
         <div class="mb-days">
@@ -43,6 +45,14 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
           <select id="f-couponStyle">{styles.map(([v, l]) => <option value={v}>{l}</option>)}</select>
         </label>
         <div class="mb-actions"><button class="mb-btn" id="save-contact" type="button">Save contact and hours</button><span class="mb-note" data-for="save-contact"></span></div>
+      </section>
+
+      <section class="mb-card">
+        <h2><Icon name="star" size={18} /> Your website badge</h2>
+        <p class="mb-help">Show customers you are a Sioux Falls Go Community Champion. Copy the code below and paste it into your website (on WordPress, add a Custom HTML block; on Wix, Squarespace, or GoDaddy, add an Embed or Code block). The badge links to your Sioux Falls Go profile, and your Google star rating on it updates by itself.</p>
+        <div class="mb-badge-preview"><a id="badge-link" href="#" target="_blank" rel="noopener"><img id="badge-img" alt="" width="360" height="120" /></a></div>
+        <label>Badge code <textarea id="badge-code" rows="4" readonly></textarea></label>
+        <div class="mb-actions"><button class="mb-btn" id="copy-badge" type="button">Copy badge code</button><a class="mb-btn mb-btn--ghost" id="download-badge" href="#" download>Download image</a><span class="mb-note" data-for="badge"></span></div>
       </section>
 
       <section class="mb-card">
@@ -144,6 +154,10 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   .mb-dealform summary { list-style: none; width: fit-content; }
   .mb-dealform summary::-webkit-details-marker { display: none; }
   .mb-dealform[open] summary { margin-bottom: 1rem; }
+  .mb-hint { font-weight: 400; font-size: 0.78rem; color: var(--color-navy-light); }
+  .mb-badge-preview { background: repeating-conic-gradient(#F3F5F8 0% 25%, #fff 0% 50%) 0 0 / 18px 18px; border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 1.4rem; display: flex; justify-content: center; margin-bottom: 0.9rem; }
+  .mb-badge-preview img { display: block; max-width: 100%; height: auto; }
+  #badge-code { font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem; background: #F7F9FC; }
   .mb-check { flex-direction: row !important; align-items: center; gap: 0.5rem !important; font-weight: 600 !important; }
   .mb-check input { width: auto; }
   .mb-check a { color: var(--color-orange-dark); }
@@ -179,7 +193,14 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   function render() {
     $('mb-name').textContent = data.name;
     ($('mb-view') as unknown as HTMLAnchorElement).href = `/businesses/${data.slug}/`;
-    for (const k of ['phone', 'website', 'hours', 'responseTime', 'couponStyle', 'excerpt', 'pullQuote', 'ownerQuote', 'ownerName', 'body']) {
+    const site = 'https://siouxfallsgo.com';
+    const badgeAlt = `${data.name}, a Sioux Falls Go Community Champion${data.googleRating ? `, rated ${Number(data.googleRating).toFixed(1)} on Google` : ''}`;
+    ($('badge-img') as unknown as HTMLImageElement).src = `/badges/${data.slug}.png`;
+    ($('badge-img') as unknown as HTMLImageElement).alt = badgeAlt;
+    ($('badge-link') as unknown as HTMLAnchorElement).href = `/businesses/${data.slug}/`;
+    ($('download-badge') as unknown as HTMLAnchorElement).href = `/badges/${data.slug}.png`;
+    ($('badge-code') as unknown as HTMLTextAreaElement).value = `<a href="${site}/businesses/${data.slug}/" target="_blank" rel="noopener" title="${esc(data.name)} on Sioux Falls Go"><img src="${site}/badges/${data.slug}.png" width="360" height="120" alt="${esc(badgeAlt)}" style="max-width:100%;height:auto;border:0;" /></a>`;
+    for (const k of ['phone', 'website', 'googleBusinessUrl', 'hours', 'responseTime', 'couponStyle', 'excerpt', 'pullQuote', 'ownerQuote', 'ownerName', 'body']) {
       const el = document.getElementById(`f-${k}`) as HTMLInputElement | null;
       if (el) el.value = data[k] || '';
     }
@@ -220,7 +241,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   $('save-contact').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-contact', async () => {
     const hoursSchedule: Record<string, string> = {};
     document.querySelectorAll<HTMLInputElement>('[data-day]').forEach((el) => { hoursSchedule[el.dataset.day!] = el.value; });
-    const r = await api({ action: 'save', phone: $('f-phone').value, website: $('f-website').value, hours: $('f-hours').value, responseTime: $('f-responseTime').value, couponStyle: ($('f-couponStyle') as unknown as HTMLSelectElement).value, hoursSchedule });
+    const r = await api({ action: 'save', phone: $('f-phone').value, website: $('f-website').value, googleBusinessUrl: $('f-googleBusinessUrl').value, hours: $('f-hours').value, responseTime: $('f-responseTime').value, couponStyle: ($('f-couponStyle') as unknown as HTMLSelectElement).value, hoursSchedule });
     return r.message;
   }));
 
@@ -289,6 +310,12 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     data = await api(); clearDeal(); render();
     return 'Saved. It shows on your listing in about a minute.';
   }));
+
+  $('copy-badge').addEventListener('click', async () => {
+    const t = $('badge-code') as unknown as HTMLTextAreaElement;
+    try { await navigator.clipboard.writeText(t.value); } catch { t.select(); document.execCommand('copy'); }
+    note('badge', 'Copied. Paste it into your website.');
+  });
 
   $('mb-signout').addEventListener('click', async () => {
     await fetch('/api/biz-auth', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'logout' }) });

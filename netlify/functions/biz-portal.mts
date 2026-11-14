@@ -2,7 +2,7 @@ import { getStore } from '@netlify/blobs';
 import { businessFromCookie } from './_shared/auth.mts';
 import {
   readBusinessFile, writeBusinessFile, readField, readList, readHours, applyChanges, putFile, getFile, deleteFile, listDir,
-  OWNER_INSTANT_FIELDS, OWNER_REVIEW_FIELDS,
+  OWNER_INSTANT_FIELDS, OWNER_REVIEW_FIELDS, isGoogleProfileUrl,
 } from './_shared/business-file.mts';
 
 // Everything a signed-in business owner can do. The business comes from the
@@ -57,7 +57,8 @@ export default async (req: Request) => {
         email: account.email,
         name: pick('name'),
         tier: pick('partnershipTier'),
-        phone: pick('phone'), website: pick('website'), hours: pick('hours'), responseTime: pick('responseTime'),
+        phone: pick('phone'), website: pick('website'), googleBusinessUrl: pick('googleBusinessUrl'),
+        googleRating: pick('googleRating'), googleReviewCount: pick('googleReviewCount'), hours: pick('hours'), responseTime: pick('responseTime'),
         couponStyle: pick('couponStyle') || 'ticket-stub',
         hoursSchedule: readHours(frontmatter),
         heroImage: pick('heroImage'), gallery: readList(frontmatter, 'gallery'),
@@ -75,6 +76,11 @@ export default async (req: Request) => {
       for (const k of OWNER_INSTANT_FIELDS) if (typeof input[k] === 'string') changes[k] = input[k];
       if (input.hoursSchedule && typeof input.hoursSchedule === 'object') changes.hoursSchedule = input.hoursSchedule;
       if (changes.website && !/^https?:\/\//i.test(changes.website)) changes.website = `https://${changes.website}`;
+      if (changes.googleBusinessUrl) {
+        changes.googleBusinessUrl = changes.googleBusinessUrl.trim().replace(/^http:\/\//i, 'https://');
+        if (!/^https:\/\//i.test(changes.googleBusinessUrl)) changes.googleBusinessUrl = `https://${changes.googleBusinessUrl}`;
+        if (!isGoogleProfileUrl(changes.googleBusinessUrl)) return json({ error: 'That does not look like a Google Business Profile link. In Google Maps, open your business, tap Share, and copy the link.' }, 400);
+      }
       const f = await readBusinessFile(slug);
       const next = applyChanges(f.frontmatter, f.body, changes);
       await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `Owner update: ${readField(f.frontmatter, 'name') || slug}`);

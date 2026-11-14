@@ -7,7 +7,20 @@ import { explainGitHubError } from './article-file.mts';
 export const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
 
 // What an owner may change and see go live right away.
-export const OWNER_INSTANT_FIELDS = ['phone', 'website', 'hours', 'responseTime', 'couponStyle'] as const;
+export const OWNER_INSTANT_FIELDS = ['phone', 'website', 'hours', 'responseTime', 'couponStyle', 'googleBusinessUrl'] as const;
+
+// Accepts the links Google gives for a Business Profile: Maps, the short
+// share links, and search knowledge panel links.
+export function isGoogleProfileUrl(u: string): boolean {
+  try {
+    const url = new URL(u);
+    if (url.protocol !== 'https:') return false;
+    const h = url.hostname.replace(/^www\./, '');
+    return h === 'maps.app.goo.gl' || h === 'g.page' || h === 'goo.gl' || h === 'share.google' || h === 'business.google.com' || h === 'g.co'
+      || (/^google\.[a-z.]+$/.test(h) && (url.pathname.startsWith('/maps') || url.pathname.startsWith('/search')))
+      || h === 'maps.google.com';
+  } catch { return false; }
+}
 // What an owner may change but you approve first, because it is the
 // written voice of the profile.
 export const OWNER_REVIEW_FIELDS = ['body', 'pullQuote', 'ownerQuote', 'ownerName', 'excerpt'] as const;
@@ -157,7 +170,7 @@ export function applyChanges(frontmatter: string, body: string, changes: Record<
     if (k === 'heroImage') { if (typeof v === 'string') fm = setField(fm, 'heroImage', v); continue; }
     if ((OWNER_INSTANT_FIELDS as readonly string[]).includes(k) || (OWNER_REVIEW_FIELDS as readonly string[]).includes(k)) {
       if (k === 'couponStyle' && v && !COUPON_STYLES.includes(v)) continue;
-      fm = setField(fm, k, typeof v === 'string' ? v.trim().slice(0, k === 'excerpt' || k.endsWith('Quote') ? 400 : 200) : null);
+      fm = setField(fm, k, typeof v === 'string' ? v.trim().slice(0, k === 'excerpt' || k.endsWith('Quote') ? 400 : k === 'googleBusinessUrl' ? 600 : 200) : null);
     }
   }
   return { frontmatter: fm, body: b };
