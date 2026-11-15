@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Flooring Contractor in Sioux Falls"
 category: "flooring"
-heroImage: "/images/scenic/levitt-concert-center.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "flooring-faq-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Not always required, but manufacturer-certified installers may be necessary to keep certain product warranties valid — worth asking if you're using a premium material."
   - question: "How do I know if a quote is missing important steps?"
     answer: "Compare it against at least one other quote for the same job — if one includes subfloor prep and old-floor removal and another doesn't mention them, ask directly before assuming the lower number is the better deal."
+heroImage: "https://images.pexels.com/photos/8143679/pexels-photo-8143679.jpeg"
+heroImageAlt: "Spacious living room with herringbone hardwood floors, a neutral sofa, and a fireplace in a bright white interior."
+heroImageCredit:
+  photographer: "Max Vakhtbovych"
+  profileUrl: "https://www.pexels.com/@artbovich"
+  source: "Pexels"
 ---
 
 Flooring installation quality depends heavily on subfloor prep, which is exactly the part homeowners can't easily judge for themselves — making contractor selection more important than with some other home services.

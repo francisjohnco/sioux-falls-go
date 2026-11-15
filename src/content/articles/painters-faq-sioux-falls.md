@@ -1,7 +1,6 @@
 ---
 title: "Painters FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "painters"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "how-to-choose-a-painting-contractor-in-sioux-falls", "painting-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["positive-painting"]
@@ -14,6 +13,12 @@ updatedAt: 2024-02-20
 seo:
   title: "Sioux Falls Painting FAQ | Sioux Falls Go"
   description: "Answers to the painting questions Sioux Falls homeowners ask most — cost, timing, and hiring."
+heroImage: "https://images.pexels.com/photos/7218683/pexels-photo-7218683.jpeg"
+heroImageAlt: "A woman on a ladder rolls white paint onto a wall with blue painter's tape during a home renovation."
+heroImageCredit:
+  photographer: "Blue Bird"
+  profileUrl: "https://www.pexels.com/@blue-bird"
+  source: "Pexels"
 ---
 
 ## When is the best time to schedule exterior painting in Sioux Falls?

@@ -1,7 +1,6 @@
 ---
 title: "Painting and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "painters"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "how-to-choose-a-painting-contractor-in-sioux-falls"]
 relatedBusinesses: ["positive-painting"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "No — interior painting can be done year-round since temperature and humidity are controlled, making winter a good time for interior projects while exterior work waits for spring."
   - question: "Why does old exterior paint fail faster in Sioux Falls than milder climates?"
     answer: "Repeated freeze-thaw cycles stress paint film more than a stable climate does, causing cracking and peeling to show up sooner, especially on wood siding and trim."
+heroImage: "https://images.pexels.com/photos/11606142/pexels-photo-11606142.jpeg"
+heroImageAlt: "Icicles hang from a snow-covered roof eave beside a weathered window on a cold winter day."
+heroImageCredit:
+  photographer: "Sami  Aksu"
+  profileUrl: "https://www.pexels.com/@sami-aksu-48867324"
+  source: "Pexels"
 ---
 
 Sioux Falls's exterior painting season is genuinely narrower than in milder parts of the country, and understanding why helps explain both scheduling and pricing patterns you'll run into when hiring.

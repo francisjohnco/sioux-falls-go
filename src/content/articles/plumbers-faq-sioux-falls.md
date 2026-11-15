@@ -1,7 +1,6 @@
 ---
 title: "Plumbing FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "plumbers"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "how-to-choose-a-plumber-in-sioux-falls", "plumbing-south-dakota-winters-sioux-falls-homeowners"]
@@ -15,6 +14,12 @@ updatedAt: 2024-01-19
 seo:
   title: "Sioux Falls Plumbing FAQ | Sioux Falls Go"
   description: "Answers to the plumbing questions Sioux Falls homeowners ask most — cost, hard water, winter pipes, permits, and hiring."
+heroImage: "https://images.pexels.com/photos/5710334/pexels-photo-5710334.jpeg"
+heroImageAlt: "A hand turns on a chrome bathroom faucet with water flowing into a clean white sink."
+heroImageCredit:
+  photographer: "Diva Plavalaguna"
+  profileUrl: "https://www.pexels.com/@diva-plavalaguna"
+  source: "Pexels"
 ---
 
 ## Is Sioux Falls water actually hard, or is that a myth?

@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Painting Contractor in Sioux Falls?"
 category: "painters"
-heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-painting-contractor-in-sioux-falls", "painters-faq-sioux-falls"]
 relatedBusinesses: ["positive-painting"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Yes, two-story homes typically cost more than single-story due to the equipment and time needed for safe access, not just the extra square footage."
   - question: "Should I pay for painting upfront or after the job is done?"
     answer: "A deposit before starting is standard for larger jobs, with the balance due on completion. Be cautious of anyone asking for full payment before work begins."
+heroImage: "https://images.pexels.com/photos/36153946/pexels-photo-36153946.jpeg"
+heroImageAlt: "Two painters work together in a residential hallway, one rolling white paint onto a wall while wearing a hard hat."
+heroImageCredit:
+  photographer: "DΛVΞ GΛRCIΛ"
+  profileUrl: "https://www.pexels.com/@davegarcia"
+  source: "Pexels"
 ---
 
 Interior painting in Sioux Falls typically runs $2–$4 per square foot including labor and materials, while exterior painting runs higher — often $3,000–$8,000 for a full single-family home, depending on siding material and how much prep work old paint requires.

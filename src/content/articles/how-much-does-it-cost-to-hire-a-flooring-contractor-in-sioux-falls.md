@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Flooring Contractor in Sioux Falls?"
 category: "flooring"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-flooring-contractor-in-sioux-falls", "flooring-faq-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Sometimes, but many flooring contractors get contractor pricing on materials that can offset or exceed the markup, and self-supplied materials can complicate warranty coverage if something goes wrong."
   - question: "Do basements need special flooring considerations in Sioux Falls?"
     answer: "Yes — moisture management matters more in below-grade spaces here given seasonal groundwater shifts, which is why vinyl plank or tile is often recommended over hardwood in Sioux Falls basements."
+heroImage: "https://images.pexels.com/photos/7166935/pexels-photo-7166935.jpeg"
+heroImageAlt: "Modern hallway with rich hardwood laminate flooring, recessed lighting, and wooden interior doors."
+heroImageCredit:
+  photographer: "Max Vakhtbovych"
+  profileUrl: "https://www.pexels.com/@artbovich"
+  source: "Pexels"
 ---
 
 Flooring costs in Sioux Falls vary widely by material, but as a starting point: laminate typically runs $4-$8 per square foot installed, engineered hardwood $6-$12, solid hardwood $8-$15+, and luxury vinyl plank $5-$9 — all including standard installation labor.

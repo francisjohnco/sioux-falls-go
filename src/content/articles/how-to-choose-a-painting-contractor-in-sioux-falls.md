@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Painting Contractor in Sioux Falls"
 category: "painters"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-painting-contractor-in-sioux-falls", "painters-faq-sioux-falls"]
 relatedBusinesses: ["positive-painting"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "At least two or three, since exterior pricing varies more than interior work based on how each contractor assesses prep needs."
   - question: "Is it a red flag if a painter wants to start immediately?"
     answer: "Not automatically, but a reputable painter with a good local reputation is often booked out during peak season (May-September) — extreme availability can sometimes mean they're newer or less in-demand than others."
+heroImage: "https://images.pexels.com/photos/7218525/pexels-photo-7218525.jpeg"
+heroImageAlt: "A wooden ladder, paint roller, drop cloth, and supplies set up in an empty room ready for interior painting."
+heroImageCredit:
+  photographer: "Blue Bird"
+  profileUrl: "https://www.pexels.com/@blue-bird"
+  source: "Pexels"
 ---
 
 South Dakota doesn't require a state license for painting contractors, which shifts more of the verification burden onto you as the homeowner — insurance and reputation matter more here than they might for a licensed trade.

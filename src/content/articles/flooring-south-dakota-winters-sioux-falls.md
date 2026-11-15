@@ -1,7 +1,6 @@
 ---
 title: "Flooring and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "flooring"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "how-to-choose-a-flooring-contractor-in-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Yes — minor seasonal gapping from indoor heating and low humidity is normal for solid hardwood and typically closes back up as humidity rises in summer."
   - question: "Does floor heating affect flooring material choice?"
     answer: "If you're installing radiant floor heating, tile and engineered hardwood generally handle it better than solid hardwood, which is more prone to movement under sustained heat cycling."
+heroImage: "https://images.pexels.com/photos/8894804/pexels-photo-8894804.jpeg"
+heroImageAlt: "Bright living room with warm hardwood floors, large windows showing a winter exterior, and a gray sofa."
+heroImageCredit:
+  photographer: "Clay Elliot"
+  profileUrl: "https://www.pexels.com/@ibidsy"
+  source: "Pexels"
 ---
 
 Sioux Falls homes go through a real humidity swing every year — dry winter air from constant indoor heating, followed by a more humid summer — and that swing has real consequences for certain flooring materials.
