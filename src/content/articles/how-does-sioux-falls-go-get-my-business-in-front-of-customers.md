@@ -1,7 +1,6 @@
 ---
 title: "How Does Sioux Falls Go Get My Business in Front of Customers?"
 category: "for-local-businesses"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "How Sioux Falls Go Gets You In Front of Local Customers"
   description: "Sioux Falls Go get your business in front of customers in few different ways. Here are 7 ways we positions your business to be front and center of local search."
 sourceUrl: "/guides/how-does-sioux-falls-go-get-my-business-in-front-of-customers"
+heroImage: "https://images.pexels.com/photos/4353667/pexels-photo-4353667.jpeg"
+heroImageAlt: "Two smiling cafe workers in aprons look at a laptop together behind a coffee bar counter."
+heroImageCredit:
+  photographer: "Ketut Subiyanto"
+  profileUrl: "https://www.pexels.com/@ketut-subiyanto"
+  source: "Pexels"
 ---
 
 That’s a fair question.

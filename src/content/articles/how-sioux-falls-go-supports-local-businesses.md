@@ -1,7 +1,6 @@
 ---
 title: "How Sioux Falls Go Supports Local Businesses"
 category: "for-local-businesses"
-heroImage: "/images/articles/how-sioux-falls-go-supports-local-businesses.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "How Sioux Falls Go Helps Local Businesses Get Chosen More Often"
   description: "Learn how Sioux Falls Go helps local businesses become known, trusted, and recommended by the community \u2014 before customers even start searching."
 sourceUrl: "/guides/how-sioux-falls-go-supports-local-businesses"
+heroImage: "https://images.pexels.com/photos/8475204/pexels-photo-8475204.jpeg"
+heroImageAlt: "Two smiling business owners in aprons stand together inside a well-stocked local grocery store."
+heroImageCredit:
+  photographer: "Kampus Production"
+  profileUrl: "https://www.pexels.com/@kampus"
+  source: "Pexels"
 ---
 
 Running a local business in Sioux Falls today isn’t simple.

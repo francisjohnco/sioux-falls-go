@@ -1,7 +1,6 @@
 ---
 title: "New to Sioux Falls? Here's Where to Start"
 category: "for-locals"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedBusinesses: ["falls-park", "sculpturewalk", "the-source-coffee-roastery-taproom"]
 evergreen: true
@@ -18,6 +17,8 @@ embeddedFaqs:
     answer: "Start downtown along Phillips Avenue and Falls Park. Nearly everything else in the city radiates out from there, and it's the most walkable stretch to get a feel for the place."
   - question: "Which Sioux Falls neighborhood should I look at first?"
     answer: "It depends what you want. Cathedral District and McKennan Park offer historic character close to downtown, while Whittier is a quieter, family-friendly option with quick downtown access."
+heroImage: "/images/scenic/downtown-2.jpg"
+heroImageAlt: "Aerial sunset view of a midwestern city's downtown skyline with a river, park, and glowing city lights."
 ---
 
 Sioux Falls is one of the fastest-growing cities in the country, which means a lot of people reading this just moved here, or are about to. Here's a starting point that skips the generic relocation-guide advice and points you toward things that are actually real and current.

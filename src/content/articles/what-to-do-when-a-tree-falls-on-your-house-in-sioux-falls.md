@@ -1,7 +1,6 @@
 ---
 title: "What to Do When a Tree Falls on Your House in Sioux Falls"
 category: "local-tree-services"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "What to Do When a Tree Falls on Your House in Sioux Falls"
   description: "What to Do When a Tree Falls on Your House in Sioux Falls \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/what-to-do-when-a-tree-falls-on-your-house-in-sioux-falls"
+heroImage: "https://images.pexels.com/photos/5494023/pexels-photo-5494023.png"
+heroImageAlt: "A large pine tree uprooted by a storm lies on a green lawn, its massive root ball exposed."
+heroImageCredit:
+  photographer: "Castorly Stock"
+  profileUrl: "https://www.pexels.com/@castorlystock"
+  source: "Pexels"
 ---
 
 That sickening crack followed by a thunderous crash is something no Sioux Falls homeowner ever wants to hear. When a tree falls on your house in Sioux Falls, the next few hours matter immensely. Whether it happened during one of our notorious summer thunderstorms rolling across the prairie, an ice-laden February morning when branches finally gave way, or a derecho that swept through Minnehaha County, knowing exactly what to do can protect your family, minimize property damage, and help you navigate insurance claims successfully. This emergency guide walks you through every critical step.

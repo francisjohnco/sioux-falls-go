@@ -1,7 +1,6 @@
 ---
 title: "Spotlight: How SAJMedia Marketing Helps Sioux Falls Businesses Get Found"
 category: "marketing-agencies"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "business-spotlight"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ updatedAt: 2026-07-15
 seo:
   title: "SAJMedia Marketing Spotlight — Sioux Falls Go"
   description: "A closer look at how SAJMedia Marketing helps local Sioux Falls businesses grow through strategic, community-focused marketing."
+heroImage: "https://images.pexels.com/photos/3184311/pexels-photo-3184311.jpeg"
+heroImageAlt: "Diverse team of professionals collaborating around a table covered with charts, laptops, and marketing data."
+heroImageCredit:
+  photographer: "fauxels"
+  profileUrl: "https://www.pexels.com/@fauxels"
+  source: "Pexels"
 ---
 
 Every so often, a local business earns more than a spot in the directory — this month, that's SAJMedia Marketing.

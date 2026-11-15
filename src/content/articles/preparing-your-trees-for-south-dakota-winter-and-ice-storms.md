@@ -1,7 +1,6 @@
 ---
 title: "Preparing Your Trees for South Dakota Winter and Ice Storms"
 category: "local-tree-services"
-heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "how-to-choose-a-tree-service-in-sioux-falls", "emergency-tree-removal-in-sioux-falls-storm-damage-and-24-7-service"]
@@ -15,6 +14,12 @@ seo:
   title: "Preparing Your Trees for South Dakota Winter and Ice Storms"
   description: "Preparing Your Trees for South Dakota Winter and Ice Storms \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/preparing-your-trees-for-south-dakota-winter-and-ice-storms"
+heroImage: "https://images.pexels.com/photos/29687400/pexels-photo-29687400.jpeg"
+heroImageAlt: "Two large bare trees stand in a frozen, snow-covered field under a pale winter sky at dusk."
+heroImageCredit:
+  photographer: "Raul Ling"
+  profileUrl: "https://www.pexels.com/@raulling"
+  source: "Pexels"
 ---
 
 If you've lived through a Sioux Falls winter, you know exactly what our trees face each year. Those April ice storms that coat everything in an inch of glaze. The January cold snaps that plunge temps to twenty below. The heavy, wet snow in March that bends branches to the breaking point. Preparing your trees for South Dakota winter and ice storms isn't just about aesthetics or property values. It's about protecting your investment and preventing the heartbreak of watching a mature oak or elm you've admired for decades split down the middle during a February blizzard. This guide walks you through everything Sioux Falls homeowners need to know to help their trees survive another Upper Midwest winter.
