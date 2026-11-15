@@ -142,7 +142,7 @@ const schema = {
     <div class="champion-hero-glow"></div>
     <div class="container champion-hero-inner-v2">
       <p class="hero-status">
-        {isVerified ? <span class="status-verified"><Icon name="check" size={13} /> Verified</span> : <span class="status-unverified"><Icon name="clock" size={13} /> Not Verified</span>}
+        {isVerified ? <a href="/verified" class="status-verified" title="What Verified means"><Icon name="check" size={13} /> Verified</a> : <a href="/verified" class="status-unverified" title="What Not Verified means"><Icon name="clock" size={13} /> Not Verified</a>}
         {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <> · Give Back Partner</>}
       </p>
       <p class="hero-service-label"><a href={`/${category.data.slug}`} class="category-link">{category.data.name}</a> in Sioux Falls</p>
@@ -355,9 +355,9 @@ const schema = {
         <div class="card trust-card">
           <h3>Why we recommend them</h3>
           <ul class="trust-list">
-            <li><Icon name="check" size={14} /> Locally owned &amp; operated</li>
-            {business.data.googleRating && <li><Icon name="check" size={14} /> {business.data.googleRating.toFixed(1)}+ rating on Google</li>}
-            {isVerified && <li><Icon name="check" size={14} /> Info confirmed by our team</li>}
+            {isVerified && <li><Icon name="check" size={14} /> Locally owned &amp; operated</li>}
+            {business.data.googleRating && <li><Icon name="check" size={14} /> Rated {business.data.googleRating.toFixed(1)} on Google</li>}
+            {isVerified ? <li><Icon name="check" size={14} /> Info confirmed by our team</li> : <li class="trust-pending"><Icon name="clock" size={14} /> <span>Details not yet confirmed with the owner. <a href="/verified">What this means</a></span></li>}
             {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
           </ul>
         </div>
@@ -542,6 +542,10 @@ const schema = {
     background: radial-gradient(circle at 85% 20%, rgba(240,126,35,0.25), transparent 55%);
   }
   .hero-status { font-size: 0.8125rem; color: rgba(255,255,255,0.65); font-weight: 600; margin: 0 0 1rem; }
+  .hero-status a { text-decoration: none; }
+  .hero-status a:hover { text-decoration: underline; }
+  .trust-pending { color: var(--color-navy-light); }
+  .trust-pending a { color: var(--color-orange-dark); font-weight: 700; }
   .hero-status .status-verified { color: #7FE0A8; display: inline-flex; align-items: center; gap: 0.3rem; }
   .hero-status .status-unverified { color: rgba(255,255,255,0.55); display: inline-flex; align-items: center; gap: 0.3rem; }
   .hero-service-label { color: var(--color-gold); font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 0.5rem; }

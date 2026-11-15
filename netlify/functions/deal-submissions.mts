@@ -21,6 +21,15 @@ export default async (req: Request) => {
     return json({ submissions: items });
   }
 
+  try {
+    return await handlePost(req, store);
+  } catch (err: any) {
+    console.error('deal-submissions:', err?.message || err);
+    return json({ error: err?.message || 'Something went wrong. Try again.' }, 502);
+  }
+};
+
+async function handlePost(req: Request, store: ReturnType<typeof getStore>): Promise<Response> {
   const body = await req.json().catch(() => ({}));
   const id = String(body.id || '');
   const sub: any = id ? await store.get(id, { type: 'json' }) : null;
@@ -52,6 +61,6 @@ export default async (req: Request) => {
   }
 
   return json({ error: 'Unknown action' }, 400);
-};
+}
 
 export const config = { path: '/api/deal-submissions' };

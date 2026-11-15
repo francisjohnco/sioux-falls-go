@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Icon from '../components/Icon.astro';
+
+const businesses = await getCollection('businesses');
+const verifiedCount = businesses.filter((b) => b.data.verifiedAt).length;
+const site = 'https://siouxfallsgo.com';
+
+const faqs = [
+  { q: 'How do I know if a business on Sioux Falls Go is verified?', a: 'Look at the top of its profile. Verified businesses show a green Verified check, and their profile lists "Info confirmed by our team." Businesses we have not confirmed yet show Not Verified with a clock.' },
+  { q: 'Can a business pay to be verified?', a: 'No. Verification is free, and it is not an ad or a ranking. It only tells you whether our team has personally confirmed the business and its details with the owner.' },
+  { q: 'Does Verified mean you guarantee the work?', a: 'Verified means we talked with the owner and confirmed the business is real, local, and accurately described. It is not a guarantee of any specific job, so read their reviews and ask questions the way you would before hiring anyone.' },
+  { q: 'Why do some businesses say Not Verified?', a: 'We list businesses we think Sioux Falls should know about, then confirm each one directly with its owner. That takes a real conversation, so it happens one business at a time. Until then, the profile is based on public information.' },
+  { q: 'What is the difference between Verified and Community Champion?', a: 'Verified tells you the details are confirmed. The Community Champion seal means a business that meets our standard has also chosen to invest in Sioux Falls Go as a paying member and funds bigger community giveaways.' },
+];
+
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: 'Verified vs. Not Verified on Sioux Falls Go', url: `${site}/verified` },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<BaseLayout
+  title="What Verified Means"
+  description="Every business on Sioux Falls Go is either Verified or Not Verified. Here is exactly what each label means and how a business gets verified."
+  canonicalPath="/verified"
+  schema={schema}
+>
+  <SiteHeader slot="header" />
+
+  <section class="v-hero">
+    <div class="container v-hero-inner">
+      <span class="v-eyebrow">How to read a profile</span>
+      <h1>Verified vs. Not Verified</h1>
+      <p>Every business on Sioux Falls Go shows one of two labels at the top of its profile. Here is exactly what each one means, so you know how much weight to give what you read.</p>
+    </div>
+  </section>
+
+  <main class="container v-main">
+    <div class="v-cards">
+      <article class="v-card v-card--yes">
+        <span class="v-label v-label--yes"><Icon name="check" size={16} /> Verified</span>
+        <h2>We have personally confirmed this business</h2>
+        <p>Our team has talked with the owner, confirmed the business is locally owned and serves the Sioux Falls area, and made sure the phone number, website, hours, and other details on its profile are accurate.</p>
+        <p class="v-strong">When you see Verified, you can trust what you see.</p>
+      </article>
+      <article class="v-card v-card--no">
+        <span class="v-label v-label--no"><Icon name="clock" size={16} /> Not Verified</span>
+        <h2>Listed from public information</h2>
+        <p>We added this business from public information, such as its Google Business Profile and website, because it looks like a business Sioux Falls should know about. We have not confirmed the details with the owner yet.</p>
+        <p class="v-strong">The information should be accurate, but it has not gone through our verification process. Call ahead before a special trip.</p>
+      </article>
+    </div>
+
+    <p class="v-count"><strong>{verifiedCount}</strong> businesses are verified so far.</p>
+
+    <section class="v-section">
+      <h2>Verification is free, and it cannot be bought</h2>
+      <p>Verification is not an ad and it is not a ranking. A business does not pay to be verified, and paying for anything else on Sioux Falls Go does not make a business verified. The label only answers one question: has our team personally confirmed this business and its details with the owner?</p>
+    </section>
+
+    <section class="v-section v-split">
+      <img src="/images/community-champion-seal.png" alt="Sioux Falls Go Community Champion seal" width="480" height="480" loading="lazy" />
+      <div>
+        <h2>Verified is different from Community Champion</h2>
+        <p>Verified tells you the details are confirmed. The Community Champion seal means a business that already meets our standard has also chosen to invest in Sioux Falls Go as a paying member, and funds bigger giveaways for the community. Champions are always marked with the seal so you know. <a href="/community-champion">What Community Champion means</a></p>
+      </div>
+    </section>
+
+    <section class="v-owner">
+      <div>
+        <h2>Own a business listed here?</h2>
+        <p>If your business shows Not Verified, we would love to confirm it. It is free and starts with a short conversation. If your business is not listed yet and is locally owned, rated 4.8 stars or higher on Google, and ready to give back, apply to be featured.</p>
+      </div>
+      <div class="v-owner-ctas">
+        <a class="button" href="/get-featured">Apply to be featured</a>
+        <a class="button button--ghost" href="/contact">Get my listing verified</a>
+      </div>
+    </section>
+
+    <section class="v-section v-faq">
+      <h2>Common questions</h2>
+      {faqs.map((f) => (<details><summary>{f.q}</summary><p>{f.a}</p></details>))}
+    </section>
+
+    <p class="v-more">Want the bigger picture? Read <a href="/about">how Sioux Falls Go works</a>.</p>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .v-hero { background: linear-gradient(160deg, #F4F8F5 0%, #FFF8F1 100%); border-bottom: 1px solid var(--color-line); padding: 3rem 0 2.6rem; }
+  .v-hero-inner { max-width: 48rem; }
+  .v-eyebrow { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-orange-dark); }
+  .v-hero h1 { font-family: var(--font-display); color: var(--color-navy); font-size: clamp(2rem, 5vw, 3rem); margin: 0.5rem 0 0.8rem; line-height: 1.1; }
+  .v-hero p { font-size: 1.125rem; line-height: 1.6; color: var(--color-navy-light); margin: 0; }
+  .v-main { padding-block: 2.4rem 4rem; max-width: 60rem; }
+  .v-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .v-card { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.5rem 1.5rem 1.3rem; border-top: 5px solid; }
+  .v-card--yes { border-top-color: #2E9E5B; }
+  .v-card--no { border-top-color: #A9B4C4; }
+  .v-label { display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 800; font-size: 0.85rem; padding: 0.35rem 0.75rem; border-radius: 999px; }
+  .v-label--yes { background: #E6F5EC; color: #1F7A45; }
+  .v-label--no { background: #EEF1F5; color: #5B6B82; }
+  .v-card h2 { font-family: var(--font-display); color: var(--color-navy); font-size: 1.3rem; margin: 0.9rem 0 0.5rem; }
+  .v-card p { color: var(--color-navy-light); line-height: 1.6; margin: 0 0 0.7rem; }
+  .v-card .v-strong { color: var(--color-navy); font-weight: 600; margin: 0; }
+  .v-count { text-align: center; color: var(--color-navy-light); margin: 1.4rem 0 0; }
+  .v-count strong { color: #1F7A45; font-size: 1.15rem; }
+  .v-section { margin-top: 2.6rem; }
+  .v-section h2, .v-owner h2 { font-family: var(--font-display); color: var(--color-navy); font-size: 1.5rem; margin: 0 0 0.6rem; }
+  .v-section p { color: var(--color-navy); line-height: 1.7; font-size: 1.0625rem; margin: 0; }
+  .v-section a, .v-more a { color: var(--color-orange-dark); font-weight: 700; }
+  .v-split { display: grid; grid-template-columns: 9rem 1fr; gap: 1.6rem; align-items: center; }
+  .v-split img { width: 100%; height: auto; filter: drop-shadow(0 8px 14px rgba(13,23,48,0.18)); }
+  .v-owner { margin-top: 2.6rem; background: var(--color-navy); color: #fff; border-radius: 1rem; padding: 1.8rem; display: grid; grid-template-columns: 1fr auto; gap: 1.4rem; align-items: center; }
+  .v-owner h2 { color: #fff; }
+  .v-owner p { color: rgba(255,255,255,0.82); line-height: 1.6; margin: 0; }
+  .v-owner-ctas { display: flex; flex-direction: column; gap: 0.6rem; }
+  .v-owner .button--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
+  .v-faq details { border-bottom: 1px solid var(--color-line); padding: 0.95rem 0; }
+  .v-faq summary { cursor: pointer; font-weight: 700; color: var(--color-navy); }
+  .v-faq details p { margin-top: 0.55rem; color: var(--color-navy-light); font-size: 1rem; }
+  .v-more { margin-top: 2rem; color: var(--color-navy-light); }
+  @media (max-width: 44rem) {
+    .v-cards, .v-owner { grid-template-columns: 1fr; }
+    .v-split { grid-template-columns: 6rem 1fr; gap: 1rem; }
+  }
+</style>
