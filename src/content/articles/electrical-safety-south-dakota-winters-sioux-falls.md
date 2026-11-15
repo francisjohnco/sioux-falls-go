@@ -1,7 +1,6 @@
 ---
 title: "Electrical Safety and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "electricians"
-heroImage: "/images/stock/cornfield.jpg"
 contentType: "seasonal-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-an-electrician-in-sioux-falls", "how-to-choose-an-electrician-in-sioux-falls"]
@@ -22,6 +21,12 @@ updatedAt: 2023-12-14
 seo:
   title: "Winter Electrical Safety Guide for Sioux Falls Homeowners"
   description: "Why breakers trip more in a Sioux Falls winter, what actually causes it, and when a tripping breaker means a real electrical problem."
+heroImage: "https://images.pexels.com/photos/40229646/pexels-photo-40229646.jpeg"
+heroImageAlt: "A snow-covered white colonial home sits beneath a bright blue winter sky with power lines visible nearby."
+heroImageCredit:
+  photographer: "Matt Barnard"
+  profileUrl: "https://www.pexels.com/@matt-barnard-21952098"
+  source: "Pexels"
 ---
 
 Electrical service calls genuinely spike in Sioux Falls once temperatures drop into the single digits and below, and it's worth understanding why before assuming the worst — because in most cases, the cause is load, not a failing electrical system.

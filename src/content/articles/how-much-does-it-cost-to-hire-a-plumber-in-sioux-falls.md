@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Plumber in Sioux Falls?"
 category: "plumbers"
-heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]
@@ -22,6 +21,12 @@ updatedAt: 2023-12-17
 seo:
   title: "Plumber Costs in Sioux Falls (2024 Guide)"
   description: "Real price ranges for plumbing work in Sioux Falls — service calls, drain cleaning, water heater replacement, and why hard water changes the math."
+heroImage: "https://images.pexels.com/photos/37771020/pexels-photo-37771020.jpeg"
+heroImageAlt: "Chrome kitchen faucet running water into an undermount sink on a granite countertop with modern appliances in the background."
+heroImageCredit:
+  photographer: "Nilzo Farías"
+  profileUrl: "https://www.pexels.com/@nilzo-farias-421916012"
+  source: "Pexels"
 ---
 
 Most plumbing service calls in Sioux Falls run $85 to $150 for the visit and diagnosis alone, before parts or labor on the actual repair. That baseline holds fairly steady across the metro, but a few things push the number up faster here than in a lot of other cities — and most of them come back to the same root cause: our water.

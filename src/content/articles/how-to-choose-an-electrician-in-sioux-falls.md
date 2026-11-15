@@ -1,7 +1,6 @@
 ---
 title: "How to Choose an Electrician in Sioux Falls"
 category: "electricians"
-heroImage: "/images/stock/cornfield.jpg"
 contentType: "buying-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-an-electrician-in-sioux-falls", "electricians-faq-sioux-falls"]
@@ -22,6 +21,12 @@ updatedAt: 2023-12-13
 seo:
   title: "How to Choose an Electrician in Sioux Falls | Sioux Falls Go"
   description: "What to check before hiring a Sioux Falls electrician — licensing, permits, real questions to ask, and red flags."
+heroImage: "https://images.pexels.com/photos/29491360/pexels-photo-29491360.jpeg"
+heroImageAlt: "An electrician carefully strips wiring with pliers while working outdoors near a yellow toolbox."
+heroImageCredit:
+  photographer: "Elvan  Lam"
+  profileUrl: "https://www.pexels.com/@elvan-lam-1105439946"
+  source: "Pexels"
 ---
 
 Electricians are state-licensed in South Dakota, which makes verification the easiest and most important first step — more so than with almost any other home service, since electrical work done wrong is a genuine safety risk, not just a quality-of-work issue.

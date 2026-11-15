@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Plumber in Sioux Falls"
 category: "plumbers"
-heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "buying-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-much-does-it-cost-to-hire-a-plumber-in-sioux-falls", "plumbers-faq-sioux-falls"]
@@ -22,6 +21,12 @@ updatedAt: 2024-01-14
 seo:
   title: "How to Choose a Plumber in Sioux Falls | Sioux Falls Go"
   description: "What to check before hiring a Sioux Falls plumber — licensing, insurance, real questions to ask, and red flags to watch for."
+heroImage: "https://images.pexels.com/photos/6419128/pexels-photo-6419128.jpeg"
+heroImageAlt: "A plumber's hands tightening steel pipe fittings beneath a sink during a residential installation."
+heroImageCredit:
+  photographer: "Anıl Karakaya"
+  profileUrl: "https://www.pexels.com/@anilkarakaya"
+  source: "Pexels"
 ---
 
 South Dakota licenses plumbers at the state level, which means the first and easiest check you can do is confirm the person showing up at your door is actually licensed to do the work, not just employed by a company that has a license somewhere on file.

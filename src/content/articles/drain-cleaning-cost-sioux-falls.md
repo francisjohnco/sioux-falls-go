@@ -16,6 +16,12 @@ updatedAt: 2026-11-19
 seo:
   title: "Drain Cleaning Cost in Sioux Falls, SD (2026 Guide)"
   description: "What drain cleaning usually costs for sinks, toilets, tubs, and main lines, what changes the price, and how to get a fair quote in Sioux Falls."
+heroImage: "https://images.pexels.com/photos/34295401/pexels-photo-34295401.jpeg"
+heroImageAlt: "Chrome faucet running water into a round stainless steel sink against a marble backsplash."
+heroImageCredit:
+  photographer: "Zulfugar Karimov"
+  profileUrl: "https://www.pexels.com/@zulfugarkarimov"
+  source: "Pexels"
 ---
 
 Most people who search for drain cleaning prices are standing in an inch of water or staring at a sink that will not drain, so here is the short version. A single clogged fixture usually costs a couple hundred dollars to clear. A clogged main sewer line costs more, and a job that needs hydro jetting or a camera inspection can run into the high hundreds or beyond. What you actually pay depends on where the clog is, how it gets cleared, and when you call. If you are still working out what kind of clog you have, start with our [complete guide to drain cleaning in Sioux Falls](/guides/drain-cleaning-sioux-falls).

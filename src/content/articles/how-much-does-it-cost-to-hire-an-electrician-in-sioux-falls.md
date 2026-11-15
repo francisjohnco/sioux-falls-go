@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire an Electrician in Sioux Falls?"
 category: "electricians"
-heroImage: "/images/stock/cornfield.jpg"
 contentType: "cost-guide"
 relatedNeighborhoods: []
 relatedArticles: ["how-to-choose-an-electrician-in-sioux-falls", "electricians-faq-sioux-falls"]
@@ -23,6 +22,12 @@ updatedAt: 2023-12-04
 seo:
   title: "Electrician Costs in Sioux Falls (2024 Guide)"
   description: "Real price ranges for electrical work in Sioux Falls — service calls, panel upgrades, rewiring, and why older neighborhoods often cost more."
+heroImage: "https://images.pexels.com/photos/7647233/pexels-photo-7647233.jpeg"
+heroImageAlt: "A smiling electrician works on wiring along an interior wall during a home renovation."
+heroImageCredit:
+  photographer: "Anastasia  Shuraeva"
+  profileUrl: "https://www.pexels.com/@anastasia-shuraeva"
+  source: "Pexels"
 ---
 
 A standard electrician service call in Sioux Falls runs $85 to $150 for the visit itself, with the total job cost depending heavily on what they find once they're there — which is truer for electrical work than almost any other home service, since so much of the job is hidden behind walls until someone opens them up.
