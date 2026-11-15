@@ -1,7 +1,6 @@
 ---
 title: "Top 10 Garage Door Services in Sioux Falls"
 category: "for-locals"
-heroImage: "/images/articles/top-10-garage-door-services-in-sioux-falls.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Top 10 Garage Door Services in Sioux Falls"
   description: "Discover the top-rated garage door repair and installation services in Sioux Falls. Trusted by locals, backed by reviews, and community-approved in 2025."
 sourceUrl: "/guides/top-10-garage-door-services-in-sioux-falls"
+heroImage: "https://images.pexels.com/photos/31602311/pexels-photo-31602311.jpeg"
+heroImageAlt: "A red brick suburban home with a white garage door, green lawn, and blue sky."
+heroImageCredit:
+  photographer: "JAELEN KEMPSON"
+  profileUrl: "https://www.pexels.com/@jaelen-kempson-2151267602"
+  source: "Pexels"
 ---
 
 **2025 Local Favorite garage door repair and installation services in Sioux Falls**

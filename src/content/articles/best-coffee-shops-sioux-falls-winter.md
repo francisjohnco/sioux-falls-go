@@ -1,7 +1,6 @@
 ---
 title: "The Best Coffee Shops for a Sioux Falls Winter Day"
 category: "coffee-shops"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "coffee-shops-by-neighborhood-sioux-falls"]
 relatedBusinesses: ["la-luna-cafe"]
@@ -19,6 +18,12 @@ embeddedFaqs:
     answer: "Beyond good coffee, real winter appeal comes down to genuine warmth and coziness, comfortable seating for longer stays, and good natural light during Sioux Falls's shorter winter days."
   - question: "Do coffee shops get busier in winter?"
     answer: "Many see increased foot traffic in the colder months, partly because a warm, cozy indoor space has more appeal when it's genuinely cold outside."
+heroImage: "https://images.pexels.com/photos/459476/pexels-photo-459476.jpeg"
+heroImageAlt: "Hands in a teal knit sweater cradle a latte art cappuccino on a rustic wooden table beside an open notebook."
+heroImageCredit:
+  photographer: "Pixabay"
+  profileUrl: "https://www.pexels.com/@pixabay"
+  source: "Pexels"
 ---
 
 A Sioux Falls winter — genuinely cold, with limited daylight — changes what makes a coffee shop appealing, beyond just quality coffee.

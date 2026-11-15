@@ -1,7 +1,6 @@
 ---
 title: "Visiting Sioux Falls? Here's Where to Find Great Coffee"
 category: "coffee-shops"
-heroImage: "/images/stock/cornfield.jpg"
 contentType: "visitor-guide"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "coffee-shops-for-remote-work-sioux-falls"]
 relatedBusinesses: ["la-luna-cafe"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Most are genuinely welcoming to visitors — Sioux Falls's coffee culture doesn't have the kind of exclusive, locals-only feel some larger cities' scenes can have."
   - question: "Should I skip chain coffee shops while visiting?"
     answer: "That's a personal call, but if you're looking for something that feels distinctly Sioux Falls rather than identical to home, the independent shops downtown are where that character actually lives."
+heroImage: "https://images.pexels.com/photos/302901/pexels-photo-302901.jpeg"
+heroImageAlt: "A barista pours steamed milk into a latte cup, creating a delicate leaf pattern in the foam."
+heroImageCredit:
+  photographer: "Chevanon Photography"
+  profileUrl: "https://www.pexels.com/@chevanon"
+  source: "Pexels"
 ---
 
 If you're in Sioux Falls for a day of exploring Falls Park, downtown, and the SculptureWalk, skipping the chains for a local coffee shop is an easy way to add some real local character to your visit.
