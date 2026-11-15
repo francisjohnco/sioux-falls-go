@@ -1,7 +1,6 @@
 ---
 title: "Top 10 Landscaping Companies In Sioux Falls 2025"
 category: "for-locals"
-heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Top 10 Landscaping Companies %sep% %sitename%"
   description: "Discover the top 10 landscaping companies in Sioux Falls -rated 4.7+ for their quality, community focus, and seasonal specials."
 sourceUrl: "/guides/top-10-landscaping-companies-in-sioux-falls-2025"
+heroImage: "https://images.pexels.com/photos/27309420/pexels-photo-27309420.jpeg"
+heroImageAlt: "A groundskeeper mows a lush green golf course fairway under a partly cloudy sky."
+heroImageCredit:
+  photographer: "Makesavanh Oudthalith"
+  profileUrl: "https://www.pexels.com/@makesavanh-oudthalith-1521938055"
+  source: "Pexels"
 ---
 
 Coming soon

@@ -1,7 +1,6 @@
 ---
 title: "What Is Sioux Falls Go? (And Why It Matters)"
 category: "for-local-businesses"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,8 @@ seo:
   title: "What Is Sioux Falls Go? (And Why It Matters)"
   description: "What Is Sioux Falls Go? (And Why It Matters) \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/what-is-sioux-falls-go-and-why-it-matters"
+heroImage: "/images/scenic/downtown-2.jpg"
+heroImageAlt: "Aerial view of a Midwestern city skyline glowing under a dramatic orange and purple sunset sky."
 ---
 
 _A new way to support local—and build a stronger Sioux Falls._

@@ -1,7 +1,6 @@
 ---
 title: "How Getting Featured on Sioux Falls Go Works (For Business Owners)"
 category: "for-local-businesses"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,8 @@ seo:
   title: "How Getting Featured on Sioux Falls Go Works (For Business Owners)"
   description: "How Getting Featured on Sioux Falls Go Works (For Business Owners) \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/how-getting-featured-on-sioux-falls-go-works-for-business-owners"
+heroImage: "/images/scenic/downtown-2.jpg"
+heroImageAlt: "Aerial sunset view of downtown Sioux Falls with the Big Sioux River winding through the city."
 ---
 
 Sioux Falls Go was built to spotlight the businesses that are truly making a difference in our community. Not through ads. Not through big budgets. But through real service, real excellence, and real heart.

@@ -1,7 +1,6 @@
 ---
 title: "Best Coffee Shops for Remote Work in Sioux Falls"
 category: "coffee-shops"
-heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-coffee-shops-in-sioux-falls", "visiting-sioux-falls-where-to-find-great-coffee"]
 relatedBusinesses: ["la-luna-cafe"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Most independent shops do, though it's worth having a mobile hotspot as backup for anything time-sensitive, since any single connection can have an off day."
   - question: "Are outlets usually easy to find?"
     answer: "It varies by shop and by seat — arriving outside peak hours generally means better odds of a table near an outlet."
+heroImage: "https://images.pexels.com/photos/2267854/pexels-photo-2267854.jpeg"
+heroImageAlt: "A laptop and Chemex coffee brewer sit on a wooden café table beside a window, ready for a productive work session."
+heroImageCredit:
+  photographer: "Iain"
+  profileUrl: "https://www.pexels.com/@iain-1191393"
+  source: "Pexels"
 ---
 
 Not every coffee shop is set up for a real work session, and the ones that are tend to have a few things in common worth knowing before you settle in with a laptop for a few hours.

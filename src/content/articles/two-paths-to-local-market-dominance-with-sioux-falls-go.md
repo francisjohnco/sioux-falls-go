@@ -1,7 +1,6 @@
 ---
 title: "Two Paths to Local Market Dominance with Sioux Falls Go"
 category: "for-local-businesses"
-heroImage: "/images/articles/two-paths-to-local-market-dominance-with-sioux-falls-go.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Two Paths to Local Market Dominance with Sioux Falls Go"
   description: "Two Paths to Local Market Dominance with Sioux Falls Go \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/two-paths-to-local-market-dominance-with-sioux-falls-go"
+heroImage: "https://images.pexels.com/photos/2353355/pexels-photo-2353355.jpeg"
+heroImageAlt: "Sunlight bursts over a historic brick building along a tree-lined downtown commercial street on a clear day."
+heroImageCredit:
+  photographer: "Brett Sayles"
+  profileUrl: "https://www.pexels.com/@brett-sayles"
+  source: "Pexels"
 ---
 
 **Sioux Falls GO**  is a _community-powered marketing platform_  built to elevate the most trusted, high-rated local businesses in our city.

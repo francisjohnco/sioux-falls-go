@@ -1,7 +1,6 @@
 ---
 title: "Top 10 Pest Control Companies in Sioux Falls - Summer 2025"
 category: "for-locals"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Top 10 Pest Control Companies in Sioux Falls - Summer 2025"
   description: "Discover the two 10 pest control companies in Sioux Falls for summer 2025. Base on real reviews and local recommendations. Find trusted, top-rated pest control "
 sourceUrl: "/guides/top-10-pest-control-companies-in-sioux-falls-summer-2025"
+heroImage: "https://images.pexels.com/photos/4098778/pexels-photo-4098778.jpeg"
+heroImageAlt: "A pest control worker in a white protective suit sprays treatment inside a residential living room."
+heroImageCredit:
+  photographer: "Matilda Wormwood"
+  profileUrl: "https://www.pexels.com/@matilda-wormwood"
+  source: "Pexels"
 ---
 
 **Your guide top top-rated pest control companies in Sioux Falls this summer**

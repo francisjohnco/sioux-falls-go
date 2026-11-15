@@ -1,7 +1,6 @@
 ---
 title: "Best Coffee Shops in Sioux Falls"
 category: "coffee-shops"
-heroImage: "/images/articles/best-coffee-shops-in-sioux-falls.png"
 contentType: "local-resource"
 relatedArticles: ["coffee-shops-for-remote-work-sioux-falls", "visiting-sioux-falls-where-to-find-great-coffee"]
 relatedBusinesses: ["la-luna-cafe"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Most do, though policies on how long you can camp out with a laptop vary — some are very welcoming to remote workers, others are more focused on quick turnover."
   - question: "Is downtown Sioux Falls the main coffee shop hub?"
     answer: "It's a major concentration point, particularly around Phillips Avenue, but quality coffee shops exist throughout the metro, not just downtown."
+heroImage: "https://images.pexels.com/photos/24613535/pexels-photo-24613535.jpeg"
+heroImageAlt: "A barista pours steamed milk into a latte, creating swirling art on the surface of the espresso drink."
+heroImageCredit:
+  photographer: "Jack Atkinson"
+  profileUrl: "https://www.pexels.com/@jack-atkinson-1289771108"
+  source: "Pexels"
 ---
 
 Sioux Falls has a genuinely active independent coffee shop scene, anchored downtown but extending well beyond it — worth knowing whether you're a local building a regular routine or visiting and looking for something better than a chain.
