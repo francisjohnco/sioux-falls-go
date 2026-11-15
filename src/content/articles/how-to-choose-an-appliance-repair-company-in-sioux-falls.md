@@ -1,7 +1,6 @@
 ---
 title: "How to Choose an Appliance Repair Company in Sioux Falls"
 category: "appliance-repair-service"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-an-appliance-repair-company-in-sioux-falls", "appliance-repair-faq-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Yes, most reputable companies warranty both parts and labor for a defined period — ask specifically what's covered and for how long."
   - question: "Should I be suspicious of a very fast diagnosis over the phone?"
     answer: "A rough idea over the phone based on symptoms is normal, but a firm price quote without an in-person look is less reliable — appliance issues often have more than one possible cause."
+heroImage: "https://images.pexels.com/photos/37518008/pexels-photo-37518008.jpeg"
+heroImageAlt: "A modern kitchen with stainless steel range, cookware, and refrigerator under warm under-cabinet lighting."
+heroImageCredit:
+  photographer: "tazzmanian studios insta"
+  profileUrl: "https://www.pexels.com/@tazzmanian-studios-insta-2161486905"
+  source: "Pexels"
 ---
 
 Appliance repair quality depends heavily on accurate diagnosis, which makes a technician's experience with your specific appliance brand and type genuinely relevant to getting it fixed right the first time.

@@ -1,7 +1,6 @@
 ---
 title: "How to shop Local (and Make every Dollar count)"
 category: "consumer-guide"
-heroImage: "/images/articles/how-to-shop-local-and-make-every-dollar-count.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "How to shop Local (and Make every Dollar count)"
   description: "Discover how Sioux Falls Go makes shopping local exciting, impactful, and easy. Support varified, high-integrity businesses that invest in our community."
 sourceUrl: "/guides/how-to-shop-local-and-make-every-dollar-count"
+heroImage: "https://images.pexels.com/photos/8387127/pexels-photo-8387127.jpeg"
+heroImageAlt: "Two women browse clothing racks together inside a bright, modern boutique with green plants and pastel garments."
+heroImageCredit:
+  photographer: "Ron Lach"
+  profileUrl: "https://www.pexels.com/@ron-lach"
+  source: "Pexels"
 ---
 
 **Sioux Falls Go. Where Your Dollars Build Community**

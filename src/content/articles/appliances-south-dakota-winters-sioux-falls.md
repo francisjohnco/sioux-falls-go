@@ -1,7 +1,6 @@
 ---
 title: "Appliances and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "appliance-repair-service"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-an-appliance-repair-company-in-sioux-falls", "how-to-choose-an-appliance-repair-company-in-sioux-falls"]
 relatedBusinesses: ["the-appliance-doc"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Combined with Sioux Falls's already-hard water, colder water temperatures can make detergents less effective and increase scale-related strain on these appliances during winter months."
   - question: "Should I have appliances checked before winter specifically?"
     answer: "A pre-winter check of your water heater and any appliance with a water line is a reasonable preventive step, especially in an older home, given how much more disruptive a mid-winter breakdown is than one in a milder season."
+heroImage: "https://images.pexels.com/photos/6944212/pexels-photo-6944212.jpeg"
+heroImageAlt: "A senior woman holds a warm cup indoors while gazing out at a snow-covered home porch in winter."
+heroImageCredit:
+  photographer: "cottonbro studio"
+  profileUrl: "https://www.pexels.com/@cottonbro"
+  source: "Pexels"
 ---
 
 Certain appliances face genuinely more strain during a Sioux Falls winter, which is worth understanding both to prevent breakdowns and to make sense of ones that happen.

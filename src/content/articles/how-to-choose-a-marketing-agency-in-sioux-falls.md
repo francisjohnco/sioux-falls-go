@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Marketing Agency in Sioux Falls"
 category: "marketing-agencies"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls", "marketing-agencies-faq-sioux-falls"]
 relatedBusinesses: ["sajmedia-marketing"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Yes — no legitimate marketing agency can guarantee a specific search ranking, since that's ultimately controlled by Google's algorithm, not the agency. Guarantees like this are a real warning sign."
   - question: "How often should I expect reporting or check-ins?"
     answer: "Monthly reporting at minimum is standard for most engagements — an agency that's vague about how or whether they'll report results is worth questioning further."
+heroImage: "https://images.pexels.com/photos/8068695/pexels-photo-8068695.jpeg"
+heroImageAlt: "Two professionals point at printed bar charts and data graphs spread across a desk during a business review meeting."
+heroImageCredit:
+  photographer: "RDNE Stock project"
+  profileUrl: "https://www.pexels.com/@rdne"
+  source: "Pexels"
 ---
 
 Marketing agencies sell a service that's harder to evaluate upfront than most home services — the actual quality only becomes clear over months, which makes checking real track record more important here than almost anywhere else.

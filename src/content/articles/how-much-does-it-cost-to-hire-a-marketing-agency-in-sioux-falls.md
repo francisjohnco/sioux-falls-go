@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Marketing Agency in Sioux Falls?"
 category: "marketing-agencies"
-heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-marketing-agency-in-sioux-falls", "marketing-agencies-faq-sioux-falls"]
 relatedBusinesses: ["sajmedia-marketing"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Often separate — website design/build is commonly quoted apart from ongoing marketing services like SEO or ad management, though some agencies bundle both."
   - question: "Why do quotes vary so much between marketing agencies?"
     answer: "Scope varies significantly — one quote might include just social media posting while another includes SEO, ad management, and content creation, making direct price comparison difficult without matching scope first."
+heroImage: "https://images.pexels.com/photos/1181346/pexels-photo-1181346.jpeg"
+heroImageAlt: "Two colleagues review a digital marketing flowchart drawn in red marker on a whiteboard."
+heroImageCredit:
+  photographer: "Christina Morillo"
+  profileUrl: "https://www.pexels.com/@divinetechygirl"
+  source: "Pexels"
 ---
 
 Local marketing services for a Sioux Falls small business commonly run $500-$2,500+ monthly depending on scope, with local SEO-focused engagements often on the lower-to-middle end and full-service marketing (ads, content, SEO combined) on the higher end.

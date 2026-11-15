@@ -1,7 +1,6 @@
 ---
 title: "What Sioux Falls Homeowners Really Want to Know About Plumbing"
 category: "consumer-guide"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Sioux Falls Plumbing FAQ"
   description: "Find answers to common plumbing questions in Sioux Falls, including cost expectations, when to call a pro, emergency services, and tips for maintaining your hom"
 sourceUrl: "/guides/what-sioux-falls-homeowners-really-want-to-know-about-plumbing"
+heroImage: "https://images.pexels.com/photos/4194980/pexels-photo-4194980.jpeg"
+heroImageAlt: "A modern white bathroom sink with a gold faucet running water, soap dispensers, and a cotton stem decoration nearby."
+heroImageCredit:
+  photographer: "https://kaboompics.com/"
+  profileUrl: "https://www.pexels.com/@karola-g"
+  source: "Pexels"
 ---
 
 Find answers to common plumbing questions in Sioux Falls, including cost expectations, when to call a pro, emergency services, and tips for maintaining your home plumbing.
