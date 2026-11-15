@@ -6,6 +6,7 @@ seo:
 googleReviewCount: 9
 googleRating: 5
 category: "marketing-agencies"
+googleBusinessUrl: "Growth Strategist"
 ownerName: "Francis John"
 responseTime: "within 24 hours"
 website: "https://sajmedia.co"
