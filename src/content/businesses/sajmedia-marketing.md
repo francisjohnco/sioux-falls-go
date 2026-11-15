@@ -6,6 +6,7 @@ seo:
 googleReviewCount: 9
 googleRating: 5
 category: "marketing-agencies"
+logo: "/images/businesses/sajmedia-marketing-logo-1794771566351.png"
 ownerRole: "Growth Strategist"
 ownerName: "Francis John"
 responseTime: "within 24 hours"
