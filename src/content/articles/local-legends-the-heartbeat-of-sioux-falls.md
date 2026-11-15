@@ -1,7 +1,6 @@
 ---
 title: "Local Legends \u2013 The Heartbeat of Sioux Falls"
 category: "consumer-guide"
-heroImage: "/images/articles/local-legends-the-heartbeat-of-sioux-falls.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Local Legends \u2013 The Heartbeat of Sioux Falls"
   description: "Local Legends \u2013 The Heartbeat of Sioux Falls \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/local-legends-the-heartbeat-of-sioux-falls"
+heroImage: "https://images.pexels.com/photos/38598691/pexels-photo-38598691.jpeg"
+heroImageAlt: "A color guard marches down a city street lined with crowds during a festive parade."
+heroImageCredit:
+  photographer: "Charles Criscuolo"
+  profileUrl: "https://www.pexels.com/@onetrillionpixels"
+  source: "Pexels"
 ---
 
 In every thriving city, there’s an unsung group of heroes — people who believe in more than just good prices or convenience. 

@@ -1,7 +1,6 @@
 ---
 title: "Window Cleaning and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "window-cleaning"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-window-cleaning-company-in-sioux-falls", "how-to-choose-a-window-cleaning-company-in-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "It's possible but not ideal — cleaning solution can freeze on the glass before it's wiped away, leading to streaking. Most companies prefer temperatures consistently above freezing."
   - question: "Is spring or fall the better cleaning window?"
     answer: "Both serve a purpose — spring addresses winter buildup, fall prepares windows for maximum light during shorter winter days. Many homeowners do both."
+heroImage: "https://images.pexels.com/photos/14512087/pexels-photo-14512087.jpeg"
+heroImageAlt: "A snow-covered house surrounded by frost-laden trees under a bright blue winter sky."
+heroImageCredit:
+  photographer: "Damir K"
+  profileUrl: "https://www.pexels.com/@damir"
+  source: "Pexels"
 ---
 
 Sioux Falls windows take real seasonal wear that's worth understanding before assuming a single annual cleaning is enough.

@@ -1,7 +1,6 @@
 ---
 title: "Tree Services FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "local-tree-services"
-heroImage: "/images/stock/cathedral.jpg"
 contentType: "faq"
 relatedArticles: ["how-to-choose-a-tree-service-in-sioux-falls", "how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "preparing-your-trees-for-south-dakota-winter-and-ice-storms"]
 relatedBusinesses: ["american-tree-service"]
@@ -14,6 +13,12 @@ updatedAt: 2025-03-05
 seo:
   title: "Sioux Falls Tree Service FAQ | Sioux Falls Go"
   description: "Quick answers to the most common tree service questions in Sioux Falls — cost, timing, and hiring."
+heroImage: "https://images.pexels.com/photos/34819918/pexels-photo-34819918.jpeg"
+heroImageAlt: "Looking up through the spreading canopy of a large deciduous tree with sunlit green and yellow leaves."
+heroImageCredit:
+  photographer: "Peter Xie"
+  profileUrl: "https://www.pexels.com/@peter-xie-371876898"
+  source: "Pexels"
 ---
 
 ## Do I need a permit to remove a tree on my property?

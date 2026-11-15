@@ -1,7 +1,6 @@
 ---
 title: "Window Cleaning FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "window-cleaning"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-window-cleaning-company-in-sioux-falls", "how-to-choose-a-window-cleaning-company-in-sioux-falls", "window-cleaning-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]
@@ -14,6 +13,12 @@ updatedAt: 2025-04-02
 seo:
   title: "Sioux Falls Window Cleaning FAQ | Sioux Falls Go"
   description: "Answers to the window cleaning questions Sioux Falls homeowners ask most — cost, timing, and hiring."
+heroImage: "https://images.pexels.com/photos/35081286/pexels-photo-35081286.jpeg"
+heroImageAlt: "A window cleaner in a safety harness scrubs the exterior glass of a multi-story building while suspended from ropes."
+heroImageCredit:
+  photographer: "Jean-Guillaume Starnini"
+  profileUrl: "https://www.pexels.com/@jean-guillaume-starnini-2157985596"
+  source: "Pexels"
 ---
 
 ## How much does window cleaning cost for an average Sioux Falls home?

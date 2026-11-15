@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Window Cleaning Company in Sioux Falls"
 category: "window-cleaning"
-heroImage: "/images/stock/cathedral.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-window-cleaning-company-in-sioux-falls", "window-cleaning-faq-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Reasonable companies typically offer to return and fix any streaks or missed spots within a short window after service — worth asking about upfront."
   - question: "Does weather affect scheduling?"
     answer: "Yes — window cleaning is usually rescheduled around rain or high wind, since results won't hold and safety is a factor for exterior or second-story work."
+heroImage: "https://images.pexels.com/photos/40797270/pexels-photo-40797270.jpeg"
+heroImageAlt: "Two window cleaners suspended on ropes scrubbing the glass facade of a large commercial building."
+heroImageCredit:
+  photographer: "Vikram Aditya"
+  profileUrl: "https://www.pexels.com/@vikram-aditya-213772137"
+  source: "Pexels"
 ---
 
 Window cleaning seems straightforward, but second-story access and interior scheduling logistics make a company's real experience and insurance coverage worth checking before booking.

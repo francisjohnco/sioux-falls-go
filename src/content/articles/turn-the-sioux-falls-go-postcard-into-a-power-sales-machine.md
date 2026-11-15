@@ -1,7 +1,6 @@
 ---
 title: "Turn The Sioux Falls Go Postcard into a power Sales Machine"
 category: "grow-with-sfg"
-heroImage: "/images/articles/turn-the-sioux-falls-go-postcard-into-a-power-sales-machine.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Turn The Sioux Falls Go Postcard into a power Sales Machine"
   description: "Turn The Sioux Falls Go Postcard into a power Sales Machine \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/turn-the-sioux-falls-go-postcard-into-a-power-sales-machine"
+heroImage: "https://images.pexels.com/photos/10376248/pexels-photo-10376248.jpeg"
+heroImageAlt: "A businessman in a suit reviews printed documents at a modern office desk with a laptop nearby."
+heroImageCredit:
+  photographer: "RDNE Stock project"
+  profileUrl: "https://www.pexels.com/@rdne"
+  source: "Pexels"
 ---
 
 **How to Turn Your Sioux Falls[Spotlight Postcard](/guides/shine-bright-with-the-sioux-falls-go-postcard) into a Sales Powerhouse** **to** **Get Better Results (than solo mail) from Your Direct Mail Campaign**

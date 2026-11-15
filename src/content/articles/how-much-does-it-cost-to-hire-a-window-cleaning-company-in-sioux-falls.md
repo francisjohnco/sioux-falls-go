@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Window Cleaning Company in Sioux Falls?"
 category: "window-cleaning"
-heroImage: "/images/stock/cathedral.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-window-cleaning-company-in-sioux-falls", "window-cleaning-faq-sioux-falls"]
 relatedBusinesses: ["sioux-empire-shine"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Often yes — screen cleaning and track detailing are commonly quoted as add-ons rather than automatically included in a standard window cleaning price."
   - question: "Is there a minimum service charge?"
     answer: "Many companies have a minimum charge regardless of window count, since travel and setup time is similar whether cleaning 8 windows or 20 — worth asking about for smaller jobs."
+heroImage: "https://images.pexels.com/photos/9462100/pexels-photo-9462100.jpeg"
+heroImageAlt: "A person wiping a residential window with a blue microfiber cloth, with green trees visible outside."
+heroImageCredit:
+  photographer: "Liliana Drew"
+  profileUrl: "https://www.pexels.com/@liliana-drew"
+  source: "Pexels"
 ---
 
 Residential window cleaning in Sioux Falls typically runs $4-$8 per pane for standard windows, with most whole-home jobs falling in the $150-$350 range depending on window count and whether both interior and exterior are included.
