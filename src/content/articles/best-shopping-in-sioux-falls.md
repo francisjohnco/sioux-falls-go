@@ -1,7 +1,6 @@
 ---
 title: "Best Shopping in Sioux Falls"
 category: "shopping-retail"
-heroImage: "/images/stock/florist-bouquet.jpg"
 contentType: "local-resource"
 relatedArticles: ["sioux-falls-shopping-a-locals-guide", "visiting-sioux-falls-where-to-shop"]
 relatedBusinesses: ["animalwisedco"]
@@ -19,6 +18,12 @@ embeddedFaqs:
     answer: "Both — the Empire Mall area is a major retail hub, but downtown and several neighborhoods support a genuine independent boutique and specialty shop scene worth exploring separately."
   - question: "What's the Empire Mall area known for?"
     answer: "It's Sioux Falls's largest concentrated retail and mall district, drawing shoppers from across the wider region, not just the city itself."
+heroImage: "https://images.pexels.com/photos/16218522/pexels-photo-16218522.jpeg"
+heroImageAlt: "Shoppers walk through a brick-vaulted indoor mall corridor lined with retail stores and hanging Edison bulb lights."
+heroImageCredit:
+  photographer: "Arian Fernandez"
+  profileUrl: "https://www.pexels.com/@troopper84"
+  source: "Pexels"
 ---
 
 Sioux Falls shopping splits into a few distinct experiences worth knowing, whether you're a resident building a regular routine or visiting and looking for something beyond the obvious.

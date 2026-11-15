@@ -1,7 +1,6 @@
 ---
 title: "Community Spotlight: SiouxFallsFlooring.com \u2014 Helping Homeowners Make Confident Flooring Decisions"
 category: "flooring"
-heroImage: "/images/articles/community-spotlight-siouxfallsflooring-com-helping-homeowners-make-confident-flo.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Sioux Falls Flooring: Helping Homeowners Make Confident Flooring Choic"
   description: "Discover how Sioux Falls Flooring helps homeowners navigate flooring repairs, installations, and contractor choices with honest, local guidance and expert insig"
 sourceUrl: "/guides/community-spotlight-siouxfallsflooring-com-helping-homeowners-make-confident-flo"
+heroImage: "https://images.pexels.com/photos/8146213/pexels-photo-8146213.jpeg"
+heroImageAlt: "Bright open room with freshly installed light hardwood flooring and large windows letting in natural light."
+heroImageCredit:
+  photographer: "Max Vakhtbovych"
+  profileUrl: "https://www.pexels.com/@artbovich"
+  source: "Pexels"
 ---
 
 **A Local Guide for Better Flooring Choices**

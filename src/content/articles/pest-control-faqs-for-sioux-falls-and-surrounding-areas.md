@@ -1,7 +1,6 @@
 ---
 title: "Pest Control FAQs for Sioux Falls and Surrounding Areas"
 category: "consumer-guide"
-heroImage: "/images/articles/pest-control-faqs-for-sioux-falls-and-surrounding-areas.png"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Pest Control in Sioux Falls, SD"
   description: "Wondering about pest control costs, the hardest pests to eliminate, or how to choose the best pest control company in Sioux Falls? Get clear, local answers here"
 sourceUrl: "/guides/pest-control-faqs-for-sioux-falls-and-surrounding-areas"
+heroImage: "https://images.pexels.com/photos/4176541/pexels-photo-4176541.jpeg"
+heroImageAlt: "A pest control technician in a white protective suit fumigates a home interior with a fogging machine."
+heroImageCredit:
+  photographer: "Michelangelo Buonarroti"
+  profileUrl: "https://www.pexels.com/@michelangelo-buonarroti"
+  source: "Pexels"
 ---
 
 Wondering about pest [control costs](https://www.cnn.com/cnn-underscored/about/tiffany-chaney), the hardest pests to eliminate, or how to choose the best pest control company in Sioux Falls? Get clear, local answers here.

@@ -1,7 +1,6 @@
 ---
 title: "Restaurants by Neighborhood: Where Sioux Falls Locals Actually Eat"
 category: "restaurants-dining"
-heroImage: "/images/stock/restaurant-workers.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-restaurants-in-sioux-falls", "sioux-falls-dining-a-locals-guide"]
 relatedBusinesses: ["shahi-india-grill"]
@@ -17,6 +16,12 @@ seo:
 embeddedFaqs:
   - question: "Do neighborhoods outside downtown have real dining options?"
     answer: "Yes — Sioux Falls's growth has brought genuine restaurant variety to areas well beyond downtown, particularly the fast-growing southeast side of the metro."
+heroImage: "https://images.pexels.com/photos/8856561/pexels-photo-8856561.jpeg"
+heroImageAlt: "Two empty wine glasses on a wooden table in a warmly lit restaurant with diners in the background."
+heroImageCredit:
+  photographer: "Alexandra Kollstrem"
+  profileUrl: "https://www.pexels.com/@alexandra-kollstrem-77751824"
+  source: "Pexels"
 ---
 
 While downtown holds real concentration, Sioux Falls's neighborhoods each have their own dining character worth knowing.

@@ -1,7 +1,6 @@
 ---
 title: "Visiting Sioux Falls? Here's Where to Shop"
 category: "shopping-retail"
-heroImage: "/images/stock/store-worker.jpg"
 contentType: "visitor-guide"
 relatedArticles: ["best-shopping-in-sioux-falls", "sioux-falls-shopping-a-locals-guide"]
 relatedBusinesses: ["animalwisedco"]
@@ -19,6 +18,12 @@ embeddedFaqs:
     answer: "Yes — downtown's independent shops are within the same walkable core as Falls Park and the SculptureWalk, making it easy to combine shopping with sightseeing."
   - question: "Should visitors prioritize the mall or downtown?"
     answer: "Depends on the goal — the Empire Mall district offers familiar, efficient mainstream shopping, while downtown offers something more distinctly Sioux Falls if you're looking for a souvenir or gift with real local character."
+heroImage: "https://images.pexels.com/photos/8386663/pexels-photo-8386663.jpeg"
+heroImageAlt: "Two women shop together in a bright boutique, one holding a floral dress and the other examining yellow heels."
+heroImageCredit:
+  photographer: "Ron Lach"
+  profileUrl: "https://www.pexels.com/@ron-lach"
+  source: "Pexels"
 ---
 
 If you're visiting Sioux Falls and have some time for shopping alongside sightseeing, downtown offers something more memorable than a standard mall trip.

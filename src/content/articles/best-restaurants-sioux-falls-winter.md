@@ -1,7 +1,6 @@
 ---
 title: "The Best Restaurants for a Sioux Falls Winter Night"
 category: "restaurants-dining"
-heroImage: "/images/stock/restaurant-workers.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["best-restaurants-in-sioux-falls", "restaurants-by-neighborhood-sioux-falls"]
 relatedBusinesses: ["shahi-india-grill"]
@@ -19,6 +18,12 @@ embeddedFaqs:
     answer: "Yes — heartier, warming cuisine sees real demand increases through winter, and restaurants with genuinely cozy atmospheres tend to see steadier winter business than those built around outdoor or patio seating."
   - question: "Is outdoor dining a big part of the Sioux Falls scene?"
     answer: "It's popular in the warmer months, but naturally limited through the winter — restaurants with strong indoor atmosphere tend to hold up better across the full year."
+heroImage: "https://images.pexels.com/photos/30420679/pexels-photo-30420679.jpeg"
+heroImageAlt: "Candlelit restaurant table with a small potted plant surrounded by warm string lights and lush greenery."
+heroImageCredit:
+  photographer: "Daniil Kondrashin"
+  profileUrl: "https://www.pexels.com/@konrads-photo"
+  source: "Pexels"
 ---
 
 A Sioux Falls winter shifts what people actually want from a restaurant, beyond just the food itself.

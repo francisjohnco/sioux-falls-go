@@ -1,7 +1,6 @@
 ---
 title: "Sioux Falls Go Roadmap"
 category: "for-local-businesses"
-heroImage: "/images/scenic/falls-park-2.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,8 @@ seo:
   title: "Sioux Falls Go Roadmap"
   description: "Sioux Falls Go Roadmap \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/sioux-falls-go-roadmap"
+heroImage: "/images/scenic/falls-park-2.jpg"
+heroImageAlt: "Silky waterfalls cascade over layered quartzite rock formations into a calm pool below."
 ---
 
 We're building something unique. Get in on [the action](/for-local-businesses) at the ground level. Here is our roadmap**:**
