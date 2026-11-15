@@ -125,6 +125,13 @@ const deals = defineCollection({
     // Seasonal promotion this deal belongs to. 'black-friday' puts it on
     // /local-deals/black-friday/ (Black Friday through Cyber Monday).
     promotion: z.enum(['black-friday']).optional(),
+    // How a customer redeems it. 'show' = show the deal page at checkout,
+    // 'call' = call redeemValue (a phone number), 'link' = go to redeemValue
+    // (a URL), 'code' = enter redeemValue as a promo code.
+    redeemMethod: z.enum(['show', 'call', 'link', 'code']).optional(),
+    redeemValue: z.string().optional(),
+    redeemNote: z.string().optional(), // short instructions, e.g. "Mention Sioux Falls Go when you book"
+
   }),
 });
 
@@ -167,6 +174,8 @@ const businesses = defineCollection({
     interviewedBy: z.string().optional(),
     pullQuote: z.string().optional(), // curated quote for premium editorial layout
     ownerName: z.string().optional(), // powers the "Meet the Owner" card — omitted entirely if not provided, never inferred or guessed
+    ownerRole: z.string().optional(), // shown under the owner's name in the profile sidebar, e.g. "Owner and Lead Technician"
+    logo: z.string().optional(), // business logo, shown next to the owner's name in the profile sidebar
     ownerQuote: z.string().optional(), // short personal line for that same card, distinct from pullQuote
     responseTime: z.string().optional(), // lowercase phrase completing "Usually responds ___", e.g. "within 1 hour", "within 24 hours" — set by the business owner to describe their own real response time, never a universal default
     excerpt: z.string().optional(), // 1-2 sentence summary, distinct from the full profile body — for card previews and social sharing

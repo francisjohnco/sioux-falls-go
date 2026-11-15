@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { randomToken } from './_shared/auth.mts';
+import { cleanRedeem } from './_shared/deal-redeem.mts';
 
 // Public: any business can send a Black Friday deal from /local-deals/black-friday/.
 // Nothing goes live until it is approved in Admin.
@@ -14,7 +15,7 @@ export default async (req: Request) => {
   const b = await req.json().catch(() => ({}));
   if (b.website_url) return json({ ok: true }); // honeypot: bots fill every field
 
-  const d = {
+  const d: Record<string, any> = {
     businessSlug: /^[a-z0-9-]{1,80}$/.test(b.businessSlug || '') ? b.businessSlug : '',
     businessName: clean(b.businessName, 120),
     contactName: clean(b.contactName, 80),
@@ -36,6 +37,10 @@ export default async (req: Request) => {
   if (d.description.length < 10) return json({ error: 'Add a sentence describing the deal.' }, 400);
   if ((d.startsAt && !isDate(d.startsAt)) || (d.endsAt && !isDate(d.endsAt))) return json({ error: 'Use valid dates.' }, 400);
   if (d.startsAt && d.endsAt && d.endsAt < d.startsAt) return json({ error: 'The end date is before the start date.' }, 400);
+
+  const redeem = cleanRedeem(b);
+  if ('error' in redeem) return json({ error: redeem.error }, 400);
+  Object.assign(d, redeem);
 
   const store = getStore('deal-submissions');
   const { blobs } = await store.list();

@@ -34,6 +34,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
           <label>Website <input id="f-website" type="url" placeholder="https://" /></label>
           <label>Hours summary <input id="f-hours" placeholder="Mon to Fri 9am to 5pm" /></label>
           <label>Usual response time <input id="f-responseTime" placeholder="within 24 hours" /></label>
+          <label class="mb-span">Your role (shown under your name on your profile) <input id="f-ownerRole" maxlength="80" placeholder="Owner and Lead Technician" /></label>
           <label class="mb-span">Google Business Profile link <input id="f-googleBusinessUrl" type="url" placeholder="https://maps.app.goo.gl/..." />
             <span class="mb-hint">In Google Maps, open your business, tap Share, and paste the link here. Your business name in your story will link to it.</span></label>
         </div>
@@ -65,6 +66,14 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
             <label class="mb-btn mb-btn--ghost mb-file">Replace main photo <input type="file" accept="image/*" data-photo="hero" /></label>
           </div>
         </div>
+        <div class="mb-hero mb-logo-row">
+          <div class="mb-logo-img" id="logo-img"></div>
+          <div>
+            <h3>Logo</h3>
+            <p class="mb-help">Shown next to your name at the top of your profile. A square PNG with a clear background looks best.</p>
+            <label class="mb-btn mb-btn--ghost mb-file">Upload logo <input type="file" accept="image/png,image/jpeg,image/webp" data-photo="logo" /></label>
+          </div>
+        </div>
         <h3>Gallery <span class="mb-count" id="gallery-count"></span></h3>
         <div class="mb-gallery" id="gallery"></div>
         <label class="mb-btn mb-btn--ghost mb-file">Add a photo <input type="file" accept="image/*" data-photo="gallery" /></label>
@@ -84,6 +93,11 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
             <label class="mb-span">Description <input id="d-desc" maxlength="300" placeholder="One sentence about the offer" /></label>
             <label>Starts on (optional) <input id="d-start" type="date" /></label>
             <label>Ends on (optional) <input id="d-exp" type="date" /></label>
+            <label>How do customers redeem it?
+              <select id="d-redeem"><option value="show">Show the deal at checkout</option><option value="call">Call us</option><option value="link">Book or buy online</option><option value="code">Use a promo code</option></select>
+            </label>
+            <label>Phone, link, or code <input id="d-redeem-value" placeholder="Not needed for show at checkout" /></label>
+            <label class="mb-span">Redeem instructions (optional) <input id="d-redeem-note" maxlength="200" placeholder="Mention Sioux Falls Go when you book" /></label>
             <label>Fine print (optional) <input id="d-terms" maxlength="200" /></label>
             <label class="mb-span mb-check"><input id="d-bf" type="checkbox" /> <span>This is a Black Friday weekend deal (shows on the <a href="/local-deals/black-friday/" target="_blank">Black Friday deals page</a>)</span></label>
           </div>
@@ -158,6 +172,8 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   .mb-badge-preview { background: repeating-conic-gradient(#F3F5F8 0% 25%, #fff 0% 50%) 0 0 / 18px 18px; border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 1.4rem; display: flex; justify-content: center; margin-bottom: 0.9rem; }
   .mb-badge-preview img { display: block; max-width: 100%; height: auto; }
   #badge-code { font-family: ui-monospace, Menlo, monospace; font-size: 0.78rem; background: #F7F9FC; }
+  .mb-logo-row { grid-template-columns: 7rem 1fr; margin-top: 1.2rem; }
+  .mb-logo-img { width: 7rem; height: 7rem; border-radius: 0.8rem; border: 1px solid var(--color-line); background: #fff center/contain no-repeat; }
   .mb-check { flex-direction: row !important; align-items: center; gap: 0.5rem !important; font-weight: 600 !important; }
   .mb-check input { width: auto; }
   .mb-check a { color: var(--color-orange-dark); }
@@ -200,18 +216,19 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     ($('badge-link') as unknown as HTMLAnchorElement).href = `/businesses/${data.slug}/`;
     ($('download-badge') as unknown as HTMLAnchorElement).href = `/badges/${data.slug}.png`;
     ($('badge-code') as unknown as HTMLTextAreaElement).value = `<a href="${site}/businesses/${data.slug}/" target="_blank" rel="noopener" title="${esc(data.name)} on Sioux Falls Go"><img src="${site}/badges/${data.slug}.png" width="360" height="120" alt="${esc(badgeAlt)}" style="max-width:100%;height:auto;border:0;" /></a>`;
-    for (const k of ['phone', 'website', 'googleBusinessUrl', 'hours', 'responseTime', 'couponStyle', 'excerpt', 'pullQuote', 'ownerQuote', 'ownerName', 'body']) {
+    for (const k of ['phone', 'website', 'googleBusinessUrl', 'ownerRole', 'hours', 'responseTime', 'couponStyle', 'excerpt', 'pullQuote', 'ownerQuote', 'ownerName', 'body']) {
       const el = document.getElementById(`f-${k}`) as HTMLInputElement | null;
       if (el) el.value = data[k] || '';
     }
     document.querySelectorAll<HTMLInputElement>('[data-day]').forEach((el) => { el.value = data.hoursSchedule?.[el.dataset.day!] || ''; });
     $('hero-img').style.backgroundImage = data.heroImage ? `url(${data.heroImage})` : '';
+    $('logo-img').style.backgroundImage = data.logo ? `url(${data.logo})` : '';
     $('gallery-count').textContent = `${data.gallery.length} of 12`;
     $('gallery').innerHTML = data.gallery.length
       ? data.gallery.map((g: string) => `<div class="mb-thumb" style="background-image:url('${esc(g)}')"><button type="button" data-remove="${esc(g)}">Remove</button></div>`).join('')
       : '<p class="mb-empty">No gallery photos yet.</p>';
     $('deals').innerHTML = data.deals.length
-      ? data.deals.map((d: any) => `<div class="mb-deal"><div><strong>${esc(d.title)}</strong>${d.promotion === 'black-friday' ? ' <em class="mb-bf">Black Friday</em>' : ''}<span>${esc(d.description)}${d.expiresAt ? ` · ends ${esc(d.expiresAt)}` : ''}</span></div><div><button class="mb-btn mb-btn--ghost" type="button" data-edit-deal="${esc(d.id)}">Edit</button><button class="mb-btn mb-btn--ghost" type="button" data-delete-deal="${esc(d.id)}">Remove</button></div></div>`).join('')
+      ? data.deals.map((d: any) => `<div class="mb-deal"><div><strong>${esc(d.title)}</strong>${d.promotion === 'black-friday' ? ' <em class="mb-bf">Black Friday</em>' : ''}<span>${esc(d.description)}${d.expiresAt ? ` · ends ${esc(d.expiresAt)}` : ''}</span></div><div><a class="mb-btn mb-btn--ghost" href="/local-deals/${esc(d.id)}/" target="_blank">View</a><button class="mb-btn mb-btn--ghost" type="button" data-edit-deal="${esc(d.id)}">Edit</button><button class="mb-btn mb-btn--ghost" type="button" data-delete-deal="${esc(d.id)}">Remove</button></div></div>`).join('')
       : '<p class="mb-empty">No specials running right now.</p>';
     const pend = $('story-pending');
     if (data.pendingReview) {
@@ -241,7 +258,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   $('save-contact').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-contact', async () => {
     const hoursSchedule: Record<string, string> = {};
     document.querySelectorAll<HTMLInputElement>('[data-day]').forEach((el) => { hoursSchedule[el.dataset.day!] = el.value; });
-    const r = await api({ action: 'save', phone: $('f-phone').value, website: $('f-website').value, googleBusinessUrl: $('f-googleBusinessUrl').value, hours: $('f-hours').value, responseTime: $('f-responseTime').value, couponStyle: ($('f-couponStyle') as unknown as HTMLSelectElement).value, hoursSchedule });
+    const r = await api({ action: 'save', phone: $('f-phone').value, website: $('f-website').value, googleBusinessUrl: $('f-googleBusinessUrl').value, ownerRole: $('f-ownerRole').value, hours: $('f-hours').value, responseTime: $('f-responseTime').value, couponStyle: ($('f-couponStyle') as unknown as HTMLSelectElement).value, hoursSchedule });
     return r.message;
   }));
 
@@ -252,7 +269,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
   }));
 
   // Photos are resized in the browser before upload, so phone photos stay small and fast.
-  function resize(file: File, max = 1600): Promise<string> {
+  function resize(file: File, max = 1600, png = false): Promise<string> {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
@@ -260,7 +277,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
         const c = document.createElement('canvas');
         c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
         c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height);
-        resolve(c.toDataURL('image/jpeg', 0.85).split(',')[1]);
+        resolve(png ? c.toDataURL('image/png').split(',')[1] : c.toDataURL('image/jpeg', 0.85).split(',')[1]);
         URL.revokeObjectURL(img.src);
       };
       img.onerror = () => reject(new Error('That file could not be read as a photo.'));
@@ -273,8 +290,9 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
       if (!file) return;
       note('photos', 'Uploading...');
       try {
-        const r = await api({ action: 'photo', kind: input.dataset.photo, data: await resize(file) });
-        if (input.dataset.photo === 'hero') data.heroImage = r.url; else data.gallery.push(r.url);
+        const isLogo = input.dataset.photo === 'logo';
+        const r = await api({ action: 'photo', kind: input.dataset.photo, data: await resize(file, isLogo ? 600 : 1600, isLogo) });
+        if (input.dataset.photo === 'hero') data.heroImage = r.url; else if (isLogo) data.logo = r.url; else data.gallery.push(r.url);
         render();
         note('photos', 'Uploaded. It shows on your listing in about a minute.');
       } catch (err: any) { if (err.message !== 'signed out') note('photos', err.message, true); }
@@ -293,7 +311,7 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     if (edit) {
       const d = data.deals.find((x: any) => x.id === edit.dataset.editDeal);
       $('d-id').value = d.id; $('d-title').value = d.title; $('d-desc').value = d.description;
-      ($('d-type') as unknown as HTMLSelectElement).value = d.discountType; $('d-exp').value = d.expiresAt || ''; $('d-start').value = d.activatesAt || ''; $('d-terms').value = d.terms || ''; ($('d-bf') as HTMLInputElement).checked = d.promotion === 'black-friday';
+      ($('d-type') as unknown as HTMLSelectElement).value = d.discountType; $('d-exp').value = d.expiresAt || ''; $('d-start').value = d.activatesAt || ''; ($('d-redeem') as unknown as HTMLSelectElement).value = d.redeemMethod || 'show'; $('d-redeem-value').value = d.redeemValue || ''; $('d-redeem-note').value = d.redeemNote || ''; $('d-terms').value = d.terms || ''; ($('d-bf') as HTMLInputElement).checked = d.promotion === 'black-friday';
       ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = true;
     }
     const del = t.closest<HTMLElement>('[data-delete-deal]');
@@ -303,10 +321,10 @@ const discounts = [['percent-off', 'Percent off'], ['dollar-off', 'Dollar off'],
     }
   });
 
-  function clearDeal() { for (const id of ['d-id', 'd-title', 'd-desc', 'd-exp', 'd-start', 'd-terms']) $(id).value = ''; ($('d-bf') as HTMLInputElement).checked = false; ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = false; }
+  function clearDeal() { for (const id of ['d-id', 'd-title', 'd-desc', 'd-exp', 'd-start', 'd-terms', 'd-redeem-value', 'd-redeem-note']) $(id).value = ''; ($('d-redeem') as unknown as HTMLSelectElement).value = 'show'; ($('d-bf') as HTMLInputElement).checked = false; ($('deal-form-wrap') as unknown as HTMLDetailsElement).open = false; }
   $('cancel-deal').addEventListener('click', clearDeal);
   $('save-deal').addEventListener('click', (e) => withButton(e.currentTarget as HTMLButtonElement, 'save-deal', async () => {
-    await api({ action: 'save-deal', deal: { id: $('d-id').value || undefined, title: $('d-title').value, description: $('d-desc').value, discountType: ($('d-type') as unknown as HTMLSelectElement).value, expiresAt: $('d-exp').value || undefined, activatesAt: $('d-start').value || undefined, promotion: ($('d-bf') as HTMLInputElement).checked ? 'black-friday' : undefined, terms: $('d-terms').value } });
+    await api({ action: 'save-deal', deal: { id: $('d-id').value || undefined, title: $('d-title').value, description: $('d-desc').value, discountType: ($('d-type') as unknown as HTMLSelectElement).value, expiresAt: $('d-exp').value || undefined, activatesAt: $('d-start').value || undefined, redeemMethod: ($('d-redeem') as unknown as HTMLSelectElement).value, redeemValue: $('d-redeem-value').value, redeemNote: $('d-redeem-note').value, promotion: ($('d-bf') as HTMLInputElement).checked ? 'black-friday' : undefined, terms: $('d-terms').value } });
     data = await api(); clearDeal(); render();
     return 'Saved. It shows on your listing in about a minute.';
   }));

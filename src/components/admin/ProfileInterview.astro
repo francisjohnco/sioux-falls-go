@@ -1,0 +1,179 @@
+---
+import { INTERVIEW_QUESTIONS } from '../../lib/interview-questions';
+interface Props { businesses: { slug: string; name: string }[] }
+const { businesses } = Astro.props;
+---
+<div class="pi" id="profile-interview">
+  <div class="pi-head">
+    <div>
+      <h3>Profile interview</h3>
+      <p>Ask the owner these questions on a call (or send them over), type or paste the answers, and write a full profile story with subheadings and quotes. Nothing changes on the site until you review it and click Save to profile.</p>
+    </div>
+    <button class="button button--ghost" id="pi-copy" type="button">Copy questions to send</button>
+  </div>
+
+  <label class="pi-biz">Business
+    <select id="pi-biz">
+      <option value="">Choose a business</option>
+      {businesses.map((b) => <option value={b.slug}>{b.name}</option>)}
+    </select>
+  </label>
+
+  <div class="pi-qs" id="pi-qs" hidden>
+    {INTERVIEW_QUESTIONS.map((q, i) => (
+      <label class="pi-q">
+        <span class="pi-section">{i + 1}. {q.section}</span>
+        <strong>{q.question}</strong>
+        <em>{q.hint}</em>
+        <textarea data-q={q.id} rows="3"></textarea>
+      </label>
+    ))}
+    <label class="pi-check"><input type="checkbox" id="pi-current" checked /> Use the current story too (keeps its facts and adds subheadings)</label>
+    <div class="pi-actions">
+      <button class="button button--ghost" id="pi-save" type="button">Save answers</button>
+      <button class="button" id="pi-write" type="button">Write the profile</button>
+      <span class="pi-msg" id="pi-msg"></span>
+    </div>
+  </div>
+
+  <div class="pi-result" id="pi-result" hidden>
+    <h4>Review before saving</h4>
+    <div class="pi-grid">
+      <label>Owner name <input id="pr-ownerName" /></label>
+      <label>Owner role <input id="pr-ownerRole" /></label>
+      <label class="pi-span">Highlighted quote (owner's exact words) <input id="pr-pullQuote" /></label>
+      <label class="pi-span">Owner quote (owner's exact words) <input id="pr-ownerQuote" /></label>
+      <label class="pi-span">Short description for listing cards <textarea id="pr-excerpt" rows="2"></textarea></label>
+    </div>
+    <div class="pi-two">
+      <label>Story (you can edit it) <textarea id="pr-body" rows="22"></textarea></label>
+      <div><span class="pi-label">Preview</span><div class="pi-preview" id="pi-preview"></div></div>
+    </div>
+    <p class="pi-warn">Check every fact, price, and date against what the owner told you before saving.</p>
+    <div class="pi-actions">
+      <button class="button" id="pi-apply" type="button">Save to profile</button>
+      <button class="button button--ghost" id="pi-discard" type="button">Discard</button>
+      <span class="pi-msg" id="pi-msg2"></span>
+    </div>
+  </div>
+  <textarea id="pi-questions-text" hidden>{INTERVIEW_QUESTIONS.map((q, i) => `${i + 1}. ${q.question}\n   (${q.hint})`).join('\n\n')}</textarea>
+</div>
+
+<style is:global>
+  .pi { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+  .pi-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
+  .pi h3 { margin: 0 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); }
+  .pi h4 { margin: 0 0 0.8rem; color: var(--color-navy); }
+  .pi-head p { margin: 0; color: var(--color-navy-light); font-size: 0.875rem; line-height: 1.5; max-width: 46rem; }
+  .pi label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .pi select, .pi input, .pi textarea { font: inherit; font-weight: 400; font-size: 0.9rem; padding: 0.55rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; }
+  .pi-biz { max-width: 26rem; margin-top: 1rem; }
+  .pi-qs { margin-top: 1.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .pi-q { background: #F8FAFC; border: 1px solid var(--color-line); border-radius: 0.7rem; padding: 0.8rem 0.9rem; }
+  .pi-section { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-orange-dark); }
+  .pi-q strong { font-size: 0.9rem; line-height: 1.4; }
+  .pi-q em { font-weight: 400; font-style: normal; font-size: 0.78rem; color: var(--color-navy-light); }
+  .pi-check { grid-column: 1 / -1; flex-direction: row !important; align-items: center; gap: 0.5rem !important; font-weight: 600 !important; }
+  .pi-actions { grid-column: 1 / -1; display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-top: 0.4rem; }
+  .pi-msg { font-size: 0.875rem; font-weight: 600; color: var(--color-navy-light); }
+  .pi-msg.is-error { color: #A93226; } .pi-msg.is-ok { color: #2E7D4F; }
+  .pi-result { margin-top: 1.4rem; border-top: 2px solid var(--color-line); padding-top: 1.2rem; }
+  .pi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; }
+  .pi-span { grid-column: 1 / -1; }
+  .pi-two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .pi-label { font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .pi-preview { margin-top: 0.3rem; border: 1px solid var(--color-line); border-radius: 0.5rem; padding: 0.4rem 1rem; max-height: 34rem; overflow: auto; font-size: 0.9rem; line-height: 1.6; color: var(--color-navy); }
+  .pi-preview h2 { font-family: var(--font-display); font-size: 1.1rem; margin: 1.1rem 0 0.4rem; }
+  .pi-warn { font-size: 0.85rem; font-weight: 700; color: #B45309; margin: 0.9rem 0 0.4rem; }
+  .pi [hidden] { display: none !important; }
+  @media (max-width: 52rem) { .pi-qs, .pi-two, .pi-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as unknown as T;
+  const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const md = (s: string) => s.split(/\n{2,}/).map((b) => {
+    const t = b.trim();
+    if (t.startsWith('## ')) return `<h2>${esc(t.slice(3))}</h2>`;
+    return `<p>${esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, ' ')}</p>`;
+  }).join('');
+  const msg = (id: string, t: string, kind = '') => { const m = $(id); m.textContent = t; m.className = `pi-msg ${kind}`; };
+  let slug = '';
+
+  async function api(body?: unknown, query = '') {
+    const res = await fetch(`/api/profile-interview${query}`, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(out.error || 'Something went wrong.');
+    return out;
+  }
+  const answers = () => Object.fromEntries([...document.querySelectorAll<HTMLTextAreaElement>('#pi-qs [data-q]')].map((t) => [t.dataset.q!, t.value]));
+
+  $('pi-biz').addEventListener('change', async () => {
+    slug = ($('pi-biz') as unknown as HTMLSelectElement).value;
+    $('pi-result').hidden = true;
+    $('pi-qs').hidden = !slug;
+    document.querySelectorAll<HTMLTextAreaElement>('#pi-qs [data-q]').forEach((t) => (t.value = ''));
+    if (!slug) return;
+    msg('pi-msg', 'Loading saved answers...');
+    try {
+      const saved = await api(undefined, `?slug=${slug}`);
+      document.querySelectorAll<HTMLTextAreaElement>('#pi-qs [data-q]').forEach((t) => (t.value = saved.answers?.[t.dataset.q!] || ''));
+      msg('pi-msg', saved.updatedAt ? `Answers last saved ${new Date(saved.updatedAt).toLocaleString()}` : '');
+    } catch (err: any) { msg('pi-msg', err.message, 'is-error'); }
+  });
+
+  $('pi-copy').addEventListener('click', async () => {
+    const name = ($('pi-biz') as unknown as HTMLSelectElement).selectedOptions[0]?.textContent || 'your business';
+    const text = `Sioux Falls Go profile interview for ${slug ? name : 'your business'}\n\n${($('pi-questions-text') as unknown as HTMLTextAreaElement).value}`;
+    try { await navigator.clipboard.writeText(text); ($('pi-copy') as unknown as HTMLButtonElement).textContent = 'Copied'; } catch {}
+  });
+
+  $('pi-save').addEventListener('click', async () => {
+    try { await api({ action: 'save', slug, answers: answers() }); msg('pi-msg', 'Answers saved.', 'is-ok'); } catch (err: any) { msg('pi-msg', err.message, 'is-error'); }
+  });
+
+  $('pi-write').addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    btn.disabled = true;
+    try {
+      await api({ action: 'save', slug, answers: answers() });
+      msg('pi-msg', 'Writing the profile. This takes about a minute...');
+      const { jobId } = await api({ action: 'write', slug, useCurrent: ($('pi-current') as HTMLInputElement).checked });
+      for (let i = 0; i < 60; i++) {
+        await new Promise((r) => setTimeout(r, 4000));
+        const job = await api(undefined, `?job=${jobId}`);
+        if (job.status === 'error') throw new Error(job.error);
+        if (job.status === 'done') {
+          const r = job.result;
+          for (const k of ['ownerName', 'ownerRole', 'pullQuote', 'ownerQuote', 'excerpt', 'body']) $(`pr-${k}`).value = r[k] || '';
+          $('pi-preview').innerHTML = md(r.body || '');
+          $('pi-result').hidden = false;
+          $('pi-result').scrollIntoView({ behavior: 'smooth' });
+          msg('pi-msg', 'Done. Review it below.', 'is-ok');
+          return;
+        }
+      }
+      throw new Error('Still writing after four minutes. Try again.');
+    } catch (err: any) { msg('pi-msg', err.message, 'is-error'); }
+    finally { btn.disabled = false; }
+  });
+
+  $('pr-body').addEventListener('input', () => { $('pi-preview').innerHTML = md($('pr-body').value); });
+  $('pi-discard').addEventListener('click', () => { $('pi-result').hidden = true; });
+
+  $('pi-apply').addEventListener('click', async (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    if (!confirm('Replace this business\'s story, quotes, and owner details with this version?')) return;
+    btn.disabled = true;
+    const updates: Record<string, string> = {};
+    for (const k of ['ownerName', 'ownerRole', 'pullQuote', 'ownerQuote', 'excerpt']) { const v = $(`pr-${k}`).value.trim(); if (v) updates[k] = v; }
+    updates.body = $('pr-body').value.trim() + '\n';
+    try {
+      const res = await fetch('/api/update-business', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, updates }) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(out.error || 'Save failed.');
+      msg('pi-msg2', 'Saved. The profile updates in about a minute.', 'is-ok');
+    } catch (err: any) { msg('pi-msg2', err.message, 'is-error'); }
+    btn.disabled = false;
+  });
+</script>

@@ -176,6 +176,7 @@ function discountIcon(type: string) {
                     categoryName={d.category?.data.name}
                     heroImage={d.business!.data.heroImage}
                     title={d.deal.data.title}
+                href={d.deal.data.mailerCampaign ? `/mailer-deals/${d.business!.id}` : `/local-deals/${d.deal.id}/`}
                     description={d.deal.data.description}
                     expiresAt={d.deal.data.expiresAt}
                   />
@@ -195,6 +196,7 @@ function discountIcon(type: string) {
                 categoryName={d.category?.data.name}
                 heroImage={d.business!.data.heroImage}
                 title={d.deal.data.title}
+                href={d.deal.data.mailerCampaign ? `/mailer-deals/${d.business!.id}` : `/local-deals/${d.deal.id}/`}
                 description={d.deal.data.description}
                 expiresAt={d.deal.data.expiresAt}
               />
@@ -213,6 +215,7 @@ function discountIcon(type: string) {
                   categoryName={d.category?.data.name}
                   heroImage={d.business!.data.heroImage}
                   title={d.deal.data.title}
+                href={d.deal.data.mailerCampaign ? `/mailer-deals/${d.business!.id}` : `/local-deals/${d.deal.id}/`}
                   description={d.deal.data.description}
                   expiresAt={d.deal.data.expiresAt}
                 />

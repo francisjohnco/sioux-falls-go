@@ -7,7 +7,7 @@ import { explainGitHubError } from './article-file.mts';
 export const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
 
 // What an owner may change and see go live right away.
-export const OWNER_INSTANT_FIELDS = ['phone', 'website', 'hours', 'responseTime', 'couponStyle', 'googleBusinessUrl'] as const;
+export const OWNER_INSTANT_FIELDS = ['phone', 'website', 'hours', 'responseTime', 'couponStyle', 'googleBusinessUrl', 'ownerRole'] as const;
 
 // Accepts the links Google gives for a Business Profile: Maps, the short
 // share links, and search knowledge panel links.
@@ -159,6 +159,32 @@ export async function listDir(path: string): Promise<{ name: string; path: strin
   return res.json();
 }
 
+// Saves an uploaded photo to the site and attaches it to the business as
+// its main photo, its logo, or a gallery photo. Used by owners and admin.
+const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
+function imageType(buf: Buffer): 'jpg' | 'png' | 'webp' | null {
+  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpg';
+  if (buf.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return 'png';
+  if (buf.slice(0, 4).toString() === 'RIFF' && buf.slice(8, 12).toString() === 'WEBP') return 'webp';
+  return null;
+}
+export async function addBusinessPhoto(slug: string, kind: 'hero' | 'gallery' | 'logo', base64: string, who: string): Promise<{ url: string } | { error: string }> {
+  const buf = Buffer.from(String(base64 || ''), 'base64');
+  if (buf.length === 0 || buf.length > MAX_IMAGE_BYTES) return { error: 'Photos must be under 3 MB.' };
+  const ext = imageType(buf);
+  if (!ext) return { error: 'Please upload a JPG, PNG, or WebP image.' };
+  const f = await readBusinessFile(slug);
+  const gallery = readList(f.frontmatter, 'gallery');
+  if (kind === 'gallery' && gallery.length >= 12) return { error: 'The gallery holds up to 12 photos. Remove one first.' };
+  const path = `public/images/businesses/${slug}-${kind === 'logo' ? 'logo-' : ''}${Date.now()}.${ext}`;
+  await putFile(path, buf.toString('base64'), `${who} photo: ${slug}`);
+  const url = path.replace(/^public/, '');
+  const changes = kind === 'hero' ? { heroImage: url } : kind === 'logo' ? { logo: url } : { gallery: [...gallery, url] };
+  const next = applyChanges(f.frontmatter, f.body, changes);
+  await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `${who} ${kind}: ${readField(f.frontmatter, 'name') || slug}`);
+  return { url };
+}
+
 // Applies owner or admin changes to the parsed file. Unknown fields are ignored.
 export function applyChanges(frontmatter: string, body: string, changes: Record<string, any>): { frontmatter: string; body: string } {
   let fm = frontmatter;
@@ -167,7 +193,7 @@ export function applyChanges(frontmatter: string, body: string, changes: Record<
     if (k === 'body') { if (typeof v === 'string') b = v.endsWith('\n') ? v : v + '\n'; continue; }
     if (k === 'hoursSchedule') { if (v && typeof v === 'object') fm = setHours(fm, v); continue; }
     if (k === 'gallery') { if (Array.isArray(v)) fm = setField(fm, 'gallery', v.map(String).slice(0, 12)); continue; }
-    if (k === 'heroImage') { if (typeof v === 'string') fm = setField(fm, 'heroImage', v); continue; }
+    if (k === 'heroImage' || k === 'logo') { if (typeof v === 'string') fm = setField(fm, k, v); continue; }
     if ((OWNER_INSTANT_FIELDS as readonly string[]).includes(k) || (OWNER_REVIEW_FIELDS as readonly string[]).includes(k)) {
       if (k === 'couponStyle' && v && !COUPON_STYLES.includes(v)) continue;
       fm = setField(fm, k, typeof v === 'string' ? v.trim().slice(0, k === 'excerpt' || k.endsWith('Quote') ? 400 : k === 'googleBusinessUrl' ? 600 : 200) : null);

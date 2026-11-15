@@ -1,7 +1,10 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
+import { verifyToken } from './_shared/auth.mts';
 
 export default async (req: Request) => {
+  // Only the site's own start-generate-draft (which checks the admin login) may start this.
+  if (verifyToken(req.headers.get('x-sfg-task')) !== 'draft-job') return new Response('Not authorized', { status: 401 });
   const body = await req.json().catch(() => null);
   const jobId = body?.jobId;
   if (!jobId) return new Response('Missing jobId', { status: 400 });

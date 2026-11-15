@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import crypto from 'node:crypto';
-import { isAdmin } from './_shared/auth.mts';
+import { isAdmin, makeToken } from './_shared/auth.mts';
 
 export default async (req: Request) => {
   if (req.method !== 'POST') {
@@ -29,7 +29,7 @@ export default async (req: Request) => {
   const siteUrl = process.env.URL || process.env.DEPLOY_URL;
   const bgRes = await fetch(`${siteUrl}/api/generate-draft-background`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-sfg-task': makeToken('draft-job', 1) },
     body: JSON.stringify({ jobId, ...body }),
   });
 

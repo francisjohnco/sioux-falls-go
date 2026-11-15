@@ -144,6 +144,7 @@ const schema = [
                 categoryName={d.category?.data.name}
                 heroImage={d.business.data.heroImage}
                 title={d.deal.data.title}
+                href={`/local-deals/${d.deal.id}/`}
                 description={d.deal.data.description}
                 expiresAt={d.deal.data.expiresAt}
               />
@@ -172,6 +173,7 @@ const schema = [
               categoryName={d.category?.data.name}
               heroImage={d.business.data.heroImage}
               title={d.deal.data.title}
+                href={`/local-deals/${d.deal.id}/`}
               description={d.deal.data.description}
               expiresAt={d.deal.data.expiresAt}
             />
@@ -214,6 +216,16 @@ const schema = [
           <label class="bf-span">Describe the deal <textarea name="description" rows="3" maxlength="300" placeholder="What customers get, and anything they need to do to get it." required></textarea></label>
           <label>Starts <input name="startsAt" type="date" value={isoDay(bf.blackFriday)} /></label>
           <label>Ends <input name="endsAt" type="date" value={isoDay(bf.cyberMonday)} /></label>
+          <label>How do customers redeem it?
+            <select name="redeemMethod" id="bf-redeem">
+              <option value="show">Show the deal at checkout</option>
+              <option value="call">Call us</option>
+              <option value="link">Book or buy online</option>
+              <option value="code">Use a promo code</option>
+            </select>
+          </label>
+          <label id="bf-redeem-value-wrap" hidden><span id="bf-redeem-label">Phone number</span> <input name="redeemValue" id="bf-redeem-value" /></label>
+          <label class="bf-span">Redeem instructions (optional) <input name="redeemNote" maxlength="200" placeholder="Mention Sioux Falls Go when you book" /></label>
           <label class="bf-span">Fine print (optional) <input name="terms" maxlength="200" placeholder="While supplies last, in store only" /></label>
           <label class="bf-hp" aria-hidden="true">Website <input name="website_url" tabindex="-1" autocomplete="off" /></label>
         </div>
@@ -283,6 +295,7 @@ const schema = [
   .bf-span { grid-column: 1 / -1; }
   .bf-form label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
   .bf-form input, .bf-form select, .bf-form textarea { font: inherit; font-weight: 400; font-size: 0.95rem; padding: 0.65rem 0.75rem; border: 1px solid var(--color-line); border-radius: 0.5rem; background: #fff; color: var(--color-navy); width: 100%; }
+  .bf-form label[hidden] { display: none; }
   .bf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .bf-submit { margin-top: 1.1rem; width: 100%; }
   .bf-submit[disabled] { opacity: 0.6; }
@@ -317,6 +330,23 @@ const schema = [
     document.querySelectorAll<HTMLElement>('.bf-cell').forEach((cell) => { cell.hidden = f !== 'all' && cell.dataset.cat !== f; });
   }));
 
+  // Redeem method: show the right box for a phone number, link, or code
+  const REDEEM: Record<string, [string, string, string] | null> = {
+    show: null,
+    call: ['Phone number customers call', 'tel', '(605) 555-0123'],
+    link: ['Link where they redeem', 'url', 'https://yourwebsite.com/book'],
+    code: ['Promo code', 'text', 'BLACKFRIDAY25'],
+  };
+  const redeemSel = document.getElementById('bf-redeem') as HTMLSelectElement;
+  const syncRedeem = () => {
+    const r = REDEEM[redeemSel.value];
+    const wrap = document.getElementById('bf-redeem-value-wrap')!;
+    const input = document.getElementById('bf-redeem-value') as HTMLInputElement;
+    wrap.hidden = !r;
+    if (r) { document.getElementById('bf-redeem-label')!.textContent = r[0]; input.type = r[1]; input.placeholder = r[2]; input.required = true; } else input.required = false;
+  };
+  redeemSel.addEventListener('change', syncRedeem); syncRedeem();
+
   // Deal form
   const form = document.getElementById('bf-form') as HTMLFormElement;
   const msg = document.getElementById('bf-msg')!;
@@ -332,7 +362,7 @@ const schema = [
       const out = await res.json().catch(() => ({}));
       if (res.status === 429) throw new Error('Too many tries. Wait a minute and try again.');
       if (!res.ok) throw new Error(out.error || 'Something went wrong. Try again.');
-      msg.textContent = out.message; msg.classList.add('is-ok'); form.reset();
+      msg.textContent = out.message; msg.classList.add('is-ok'); form.reset(); syncRedeem();
     } catch (err: any) { msg.textContent = err.message; msg.classList.remove('is-ok'); }
     msg.hidden = false; btn.disabled = false;
   });

@@ -1,0 +1,178 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+import { todayCentral } from '../../lib/dates';
+import { googleProfileUrl } from '../../lib/google-profile';
+
+// One page per deal (postcard mailer deals keep their own redemption pages).
+// This is where a shopper actually redeems: the business chooses how, and
+// the page puts that action first.
+export async function getStaticPaths() {
+  const deals = await getCollection('deals');
+  return deals.filter((d) => !d.data.mailerCampaign).map((deal) => ({ params: { deal: deal.id }, props: { deal } }));
+}
+
+const { deal } = Astro.props;
+const business = await getEntry(deal.data.business);
+if (!business) throw new Error(`Deal ${deal.id} points to a missing business`);
+const category = await getEntry(business.data.category);
+const today = todayCentral();
+const day = (d?: Date) => (d ? d.toISOString().slice(0, 10) : '');
+const nice = (d: Date) => d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const ended = !!deal.data.expiresAt && day(deal.data.expiresAt) < today;
+const notYet = !!deal.data.activatesAt && day(deal.data.activatesAt) > today;
+const isBF = deal.data.promotion === 'black-friday';
+
+const method = deal.data.redeemMethod || 'show';
+const value = deal.data.redeemValue?.trim() || '';
+const phone = method === 'call' && value ? value : business.data.phone;
+const telHref = (p?: string) => (p ? `tel:${p.replace(/[^\d+]/g, '')}` : '');
+// A short code the business can recognize at the counter.
+const ticket = `SFG-${[...deal.id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7).toString(36).toUpperCase().slice(-5)}`;
+const gbpUrl = googleProfileUrl(business.data);
+const site = 'https://siouxfallsgo.com';
+const pagePath = `/local-deals/${deal.id}/`;
+
+const steps: string[] = {
+  show: ['Visit or call ' + business.data.name + '.', 'Show this page at checkout, or mention code ' + ticket + '.', 'Enjoy the deal.'],
+  call: ['Call ' + business.data.name + ' at ' + (phone || 'the number below') + '.', 'Tell them you are calling about the Sioux Falls Go deal.', 'Book your visit with the deal applied.'],
+  link: ['Tap Redeem online below.', 'Finish your booking or order on ' + business.data.name + "'s site.", 'The deal is applied there.'],
+  code: ['Copy the promo code below.', 'Use it when you book or check out with ' + business.data.name + '.', 'The discount is applied.'],
+}[method];
+
+const schema = {
+  '@context': 'https://schema.org', '@type': 'Offer',
+  name: deal.data.title, description: deal.data.description, url: site + pagePath,
+  ...(deal.data.activatesAt ? { validFrom: day(deal.data.activatesAt) } : {}),
+  ...(deal.data.expiresAt ? { validThrough: day(deal.data.expiresAt) } : {}),
+  availability: ended ? 'https://schema.org/Discontinued' : 'https://schema.org/InStock',
+  seller: { '@type': 'LocalBusiness', name: business.data.name, url: `${site}/businesses/${business.id}`, ...(business.data.phone ? { telephone: business.data.phone } : {}) },
+};
+---
+<BaseLayout
+  title={`${deal.data.title} at ${business.data.name}`}
+  description={`${deal.data.title} at ${business.data.name} in Sioux Falls. ${deal.data.description}`.slice(0, 158)}
+  canonicalPath={pagePath}
+  schema={schema}
+  noindex={ended}
+  ogImage={business.data.heroImage}
+>
+  <SiteHeader slot="header" />
+
+  <main class="container rd">
+    <nav class="rd-crumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a> / <a href="/local-deals">Local Deals</a> / {isBF && <><a href="/local-deals/black-friday/">Black Friday</a> / </>}<span>{business.data.name}</span>
+    </nav>
+
+    {ended && <p class="rd-banner rd-banner--ended">This deal ended on {nice(deal.data.expiresAt!)}. <a href={isBF ? '/local-deals/black-friday/' : '/local-deals'}>See deals running now</a></p>}
+    {!ended && notYet && <p class="rd-banner">This deal starts {nice(deal.data.activatesAt!)}. Save this page and come back then.</p>}
+
+    <div class="rd-grid">
+      <section class="rd-ticket" aria-label="The deal">
+        <div class="rd-ticket-top" style={business.data.heroImage ? `background-image: linear-gradient(180deg, rgba(14,20,36,0.15), rgba(14,20,36,0.85)), url(${business.data.heroImage})` : undefined}>
+          {isBF && <span class="rd-tag">Black Friday</span>}
+          <a class="rd-biz" href={`/businesses/${business.id}`}>{business.data.name}</a>
+          <span class="rd-cat">{category?.data.name}</span>
+        </div>
+        <div class="rd-ticket-body">
+          <h1>{deal.data.title}</h1>
+          <p class="rd-desc">{deal.data.description}</p>
+          <dl class="rd-dates">
+            {deal.data.activatesAt && <div><dt>Starts</dt><dd>{nice(deal.data.activatesAt)}</dd></div>}
+            <div><dt>Ends</dt><dd>{deal.data.expiresAt ? nice(deal.data.expiresAt) : 'No end date'}</dd></div>
+          </dl>
+          {deal.data.terms && <p class="rd-terms"><strong>Fine print</strong> {deal.data.terms}</p>}
+        </div>
+        <div class="rd-stub">
+          <span>Deal code</span>
+          <strong>{ticket}</strong>
+          <span>Sioux Falls Go</span>
+        </div>
+      </section>
+
+      <section class="rd-redeem" aria-labelledby="redeem-h">
+        <h2 id="redeem-h">How to redeem</h2>
+        <ol class="rd-steps">{steps.map((s) => <li>{s}</li>)}</ol>
+        {deal.data.redeemNote && <p class="rd-note"><Icon name="megaphone" size={15} /> {deal.data.redeemNote}</p>}
+
+        {!ended && (
+          <div class="rd-actions">
+            {method === 'call' && phone && <a class="rd-btn" href={telHref(phone)}><Icon name="phone" size={18} /> Call {phone}</a>}
+            {method === 'link' && value && <a class="rd-btn" href={value} target="_blank" rel="noopener nofollow">Redeem online ↗</a>}
+            {method === 'code' && value && (
+              <div class="rd-code"><span id="rd-code">{value}</span><button type="button" class="rd-btn rd-btn--sm" data-copy={value}>Copy code</button></div>
+            )}
+            {method === 'show' && (
+              <p class="rd-show"><Icon name="check" size={16} /> No coupon to print. Show this page on your phone at checkout.</p>
+            )}
+            <div class="rd-secondary">
+              {method !== 'call' && business.data.phone && <a class="rd-btn rd-btn--ghost" href={telHref(business.data.phone)}><Icon name="phone" size={16} /> Call</a>}
+              {method !== 'link' && business.data.website && <a class="rd-btn rd-btn--ghost" href={business.data.website} target="_blank" rel="noopener nofollow">Website ↗</a>}
+              {gbpUrl && <a class="rd-btn rd-btn--ghost" href={gbpUrl} target="_blank" rel="noopener">Directions ↗</a>}
+              <button type="button" class="rd-btn rd-btn--ghost" id="rd-share">Share deal</button>
+            </div>
+          </div>
+        )}
+
+        <a class="rd-profile" href={`/businesses/${business.id}`}>About {business.data.name} →</a>
+      </section>
+    </div>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style>
+  .rd { padding-block: 1.6rem 4rem; max-width: 64rem; }
+  .rd-crumbs { font-size: 0.8125rem; color: var(--color-navy-light); margin-bottom: 1.2rem; }
+  .rd-crumbs a { color: var(--color-navy-light); }
+  .rd-banner { background: #FFF6E5; border: 1px solid #F3D9A4; color: #8A5A00; border-radius: 0.6rem; padding: 0.8rem 1rem; font-weight: 600; margin: 0 0 1.2rem; }
+  .rd-banner--ended { background: #FDECEA; border-color: #F2C2BC; color: #A93226; }
+  .rd-banner a { color: inherit; }
+  .rd-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1.6rem; align-items: start; }
+  .rd-ticket { background: #fff; border-radius: 1rem; box-shadow: 0 18px 40px rgba(13,23,48,0.12); overflow: hidden; border: 1px solid var(--color-line); }
+  .rd-ticket-top { position: relative; min-height: 9.5rem; padding: 1.2rem 1.4rem; display: flex; flex-direction: column; justify-content: flex-end; background: #0E1424 center/cover; color: #fff; }
+  .rd-tag { position: absolute; top: 1rem; left: 1.4rem; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; background: var(--color-gold); color: #0E1424; padding: 0.25rem 0.6rem; border-radius: 0.3rem; }
+  .rd-biz { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; text-decoration: none; }
+  .rd-cat { font-size: 0.8rem; color: rgba(255,255,255,0.8); }
+  .rd-ticket-body { padding: 1.4rem; }
+  .rd-ticket h1 { font-family: var(--font-display); color: var(--color-navy); font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.1; margin: 0 0 0.6rem; }
+  .rd-desc { font-size: 1.0625rem; line-height: 1.55; color: var(--color-navy); margin: 0 0 1rem; }
+  .rd-dates { display: flex; gap: 1.6rem; flex-wrap: wrap; margin: 0; }
+  .rd-dates dt { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-navy-light); }
+  .rd-dates dd { margin: 0.15rem 0 0; font-weight: 700; color: var(--color-navy); }
+  .rd-terms { font-size: 0.875rem; color: var(--color-navy-light); margin: 1rem 0 0; }
+  .rd-terms strong { color: var(--color-navy); margin-right: 0.3rem; }
+  .rd-stub { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.4rem; border-top: 2px dashed var(--color-line); background: #FAFBFD; font-size: 0.75rem; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.06em; }
+  .rd-stub strong { font-family: ui-monospace, Menlo, monospace; font-size: 1.1rem; color: var(--color-navy); letter-spacing: 0.08em; }
+  .rd-redeem { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.4rem 1.5rem; }
+  .rd-redeem h2 { font-family: var(--font-display); color: var(--color-navy); font-size: 1.35rem; margin: 0 0 0.8rem; }
+  .rd-steps { margin: 0; padding-left: 1.3rem; color: var(--color-navy); line-height: 1.7; }
+  .rd-note { display: flex; gap: 0.4rem; align-items: flex-start; background: #F3F7FC; border-radius: 0.5rem; padding: 0.7rem 0.8rem; color: var(--color-navy); font-size: 0.9rem; margin: 1rem 0 0; }
+  .rd-actions { margin-top: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .rd-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; font: inherit; font-weight: 800; font-size: 1.05rem; padding: 0.95rem 1.2rem; border-radius: 0.65rem; background: var(--color-orange); color: #fff; border: 2px solid var(--color-orange); text-decoration: none; cursor: pointer; }
+  .rd-btn:hover { background: #d96a12; border-color: #d96a12; }
+  .rd-btn--sm { font-size: 0.875rem; padding: 0.55rem 0.9rem; }
+  .rd-btn--ghost { background: #fff; color: var(--color-navy); border-color: var(--color-line); font-size: 0.9rem; padding: 0.6rem 0.9rem; font-weight: 700; }
+  .rd-btn--ghost:hover { background: var(--color-surface); border-color: var(--color-line); }
+  .rd-code { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; border: 2px dashed var(--color-orange); border-radius: 0.65rem; padding: 0.7rem 0.8rem 0.7rem 1rem; }
+  .rd-code span { font-family: ui-monospace, Menlo, monospace; font-weight: 800; font-size: 1.3rem; color: var(--color-navy); letter-spacing: 0.06em; }
+  .rd-show { display: flex; gap: 0.5rem; align-items: center; background: #E8F6EE; color: #1F7A45; font-weight: 700; border-radius: 0.6rem; padding: 0.85rem 1rem; margin: 0; }
+  .rd-secondary { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .rd-profile { display: inline-block; margin-top: 1.3rem; font-weight: 700; color: var(--color-orange-dark); }
+  @media (max-width: 48rem) { .rd-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy!); b.textContent = 'Copied'; } catch { b.textContent = b.dataset.copy!; }
+  }));
+  document.getElementById('rd-share')?.addEventListener('click', async (e) => {
+    const b = e.currentTarget as HTMLButtonElement;
+    const data = { title: document.title, url: location.href };
+    try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); b.textContent = 'Link copied'; } } catch {}
+  });
+</script>

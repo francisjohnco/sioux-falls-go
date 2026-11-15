@@ -1,6 +1,7 @@
 import { getStore } from '@netlify/blobs';
 import { isAdmin } from './_shared/auth.mts';
 import { getFile, putFile } from './_shared/business-file.mts';
+import { cleanRedeem } from './_shared/deal-redeem.mts';
 
 // Admin: review deals businesses sent from /local-deals/black-friday/.
 //   GET                                      waiting submissions
@@ -52,6 +53,9 @@ async function handlePost(req: Request, store: ReturnType<typeof getStore>): Pro
     const starts = String(body.startsAt ?? sub.startsAt ?? ''), ends = String(body.endsAt ?? sub.endsAt ?? '');
     if (/^\d{4}-\d{2}-\d{2}$/.test(starts)) deal.activatesAt = starts;
     if (/^\d{4}-\d{2}-\d{2}$/.test(ends)) deal.expiresAt = ends;
+    const redeem = cleanRedeem({ redeemMethod: body.redeemMethod ?? sub.redeemMethod, redeemValue: body.redeemValue ?? sub.redeemValue, redeemNote: body.redeemNote ?? sub.redeemNote });
+    if ('error' in redeem) return json({ error: redeem.error }, 400);
+    Object.assign(deal, redeem);
     const terms = String(body.terms ?? sub.terms ?? '').trim();
     if (terms) deal.terms = terms.slice(0, 200);
     const fileId = `${slug}-black-friday-${new Date().getFullYear()}-${Date.now().toString(36)}`;

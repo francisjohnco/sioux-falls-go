@@ -2,8 +2,9 @@ import { getStore } from '@netlify/blobs';
 import { businessFromCookie } from './_shared/auth.mts';
 import {
   readBusinessFile, writeBusinessFile, readField, readList, readHours, applyChanges, putFile, getFile, deleteFile, listDir,
-  OWNER_INSTANT_FIELDS, OWNER_REVIEW_FIELDS, isGoogleProfileUrl,
+  OWNER_INSTANT_FIELDS, OWNER_REVIEW_FIELDS, isGoogleProfileUrl, addBusinessPhoto,
 } from './_shared/business-file.mts';
+import { cleanRedeem } from './_shared/deal-redeem.mts';
 
 // Everything a signed-in business owner can do. The business comes from the
 // signed session cookie, never from the request, so an owner can only ever
@@ -17,15 +18,8 @@ import {
 //   POST save-deal / delete-deal   their own specials (postcard mailer deals stay admin only)
 
 const json = (obj: unknown, status = 200) => new Response(JSON.stringify(obj), { status, headers: { 'Content-Type': 'application/json' } });
-const MAX_IMAGE_BYTES = 3 * 1024 * 1024;
 const DISCOUNT_TYPES = ['percent-off', 'dollar-off', 'bogo', 'free-item', 'bundle', 'other'];
 
-function imageType(buf: Buffer): 'jpg' | 'png' | 'webp' | null {
-  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return 'jpg';
-  if (buf.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return 'png';
-  if (buf.slice(0, 4).toString() === 'RIFF' && buf.slice(8, 12).toString() === 'WEBP') return 'webp';
-  return null;
-}
 
 async function ownDeals(slug: string) {
   const files = (await listDir('src/content/deals')).filter((f) => f.name.endsWith('.json'));
@@ -62,7 +56,7 @@ export default async (req: Request) => {
         couponStyle: pick('couponStyle') || 'ticket-stub',
         hoursSchedule: readHours(frontmatter),
         heroImage: pick('heroImage'), gallery: readList(frontmatter, 'gallery'),
-        body: body.trim(), pullQuote: pick('pullQuote'), ownerQuote: pick('ownerQuote'), ownerName: pick('ownerName'), excerpt: pick('excerpt'),
+        body: body.trim(), pullQuote: pick('pullQuote'), ownerQuote: pick('ownerQuote'), ownerName: pick('ownerName'), excerpt: pick('excerpt'), ownerRole: pick('ownerRole'), logo: pick('logo'),
         pendingReview: await reviews.get(slug, { type: 'json' }),
         deals: await ownDeals(slug),
       });
@@ -96,21 +90,9 @@ export default async (req: Request) => {
     }
 
     if (input.action === 'photo') {
-      const buf = Buffer.from(String(input.data || ''), 'base64');
-      if (buf.length === 0 || buf.length > MAX_IMAGE_BYTES) return json({ error: 'Photos must be under 3 MB.' }, 400);
-      const ext = imageType(buf);
-      if (!ext) return json({ error: 'Please upload a JPG, PNG, or WebP photo.' }, 400);
-      const path = `public/images/businesses/${slug}-${Date.now()}.${ext}`;
-      await putFile(path, buf.toString('base64'), `Owner photo: ${slug}`);
-      const url = path.replace(/^public/, '');
-      const f = await readBusinessFile(slug);
-      const changes = input.kind === 'hero'
-        ? { heroImage: url }
-        : { gallery: [...readList(f.frontmatter, 'gallery'), url] };
-      if (input.kind !== 'hero' && changes.gallery!.length > 12) return json({ error: 'The gallery holds up to 12 photos. Remove one first.' }, 400);
-      const next = applyChanges(f.frontmatter, f.body, changes);
-      await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `Owner photo: ${readField(f.frontmatter, 'name') || slug}`);
-      return json({ ok: true, url });
+      const kind = input.kind === 'hero' ? 'hero' : input.kind === 'logo' ? 'logo' : 'gallery';
+      const r = await addBusinessPhoto(slug, kind, input.data, 'Owner');
+      return 'error' in r ? json(r, 400) : json({ ok: true, url: r.url });
     }
 
     if (input.action === 'remove-photo') {
@@ -145,6 +127,9 @@ export default async (req: Request) => {
         business: slug, title: title.slice(0, 80), description: description.slice(0, 300), discountType: d.discountType,
         valueScore: 50, submittedBy: 'business-owner',
       };
+      const redeem = cleanRedeem(d);
+      if ('error' in redeem) return json({ error: redeem.error }, 400);
+      Object.assign(deal, redeem);
       if (d.activatesAt) deal.activatesAt = d.activatesAt;
       if (d.expiresAt) deal.expiresAt = d.expiresAt;
       if (d.promotion === 'black-friday') deal.promotion = 'black-friday';

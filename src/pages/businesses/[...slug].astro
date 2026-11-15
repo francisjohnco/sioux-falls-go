@@ -1,4 +1,5 @@
 ---
+import { weaveStory } from '../../lib/story';
 import { googleProfileUrl, linkFirstMention } from '../../lib/google-profile';
 import { todayCentral as todayCentral } from '../../lib/dates';
 import { getCollection, getEntry, render } from 'astro:content';
@@ -21,6 +22,17 @@ const { business } = Astro.props;
 const { Content } = await render(business);
 const gbpUrl = googleProfileUrl(business.data);
 const story = gbpUrl && business.rendered?.html ? linkFirstMention(business.rendered.html, business.data.name, gbpUrl) : { html: '', linked: false };
+const storyPhotos = business.data.gallery.filter((g) => g !== business.data.heroImage);
+const woven = weaveStory(story.linked ? story.html : business.rendered?.html || '', {
+  businessName: business.data.name,
+  pullQuote: business.data.pullQuote,
+  ownerQuote: business.data.ownerQuote,
+  ownerName: business.data.ownerName,
+  ownerRole: business.data.ownerRole,
+  photos: storyPhotos,
+});
+const prettyPhone = (p?: string) => { const d = (p || '').replace(/\D/g, '').slice(-10); return d.length === 10 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : p || ''; };
+const ownerInitials = (business.data.ownerName || business.data.name).split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
 const category = await getEntry(business.data.category);
 const neighborhood = business.data.neighborhood ? await getEntry(business.data.neighborhood) : null;
 const isChampion = business.data.partnershipTier === 'community-champion';
@@ -215,8 +227,7 @@ const schema = {
     <div class="champion-grid-v2">
       <div class="champion-main">
         <div class="tab-panel is-active" data-panel="story">
-          {business.data.pullQuote && <blockquote class="pull-quote-v2">"{business.data.pullQuote}"</blockquote>}
-          <div class="prose">{story.linked ? <Fragment set:html={story.html} /> : <Content />}</div>
+          <div class="prose story">{woven.html ? <Fragment set:html={woven.html} /> : <Content />}</div>
 
           {featuredReview && (
             <>
@@ -235,27 +246,21 @@ const schema = {
             </>
           )}
 
-          {business.data.ownerName && (
-            <div class="owner-card">
-              <div class="owner-avatar">{business.data.ownerName.charAt(0)}</div>
-              <div>
-                <h3>Meet {business.data.ownerName.split(' ')[0]}</h3>
-                {business.data.ownerQuote && <p>"{business.data.ownerQuote}"</p>}
-              </div>
-            </div>
-          )}
         </div>
 
         <div class="tab-panel" data-panel="photos">
           {business.data.gallery.length > 0 ? (
             <div class="gallery-grid">
-              {business.data.gallery.map((img) => (
-                <div class="gallery-item" style={`background-image: url(${img})`}></div>
+              {business.data.gallery.map((img, i) => (
+                <button type="button" class="gallery-item" data-full={img} aria-label={`Open photo ${i + 1} of ${business.data.name}`}>
+                  <img src={img} alt={`${business.data.name} photo ${i + 1}`} loading="lazy" decoding="async" />
+                </button>
               ))}
             </div>
           ) : (
-            <p class="empty-note">Photo gallery coming soon — will pull from the business's uploaded media.</p>
+            <p class="empty-note">Photos from {business.data.name} are coming soon.</p>
           )}
+          <dialog class="photo-viewer" id="photo-viewer"><button type="button" class="photo-viewer-close" aria-label="Close">✕</button><img alt="" /></dialog>
         </div>
 
         <div class="tab-panel" data-panel="specials">
@@ -289,6 +294,7 @@ const schema = {
                   title={deal.data.title}
                   description={deal.data.description}
                   expiresAt={deal.data.expiresAt}
+                  href={`/local-deals/${deal.id}/`}
                 />
               ))}
             </div>
@@ -325,6 +331,13 @@ const schema = {
 
       <aside class="champion-side-v2">
         <div class="card contact-card">
+          <div class="owner-head">
+            {business.data.logo ? <img class="owner-logo" src={business.data.logo} alt={`${business.data.name} logo`} width="72" height="72" /> : <span class="owner-logo owner-logo--initials" aria-hidden="true">{ownerInitials}</span>}
+            <div>
+              <strong>{business.data.ownerName || business.data.name}</strong>
+              <span>{business.data.ownerRole || (business.data.ownerName ? `Owner, ${business.data.name}` : category.data.name)}</span>
+            </div>
+          </div>
           {business.data.hoursSchedule && (
             <button class="open-now-indicator" id="open-now-indicator" type="button" hidden></button>
           )}
@@ -341,7 +354,7 @@ const schema = {
           <dl>
             {business.data.address && business.data.showAddress && <><dt>Address</dt><dd>{business.data.address}</dd></>}
             {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
-            {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone}`}>{business.data.phone}</a></dd></>}
+            {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone.replace(/[^\d+]/g, '')}`}>{prettyPhone(business.data.phone)}</a></dd></>}
             {gbpUrl && <><dt>Google</dt><dd><a href={gbpUrl} rel="noopener" target="_blank">Reviews and directions ↗</a></dd></>}
             {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
           </dl>
@@ -787,7 +800,7 @@ const schema = {
   .open-now-indicator.is-closed { background: #FBEAEA; color: #C0392B; }
 
   .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--space-2); margin-top: var(--space-3); }
-  .gallery-item { height: 9rem; border-radius: var(--radius); background-size: cover; background-position: center; background-color: var(--color-surface); }
+  .gallery-item { height: 11rem; border-radius: var(--radius); background-size: cover; background-position: center; background-color: var(--color-surface); }
 
   .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-3); margin-top: var(--space-3); }
   .view-more-google {
@@ -827,6 +840,34 @@ const schema = {
   .related-body { padding: var(--space-2); display: flex; justify-content: space-between; align-items: center; }
   .related-body strong { font-size: 0.9375rem; color: var(--color-navy); }
   .related-rating { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+
+  /* Owner header at the top of the sidebar */
+  .owner-head { display: flex; gap: 0.9rem; align-items: center; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--color-line); }
+  .owner-logo { width: 4.5rem; height: 4.5rem; flex-shrink: 0; border-radius: 0.8rem; object-fit: contain; background: #fff; border: 1px solid var(--color-line); padding: 0.35rem; }
+  .owner-logo--initials { display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; color: #fff; background: linear-gradient(135deg, var(--color-navy), #2c4572); border: 0; }
+  .owner-head strong { display: block; font-family: var(--font-display); font-size: 1.1rem; color: var(--color-navy); line-height: 1.25; }
+  .owner-head > div span { display: block; font-size: 0.875rem; font-weight: 600; color: var(--color-navy-light); margin-top: 0.15rem; line-height: 1.35; }
+
+  /* Story with woven quotes and photos */
+  .story :global(h2) { font-family: var(--font-display); color: var(--color-navy); font-size: 1.45rem; line-height: 1.25; margin: 2.2rem 0 0.7rem; }
+  .story :global(h3) { font-size: 1.15rem; color: var(--color-navy); margin: 1.6rem 0 0.5rem; }
+  .story :global(.story-quote) { margin: 2rem 0; padding: 0; }
+  .story :global(.story-quote blockquote) { margin: 0; font-family: var(--font-display); font-weight: 700; color: var(--color-navy); line-height: 1.35; }
+  .story :global(.story-quote--pull blockquote) { font-size: clamp(1.3rem, 3vw, 1.65rem); border-left: 5px solid var(--color-orange); padding: 0.2rem 0 0.2rem 1.2rem; }
+  .story :global(.story-quote--owner) { background: #FFF6EC; border-radius: 0.9rem; padding: 1.4rem 1.5rem; }
+  .story :global(.story-quote--owner blockquote) { font-size: 1.3rem; }
+  .story :global(.story-quote figcaption) { margin-top: 0.6rem; font-weight: 700; font-size: 0.9rem; color: var(--color-orange-dark); }
+  .story :global(.story-quote figcaption)::before { content: '— '; }
+  .story :global(.story-photo) { margin: 2rem 0; }
+  .story :global(.story-photo img) { display: block; width: 100%; height: auto; max-height: 30rem; object-fit: cover; border-radius: 0.9rem; }
+
+  .gallery-item { padding: 0; border: 0; cursor: zoom-in; overflow: hidden; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.25s ease; }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .photo-viewer { border: 0; padding: 0; background: transparent; max-width: min(92vw, 70rem); }
+  .photo-viewer::backdrop { background: rgba(10,16,30,0.85); }
+  .photo-viewer img { display: block; max-width: 100%; max-height: 85vh; border-radius: 0.6rem; }
+  .photo-viewer-close { position: absolute; top: 0.5rem; right: 0.5rem; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 0; background: rgba(0,0,0,0.6); color: #fff; font-size: 1rem; cursor: pointer; }
 </style>
 
 <script>
@@ -911,4 +952,12 @@ const schema = {
       }
     }
   }
+
+  const viewer = document.getElementById('photo-viewer') as HTMLDialogElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.gallery-item[data-full]').forEach((b) => b.addEventListener('click', () => {
+    if (!viewer) return;
+    (viewer.querySelector('img') as HTMLImageElement).src = b.dataset.full!;
+    viewer.showModal();
+  }));
+  viewer?.addEventListener('click', (e) => { if (e.target === viewer || (e.target as HTMLElement).closest('.photo-viewer-close')) viewer.close(); });
 </script>
