@@ -16,7 +16,7 @@ STRUCTURE
 - Open with one or two short paragraphs about the situation the customer is in before they find this business. No heading above the opening.
 - Then 5 to 8 sections, each starting with a "## " subheading. Subheadings are specific, plain-spoken phrases that tell the reader what the section gives them (examples of the style: "Your Own Office, Four Hours at a Time", "Walk In and Start Seeing Clients Within Minutes", "Built for Confidential, Client-Facing Work"). No colons, no question marks, no em or en dashes in subheadings.
 - Cover, where the answers allow: the owner's story, what is different, how it works step by step, what is included and starting prices, who it is for, standards and trust, and a closing section on how to get started (service area, hours, how to book).
-- 600 to 1100 words. Short paragraphs of 2 to 4 sentences. Address the reader as "you".
+- 600 to 1100 words. Write for reading on a phone: short paragraphs of 1 to 3 sentences, never more than about 50 words. Address the reader as "you".
 
 ACCURACY (most important)
 - Use only facts found in the interview answers or the current story. Never invent prices, dates, years, numbers, credentials, licenses, awards, names, customer stories, or quotes.

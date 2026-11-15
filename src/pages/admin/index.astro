@@ -1,4 +1,5 @@
 ---
+import PublishTracker from '../../components/PublishTracker.astro';
 import { getCollection, getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
@@ -881,7 +882,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <div class="ap-slot"><div class="ap-thumb ap-thumb--logo" id="ap-logo"></div><label class="button button--ghost ap-file">Logo <input type="file" accept="image/png,image/jpeg,image/webp" data-ap="logo" /></label></div>
             </div>
             <div class="ap-gallery" id="ap-gallery"></div>
-            <label class="button button--ghost ap-file">Add gallery photo <input type="file" accept="image/*" data-ap="gallery" /></label>
+            <label class="button button--ghost ap-file">Add gallery photos <input type="file" accept="image/*" multiple data-ap="gallery" /></label>
             <p class="ap-note" id="ap-note">Photos save right away. Gallery photos also appear inside the story on the profile.</p>
 
             <h3 class="edit-section-heading">Hours</h3>
@@ -901,6 +902,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <p class="edit-modal-status" id="edit-modal-status" hidden></p>
           </div>
           <div class="edit-modal-footer">
+            <a class="button button--ghost" id="edit-manage-link" href="#" target="_blank" rel="noopener">Open owner dashboard ↗</a>
             <button class="button button--ghost" id="edit-modal-cancel">Cancel</button>
             <button class="button" id="edit-modal-save">Save Changes</button>
           </div>
@@ -931,6 +933,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               amenityCount: stay.data.amenityCount ?? '',
               airbnbUrl: stay.data.airbnbUrl,
               hostName: stay.data.hostName || '',
+              heroImage: stay.data.heroImage || '',
+              gallery: stay.data.gallery || [],
               verified: !!stay.data.verifiedAt,
               insiderTips: stay.data.insiderTips,
             })}>{stay.data.name}</button>
@@ -961,6 +965,15 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <label class="edit-field-full">Airbnb URL <input type="text" id="stay-edit-airbnb" /></label>
             <label class="edit-field-full">Total Amenity Count (on Airbnb) <input type="number" id="stay-edit-amenity-count" /></label>
             <label class="edit-field-full">Amenities (one per line) <textarea id="stay-edit-amenities" rows="5"></textarea></label>
+
+            <h3 class="edit-section-heading">Photos of the home</h3>
+            <div class="ap-row">
+              <div class="ap-slot"><div class="ap-thumb" id="sp-hero"></div><label class="button button--ghost ap-file">Main photo <input type="file" accept="image/*" data-sp="hero" /></label></div>
+            </div>
+            <div class="ap-gallery" id="sp-gallery"></div>
+            <label class="button button--ghost ap-file">Add photos <input type="file" accept="image/*" multiple data-sp="gallery" /></label>
+            <p class="ap-note" id="sp-note">Photos save right away. You can pick several at once. Tap Make main on any photo to use it as the main one.</p>
+
 
             <label style="display:flex; align-items:center; gap:0.6rem; margin: 1rem 0;">
               <input type="checkbox" id="stay-edit-verified" style="width:auto;" />
@@ -1073,6 +1086,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   </div>
 
   <script type="application/json" id="article-index-data" set:html={JSON.stringify(articleIndexForEngine)}></script>
+  <PublishTracker />
 </BaseLayout>
 
 <style>
@@ -1194,11 +1208,13 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .ap-slot { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; }
   .ap-thumb { width: 10rem; height: 6rem; border-radius: 0.5rem; background: #EEF1F6 center/cover; border: 1px solid var(--color-line); }
   .ap-thumb--logo { width: 6rem; background-size: contain; background-repeat: no-repeat; background-color: #fff; }
-  .ap-file { position: relative; overflow: hidden; font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+  .ap-file { position: relative; overflow: hidden; font-size: 0.8rem !important; padding: 0.5rem 0.9rem !important; display: inline-flex !important; width: fit-content !important; text-transform: none !important; letter-spacing: normal !important; border-radius: 0.5rem !important; }
+  .ap-gallery :global(.ap-note) { grid-column: 1 / -1; }
   .ap-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .ap-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr)); gap: 0.5rem; margin: 0.8rem 0; }
-  .ap-gthumb { position: relative; aspect-ratio: 1; border-radius: 0.4rem; background: #EEF1F6 center/cover; }
-  .ap-gthumb button { position: absolute; top: 0.25rem; right: 0.25rem; font-size: 0.65rem; font-weight: 700; border: 0; border-radius: 0.3rem; padding: 0.15rem 0.35rem; background: rgba(13,23,48,0.75); color: #fff; cursor: pointer; }
+  .ap-gallery :global(.ap-gthumb) { position: relative; aspect-ratio: 1; border-radius: 0.4rem; background: #EEF1F6 center/cover; }
+  .ap-gallery :global(.ap-gthumb button) { position: absolute; top: 0.25rem; right: 0.25rem; font-size: 0.65rem; font-weight: 700; border: 0; border-radius: 0.3rem; padding: 0.15rem 0.35rem; background: rgba(13,23,48,0.75); color: #fff; cursor: pointer; }
+  .ap-gallery :global(.ap-gthumb .ap-main) { top: auto; bottom: 0.25rem; }
   .ap-note { font-size: 0.8rem; color: var(--color-navy-light); margin: 0.4rem 0 0.8rem; }
   .pending-draft-thumb { width: 9rem; height: 5.1rem; object-fit: cover; border-radius: 0.45rem; flex-shrink: 0; background: #EEF1F6; }
   .pending-draft-thumb--none { display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--color-navy-light); text-align: center; }
@@ -2155,6 +2171,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     }
     (document.getElementById('edit-body') as HTMLTextAreaElement).value = data.body || '';
     renderAdminPhotos(data);
+    (document.getElementById('edit-manage-link') as HTMLAnchorElement).href = `/my-business/?b=${encodeURIComponent(slug)}`;
     if (editStatus) editStatus.hidden = true;
     editBackdrop?.classList.add('is-open');
   }
@@ -2174,15 +2191,19 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     });
   }
   document.querySelectorAll<HTMLInputElement>('[data-ap]').forEach((input) => input.addEventListener('change', async () => {
-    const file = input.files?.[0]; if (!file || !currentEditSlug) return;
-    const note = document.getElementById('ap-note')!; note.textContent = 'Uploading...';
+    const files = [...(input.files || [])]; if (!files.length || !currentEditSlug) return;
+    const note = document.getElementById('ap-note')!;
     const kind = input.dataset.ap!;
     try {
+     for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      note.textContent = files.length > 1 ? `Uploading ${i + 1} of ${files.length}...` : 'Uploading...';
       const res = await fetch('/api/admin-biz-photo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug: currentEditSlug, kind, data: await shrinkImage(file, kind === 'logo' ? 600 : 1600, kind === 'logo') }) });
       const out = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(out.error || 'Upload failed');
       if (kind === 'hero') { currentEditOriginal.heroImage = out.url; (document.getElementById('edit-heroImage') as HTMLInputElement).value = out.url; } else if (kind === 'logo') currentEditOriginal.logo = out.url; else (currentEditOriginal.gallery ||= []).push(out.url);
       renderAdminPhotos(currentEditOriginal);
+     }
       note.textContent = 'Saved. It shows on the profile in about a minute.';
     } catch (err: any) { note.textContent = err.message; }
     input.value = '';
@@ -2314,6 +2335,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     (document.getElementById('stay-edit-amenity-count') as HTMLInputElement).value = data.amenityCount ?? '';
     (document.getElementById('stay-edit-amenities') as HTMLTextAreaElement).value = (data.amenities || []).join('\n');
     (document.getElementById('stay-edit-verified') as HTMLInputElement).checked = !!data.verified;
+    renderStayPhotos(data);
 
     const tipsList = document.getElementById('stay-edit-tips-list')!;
     tipsList.innerHTML = '';
@@ -2322,6 +2344,43 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     if (stayEditStatus) stayEditStatus.hidden = true;
     stayModalBackdrop?.classList.add('is-open');
   }
+
+  function renderStayPhotos(data: any) {
+    const h = document.getElementById('sp-hero'); if (h) h.style.backgroundImage = data.heroImage ? `url(${data.heroImage})` : '';
+    const g = document.getElementById('sp-gallery');
+    if (g) g.innerHTML = (data.gallery || []).map((u: string) => `<div class="ap-gthumb" style="background-image:url('${u}')"><button type="button" data-sp-remove="${u}">Remove</button><button type="button" class="ap-main" data-sp-main="${u}">Make main</button></div>`).join('') || '<p class="ap-note">No photos yet.</p>';
+  }
+  async function stayPhotoCall(body: any) {
+    const res = await fetch('/api/admin-biz-photo', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ collection: 'stays', slug: currentStaySlug, ...body }) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(out.error || 'Something went wrong');
+    return out;
+  }
+  document.querySelectorAll<HTMLInputElement>('[data-sp]').forEach((input) => input.addEventListener('change', async () => {
+    if (!currentStaySlug || !input.files?.length) return;
+    const note = document.getElementById('sp-note')!;
+    const files = [...input.files];
+    try {
+      for (let i = 0; i < files.length; i++) {
+        note.textContent = `Uploading ${i + 1} of ${files.length}...`;
+        const out = await stayPhotoCall({ kind: input.dataset.sp, data: await shrinkImage(files[i], 1600, false) });
+        if (input.dataset.sp === 'hero') currentStayOriginal.heroImage = out.url; else (currentStayOriginal.gallery ||= []).push(out.url);
+        renderStayPhotos(currentStayOriginal);
+      }
+      note.textContent = 'Saved. Photos show on the stay page in about a minute.';
+    } catch (err: any) { note.textContent = err.message; }
+    input.value = '';
+  }));
+  document.getElementById('sp-gallery')?.addEventListener('click', async (e) => {
+    const t = e.target as HTMLElement;
+    const rm = t.closest<HTMLElement>('[data-sp-remove]'), mk = t.closest<HTMLElement>('[data-sp-main]');
+    const note = document.getElementById('sp-note')!;
+    try {
+      if (rm) { const out = await stayPhotoCall({ action: 'remove', url: rm.dataset.spRemove }); currentStayOriginal.gallery = out.gallery; }
+      if (mk) { await stayPhotoCall({ action: 'make-main', url: mk.dataset.spMain }); currentStayOriginal.heroImage = mk.dataset.spMain; }
+      if (rm || mk) { renderStayPhotos(currentStayOriginal); note.textContent = 'Saved.'; }
+    } catch (err: any) { note.textContent = err.message; }
+  });
 
   function closeStayEditModal() {
     stayModalBackdrop?.classList.remove('is-open');

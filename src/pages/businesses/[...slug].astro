@@ -338,41 +338,47 @@ const schema = {
               <span>{business.data.ownerRole || (business.data.ownerName ? `Owner, ${business.data.name}` : category.data.name)}</span>
             </div>
           </div>
+
           {business.data.hoursSchedule && (
-            <button class="open-now-indicator" id="open-now-indicator" type="button" hidden></button>
-          )}
-          {business.data.hoursSchedule && (
-            <div class="hours-table-v2" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)} hidden>
-              {daysOfWeek.map(({ key, label }) => (
-                <div class="hours-row-v2" data-day={key}>
-                  <span class="hours-day">{label}</span>
-                  <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
-                </div>
-              ))}
+            <div class="cc-hours">
+              <button class="open-now-indicator" id="open-now-indicator" type="button" aria-controls="hours-table" hidden></button>
+              <div class="hours-table-v2" id="hours-table" data-hours={JSON.stringify(business.data.hoursSchedule)} hidden>
+                {daysOfWeek.map(({ key, label }) => (
+                  <div class="hours-row-v2" data-day={key}>
+                    <span class="hours-day">{label}</span>
+                    <span class="hours-time">{business.data.hoursSchedule?.[key] || 'Not listed'}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
-          <dl>
-            {business.data.address && business.data.showAddress && <><dt>Address</dt><dd>{business.data.address}</dd></>}
-            {neighborhood && <><dt>Neighborhood</dt><dd><a href={`/neighborhoods/${neighborhood.id}`}>{neighborhood.data.name}</a></dd></>}
-            {business.data.phone && <><dt>Phone</dt><dd><a href={`tel:${business.data.phone.replace(/[^\d+]/g, '')}`}>{prettyPhone(business.data.phone)}</a></dd></>}
-            {gbpUrl && <><dt>Google</dt><dd><a href={gbpUrl} rel="noopener" target="_blank">Reviews and directions ↗</a></dd></>}
-            {business.data.website && <><dt>Website</dt><dd><a href={business.data.website} rel="nofollow noopener" target="_blank">Visit site ↗</a></dd></>}
-          </dl>
-          {smartCTA.external ? (
-            <a class="button contact-cta" href={smartCTA.href} target="_blank" rel="nofollow noopener">{smartCTA.label}</a>
-          ) : (
-            <a class="button contact-cta" href={smartCTA.href}>{smartCTA.label}</a>
-          )}
-        </div>
 
-        <div class="card trust-card">
-          <h3>Why we recommend them</h3>
-          <ul class="trust-list">
-            {isVerified && <li><Icon name="check" size={14} /> Locally owned &amp; operated</li>}
-            {business.data.googleRating && <li><Icon name="check" size={14} /> Rated {business.data.googleRating.toFixed(1)} on Google</li>}
-            {isVerified ? <li><Icon name="check" size={14} /> Info confirmed by our team</li> : <li class="trust-pending"><Icon name="clock" size={14} /> <span>Details not yet confirmed with the owner. <a href="/verified">What this means</a></span></li>}
-            {(business.data.partnershipTier === 'community-listing' || business.data.partnershipTier === 'community-champion') && <li><Icon name="check" size={14} /> Committed to giving back to Sioux Falls</li>}
+          <ul class="cc-list">
+            {business.data.phone && (
+              <li><a href={`tel:${business.data.phone.replace(/[^\d+]/g, '')}`}><Icon name="phone" size={18} /><span><small>Call</small>{prettyPhone(business.data.phone)}</span><i aria-hidden="true">›</i></a></li>
+            )}
+            {business.data.website && (
+              <li><a href={business.data.website} target="_blank" rel="noopener"><Icon name="globe" size={18} /><span><small>Website</small>{business.data.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}</span><i aria-hidden="true">›</i></a></li>
+            )}
+            {gbpUrl && (
+              <li><a href={gbpUrl} target="_blank" rel="noopener"><Icon name="star" size={18} /><span><small>Google</small>Reviews and directions</span><i aria-hidden="true">›</i></a></li>
+            )}
+            {business.data.address && business.data.showAddress && (
+              <li><div><Icon name="pin" size={18} /><span><small>Address</small>{business.data.address}</span></div></li>
+            )}
+            {neighborhood && (
+              <li><a href={`/neighborhoods/${neighborhood.id}`}><Icon name="map" size={18} /><span><small>Neighborhood</small>{neighborhood.data.name}</span><i aria-hidden="true">›</i></a></li>
+            )}
           </ul>
+
+          {smartCTA.external ? (
+            <a class="cc-btn" href={smartCTA.href} target="_blank" rel="noopener">{smartCTA.label}</a>
+          ) : (
+            <a class="cc-btn" href={smartCTA.href}>{smartCTA.label}</a>
+          )}
+          {business.data.phone && !/^tel:/.test(smartCTA.href) && (
+            <a class="cc-btn cc-btn--ghost" href={`tel:${business.data.phone.replace(/[^\d+]/g, '')}`}><Icon name="phone" size={16} /> Call now</a>
+          )}
         </div>
 
         {isChampion && (
@@ -868,6 +874,26 @@ const schema = {
   .photo-viewer::backdrop { background: rgba(10,16,30,0.85); }
   .photo-viewer img { display: block; max-width: 100%; max-height: 85vh; border-radius: 0.6rem; }
   .photo-viewer-close { position: absolute; top: 0.5rem; right: 0.5rem; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 0; background: rgba(0,0,0,0.6); color: #fff; font-size: 1rem; cursor: pointer; }
+
+  /* Contact card: clean rows and square-cornered buttons, no pills */
+  .contact-card { padding: 1.3rem 1.3rem 1.4rem; }
+  .cc-hours { margin-bottom: 0.4rem; }
+  .contact-card .open-now-indicator { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 0.5rem; margin: 0; padding: 0.75rem 0; border: 0; border-bottom: 1px solid var(--color-line); border-radius: 0; background: none !important; font: inherit; font-weight: 700; font-size: 0.95rem; cursor: pointer; text-align: left; }
+  .contact-card .open-now-indicator.is-open { color: var(--color-success); }
+  .contact-card .open-now-indicator.is-closed { color: #C0392B; }
+  .contact-card .hours-table-v2 { margin: 0.6rem 0 0.4rem; border-radius: 0.5rem; }
+  .cc-list { list-style: none; margin: 0 0 1.1rem; padding: 0; }
+  .cc-list li { border-bottom: 1px solid var(--color-line); }
+  .cc-list a, .cc-list li > div { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem 0; color: var(--color-navy); text-decoration: none; }
+  .cc-list a:hover span { color: var(--color-orange-dark); }
+  .cc-list :global(svg) { flex-shrink: 0; color: var(--color-orange); }
+  .cc-list span { flex: 1; min-width: 0; font-weight: 700; font-size: 0.95rem; overflow-wrap: anywhere; line-height: 1.35; }
+  .cc-list small { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-navy-light); margin-bottom: 0.1rem; }
+  .cc-list i { font-style: normal; font-size: 1.4rem; line-height: 1; color: var(--color-navy-light); }
+  .cc-btn { display: flex; align-items: center; justify-content: center; gap: 0.45rem; width: 100%; padding: 0.9rem 1rem; border-radius: 0.55rem; background: var(--color-orange); color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none; border: 2px solid var(--color-orange); }
+  .cc-btn:hover { background: var(--color-orange-dark); border-color: var(--color-orange-dark); color: #fff; }
+  .cc-btn--ghost { margin-top: 0.6rem; background: #fff; color: var(--color-navy); border-color: var(--color-line); }
+  .cc-btn--ghost:hover { background: var(--color-surface); color: var(--color-navy); border-color: var(--color-line); }
 </style>
 
 <script>

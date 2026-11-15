@@ -1,0 +1,78 @@
+---
+// After any save that changes the site, shows a bar that follows the rebuild
+// and confirms when the change is actually live. It watches the site's
+// build-info.json, which is rewritten on every build.
+---
+<div class="pt" id="publish-tracker" hidden role="status" aria-live="polite">
+  <span class="pt-dot" id="pt-dot"></span>
+  <span class="pt-text" id="pt-text">Publishing your change...</span>
+  <button type="button" class="pt-close" id="pt-close" aria-label="Hide">✕</button>
+</div>
+
+<style is:global>
+  .pt { position: fixed; left: 50%; bottom: 1.2rem; transform: translateX(-50%); z-index: 2000; display: flex; align-items: center; gap: 0.7rem; background: #1B2A4A; color: #fff; padding: 0.8rem 1rem 0.8rem 1.1rem; border-radius: 0.8rem; box-shadow: 0 12px 30px rgba(13,23,48,0.3); font-size: 0.9rem; font-weight: 600; max-width: calc(100vw - 2rem); }
+  .pt[hidden] { display: none; }
+  .pt-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--color-gold, #F5B429); flex-shrink: 0; animation: ptpulse 1.1s ease-in-out infinite; }
+  .pt.is-live .pt-dot { background: #3DD68C; animation: none; }
+  .pt.is-error .pt-dot { background: #FF6B5B; animation: none; }
+  .pt-text a { color: #FFD27A; }
+  .pt-close { border: 0; background: none; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 0.9rem; }
+  @keyframes ptpulse { 50% { opacity: 0.35; } }
+  @media (max-width: 40rem) { .pt { bottom: 5.4rem; } }
+</style>
+
+<script>
+  // Endpoints that save something to the site (and so trigger a rebuild).
+  const SAVES = /\/api\/(update-business|update-article|update-stay|update-mailer-deal|create-mailer-deal|publish-draft|manage-event|biz-changes|deal-submissions|admin-biz-photo|hero-photo|biz-portal)\b/;
+  const READ_ONLY_ACTIONS = /"action":"(search|run|submit-review|logout)"/;
+  const box = document.getElementById('publish-tracker')!;
+  const text = document.getElementById('pt-text')!;
+  let timer: number | undefined;
+
+  async function builtAt(): Promise<number> {
+    const r = await fetch(`/build-info.json?t=${Date.now()}`, { cache: 'no-store' });
+    return r.ok ? (await r.json()).builtAt || 0 : 0;
+  }
+
+  function track(savedAt: number, viewUrl?: string) {
+    clearInterval(timer);
+    box.hidden = false; box.classList.remove('is-live', 'is-error');
+    text.textContent = 'Saved. Publishing your change to the site...';
+    const started = Date.now();
+    timer = window.setInterval(async () => {
+      const secs = Math.round((Date.now() - started) / 1000);
+      try {
+        if ((await builtAt()) > savedAt) {
+          clearInterval(timer);
+          box.classList.add('is-live');
+          text.innerHTML = `Live on the site.${viewUrl ? ` <a href="${viewUrl}" target="_blank" rel="noopener">View it</a>` : ''}`;
+          setTimeout(() => (box.hidden = true), 15000);
+          return;
+        }
+      } catch {}
+      if (secs > 300) {
+        clearInterval(timer); box.classList.add('is-error');
+        text.textContent = 'Still not live after 5 minutes. The site build may have failed. Check Deploys in Netlify.';
+        return;
+      }
+      text.textContent = `Saved. Publishing your change to the site... (${secs}s, usually under a minute)`;
+    }, 6000);
+  }
+  document.getElementById('pt-close')!.addEventListener('click', () => { box.hidden = true; clearInterval(timer); });
+
+  const realFetch = window.fetch.bind(window);
+  window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const res = await realFetch(input, init);
+    try {
+      const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+      const method = (init?.method || 'GET').toUpperCase();
+      const body = typeof init?.body === 'string' ? init.body : '';
+      if (res.ok && method === 'POST' && SAVES.test(url) && !READ_ONLY_ACTIONS.test(body.replace(/\s/g, ''))) {
+        const slug = body.match(/"slug":"([a-z0-9-]+)"/)?.[1];
+        const view = /biz-portal|update-business|admin-biz-photo|biz-changes/.test(url) && slug ? `/businesses/${slug}/` : undefined;
+        track(Date.now() - 2000, view);
+      }
+    } catch {}
+    return res;
+  };
+</script>

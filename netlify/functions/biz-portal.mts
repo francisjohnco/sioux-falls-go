@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { businessFromCookie } from './_shared/auth.mts';
+import { businessFromCookie, isAdmin } from './_shared/auth.mts';
 import {
   readBusinessFile, writeBusinessFile, readField, readList, readHours, applyChanges, putFile, getFile, deleteFile, listDir,
   OWNER_INSTANT_FIELDS, OWNER_REVIEW_FIELDS, isGoogleProfileUrl, addBusinessPhoto,
@@ -36,10 +36,15 @@ async function ownDeals(slug: string) {
 }
 
 export default async (req: Request) => {
-  const slug = businessFromCookie(req.headers.get('cookie') || '');
+  // Admin can manage any business through the same dashboard (?b=slug), with
+  // story edits applied directly instead of waiting for review.
+  const cookie = req.headers.get('cookie') || '';
+  const asked = new URL(req.url).searchParams.get('b') || '';
+  const adminMode = !!asked && /^[a-z0-9-]+$/.test(asked) && isAdmin(cookie);
+  const slug = adminMode ? asked : businessFromCookie(cookie);
   if (!slug) return json({ error: 'Please sign in again.' }, 401);
-  const account: any = await getStore('business-accounts').get(slug, { type: 'json' });
-  if (!account?.passwordHash) return json({ error: 'This sign-in was turned off. Contact Sioux Falls Go.' }, 401);
+  const account: any = adminMode ? { email: 'admin' } : await getStore('business-accounts').get(slug, { type: 'json' });
+  if (!adminMode && !account?.passwordHash) return json({ error: 'This sign-in was turned off. Contact Sioux Falls Go.' }, 401);
   const reviews = getStore('business-change-requests');
 
   try {
@@ -47,7 +52,7 @@ export default async (req: Request) => {
       const { frontmatter, body } = await readBusinessFile(slug);
       const pick = (k: string) => readField(frontmatter, k) ?? '';
       return json({
-        slug,
+        slug, adminMode,
         email: account.email,
         name: pick('name'),
         tier: pick('partnershipTier'),
@@ -85,6 +90,13 @@ export default async (req: Request) => {
       const changes: Record<string, string> = {};
       for (const k of OWNER_REVIEW_FIELDS) if (typeof input[k] === 'string') changes[k] = input[k].slice(0, k === 'body' ? 20000 : 400);
       if (!Object.keys(changes).length) return json({ error: 'Nothing to send.' }, 400);
+      if (adminMode) {
+        const f = await readBusinessFile(slug);
+        const next = applyChanges(f.frontmatter, f.body, changes);
+        await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `Admin story update: ${readField(f.frontmatter, 'name') || slug}`);
+        await reviews.delete(slug).catch(() => {});
+        return json({ ok: true, message: 'Saved and published. The profile updates in about a minute.' });
+      }
       await reviews.setJSON(slug, { slug, businessName: input.businessName || slug, changes, submittedAt: new Date().toISOString(), email: account.email });
       return json({ ok: true, message: 'Sent. Sioux Falls Go will review your changes, usually within a day or two.' });
     }

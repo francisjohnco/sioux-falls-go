@@ -101,21 +101,23 @@ export function setHours(frontmatter: string, hours: Record<string, string>): st
   return lines.join('\n');
 }
 
-export async function readBusinessFile(slug: string): Promise<{ raw: string; sha: string; frontmatter: string; body: string }> {
+export type Collection = 'businesses' | 'stays';
+
+export async function readBusinessFile(slug: string, collection: Collection = 'businesses'): Promise<{ raw: string; sha: string; frontmatter: string; body: string }> {
   if (!/^[a-z0-9-]+$/.test(slug)) throw new Error('Invalid business');
   const { base, headers } = gh();
-  const res = await fetch(`${base}/src/content/businesses/${slug}.md`, { headers });
+  const res = await fetch(`${base}/src/content/${collection}/${slug}.md`, { headers });
   if (!res.ok) throw new Error(res.status === 404 ? 'Business not found' : explainGitHubError(res.status));
   const data = await res.json();
   const raw = Buffer.from(data.content, 'base64').toString('utf-8');
   return { raw, sha: data.sha, ...splitFile(raw) };
 }
 
-export async function writeBusinessFile(slug: string, frontmatter: string, body: string, sha: string, message: string): Promise<void> {
+export async function writeBusinessFile(slug: string, frontmatter: string, body: string, sha: string, message: string, collection: Collection = 'businesses'): Promise<void> {
   const { base, headers } = gh();
   const raw = `---\n${frontmatter}\n---\n${body}`;
   splitFile(raw); // sanity check before writing
-  const res = await fetch(`${base}/src/content/businesses/${slug}.md`, {
+  const res = await fetch(`${base}/src/content/${collection}/${slug}.md`, {
     method: 'PUT',
     headers: { ...headers, 'Content-Type': 'application/json' },
     body: JSON.stringify({ message, content: Buffer.from(raw).toString('base64'), sha }),
@@ -168,20 +170,20 @@ function imageType(buf: Buffer): 'jpg' | 'png' | 'webp' | null {
   if (buf.slice(0, 4).toString() === 'RIFF' && buf.slice(8, 12).toString() === 'WEBP') return 'webp';
   return null;
 }
-export async function addBusinessPhoto(slug: string, kind: 'hero' | 'gallery' | 'logo', base64: string, who: string): Promise<{ url: string } | { error: string }> {
+export async function addBusinessPhoto(slug: string, kind: 'hero' | 'gallery' | 'logo', base64: string, who: string, collection: Collection = 'businesses'): Promise<{ url: string } | { error: string }> {
   const buf = Buffer.from(String(base64 || ''), 'base64');
   if (buf.length === 0 || buf.length > MAX_IMAGE_BYTES) return { error: 'Photos must be under 3 MB.' };
   const ext = imageType(buf);
   if (!ext) return { error: 'Please upload a JPG, PNG, or WebP image.' };
-  const f = await readBusinessFile(slug);
+  const f = await readBusinessFile(slug, collection);
   const gallery = readList(f.frontmatter, 'gallery');
-  if (kind === 'gallery' && gallery.length >= 12) return { error: 'The gallery holds up to 12 photos. Remove one first.' };
-  const path = `public/images/businesses/${slug}-${kind === 'logo' ? 'logo-' : ''}${Date.now()}.${ext}`;
+  if (kind === 'gallery' && gallery.length >= (collection === 'stays' ? 30 : 12)) return { error: 'The gallery holds up to 12 photos. Remove one first.' };
+  const path = `public/images/${collection === 'stays' ? 'stays' : 'businesses'}/${slug}-${kind === 'logo' ? 'logo-' : ''}${Date.now()}.${ext}`;
   await putFile(path, buf.toString('base64'), `${who} photo: ${slug}`);
   const url = path.replace(/^public/, '');
   const changes = kind === 'hero' ? { heroImage: url } : kind === 'logo' ? { logo: url } : { gallery: [...gallery, url] };
   const next = applyChanges(f.frontmatter, f.body, changes);
-  await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `${who} ${kind}: ${readField(f.frontmatter, 'name') || slug}`);
+  await writeBusinessFile(slug, next.frontmatter, next.body, f.sha, `${who} ${kind}: ${readField(f.frontmatter, 'name') || slug}`, collection);
   return { url };
 }
 
@@ -192,7 +194,7 @@ export function applyChanges(frontmatter: string, body: string, changes: Record<
   for (const [k, v] of Object.entries(changes)) {
     if (k === 'body') { if (typeof v === 'string') b = v.endsWith('\n') ? v : v + '\n'; continue; }
     if (k === 'hoursSchedule') { if (v && typeof v === 'object') fm = setHours(fm, v); continue; }
-    if (k === 'gallery') { if (Array.isArray(v)) fm = setField(fm, 'gallery', v.map(String).slice(0, 12)); continue; }
+    if (k === 'gallery') { if (Array.isArray(v)) fm = setField(fm, 'gallery', v.map(String).slice(0, 30)); continue; }
     if (k === 'heroImage' || k === 'logo') { if (typeof v === 'string') fm = setField(fm, k, v); continue; }
     if ((OWNER_INSTANT_FIELDS as readonly string[]).includes(k) || (OWNER_REVIEW_FIELDS as readonly string[]).includes(k)) {
       if (k === 'couponStyle' && v && !COUPON_STYLES.includes(v)) continue;

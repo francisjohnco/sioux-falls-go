@@ -237,3 +237,7 @@ function main() {
 }
 
 main();
+
+// When this version of the site was built. The admin and owner dashboards
+// check this after a save to confirm the change is actually live.
+fs.writeFileSync(path.join(ROOT, 'public/build-info.json'), JSON.stringify({ builtAt: Date.now(), commit: process.env.COMMIT_REF || '' }));

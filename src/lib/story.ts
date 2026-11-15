@@ -23,9 +23,47 @@ function photoBlock(src: string, alt: string) {
   return `<figure class="story-photo"><img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async" /></figure>`;
 }
 
+// Splits long paragraphs into short ones (about two sentences, never more
+// than about 55 words) so the story reads easily on a phone. Never cuts
+// inside a link or other tag.
+export function shortenParagraphs(html: string): string {
+  return html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner: string) => {
+    if (/<(p|div|ul|ol|figure|blockquote|img)\b/i.test(inner)) return whole;
+    const words = inner.replace(/<[^>]+>/g, '').split(/\s+/).length;
+    if (words <= 55) return whole;
+    // sentence ends: . ! ? (optionally followed by a closing quote or bracket), a space, then a capital or opening quote
+    const cuts: number[] = [];
+    const re = /[.!?]["”’)]?\s+(?=["“A-Z0-9])/g;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(inner))) {
+      const at = m.index + m[0].length;
+      const before = inner.slice(0, at);
+      const openTags = (before.match(/<a\b/gi) || []).length - (before.match(/<\/a>/gi) || []).length;
+      const insideTag = before.lastIndexOf('<') > before.lastIndexOf('>');
+      if (openTags === 0 && !insideTag) cuts.push(at);
+    }
+    if (!cuts.length) return whole;
+    const sentences: string[] = [];
+    let last = 0;
+    for (const c of cuts) { sentences.push(inner.slice(last, c).trim()); last = c; }
+    sentences.push(inner.slice(last).trim());
+    const out: string[] = [];
+    let cur: string[] = [];
+    const wc = (t: string) => t.replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length;
+    for (const sentence of sentences.filter(Boolean)) {
+      if (cur.length && (cur.length >= 2 || wc(cur.join(' ')) + wc(sentence) > 55)) { out.push(cur.join(' ')); cur = []; }
+      cur.push(sentence);
+    }
+    if (cur.length) out.push(cur.join(' '));
+    // a lone short last line reads better joined to the one before it
+    if (out.length > 1 && wc(out[out.length - 1]) < 8) out.splice(-2, 2, `${out[out.length - 2]} ${out[out.length - 1]}`);
+    return out.map((t) => `<p>${t}</p>`).join('\n');
+  });
+}
+
 export function weaveStory(html: string, x: StoryExtras): { html: string; usedOwnerQuote: boolean; usedPhotos: number } {
   // The page already has the business name as its H1, so any H1 in the story becomes an H2.
-  let body = html.replace(/<h1(\s|>)/g, '<h2$1').replace(/<\/h1>/g, '</h2>');
+  let body = shortenParagraphs(html.replace(/<h1(\s|>)/g, '<h2$1').replace(/<\/h1>/g, '</h2>'));
   // Drop a leading heading that only repeats the page title (common in imported stories).
   body = body.replace(/^\s*<h2[^>]*>[^<]*<\/h2>\s*/, (m) => (m.toLowerCase().includes(x.businessName.toLowerCase().slice(0, 12)) ? '' : m));
 

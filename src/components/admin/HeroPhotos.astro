@@ -56,6 +56,10 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
         <input id="hp-q" placeholder="What should the photo show? e.g. plumber clearing a kitchen drain" />
         <button class="button" type="submit">Search</button>
       </form>
+      <div class="hp-upload">
+        <span>Or use your own photo</span>
+        <label class="button button--ghost hp-file">Upload a photo <input type="file" accept="image/jpeg,image/png" id="hp-own" /></label>
+      </div>
       <div class="hp-results" id="hp-results"></div>
       <div class="hp-pick" id="hp-pick" hidden>
         <label>Describe the photo (alt text for Google and screen readers)
@@ -96,6 +100,9 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
   .hp-for { margin: 0.3rem 0 0.9rem; color: var(--color-navy-light); font-size: 0.875rem; }
   .hp-search { display: flex; gap: 0.6rem; }
   .hp-search input, .hp-pick input { flex: 1; font: inherit; font-size: 0.9rem; padding: 0.6rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; width: 100%; }
+  .hp-upload { display: flex; align-items: center; gap: 0.7rem; margin-top: 0.8rem; font-size: 0.85rem; font-weight: 700; color: var(--color-navy-light); }
+  .hp-file { position: relative; overflow: hidden; }
+  .hp-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .hp-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.6rem; margin-top: 0.9rem; }
   .hp-result { position: relative; border: 3px solid transparent; border-radius: 0.55rem; padding: 0; background: none; cursor: pointer; overflow: hidden; }
   .hp-result img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
@@ -185,11 +192,27 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
     if (t.id === 'hp-close' || t.id === 'hp-modal') $('hp-modal').hidden = true;
   });
 
+  let ownData = '';
+  $('hp-own').addEventListener('change', async () => {
+    const file = ($('hp-own') as HTMLInputElement).files?.[0]; if (!file) return;
+    ownData = await new Promise<string>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => { const k = Math.min(1, 1600 / Math.max(img.width, img.height)); const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height); resolve(c.toDataURL('image/jpeg', 0.85).split(',')[1]); };
+      img.onerror = () => reject(new Error('That file could not be read as a photo.'));
+      img.src = URL.createObjectURL(file);
+    });
+    picked = { own: true };
+    document.querySelectorAll('.hp-result').forEach((x) => x.classList.remove('is-picked'));
+    ($('hp-alt') as HTMLInputElement).value = '';
+    $('hp-pick').hidden = false;
+    msg('Your photo is ready. Describe it, then click Use this photo.', true);
+  });
+
   $('hp-search').addEventListener('submit', (e) => { e.preventDefault(); search(($('hp-q') as HTMLInputElement).value); });
   $('hp-save').addEventListener('click', async (e) => {
     const b = e.currentTarget as HTMLButtonElement;
     b.disabled = true;
-    try { const r = await call({ action: 'set', slug, candidate: picked, alt: ($('hp-alt') as HTMLInputElement).value }); msg(r.message, true); }
+    try { const alt = ($('hp-alt') as HTMLInputElement).value; const r = picked?.own ? await call({ action: 'upload', slug, data: ownData, alt }) : await call({ action: 'set', slug, candidate: picked, alt }); msg(r.message, true); }
     catch (err: any) { msg(err.message); }
     b.disabled = false;
   });

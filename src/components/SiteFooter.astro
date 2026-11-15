@@ -27,6 +27,7 @@ const columns = [
     title: 'Service Providers',
     links: [
       { href: '/get-featured', label: 'Get Featured' },
+      { href: '/business-login/', label: 'Business Owner Login' },
       { href: '/postcard', label: 'Postcard Advertising' },
       { href: '/badges', label: 'Banners & Badges' },
       { href: '/earn-badges', label: 'Earn Your Badge' },
@@ -39,7 +40,7 @@ const columns = [
   <div class="container footer-main">
     <div class="footer-brand">
       <a href="/" class="footer-logo-link">
-        <img src="/images/sfg-logo.png" alt="Sioux Falls Go" class="footer-logo" />
+        <img src="/images/sfg-logo-reversed.png" alt="Sioux Falls Go" class="footer-logo" width="875" height="349" />
       </a>
       <p class="footer-tagline">The homepage for living in Sioux Falls &mdash; real local businesses, checked by real people.</p>
 
@@ -104,7 +105,7 @@ const columns = [
   @media (max-width: 55rem) { .footer-main { grid-template-columns: 1fr; gap: var(--space-5); } }
 
   .footer-logo-link { display: inline-block; }
-  .footer-logo { height: 6.2rem; width: auto; filter: brightness(0) invert(1); display: block; }
+  .footer-logo { height: 6.2rem; width: auto; display: block; }
   .footer-tagline { color: rgba(255,255,255,0.62); font-size: 0.9375rem; max-width: 26ch; margin: 1.1rem 0 1.6rem; line-height: 1.55; }
 
   .footer-newsletter-label { display: block; font-weight: 700; font-size: 0.75rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.7rem; }
