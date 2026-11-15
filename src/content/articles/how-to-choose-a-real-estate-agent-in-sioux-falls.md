@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Real Estate Agent in Sioux Falls"
 category: "real-estate-agents"
-heroImage: "/images/stock/real-estate-handshake.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "real-estate-agents-faq-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "It helps — Sioux Falls neighborhoods vary meaningfully in pricing patterns and buyer demand, and an agent with specific recent experience in your area often has sharper pricing instincts than one working broadly across the whole metro."
   - question: "Is it normal to interview more than one agent before choosing?"
     answer: "Yes, especially for selling a home — most agents expect this and it's a reasonable way to compare approach, communication style, and marketing plans before committing."
+heroImage: "https://images.pexels.com/photos/8470833/pexels-photo-8470833.jpeg"
+heroImageAlt: "A real estate agent speaks with a couple on the sunny porch of a home they are touring."
+heroImageCredit:
+  photographer: "Thirdman"
+  profileUrl: "https://www.pexels.com/@thirdman"
+  source: "Pexels"
 ---
 
 Sioux Falls's real estate market has real neighborhood-level variation — downtown, McKennan Park, and the fast-growing southeast side each have different pricing dynamics — which makes an agent's specific local experience genuinely relevant, not just a nice-to-have.

@@ -1,7 +1,6 @@
 ---
 title: "Real Estate Agents FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "real-estate-agents"
-heroImage: "/images/stock/real-estate-keys.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "how-to-choose-a-real-estate-agent-in-sioux-falls", "real-estate-and-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]
@@ -14,6 +13,12 @@ updatedAt: 2024-08-15
 seo:
   title: "Sioux Falls Real Estate Agent FAQ | Sioux Falls Go"
   description: "Answers to the real estate questions Sioux Falls buyers and sellers ask most — commission, timing, and choosing an agent."
+heroImage: "https://images.pexels.com/photos/6035315/pexels-photo-6035315.jpeg"
+heroImageAlt: "A bright blue craftsman-style house with a white front porch and green lawn on a clear day."
+heroImageCredit:
+  photographer: "Curtis Adams"
+  profileUrl: "https://www.pexels.com/@curtis-adams-1694007"
+  source: "Pexels"
 ---
 
 ## How much is real estate commission in Sioux Falls?

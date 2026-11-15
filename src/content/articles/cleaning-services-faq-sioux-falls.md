@@ -1,7 +1,6 @@
 ---
 title: "Cleaning Services FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "cleaning-services"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "how-to-choose-a-cleaning-service-in-sioux-falls", "cleaning-services-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]
@@ -14,6 +13,12 @@ updatedAt: 2024-06-12
 seo:
   title: "Sioux Falls Cleaning Services FAQ | Sioux Falls Go"
   description: "Answers to the house cleaning questions Sioux Falls homeowners ask most — cost, trust, and seasonal needs."
+heroImage: "https://images.pexels.com/photos/9462333/pexels-photo-9462333.jpeg"
+heroImageAlt: "Two housekeepers in uniform making a bed together in a bright, neatly arranged bedroom."
+heroImageCredit:
+  photographer: "Liliana Drew"
+  profileUrl: "https://www.pexels.com/@liliana-drew"
+  source: "Pexels"
 ---
 
 ## How much does recurring house cleaning cost?

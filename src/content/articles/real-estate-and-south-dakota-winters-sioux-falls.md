@@ -1,7 +1,6 @@
 ---
 title: "Buying or Selling a Home in Sioux Falls During Winter: What to Expect"
 category: "real-estate-agents"
-heroImage: "/images/stock/real-estate-handshake.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-real-estate-agent-in-sioux-falls", "how-to-choose-a-real-estate-agent-in-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Yes — keeping walkways clear of ice and snow, ensuring good interior lighting given shorter daylight hours, and making sure the home is warm and welcoming all matter more in winter showings than in summer ones."
   - question: "When does the Sioux Falls spring market typically pick up?"
     answer: "Buyer activity commonly increases starting in March as weather improves, with the traditional spring rush intensifying through April and May."
+heroImage: "https://images.pexels.com/photos/15938929/pexels-photo-15938929.jpeg"
+heroImageAlt: "A snow-covered house surrounded by large bare trees at golden-hour dusk in a midwestern winter landscape."
+heroImageCredit:
+  photographer: "Tom Fisk"
+  profileUrl: "https://www.pexels.com/@tomfisk"
+  source: "Pexels"
 ---
 
 The Sioux Falls real estate market doesn't stop in winter, but it does shift in ways worth understanding whether you're buying or selling.

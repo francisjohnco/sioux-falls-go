@@ -1,7 +1,6 @@
 ---
 title: "Shine Bright With The Sioux Falls Go Postcard"
 category: "grow-with-sfg"
-heroImage: "/images/articles/shine-bright-with-the-sioux-falls-go-postcard.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Shine Bright With The Sioux Falls Go Postcard"
   description: "Shine Bright With The Sioux Falls Go Postcard \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/shine-bright-with-the-sioux-falls-go-postcard"
+heroImage: "https://images.pexels.com/photos/28780231/pexels-photo-28780231.jpeg"
+heroImageAlt: "Colorful postcards with scenic and artistic designs displayed on a retail rack."
+heroImageCredit:
+  photographer: "Nikki Villanueva"
+  profileUrl: "https://www.pexels.com/@nikki-villanueva-318039245"
+  source: "Pexels"
 ---
 
 **Introducing the Sioux Falls Spotlight Postcard: A Smarter Way to Reach Local Homes** **with Direct Mail**

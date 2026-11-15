@@ -1,7 +1,6 @@
 ---
 title: "Home Watch and South Dakota Winters: What Every Snowbird Should Know"
 category: "home-watch-services"
-heroImage: "/images/stock/rustic-bedroom.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-home-watch-company-in-sioux-falls", "how-to-choose-a-home-watch-company-in-sioux-falls"]
 relatedBusinesses: ["while-away"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Many home watch professionals recommend keeping the thermostat no lower than 55-60°F while away, to reduce freeze risk on interior plumbing without running heating costs unnecessarily high."
   - question: "Does snow removal fall under standard home watch service?"
     answer: "It varies by provider — some include basic snow monitoring and can arrange removal, others treat it as a separate add-on service. Confirm this specifically before winter, not after the first snowfall."
+heroImage: "https://images.pexels.com/photos/15745735/pexels-photo-15745735.jpeg"
+heroImageAlt: "A small snow-covered cabin glows warmly from within on a dark winter night beside a frozen shoreline."
+heroImageCredit:
+  photographer: "David Kanigan"
+  profileUrl: "https://www.pexels.com/@david-kanigan-239927285"
+  source: "Pexels"
 ---
 
 If you're heading south for the winter, your Sioux Falls home faces real risks in your absence that a good home watch service is specifically designed to catch early.

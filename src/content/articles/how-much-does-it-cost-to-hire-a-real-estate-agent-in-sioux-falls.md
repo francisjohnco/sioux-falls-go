@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Real Estate Agent in Sioux Falls?"
 category: "real-estate-agents"
-heroImage: "/images/stock/real-estate-keys.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-real-estate-agent-in-sioux-falls", "real-estate-agents-faq-sioux-falls"]
 relatedBusinesses: ["daniel-brunz-realtor"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Commission rates are generally negotiable between agent and client, though rates can vary by agent and by the specific services included — it's a reasonable topic to discuss upfront, not after signing an agreement."
   - question: "Are there additional costs beyond commission when selling?"
     answer: "Yes — closing costs, potential repairs from inspection negotiations, and staging or prep costs are separate from agent commission and worth budgeting for separately."
+heroImage: "https://images.pexels.com/photos/8470794/pexels-photo-8470794.jpeg"
+heroImageAlt: "A real estate agent reviews documents with two clients on an outdoor balcony railing."
+heroImageCredit:
+  photographer: "Thirdman"
+  profileUrl: "https://www.pexels.com/@thirdman"
+  source: "Pexels"
 ---
 
 Real estate commission in Sioux Falls, as elsewhere, is typically a percentage of the sale price, split between the listing agent's brokerage and the buyer's agent's brokerage, and is generally negotiable rather than fixed.

@@ -1,7 +1,6 @@
 ---
 title: "SAJMedia Marketing: Grow with Visibility, Authority, & Optimize Onboarding Process"
 category: "community-spotlight"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Sioux Falls Digital Marketing Spotlight"
   description: "SAJMedia Marketing: Grow with Visibility, Authority, & Optimize Onboarding Process \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/sajmedia-marketing-grow-with-visibility-authority-optimize-onboarding-process"
+heroImage: "https://images.pexels.com/photos/6592753/pexels-photo-6592753.jpeg"
+heroImageAlt: "A young woman draws a diagram on a whiteboard while a colleague works in the background of a bright office."
+heroImageCredit:
+  photographer: "Mikhail Nilov"
+  profileUrl: "https://www.pexels.com/@mikhail-nilov"
+  source: "Pexels"
 ---
 
 **Community Spotlight: SAJMedia Marketing**
