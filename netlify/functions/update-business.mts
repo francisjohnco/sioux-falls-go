@@ -1,4 +1,5 @@
 import { isAdmin } from './_shared/auth.mts';
+import { isGoogleProfileUrl } from './_shared/business-file.mts';
 // Env vars required (same as publish-draft.mts):
 //   GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO
 //
@@ -106,6 +107,12 @@ export default async (req: Request) => {
   }
 
   const { hoursSchedule, body: newBodyContent, ...scalarUpdates } = updates;
+  const g = (scalarUpdates as any).googleBusinessUrl;
+  if (typeof g === 'string' && g.trim()) {
+    const url = /^https?:\/\//i.test(g.trim()) ? g.trim() : `https://${g.trim()}`;
+    if (!isGoogleProfileUrl(url)) return new Response(JSON.stringify({ error: 'The Google Business Profile box needs a Google link (in Google Maps, open the business, tap Share, and copy the link). Put job titles in Owner Role.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    (scalarUpdates as any).googleBusinessUrl = url;
+  }
   const invalidKeys = Object.keys(scalarUpdates).filter((k) => !SCALAR_FIELDS.includes(k as ScalarField));
   if (invalidKeys.length > 0) {
     return new Response(JSON.stringify({ error: `Not an editable field: ${invalidKeys.join(', ')}` }), { status: 400 });

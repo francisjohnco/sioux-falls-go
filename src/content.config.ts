@@ -146,12 +146,13 @@ const businesses = defineCollection({
     neighborhood: reference('neighborhoods').optional(),
     address: z.string().optional(), // not always available at import — see migration report
     showAddress: z.boolean().default(false), // per-business privacy toggle — most businesses keep their street address private
-    googleBusinessUrl: z.string().url().optional(), // their Google Business Profile link; their name in the story links to it
+    // A value that is not a web address is ignored instead of failing the whole site build.
+    googleBusinessUrl: z.preprocess((v) => { if (typeof v !== 'string' || !v.trim()) return undefined; const u = /^https?:\/\//i.test(v.trim()) ? v.trim() : `https://${v.trim()}`; try { const x = new URL(u); return x.hostname.includes('.') && !/\s/.test(v.trim()) ? u : undefined; } catch { return undefined; } }, z.string().url().optional()), // their Google Business Profile link; their name in the story links to it
     placeId: z.string().optional(), // Google Place ID — required for the automated review sync to work for this business
     latitude: z.number().optional(),
     longitude: z.number().optional(),
     phone: z.string().optional(),
-    website: z.string().url().optional(),
+    website: z.preprocess((v) => { if (typeof v !== 'string' || !v.trim()) return undefined; const u = /^https?:\/\//i.test(v.trim()) ? v.trim() : `https://${v.trim()}`; try { const x = new URL(u); return x.hostname.includes('.') && !/\s/.test(v.trim()) ? u : undefined; } catch { return undefined; } }, z.string().url().optional()),
     hours: z.string().optional(),
     verifiedAt: z.date().optional(), // set once Sioux Falls Go has confirmed this listing is real and accurate — omitted entirely for newly-added, not-yet-verified businesses
     claimed: z.boolean().default(false),
