@@ -6,6 +6,8 @@ seo:
 googleReviewCount: 9
 googleRating: 5
 category: "marketing-agencies"
+googleBusinessUrl: "Growth Strategist"
+ownerName: "Francis John"
 responseTime: "within 24 hours"
 website: "https://sajmedia.co"
 placeId: "ChIJkdQmp43LjocRswPLmOq_5h8"
@@ -29,28 +31,27 @@ hoursSchedule:
 latitude: 43.524902
 longitude: -96.750074
 reviews:
+  - author: "Brandon Smith"
+    rating: 5
+    text: "SAJMedia did a great job helping me through the process of creating a website! They were very professional and easy to work with. They took my ideas and desires and translated them into reality with precision. Their feedback and good communication through the process was very helpful as well. I am definitely going to be recommending them to everyone I can!"
+    date: "6 months ago"
   - author: "Ryan Jurrens"
     rating: 5
     text: "Francis was very professional, knowledgeable, and wanted what was best for me and my business. He did not pressure me into a product I didn’t want or feel comfortable with."
-    date: "4 months ago"
+    date: "6 months ago"
   - author: "denis kilimnik"
     rating: 5
     text: "Francis was professional and friendly. He thoroughly explained his services and gave me different options. I did not feel pressured, and I would recommend checking them out."
-    date: "5 months ago"
+    date: "7 months ago"
   - author: "Corey Thorson"
     rating: 5
     text: "Francis was very knowledgeable. He took the time to go over everything and explain in detail how everything works.  It was a pleasure working with him."
-    date: "5 months ago"
-  - author: "Bryce Vining"
+    date: "7 months ago"
+  - author: "Mike McComber"
     rating: 5
-    text: "I’ve never seen someone so passionate about spreading so much love into the community! I wish I could put it in words as beautiful as they do. But nothing will ever top the skills they provide!"
-    date: "5 months ago"
-  - author: "Daniel Brunz"
-    rating: 5
-    text: "Francis was super helpful in helping me identify best ways to optimize my Google ranking!"
-    date: "4 months ago"
+    text: "We are extremely grateful for Francis and SAJMedia for the professional way he guided us through the process of building our website.  My wife and I know nothing about this process and Francis did such a wonderful job at explaining every step as we went.  Francis is also excellent at goal setting, and meeting expected time frames.  We would highly recommend his services."
+    date: "3 years ago"
 ---
-
 ## **Marketing Services in Sioux Falls That Help Your Business Get Found and Grow**
 
 **Complete Local SEO and Marketing System For Service businesses.** When you are trying to grow a business, marketing can quickly feel overwhelming. There are a lot of moving parts, and it is not always clear what is actually working. That is where SAJMedia Marketing brings a different kind of experience, one that feels focused, intentional, and built around real results. At its core, this is a team that understands local businesses because everything they do is designed to help you stand out right here in Sioux Falls. Instead of pushing generic strategies, the approach feels tailored to your goals, your market, and the way your business naturally operates. 
