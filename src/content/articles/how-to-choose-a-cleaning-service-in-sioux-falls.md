@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Cleaning Service in Sioux Falls"
 category: "cleaning-services"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "cleaning-services-faq-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Both can work well, but a company typically offers backup coverage if your regular cleaner is sick, while an individual may offer more consistency and lower cost — the tradeoff is worth thinking through for your situation."
   - question: "Should I be home during cleaning visits?"
     answer: "Not necessarily — many homeowners aren't, but if you're hiring someone new, being present for the first visit or two is a reasonable way to build trust before leaving them unsupervised."
+heroImage: "https://images.pexels.com/photos/4239116/pexels-photo-4239116.jpeg"
+heroImageAlt: "A gloved hand scrubs a white bathroom sink with a sponge beside a neatly hung towel and round mirror."
+heroImageCredit:
+  photographer: "https://kaboompics.com/"
+  profileUrl: "https://www.pexels.com/@karola-g"
+  source: "Pexels"
 ---
 
 Cleaning services work in your home, often unsupervised, which makes trust and verification matter more here than for services performed while you're present.

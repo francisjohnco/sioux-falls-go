@@ -1,7 +1,6 @@
 ---
 title: "Lawn Care and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "lawn-care"
-heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "how-to-choose-a-lawn-care-company-in-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Winter freeze-thaw cycles stress grass roots more in clay-heavy soil than in looser soil types, which is part of why spring patchiness is a common, largely normal pattern in this area rather than a sign something went wrong."
   - question: "Is it too late to aerate if I missed fall?"
     answer: "Spring aeration is a reasonable second option if fall aeration was missed, though many lawn care companies consider fall the stronger window for cool-season grasses common in Sioux Falls."
+heroImage: "https://images.pexels.com/photos/29985003/pexels-photo-29985003.jpeg"
+heroImageAlt: "Frost-covered oak leaves and frozen grass blades on a lawn during a crisp winter morning."
+heroImageCredit:
+  photographer: "Christina & Peter"
+  profileUrl: "https://www.pexels.com/@christina99999"
+  source: "Pexels"
 ---
 
 Sioux Falls lawns go through a real seasonal cycle that's worth understanding before assuming something's wrong with your yard every spring.

@@ -1,7 +1,6 @@
 ---
 title: "Flooring FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "flooring"
-heroImage: "/images/scenic/levitt-concert-center.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-flooring-contractor-in-sioux-falls", "how-to-choose-a-flooring-contractor-in-sioux-falls", "flooring-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["dakota-elite-flooring"]
@@ -14,6 +13,12 @@ updatedAt: 2024-03-22
 seo:
   title: "Sioux Falls Flooring FAQ | Sioux Falls Go"
   description: "Answers to the flooring questions Sioux Falls homeowners ask most — material choice, cost, and basements."
+heroImage: "https://images.pexels.com/photos/5502256/pexels-photo-5502256.jpeg"
+heroImageAlt: "Sunlit empty living room with rich hardwood floors, crown molding, and a decorative chandelier."
+heroImageCredit:
+  photographer: "Curtis Adams"
+  profileUrl: "https://www.pexels.com/@curtis-adams-1694007"
+  source: "Pexels"
 ---
 
 ## What flooring is best for a Sioux Falls basement?

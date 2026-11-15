@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Lawn Care Company in Sioux Falls?"
 category: "lawn-care"
-heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-lawn-care-company-in-sioux-falls", "lawn-care-faq-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]
@@ -21,6 +20,8 @@ embeddedFaqs:
     answer: "Aeration is typically a separate service from routine mowing, usually billed once or twice a year rather than as part of a weekly plan."
   - question: "Why do some quotes include soil testing and others don't?"
     answer: "Given Sioux Falls's clay-heavy soil, some companies test before recommending a fertilization program, which can add a small upfront cost but often improves results and can save money on unnecessary treatments."
+heroImage: "/images/stock/lawn-mower.jpg"
+heroImageAlt: "A blue and white push lawn mower sits on freshly cut green grass beneath a partly cloudy sky."
 ---
 
 Weekly mowing for an average Sioux Falls residential lot typically runs $35-$60 per visit, while a full-season fertilization and weed control program runs $300-$600 for the year, depending on lawn size and how many applications are included.

@@ -1,7 +1,6 @@
 ---
 title: "Top 10 Lawn Care Services in Sioux Falls For Spring 2025"
 category: "for-locals"
-heroImage: "/images/articles/top-10-lawn-care-services-in-sioux-falls-for-spring-2025.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Top 10 Lawn Care Services in Sioux Falls For Spring 2025"
   description: "Discover the top 10 lawn care services in Sioux Falls for Spring 2025. From expert mowing to lush landscaping, find trusted local pros near you.\u201d"
 sourceUrl: "/guides/top-10-lawn-care-services-in-sioux-falls-for-spring-2025"
+heroImage: "https://images.pexels.com/photos/12087398/pexels-photo-12087398.jpeg"
+heroImageAlt: "A man on a riding lawn mower cuts a lush green lawn surrounded by trees in warm afternoon sunlight."
+heroImageCredit:
+  photographer: "Vaan Photography"
+  profileUrl: "https://www.pexels.com/@vaan-photos"
+  source: "Pexels"
 ---
 
 Looking to refresh your lawn this spring? We’ve curated a list of **Sioux Falls’ top local lawn care providers** — businesses that consistently deliver quality service and have earned the community’s trust. This isn’t about who paid for the top spot; it’s about who truly stands out.

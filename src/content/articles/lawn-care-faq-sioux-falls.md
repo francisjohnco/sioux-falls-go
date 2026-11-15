@@ -1,7 +1,6 @@
 ---
 title: "Lawn Care FAQ: Sioux Falls Homeowners' Most Common Questions"
 category: "lawn-care"
-heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "faq"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "how-to-choose-a-lawn-care-company-in-sioux-falls", "lawn-care-south-dakota-winters-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]
@@ -14,6 +13,8 @@ updatedAt: 2024-04-19
 seo:
   title: "Sioux Falls Lawn Care FAQ | Sioux Falls Go"
   description: "Answers to the lawn care questions Sioux Falls homeowners ask most — soil, seasonal timing, and cost."
+heroImage: "/images/stock/lawn-mower.jpg"
+heroImageAlt: "A blue and white push lawn mower sits on freshly cut green grass beneath a partly cloudy sky."
 ---
 
 ## Why is Sioux Falls soil harder on lawns than other places?

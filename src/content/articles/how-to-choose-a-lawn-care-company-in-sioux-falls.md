@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Lawn Care Company in Sioux Falls"
 category: "lawn-care"
-heroImage: "/images/stock/lawn-mower.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-lawn-care-company-in-sioux-falls", "lawn-care-faq-sioux-falls"]
 relatedBusinesses: ["robert-s-property-care"]
@@ -21,6 +20,8 @@ embeddedFaqs:
     answer: "Not necessarily — some homeowners prefer that flexibility. It's worth comparing pricing and terms against season-long contracts to see which fits your situation."
   - question: "Do I need to be licensed or present for pesticide applications?"
     answer: "No, but the company applying pesticides should be properly licensed for chemical application under South Dakota regulations — reasonable to ask about directly."
+heroImage: "/images/stock/lawn-mower.jpg"
+heroImageAlt: "A blue and white push lawn mower sits on freshly cut green grass beneath a sunny sky."
 ---
 
 Lawn care in Sioux Falls has a real local wrinkle: much of the area's clay-heavy soil behaves differently than the sandy or loamy soil generic national lawn care advice usually assumes, which makes a company's actual local experience matter more than it might elsewhere.

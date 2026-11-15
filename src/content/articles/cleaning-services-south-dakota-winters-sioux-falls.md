@@ -1,7 +1,6 @@
 ---
 title: "Cleaning Services and South Dakota Winters: What Every Sioux Falls Homeowner Should Know"
 category: "cleaning-services"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "seasonal-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-cleaning-service-in-sioux-falls", "how-to-choose-a-cleaning-service-in-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Many Sioux Falls homeowners do, timed after the worst of salt-tracking season ends, to address residue and buildup that accumulated over winter."
   - question: "Does dry winter air affect cleaning needs?"
     answer: "Yes — static from dry indoor air tends to increase dust clinging to surfaces, which is part of why dusting can feel like a bigger job in winter months."
+heroImage: "https://images.pexels.com/photos/29505010/pexels-photo-29505010.jpeg"
+heroImageAlt: "Snow-covered winter boots stepping through deep snow with blurred trees in the background."
+heroImageCredit:
+  photographer: "iddea photo"
+  profileUrl: "https://www.pexels.com/@alena"
+  source: "Pexels"
 ---
 
 Sioux Falls winters bring a specific kind of household mess that's worth planning around, separate from year-round cleaning needs.
