@@ -30,7 +30,7 @@ const {
 // Search Console ownership check. Paste the code Google gives you (the
 // content="..." part of the HTML tag) into the GOOGLE_SITE_VERIFICATION
 // environment variable in Netlify, then redeploy.
-const googleVerification = (process.env.GOOGLE_SITE_VERIFICATION || '').replace(/^.*content="([^"]+)".*$/s, '$1').trim();
+const googleVerification = (process.env.GOOGLE_SITE_VERIFICATION || '9OPhAnWH2t9zzJrCLzJOlNuT0stwwzwaaCBPvbWQ8Q0').replace(/^.*content="([^"]+)".*$/s, '$1').trim();
 const preloadOrigin = preloadImage?.href.startsWith('https://') ? new URL(preloadImage.href).origin : null;
 
 // DNS has switched — confirmed by directly fetching siouxfallsgo.com and
