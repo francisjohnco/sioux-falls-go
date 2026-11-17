@@ -203,3 +203,13 @@ export function setArticleHero(raw: string, hero: { heroImage?: string; heroImag
   if (hero.locked) kept.push('heroImageLocked: true');
   return `---\n${kept.join('\n')}\n---\n${m[2]}`;
 }
+
+// Sets the header photo fields in a category's JSON file.
+export function setCategoryHero(raw: string, hero: { heroImage: string; heroImageAlt: string; heroImageCredit?: HeroChoice['heroImageCredit'] | null; locked?: boolean }): string {
+  const c = JSON.parse(raw);
+  c.heroImage = hero.heroImage;
+  c.heroImageAlt = hero.heroImageAlt;
+  if (hero.heroImageCredit) c.heroImageCredit = hero.heroImageCredit; else delete c.heroImageCredit;
+  if (hero.locked) c.heroImageLocked = true; else delete c.heroImageLocked;
+  return JSON.stringify(c, null, 2) + '\n';
+}

@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
 import { buildArticleFile, commitNewFile, cleanDraft, validateDraft, isNearDuplicate } from './_shared/article-file.mts';
-import { chicagoToday, planNextSlot } from './_shared/schedule.mts';
+import { chicagoToday, planNextSlot, planClusterSlot, PUBLISH_WEEKDAYS } from './_shared/schedule.mts';
 
 // A Netlify SCHEDULED function. "0 14 * * 1,3" is 2 PM UTC every Monday and
 // Wednesday. Each run writes at most ONE article.
@@ -56,9 +56,17 @@ async function loadPending(): Promise<any[]> {
   return (await Promise.all(blobs.map((b) => store.get(b.key, { type: 'json' })))).filter(Boolean) as any[];
 }
 
+// Runs every hour but only writes when a series is running low: each queue
+// (content cluster) is kept a few articles ahead of its own publish days.
+// The open-ended gap filler still runs only on its old Monday and Wednesday
+// slot, once every queue is finished.
 export default async () => {
   const siteUrl = process.env.URL || process.env.DEPLOY_URL;
   if (!siteUrl) return new Response('Missing site URL env var', { status: 500 });
+
+  const engine = getStore('content-engine');
+  const lastFail = await engine.get('last-failure');
+  if (lastFail && Date.now() - Date.parse(lastFail) < 6 * 3600 * 1000) return new Response('Waiting after a failed run', { status: 200 });
 
   const pending = await loadPending();
   if (pending.length >= MAX_PENDING) {
@@ -71,15 +79,37 @@ export default async () => {
   const allSlugs = new Set(articleIndex.map((a) => a.slug));
   const pendingSlugs = new Set(pending.map((p) => p.slug).filter(Boolean));
   const takenTitles = [...articleIndex.map((a) => a.title), ...pending.map((p) => p.draft?.title).filter(Boolean)];
+  const today = chicagoToday();
 
   const queueRes = await fetch(`${siteUrl}/topic-queue.json`);
-  const queue = queueRes.ok ? await queueRes.json() : null;
-  if (queue) {
-    const next = (queue.topics || []).find((t: any) => !allSlugs.has(t.slug) && !pendingSlugs.has(t.slug));
-    if (next) return await runQueuedTopic(next, queue, articleIndex);
-    console.log('Topic queue is complete, moving on to content gaps.');
+  const file = queueRes.ok ? await queueRes.json() : null;
+  const queues: any[] = file ? (file.queues || [file]) : [];
+
+  const due: { queue: any; topic: any; ahead: number }[] = [];
+  let unfinished = 0;
+  for (const queue of queues) {
+    const open = (slug: string) => !allSlugs.has(slug) && !pendingSlugs.has(slug);
+    const pillarTopic = queue.pillar?.contentType && open(queue.pillar.slug) ? { ...queue.pillar, role: 'pillar' } : null;
+    const topic = pillarTopic || (queue.topics || []).find((t: any) => open(t.slug));
+    if (!topic) continue;
+    unfinished++;
+    const ahead = articleIndex.filter((a) => a.cluster === queue.cluster && a.publishedAt > today).length
+      + pending.filter((p) => p.cluster === queue.cluster).length;
+    if (ahead < (queue.bufferTarget || 3)) due.push({ queue, topic, ahead });
   }
 
+  if (due.length) {
+    due.sort((a, b) => a.ahead - b.ahead);
+    const { queue, topic } = due[0];
+    const res = await runQueuedTopic(topic, queue, articleIndex);
+    if (res.status >= 500) await engine.set('last-failure', new Date().toISOString());
+    return res;
+  }
+  if (unfinished) return new Response('Every series is far enough ahead', { status: 200 });
+
+  // All queues finished: fall back to the gap filler on its old schedule only.
+  const now = new Date();
+  if (![1, 3].includes(now.getUTCDay()) || now.getUTCHours() !== 14) return new Response('Queues complete, gap filler waits for its slot', { status: 200 });
   return await runGapDriven(siteUrl, articleIndex, pending, takenTitles);
 };
 
@@ -98,22 +128,27 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   const categoryName = next.categoryName || queue.categoryName || categorySlug;
   const relatedBusinesses = next.relatedBusinesses || queue.relatedBusinesses || [];
   const pillar = queue.pillar;
+  const isPillar = next.role === 'pillar';
 
   // Link targets: the main guide, the other planned topics in this cluster,
   // and live articles in the same category.
   const clusterTargets = [
-    ...(pillar ? [{ title: pillar.title, slug: pillar.slug, category: categorySlug, description: 'The main guide for this topic' }] : []),
+    ...(pillar && !isPillar ? [{ title: pillar.title, slug: pillar.slug, category: categorySlug, description: 'The main guide for this topic' }] : []),
     ...(queue.topics || []).filter((t: any) => t.slug !== next.slug).map((t: any) => ({ title: t.title, slug: t.slug, category: categorySlug, description: t.brief || '' })),
     ...articleIndex.filter((a) => a.live !== false && a.category === categorySlug && a.cluster !== queue.cluster),
   ];
 
   const direction = [
     `Write this exact article. Use this exact title: ${next.title}`,
-    `This is one supporting article in a series about ${queue.campaign || categoryName}. It must cover its own angle in depth and not repeat the main guide.`,
-    pillar ? `In the first or second paragraph, link to the main guide like this: [${pillar.title}](/guides/${pillar.slug}).` : '',
-    'Also link naturally to 2 or 3 other articles from the list below that a reader of this article would want next.',
+    isPillar
+      ? `This is the MAIN guide (pillar) for a series about ${queue.campaign || categoryName}. It is the most complete, most useful page on this topic for Sioux Falls. Write 1500 to 2200 words in 6 to 9 H2 sections, each giving the reader a real answer and next step, and in each section link to the matching supporting article from the list below with natural anchor text.`
+      : `This is one supporting article in a series about ${queue.campaign || categoryName}. It must cover its own angle in depth and not repeat the main guide.`,
+    !isPillar && pillar ? `In the first or second paragraph, link to the main guide like this: [${pillar.title}](/guides/${pillar.slug}).` : '',
+    isPillar ? '' : 'Also link naturally to 2 or 3 other articles from the list below that a reader of this article would want next.',
     next.keywords?.length ? `Work these search phrases in naturally, without stuffing: ${next.keywords.join('; ')}.` : '',
     next.brief || '',
+    queue.localFacts?.length ? `VERIFIED LOCAL FACTS. Use the ones that fit this article; they are what makes it more useful than anything else online. When you use a number or a named place from this list, name the source in the sentence (for example "according to the City of Sioux Falls" or "SiouxFalls.Business reported in April 2026"). Do not state any other Sioux Falls specific numbers, prices, or names.\n- ${queue.localFacts.join('\n- ')}` : '',
+    'Make it the most helpful page a Sioux Falls reader could find: specific steps, real local names, the questions to ask, the mistakes to avoid, and a clear next step. No filler.',
     'Never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word "to" for ranges.',
     'Do not present any price as a Sioux Falls average unless you were given a source for it. If you mention costs, call them typical national ranges and tell the reader to get a written quote.',
   ].filter(Boolean).join('\n');
@@ -134,8 +169,9 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   const cluster = queue.cluster;
 
   if (autoPublish && problems.length === 0) {
-    const publishDate = planNextSlot(articleIndex.map((a) => a.publishedAt).filter(Boolean), chicagoToday());
-    const file = buildArticleFile({ draft: withImage, categorySlug, contentType: next.contentType, relatedBusinesses, publishDate, slug: next.slug, cluster, clusterRole: 'support' });
+    const clusterDates = articleIndex.filter((a) => a.cluster === cluster).map((a) => a.publishedAt).filter(Boolean);
+    const publishDate = planClusterSlot(clusterDates, chicagoToday(), queue.publishWeekdays || PUBLISH_WEEKDAYS, queue.firstPublishDate);
+    const file = buildArticleFile({ draft: withImage, categorySlug, contentType: next.contentType, relatedBusinesses, publishDate, slug: next.slug, cluster, clusterRole: isPillar ? 'pillar' : 'support' });
     const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
     if (res.ok) {
       console.log(`Auto-scheduled "${draft.title}" for ${publishDate}`);
@@ -149,7 +185,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   const id = `${next.slug}-${Date.now()}`;
   await getStore('pending-drafts').setJSON(id, {
     id, categorySlug, categoryName, contentType: next.contentType, draft: withImage, slug: next.slug,
-    relatedBusinesses, cluster, clusterRole: 'support',
+    relatedBusinesses, cluster, clusterRole: isPillar ? 'pillar' : 'support',
     generatedAt: new Date().toISOString(), status: 'pending-review',
     reviewNote: problems.length ? `Held for review: ${problems.join('; ')}` : autoPublish ? 'Held for review: commit failed' : 'Auto-publish is off',
   });
@@ -227,6 +263,6 @@ async function runGapDriven(siteUrl: string, articleIndex: any[], pending: any[]
 }
 
 export const config = {
-  schedule: '0 14 * * 1,3', // 2pm UTC, Monday and Wednesday
+  schedule: '7 * * * *', // hourly; it only writes when a series is running low
   background: true, // generation can take longer than the 10s synchronous limit
 };

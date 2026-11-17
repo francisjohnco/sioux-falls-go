@@ -1,220 +1,481 @@
 {
-  "campaign": "Drain cleaning in Sioux Falls",
-  "category": "plumbers",
-  "categoryName": "Plumbers",
-  "relatedBusinesses": [
-    "605-drain-solutions",
-    "jurrens-plumbing"
-  ],
-  "note": "One main guide (pillar) plus supporting articles, written in this order, one per scheduled run. Each supporting article links to the main guide and to related articles in the cluster. A topic counts as done once an article with its slug exists or a draft for it is waiting for review.",
-  "topics": [
+  "note": "Each queue is one content cluster with its own publish days. The engine fills each queue a few articles ahead, main guide first.",
+  "queues": [
     {
-      "slug": "drain-cleaning-cost-sioux-falls",
-      "title": "Drain Cleaning Cost in Sioux Falls, SD (2026 Guide)",
-      "contentType": "cost-guide",
-      "keywords": [
-        "how much does drain cleaning cost Sioux Falls",
-        "drain cleaning cost Sioux Falls",
-        "how much should it cost to clean a drain"
+      "campaign": "Drain cleaning in Sioux Falls",
+      "category": "plumbers",
+      "categoryName": "Plumbers",
+      "relatedBusinesses": [
+        "605-drain-solutions",
+        "jurrens-plumbing"
       ],
-      "brief": "Cover typical costs by drain type and method, what changes the price, and how to get a quote you can trust."
+      "note": "One main guide (pillar) plus supporting articles, written in this order, one per scheduled run. Each supporting article links to the main guide and to related articles in the cluster. A topic counts as done once an article with its slug exists or a draft for it is waiting for review.",
+      "topics": [
+        {
+          "slug": "drain-cleaning-cost-sioux-falls",
+          "title": "Drain Cleaning Cost in Sioux Falls, SD (2026 Guide)",
+          "contentType": "cost-guide",
+          "keywords": [
+            "how much does drain cleaning cost Sioux Falls",
+            "drain cleaning cost Sioux Falls",
+            "how much should it cost to clean a drain"
+          ],
+          "brief": "Cover typical costs by drain type and method, what changes the price, and how to get a quote you can trust."
+        },
+        {
+          "slug": "is-professional-drain-cleaning-worth-it-sioux-falls",
+          "title": "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro",
+          "contentType": "comparison",
+          "keywords": [
+            "is professional drain cleaning worth it",
+            "when to call a plumber for a clogged drain Sioux Falls"
+          ],
+          "brief": "Compare DIY fixes and a professional visit on effectiveness, risk to pipes, and long-term cost. End with clear decision criteria."
+        },
+        {
+          "slug": "hydro-jetting-vs-snaking-sioux-falls",
+          "title": "Hydro Jetting vs. Snaking for Sioux Falls Homes",
+          "contentType": "comparison",
+          "keywords": [
+            "hydro jetting Sioux Falls",
+            "drain snaking vs hydro jetting",
+            "what cleans out drains the best"
+          ],
+          "brief": "Explain both methods, when each fits, the role of a camera inspection, and why local roots, hard water scale, and shifting clay soil matter."
+        },
+        {
+          "slug": "what-to-do-when-your-drain-backs-up-sioux-falls",
+          "title": "What to Do When Your Drain Backs Up in Sioux Falls (Emergency Guide)",
+          "contentType": "safety-information",
+          "keywords": [
+            "clogged drain Sioux Falls",
+            "emergency drain cleaning Sioux Falls",
+            "sewer backup what to do"
+          ],
+          "brief": "A calm step by step guide for the first hour, how to tell an emergency from something that can wait, and what to ask when calling a company."
+        },
+        {
+          "slug": "kitchen-sink-clogs-sioux-falls-homes",
+          "title": "Kitchen Sink Clogs in Sioux Falls Homes (Grease, Disposals, and What Actually Works)",
+          "contentType": "educational-article",
+          "keywords": [
+            "kitchen sink clogged Sioux Falls",
+            "kitchen drain clogs grease disposal"
+          ],
+          "brief": "Why kitchen lines clog, what not to put down a disposal, what a homeowner can safely try, and when to call."
+        },
+        {
+          "slug": "clear-hair-clogged-bathroom-drain",
+          "title": "How to Clear a Hair Clog From a Bathroom Sink or Shower in Sioux Falls",
+          "contentType": "checklist",
+          "keywords": [
+            "shower drain clogged hair",
+            "bathroom sink slow drain fix"
+          ],
+          "brief": "A practical checklist of safe tools and steps, and the signs that the problem is deeper than hair."
+        },
+        {
+          "slug": "main-sewer-line-cleaning-cost-sioux-falls",
+          "title": "Main Sewer Line Cleaning Cost in Sioux Falls (and Why It Costs More)",
+          "contentType": "cost-guide",
+          "keywords": [
+            "main sewer line cleaning cost",
+            "sewer line cleaning Sioux Falls"
+          ],
+          "brief": "Explain why a main line costs more than a fixture, what drives the quote, and the red flags in an estimate."
+        },
+        {
+          "slug": "tree-roots-in-sioux-falls-sewer-lines",
+          "title": "Tree Roots in Sioux Falls Sewer Lines (Signs, Fixes, and Costs)",
+          "contentType": "educational-article",
+          "keywords": [
+            "tree roots in sewer line",
+            "roots in drain pipes Sioux Falls"
+          ],
+          "brief": "How roots get in, warning signs, the difference between clearing and repairing, and how often roots return."
+        },
+        {
+          "slug": "sewer-camera-inspection-sioux-falls",
+          "title": "Sewer Camera Inspection in Sioux Falls (When It Is Worth Paying For)",
+          "contentType": "buying-guide",
+          "keywords": [
+            "sewer camera inspection Sioux Falls",
+            "drain camera inspection cost"
+          ],
+          "brief": "When a camera inspection earns its price, what a good report includes, and how buyers can use one before closing on a home."
+        },
+        {
+          "slug": "why-do-my-drains-keep-clogging",
+          "title": "Why Do My Drains Keep Clogging? Recurring Clogs Explained for Sioux Falls Homes",
+          "contentType": "educational-article",
+          "keywords": [
+            "why does my drain keep clogging",
+            "recurring drain clogs"
+          ],
+          "brief": "The usual causes of repeat clogs, from grease and scale to roots and sagging pipe, and how to find the real one."
+        },
+        {
+          "slug": "spring-sewer-backups-sioux-falls",
+          "title": "Spring Sewer Backups in Sioux Falls (Thaw, Heavy Rain, and Sump Pump Problems)",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "sewer backup spring Sioux Falls",
+            "basement sewer backup heavy rain"
+          ],
+          "brief": "Why backups cluster in spring, what homeowners can check ahead of time, and what to do during a heavy rain."
+        },
+        {
+          "slug": "winter-drain-problems-sioux-falls",
+          "title": "Winter Drain Problems in Sioux Falls (Freezing Temperatures and Slow Drains)",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winter drain problems",
+            "frozen drain pipe Sioux Falls"
+          ],
+          "brief": "How a Sioux Falls winter affects drains and vent lines, what to do on the coldest nights, and what to avoid."
+        },
+        {
+          "slug": "drain-cleaner-chemicals-vs-plumbing-snake",
+          "title": "Chemical Drain Cleaners vs. a Plumbing Snake (What Plumbers Recommend)",
+          "contentType": "comparison",
+          "keywords": [
+            "do plumbers recommend drain cleaners",
+            "chemical drain cleaner vs snake"
+          ],
+          "brief": "Compare chemical cleaners and mechanical tools on safety, pipe damage, and results, and say plainly when each is a poor choice."
+        },
+        {
+          "slug": "how-to-choose-a-drain-cleaning-company-sioux-falls",
+          "title": "How to Choose a Drain Cleaning Company in Sioux Falls (Questions to Ask Before You Book)",
+          "contentType": "buying-guide",
+          "keywords": [
+            "best drain cleaning Sioux Falls",
+            "drain cleaning company Sioux Falls"
+          ],
+          "brief": "A list of questions to ask, how to read a quote, and signs of a company that explains its work."
+        },
+        {
+          "slug": "commercial-drain-cleaning-sioux-falls",
+          "title": "Commercial Drain Cleaning in Sioux Falls (Restaurants, Grease Traps, and Floor Drains)",
+          "contentType": "local-resource",
+          "keywords": [
+            "commercial drain cleaning Sioux Falls",
+            "restaurant grease trap cleaning"
+          ],
+          "brief": "What commercial drain service involves, how often it is needed, and what a business owner should have in writing."
+        },
+        {
+          "slug": "basement-floor-drain-backing-up-sioux-falls",
+          "title": "Basement Floor Drain Backing Up in Sioux Falls (Causes and Fixes)",
+          "contentType": "educational-article",
+          "keywords": [
+            "basement floor drain backing up",
+            "floor drain sewage smell"
+          ],
+          "brief": "Common causes, what is safe to do first, and when a floor drain backup points to the main line."
+        },
+        {
+          "slug": "toilet-keeps-clogging-sioux-falls",
+          "title": "Toilet Keeps Clogging in Your Sioux Falls Home (Causes and When to Call a Plumber)",
+          "contentType": "educational-article",
+          "keywords": [
+            "toilet keeps clogging",
+            "toilet clogged repeatedly"
+          ],
+          "brief": "Why a toilet clogs again and again, what to try, and the signs that the problem is the line and not the toilet."
+        },
+        {
+          "slug": "hard-water-buildup-in-sioux-falls-pipes",
+          "title": "Hard Water Buildup in Sioux Falls Pipes (Scale, Slow Drains, and Prevention)",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "hard water pipes Sioux Falls",
+            "mineral buildup in drains"
+          ],
+          "brief": "How hard water from the Big Sioux Aquifer leaves scale in pipes over time, what it does to drains, and sensible prevention."
+        },
+        {
+          "slug": "drain-maintenance-checklist-sioux-falls-homeowners",
+          "title": "Yearly Drain Maintenance Checklist for Sioux Falls Homeowners",
+          "contentType": "checklist",
+          "keywords": [
+            "drain maintenance checklist",
+            "how to prevent clogged drains"
+          ],
+          "brief": "A season by season checklist a homeowner can actually follow, plus what is worth hiring out."
+        },
+        {
+          "slug": "older-sioux-falls-homes-drain-problems",
+          "title": "Older Sioux Falls Homes and Drain Problems (Cast Iron, Clay, and Aging Pipe)",
+          "contentType": "educational-article",
+          "keywords": [
+            "old house drain problems",
+            "cast iron drain pipe problems"
+          ],
+          "brief": "What aging drain pipe looks like, what an inspection can show, and how to plan for repairs without panic."
+        }
+      ],
+      "cluster": "drain-cleaning",
+      "pillar": {
+        "slug": "drain-cleaning-sioux-falls",
+        "title": "The Sioux Falls Homeowner's Guide to Drain Cleaning"
+      },
+      "publishWeekdays": [
+        2,
+        4
+      ]
     },
     {
-      "slug": "is-professional-drain-cleaning-worth-it-sioux-falls",
-      "title": "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro",
-      "contentType": "comparison",
-      "keywords": [
-        "is professional drain cleaning worth it",
-        "when to call a plumber for a clogged drain Sioux Falls"
+      "cluster": "custom-home-builders",
+      "campaign": "Building a custom home in Sioux Falls",
+      "category": "custom-home-builders",
+      "categoryName": "Custom Home Builders",
+      "relatedBusinesses": [
+        "glammeier-homes",
+        "thorson-construction",
+        "4d-design-consulting"
       ],
-      "brief": "Compare DIY fixes and a professional visit on effectiveness, risk to pipes, and long-term cost. End with clear decision criteria."
-    },
-    {
-      "slug": "hydro-jetting-vs-snaking-sioux-falls",
-      "title": "Hydro Jetting vs. Snaking for Sioux Falls Homes",
-      "contentType": "comparison",
-      "keywords": [
-        "hydro jetting Sioux Falls",
-        "drain snaking vs hydro jetting",
-        "what cleans out drains the best"
+      "publishWeekdays": [
+        1,
+        3,
+        5
       ],
-      "brief": "Explain both methods, when each fits, the role of a camera inspection, and why local roots, hard water scale, and shifting clay soil matter."
-    },
-    {
-      "slug": "what-to-do-when-your-drain-backs-up-sioux-falls",
-      "title": "What to Do When Your Drain Backs Up in Sioux Falls (Emergency Guide)",
-      "contentType": "safety-information",
-      "keywords": [
-        "clogged drain Sioux Falls",
-        "emergency drain cleaning Sioux Falls",
-        "sewer backup what to do"
+      "firstPublishDate": "2026-11-16",
+      "bufferTarget": 3,
+      "note": "Publishes Monday, Wednesday, and Friday, the days the drain cleaning series does not. The main guide goes first, dated November 16, 2026.",
+      "localFacts": [
+        "City of Sioux Falls Building Services (first floor of City Center, 231 N. Dakota Avenue, 605-367-8670) issues building permits. Building permit fees start at $40 and rise with the construction value on the city's 2026 fee schedule; electrical, mechanical, and plumbing permits have their own fee schedule. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Applicants give an approximate cost of the work, and site, foundation, and floor plans may be required. Work must begin and an inspection be requested within 180 days of the permit being issued. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Sioux Falls licenses residential, electrical, plumbing, and mechanical contractors. Homeowners can verify a contractor's license by calling Building Services at 605-367-8672 or checking the city's Currently Licensed Contractors list, and can look up permits on the city's permit data site, which updates every Sunday. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Call 811 (South Dakota One Call) before any digging so underground utilities are marked. (Source: City of Sioux Falls)",
+        "Homes outside Sioux Falls city limits go through the county (Minnehaha County Planning or Lincoln County) or the city they sit in, such as Brandon, Harrisburg, Tea, or Crooks, not Sioux Falls Building Services.",
+        "The Sanctuary in northeast Sioux Falls (Deffenbaugh Homes) is a 200 acre neighborhood with 160 lots; its average lot list price was about $333,000 in spring 2026, and its lots made up roughly 70 to 75 percent of Sioux Falls lot sales above $200,000. (Source: SiouxFalls.Business, April 2026)",
+        "Mapleton Highlands, near Mapleton Golf Club (Van Buskirk Cos.), opened 66 lots with 60 more planned; lots generally ran $150,000 to $275,000, and over $550,000 along the golf course, in spring 2026. Van Buskirk also planned Westwater at Cherry Lake on the far west side (150 lots next to a private lake), with Willow Ridge in northeast Sioux Falls near Fred Assam Elementary, River Park in Brandon, and Heritage Pond in Crooks also active. (Source: SiouxFalls.Business, April 2026)",
+        "Empire Cos. announced a 75 acre development off 57th Street between Highway 11 and Six Mile Road with single family homes, villas, townhomes, and twin homes, plus more townhomes and twin homes in SouthLoop off 69th Street and Sycamore Avenue. (Source: SiouxFalls.Business, April 2026)",
+        "Sioux Falls had 604 single family homes and townhomes under construction on April 1, 2026, down from 821 a year earlier. New residential construction value was $23.8 million in the first quarter of 2026, versus $32.3 million in the first quarter of 2025. (Source: SiouxFalls.Business, April 2026)",
+        "In spring 2026 builders reported that many custom buyers were moving in from Minnesota and Iowa, many aged roughly 53 to 65 and asking for slab on grade (no basement) homes, and that more than 75 percent of buyers in the top lot segment paid cash. (Source: SiouxFalls.Business, April 2026)",
+        "The Sioux Empire Parade of Homes runs twice a year, in spring and fall, with homes open 1 to 5 PM on parade weekends; the Home Builders Association of the Sioux Empire is involved, and details are at siouxempireparadeofhomes.com. Visitors are asked to wear socks and slip on shoes and to leave food and drinks outside. (Source: Dakota News Now, September 2026)",
+        "Sioux Falls building code uses a 42 inch frost depth for footings, and the area's expansive clay soils and freeze thaw cycles make drainage, grading, and foundation design matter."
       ],
-      "brief": "A calm step by step guide for the first hour, how to tell an emergency from something that can wait, and what to ask when calling a company."
-    },
-    {
-      "slug": "kitchen-sink-clogs-sioux-falls-homes",
-      "title": "Kitchen Sink Clogs in Sioux Falls Homes (Grease, Disposals, and What Actually Works)",
-      "contentType": "educational-article",
-      "keywords": [
-        "kitchen sink clogged Sioux Falls",
-        "kitchen drain clogs grease disposal"
-      ],
-      "brief": "Why kitchen lines clog, what not to put down a disposal, what a homeowner can safely try, and when to call."
-    },
-    {
-      "slug": "clear-hair-clogged-bathroom-drain",
-      "title": "How to Clear a Hair Clog From a Bathroom Sink or Shower in Sioux Falls",
-      "contentType": "checklist",
-      "keywords": [
-        "shower drain clogged hair",
-        "bathroom sink slow drain fix"
-      ],
-      "brief": "A practical checklist of safe tools and steps, and the signs that the problem is deeper than hair."
-    },
-    {
-      "slug": "main-sewer-line-cleaning-cost-sioux-falls",
-      "title": "Main Sewer Line Cleaning Cost in Sioux Falls (and Why It Costs More)",
-      "contentType": "cost-guide",
-      "keywords": [
-        "main sewer line cleaning cost",
-        "sewer line cleaning Sioux Falls"
-      ],
-      "brief": "Explain why a main line costs more than a fixture, what drives the quote, and the red flags in an estimate."
-    },
-    {
-      "slug": "tree-roots-in-sioux-falls-sewer-lines",
-      "title": "Tree Roots in Sioux Falls Sewer Lines (Signs, Fixes, and Costs)",
-      "contentType": "educational-article",
-      "keywords": [
-        "tree roots in sewer line",
-        "roots in drain pipes Sioux Falls"
-      ],
-      "brief": "How roots get in, warning signs, the difference between clearing and repairing, and how often roots return."
-    },
-    {
-      "slug": "sewer-camera-inspection-sioux-falls",
-      "title": "Sewer Camera Inspection in Sioux Falls (When It Is Worth Paying For)",
-      "contentType": "buying-guide",
-      "keywords": [
-        "sewer camera inspection Sioux Falls",
-        "drain camera inspection cost"
-      ],
-      "brief": "When a camera inspection earns its price, what a good report includes, and how buyers can use one before closing on a home."
-    },
-    {
-      "slug": "why-do-my-drains-keep-clogging",
-      "title": "Why Do My Drains Keep Clogging? Recurring Clogs Explained for Sioux Falls Homes",
-      "contentType": "educational-article",
-      "keywords": [
-        "why does my drain keep clogging",
-        "recurring drain clogs"
-      ],
-      "brief": "The usual causes of repeat clogs, from grease and scale to roots and sagging pipe, and how to find the real one."
-    },
-    {
-      "slug": "spring-sewer-backups-sioux-falls",
-      "title": "Spring Sewer Backups in Sioux Falls (Thaw, Heavy Rain, and Sump Pump Problems)",
-      "contentType": "seasonal-guide",
-      "keywords": [
-        "sewer backup spring Sioux Falls",
-        "basement sewer backup heavy rain"
-      ],
-      "brief": "Why backups cluster in spring, what homeowners can check ahead of time, and what to do during a heavy rain."
-    },
-    {
-      "slug": "winter-drain-problems-sioux-falls",
-      "title": "Winter Drain Problems in Sioux Falls (Freezing Temperatures and Slow Drains)",
-      "contentType": "seasonal-guide",
-      "keywords": [
-        "winter drain problems",
-        "frozen drain pipe Sioux Falls"
-      ],
-      "brief": "How a Sioux Falls winter affects drains and vent lines, what to do on the coldest nights, and what to avoid."
-    },
-    {
-      "slug": "drain-cleaner-chemicals-vs-plumbing-snake",
-      "title": "Chemical Drain Cleaners vs. a Plumbing Snake (What Plumbers Recommend)",
-      "contentType": "comparison",
-      "keywords": [
-        "do plumbers recommend drain cleaners",
-        "chemical drain cleaner vs snake"
-      ],
-      "brief": "Compare chemical cleaners and mechanical tools on safety, pipe damage, and results, and say plainly when each is a poor choice."
-    },
-    {
-      "slug": "how-to-choose-a-drain-cleaning-company-sioux-falls",
-      "title": "How to Choose a Drain Cleaning Company in Sioux Falls (Questions to Ask Before You Book)",
-      "contentType": "buying-guide",
-      "keywords": [
-        "best drain cleaning Sioux Falls",
-        "drain cleaning company Sioux Falls"
-      ],
-      "brief": "A list of questions to ask, how to read a quote, and signs of a company that explains its work."
-    },
-    {
-      "slug": "commercial-drain-cleaning-sioux-falls",
-      "title": "Commercial Drain Cleaning in Sioux Falls (Restaurants, Grease Traps, and Floor Drains)",
-      "contentType": "local-resource",
-      "keywords": [
-        "commercial drain cleaning Sioux Falls",
-        "restaurant grease trap cleaning"
-      ],
-      "brief": "What commercial drain service involves, how often it is needed, and what a business owner should have in writing."
-    },
-    {
-      "slug": "basement-floor-drain-backing-up-sioux-falls",
-      "title": "Basement Floor Drain Backing Up in Sioux Falls (Causes and Fixes)",
-      "contentType": "educational-article",
-      "keywords": [
-        "basement floor drain backing up",
-        "floor drain sewage smell"
-      ],
-      "brief": "Common causes, what is safe to do first, and when a floor drain backup points to the main line."
-    },
-    {
-      "slug": "toilet-keeps-clogging-sioux-falls",
-      "title": "Toilet Keeps Clogging in Your Sioux Falls Home (Causes and When to Call a Plumber)",
-      "contentType": "educational-article",
-      "keywords": [
-        "toilet keeps clogging",
-        "toilet clogged repeatedly"
-      ],
-      "brief": "Why a toilet clogs again and again, what to try, and the signs that the problem is the line and not the toilet."
-    },
-    {
-      "slug": "hard-water-buildup-in-sioux-falls-pipes",
-      "title": "Hard Water Buildup in Sioux Falls Pipes (Scale, Slow Drains, and Prevention)",
-      "contentType": "maintenance-guide",
-      "keywords": [
-        "hard water pipes Sioux Falls",
-        "mineral buildup in drains"
-      ],
-      "brief": "How hard water from the Big Sioux Aquifer leaves scale in pipes over time, what it does to drains, and sensible prevention."
-    },
-    {
-      "slug": "drain-maintenance-checklist-sioux-falls-homeowners",
-      "title": "Yearly Drain Maintenance Checklist for Sioux Falls Homeowners",
-      "contentType": "checklist",
-      "keywords": [
-        "drain maintenance checklist",
-        "how to prevent clogged drains"
-      ],
-      "brief": "A season by season checklist a homeowner can actually follow, plus what is worth hiring out."
-    },
-    {
-      "slug": "older-sioux-falls-homes-drain-problems",
-      "title": "Older Sioux Falls Homes and Drain Problems (Cast Iron, Clay, and Aging Pipe)",
-      "contentType": "educational-article",
-      "keywords": [
-        "old house drain problems",
-        "cast iron drain pipe problems"
-      ],
-      "brief": "What aging drain pipe looks like, what an inspection can show, and how to plan for repairs without panic."
+      "pillar": {
+        "slug": "build-custom-home-sioux-falls",
+        "title": "How to Build a Custom Home in Sioux Falls (2026 Guide)",
+        "contentType": "buying-guide",
+        "keywords": [
+          "custom home builders Sioux Falls",
+          "build a house in Sioux Falls",
+          "custom home Sioux Falls SD",
+          "new home construction Sioux Falls"
+        ],
+        "brief": "The complete roadmap from first idea to move in day: budget, choosing a lot and neighborhood, choosing a builder, design, permits and inspections, construction stages and timing through a Sioux Falls winter, financing, and the final walkthrough. Each stage gets a short, practical section and points to the supporting article that goes deeper."
+      },
+      "topics": [
+        {
+          "slug": "custom-home-cost-sioux-falls",
+          "title": "What a Custom Home Costs to Build in Sioux Falls",
+          "contentType": "cost-guide",
+          "keywords": [
+            "cost to build a house in Sioux Falls",
+            "custom home cost Sioux Falls",
+            "cost per square foot to build Sioux Falls"
+          ],
+          "brief": "Break the total into lot, site work, house, and soft costs (permits, design, financing). Use the real 2026 lot prices from the local facts. Explain what moves the price per square foot (basement or slab, finishes, size, shape) and how to get comparable written bids. Do not state a Sioux Falls average per square foot."
+        },
+        {
+          "slug": "choose-custom-home-builder-sioux-falls",
+          "title": "How to Choose a Custom Home Builder in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "best custom home builders Sioux Falls",
+            "how to choose a home builder Sioux Falls"
+          ],
+          "brief": "A step by step vetting process: license check with the city, touring finished and in progress homes, the Parade of Homes, references from owners 2 to 5 years in, contract and allowance review, communication style. Include red flags."
+        },
+        {
+          "slug": "questions-to-ask-home-builder-sioux-falls",
+          "title": "25 Questions to Ask a Sioux Falls Home Builder",
+          "contentType": "checklist",
+          "keywords": [
+            "questions to ask a home builder",
+            "questions to ask custom home builder Sioux Falls"
+          ],
+          "brief": "Exactly 25 numbered questions, grouped under H2s (company and license, price and contract, schedule, construction quality, warranty and after move in). After each question, one sentence on what a good answer sounds like."
+        },
+        {
+          "slug": "buying-a-lot-sioux-falls",
+          "title": "Buying a Building Lot in Sioux Falls, What to Check",
+          "contentType": "checklist",
+          "keywords": [
+            "lots for sale Sioux Falls",
+            "buying land to build a house Sioux Falls"
+          ],
+          "brief": "What to check before buying a lot: covenants and architectural review, builder requirements in a neighborhood, utilities and specials, soil and drainage, slope for a walkout, school boundaries, inside or outside city limits. Use the lot price ranges from the local facts."
+        },
+        {
+          "slug": "new-neighborhoods-to-build-sioux-falls",
+          "title": "New Neighborhoods to Build In Around Sioux Falls (2026)",
+          "contentType": "local-resource",
+          "keywords": [
+            "new neighborhoods Sioux Falls",
+            "new developments Sioux Falls 2026",
+            "where to build a house Sioux Falls"
+          ],
+          "brief": "A guide to the developments named in the local facts (The Sanctuary, Mapleton Highlands, Westwater at Cherry Lake, Willow Ridge, the Empire Cos. 57th Street project, SouthLoop, River Park in Brandon, Heritage Pond in Crooks), using only the facts given for each. Tell readers to confirm current lot availability and pricing with the developer, since lots sell over time."
+        },
+        {
+          "slug": "sioux-falls-building-permit-new-home",
+          "title": "Sioux Falls Building Permits for a New Home, Explained",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls building permit",
+            "building permit new house Sioux Falls",
+            "Sioux Falls building inspections"
+          ],
+          "brief": "What the permit covers and what needs separate electrical, plumbing, and mechanical permits, what the application asks for, the 180 day rule, fees, how to look a permit up, and how homes outside city limits differ. Use only the facts given; say the builder normally pulls permits and handles inspections."
+        },
+        {
+          "slug": "how-long-to-build-a-house-sioux-falls",
+          "title": "How Long It Takes to Build a House in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "how long to build a house Sioux Falls",
+            "custom home timeline"
+          ],
+          "brief": "The phases from design and bids to permits, excavation and foundation, framing, rough ins, finishes, and final, with what usually causes delays here (winter ground, wet springs, selections made late, lender draws). Present durations as typical ranges a builder should confirm."
+        },
+        {
+          "slug": "building-a-house-in-winter-sioux-falls",
+          "title": "Can You Build a House in a Sioux Falls Winter?",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "building a house in winter South Dakota",
+            "winter construction Sioux Falls"
+          ],
+          "brief": "What can and cannot happen in winter: frozen ground and footings below the 42 inch frost depth, cold weather concrete, heated enclosures, framing and interior work. When to start to move in by a target date. Pros and cons of a winter start."
+        },
+        {
+          "slug": "basement-or-slab-sioux-falls",
+          "title": "Basement or Slab on Grade in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "basement vs slab Sioux Falls",
+            "slab on grade home South Dakota",
+            "walkout basement Sioux Falls"
+          ],
+          "brief": "Compare full basement, walkout, and slab on grade for Sioux Falls: cost, storm shelter, storage, accessibility, water and clay soil concerns, resale. Mention the slab on grade demand among relocating buyers from the local facts."
+        },
+        {
+          "slug": "custom-vs-production-builder-sioux-falls",
+          "title": "Custom vs Production Builders in Sioux Falls",
+          "contentType": "comparison",
+          "keywords": [
+            "custom home builder vs production builder",
+            "semi custom homes Sioux Falls"
+          ],
+          "brief": "Explain custom, semi custom, and production (spec) building, who each fits, how pricing and changes work, and how to tell which kind a builder really is."
+        },
+        {
+          "slug": "construction-loans-sioux-falls",
+          "title": "How Construction Loans Work When You Build in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "construction loan Sioux Falls",
+            "one time close construction loan South Dakota"
+          ],
+          "brief": "Construction to permanent versus two close loans, draws and inspections, interest during construction, what lenders want to see (plans, contract, budget, builder info), and paying cash for land first. No rates or invented figures; tell readers to talk to a local lender."
+        },
+        {
+          "slug": "parade-of-homes-sioux-falls-tips",
+          "title": "How to Use the Parade of Homes to Pick a Builder",
+          "contentType": "buying-guide",
+          "keywords": [
+            "Parade of Homes Sioux Falls",
+            "Sioux Empire Parade of Homes"
+          ],
+          "brief": "How to tour with a purpose: plan a route, what to look at beyond finishes (framing visible in unfinished areas, windows, mechanicals, trim quality), questions for the builder on site, how to take notes and compare later. Use the parade facts given."
+        },
+        {
+          "slug": "fixed-price-vs-cost-plus-home-contract",
+          "title": "Fixed Price or Cost Plus, Home Builder Contracts Explained",
+          "contentType": "comparison",
+          "keywords": [
+            "cost plus vs fixed price home building contract",
+            "home builder contract allowances"
+          ],
+          "brief": "How each contract works, allowances and how they blow up budgets, change orders, payment schedules, and what to have a real estate attorney review."
+        },
+        {
+          "slug": "build-or-buy-a-home-sioux-falls",
+          "title": "Should You Build or Buy a Home in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "build or buy a house Sioux Falls",
+            "new construction vs existing home Sioux Falls"
+          ],
+          "brief": "An honest decision guide: time, cost, control, maintenance, energy efficiency, location trade offs, and stress. Use the local construction trend facts."
+        },
+        {
+          "slug": "new-construction-inspection-sioux-falls",
+          "title": "Should You Get an Inspection on a New Build?",
+          "contentType": "checklist",
+          "keywords": [
+            "new construction home inspection Sioux Falls",
+            "phase inspection new home"
+          ],
+          "brief": "Why city inspections are a code minimum, not a quality check, and how independent phase inspections (pre pour, pre drywall, final, 11 month) work, with a checklist for each."
+        },
+        {
+          "slug": "custom-home-design-for-sioux-falls-climate",
+          "title": "Custom Home Design Choices That Pay Off in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "energy efficient home design South Dakota",
+            "custom home ideas Sioux Falls"
+          ],
+          "brief": "Design for the climate: insulation and air sealing, window placement and sun, snow and drifting on driveways and roofs, garage size, mudrooms, storm shelter, radon mitigation, grading away from clay soil. Practical, not trendy."
+        },
+        {
+          "slug": "building-outside-sioux-falls-city-limits",
+          "title": "Building Outside Sioux Falls City Limits, What Changes",
+          "contentType": "educational-article",
+          "keywords": [
+            "building a house in Lincoln County SD",
+            "build a home Brandon Harrisburg Tea"
+          ],
+          "brief": "County versus city permits, well and septic on acreages, road access and snow removal, school districts, taxes and utilities to ask about, and the suburbs named in the local facts."
+        },
+        {
+          "slug": "new-home-final-walkthrough-checklist",
+          "title": "New Home Final Walkthrough Checklist for Sioux Falls",
+          "contentType": "checklist",
+          "keywords": [
+            "new construction final walkthrough checklist",
+            "new home punch list"
+          ],
+          "brief": "A room by room punch list checklist, plus exterior, grading and drainage, mechanicals, and paperwork to collect (warranties, manuals, permit final)."
+        },
+        {
+          "slug": "new-home-warranty-south-dakota",
+          "title": "New Home Warranties in South Dakota, What to Expect",
+          "contentType": "faq",
+          "keywords": [
+            "new home warranty South Dakota",
+            "builder warranty Sioux Falls"
+          ],
+          "brief": "Common builder warranty structures (workmanship, systems, structural), what is usually excluded, how to file claims, and what to get in writing. Do not state South Dakota law specifics; tell readers to read their contract and ask an attorney."
+        },
+        {
+          "slug": "downsizing-new-build-sioux-falls",
+          "title": "Building a Downsizing Home in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "downsizing home Sioux Falls",
+            "one level homes Sioux Falls",
+            "villas Sioux Falls"
+          ],
+          "brief": "For empty nesters and relocating retirees: one level living, slab on grade, villas and twin homes, low maintenance exteriors, aging in place details, and neighborhoods from the local facts."
+        }
+      ]
     }
-  ],
-  "cluster": "drain-cleaning",
-  "pillar": {
-    "slug": "drain-cleaning-sioux-falls",
-    "title": "The Sioux Falls Homeowner's Guide to Drain Cleaning"
-  }
+  ]
 }

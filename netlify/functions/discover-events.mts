@@ -91,11 +91,13 @@ export default async () => {
 
 Prefer official sources: the organizer or venue page, Experience Sioux Falls, Downtown Sioux Falls, the Washington Pavilion, the Denny Sanford PREMIER Center, and Falls Park Farmers Market. Only include an event if you read its date on a page for the ${today.slice(0, 4)} or ${Number(today.slice(0, 4)) + 1} edition. If you cannot confirm the date, leave the event out. A short list of events you are sure about is better than a long list you are not.
 
-Categories, pick one each: family, downtown, music, sports, market. Market means farmers markets and art, craft, or vendor shows where people sell goods.
+Families with kids are our biggest audience, so search for family events on purpose and make at least half the list family events when you can confirm them, while still including the best downtown, music, sports, and market events. Good family sources: Sioux Falls Parks and Recreation, Siouxland Libraries (story times and kids programs), the Great Plains Zoo, the Kirby Science Discovery Center at the Washington Pavilion, the Butterfly House and Aquarium, SculptureWalk, Falls Park light shows and holiday events, and school break camps or kids shows at local venues.
+
+Categories, pick one each: family, downtown, music, sports, market. Family means made for kids or easy to enjoy with kids of any age. Market means farmers markets and art, craft, or vendor shows where people sell goods.
 
 Already on the calendar, do not repeat: ${existing.map((e) => e.title).join('; ') || '(none)'}.
 
-Reply with ONLY a JSON array and nothing else. Each item: {"title": string, "description": one plain sentence with no em dashes or en dashes, "category": string, "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD" or null, "time": a short phrase such as "Starts at 7 PM" or null, "location": string, "sourceName": string, "sourceUrl": the exact page you read}. At most 10 items.`;
+Reply with ONLY a JSON array and nothing else. Each item: {"title": string, "description": one plain sentence with no em dashes or en dashes, "category": string, "startDate": "YYYY-MM-DD", "endDate": "YYYY-MM-DD" or null, "time": a short phrase such as "Starts at 7 PM" or null, "location": string, "sourceName": string, "sourceUrl": the exact page you read}. At most 14 items.`;
 
   const client = new Anthropic({ apiKey });
   let messages: any[] = [{ role: 'user', content: prompt }];
@@ -105,7 +107,7 @@ Reply with ONLY a JSON array and nothing else. Each item: {"title": string, "des
       const msg: any = await client.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: 4000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 8 }] as any,
+        tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 10 }] as any,
         messages,
       });
       const text = msg.content.filter((b: any) => b.type === 'text').map((b: any) => b.text).join('\n');

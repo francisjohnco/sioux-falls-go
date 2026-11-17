@@ -12,3 +12,4 @@ src/generated/
 public/hero-manifest.json
 public/badges/
 public/build-info.json
+node_modules

@@ -1,7 +1,7 @@
 import { getStore } from '@netlify/blobs';
 import { isAdmin, verifyToken } from './_shared/auth.mts';
-import { findHeroPhoto, setArticleHero, photoKeys, unsplashRemaining, photoKey } from './_shared/hero-photo.mts';
-import { commitTextFiles } from './_shared/git-batch.mts';
+import { findHeroPhoto, setArticleHero, setCategoryHero, photoKeys, unsplashRemaining, photoKey } from './_shared/hero-photo.mts';
+import { commitTextFiles, readText } from './_shared/git-batch.mts';
 import { loadArticles, needsPhoto } from './_shared/article-scan.mts';
 
 // Works through every article that does not have a chosen header photo yet
@@ -84,9 +84,41 @@ export default async (req: Request) => {
       if (pending.length >= COMMIT_EVERY) await flush();
     }
     await flush();
+
+    // Then categories: each category page gets its own photo that shows what
+    // the category is about, instead of borrowing a business's photo.
+    const cats: any[] = await fetch(`${SITE}/category-index.json`).then((r) => (r.ok ? r.json() : [])).catch(() => []);
+    for (const c of cats) if (c.heroImage?.startsWith('https://')) used.add(photoKey(c.heroImage));
+    const catTodo = cats.filter((c) => !c.heroImage && !c.locked && !recentSkip(`category:${c.slug}`))
+      .sort((a, b) => b.businesses - a.businesses); // busiest categories first
+    let catChanged = 0;
+    for (const c of catTodo) {
+      if (Date.now() - started > TIME_BUDGET_MS) { log.push('Paused for time, categories continue next hour.'); break; }
+      if (keys.unsplash && !keys.pexels && unsplashRemaining < 6) { log.push('Paused for the Unsplash hourly limit, categories continue next hour.'); break; }
+      try {
+        const r = await findHeroPhoto({
+          title: `${c.name} in Sioux Falls`,
+          description: `Header photo for the ${c.name} category page of a local business directory. The photo must show, at a glance, what ${c.name.toLowerCase()} are or do (the work, the place, or the product), so a visitor knows what the page is about without reading. ${c.description}`,
+          category: c.name, exclude: used,
+        });
+        if (r.kind !== 'new') { skipped[`category:${c.slug}`] = new Date().toISOString(); log.push(`No good photo yet for category: ${c.name}`); continue; }
+        const path = `src/content/categories/${c.slug}.json`;
+        const raw = await readText(path);
+        if (!raw) continue;
+        used.add(photoKey(r.choice.heroImage));
+        pending.push({ path, content: setCategoryHero(raw, { heroImage: r.choice.heroImage, heroImageAlt: r.choice.heroImageAlt, heroImageCredit: r.choice.heroImageCredit }) });
+        catChanged++;
+        log.push(`Category photo: ${c.name}`);
+      } catch (err: any) {
+        log.push(`Error on category ${c.name}: ${err?.message || err}`);
+      }
+      if (pending.length >= COMMIT_EVERY) await flush();
+    }
+    await flush();
+    status.categoriesRemaining = Math.max(0, catTodo.length - catChanged);
     await store.setJSON('skipped', skipped);
 
-    const remaining = articles.filter(needsPhoto).length - changed;
+    const remaining = articles.filter(needsPhoto).length - (changed - catChanged);
     Object.assign(status, {
       running: false, lastRun: new Date().toISOString(), lastChanged: changed,
       total: articles.length, remaining: Math.max(0, remaining),

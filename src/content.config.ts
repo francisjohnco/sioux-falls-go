@@ -39,7 +39,10 @@ const categories = defineCollection({
       title: z.string(),
       description: z.string(),
     }),
-    heroImage: z.string().optional(), // real photo, once available — falls back to a CSS-layered design
+    heroImage: z.string().optional(), // the category's own photo, chosen by the photo finder or in Admin
+    heroImageAlt: z.string().optional(),
+    heroImageCredit: z.object({ photographer: z.string(), profileUrl: z.string(), source: z.string().optional() }).optional(),
+    heroImageLocked: z.boolean().optional(),
     icon: z.string().default('pin'), // semantic icon name, rendered via the Icon component — no emoji
   }),
 });

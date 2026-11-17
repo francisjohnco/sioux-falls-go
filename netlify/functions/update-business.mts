@@ -17,7 +17,7 @@ const SCALAR_FIELDS = [
   'name', 'address', 'showAddress', 'placeId', 'latitude', 'longitude',
   'phone', 'website', 'verifiedAt', 'claimed', 'heroImage', 'partnershipTier',
   'googleRating', 'googleReviewCount', 'giveawaysPerYear',
-  'pullQuote', 'ownerName', 'ownerQuote', 'responseTime', 'couponStyle', 'googleBusinessUrl', 'ownerRole', 'logo', 'excerpt',
+  'pullQuote', 'ownerName', 'ownerQuote', 'responseTime', 'couponStyle', 'googleBusinessUrl', 'ownerRole', 'logo', 'excerpt', 'category',
 ] as const;
 type ScalarField = (typeof SCALAR_FIELDS)[number];
 
@@ -112,6 +112,12 @@ export default async (req: Request) => {
     const url = /^https?:\/\//i.test(g.trim()) ? g.trim() : `https://${g.trim()}`;
     if (!isGoogleProfileUrl(url)) return new Response(JSON.stringify({ error: 'The Google Business Profile box needs a Google link (in Google Maps, open the business, tap Share, and copy the link). Put job titles in Owner Role.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
     (scalarUpdates as any).googleBusinessUrl = url;
+  }
+  if ('category' in scalarUpdates) {
+    const cat = String((scalarUpdates as any).category || '');
+    if (!/^[a-z0-9-]+$/.test(cat)) return new Response(JSON.stringify({ error: 'Pick a category from the list.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    const check = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/src/content/categories/${cat}.json`, { headers: { Authorization: `Bearer ${GITHUB_TOKEN}`, Accept: 'application/vnd.github+json' } });
+    if (!check.ok) return new Response(JSON.stringify({ error: `There is no "${cat}" category yet. Create it first under Categories.` }), { status: 400, headers: { 'Content-Type': 'application/json' } });
   }
   const invalidKeys = Object.keys(scalarUpdates).filter((k) => !SCALAR_FIELDS.includes(k as ScalarField));
   if (invalidKeys.length > 0) {

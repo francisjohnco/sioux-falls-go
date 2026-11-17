@@ -92,3 +92,10 @@ export function articleHero(article: { data: any }): Hero {
   const fbSrc = M[fallbackFor(category)] ? fallbackFor(category) : DEFAULT_FALLBACK;
   return { ...local(fbSrc)!, alt: FALLBACK_ALT[fbSrc] || 'Sioux Falls, South Dakota', isFallback: true };
 }
+
+// A category page's header photo: the category's own photo, never a photo
+// borrowed from one of its businesses.
+export function categoryHero(category: { data: any }): Hero {
+  const d = category.data;
+  return articleHero({ data: { ...d, title: `${d.name} in Sioux Falls`, category: d.slug } });
+}

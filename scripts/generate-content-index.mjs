@@ -195,6 +195,20 @@ function main() {
     : [];
   fs.writeFileSync(path.join(ROOT, 'public/events-index.json'), JSON.stringify(eventsIndex, null, 2));
 
+  // Categories and whether each has its own header photo yet, read by the
+  // photo finder so it only opens the category files that need a photo.
+  const businessCount = {};
+  if (fs.existsSync(bizDir)) for (const f of fs.readdirSync(bizDir).filter((x) => x.endsWith('.md'))) {
+    const m = fs.readFileSync(path.join(bizDir, f), 'utf8').match(/^category:\s*"?([a-z0-9-]+)"?/m);
+    if (m) businessCount[m[1]] = (businessCount[m[1]] || 0) + 1;
+  }
+  const categoryIndex = categories.map((c) => ({
+    slug: c.slug, name: c.name, description: c.seo?.description || '', parent: c.parentCategory || '',
+    icon: c.icon || 'pin', heroImage: c.heroImage || '', heroImageAlt: c.heroImageAlt || '', locked: !!c.heroImageLocked,
+    businesses: businessCount[c.slug] || 0,
+  })).sort((a, b) => a.name.localeCompare(b.name));
+  fs.writeFileSync(path.join(ROOT, 'public/category-index.json'), JSON.stringify(categoryIndex, null, 2));
+
   // The planned topic queue, read by the scheduled generator.
   const queueSrc = path.join(ROOT, 'data/topic-queue.json');
   if (fs.existsSync(queueSrc)) fs.copyFileSync(queueSrc, path.join(ROOT, 'public/topic-queue.json'));

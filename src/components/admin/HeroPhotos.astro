@@ -119,6 +119,8 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
   const $ = (id: string) => document.getElementById(id)!;
   const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
   let slug = '';
+  let target = ''; // '' for articles, 'category' for category pages
+  document.body.appendChild($('hp-modal')); // so it opens from any admin tab
   let results: any[] = [];
   let picked: any = null;
 
@@ -176,6 +178,7 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
     const open = t.closest<HTMLElement>('[data-hp-slug]');
     if (open) {
       slug = open.dataset.hpSlug!;
+      target = open.dataset.hpTarget || '';
       $('hp-for').textContent = `For: ${open.dataset.hpTitle}`;
       ($('hp-q') as HTMLInputElement).value = open.dataset.hpTitle!.replace(/\([^)]*\)/g, '').replace(/\b(in |near )?(Sioux Falls|South Dakota|SD)\b('s)?/gi, '').replace(/[,:?!]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 60);
       $('hp-modal').hidden = false;
@@ -212,7 +215,7 @@ const sorted = [...items].sort((a, b) => order[a.state] - order[b.state] || a.ti
   $('hp-save').addEventListener('click', async (e) => {
     const b = e.currentTarget as HTMLButtonElement;
     b.disabled = true;
-    try { const alt = ($('hp-alt') as HTMLInputElement).value; const r = picked?.own ? await call({ action: 'upload', slug, data: ownData, alt }) : await call({ action: 'set', slug, candidate: picked, alt }); msg(r.message, true); }
+    try { const alt = ($('hp-alt') as HTMLInputElement).value; const r = picked?.own ? await call({ action: 'upload', slug, target, data: ownData, alt }) : await call({ action: 'set', slug, target, candidate: picked, alt }); msg(r.message, true); }
     catch (err: any) { msg(err.message); }
     b.disabled = false;
   });

@@ -7,7 +7,7 @@ import { makeToken } from './_shared/auth.mts';
 export default async () => {
   const status: any = (await getStore('hero-photos').get('status', { type: 'json' })) || {};
   const hoursSince = status.lastRun ? (Date.now() - Date.parse(status.lastRun)) / 3600000 : Infinity;
-  if (status.remaining === 0 && hoursSince < 23) return new Response('All articles have photos');
+  if (status.remaining === 0 && status.categoriesRemaining === 0 && hoursSince < 23) return new Response('All articles have photos');
   if (status.error && hoursSince < 6) return new Response(`Waiting after error: ${status.error}`);
 
   const base = process.env.URL || 'https://siouxfallsgo.com';

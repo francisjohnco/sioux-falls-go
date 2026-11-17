@@ -36,6 +36,12 @@ function articleImages() {
     const m = fs.readFileSync(path.join(dir, f), 'utf8').match(/^heroImage:\s*"?([^"\n]+)"?\s*$/m);
     if (m && m[1].startsWith('/')) out.add(m[1].trim());
   }
+  // uploaded category photos too
+  const catDir = path.join(ROOT, 'src', 'content', 'categories');
+  for (const f of fs.readdirSync(catDir)) {
+    if (!f.endsWith('.json')) continue;
+    try { const c = JSON.parse(fs.readFileSync(path.join(catDir, f), 'utf8')); if (c.heroImage?.startsWith('/')) out.add(c.heroImage); } catch {}
+  }
   return [...out];
 }
 

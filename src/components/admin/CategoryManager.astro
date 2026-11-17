@@ -1,0 +1,95 @@
+---
+// Directory block: create categories and give every category page its own
+// header photo. Photos are chosen by the photo finder automatically (busiest
+// categories first) and can be changed by hand with the same photo picker
+// the articles use.
+interface Item { slug: string; name: string; parent: string; card: string; hasPhoto: boolean; locked: boolean; count: number }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+const ICONS = ['pin', 'home', 'wrench', 'zap', 'leaf', 'tree', 'sparkles', 'key', 'window', 'plug', 'layers', 'megaphone', 'coffee', 'utensils', 'briefcase', 'clipboard', 'star', 'heart', 'handshake', 'activity', 'gift', 'map', 'book', 'globe'];
+const parents = items.filter((i) => !i.parent).sort((a, b) => a.name.localeCompare(b.name));
+const withPhoto = items.filter((i) => i.hasPhoto).length;
+---
+<div class="cm" id="category-manager">
+  <div class="cm-head">
+    <div>
+      <h3>Categories</h3>
+      <p>Each category has its own page. To move a business into a different category, open the business below and change its Category. Every category page gets its own header photo that shows what the category is about, so nobody has to read to know where they are.</p>
+    </div>
+  </div>
+
+  <form class="cm-new" id="cm-new">
+    <label>New category name <input id="cm-name" maxlength="60" placeholder="e.g. Basement Waterproofing" required /></label>
+    <label>Inside <select id="cm-parent"><option value="">(top level)</option>{parents.map((p) => <option value={p.slug}>{p.name}</option>)}</select></label>
+    <label>Icon <select id="cm-icon">{ICONS.map((i) => <option value={i}>{i}</option>)}</select></label>
+    <button class="button" type="submit">Create category</button>
+  </form>
+  <p class="cm-msg" id="cm-msg" hidden></p>
+
+  <details class="cm-all">
+    <summary>All {items.length} categories ({withPhoto} with their own photo)</summary>
+    <input type="search" class="cm-filter" id="cm-filter" placeholder="Find a category..." />
+    <div class="cm-grid">
+      {items.map((i) => (
+        <div class="cm-item" data-name={i.name.toLowerCase()}>
+          <img src={i.card} alt="" loading="lazy" width="240" height="135" />
+          <div>
+            <span class={`cm-badge ${i.hasPhoto ? 'is-own' : ''}`}>{i.locked ? 'Your pick' : i.hasPhoto ? 'Own photo' : 'Temporary photo'}</span>
+            <p><a href={`/${i.slug}`} target="_blank" rel="noopener">{i.name}</a> <small>{i.count} {i.count === 1 ? 'business' : 'businesses'}</small></p>
+            <button class="hp-change" type="button" data-hp-slug={i.slug} data-hp-title={i.name} data-hp-target="category">Change photo</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </details>
+</div>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+  $('cm-new').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = (e.currentTarget as HTMLFormElement).querySelector('button')!;
+    const m = $('cm-msg');
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/manage-category', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        action: 'create', name: ($('cm-name') as HTMLInputElement).value, parent: ($('cm-parent') as HTMLSelectElement).value, icon: ($('cm-icon') as HTMLSelectElement).value,
+      }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Could not create the category.');
+      m.textContent = data.message; m.className = 'cm-msg is-ok';
+      ($('cm-name') as HTMLInputElement).value = '';
+    } catch (err: any) { m.textContent = err.message; m.className = 'cm-msg is-error'; }
+    m.hidden = false; btn.disabled = false;
+  });
+  $('cm-filter').addEventListener('input', (e) => {
+    const q = (e.target as HTMLInputElement).value.trim().toLowerCase();
+    document.querySelectorAll<HTMLElement>('.cm-item').forEach((el) => { el.hidden = !!q && !el.dataset.name!.includes(q); });
+  });
+</script>
+
+<style is:global>
+  .cm { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.3rem 1.4rem; margin: 1.4rem 0; }
+  .cm-head h3 { margin: 0 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); }
+  .cm-head p { margin: 0; color: var(--color-navy-light); font-size: 0.875rem; line-height: 1.5; max-width: 46rem; }
+  .cm-new { display: grid; grid-template-columns: 2fr 1.4fr 1fr auto; gap: 0.7rem; align-items: end; margin: 1rem 0 0.4rem; }
+  .cm-new label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.8rem; font-weight: 700; color: var(--color-navy); }
+  .cm-new input, .cm-new select, .cm-filter { padding: 0.6rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.5rem; font: inherit; font-weight: 400; }
+  .cm-msg { font-size: 0.85rem; margin: 0.4rem 0; }
+  .cm-msg.is-ok { color: #1E7B4F; font-weight: 600; }
+  .cm-msg.is-error { color: #A93226; font-weight: 600; }
+  .cm-all { margin-top: 0.8rem; }
+  .cm-all summary { cursor: pointer; font-weight: 700; font-size: 0.9rem; color: var(--color-orange-dark); }
+  .cm-filter { width: 100%; margin-top: 0.8rem; }
+  .cm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: 0.9rem; margin-top: 0.9rem; }
+  .cm-item { border: 1px solid var(--color-line); border-radius: 0.6rem; overflow: hidden; }
+  .cm-item[hidden] { display: none; }
+  .cm-item img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; background: #EEF1F6; }
+  .cm-item > div { padding: 0.6rem 0.7rem 0.7rem; }
+  .cm-item p { margin: 0.35rem 0 0.45rem; font-size: 0.8125rem; font-weight: 700; color: var(--color-navy); }
+  .cm-item p a { color: inherit; }
+  .cm-item small { font-weight: 400; color: var(--color-navy-light); }
+  .cm-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 99px; background: #FDF0E1; color: #B45309; }
+  .cm-badge.is-own { background: #E6F4EC; color: #1E7B4F; }
+  @media (max-width: 720px) { .cm-new { grid-template-columns: 1fr; } }
+</style>

@@ -57,12 +57,15 @@ RULES YOU MUST FOLLOW (non-negotiable):
 4. Never write sales language. The article helps the reader, it doesn't pitch a specific business as "the best" — related businesses get mentioned neutrally via a separate field, not endorsed within the prose.
 5. Local SEO discipline: the title and at least one H2 should naturally include the topic paired with "Sioux Falls" or a named neighborhood — not stuffed unnaturally, but present, since that's what local searchers actually type. The SEO title and description must both work as genuine, honest search-result copy for a local search — specific enough that someone searching "[topic] Sioux Falls" would recognize this as exactly what they're looking for.
 6. Internal linking discipline: only ever link to a slug that was explicitly given to you in the "real articles already published" list below — never invent, guess, or slightly-modify a slug. An article with zero internal links is completely fine; an article with one broken or hallucinated link is not acceptable.
-7. Punctuation: never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word \"to\" for ranges.
-8. Respond in exactly this delimited format, nothing else, no markdown code fences around the whole response:
+7. Search result copy that earns the click (this decides whether anyone reads the article):
+   - SEO_TITLE: 45 to 60 characters so Google never cuts it off. Lead with the exact phrase a local would type (for example "Drain Cleaning Cost in Sioux Falls"), then the payoff: a year, a number, or a concrete promise ("What to Expect", "Prices and Red Flags", "25 Questions to Ask"). Never a colon, never clickbait, and every promise must be kept by the article.
+   - SEO_DESCRIPTION: 140 to 155 characters. Start with the answer or the most useful specific detail (a real number from the article, a named Sioux Falls place or office), then say exactly what the reader gets. Written to a person, not a keyword list.
+8. Punctuation: never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word \"to\" for ranges.
+9. Respond in exactly this delimited format, nothing else, no markdown code fences around the whole response:
 
 TITLE: <string>
-SEO_TITLE: <string, under 70 characters>
-SEO_DESCRIPTION: <string, under 160 characters>
+SEO_TITLE: <string, 45 to 60 characters>
+SEO_DESCRIPTION: <string, 140 to 155 characters>
 ---BODY---
 <the full article body in markdown, NOT including the title as an H1 — start directly with the intro paragraph>
 ---FAQS---
@@ -125,7 +128,7 @@ Output now in the exact format specified.`.trim();
   const anthropic = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 4000,
+    max_tokens: 6000,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: userPrompt }],
   });

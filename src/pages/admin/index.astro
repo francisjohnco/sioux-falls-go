@@ -8,6 +8,8 @@ import { articleHero } from '../../lib/hero';
 import DealSubmissions from '../../components/admin/DealSubmissions.astro';
 import ProfileInterview from '../../components/admin/ProfileInterview.astro';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
+import CategoryManager from '../../components/admin/CategoryManager.astro';
+import { categoryHero } from '../../lib/hero';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
 import { isLive, publishDay } from '../../lib/articles';
@@ -139,6 +141,12 @@ const adminEvents = (await getCollection('events')).map((e) => {
 const upcomingEventCount = adminEvents.filter((e) => !e.isPast).length;
 const allCategories = await getCollection('categories');
 const allStays = await getCollection('stays');
+const sortedCategories = [...allCategories].sort((a, b) => a.data.name.localeCompare(b.data.name));
+const categoryItems = sortedCategories.map((c) => {
+  const h = categoryHero(c);
+  return { slug: c.data.slug, name: c.data.name, parent: c.data.parentCategory?.id || '', card: h.card, hasPhoto: !h.isFallback, locked: !!c.data.heroImageLocked,
+    count: businesses.filter((b) => b.data.category.id === c.id).length };
+});
 const articleIndexForEngine = allArticles.filter((a) => isLive(a)).map((a) => ({
   title: a.data.title,
   slug: a.id,
@@ -754,6 +762,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
 
         <OwnerAccess champions={businesses.filter((b) => b.data.partnershipTier === 'community-champion').map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name))} />
 
+        <CategoryManager items={categoryItems} />
+
         <div class="gsc-widget" id="reviews-sync-widget">
           <div class="gsc-widget-header">
             <h3>Google Reviews Sync</h3>
@@ -778,6 +788,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
                 data-open-edit={business.id}
                 data-business={JSON.stringify({
                   name: business.data.name,
+                  category: business.data.category.id,
                   address: business.data.address || '',
                   phone: business.data.phone || '',
                   website: business.data.website || '',
@@ -846,6 +857,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           <div class="edit-modal-body">
             <div class="edit-field-grid">
               <label>Name <input type="text" id="edit-name" /></label>
+              <label>Category <select id="edit-category">{sortedCategories.map((c) => <option value={c.data.slug}>{c.data.name}{c.data.parentCategory ? '' : ' (main)'}</option>)}</select></label>
               <label>Phone <input type="text" id="edit-phone" /></label>
               <label>Address <input type="text" id="edit-address" /></label>
               <label>Website <input type="text" id="edit-website" /></label>
@@ -2150,7 +2162,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   let currentEditOriginal: any = null;
 
   const SCALAR_EDIT_IDS = [
-    'name', 'phone', 'address', 'website', 'googleBusinessUrl', 'heroImage', 'latitude', 'longitude',
+    'name', 'category', 'phone', 'address', 'website', 'googleBusinessUrl', 'heroImage', 'latitude', 'longitude',
     'googleRating', 'googleReviewCount', 'giveawaysPerYear', 'responseTime',
     'ownerName', 'ownerRole', 'ownerQuote', 'pullQuote', 'couponStyle',
   ];

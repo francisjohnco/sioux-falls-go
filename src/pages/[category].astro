@@ -7,6 +7,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import LayeredHero from '../components/LayeredHero.astro';
+import { categoryHero } from '../lib/hero';
 import Icon from '../components/Icon.astro';
 
 export async function getStaticPaths() {
@@ -51,13 +52,10 @@ const renderedFaqs = await Promise.all(
   categoryFaqs.map(async (faq) => ({ faq, Content: (await render(faq)).Content }))
 );
 
-// Real photo for the hero background — prefer a real business photo from
-// this category if one exists, otherwise a real Sioux Falls scenic photo
-// (never the CSS-art fallback on this page — a real image was requested).
-const businessWithPhoto = businesses.find((b) => b.data.heroImage);
-const scenicFallbacks = ['/images/scenic/falls-park-1.jpg', '/images/scenic/downtown-2.jpg', '/images/scenic/falls-park-2.jpg'];
-const scenicIndex = category.data.slug.length % scenicFallbacks.length;
-const heroPhoto = category.data.heroImage || businessWithPhoto?.data.heroImage || scenicFallbacks[scenicIndex];
+// The category's own photo, picked to show what the category is about.
+// Never borrowed from a business in the category.
+const hero = categoryHero(category);
+const heroPhoto = hero.large;
 
 const INITIAL_COUNT = 6;
 
@@ -72,6 +70,8 @@ const schema = {
   description={category.data.seo.description}
   canonicalPath={`/${category.data.slug}`}
   schema={schema}
+  ogImage={hero.og}
+  ogImageAlt={hero.alt}
 >
   <SiteHeader slot="header" />
 
@@ -80,6 +80,8 @@ const schema = {
     title={category.data.name}
     subtitle={category.data.seo.description}
     photoUrl={heroPhoto}
+    photoAlt={hero.alt}
+    photoCredit={hero.credit ? `Photo: ${hero.credit.photographer} on ${hero.credit.source}` : undefined}
     centered
   >
     <nav class="hero-breadcrumbs" aria-label="Breadcrumb">

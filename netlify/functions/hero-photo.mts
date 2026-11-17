@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { isAdmin, makeToken } from './_shared/auth.mts';
-import { photoKeys, searchBoth, markUsed, setArticleHero, choiceFromCandidate, type Candidate } from './_shared/hero-photo.mts';
+import { photoKeys, searchBoth, markUsed, setArticleHero, setCategoryHero, choiceFromCandidate, type Candidate } from './_shared/hero-photo.mts';
 import { readText, commitTextFiles } from './_shared/git-batch.mts';
 import { putFile } from './_shared/business-file.mts';
 
@@ -9,6 +9,7 @@ import { putFile } from './_shared/business-file.mts';
 //   POST { action: 'run' }       start the photo finder now
 //   POST { action: 'search', q } photo choices from Unsplash and Pexels
 //   POST { action: 'set', slug, candidate, alt }  use a photo you picked (locks it)
+//   add target: 'category' to set or upload a category page's photo instead of an article's
 
 const json = (o: unknown, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'Content-Type': 'application/json' } });
 
@@ -46,13 +47,15 @@ export default async (req: Request) => {
       if (!buf.length || buf.length > 3 * 1024 * 1024) return json({ error: 'Photos must be under 3 MB.' }, 400);
       const isJpg = buf[0] === 0xff && buf[1] === 0xd8, isPng = buf[0] === 0x89 && buf[1] === 0x50;
       if (!isJpg && !isPng) return json({ error: 'Please upload a JPG or PNG photo.' }, 400);
-      const path = `src/content/articles/${slug}.md`;
+      const isCat = body.target === 'category';
+      const path = isCat ? `src/content/categories/${slug}.json` : `src/content/articles/${slug}.md`;
       const raw = await readText(path);
-      if (!raw) return json({ error: 'That article was not found.' }, 404);
-      const imgPath = `public/images/articles/${slug}-${Date.now()}.${isPng ? 'png' : 'jpg'}`;
+      if (!raw) return json({ error: isCat ? 'That category was not found.' : 'That article was not found.' }, 404);
+      const imgPath = `public/images/${isCat ? 'categories' : 'articles'}/${slug}-${Date.now()}.${isPng ? 'png' : 'jpg'}`;
       await putFile(imgPath, buf.toString('base64'), `Header photo uploaded for ${slug}`);
-      await commitTextFiles([{ path, content: setArticleHero(raw, { heroImage: imgPath.replace(/^public/, ''), heroImageAlt: alt.slice(0, 160), heroImageCredit: null, locked: true }) }], `Header photo set for ${slug}`);
-      return json({ ok: true, message: 'Saved. The article shows your photo in about a minute.' });
+      const hero = { heroImage: imgPath.replace(/^public/, ''), heroImageAlt: alt.slice(0, 160), heroImageCredit: null, locked: true };
+      await commitTextFiles([{ path, content: isCat ? setCategoryHero(raw, hero) : setArticleHero(raw, hero) }], `Header photo set for ${slug}`);
+      return json({ ok: true, message: `Saved. The ${isCat ? 'category page' : 'article'} shows your photo in about a minute.` });
     }
 
     if (body.action === 'set') {
@@ -62,13 +65,15 @@ export default async (req: Request) => {
       if (!c || !['Unsplash', 'Pexels'].includes(c.provider) || !/^https:\/\/images\.(unsplash|pexels)\.com\//.test(c.url)) return json({ error: 'Pick a photo from the results.' }, 400);
       const alt = String(body.alt || c.description || '').trim();
       if (alt.length < 8) return json({ error: 'Describe the photo in a few words (this is the alt text Google reads).' }, 400);
-      const path = `src/content/articles/${slug}.md`;
+      const isCat = body.target === 'category';
+      const path = isCat ? `src/content/categories/${slug}.json` : `src/content/articles/${slug}.md`;
       const raw = await readText(path);
-      if (!raw) return json({ error: 'That article was not found.' }, 404);
+      if (!raw) return json({ error: isCat ? 'That category was not found.' : 'That article was not found.' }, 404);
       const choice = choiceFromCandidate(c, alt);
-      await commitTextFiles([{ path, content: setArticleHero(raw, { heroImage: choice.heroImage, heroImageAlt: choice.heroImageAlt, heroImageCredit: choice.heroImageCredit, locked: true }) }], `Header photo chosen for ${slug}`);
+      const hero = { heroImage: choice.heroImage, heroImageAlt: choice.heroImageAlt, heroImageCredit: choice.heroImageCredit, locked: true };
+      await commitTextFiles([{ path, content: isCat ? setCategoryHero(raw, hero) : setArticleHero(raw, hero) }], `Header photo chosen for ${slug}`);
       await markUsed(c);
-      return json({ ok: true, message: 'Saved. The article shows the new photo in about a minute.' });
+      return json({ ok: true, message: `Saved. The ${isCat ? 'category page' : 'article'} shows the new photo in about a minute.` });
     }
 
     return json({ error: 'Unknown action' }, 400);

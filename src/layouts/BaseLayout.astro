@@ -67,6 +67,9 @@ const WEBSITE_SCHEMA = {
 
 const pageSchemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 const allSchemas = [ORG_SCHEMA, WEBSITE_SCHEMA, ...pageSchemas];
+// Google cuts titles off at about 60 characters. The brand only goes on
+// when it fits, so the words that earn the click are never the ones cut.
+const fullTitle = title.length + 17 <= 60 && !/sioux falls go/i.test(title) ? `${title} | Sioux Falls Go` : title;
 ---
 
 <!doctype html>
@@ -74,7 +77,7 @@ const allSchemas = [ORG_SCHEMA, WEBSITE_SCHEMA, ...pageSchemas];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Sioux Falls Go</title>
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />}
     <link rel="canonical" href={canonicalURL} />
