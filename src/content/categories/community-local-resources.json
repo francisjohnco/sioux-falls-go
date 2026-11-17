@@ -18,5 +18,12 @@
     "title": "Top-Rated Community & Local Resources in Sioux Falls, SD",
     "description": "Find trusted community & local resources in Sioux Falls."
   },
-  "icon": "handshake"
+  "icon": "handshake",
+  "heroImage": "https://images.pexels.com/photos/6994869/pexels-photo-6994869.jpeg",
+  "heroImageAlt": "Diverse volunteers sort donated clothing and supplies in a bright warehouse with brick walls and large windows.",
+  "heroImageCredit": {
+    "photographer": "Julia M Cameron",
+    "profileUrl": "https://www.pexels.com/@julia-m-cameron",
+    "source": "Pexels"
+  }
 }

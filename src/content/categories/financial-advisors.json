@@ -19,5 +19,12 @@
     "description": "Discover financial advisors in Sioux Falls."
   },
   "icon": "briefcase",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/8441813/pexels-photo-8441813.jpeg",
+  "heroImageAlt": "A financial advisor sits with two senior clients on a couch, reviewing documents together in a bright modern office.",
+  "heroImageCredit": {
+    "photographer": "Kampus Production",
+    "profileUrl": "https://www.pexels.com/@kampus",
+    "source": "Pexels"
+  }
 }

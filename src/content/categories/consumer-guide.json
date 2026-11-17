@@ -13,7 +13,14 @@
   },
   "seo": {
     "title": "Consumer Guide in Sioux Falls",
-    "description": "Consumer Guide \u2014 local Sioux Falls content and resources."
+    "description": "Consumer Guide — local Sioux Falls content and resources."
   },
-  "icon": "clipboard"
+  "icon": "clipboard",
+  "heroImage": "https://images.pexels.com/photos/4971967/pexels-photo-4971967.jpeg",
+  "heroImageAlt": "Woman with braids reaches for a product on a grocery store shelf, shopping cart filled with fresh produce below.",
+  "heroImageCredit": {
+    "photographer": "Gustavo Fring",
+    "profileUrl": "https://www.pexels.com/@gustavo-fring",
+    "source": "Pexels"
+  }
 }

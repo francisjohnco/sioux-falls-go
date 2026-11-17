@@ -13,7 +13,14 @@
   },
   "seo": {
     "title": "Community Spotlight in Sioux Falls",
-    "description": "Community Spotlight \u2014 local Sioux Falls content and resources."
+    "description": "Community Spotlight — local Sioux Falls content and resources."
   },
-  "icon": "mic"
+  "icon": "mic",
+  "heroImage": "https://images.pexels.com/photos/34623526/pexels-photo-34623526.jpeg",
+  "heroImageAlt": "Two men chat and laugh together at a busy indoor community networking event.",
+  "heroImageCredit": {
+    "photographer": "Caleb Oquendo",
+    "profileUrl": "https://www.pexels.com/@caleboquendo",
+    "source": "Pexels"
+  }
 }

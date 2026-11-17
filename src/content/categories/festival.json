@@ -18,5 +18,12 @@
     "title": "Festival in Sioux Falls, SD",
     "description": "Discover festival in Sioux Falls."
   },
-  "icon": "star"
+  "icon": "star",
+  "heroImage": "https://images.pexels.com/photos/14250752/pexels-photo-14250752.jpeg",
+  "heroImageAlt": "Colorful fairground rides and a Ferris wheel glow against a dramatic sunset sky at a bustling outdoor festival.",
+  "heroImageCredit": {
+    "photographer": "Brett Sayles",
+    "profileUrl": "https://www.pexels.com/@brett-sayles",
+    "source": "Pexels"
+  }
 }

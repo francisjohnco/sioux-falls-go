@@ -18,5 +18,12 @@
     "title": "Food & Retail in Sioux Falls",
     "description": "Find trusted local restaurants, coffee shops, and retail businesses in Sioux Falls, plus local guides and resources."
   },
-  "icon": "shopping-bag"
+  "icon": "shopping-bag",
+  "heroImage": "https://images.pexels.com/photos/39604990/pexels-photo-39604990.jpeg",
+  "heroImageAlt": "A waiter moves through a warmly lit restaurant dining room with wooden décor and glowing lamp shades.",
+  "heroImageCredit": {
+    "photographer": "letizia",
+    "profileUrl": "https://www.pexels.com/@letizia-2153189707",
+    "source": "Pexels"
+  }
 }
