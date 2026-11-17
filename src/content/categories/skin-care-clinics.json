@@ -19,5 +19,12 @@
     "description": "Discover skin care clinics in Sioux Falls."
   },
   "icon": "sparkles",
-  "parentCategory": "beauty-personal-care"
+  "parentCategory": "beauty-personal-care",
+  "heroImage": "https://images.pexels.com/photos/3985323/pexels-photo-3985323.jpeg",
+  "heroImageAlt": "An esthetician in pink gloves applies a facial treatment to a relaxed woman lying on a spa table.",
+  "heroImageCredit": {
+    "photographer": "Gustavo Fring",
+    "profileUrl": "https://www.pexels.com/@gustavo-fring",
+    "source": "Pexels"
+  }
 }

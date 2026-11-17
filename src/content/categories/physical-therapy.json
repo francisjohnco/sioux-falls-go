@@ -19,5 +19,12 @@
     "description": "Discover physical therapy in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/4506163/pexels-photo-4506163.jpeg",
+  "heroImageAlt": "A physical therapist guides a woman through a resistance band arm exercise in a clinical therapy room.",
+  "heroImageCredit": {
+    "photographer": "https://kaboompics.com/",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }

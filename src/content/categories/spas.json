@@ -19,5 +19,12 @@
     "description": "Discover spas in Sioux Falls."
   },
   "icon": "sparkles",
-  "parentCategory": "beauty-personal-care"
+  "parentCategory": "beauty-personal-care",
+  "heroImage": "https://images.pexels.com/photos/6629549/pexels-photo-6629549.jpeg",
+  "heroImageAlt": "A massage therapist performs a relaxing head massage on a woman lying on a spa treatment table.",
+  "heroImageCredit": {
+    "photographer": "https://kaboompics.com/",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }

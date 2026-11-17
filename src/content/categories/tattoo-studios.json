@@ -19,5 +19,12 @@
     "description": "Discover tattoo studios in Sioux Falls."
   },
   "icon": "sparkles",
-  "parentCategory": "beauty-personal-care"
+  "parentCategory": "beauty-personal-care",
+  "heroImage": "https://images.pexels.com/photos/15303270/pexels-photo-15303270.jpeg",
+  "heroImageAlt": "A tattooed artist in a black shirt carefully applies ink to a client's forearm in a bright tattoo studio.",
+  "heroImageCredit": {
+    "photographer": "Omotayo Samuel",
+    "profileUrl": "https://www.pexels.com/@omotayo-samuel-329103165",
+    "source": "Pexels"
+  }
 }

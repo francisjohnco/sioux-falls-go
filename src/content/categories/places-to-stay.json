@@ -18,5 +18,12 @@
     "title": "Places to Stay in Sioux Falls, SD",
     "description": "Places to stay in Sioux Falls. Hosted by locals and AirBnb."
   },
-  "icon": "home"
+  "icon": "home",
+  "heroImage": "https://images.pexels.com/photos/2736388/pexels-photo-2736388.jpeg",
+  "heroImageAlt": "Two neatly made hotel beds with white pillows and linens beside a glowing bedside lamp.",
+  "heroImageCredit": {
+    "photographer": "Engin Akyurt",
+    "profileUrl": "https://www.pexels.com/@enginakyurt",
+    "source": "Pexels"
+  }
 }

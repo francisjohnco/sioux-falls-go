@@ -19,5 +19,12 @@
     "description": "Discover nail salons in Sioux Falls."
   },
   "icon": "sparkles",
-  "parentCategory": "beauty-personal-care"
+  "parentCategory": "beauty-personal-care",
+  "heroImage": "https://images.pexels.com/photos/7755235/pexels-photo-7755235.jpeg",
+  "heroImageAlt": "A nail technician and client examine nail color options together at a bright, modern salon manicure station.",
+  "heroImageCredit": {
+    "photographer": "RDNE Stock project",
+    "profileUrl": "https://www.pexels.com/@rdne",
+    "source": "Pexels"
+  }
 }

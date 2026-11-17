@@ -19,5 +19,12 @@
     "description": "Discover nonprofits in Sioux Falls."
   },
   "icon": "handshake",
-  "parentCategory": "community-local-resources"
+  "parentCategory": "community-local-resources",
+  "heroImage": "https://images.pexels.com/photos/6646923/pexels-photo-6646923.jpeg",
+  "heroImageAlt": "A diverse group of volunteers in white t-shirts distribute food and water at an outdoor community charity event.",
+  "heroImageCredit": {
+    "photographer": "RDNE Stock project",
+    "profileUrl": "https://www.pexels.com/@rdne",
+    "source": "Pexels"
+  }
 }

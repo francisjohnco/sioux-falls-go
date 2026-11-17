@@ -19,5 +19,12 @@
     "description": "Discover optometrists in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/6749727/pexels-photo-6749727.jpeg",
+  "heroImageAlt": "An optometrist in a white coat fits a trial frame on a male patient during an eye examination.",
+  "heroImageCredit": {
+    "photographer": "Antoni Shkraba",
+    "profileUrl": "https://www.pexels.com/@shkrabaanthony",
+    "source": "Pexels"
+  }
 }
