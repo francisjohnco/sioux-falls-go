@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<BaseLayout title="Your Business Report" description="How customers find your business through Sioux Falls Go." canonicalPath="/business-report" noindex>
+  <SiteHeader slot="header" />
+
+  <main class="br">
+    <p class="br-loading" id="br-loading">Building your report...</p>
+    <div id="br-app" hidden>
+      <header class="br-head">
+        <div>
+          <span class="br-eyebrow">Sioux Falls Go report</span>
+          <h1 id="br-name">Your business</h1>
+          <p class="br-sub" id="br-range"></p>
+        </div>
+        <div class="br-head-actions">
+          <a class="br-btn br-btn--ghost" id="br-back" href="/my-business/">Back to my listing</a>
+          <button class="br-btn br-btn--ghost" id="br-print" type="button">Print or save as PDF</button>
+        </div>
+      </header>
+
+      <section class="br-insights" id="br-insights" hidden>
+        <h2>What stands out</h2>
+        <ul id="br-insight-list"></ul>
+      </section>
+
+      <section class="br-kpis" id="br-kpis"></section>
+
+      <section class="br-card" id="br-trend-card" hidden>
+        <div class="br-card-head">
+          <h2>Your visibility on Google, week by week</h2>
+          <div class="br-legend"><span class="br-key br-key--seen"></span>Times seen <span class="br-key br-key--click"></span>Clicks</div>
+        </div>
+        <div id="br-chart"></div>
+      </section>
+
+      <section class="br-card" id="br-queries-card" hidden>
+        <div class="br-card-head">
+          <h2>What people searched on Google</h2>
+          <p>The last 90 days of searches that showed your profile, your category page, or a guide in your industry.</p>
+        </div>
+        <div class="br-table-wrap"><table class="br-table" id="br-queries"></table></div>
+      </section>
+
+      <section class="br-card">
+        <div class="br-card-head">
+          <h2>What visitors did on your profile</h2>
+          <p>Counted by Sioux Falls Go when someone taps a button on your profile. Google does not report these.</p>
+        </div>
+        <div class="br-table-wrap"><table class="br-table" id="br-actions"></table></div>
+      </section>
+
+      <p class="br-note" id="br-gsc-note"></p>
+      <p class="br-note">Search numbers come from Google Search Console and run about two days behind. "Times seen" counts each time a page appeared in someone's Google results. "Position" is the average spot on the results page, where 1 is the top.</p>
+    </div>
+  </main>
+
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<script>
+  const $ = (id: string) => document.getElementById(id)!;
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  const n = (v: number) => Math.round(v).toLocaleString();
+  const monthName = (m: string) => new Date(`${m}-15T12:00:00Z`).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  const shortDate = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+  function change(cur: number, prev: number) {
+    if (!prev) return cur ? '<span class="br-chg br-chg--up">New</span>' : '';
+    const p = Math.round(((cur - prev) / prev) * 100);
+    return `<span class="br-chg ${p >= 0 ? 'br-chg--up' : 'br-chg--down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}%</span>`;
+  }
+
+  function kpi(label: string, value: string, extra: string, help: string) {
+    return `<div class="br-kpi"><span class="br-kpi-label">${label}</span><strong>${value}</strong>${extra}<small>${help}</small></div>`;
+  }
+
+  function chart(weeks: any[]) {
+    const W = 720, H = 220, pad = { l: 44, r: 12, t: 12, b: 28 };
+    const maxSeen = Math.max(1, ...weeks.map((w) => w.impressions));
+    const maxClick = Math.max(1, ...weeks.map((w) => w.profileClicks + w.industryClicks));
+    const bw = (W - pad.l - pad.r) / weeks.length;
+    const y = (v: number, max: number) => pad.t + (H - pad.t - pad.b) * (1 - v / max);
+    const bars = weeks.map((w, i) => {
+      const x = pad.l + i * bw + bw * 0.18, h = H - pad.b - y(w.impressions, maxSeen);
+      return `<rect x="${x.toFixed(1)}" y="${y(w.impressions, maxSeen).toFixed(1)}" width="${(bw * 0.64).toFixed(1)}" height="${h.toFixed(1)}" rx="3" class="br-bar"><title>Week of ${shortDate(w.week)}: seen ${n(w.impressions)} times, ${n(w.profileClicks + w.industryClicks)} clicks</title></rect>`;
+    }).join('');
+    const pts = weeks.map((w, i) => `${(pad.l + i * bw + bw / 2).toFixed(1)},${y(w.profileClicks + w.industryClicks, maxClick).toFixed(1)}`);
+    const dots = pts.map((p) => `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3.5" class="br-dot" />`).join('');
+    const labels = weeks.map((w, i) => (i % 2 === 0 ? `<text x="${(pad.l + i * bw + bw / 2).toFixed(1)}" y="${H - 8}" class="br-axis" text-anchor="middle">${shortDate(w.week)}</text>` : '')).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="br-svg" role="img" aria-label="Weekly times seen and clicks">
+      <text x="${pad.l - 8}" y="${pad.t + 8}" class="br-axis" text-anchor="end">${n(maxSeen)}</text>
+      <line x1="${pad.l}" x2="${W - pad.r}" y1="${H - pad.b}" y2="${H - pad.b}" class="br-base" />
+      ${bars}<polyline points="${pts.join(' ')}" class="br-line" />${dots}${labels}</svg>`;
+  }
+
+  async function load() {
+    const b = new URLSearchParams(location.search).get('b');
+    if (b) ($('br-back') as HTMLAnchorElement).href = `/my-business/?b=${encodeURIComponent(b)}`;
+    const res = await fetch(`/api/business-report${b ? `?b=${encodeURIComponent(b)}` : ''}`);
+    const r = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      $('br-loading').innerHTML = res.status === 401 ? 'Please <a href="/business-login/">sign in</a> to see your report.' : esc(r.error || 'The report could not be loaded.');
+      return;
+    }
+    $('br-name').textContent = r.business.name;
+    $('br-range').textContent = `${r.business.categoryName} in Sioux Falls · Last 4 weeks: ${shortDate(r.range.start)} to ${shortDate(r.range.end)}`;
+    document.title = `${r.business.name} Report | Sioux Falls Go`;
+
+    if (r.insights?.length) {
+      $('br-insight-list').innerHTML = r.insights.map((t: string) => `<li>${esc(t)}</li>`).join('');
+      $('br-insights').hidden = false;
+    }
+
+    const a = r.actions[0];
+    const acts = a.call + a.directions + a.website + a.quote;
+    const k: string[] = [];
+    if (r.gsc.connected) {
+      const c = r.gsc.current, p = r.gsc.previous;
+      k.push(kpi('Seen on Google', n(c.profile.impressions + c.industry.impressions), change(c.profile.impressions + c.industry.impressions, p.profile.impressions + p.industry.impressions), 'Times a page featuring you showed in search results'));
+      k.push(kpi('Clicks to your profile', n(c.profile.clicks), change(c.profile.clicks, p.profile.clicks), 'People who came from Google straight to your profile'));
+      k.push(kpi('Clicks into your industry', n(c.industry.clicks), change(c.industry.clicks, p.industry.clicks), `Visits to the ${esc(r.business.categoryName)} page and its ${r.business.guides} guides, where you are listed`));
+    }
+    k.push(kpi('Profile visits', n(a.view), r.actions[1] ? change(a.view, r.actions[1].view) : '', `This month, from any source`));
+    k.push(kpi('Customer actions', n(acts), '', 'Calls, directions, website visits, and quote requests this month'));
+    $('br-kpis').innerHTML = k.join('');
+
+    if (r.gsc.connected && r.gsc.weekly?.length > 1) {
+      $('br-chart').innerHTML = chart(r.gsc.weekly.slice(-13));
+      $('br-trend-card').hidden = false;
+    }
+    if (r.gsc.connected && r.gsc.queries?.length) {
+      $('br-queries').innerHTML = `<thead><tr><th>Search</th><th>Times seen</th><th>Clicks</th><th>Position</th><th>Landed on</th></tr></thead><tbody>${
+        r.gsc.queries.map((q: any) => `<tr><td>${esc(q.query)}</td><td>${n(q.impressions)}</td><td>${n(q.clicks)}</td><td>${q.position}</td><td><span class="br-tag ${q.profile ? 'br-tag--you' : ''}">${q.profile ? 'Your profile' : 'Your industry'}</span></td></tr>`).join('')
+      }</tbody>`;
+      $('br-queries-card').hidden = false;
+    }
+    $('br-actions').innerHTML = `<thead><tr><th>Month</th><th>Profile visits</th><th>Calls</th><th>Directions</th><th>Website</th><th>Quotes</th></tr></thead><tbody>${
+      r.actions.map((m: any) => `<tr><td>${monthName(m.month)}</td><td>${n(m.view)}</td><td>${n(m.call)}</td><td>${n(m.directions)}</td><td>${n(m.website)}</td><td>${n(m.quote)}</td></tr>`).join('')
+    }</tbody>`;
+    $('br-gsc-note').textContent = r.gsc.connected ? `Updated ${new Date(r.generatedAt).toLocaleString()}. The report refreshes every six hours.`
+      : r.gsc.error ? `Google search numbers are unavailable right now: ${r.gsc.error}` : 'Google search numbers appear here once Search Console is connected in Admin.';
+
+    $('br-loading').hidden = true;
+    $('br-app').hidden = false;
+  }
+
+  $('br-print').addEventListener('click', () => window.print());
+  load();
+</script>
+
+<style is:global>
+  .br { max-width: 70rem; margin: 0 auto; padding: 2rem 1rem 3rem; }
+  .br-loading { text-align: center; padding: 4rem 1rem; color: var(--color-navy-light); }
+  .br-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.4rem; }
+  .br-eyebrow { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-orange-dark); }
+  .br-head h1 { margin: 0.2rem 0 0.3rem; font-family: var(--font-display); color: var(--color-navy); font-size: clamp(1.6rem, 4vw, 2.3rem); }
+  .br-sub { margin: 0; color: var(--color-navy-light); }
+  .br-head-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .br-btn { display: inline-flex; align-items: center; padding: 0.6rem 1rem; border-radius: 0.55rem; font-weight: 700; font-size: 0.875rem; cursor: pointer; text-decoration: none; border: 1px solid var(--color-line); background: #fff; color: var(--color-navy); font-family: inherit; }
+  .br-btn:hover { background: var(--color-surface); }
+  .br-insights { background: linear-gradient(135deg, #1B2A4A, #2E4470); color: #fff; border-radius: 1rem; padding: 1.3rem 1.5rem; margin-bottom: 1.2rem; }
+  .br-insights h2 { margin: 0 0 0.6rem; font-size: 1.05rem; color: var(--color-gold); }
+  .br-insights ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.5rem; line-height: 1.5; }
+  .br-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 0.8rem; margin-bottom: 1.2rem; }
+  .br-kpi { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.25rem; }
+  .br-kpi-label { font-size: 0.78rem; font-weight: 700; color: var(--color-navy-light); text-transform: uppercase; letter-spacing: 0.04em; }
+  .br-kpi strong { font-size: 2rem; font-family: var(--font-display); color: var(--color-navy); line-height: 1.1; }
+  .br-kpi small { color: var(--color-navy-light); font-size: 0.8rem; line-height: 1.4; }
+  .br-chg { font-size: 0.8rem; font-weight: 800; }
+  .br-chg--up { color: var(--color-success); }
+  .br-chg--down { color: #B4432F; }
+  .br-card { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 1.2rem 1.3rem; margin-bottom: 1.2rem; }
+  .br-card[hidden], .br-insights[hidden] { display: none; }
+  .br-card-head { display: flex; justify-content: space-between; gap: 0.5rem 1rem; flex-wrap: wrap; align-items: baseline; margin-bottom: 0.8rem; }
+  .br-card-head h2 { margin: 0; font-size: 1.1rem; color: var(--color-navy); }
+  .br-card-head p { margin: 0; flex-basis: 100%; color: var(--color-navy-light); font-size: 0.875rem; }
+  .br-legend { font-size: 0.8rem; color: var(--color-navy-light); display: flex; align-items: center; gap: 0.35rem; }
+  .br-key { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 3px; margin-left: 0.5rem; }
+  .br-key--seen { background: #C9DCEB; }
+  .br-key--click { background: var(--color-orange); border-radius: 50%; }
+  .br-svg { width: 100%; height: auto; display: block; }
+  .br-bar { fill: #C9DCEB; }
+  .br-line { fill: none; stroke: var(--color-orange); stroke-width: 2.5; }
+  .br-dot { fill: var(--color-orange); }
+  .br-axis { font-size: 11px; fill: #6B7591; }
+  .br-base { stroke: var(--color-line); }
+  .br-table-wrap { overflow-x: auto; }
+  .br-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .br-table th { text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-navy-light); padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--color-line); white-space: nowrap; }
+  .br-table td { padding: 0.6rem; border-bottom: 1px solid var(--color-line); color: var(--color-ink); }
+  .br-table td:not(:first-child), .br-table th:not(:first-child) { text-align: right; }
+  .br-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 99px; background: var(--color-river-light); color: var(--color-river); white-space: nowrap; }
+  .br-tag--you { background: #FDF0E1; color: var(--color-orange-dark); }
+  .br-note { color: var(--color-navy-light); font-size: 0.8rem; line-height: 1.5; margin: 0.4rem 0; }
+  @media print { .br-head-actions, header.site-header, footer { display: none !important; } .br-card, .br-kpi { break-inside: avoid; } }
+</style>

@@ -43,6 +43,12 @@ const categories = defineCollection({
     heroImageAlt: z.string().optional(),
     heroImageCredit: z.object({ photographer: z.string(), profileUrl: z.string(), source: z.string().optional() }).optional(),
     heroImageLocked: z.boolean().optional(),
+    // Written for this category's page: a short local intro, what to look for
+    // when hiring, and the questions people actually search.
+    intro: z.string().optional(),
+    tips: z.array(z.string()).optional(),
+    faqs: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
+    contentUpdatedAt: z.string().optional(),
     icon: z.string().default('pin'), // semantic icon name, rendered via the Icon component — no emoji
   }),
 });

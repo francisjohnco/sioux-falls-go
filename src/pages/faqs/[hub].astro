@@ -1,122 +1,103 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
+import Icon from '../../components/Icon.astro';
+
+// Sioux Falls Answers: the best questions from every industry in one place,
+// grouped by category. Each answer links on to the full guide or category
+// page, so this page feeds readers (and Google) into the pages that matter.
+// It grows by itself: every category page's questions and every new guide's
+// questions show up here at the next rebuild.
 
 export async function getStaticPaths() {
   const hubs = await getCollection('hubs');
-  return hubs.map((hub) => ({
-    params: { hub: hub.data.slug },
-    props: { hub },
-  }));
+  return hubs.map((hub) => ({ params: { hub: hub.data.slug }, props: { hub } }));
 }
 
 const { hub } = Astro.props;
+const PER_CATEGORY = 6;
 
 const allFaqs = await getCollection('faqs');
 const allCategories = await getCollection('categories');
+const allBusinesses = await getCollection('businesses');
 const allArticles = await getLiveArticles();
 
-// Canonical dedup: drop any entry that points elsewhere, then only keep
-// entries tagged for this hub and marked featured (the "5-10 questions" cut).
-const eligible = allFaqs.filter(
-  (faq) => !faq.data.canonicalOf && faq.data.hub.includes(hub.data.slug) && faq.data.featured
-);
+type Item = { q: string; html?: string; text?: string; Content?: any; href?: string; linkLabel?: string };
 
-// Group by category, pre-render each FAQ's markdown answer, and resolve
-// related businesses — all before the template, since Astro can't await
-// inside a .map() in the markup.
-const groups = await Promise.all(
+const groups = (await Promise.all(
   allCategories.map(async (category) => {
-    const faqsInCategory = eligible
-      .filter((faq) => faq.data.category.id === category.id)
-      .slice(0, hub.data.featuredPerCategory);
-
-    const renderedFaqs = await Promise.all(
-      faqsInCategory.map(async (faq) => {
-        const { Content } = await render(faq);
-        return { faq, Content };
-      })
-    );
-
-    const businessRefs = faqsInCategory.flatMap((f) => f.data.relatedBusinesses);
-    const uniqueBusinessRefs = businessRefs.filter(
-      (ref, i, arr) => arr.findIndex((r) => r.id === ref.id) === i
-    );
-    const businesses = await Promise.all(uniqueBusinessRefs.map((ref) => getEntry(ref)));
-
-    // Most relevant article for this category — prefer the dedicated FAQ
-    // companion piece (it directly answers the same questions), falling
-    // back to the "How to Choose" buying guide if no FAQ article exists.
-    const categoryArticles = allArticles.filter((a) => a.data.category.id === category.id);
-    const relatedArticle =
-      categoryArticles.find((a) => a.data.contentType === 'faq') ||
-      categoryArticles.find((a) => a.data.contentType === 'buying-guide') ||
-      categoryArticles[0];
-
-    return { category, renderedFaqs, businesses, relatedArticle };
+    const seen = new Set<string>();
+    const items: Item[] = [];
+    const add = (it: Item) => {
+      const k = it.q.trim().toLowerCase();
+      if (seen.has(k) || items.length >= PER_CATEGORY) return;
+      seen.add(k); items.push(it);
+    };
+    for (const f of category.data.faqs || []) add({ q: f.q, text: f.a, href: `/${category.data.slug}#faqs`, linkLabel: `${category.data.name} in Sioux Falls` });
+    for (const faq of allFaqs.filter((f) => !f.data.canonicalOf && f.data.category.id === category.id)) {
+      if (items.length >= PER_CATEGORY) break;
+      const { Content } = await render(faq);
+      add({ q: faq.data.question, Content });
+    }
+    const guides = allArticles.filter((a) => a.data.category.id === category.id)
+      .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+    for (const g of guides) for (const f of g.data.embeddedFaqs || []) add({ q: f.question, text: f.answer, href: `/guides/${g.id}`, linkLabel: g.data.title });
+    const businessCount = allBusinesses.filter((b) => b.data.category.id === category.id).length;
+    return { category, items, guides: guides.length, businessCount };
   })
-);
-const nonEmptyGroups = groups.filter((g) => g.renderedFaqs.length > 0);
+)).filter((g) => g.items.length > 0)
+  .sort((a, b) => b.businessCount - a.businessCount || b.items.length - a.items.length || a.category.data.name.localeCompare(b.category.data.name));
+
+const total = groups.reduce((s, g) => s + g.items.length, 0);
+const title = 'Sioux Falls Answers for Hiring Local Pros';
+const description = `${total} answers to the questions Sioux Falls homeowners ask most about hiring local pros, by industry, written for our winters, soil, and building rules.`;
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: eligible.map((faq) => ({
-    '@type': 'Question',
-    name: faq.data.question,
-  })),
+  mainEntity: groups.flatMap((g) => g.items.filter((i) => i.text).map((i) => ({
+    '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.text },
+  }))),
 };
 ---
-<BaseLayout
-  title={hub.data.title}
-  description={hub.data.description}
-  canonicalPath={`/faqs/${hub.data.slug}`}
-  schema={schema}
->
+<BaseLayout title={title} description={description.slice(0, 158)} canonicalPath={`/faqs/${hub.data.slug}`} schema={schema}>
   <SiteHeader slot="header" />
 
   <div class="container page">
-    <span class="eyebrow">Knowledge Hub</span>
-    <h1>{hub.data.title}</h1>
-    <p class="page-sub">{hub.data.description}</p>
+    <span class="eyebrow">Sioux Falls Answers</span>
+    <h1>Answers before you hire a local pro</h1>
+    <p class="page-sub">{total} straight answers to the questions Sioux Falls homeowners ask most, grouped by industry. Each one links to the full guide or to the top-rated local businesses for that job.</p>
 
-    {nonEmptyGroups.map((group) => (
-      <section class="category-group" aria-labelledby={`hub-${group.category.data.slug}`}>
+    <div class="hub-search">
+      <Icon name="search" size={18} />
+      <input type="search" id="hub-q" placeholder="Search questions, for example garage door spring" aria-label="Search questions" />
+    </div>
+    <nav class="hub-jump" aria-label="Jump to an industry">
+      {groups.map((g) => <a href={`#hub-${g.category.data.slug}`}>{g.category.data.name}</a>)}
+    </nav>
+    <p class="hub-empty" id="hub-empty" hidden>No questions match that search yet.</p>
+
+    {groups.map((g) => (
+      <section class="category-group" id={`hub-${g.category.data.slug}`} aria-labelledby={`h-${g.category.data.slug}`}>
         <div class="group-header">
-          <h2 id={`hub-${group.category.data.slug}`}>{group.category.data.name}</h2>
-          <a href={`/${group.category.data.slug}#faqs`}>View all {group.category.data.name} FAQs →</a>
+          <h2 id={`h-${g.category.data.slug}`}><Icon name={g.category.data.icon} size={22} /> {g.category.data.name}</h2>
+          {g.businessCount > 0 && <a href={`/${g.category.data.slug}`}>See {g.businessCount} top-rated {g.category.data.name.toLowerCase()} →</a>}
         </div>
-
         <div class="faq-list">
-          {group.renderedFaqs.map(({ faq, Content }) => (
-            <details class="faq-item">
-              <summary>{faq.data.question}</summary>
+          {g.items.map((it) => (
+            <details class="faq-item" data-q={it.q.toLowerCase()}>
+              <summary>{it.q}</summary>
               <div class="faq-answer">
-                <Content />
+                {it.Content ? <it.Content /> : <p>{it.text}</p>}
+                {it.href && <a class="faq-source" href={it.href}>{it.href.startsWith('/guides/') ? `Read the full guide: ${it.linkLabel}` : `Compare ${it.linkLabel}`} →</a>}
               </div>
             </details>
           ))}
         </div>
-
-        {group.relatedArticle && (
-          <p class="group-article-link">
-            Want the full picture? Read <a href={`/guides/${group.relatedArticle.id}`}>{group.relatedArticle.data.title}</a>.
-          </p>
-        )}
-
-        {group.businesses.length > 0 && (
-          <p class="group-businesses">
-            Related: {group.businesses.map((b, i) => (
-              <>
-                <a href={`/businesses/${b.id}`}>{b.data.name}</a>
-                {i < group.businesses.length - 1 ? ', ' : ''}
-              </>
-            ))}
-          </p>
-        )}
+        {g.guides > 0 && <p class="group-article-link"><a href={`/${g.category.data.slug}#guides-heading`}>Browse {g.guides} {g.category.data.name.toLowerCase()} guide{g.guides === 1 ? '' : 's'} →</a></p>}
       </section>
     ))}
   </div>
@@ -124,37 +105,44 @@ const schema = {
   <SiteFooter slot="footer" />
 </BaseLayout>
 
+<script>
+  const input = document.getElementById('hub-q') as HTMLInputElement;
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let any = false;
+    document.querySelectorAll<HTMLElement>('.category-group').forEach((sec) => {
+      let shown = 0;
+      sec.querySelectorAll<HTMLElement>('.faq-item').forEach((it) => {
+        const match = !q || it.dataset.q!.includes(q) || (it.textContent || '').toLowerCase().includes(q);
+        it.hidden = !match; if (match) shown++;
+      });
+      sec.hidden = shown === 0; if (shown) any = true;
+    });
+    (document.getElementById('hub-empty') as HTMLElement).hidden = any;
+  });
+</script>
+
 <style>
   .page { padding-block: var(--space-4) var(--space-6); }
-  .page-sub { max-width: 52ch; color: var(--color-river-light); }
-  .category-group { margin-top: var(--space-5); }
-  .category-group:first-of-type { margin-top: var(--space-4); }
-  .group-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-    border-bottom: 1px solid var(--color-line);
-    padding-bottom: var(--space-1);
-  }
-  .group-header h2 { margin: 0; }
-  .group-header a { font-size: 0.9375rem; white-space: nowrap; }
+  .page-sub { max-width: 60ch; color: var(--color-navy-light); font-size: 1.0625rem; line-height: 1.6; }
+  .hub-search { display: flex; align-items: center; gap: 0.6rem; max-width: 34rem; margin-top: var(--space-3); padding: 0.75rem 1.1rem; border: 1.5px solid var(--color-line); border-radius: 99px; background: #fff; box-shadow: 0 2px 10px rgba(13,23,48,0.06); color: var(--color-navy-light); }
+  .hub-search input { border: 0; outline: none; flex: 1; font: inherit; font-size: 0.9375rem; background: transparent; }
+  .hub-jump { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: var(--space-3); }
+  .hub-jump a { padding: 0.35rem 0.8rem; border: 1px solid var(--color-line); border-radius: 99px; font-size: 0.8125rem; font-weight: 600; color: var(--color-navy); text-decoration: none; }
+  .hub-jump a:hover { border-color: var(--color-orange); color: var(--color-orange-dark); }
+  .hub-empty { margin-top: var(--space-4); color: var(--color-navy-light); }
+  .category-group { margin-top: var(--space-5); scroll-margin-top: 6rem; }
+  .category-group[hidden], .faq-item[hidden] { display: none; }
+  .group-header { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; border-bottom: 1px solid var(--color-line); padding-bottom: var(--space-1); }
+  .group-header h2 { margin: 0; display: flex; align-items: center; gap: 0.5rem; }
+  .group-header h2 :global(svg) { color: var(--color-orange); }
+  .group-header a { font-size: 0.9375rem; font-weight: 700; color: var(--color-orange-dark); }
   .faq-list { margin-top: var(--space-2); display: flex; flex-direction: column; gap: 0.5rem; }
-  .faq-item {
-    background: var(--color-frost);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius);
-    padding: var(--space-2);
-  }
-  .faq-item summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--color-river);
-  }
-  .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; }
-  .faq-answer :global(p) { margin: 0; }
-  .group-article-link { margin-top: var(--space-2); font-size: 0.9375rem; color: var(--color-navy); font-weight: 600; }
+  .faq-item { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2); }
+  .faq-item summary { cursor: pointer; font-weight: 700; color: var(--color-navy); }
+  .faq-answer { margin-top: var(--space-1); font-size: 0.9375rem; line-height: 1.6; }
+  .faq-answer :global(p) { margin: 0 0 0.5rem; }
+  .faq-source { display: inline-block; font-weight: 700; font-size: 0.875rem; color: var(--color-river); }
+  .group-article-link { margin-top: var(--space-2); font-size: 0.9375rem; font-weight: 700; }
   .group-article-link a { color: var(--color-orange-dark); }
-  .group-businesses { margin-top: var(--space-1); font-size: 0.875rem; color: var(--color-river-light); }
 </style>

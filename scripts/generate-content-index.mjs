@@ -206,6 +206,9 @@ function main() {
     slug: c.slug, name: c.name, description: c.seo?.description || '', parent: c.parentCategory || '',
     icon: c.icon || 'pin', heroImage: c.heroImage || '', heroImageAlt: c.heroImageAlt || '', locked: !!c.heroImageLocked,
     businesses: businessCount[c.slug] || 0,
+    articles: articles.filter((a) => a.category === c.slug).length,
+    parentName: (categories.find((p) => p.slug === c.parentCategory) || {}).name || '',
+    hasIntro: !!c.intro,
   })).sort((a, b) => a.name.localeCompare(b.name));
   fs.writeFileSync(path.join(ROOT, 'public/category-index.json'), JSON.stringify(categoryIndex, null, 2));
 

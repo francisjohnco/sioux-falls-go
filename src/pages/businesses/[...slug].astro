@@ -987,3 +987,30 @@ const schema = {
   }));
   viewer?.addEventListener('click', (e) => { if (e.target === viewer || (e.target as HTMLElement).closest('.photo-viewer-close')) viewer.close(); });
 </script>
+
+<script is:inline define:vars={{ trackSlug: business.id }}>
+  // Counts views and contact taps for the owner's report. No personal data.
+  (function () {
+    function send(a) {
+      try {
+        var body = JSON.stringify({ b: trackSlug, a: a });
+        if (navigator.sendBeacon) navigator.sendBeacon('/api/track', new Blob([body], { type: 'application/json' }));
+        else fetch('/api/track', { method: 'POST', body: body, keepalive: true, headers: { 'Content-Type': 'application/json' } });
+      } catch (e) {}
+    }
+    var key = 'sfg-viewed-' + trackSlug;
+    try { if (!sessionStorage.getItem(key)) { sessionStorage.setItem(key, '1'); send('view'); } } catch (e) { send('view'); }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (h.indexOf('tel:') === 0) send('call');
+      else if (/maps\.google|google\.com\/maps|maps\.apple|goo\.gl\/maps|maps\.app/.test(h)) send('directions');
+      else if (/^https?:/.test(h) && a.host !== location.host && !/unsplash|pexels|google\.com\/(search|maps)|facebook|instagram|g\.page/.test(h)) send('website');
+    });
+    document.addEventListener('submit', function (e) {
+      if (e.target && e.target.classList && e.target.classList.contains('quote-form')) send('quote');
+    });
+  })();
+</script>
+

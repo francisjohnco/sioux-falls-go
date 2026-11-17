@@ -915,6 +915,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </div>
           <div class="edit-modal-footer">
             <a class="button button--ghost" id="edit-manage-link" href="#" target="_blank" rel="noopener">Open owner dashboard ↗</a>
+              <a class="button button--ghost" id="edit-report-link" href="#" target="_blank" rel="noopener">See this business's report</a>
             <button class="button button--ghost" id="edit-modal-cancel">Cancel</button>
             <button class="button" id="edit-modal-save">Save Changes</button>
           </div>
@@ -2184,6 +2185,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
     (document.getElementById('edit-body') as HTMLTextAreaElement).value = data.body || '';
     renderAdminPhotos(data);
     (document.getElementById('edit-manage-link') as HTMLAnchorElement).href = `/my-business/?b=${encodeURIComponent(slug)}`;
+    (document.getElementById('edit-report-link') as HTMLAnchorElement).href = `/business-report/?b=${encodeURIComponent(slug)}`;
     if (editStatus) editStatus.hidden = true;
     editBackdrop?.classList.add('is-open');
   }

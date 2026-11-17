@@ -30,5 +30,40 @@
     "photographer": "Curtis Adams",
     "profileUrl": "https://www.pexels.com/@curtis-adams-1694007",
     "source": "Pexels"
-  }
+  },
+  "intro": "When a garage door quits in Sioux Falls, it usually picks the worst morning to do it. Long stretches below zero, wind-driven snow, and freeze and thaw cycles are hard on springs, cables, openers, and the rubber seal along the bottom, so most calls here are about a door that will not lift, will not close, or slams down unevenly.\n\nA good garage door company tells you what failed before it quotes a fix, puts the price in writing before work starts, and stands behind both parts and labor. The companies listed here are locally based and rated 4.8 stars or higher on Google.",
+  "tips": [
+    "Ask for the price in writing before any work starts, including the service call and any after hours fee, so the bill matches the quote.",
+    "If a spring broke, ask whether they replace springs in pairs and what cycle rating the new springs carry.",
+    "Be wary of anyone who jumps straight to a new door for a broken spring or cable. Those are routine repairs.",
+    "Check the company on the City of Sioux Falls licensed contractor list and ask which city license it holds.",
+    "Ask how long the warranty runs on parts and on labor, and get it on the invoice."
+  ],
+  "faqs": [
+    {
+      "q": "How much does garage door repair cost in Sioux Falls?",
+      "a": "It depends on what failed. A spring, cable, or roller repair is a routine service call, while an opener replacement or a new door costs more. Get a written quote that includes the service call and any after hours fee before work starts, and compare the same repair across two companies if it is not an emergency."
+    },
+    {
+      "q": "Can I fix a broken garage door spring myself?",
+      "a": "It is not a safe DIY job. Springs hold enough tension to lift the whole door, and winding bars or loose cables can cause serious injuries. Leave the door closed, unplug the opener, and call a garage door company."
+    },
+    {
+      "q": "Why won't my garage door open when it is cold outside?",
+      "a": "Common causes in a Sioux Falls winter are a bottom seal frozen to the floor, grease that thickens in the cold, a weakened spring, or an opener whose force setting needs adjusting. Try freeing a frozen seal gently, but if the door is uneven or the opener strains, stop and call for service."
+    },
+    {
+      "q": "Should I repair my garage door or replace it?",
+      "a": "Most problems, including springs, cables, rollers, and openers, are repairs. Replacement makes sense when panels are badly damaged or rusted, the door is very old and poorly insulated, or repair costs approach the price of a new door."
+    },
+    {
+      "q": "How often should a garage door be serviced?",
+      "a": "A yearly tune up before winter is a good habit. A technician checks the balance, springs, cables, and rollers, lubricates moving parts, and tests the auto reverse safety feature, which helps catch problems before the first cold snap."
+    },
+    {
+      "q": "Do I need a permit to replace a garage door in Sioux Falls?",
+      "a": "Changing the size of the opening or the header is structural work that needs a permit. For a same size replacement, ask your installer, or call Sioux Falls Planning and Development Services at 605-367-8670 to confirm."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-17"
 }

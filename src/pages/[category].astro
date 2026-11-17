@@ -59,15 +59,66 @@ const heroPhoto = hero.large;
 
 const INITIAL_COUNT = 6;
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: category.data.seo.title,
-};
+// Search description: the category's own, unless it is still the old
+// one-line template, in which case it is built from the real listings.
+const rated = businesses.filter((b) => typeof b.data.googleRating === 'number');
+const minRating = rated.length ? Math.min(...rated.map((b) => b.data.googleRating as number)) : 0;
+const lower = category.data.name.toLowerCase();
+const isGeneric = (d: string) => /^(find trusted|discover|sioux falls )/i.test(d) || d.length < 90;
+const metaDescription = !isGeneric(category.data.seo.description) ? category.data.seo.description
+  : businesses.length
+    ? `Compare ${businesses.length >= 3 ? `${businesses.length} ` : ''}top-rated ${lower} in Sioux Falls, SD${rated.length >= 2 && minRating >= 4.5 ? `, each rated ${minRating.toFixed(1)} stars${minRating < 5 ? ' or higher' : ''} on Google` : ''}. Hours, phone numbers, and local guides in one place.`.slice(0, 158)
+    : `${category.data.name} in Sioux Falls, SD: local guides, answers to common questions, and what to look for when you hire.`.slice(0, 158);
+
+// Questions: the category's own plus any from the FAQ library, no repeats.
+const ownFaqs = (category.data.faqs || []).map((f) => ({ q: f.q, a: f.a }));
+const seenQ = new Set(ownFaqs.map((f) => f.q.toLowerCase()));
+const libraryFaqs = renderedFaqs.filter(({ faq }) => !seenQ.has(faq.data.question.toLowerCase()));
+
+// Related categories: the parent, its other children, and this category's children.
+const parentId = category.data.parentCategory?.id;
+const related = allCategories.filter((c) => c.id !== category.id && (
+  c.id === parentId || (parentId && c.data.parentCategory?.id === parentId) || c.data.parentCategory?.id === category.id
+)).sort((a, b) => a.data.name.localeCompare(b.data.name)).slice(0, 12);
+
+const newestArticle = articles.map((a) => a.data.publishedAt.toISOString().slice(0, 10)).sort().pop();
+const updatedOn = [category.data.contentUpdatedAt, newestArticle].filter(Boolean).sort().pop();
+const updatedLabel = updatedOn ? new Date(`${updatedOn}T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }) : '';
+
+const site = 'https://siouxfallsgo.com';
+const pageUrl = `${site}/${category.data.slug}/`;
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: category.data.seo.title,
+    description: metaDescription,
+    url: pageUrl,
+    ...(businesses.length ? { mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: businesses.length,
+      itemListElement: businesses.map((b, i) => ({ '@type': 'ListItem', position: i + 1, url: `${site}/businesses/${b.id}/`, name: b.data.name })),
+    } } : {}),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${site}/` },
+      { '@type': 'ListItem', position: 2, name: 'Directory', item: `${site}/businesses/` },
+      { '@type': 'ListItem', position: 3, name: category.data.name, item: pageUrl },
+    ],
+  },
+  ...(ownFaqs.length ? [{
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: ownFaqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  }] : []),
+];
 ---
 <BaseLayout
   title={category.data.seo.title}
-  description={category.data.seo.description}
+  description={metaDescription}
   canonicalPath={`/${category.data.slug}`}
   schema={schema}
   ogImage={hero.og}
@@ -78,7 +129,7 @@ const schema = {
   <LayeredHero
     eyebrow="Category"
     title={category.data.name}
-    subtitle={category.data.seo.description}
+    subtitle={metaDescription}
     photoUrl={heroPhoto}
     photoAlt={hero.alt}
     photoCredit={hero.credit ? `Photo: ${hero.credit.photographer} on ${hero.credit.source}` : undefined}
@@ -88,7 +139,7 @@ const schema = {
       <a href="/">Home</a> / <a href="/businesses">Directory</a> / <span>{category.data.name}</span>
     </nav>
     {businesses.length > 0 && (
-      <p class="hero-stats">{businesses.length} business{businesses.length === 1 ? '' : 'es'} · {articles.length} local guide{articles.length === 1 ? '' : 's'}</p>
+      <p class="hero-stats">{businesses.length} business{businesses.length === 1 ? '' : 'es'}{articles.length > 0 && ` · ${articles.length} local guide${articles.length === 1 ? '' : 's'}`}{updatedLabel && ` · Updated ${updatedLabel}`}</p>
     )}
   </LayeredHero>
 
@@ -134,6 +185,20 @@ const schema = {
       </div>
     )}
 
+    {(category.data.intro || category.data.tips?.length) && (
+      <section class="choose" aria-labelledby="choose-heading">
+        <h2 id="choose-heading">How to choose {lower} in Sioux Falls</h2>
+        <div class="choose-grid">
+          {category.data.intro && <div class="choose-intro">{category.data.intro.split(/\n\s*\n/).map((p) => <p>{p}</p>)}</div>}
+          {category.data.tips?.length && (
+            <div class="choose-tips">
+              <h3>What to look for</h3>
+              <ul>{category.data.tips.map((t) => <li><Icon name="check" size={16} /><span>{t}</span></li>)}</ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
   </div>
 
   {articles.length > 0 && (
@@ -142,7 +207,7 @@ const schema = {
         <span class="eyebrow">From the Knowledge Base</span>
         <h2 id="guides-heading">Helpful guides for {category.data.name.toLowerCase()}</h2>
         <div class="grid">
-          {articles.slice(0, 3).map((article) => (
+          {articles.slice(0, 6).map((article) => (
             <a class="guide-card" href={`/guides/${article.id}`}>
               <div class="guide-card-media has-photo"><img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
               </div>
@@ -159,28 +224,57 @@ const schema = {
   )}
 
   <div class="container page">
-    {renderedFaqs.length > 0 && (
+    {(ownFaqs.length > 0 || libraryFaqs.length > 0) && (
       <>
         <div class="contour-rule" role="presentation"></div>
         <section id="faqs" aria-labelledby="faqs-heading">
-          <h2 id="faqs-heading">Frequently asked questions</h2>
+          <h2 id="faqs-heading">{category.data.name} questions, answered for Sioux Falls</h2>
           <div class="faq-list">
-            {renderedFaqs.map(({ faq, Content }) => (
+            {ownFaqs.map((f, i) => (
+              <details class="faq-item" open={i === 0}>
+                <summary>{f.q}</summary>
+                <div class="faq-answer"><p>{f.a}</p></div>
+              </details>
+            ))}
+            {libraryFaqs.map(({ faq, Content }) => (
               <details class="faq-item">
                 <summary>{faq.data.question}</summary>
                 <div class="faq-answer"><Content /></div>
               </details>
             ))}
           </div>
+          <p class="faq-more"><a href="/faqs/local-service-faqs">More Sioux Falls answers by industry →</a></p>
         </section>
       </>
     )}
-  </div>
 
+    {related.length > 0 && (
+      <section class="related-cats" aria-labelledby="related-heading">
+        <h2 id="related-heading">Related categories</h2>
+        <div class="related-chips">
+          {related.map((c) => <a href={`/${c.data.slug}`}><Icon name={c.data.icon} size={16} />{c.data.name}</a>)}
+        </div>
+      </section>
+    )}
+  </div>
   <SiteFooter slot="footer" />
 </BaseLayout>
 
 <style>
+  .choose { margin-top: var(--space-6); }
+  .choose-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--space-4); align-items: start; margin-top: var(--space-3); }
+  .choose-intro p { margin: 0 0 1rem; line-height: 1.65; color: var(--color-ink); }
+  .choose-tips { background: var(--color-river-light); border-radius: 1rem; padding: 1.2rem 1.3rem; }
+  .choose-tips h3 { margin: 0 0 0.7rem; font-size: 1rem; color: var(--color-navy); }
+  .choose-tips ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.65rem; }
+  .choose-tips li { display: flex; gap: 0.55rem; align-items: flex-start; line-height: 1.45; font-size: 0.9375rem; }
+  .choose-tips li :global(svg) { flex: none; margin-top: 0.2rem; color: var(--color-river); }
+  .faq-more { margin-top: var(--space-2); font-weight: 700; }
+  .related-cats { margin-top: var(--space-6); }
+  .related-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-2); }
+  .related-chips a { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; border: 1px solid var(--color-line); border-radius: 99px; color: var(--color-navy); font-weight: 600; font-size: 0.875rem; text-decoration: none; background: #fff; }
+  .related-chips a:hover { border-color: var(--color-orange); color: var(--color-orange-dark); }
+  @media (max-width: 760px) { .choose-grid { grid-template-columns: 1fr; } }
   .hero-breadcrumbs { font-size: 0.8125rem; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
   .hero-breadcrumbs a { color: rgba(255,255,255,0.7); }
   .hero-breadcrumbs a:hover { color: #fff; }
