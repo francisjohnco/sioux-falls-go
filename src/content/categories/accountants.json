@@ -19,5 +19,12 @@
     "description": "Discover accountants in Sioux Falls."
   },
   "icon": "briefcase",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/8297031/pexels-photo-8297031.jpeg",
+  "heroImageAlt": "A woman uses a calculator and pen while reviewing financial documents stacked on an office desk.",
+  "heroImageCredit": {
+    "photographer": "Mikhail Nilov",
+    "profileUrl": "https://www.pexels.com/@mikhail-nilov",
+    "source": "Pexels"
+  }
 }

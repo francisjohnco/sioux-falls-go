@@ -19,5 +19,12 @@
     "description": "Sioux Falls entertainment"
   },
   "icon": "star",
-  "parentCategory": "attractions"
+  "parentCategory": "attractions",
+  "heroImage": "https://images.pexels.com/photos/36675302/pexels-photo-36675302.jpeg",
+  "heroImageAlt": "A large concert crowd raises their hands beneath dramatic crossing beams of blue and white stage lights.",
+  "heroImageCredit": {
+    "photographer": "Fausto Ferreira",
+    "profileUrl": "https://www.pexels.com/@fausto-ferreira-2159402204",
+    "source": "Pexels"
+  }
 }

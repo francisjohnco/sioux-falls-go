@@ -1,7 +1,11 @@
 {
   "name": "Concrete Contractors",
   "slug": "concrete-contractors",
-  "aliases": ["Concrete", "Hardscaping", "Concrete & Hardscaping"],
+  "aliases": [
+    "Concrete",
+    "Hardscaping",
+    "Concrete & Hardscaping"
+  ],
   "playbook": {
     "topics": [
       "hiring",
@@ -20,5 +24,12 @@
     "description": "Find trusted concrete and hardscaping contractors in Sioux Falls for driveways, patios, and outdoor projects."
   },
   "icon": "layers",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/33405139/pexels-photo-33405139.jpeg",
+  "heroImageAlt": "Workers pour and spread wet concrete for a residential driveway as a cement mixer truck unloads under a blue sky.",
+  "heroImageCredit": {
+    "photographer": "Ryan  Stephens",
+    "profileUrl": "https://www.pexels.com/@rstephens",
+    "source": "Pexels"
+  }
 }

@@ -19,5 +19,12 @@
     "description": "Find trusted real estate agents in Sioux Falls, plus local guides and resources."
   },
   "icon": "home",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/8815820/pexels-photo-8815820.jpeg",
+  "heroImageAlt": "A real estate agent holding a clipboard gestures while guiding clients up a staircase during a home tour.",
+  "heroImageCredit": {
+    "photographer": "Kampus Production",
+    "profileUrl": "https://www.pexels.com/@kampus",
+    "source": "Pexels"
+  }
 }

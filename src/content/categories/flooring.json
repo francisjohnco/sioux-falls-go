@@ -19,5 +19,12 @@
     "description": "Find trusted flooring in Sioux Falls, plus local guides and resources."
   },
   "icon": "layers",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/6835181/pexels-photo-6835181.jpeg",
+  "heroImageAlt": "Freshly refinished light hardwood floors in a bright, empty room with white trim and natural window light.",
+  "heroImageCredit": {
+    "photographer": "Curtis Adams",
+    "profileUrl": "https://www.pexels.com/@curtis-adams-1694007",
+    "source": "Pexels"
+  }
 }

@@ -19,5 +19,12 @@
     "description": "Find trusted cleaning services in Sioux Falls, plus local guides and resources."
   },
   "icon": "sparkles",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/4239037/pexels-photo-4239037.jpeg",
+  "heroImageAlt": "Gloved hands wiping a white bathroom cabinet surface with a blue cloth during housecleaning.",
+  "heroImageCredit": {
+    "photographer": "https://kaboompics.com/",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }

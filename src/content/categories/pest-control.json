@@ -19,5 +19,12 @@
     "description": "Discover pest control in Sioux Falls."
   },
   "icon": "wrench",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/32151816/pexels-photo-32151816.jpeg",
+  "heroImageAlt": "A vivid red lily beetle perched on a green leaf against a soft blurred background.",
+  "heroImageCredit": {
+    "photographer": "Erik Karits",
+    "profileUrl": "https://www.pexels.com/@erik-karits-2093459",
+    "source": "Pexels"
+  }
 }
