@@ -19,5 +19,12 @@
     "description": "Discover breakfast & brunch in Sioux Falls."
   },
   "icon": "utensils",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/6529785/pexels-photo-6529785.jpeg",
+  "heroImageAlt": "Two people sharing a sunny breakfast of eggs, pancakes, and orange juice at an outdoor café table.",
+  "heroImageCredit": {
+    "photographer": "RDNE Stock project",
+    "profileUrl": "https://www.pexels.com/@rdne",
+    "source": "Pexels"
+  }
 }

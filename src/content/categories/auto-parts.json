@@ -19,5 +19,12 @@
     "description": "Sioux Falls auto parts"
   },
   "icon": "wrench",
-  "parentCategory": "automotive"
+  "parentCategory": "automotive",
+  "heroImage": "https://images.pexels.com/photos/5506059/pexels-photo-5506059.jpeg",
+  "heroImageAlt": "Shelves of assorted auto parts and components fill a bright, modern automotive workshop with cars being serviced in the background.",
+  "heroImageCredit": {
+    "photographer": "Mike van Schoonderwalt",
+    "profileUrl": "https://www.pexels.com/@mike-van-schoonderwalt-1884800",
+    "source": "Pexels"
+  }
 }

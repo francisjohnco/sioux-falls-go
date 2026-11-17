@@ -19,5 +19,12 @@
     "description": "Sioux Falls auto detailing services"
   },
   "icon": "sparkles",
-  "parentCategory": "automotive"
+  "parentCategory": "automotive",
+  "heroImage": "https://images.pexels.com/photos/14615269/pexels-photo-14615269.jpeg",
+  "heroImageAlt": "A detailer uses a rotary polisher on a vehicle's side panel inside a professional auto detailing shop.",
+  "heroImageCredit": {
+    "photographer": "Dextar Studio ™",
+    "profileUrl": "https://www.pexels.com/@dextarstudio",
+    "source": "Pexels"
+  }
 }

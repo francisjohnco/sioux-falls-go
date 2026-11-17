@@ -1,7 +1,11 @@
 {
   "name": "Waste & Garbage Services",
   "slug": "waste-garbage-services",
-  "aliases": ["Garbage", "Trash Pickup", "Sanitation Services"],
+  "aliases": [
+    "Garbage",
+    "Trash Pickup",
+    "Sanitation Services"
+  ],
   "playbook": {
     "topics": [
       "hiring",
@@ -19,5 +23,12 @@
     "description": "Find trusted trash pickup, dumpster rental, and waste removal services in Sioux Falls."
   },
   "icon": "trash",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/40600936/pexels-photo-40600936.jpeg",
+  "heroImageAlt": "A blue rear-loading garbage truck parked in front of autumn trees on a clear day.",
+  "heroImageCredit": {
+    "photographer": "R9 Media Photo Collective",
+    "profileUrl": "https://www.pexels.com/@r9media",
+    "source": "Pexels"
+  }
 }

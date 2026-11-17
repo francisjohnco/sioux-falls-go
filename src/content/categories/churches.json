@@ -19,5 +19,12 @@
     "description": "Discover churches in Sioux Falls."
   },
   "icon": "home",
-  "parentCategory": "community-local-resources"
+  "parentCategory": "community-local-resources",
+  "heroImage": "https://images.pexels.com/photos/29574943/pexels-photo-29574943.jpeg",
+  "heroImageAlt": "Sunlit Gothic cathedral interior with soaring arched ceilings, stone columns, and tall stained glass windows.",
+  "heroImageCredit": {
+    "photographer": "Javier C",
+    "profileUrl": "https://www.pexels.com/@javier-c-1342425248",
+    "source": "Pexels"
+  }
 }

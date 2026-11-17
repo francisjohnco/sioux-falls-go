@@ -19,5 +19,12 @@
     "description": "Discover boutiques in Sioux Falls."
   },
   "icon": "star",
-  "parentCategory": "shopping-retail"
+  "parentCategory": "shopping-retail",
+  "heroImage": "https://images.pexels.com/photos/8386643/pexels-photo-8386643.jpeg",
+  "heroImageAlt": "Colorful women's clothing hangs on racks inside a bright, airy boutique with tropical plants.",
+  "heroImageCredit": {
+    "photographer": "Ron Lach",
+    "profileUrl": "https://www.pexels.com/@ron-lach",
+    "source": "Pexels"
+  }
 }

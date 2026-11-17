@@ -19,5 +19,12 @@
     "description": "Discover sporting goods stores in Sioux Falls."
   },
   "icon": "activity",
-  "parentCategory": "shopping-retail"
+  "parentCategory": "shopping-retail",
+  "heroImage": "https://images.pexels.com/photos/903967/pexels-photo-903967.jpeg",
+  "heroImageAlt": "Ski goggles with reflective amber lenses displayed on a rack in a sporting goods store with colorful gear in the background.",
+  "heroImageCredit": {
+    "photographer": "ClickerHappy",
+    "profileUrl": "https://www.pexels.com/@clickerhappy",
+    "source": "Pexels"
+  }
 }

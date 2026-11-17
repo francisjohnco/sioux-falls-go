@@ -19,5 +19,12 @@
     "description": "Find trusted shopping & retail in Sioux Falls, plus local guides and resources."
   },
   "icon": "shopping-bag",
-  "parentCategory": "food-retail"
+  "parentCategory": "food-retail",
+  "heroImage": "https://images.pexels.com/photos/8387833/pexels-photo-8387833.jpeg",
+  "heroImageAlt": "A woman browses colorful clothing on racks inside a bright, modern boutique.",
+  "heroImageCredit": {
+    "photographer": "Ron Lach",
+    "profileUrl": "https://www.pexels.com/@ron-lach",
+    "source": "Pexels"
+  }
 }
