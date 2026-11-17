@@ -19,5 +19,12 @@
     "description": "Discover roofing in Sioux Falls."
   },
   "icon": "home",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/33404248/pexels-photo-33404248.jpeg",
+  "heroImageAlt": "Roofer using a nail gun to install asphalt shingles on a residential roof under a blue sky.",
+  "heroImageCredit": {
+    "photographer": "Ryan  Stephens",
+    "profileUrl": "https://www.pexels.com/@rstephens",
+    "source": "Pexels"
+  }
 }

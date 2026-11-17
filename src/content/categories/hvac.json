@@ -19,5 +19,12 @@
     "description": "Discover hvac in Sioux Falls."
   },
   "icon": "wrench",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/6782360/pexels-photo-6782360.jpeg",
+  "heroImageAlt": "A wall-mounted mini-split air conditioning unit in a clean, modern living room with a TV and neutral decor.",
+  "heroImageCredit": {
+    "photographer": "Max Vakhtbovych",
+    "profileUrl": "https://www.pexels.com/@artbovich",
+    "source": "Pexels"
+  }
 }

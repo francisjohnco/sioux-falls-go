@@ -19,5 +19,12 @@
     "description": "Discover photography in Sioux Falls."
   },
   "icon": "star",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/15291302/pexels-photo-15291302.jpeg",
+  "heroImageAlt": "A young man with curly hair concentrates while adjusting a DSLR camera outdoors with green foliage behind him.",
+  "heroImageCredit": {
+    "photographer": "Matheus Bertelli",
+    "profileUrl": "https://www.pexels.com/@bertellifotografia",
+    "source": "Pexels"
+  }
 }

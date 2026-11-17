@@ -19,5 +19,12 @@
     "description": "Discover home remodeling in Sioux Falls."
   },
   "icon": "home",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/36511371/pexels-photo-36511371.jpeg",
+  "heroImageAlt": "Renovated galley kitchen with white shaker cabinets, gold hardware, marble backsplash, and stainless steel appliances.",
+  "heroImageCredit": {
+    "photographer": "Lee Salem",
+    "profileUrl": "https://www.pexels.com/@charlotteblackcarservice",
+    "source": "Pexels"
+  }
 }

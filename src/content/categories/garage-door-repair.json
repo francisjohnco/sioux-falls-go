@@ -19,5 +19,12 @@
     "description": "Discover garage door repair in Sioux Falls."
   },
   "icon": "wrench",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/3555615/pexels-photo-3555615.jpeg",
+  "heroImageAlt": "A suburban home with a white paneled garage door, brick facade, and tidy landscaping on a partly cloudy day.",
+  "heroImageCredit": {
+    "photographer": "Curtis Adams",
+    "profileUrl": "https://www.pexels.com/@curtis-adams-1694007",
+    "source": "Pexels"
+  }
 }

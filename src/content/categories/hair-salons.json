@@ -19,5 +19,12 @@
     "description": "Discover hair salons in Sioux Falls."
   },
   "icon": "sparkles",
-  "parentCategory": "beauty-personal-care"
+  "parentCategory": "beauty-personal-care",
+  "heroImage": "https://images.pexels.com/photos/3993320/pexels-photo-3993320.jpeg",
+  "heroImageAlt": "A stylist wearing gloves applies hair color to a client's hair in a modern salon with lit mirrors.",
+  "heroImageCredit": {
+    "photographer": "cottonbro studio",
+    "profileUrl": "https://www.pexels.com/@cottonbro",
+    "source": "Pexels"
+  }
 }

@@ -19,5 +19,12 @@
     "description": "Discover pressure washing in Sioux Falls."
   },
   "icon": "droplet",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/9245159/pexels-photo-9245159.jpeg",
+  "heroImageAlt": "Worker in an orange uniform pressure washing a concrete wall outdoors in bright sunlight.",
+  "heroImageCredit": {
+    "photographer": "cottonbro studio",
+    "profileUrl": "https://www.pexels.com/@cottonbro",
+    "source": "Pexels"
+  }
 }

@@ -19,5 +19,12 @@
     "description": "Discover museums in Sioux Falls."
   },
   "icon": "book",
-  "parentCategory": "things-to-do"
+  "parentCategory": "things-to-do",
+  "heroImage": "https://images.pexels.com/photos/20627399/pexels-photo-20627399.jpeg",
+  "heroImageAlt": "Dinosaur skeletons and natural history exhibits fill the grand white hall of a large American museum.",
+  "heroImageCredit": {
+    "photographer": "Quang Vuong",
+    "profileUrl": "https://www.pexels.com/@quang-vuong-724225078",
+    "source": "Pexels"
+  }
 }
