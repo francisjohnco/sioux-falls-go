@@ -19,5 +19,12 @@
     "description": "Discover attorneys in Sioux Falls."
   },
   "icon": "briefcase",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/8112199/pexels-photo-8112199.jpeg",
+  "heroImageAlt": "Bronze Lady Justice statue holding scales of justice with a framed certificate blurred in the background.",
+  "heroImageCredit": {
+    "photographer": "Pavel Danilyuk",
+    "profileUrl": "https://www.pexels.com/@pavel-danilyuk",
+    "source": "Pexels"
+  }
 }

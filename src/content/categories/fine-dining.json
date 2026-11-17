@@ -19,5 +19,12 @@
     "description": "Discover Sioux Falls' best fine dining restaurants for special occasions, date nights, and celebrations."
   },
   "icon": "utensils",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/8856508/pexels-photo-8856508.jpeg",
+  "heroImageAlt": "Elegant restaurant place setting with white plate, forks, and wine glasses in warm natural window light.",
+  "heroImageCredit": {
+    "photographer": "Alexandra Kollstrem",
+    "profileUrl": "https://www.pexels.com/@alexandra-kollstrem-77751824",
+    "source": "Pexels"
+  }
 }

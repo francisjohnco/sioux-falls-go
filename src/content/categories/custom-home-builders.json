@@ -19,5 +19,12 @@
     "description": "Find trusted custom home builders in Sioux Falls, plus local guides and resources."
   },
   "icon": "home",
-  "parentCategory": "home-services"
+  "parentCategory": "home-services",
+  "heroImage": "https://images.pexels.com/photos/4933643/pexels-photo-4933643.jpeg",
+  "heroImageAlt": "A large custom home with glowing exterior lights sits beneath a pink and purple dusk sky with a circular driveway.",
+  "heroImageCredit": {
+    "photographer": "Deepak DK",
+    "profileUrl": "https://www.pexels.com/@deepak-dk-197763",
+    "source": "Pexels"
+  }
 }

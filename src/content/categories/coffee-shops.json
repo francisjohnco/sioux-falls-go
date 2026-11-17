@@ -19,5 +19,12 @@
     "description": "Find trusted coffee shops in Sioux Falls, plus local guides and resources."
   },
   "icon": "coffee",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg",
+  "heroImageAlt": "Barista pouring steamed milk into a latte cup held in hand, creating delicate latte art.",
+  "heroImageCredit": {
+    "photographer": "Chevanon Photography",
+    "profileUrl": "https://www.pexels.com/@chevanon",
+    "source": "Pexels"
+  }
 }

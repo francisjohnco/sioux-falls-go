@@ -19,5 +19,12 @@
     "description": "Discover chiropractors in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/4506218/pexels-photo-4506218.jpeg",
+  "heroImageAlt": "A chiropractor in green scrubs stretches a female patient's neck during a treatment session.",
+  "heroImageCredit": {
+    "photographer": "https://kaboompics.com/",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }

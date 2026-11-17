@@ -19,5 +19,12 @@
     "description": "Discover catering in Sioux Falls."
   },
   "icon": "utensils",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/17294714/pexels-photo-17294714.jpeg",
+  "heroImageAlt": "An elegant catered buffet table filled with gourmet dishes and lush floral greenery arrangements.",
+  "heroImageCredit": {
+    "photographer": "Matheus Bertelli",
+    "profileUrl": "https://www.pexels.com/@bertellifotografia",
+    "source": "Pexels"
+  }
 }

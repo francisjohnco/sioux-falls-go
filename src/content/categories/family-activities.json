@@ -19,5 +19,12 @@
     "description": "Discover family activities in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "things-to-do"
+  "parentCategory": "things-to-do",
+  "heroImage": "https://images.pexels.com/photos/7943716/pexels-photo-7943716.jpeg",
+  "heroImageAlt": "A girl joyfully raises her arms while sliding down a playground slide as her mother watches and smiles.",
+  "heroImageCredit": {
+    "photographer": "Nicola Barts",
+    "profileUrl": "https://www.pexels.com/@nicola-barts",
+    "source": "Pexels"
+  }
 }

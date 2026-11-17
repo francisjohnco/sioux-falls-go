@@ -19,5 +19,12 @@
     "description": "Discover auto repair in Sioux Falls."
   },
   "icon": "wrench",
-  "parentCategory": "automotive"
+  "parentCategory": "automotive",
+  "heroImage": "https://images.pexels.com/photos/37163499/pexels-photo-37163499.jpeg",
+  "heroImageAlt": "A red sports car elevated on a lift inside a well-lit auto repair garage surrounded by other vehicles.",
+  "heroImageCredit": {
+    "photographer": "Ivan Chumak",
+    "profileUrl": "https://www.pexels.com/@iohichu",
+    "source": "Pexels"
+  }
 }
