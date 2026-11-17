@@ -19,5 +19,12 @@
     "description": "Discover yoga studios in Sioux Falls."
   },
   "icon": "activity",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/4534873/pexels-photo-4534873.jpeg",
+  "heroImageAlt": "Woman balancing in crane pose on a yoga mat in a bright, airy studio with large windows.",
+  "heroImageCredit": {
+    "photographer": "Vlada Karpovich",
+    "profileUrl": "https://www.pexels.com/@vlada-karpovich",
+    "source": "Pexels"
+  }
 }

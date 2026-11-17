@@ -19,5 +19,12 @@
     "description": "Discover towing in Sioux Falls."
   },
   "icon": "wrench",
-  "parentCategory": "automotive"
+  "parentCategory": "automotive",
+  "heroImage": "https://images.pexels.com/photos/40273534/pexels-photo-40273534.jpeg",
+  "heroImageAlt": "A black classic muscle car loaded on a flatbed tow truck on a sunny residential street.",
+  "heroImageCredit": {
+    "photographer": "Eddie Oliveira",
+    "profileUrl": "https://www.pexels.com/@eddie-oliveira-1595597684",
+    "source": "Pexels"
+  }
 }
