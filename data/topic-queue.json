@@ -476,6 +476,263 @@
           "brief": "For empty nesters and relocating retirees: one level living, slab on grade, villas and twin homes, low maintenance exteriors, aging in place details, and neighborhoods from the local facts."
         }
       ]
+    },
+    {
+      "cluster": "garage-door-repair",
+      "campaign": "Garage door repair in Sioux Falls",
+      "category": "garage-door-repair",
+      "categoryName": "Garage Door Repair",
+      "relatedBusinesses": [],
+      "publishWeekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "firstPublishDate": "2026-11-17",
+      "bufferTarget": 4,
+      "note": "Publishes every day, so with the other series most days get two articles. The main guide goes first, dated November 17, 2026. Articles never name or promote specific companies.",
+      "localFacts": [
+        "The City of Sioux Falls licenses residential contractors, and since 2024 also offers a Residential Roofing and Repair Contractor license for smaller jobs such as re-shingling, re-siding, and door or window replacements on homes and townhomes that need no structural changes (exam $75, bond and insurance required). Homeowners can check any contractor on the city's licensed contractor list at siouxfalls.gov/licensed-contractors or by calling Building Services at 605-367-8672. The city's announcement does not mention garage doors by name, so tell readers to ask the company which city license it holds. (Source: City of Sioux Falls, February 2024 and April 2026)",
+        "Sioux Falls requires a building permit for structural work and for building or placing a detached garage or shed. Work like painting does not need one. Widening a garage door opening or changing the header is structural; for a same-size replacement, tell readers to ask the installer or call Planning and Development Services at 605-367-8670. (Source: City of Sioux Falls home improvement tips, April 2026)",
+        "Sioux Falls winters bring long stretches of below zero air from Canada; a National Weather Service meteorologist described the February 2021 cold snap as the longest of its kind since about 1996. Cold makes springs, cables, and lubricant behave differently, and is when many spring and opener failures show up. (Source: SiouxFalls.Business, February 2021)",
+        "Sioux Falls homes face freeze thaw cycles, blowing snow, and strong prairie wind, so bottom seals, weatherstripping, insulated doors, and keeping snow and ice off the threshold matter more here than in milder climates.",
+        "Several Sioux Falls garage door companies offer evening, weekend, or emergency service, and others keep standard weekday hours; readers should ask about after hours fees before booking."
+      ],
+      "pillar": {
+        "slug": "garage-door-repair-sioux-falls",
+        "title": "Garage Door Repair in Sioux Falls, the Complete Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "garage door repair Sioux Falls",
+          "garage door repair Sioux Falls SD",
+          "garage door service Sioux Falls",
+          "garage door company Sioux Falls"
+        ],
+        "brief": "The complete homeowner roadmap: the common problems (springs, cables, openers, off track doors, sensors, seals) and what each usually means, what is safe to check yourself and what is not, typical cost ranges, repair versus replace, choosing a company and checking its city license, emergency service, and keeping a door working through a Sioux Falls winter. Each section points to the supporting article that goes deeper. Never name or recommend specific companies."
+      },
+      "topics": [
+        {
+          "slug": "garage-door-repair-cost-sioux-falls",
+          "title": "Garage Door Repair Cost in Sioux Falls, Typical Prices",
+          "contentType": "cost-guide",
+          "keywords": [
+            "garage door repair cost Sioux Falls",
+            "how much to fix a garage door",
+            "garage door service call cost"
+          ],
+          "brief": "Cost by repair type (spring, cable, opener, rollers, panel, off track), service call and after hours fees, what moves the price, and how to get a written quote before work starts. Typical national ranges only, clearly labeled."
+        },
+        {
+          "slug": "broken-garage-door-spring-sioux-falls",
+          "title": "Broken Garage Door Spring in Sioux Falls, What to Do",
+          "contentType": "checklist",
+          "keywords": [
+            "broken garage door spring",
+            "garage door spring replacement Sioux Falls",
+            "garage door spring broke"
+          ],
+          "brief": "How to tell a spring broke, why you should not open the door or try to fix it, how to get the car out safely, why replacing both springs is common, and what a fair replacement visit looks like."
+        },
+        {
+          "slug": "garage-door-wont-open-cold-weather",
+          "title": "Garage Door Won't Open in the Cold? Sioux Falls Fixes",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "garage door won't open in cold weather",
+            "garage door frozen to ground",
+            "garage door opener cold weather"
+          ],
+          "brief": "The cold weather causes in order of likelihood (door frozen to the floor, thickened grease, opener force settings, weak springs, battery and remote issues) and safe fixes for each, plus when to call."
+        },
+        {
+          "slug": "new-garage-door-cost-sioux-falls",
+          "title": "New Garage Door Cost in Sioux Falls, What Changes the Price",
+          "contentType": "cost-guide",
+          "keywords": [
+            "new garage door cost Sioux Falls",
+            "garage door replacement cost",
+            "garage door installation Sioux Falls"
+          ],
+          "brief": "Single versus double doors, steel, wood look, and composite, insulation levels, windows, hardware, opener bundles, removal of the old door, and how to compare quotes line by line. Typical national ranges only."
+        },
+        {
+          "slug": "garage-door-opener-repair-or-replace",
+          "title": "Garage Door Opener Repair or Replace? How to Decide",
+          "contentType": "comparison",
+          "keywords": [
+            "garage door opener repair",
+            "garage door opener replacement Sioux Falls",
+            "chain vs belt garage door opener"
+          ],
+          "brief": "Signs an opener can be repaired versus replaced, age and safety features, chain versus belt versus wall mount openers, battery backup, and smart features."
+        },
+        {
+          "slug": "choose-garage-door-company-sioux-falls",
+          "title": "How to Choose a Garage Door Company in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "best garage door company Sioux Falls",
+            "garage door repair near me Sioux Falls"
+          ],
+          "brief": "How to vet a company: city license check, written quotes, local address, reviews that mention the same problem you have, warranty on parts and labor, and how they price after hours calls. Do not name companies."
+        },
+        {
+          "slug": "garage-door-repair-scams-red-flags",
+          "title": "Garage Door Repair Scams and Red Flags to Avoid",
+          "contentType": "buying-guide",
+          "keywords": [
+            "garage door repair scams",
+            "garage door bait and switch pricing"
+          ],
+          "brief": "The bait and switch pattern (low phone quote, much higher bill on site), pushing a full replacement for a spring, unlabeled national call centers posing as local companies, pressure tactics, and how to protect yourself with a written price before work starts."
+        },
+        {
+          "slug": "emergency-garage-door-repair-sioux-falls",
+          "title": "Emergency Garage Door Repair in Sioux Falls, What to Expect",
+          "contentType": "faq",
+          "keywords": [
+            "emergency garage door repair Sioux Falls",
+            "24 hour garage door repair Sioux Falls"
+          ],
+          "brief": "What counts as a real emergency, how to secure the garage and get a car out, what after hours service usually costs extra, and which fixes can wait until morning."
+        },
+        {
+          "slug": "garage-door-winter-maintenance-checklist",
+          "title": "Garage Door Winter Maintenance Checklist for Sioux Falls",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "garage door maintenance checklist",
+            "winterize garage door"
+          ],
+          "brief": "A fall checklist: lubricate the right parts with the right product, test balance and auto reverse, check rollers, cables, and seals, clear the threshold, and test the backup battery."
+        },
+        {
+          "slug": "insulated-garage-door-worth-it-sioux-falls",
+          "title": "Are Insulated Garage Doors Worth It in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "insulated garage door Sioux Falls",
+            "garage door R value",
+            "is an insulated garage door worth it"
+          ],
+          "brief": "What R value means, single layer versus insulated steel, who benefits most (attached garages, rooms above, heated garages), noise and dent resistance, and honest limits on energy savings. No savings numbers unless given."
+        },
+        {
+          "slug": "torsion-vs-extension-garage-door-springs",
+          "title": "Torsion vs Extension Garage Door Springs Explained",
+          "contentType": "comparison",
+          "keywords": [
+            "torsion vs extension springs",
+            "types of garage door springs"
+          ],
+          "brief": "How each spring type works, how to tell which you have, lifespan in cycles explained simply, safety differences, and upgrading from extension to torsion."
+        },
+        {
+          "slug": "garage-door-off-track",
+          "title": "Garage Door Off Track? What to Do and What to Avoid",
+          "contentType": "safety-information",
+          "keywords": [
+            "garage door off track",
+            "garage door came off rollers"
+          ],
+          "brief": "Why doors come off track (car bump, broken cable, obstruction), why not to run the opener, how to secure it, and what the repair involves."
+        },
+        {
+          "slug": "garage-door-sensors-not-working",
+          "title": "Garage Door Sensors Not Working? Simple Checks First",
+          "contentType": "checklist",
+          "keywords": [
+            "garage door sensor not working",
+            "garage door won't close blinking light"
+          ],
+          "brief": "Step by step checks a homeowner can safely do: alignment, dirty lenses, sunlight glare, loose wires, then when to call. Explain why the auto reverse safety system matters."
+        },
+        {
+          "slug": "loud-garage-door-fix",
+          "title": "Why Your Garage Door Is So Loud and How to Quiet It",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "noisy garage door",
+            "garage door grinding noise",
+            "squeaky garage door fix"
+          ],
+          "brief": "Noises mapped to causes (rollers, hinges, chain, springs, loose hardware) and the safe fixes for each, plus when a noise is a warning sign."
+        },
+        {
+          "slug": "garage-door-bottom-seal-replacement",
+          "title": "Garage Door Bottom Seal Replacement for Snow and Wind",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "garage door bottom seal replacement",
+            "garage door weatherstripping"
+          ],
+          "brief": "How to tell a seal is worn, seal types and retainers, uneven floors, side and top weatherstripping, and DIY versus pro."
+        },
+        {
+          "slug": "broken-garage-door-cable",
+          "title": "Broken Garage Door Cable, Causes and Repair",
+          "contentType": "educational-article",
+          "keywords": [
+            "garage door cable broke",
+            "garage door cable repair"
+          ],
+          "brief": "What cables do, why they fray or snap, the danger signs, why it pairs with spring work, and what the repair costs in typical ranges."
+        },
+        {
+          "slug": "smart-garage-door-openers-worth-it",
+          "title": "Smart Garage Door Openers, Are They Worth It?",
+          "contentType": "comparison",
+          "keywords": [
+            "smart garage door opener",
+            "wifi garage door opener"
+          ],
+          "brief": "What smart openers and add on controllers do, package delivery and phone alerts, security, compatibility with older openers, and costs in typical ranges."
+        },
+        {
+          "slug": "new-garage-door-home-value-sioux-falls",
+          "title": "Does a New Garage Door Help Sell a Sioux Falls Home?",
+          "contentType": "educational-article",
+          "keywords": [
+            "new garage door resale value",
+            "garage door curb appeal"
+          ],
+          "brief": "Curb appeal, what buyers and inspectors notice, styles that suit Sioux Falls neighborhoods, and when a repair is enough before listing. Do not cite return on investment percentages."
+        },
+        {
+          "slug": "garage-door-repair-faq-sioux-falls",
+          "title": "Garage Door Repair FAQ for Sioux Falls Homeowners",
+          "contentType": "faq",
+          "keywords": [
+            "garage door repair questions",
+            "garage door repair Sioux Falls FAQ"
+          ],
+          "brief": "Twelve to fifteen of the real questions homeowners ask, each answered in two to four sentences, linking to the deeper article where one exists."
+        },
+        {
+          "slug": "garage-door-repairs-never-diy",
+          "title": "Garage Door Repairs You Should Never Do Yourself",
+          "contentType": "safety-information",
+          "keywords": [
+            "DIY garage door repair",
+            "is it safe to fix garage door spring yourself"
+          ],
+          "brief": "What is safe to DIY (lubrication, sensor alignment, seals, remote batteries) versus what is dangerous (springs, cables, drums, off track doors under tension), and why."
+        },
+        {
+          "slug": "commercial-overhead-door-repair-sioux-falls",
+          "title": "Commercial Overhead Door Repair in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "commercial overhead door repair Sioux Falls",
+            "commercial garage door service"
+          ],
+          "brief": "For shops, warehouses, and storefronts: door and operator types, preventive maintenance contracts, high cycle springs, dock doors, and downtime planning in winter."
+        }
+      ]
     }
   ]
 }

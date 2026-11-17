@@ -974,7 +974,7 @@ const schema = {
       const closeTime = parseTime(closeStr, now);
       if (openTime && closeTime) {
         const isOpen = now >= openTime && now <= closeTime;
-        setIndicator(isOpen ? `Open now — closes ${closeStr}` : `Closed now — opens ${openStr}`, isOpen);
+        setIndicator(isOpen ? `Open now · closes ${closeStr}` : `Closed now · opens ${openStr}`, isOpen);
       }
     }
   }

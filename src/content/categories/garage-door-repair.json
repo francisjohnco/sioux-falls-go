@@ -11,12 +11,16 @@
     "contentTypes": [
       "faq",
       "cost-guide",
-      "local-resource"
+      "buying-guide",
+      "checklist",
+      "maintenance-guide",
+      "seasonal-guide",
+      "comparison"
     ]
   },
   "seo": {
     "title": "Top-Rated Garage Door Repair in Sioux Falls, SD",
-    "description": "Discover garage door repair in Sioux Falls."
+    "description": "Compare top-rated Sioux Falls garage door companies, each rated 4.8 stars or higher on Google, for broken springs, openers, and new doors."
   },
   "icon": "wrench",
   "parentCategory": "home-services",

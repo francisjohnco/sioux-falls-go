@@ -226,16 +226,7 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
       <a class="button" href={`/${category.data.slug}`}>Browse {category.data.name} →</a>
     </div>
 
-    {relatedBusinesses.length > 0 && (
-      <div class="business-links">
-        <span class="eyebrow">Mentioned in this guide</span>
-        <div class="business-chip-row">
-          {relatedBusinesses.map((b) => (
-            <a class="business-chip" href={`/businesses/${b.id}`}>{b.data.name} →</a>
-          ))}
-        </div>
-      </div>
-    )}
+    {/* Only a sponsor is shown on articles. Other businesses are not promoted here. */}
   </article>
 
   {related.length > 0 && (
