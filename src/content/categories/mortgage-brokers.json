@@ -18,5 +18,12 @@
     "title": "Top-Rated Mortgage Brokers in Sioux Falls, SD",
     "description": "Discover mortgage brokers in Sioux Falls."
   },
-  "icon": "briefcase"
+  "icon": "briefcase",
+  "heroImage": "https://images.pexels.com/photos/7979438/pexels-photo-7979438.jpeg",
+  "heroImageAlt": "A couple sits across from a financial advisor reviewing loan documents at an office table with a laptop nearby.",
+  "heroImageCredit": {
+    "photographer": "Kindel Media",
+    "profileUrl": "https://www.pexels.com/@kindelmedia",
+    "source": "Pexels"
+  }
 }

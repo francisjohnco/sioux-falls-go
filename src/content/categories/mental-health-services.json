@@ -19,5 +19,12 @@
     "description": "Discover mental health services in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/5699454/pexels-photo-5699454.jpeg",
+  "heroImageAlt": "A therapist with a clipboard sits across from a client lying on a white couch in a bright, plant-filled office.",
+  "heroImageCredit": {
+    "photographer": "Alex Green",
+    "profileUrl": "https://www.pexels.com/@alex-green",
+    "source": "Pexels"
+  }
 }

@@ -13,7 +13,14 @@
   },
   "seo": {
     "title": "Marketing Tips & Insights in Sioux Falls",
-    "description": "Marketing Tips & Insights \u2014 local Sioux Falls content and resources."
+    "description": "Marketing Tips & Insights — local Sioux Falls content and resources."
   },
-  "icon": "star"
+  "icon": "star",
+  "heroImage": "https://images.pexels.com/photos/6340797/pexels-photo-6340797.jpeg",
+  "heroImageAlt": "Two colleagues take notes and work on a laptop together over coffee at a wooden table.",
+  "heroImageCredit": {
+    "photographer": "Pavel Danilyuk",
+    "profileUrl": "https://www.pexels.com/@pavel-danilyuk",
+    "source": "Pexels"
+  }
 }

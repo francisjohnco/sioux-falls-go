@@ -19,5 +19,12 @@
     "description": "Discover it services in Sioux Falls."
   },
   "icon": "plug",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg",
+  "heroImageAlt": "A woman holds a laptop while standing in a corridor beside glass-enclosed server racks glowing blue.",
+  "heroImageCredit": {
+    "photographer": "Christina Morillo",
+    "profileUrl": "https://www.pexels.com/@divinetechygirl",
+    "source": "Pexels"
+  }
 }

@@ -19,5 +19,12 @@
     "description": "Discover local news in Sioux Falls."
   },
   "icon": "newspaper",
-  "parentCategory": "community-local-resources"
+  "parentCategory": "community-local-resources",
+  "heroImage": "https://images.pexels.com/photos/3944425/pexels-photo-3944425.jpeg",
+  "heroImageAlt": "A cup of black coffee resting on an open newspaper spread on a clean white surface.",
+  "heroImageCredit": {
+    "photographer": "cottonbro studio",
+    "profileUrl": "https://www.pexels.com/@cottonbro",
+    "source": "Pexels"
+  }
 }

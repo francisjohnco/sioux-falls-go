@@ -13,7 +13,14 @@
   },
   "seo": {
     "title": "Local Spotlights in Sioux Falls",
-    "description": "Local Spotlights \u2014 local Sioux Falls content and resources."
+    "description": "Local Spotlights — local Sioux Falls content and resources."
   },
-  "icon": "sparkles"
+  "icon": "sparkles",
+  "heroImage": "https://images.pexels.com/photos/4250332/pexels-photo-4250332.jpeg",
+  "heroImageAlt": "A quiet downtown street lined with brick sidewalks, bare trees, and contemporary commercial buildings on a clear day.",
+  "heroImageCredit": {
+    "photographer": "Brett Sayles",
+    "profileUrl": "https://www.pexels.com/@brett-sayles",
+    "source": "Pexels"
+  }
 }

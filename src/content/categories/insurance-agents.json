@@ -19,5 +19,12 @@
     "description": "Discover insurance agents in Sioux Falls."
   },
   "icon": "briefcase",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "heroImage": "https://images.pexels.com/photos/8441820/pexels-photo-8441820.jpeg",
+  "heroImageAlt": "An insurance agent smiles while reviewing documents with two senior clients in a bright modern office.",
+  "heroImageCredit": {
+    "photographer": "Kampus Production",
+    "profileUrl": "https://www.pexels.com/@kampus",
+    "source": "Pexels"
+  }
 }
