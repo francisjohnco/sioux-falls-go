@@ -21,7 +21,7 @@
   },
   "seo": {
     "title": "Top-Rated Concrete Contractors in Sioux Falls, SD",
-    "description": "Find trusted concrete and hardscaping contractors in Sioux Falls for driveways, patios, and outdoor projects."
+    "description": "Compare concrete contractors in Sioux Falls, SD. Browse local listings with hours, phone numbers, reviews, and tips for driveways, patios, and foundations."
   },
   "icon": "layers",
   "parentCategory": "home-services",
@@ -31,5 +31,39 @@
     "photographer": "Ryan  Stephens",
     "profileUrl": "https://www.pexels.com/@rstephens",
     "source": "Pexels"
-  }
+  },
+  "intro": "Concrete contractors in Sioux Falls pour and finish driveways, patios, sidewalks, garage floors, basement walls, and foundations. Whether you are building new or replacing a cracked slab, you need someone who understands this specific climate.\n\nSioux Falls soil is heavy with clay, and the freeze-thaw cycle from October through April puts serious stress on any flatwork. A good local contractor knows how to prep the base, choose the right mix, control the cure in cold or hot weather, and place expansion joints where they will actually do their job.",
+  "tips": [
+    "Ask how the contractor prepares the sub-base, because proper compaction and gravel depth matter far more here than in warmer climates.",
+    "Ask whether they use fiber reinforcement, rebar, or wire mesh, and get the reasoning for whatever they recommend for your specific project.",
+    "Find out when in the season they plan to pour, since concrete placed during a Sioux Falls cold snap needs blankets or heated enclosures to cure correctly.",
+    "Ask for references from projects that are at least two or three winters old so you can see how the work holds up after real freeze-thaw cycles."
+  ],
+  "faqs": [
+    {
+      "q": "How much does a concrete driveway cost in Sioux Falls?",
+      "a": "Prices vary depending on square footage, thickness, finish type, and what demo or base work is needed beforehand. Get at least three itemized quotes from local contractors and ask what is and is not included, since gravel base, haul-away of old concrete, and sealing are sometimes priced separately."
+    },
+    {
+      "q": "Why does concrete crack so much in Sioux Falls?",
+      "a": "The main culprit is the freeze-thaw cycle, which causes the ground to shift repeatedly every winter and spring. Clay soil holds water and expands when it freezes, pushing up against slabs from below. Proper base preparation, correct joint placement, and adequate slab thickness reduce but do not entirely eliminate cracking."
+    },
+    {
+      "q": "Do I need a permit for a concrete driveway or patio in Sioux Falls?",
+      "a": "Permit requirements depend on the scope of the project and your specific zoning. Contact the City of Sioux Falls Planning and Building Services department directly before work begins to find out what applies to your address and project type."
+    },
+    {
+      "q": "When is the best time of year to pour concrete in Sioux Falls?",
+      "a": "Late spring through early fall generally gives the most reliable curing conditions, with temperatures consistently above freezing and not too hot. Pouring in extreme heat or cold is possible but requires extra precautions, so discuss timing with your contractor before scheduling."
+    },
+    {
+      "q": "How thick should a concrete driveway be in South Dakota?",
+      "a": "For residential driveways, four inches is a common minimum, but many contractors in this region recommend five or six inches given the soil conditions and heavy pickup trucks and SUVs that are common locally. Ask your contractor to explain their recommendation for your specific site and expected load."
+    },
+    {
+      "q": "How do I know if my existing concrete needs to be replaced or can just be repaired?",
+      "a": "Surface cracks that are narrow and stable are often candidates for sealing or patching, but heaving, deep structural cracks, or widespread spalling usually mean the slab should come out entirely. Have a contractor inspect the slab in person and ask them to explain exactly what they see before agreeing to any scope of work."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
