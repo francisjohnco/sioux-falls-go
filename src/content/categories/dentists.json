@@ -16,8 +16,42 @@
   },
   "seo": {
     "title": "Top-Rated Dentists in Sioux Falls, SD",
-    "description": "Discover dentists in Sioux Falls."
+    "description": "Compare dentists in Sioux Falls with hours, phone numbers, patient reviews, and a local guide to finding the right fit for your family."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "intro": "Whether you're new to Sioux Falls, switching providers, or finally dealing with that tooth you've been ignoring, finding a dentist you trust makes a real difference. The city has a range of general and specialty practices, from solo offices with a neighborhood feel to larger clinics that can handle most dental needs under one roof.\n\nSioux Falls' hard water and long winters can contribute to specific concerns like dry mouth from indoor heating and mineral buildup on teeth. A good local dentist notices those patterns and talks with you honestly rather than rushing you through the chair.",
+  "tips": [
+    "Ask whether the office files insurance claims on your behalf or requires you to handle reimbursement yourself, since the two experiences are very different.",
+    "If you have dental anxiety, call ahead and ask how the staff handles nervous patients before you even book an appointment.",
+    "Look for a practice that takes new emergency appointments, because a cracked tooth on a Friday afternoon in January is not the time to learn your dentist has a two-week wait.",
+    "Ask whether they have digital X-rays, which reduce radiation exposure and give the dentist a faster, clearer look at what's happening."
+  ],
+  "faqs": [
+    {
+      "q": "How often should I go to the dentist in Sioux Falls?",
+      "a": "Most adults do well with a cleaning and checkup every six months, though your dentist may suggest more frequent visits if you have gum disease, dry mouth, or a history of cavities. The dry indoor air that comes with South Dakota winters can affect your oral health, so it's worth mentioning any changes to your dentist at each visit."
+    },
+    {
+      "q": "What if I don't have dental insurance in Sioux Falls?",
+      "a": "Many local offices offer in-house membership plans or payment plans that spread out the cost of routine care. It's worth calling a few practices and asking directly what options they have for uninsured patients before assuming you can't afford to go."
+    },
+    {
+      "q": "Are there dentists in Sioux Falls who see kids?",
+      "a": "Yes, some general dentists see patients of all ages starting from early childhood, while others refer young children to a pediatric specialist. When you call, ask the minimum age they see and whether they have experience making kids comfortable during appointments."
+    },
+    {
+      "q": "How do I find a dentist near me in Sioux Falls?",
+      "a": "The listings on this page are a good starting point, and you can also check whether your insurance carrier has a provider search tool that filters by zip code. Neighborhoods like McKennan Park, the east side, and the growing suburbs of Harrisburg and Tea all have nearby options worth comparing."
+    },
+    {
+      "q": "What should I do if I have a dental emergency in Sioux Falls?",
+      "a": "Call your regular dentist first, since many practices keep time set aside for urgent situations and can often see you the same day. If you don't have a dentist or can't reach one, ask when you call any local office whether they accept emergency walk-ins from new patients."
+    },
+    {
+      "q": "How do I know if a Sioux Falls dentist is licensed?",
+      "a": "Dentists practicing in South Dakota must hold a license through the South Dakota State Board of Dentistry, which you can contact directly to verify a provider's standing. Asking to see credentials is completely reasonable, and any reputable office will not hesitate to answer that question."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-17"
 }
