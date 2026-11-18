@@ -16,7 +16,41 @@
   },
   "seo": {
     "title": "Top-Rated Home Inspectors in Sioux Falls, SD",
-    "description": "Discover home inspectors in Sioux Falls."
+    "description": "Compare home inspectors in Sioux Falls with hours, phone numbers, reviews, and a local guide to what matters most in a South Dakota home inspection."
   },
-  "icon": "check"
+  "icon": "check",
+  "intro": "A home inspector walks through a property before you buy it and gives you a written report on what they found. In Sioux Falls, that report can surface issues that are genuinely common here: frost damage to foundations, clay soil movement under slabs, water intrusion in older basements, furnace age in homes that work hard through long winters, and hard water damage to water heaters and fixtures.\n\nA good inspector here knows local construction methods, takes enough time to do the job thoroughly, and writes a report clear enough that you can actually use it in negotiations or repairs.",
+  "tips": [
+    "Ask how long the inspection will take and whether you can walk through with the inspector, being present lets you ask questions in real time.",
+    "Ask what the written report looks like and how quickly you will receive it, since you often have a tight deadline in a purchase contract.",
+    "Ask whether the inspector carries errors and omissions insurance, which protects you if something significant is missed.",
+    "Ask if the inspector has experience with the age and style of home you are buying, since a 1920s craftsman near McKennan Park has very different concerns than a new build in Harrisburg."
+  ],
+  "faqs": [
+    {
+      "q": "How much does a home inspection cost in Sioux Falls?",
+      "a": "Price generally depends on the size and age of the home. Ask each inspector for a quote upfront and confirm exactly what is included, since some inspectors charge separately for things like radon testing or sewer scopes."
+    },
+    {
+      "q": "Is radon testing something I should add to a home inspection in Sioux Falls?",
+      "a": "South Dakota has elevated radon levels in many areas, and Sioux Falls is no exception, so adding a radon test to your inspection is a reasonable step. Ask your inspector whether they handle radon testing themselves or use a separate certified tester."
+    },
+    {
+      "q": "How long does a home inspection take in Sioux Falls?",
+      "a": "Most inspections on a typical single-family home take two to four hours, though larger or older homes can take longer. If an inspector quotes you a very short time, ask them to walk you through how they handle a property that size."
+    },
+    {
+      "q": "Can a seller refuse a home inspection in South Dakota?",
+      "a": "A seller can decline to allow an inspection, but that is a significant red flag and you have the right to walk away from the purchase. Talk to your real estate agent about how to handle that situation if it comes up."
+    },
+    {
+      "q": "What are common things home inspectors find in Sioux Falls homes?",
+      "a": "Inspectors here frequently flag issues related to freeze and thaw cycles, including cracks in foundations and driveways, as well as aging HVAC systems, grading problems that direct water toward the house, and mineral buildup from hard water. Older homes near downtown or established neighborhoods sometimes have outdated electrical panels or original knob-and-tube wiring worth noting."
+    },
+    {
+      "q": "Do I need a home inspection on a newly built home in Sioux Falls?",
+      "a": "Yes, new construction can still have issues, and an independent inspection gives you a set of eyes that are working for you rather than the builder. Some buyers also schedule an inspection just before the builder warranty expires so any covered problems can be addressed in time."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
