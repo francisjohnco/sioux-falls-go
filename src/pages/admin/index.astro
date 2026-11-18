@@ -9,6 +9,7 @@ import DealSubmissions from '../../components/admin/DealSubmissions.astro';
 import ProfileInterview from '../../components/admin/ProfileInterview.astro';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import CategoryManager from '../../components/admin/CategoryManager.astro';
+import AnalyticsPanel from '../../components/admin/AnalyticsPanel.astro';
 import { categoryHero } from '../../lib/hero';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
@@ -213,6 +214,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <button class="nav-item is-active" data-tab="dashboard">
           <span class="nav-icon"><Icon name="dashboard" size={18} /></span> Dashboard
         </button>
+        <button class="nav-item" data-tab="analytics">
+          <span class="nav-icon"><Icon name="activity" size={18} /></span> Analytics
+        </button>
         <button class="nav-item" data-tab="content-engine">
           <span class="nav-icon"><Icon name="edit" size={18} /></span> Content Engine
         </button>
@@ -281,7 +285,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           </button>
         </div>
 
-        <h2 class="section-heading">Search Traffic <span class="section-heading-sub">Last 28 days, from Google Search Console</span></h2>
+        <h2 class="section-heading">Search Traffic <span class="section-heading-sub">Last 28 days, from Google Search Console · <button type="button" class="link-button" data-jump-tab="analytics">See full analytics →</button></span></h2>
         <div class="stat-grid" id="search-traffic-grid">
           <div class="stat-card">
             <span class="stat-number" id="traffic-clicks">—</span>
@@ -362,6 +366,10 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       </section>
 
       <!-- ── CONTENT AI ENGINE ── -->
+      <section class="tab-panel" id="panel-analytics">
+        <AnalyticsPanel names={Object.fromEntries(businesses.map((b) => [b.id, b.data.name]))} />
+      </section>
+
       <section class="tab-panel" id="panel-content-engine">
         <h1>Content Engine</h1>
         <p class="panel-sub">Turn interview answers into a finished profile — or generate the next highest-priority guide.</p>
@@ -1193,6 +1201,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .attention-link:hover { text-decoration: underline; }
 
   /* Content Engine */
+  .link-button { background: none; border: 0; padding: 0; font: inherit; color: var(--color-orange-dark); font-weight: 700; cursor: pointer; }
   .gsc-widget { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-top: var(--space-2); }
   .gsc-widget-header { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
   .gsc-widget-header h3 { font-size: 0.9375rem; margin: 0; flex: 1; display: flex; align-items: center; gap: 0.5rem; }

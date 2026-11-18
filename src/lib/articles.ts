@@ -29,3 +29,11 @@ export async function getScheduledArticles(): Promise<Article[]> {
     .filter((a) => !isLive(a, today))
     .sort((a, b) => publishDay(a).localeCompare(publishDay(b)));
 }
+
+// Newest first. Two articles live on the same day are ordered by when each
+// was actually published (its first commit), so the latest one leads.
+import articleTimes from '../generated/article-times.json';
+const TIMES = articleTimes as Record<string, number>;
+export function newestFirst(a: Article, b: Article): number {
+  return publishDay(b).localeCompare(publishDay(a)) || (TIMES[b.id] || 0) - (TIMES[a.id] || 0) || a.data.title.localeCompare(b.data.title);
+}

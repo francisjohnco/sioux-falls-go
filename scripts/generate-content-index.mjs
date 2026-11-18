@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process';
 /**
  * Computes a priority-ranked content gap report and writes it to
  * public/content-gaps.json, where it's fetched by the admin Content Engine
@@ -211,6 +212,20 @@ function main() {
     hasIntro: !!c.intro,
   })).sort((a, b) => a.name.localeCompare(b.name));
   fs.writeFileSync(path.join(ROOT, 'public/category-index.json'), JSON.stringify(categoryIndex, null, 2));
+
+  // When each article file was first committed, so two articles published on
+  // the same day still sort newest first (the later one is the latest).
+  const times = {};
+  try {
+    const log = execSync('git log --diff-filter=A --format=@%ct --name-only -- src/content/articles', { cwd: ROOT, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
+    let t = 0;
+    for (const line of log.split('\n')) {
+      if (line.startsWith('@')) t = Number(line.slice(1));
+      else if (line.endsWith('.md')) { const slug = path.basename(line, '.md'); if (!(slug in times)) times[slug] = t; }
+    }
+  } catch { /* no git history available; same-day order falls back to title */ }
+  fs.mkdirSync(path.join(ROOT, 'src/generated'), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, 'src/generated/article-times.json'), JSON.stringify(times));
 
   // The planned topic queue, read by the scheduled generator.
   const queueSrc = path.join(ROOT, 'data/topic-queue.json');

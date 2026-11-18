@@ -1,5 +1,5 @@
 import { getEntry } from 'astro:content';
-import { getLiveArticles } from '../lib/articles';
+import { getLiveArticles, newestFirst } from '../lib/articles';
 
 // RSS feed of the newest live guides, like WordPress's /feed. Feed readers,
 // aggregators, and some search tools discover new posts through it.
@@ -8,7 +8,7 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 export async function GET() {
   const site = 'https://siouxfallsgo.com';
   const articles = (await getLiveArticles())
-    .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+    .sort(newestFirst)
     .slice(0, 40);
   const items = await Promise.all(articles.map(async (a) => {
     const cat = await getEntry(a.data.category);

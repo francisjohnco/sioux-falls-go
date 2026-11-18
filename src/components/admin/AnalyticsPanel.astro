@@ -1,0 +1,161 @@
+---
+// Admin Analytics tab. Loads when the tab is first opened.
+interface Props { names: Record<string, string> }
+const { names } = Astro.props;
+---
+<div class="an" id="analytics-root" data-names={JSON.stringify(names)}>
+  <div class="an-head">
+    <div>
+      <h1>Analytics</h1>
+      <p class="an-sub" id="an-range">How people find Sioux Falls Go on Google, and what they do on business profiles.</p>
+    </div>
+    <button class="button button--ghost" id="an-refresh" type="button">Refresh now</button>
+  </div>
+  <p class="an-msg" id="an-msg">Loading analytics...</p>
+
+  <div id="an-body" hidden>
+    <div class="an-kpis" id="an-kpis"></div>
+
+    <section class="an-card" id="an-trend" hidden>
+      <div class="an-card-head"><h2>Google search, week by week</h2><span class="an-legend"><i class="k1"></i>Times seen <i class="k2"></i>Clicks</span></div>
+      <div id="an-chart"></div>
+    </section>
+
+    <div class="an-two">
+      <section class="an-card" id="an-wins" hidden>
+        <div class="an-card-head"><h2>Quick wins: better titles</h2><p>Pages Google shows often near the top, but few people click. A sharper title and description usually lifts these first.</p></div>
+        <div class="an-table-wrap"><table class="an-table" id="an-wins-t"></table></div>
+      </section>
+      <section class="an-card" id="an-near" hidden>
+        <div class="an-card-head"><h2>Almost on top</h2><p>Searches where the site sits in spots 5 to 15. One stronger guide or page can move these into the first few results.</p></div>
+        <div class="an-table-wrap"><table class="an-table" id="an-near-t"></table></div>
+      </section>
+    </div>
+
+    <section class="an-card" id="an-queries" hidden>
+      <div class="an-card-head"><h2>Top searches</h2><p>Last 4 weeks, sorted by clicks.</p></div>
+      <div class="an-table-wrap"><table class="an-table" id="an-queries-t"></table></div>
+    </section>
+
+    <section class="an-card" id="an-pages" hidden>
+      <div class="an-card-head"><h2>Top pages</h2><p>Last 4 weeks, sorted by clicks.</p></div>
+      <div class="an-table-wrap"><table class="an-table" id="an-pages-t"></table></div>
+    </section>
+
+    <section class="an-card">
+      <div class="an-card-head"><h2>Business profiles this month</h2><p>Visits and contact taps counted on each profile (calls, directions, website, quote requests). Open any business's full report to share with the owner.</p></div>
+      <div class="an-table-wrap"><table class="an-table" id="an-biz-t"></table></div>
+    </section>
+    <p class="an-note" id="an-note"></p>
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById('analytics-root')!;
+  const names: Record<string, string> = JSON.parse(root.dataset.names || '{}');
+  const $ = (id: string) => document.getElementById(id)!;
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  const n = (v: number) => Math.round(v).toLocaleString();
+  const d = (s: string) => new Date(`${s}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  let loaded = false;
+
+  function chg(cur: number, prev: number, lowerIsBetter = false) {
+    if (!prev) return '';
+    const p = Math.round(((cur - prev) / prev) * 100);
+    const good = lowerIsBetter ? p <= 0 : p >= 0;
+    return `<span class="an-chg ${good ? 'up' : 'down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}%</span>`;
+  }
+
+  function chart(weeks: any[]) {
+    const W = 760, H = 220, L = 48, R = 12, T = 14, B = 28;
+    const ms = Math.max(1, ...weeks.map((w) => w.impressions)), mc = Math.max(1, ...weeks.map((w) => w.clicks));
+    const bw = (W - L - R) / weeks.length;
+    const y = (v: number, m: number) => T + (H - T - B) * (1 - v / m);
+    const bars = weeks.map((w, i) => `<rect x="${(L + i * bw + bw * 0.18).toFixed(1)}" y="${y(w.impressions, ms).toFixed(1)}" width="${(bw * 0.64).toFixed(1)}" height="${(H - B - y(w.impressions, ms)).toFixed(1)}" rx="3" class="b"><title>Week of ${d(w.week)}: seen ${n(w.impressions)}, ${n(w.clicks)} clicks</title></rect>`).join('');
+    const pts = weeks.map((w, i) => `${(L + i * bw + bw / 2).toFixed(1)},${y(w.clicks, mc).toFixed(1)}`);
+    const labels = weeks.map((w, i) => (i % 2 === 0 ? `<text x="${(L + i * bw + bw / 2).toFixed(1)}" y="${H - 8}" text-anchor="middle" class="t">${d(w.week)}</text>` : '')).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="an-svg" role="img" aria-label="Weekly times seen and clicks"><text x="${L - 8}" y="${T + 8}" text-anchor="end" class="t">${n(ms)}</text><line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" class="base"/>${bars}<polyline points="${pts.join(' ')}" class="l"/>${pts.map((p) => `<circle cx="${p.split(',')[0]}" cy="${p.split(',')[1]}" r="3.5" class="dot"/>`).join('')}${labels}</svg>`;
+  }
+
+  function table(el: string, head: string[], rows: string[][]) {
+    $(el).innerHTML = `<thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  }
+
+  async function load(refresh = false) {
+    $('an-msg').hidden = false; $('an-msg').textContent = 'Loading analytics...';
+    try {
+      const res = await fetch(`/api/site-analytics${refresh ? '?refresh=1' : ''}`);
+      const r = await res.json();
+      if (!res.ok) throw new Error(r.error || 'Could not load analytics.');
+      const g = r.gsc;
+      const k: string[] = [];
+      if (g.connected) {
+        $('an-range').textContent = `Last 4 weeks: ${d(r.range.start)} to ${d(r.range.end)}, compared with the 4 weeks before. Google data runs about two days behind.`;
+        const c = g.current, p = g.previous;
+        k.push(`<div class="an-kpi"><span>Clicks from Google</span><strong>${n(c.clicks)}</strong>${chg(c.clicks, p.clicks)}</div>`);
+        k.push(`<div class="an-kpi"><span>Times seen on Google</span><strong>${n(c.impressions)}</strong>${chg(c.impressions, p.impressions)}</div>`);
+        k.push(`<div class="an-kpi"><span>Click-through rate</span><strong>${c.ctr}%</strong>${chg(c.ctr, p.ctr)}</div>`);
+        k.push(`<div class="an-kpi"><span>Average position</span><strong>${c.position || '·'}</strong>${chg(c.position, p.position, true)}</div>`);
+      }
+      const acts = r.businesses.reduce((s: number, b: any) => s + b.actions, 0);
+      const views = r.businesses.reduce((s: number, b: any) => s + b.view, 0);
+      k.push(`<div class="an-kpi"><span>Profile visits this month</span><strong>${n(views)}</strong></div>`);
+      k.push(`<div class="an-kpi"><span>Contact taps this month</span><strong>${n(acts)}</strong></div>`);
+      $('an-kpis').innerHTML = k.join('');
+
+      if (g.connected && g.weekly.length > 1) { $('an-chart').innerHTML = chart(g.weekly.slice(-13)); $('an-trend').hidden = false; }
+      if (g.connected && g.titleWins.length) { table('an-wins-t', ['Page', 'Seen', 'CTR', 'Position'], g.titleWins.map((p: any) => [`<a href="${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path)}</a>`, n(p.impressions), `${p.ctr}%`, p.position])); $('an-wins').hidden = false; }
+      if (g.connected && g.nearTop.length) { table('an-near-t', ['Search', 'Seen', 'Clicks', 'Position'], g.nearTop.map((q: any) => [esc(q.query), n(q.impressions), n(q.clicks), q.position])); $('an-near').hidden = false; }
+      if (g.connected && g.queries.length) { table('an-queries-t', ['Search', 'Clicks', 'Seen', 'CTR', 'Position'], g.queries.map((q: any) => [esc(q.query), n(q.clicks), n(q.impressions), `${q.ctr}%`, q.position])); $('an-queries').hidden = false; }
+      if (g.connected && g.pages.length) { table('an-pages-t', ['Page', 'Type', 'Clicks', 'Seen', 'CTR', 'Position'], g.pages.map((p: any) => [`<a href="${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path)}</a>`, esc(p.type), n(p.clicks), n(p.impressions), `${p.ctr}%`, p.position])); $('an-pages').hidden = false; }
+
+      const biz = r.businesses.length ? r.businesses : [];
+      table('an-biz-t', ['Business', 'Visits', 'Calls', 'Directions', 'Website', 'Quotes', ''], biz.length
+        ? biz.map((b: any) => [esc(names[b.slug] || b.slug), n(b.view), n(b.call), n(b.directions), n(b.website), n(b.quote), `<a href="/business-report/?b=${encodeURIComponent(b.slug)}" target="_blank" rel="noopener">Report →</a>`])
+        : [['No profile visits counted yet this month. Counting started November 17, 2026.', '', '', '', '', '', '']]);
+
+      $('an-note').textContent = g.connected ? `Updated ${new Date(r.generatedAt).toLocaleString()}. Refreshes every three hours, or click Refresh now.`
+        : g.error ? `Google search numbers are unavailable: ${g.error}` : 'Google search numbers appear here once Search Console is connected (Content Engine tab, Connect Search Console) and GSC_SITE_PROPERTY is set in Netlify.';
+      $('an-msg').hidden = true; $('an-body').hidden = false;
+      loaded = true;
+    } catch (err: any) { $('an-msg').textContent = err.message; }
+  }
+
+  document.querySelectorAll('[data-tab="analytics"], [data-jump-tab="analytics"]').forEach((el) => el.addEventListener('click', () => { if (!loaded) load(); }));
+  if (new URLSearchParams(location.search).get('tab') === 'analytics') load();
+  $('an-refresh').addEventListener('click', () => load(true));
+</script>
+
+<style is:global>
+  .an-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .an-head h1 { margin: 0; }
+  .an-sub { margin: 0.3rem 0 0; color: var(--color-navy-light); font-size: 0.9rem; }
+  .an-msg { color: var(--color-navy-light); }
+  .an-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+  .an-kpi { background: #fff; border: 1px solid var(--color-line); border-radius: 0.8rem; padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.2rem; }
+  .an-kpi span { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-navy-light); }
+  .an-kpi strong { font-size: 1.7rem; color: var(--color-navy); font-family: var(--font-display); }
+  .an-chg { font-size: 0.78rem; font-weight: 800; }
+  .an-chg.up { color: var(--color-success); }
+  .an-chg.down { color: #B4432F; }
+  .an-card { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.1rem 1.2rem; margin-bottom: 1rem; min-width: 0; }
+  .an-card[hidden] { display: none; }
+  .an-card-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.4rem 1rem; margin-bottom: 0.7rem; }
+  .an-card-head h2 { margin: 0; font-size: 1.05rem; color: var(--color-navy); }
+  .an-card-head p { margin: 0; flex-basis: 100%; font-size: 0.85rem; color: var(--color-navy-light); }
+  .an-legend { font-size: 0.8rem; color: var(--color-navy-light); display: flex; align-items: center; gap: 0.35rem; }
+  .an-legend i { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 3px; margin-left: 0.4rem; }
+  .an-legend .k1 { background: #C9DCEB; } .an-legend .k2 { background: var(--color-orange); border-radius: 50%; }
+  .an-svg { width: 100%; height: auto; display: block; }
+  .an-svg .b { fill: #C9DCEB; } .an-svg .l { fill: none; stroke: var(--color-orange); stroke-width: 2.5; } .an-svg .dot { fill: var(--color-orange); }
+  .an-svg .t { font-size: 11px; fill: #6B7591; } .an-svg .base { stroke: var(--color-line); }
+  .an-two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .an-table-wrap { overflow-x: auto; }
+  .an-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  .an-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-navy-light); padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--color-line); white-space: nowrap; }
+  .an-table td { padding: 0.55rem 0.5rem; border-bottom: 1px solid var(--color-line); }
+  .an-table td:not(:first-child), .an-table th:not(:first-child) { text-align: right; white-space: nowrap; }
+  .an-table a { color: var(--color-river); font-weight: 600; word-break: break-all; }
+  .an-note { font-size: 0.8rem; color: var(--color-navy-light); }
+  @media (max-width: 900px) { .an-two { grid-template-columns: 1fr; } }
+</style>

@@ -1,7 +1,7 @@
 ---
 import { articleHero } from '../lib/hero';
 import { getCollection, render } from 'astro:content';
-import { getLiveArticles } from '../lib/articles';
+import { getLiveArticles, newestFirst } from '../lib/articles';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -42,7 +42,7 @@ const groups = collectGroups(category);
 const businesses = groups.flatMap((g) => g.businesses);
 const isAggregated = groups.length > 1 || (groups.length === 1 && groups[0].key !== category.data.slug);
 
-const articles = allArticles.filter((a) => a.data.category.id === category.id);
+const articles = allArticles.filter((a) => a.data.category.id === category.id).sort(newestFirst);
 
 const allFaqs = await getCollection('faqs');
 const categoryFaqs = allFaqs.filter(

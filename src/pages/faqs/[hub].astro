@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { getLiveArticles } from '../../lib/articles';
+import { getLiveArticles, newestFirst } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -43,7 +43,7 @@ const groups = (await Promise.all(
       add({ q: faq.data.question, Content });
     }
     const guides = allArticles.filter((a) => a.data.category.id === category.id)
-      .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+      .sort(newestFirst);
     for (const g of guides) for (const f of g.data.embeddedFaqs || []) add({ q: f.question, text: f.answer, href: `/guides/${g.id}`, linkLabel: g.data.title });
     const businessCount = allBusinesses.filter((b) => b.data.category.id === category.id).length;
     return { category, items, guides: guides.length, businessCount };

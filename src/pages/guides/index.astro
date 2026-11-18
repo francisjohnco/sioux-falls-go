@@ -1,7 +1,7 @@
 ---
 import { articleHero } from '../../lib/hero';
 import { getCollection, getEntry } from 'astro:content';
-import { getLiveArticles } from '../../lib/articles';
+import { getLiveArticles, newestFirst } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -15,7 +15,7 @@ const VISITOR_CATEGORIES = ['explore-sioux-falls'];
 const BUSINESS_CATEGORIES = ['for-local-businesses', 'grow-with-sfg', 'marketing-tips-insights'];
 
 function sortByDateDesc(articles: typeof allArticles) {
-  return [...articles].sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+  return [...articles].sort(newestFirst);
 }
 
 const allSorted = sortByDateDesc(allArticles);
