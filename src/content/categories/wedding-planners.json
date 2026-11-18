@@ -1,7 +1,10 @@
 {
   "name": "Wedding Planners",
   "slug": "wedding-planners",
-  "aliases": ["Wedding Planning", "Event Planners"],
+  "aliases": [
+    "Wedding Planning",
+    "Event Planners"
+  ],
   "playbook": {
     "topics": [
       "hiring",
@@ -16,8 +19,42 @@
   },
   "seo": {
     "title": "Top-Rated Wedding Planners in Sioux Falls, SD",
-    "description": "Find trusted wedding planners in Sioux Falls to help plan your big day."
+    "description": "Compare wedding planners in Sioux Falls, SD. Browse local listings with hours, contact info, reviews, and guides to finding the right fit for your day."
   },
   "icon": "heart",
-  "parentCategory": "professional-services"
+  "parentCategory": "professional-services",
+  "intro": "A wedding planner in Sioux Falls handles the logistics, vendor coordination, and day-of details so you can actually enjoy your engagement and your wedding. Whether you are getting married at a venue downtown, in a park near McKennan, or at a family farm outside Harrisburg or Tea, a local planner knows which vendors are reliable and which timelines are realistic.\n\nA good planner listens more than they talk. They should understand your budget honestly, have relationships with local caterers, photographers, and florists, and know how to build a backup plan when a South Dakota spring day decides to become a wind event.",
+  "tips": [
+    "Ask whether they offer full planning, partial planning, or day-of coordination only, since the scope varies a lot and so does the price.",
+    "Find out how many weddings they take per weekend, because a planner stretched across two or three events on the same day cannot give yours full attention.",
+    "Ask for a sample timeline from a past wedding so you can see how detailed and realistic their planning actually gets.",
+    "Confirm they have working relationships with venues you are considering, since local experience with a specific space can prevent a lot of avoidable surprises."
+  ],
+  "faqs": [
+    {
+      "q": "What does a wedding planner in Sioux Falls typically cost?",
+      "a": "Pricing varies based on whether you hire someone for full planning, partial planning, or day-of coordination only. Full planning packages generally cost more because they involve months of vendor sourcing and ongoing communication. Ask each planner for an itemized breakdown so you can compare what is actually included."
+    },
+    {
+      "q": "What is the difference between a wedding planner and a wedding coordinator in Sioux Falls?",
+      "a": "A planner is typically involved from early in the process, helping you choose vendors, build a budget, and design the event. A coordinator, sometimes called a day-of coordinator, usually steps in closer to the wedding to manage the timeline and logistics. Some local professionals offer both under one contract, so ask exactly when their involvement begins."
+    },
+    {
+      "q": "Do I need a wedding planner if my venue already has an on-site coordinator?",
+      "a": "A venue coordinator works for the venue, which means their priority is the building and its operations, not your overall wedding vision. They may not manage your outside vendors, your ceremony timing, or anything that happens off their property. A hired planner or coordinator works for you specifically and covers the full picture."
+    },
+    {
+      "q": "How far in advance should I book a wedding planner in Sioux Falls?",
+      "a": "Popular dates, especially summer Saturdays, fill up quickly, and planners who limit how many events they take per season book even faster. Reaching out at least a year ahead gives you the most options. If your date is sooner, it is still worth asking because cancellations and openings do happen."
+    },
+    {
+      "q": "What questions should I ask a wedding planner during a first meeting?",
+      "a": "Ask how many weddings they have coordinated in the Sioux Falls area, what their communication process looks like between booking and the wedding day, and what happens if they have an emergency and cannot be there. You should also ask for references from couples whose weddings had a similar size or style to yours."
+    },
+    {
+      "q": "Can a wedding planner in Sioux Falls help with outdoor weddings?",
+      "a": "Yes, and local experience matters a lot for outdoor events given how quickly weather can shift here in spring and fall. A planner familiar with the area can recommend vendors who have solid contingency setups and help you think through tent options, permit requirements for public spaces, and realistic timing around sunset and temperature."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
