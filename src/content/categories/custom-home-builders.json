@@ -16,7 +16,7 @@
   },
   "seo": {
     "title": "Top-Rated Custom Home Builders in Sioux Falls, SD",
-    "description": "Find trusted custom home builders in Sioux Falls, plus local guides and resources."
+    "description": "Compare custom home builders in Sioux Falls, SD. Browse listings with hours, phone numbers, reviews, and local guides to help you build with confidence."
   },
   "icon": "home",
   "parentCategory": "home-services",
@@ -26,5 +26,39 @@
     "photographer": "Deepak DK",
     "profileUrl": "https://www.pexels.com/@deepak-dk-197763",
     "source": "Pexels"
-  }
+  },
+  "intro": "Building a custom home in Sioux Falls means making hundreds of decisions before the first shovel hits the ground, from choosing a lot in a new development to working through permits at the City Center on North Dakota Avenue. The local climate adds real complexity: frost depths reach 42 inches, expansive clay soils shift with every freeze and thaw cycle, and proper drainage and grading are not optional extras.\n\nA good custom builder here knows those conditions the way a contractor in a milder climate simply does not. They pull permits correctly, coordinate with subcontractors who are licensed through the city, and keep the job moving so work begins within the required 180 days of permit issuance, per City of Sioux Falls Building Permit FAQs.",
+  "tips": [
+    "Ask to see the builder's current city license yourself. You can verify it for free by calling Sioux Falls Building Services at 605-367-8672 or checking the city's Currently Licensed Contractors list online.",
+    "Ask how the builder handles drainage and grading on clay soil specifically. A vague answer about \"standard grading\" is worth following up on, because standing water next to a foundation causes real long-term problems here.",
+    "If you are building outside city limits in Brandon, Harrisburg, Tea, or Crooks, your permits go through that city or through Minnehaha or Lincoln County, not through Sioux Falls Building Services. Confirm your builder knows which jurisdiction applies to your lot before contracts are signed.",
+    "Walk the Sioux Empire Parade of Homes before you commit. It runs twice a year, spring and fall, with homes open 1 to 5 PM on parade weekends. Seeing finished work in person tells you more about a builder's quality than any brochure will. Details are at siouxempireparadeofhomes.com."
+  ],
+  "faqs": [
+    {
+      "q": "How long does it take to build a custom home in Sioux Falls?",
+      "a": "Most custom builds in Sioux Falls take somewhere between nine months and two years from lot purchase to move-in, depending on the size of the home, the builder's current workload, and how quickly you finalize selections. Permit processing, weather delays in winter, and subcontractor scheduling all affect the timeline. Ask each builder you interview for a realistic project schedule based on their current backlog."
+    },
+    {
+      "q": "What permits do I need to build a new home in Sioux Falls?",
+      "a": "At minimum you will need a building permit, and separate electrical, mechanical, and plumbing permits are also required for those trades, according to the City of Sioux Falls Building Permit FAQs. Permits are issued through Building Services on the first floor of City Center at 231 N. Dakota Avenue, and building permit fees start at $40 and increase with the value of the construction. Your builder should handle permit applications, but you can track permit status yourself on the city's permit data site, which updates every Sunday."
+    },
+    {
+      "q": "Can I build a custom home without a basement in Sioux Falls?",
+      "a": "Yes, slab on grade homes are permitted and are increasingly popular, particularly among buyers relocating from Minnesota and Iowa, according to reporting by SiouxFalls.Business in April 2026. That said, the 42-inch frost depth requirement means footings must still go deep regardless of whether you have a basement. Talk with your builder about how they design slabs for local soil and freeze-thaw conditions."
+    },
+    {
+      "q": "How do I find a lot to build on in Sioux Falls?",
+      "a": "Several active developments were adding lots in and around Sioux Falls in spring 2026, including neighborhoods in the northeast, far west side, and in nearby communities like Brandon and Crooks, according to SiouxFalls.Business. A local real estate agent who specializes in new construction can walk you through available lots, and some builders work within specific developments and can point you to lots they are approved to build on."
+    },
+    {
+      "q": "Who do I call before digging on my new lot?",
+      "a": "Call 811, the South Dakota One Call line, before any digging so underground utilities can be marked. This is required by state law and your builder should initiate it, but it is worth confirming they have done so before excavation begins."
+    },
+    {
+      "q": "What should I bring to my first meeting with a custom builder?",
+      "a": "Come with a rough budget range, an idea of your lot location or the neighborhoods you are considering, and a list of must-have features. If you have sketches or inspiration photos, bring those too. Builders will often ask you to describe how you live day to day, since that shapes decisions about layout, storage, and flow far more than a list of room counts does."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-17"
 }
