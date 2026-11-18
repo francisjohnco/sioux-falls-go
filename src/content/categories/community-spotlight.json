@@ -13,7 +13,7 @@
   },
   "seo": {
     "title": "Community Spotlight in Sioux Falls",
-    "description": "Community Spotlight — local Sioux Falls content and resources."
+    "description": "Discover locally owned businesses making a difference in Sioux Falls, SD. Browse profiles, hours, phone numbers, and community stories all in one place."
   },
   "icon": "mic",
   "heroImage": "https://images.pexels.com/photos/34623526/pexels-photo-34623526.jpeg",
@@ -22,5 +22,39 @@
     "photographer": "Caleb Oquendo",
     "profileUrl": "https://www.pexels.com/@caleboquendo",
     "source": "Pexels"
-  }
+  },
+  "intro": "Sioux Falls has a quietly strong tradition of neighbors supporting neighbors. The businesses spotlighted here are locally owned, which means the people running them live in the same neighborhoods, send their kids to the same schools, and have a real stake in how this city grows.\n\nA good community business does more than provide a service. It shows up for local events, hires from the area, and treats customers like people it will see again at Hy-Vee or along the bike trail. That combination of accountability and genuine investment is what this page is about.",
+  "tips": [
+    "Ask whether the business is independently owned or a franchise, since local ownership usually means faster decisions and more flexible service.",
+    "Look for businesses that have operated through at least one or two Sioux Falls winters, since longevity here says something about reliability and community trust.",
+    "Check whether the owner or manager is reachable directly, not just a customer service line, because local accountability makes a real difference when something goes wrong.",
+    "Pay attention to whether a business participates in local events, sponsors youth sports, or partners with other Sioux Falls organizations, since those ties often reflect how invested they are in the community."
+  ],
+  "faqs": [
+    {
+      "q": "Why should I choose a locally owned business in Sioux Falls over a national chain?",
+      "a": "Local businesses keep spending circulating within the Sioux Falls economy, which benefits your neighbors and your neighborhood. They also tend to know the local context better, whether that is the clay soil affecting a service, the weather patterns, or the particular needs of different parts of the city."
+    },
+    {
+      "q": "How do I know if a business is truly locally owned?",
+      "a": "Ask the business directly whether it is independently owned or whether a parent company or franchise agreement is involved. You can also check South Dakota Secretary of State business records, which are publicly searchable online, to see where a business is registered and who is listed as an officer."
+    },
+    {
+      "q": "Are there any community organizations in Sioux Falls that recognize outstanding local businesses?",
+      "a": "Several local groups, including the Sioux Falls Area Chamber of Commerce and neighborhood associations, recognize businesses that contribute to the community. Ask a business whether it has received any local recognition and from what organization, so you can verify the source yourself."
+    },
+    {
+      "q": "What neighborhoods or areas in Sioux Falls have strong concentrations of independent local businesses?",
+      "a": "Downtown Sioux Falls and the McKennan Park area are well known for independent shops, restaurants, and service providers. Growing suburbs like Brandon, Harrisburg, and Tea also have locally owned businesses that serve residents who prefer to shop close to home."
+    },
+    {
+      "q": "How can I support Sioux Falls local businesses beyond just buying from them?",
+      "a": "Leaving honest reviews on Google or other platforms helps other residents find trustworthy businesses. Sharing recommendations with friends, attending local events, and following businesses on social media so their posts reach more people are all practical ways to help."
+    },
+    {
+      "q": "What should I do if I have a problem with a locally owned business in Sioux Falls?",
+      "a": "Contact the owner or manager directly first, since local businesses can usually resolve issues faster than a corporate chain can. If that does not work, the Better Business Bureau serving South Dakota and the South Dakota Attorney General's Consumer Protection Division are both available resources."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }

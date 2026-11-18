@@ -13,7 +13,41 @@
   },
   "seo": {
     "title": "Explore Sioux Falls in Sioux Falls",
-    "description": "Explore Sioux Falls \u2014 local Sioux Falls content and resources."
+    "description": "Compare local guides, attractions, and things to do in Sioux Falls SD. Find hours, phone numbers, reviews, and insider tips for exploring the city."
   },
-  "icon": "map"
+  "icon": "map",
+  "intro": "Sioux Falls has more going on than most people expect when they first move here or come to visit. The falls themselves at Falls Park draw people year-round, the sculpture walk downtown adds something worth seeing on any afternoon, and the neighborhoods around McKennan Park have a walkable, lived-in character that takes time to discover.\n\nA good starting point is knowing what kind of day you want. Outdoor spots along the Big Sioux River feel different in spring thaw than in a February cold snap, and some smaller venues keep limited hours or seasonal schedules, so a little planning goes a long way before you head out.",
+  "tips": [
+    "Ask locals, not just tourists sites, which spots are worth visiting in each season, since Sioux Falls changes a lot between January and July.",
+    "Check hours directly with any attraction before you visit, especially smaller galleries, historic sites, and nature areas that may close for weather or maintenance.",
+    "If you are new to the city, spend time in a few different areas including downtown, the east side trails, and the growing suburbs like Harrisburg and Tea, since each has its own character.",
+    "Look for free or low-cost options first, since many of the most popular things to do in Sioux Falls, including parks, trails, and the sculpture walk, cost nothing to enjoy."
+  ],
+  "faqs": [
+    {
+      "q": "What are some things to do in Sioux Falls on a weekend?",
+      "a": "Falls Park is a natural starting point, with the waterfall, ruins, and a viewing tower all in one place. The downtown sculpture walk, the Sherman Park area, and the trail system along the Big Sioux River give you outdoor options in almost any weather. Smaller local spots like coffee shops, independent bookstores, and local breweries fill out a weekend nicely without needing much of a plan."
+    },
+    {
+      "q": "Is Sioux Falls worth visiting as a tourist?",
+      "a": "Yes, especially if you like a mid-sized city that feels easy to navigate and genuinely welcoming. The falls are a real natural feature, not just a name, and the food and arts scene has grown steadily in recent years. A long weekend gives you enough time to see the highlights and get a feel for the place."
+    },
+    {
+      "q": "What outdoor activities are available in Sioux Falls?",
+      "a": "The city has an extensive trail network that connects parks along the Big Sioux River, good for walking, running, and biking across multiple seasons. Outdoor recreation ranges from disc golf and tennis to kayaking on the river when conditions allow. Winter brings its own options, though you will want to dress for serious cold since temperatures regularly drop well below freezing from December through February."
+    },
+    {
+      "q": "Are there free things to do in Sioux Falls?",
+      "a": "Several of the best-known attractions cost nothing to visit, including Falls Park, the downtown sculpture walk, and most of the city trail system. Many local events, outdoor concerts, and community festivals throughout the year are also free. It is worth checking local event calendars regularly since free programming tends to cluster around spring, summer, and early fall."
+    },
+    {
+      "q": "What neighborhoods are good to explore in Sioux Falls?",
+      "a": "The area around McKennan Park has tree-lined streets, older homes, and walkable access to the park itself, which makes it pleasant to wander on foot. Downtown has seen steady investment and has a mix of local restaurants, shops, and event spaces within a few walkable blocks. The newer suburban areas of Brandon, Harrisburg, and Tea have their own local businesses and parks worth checking out if you are curious about where the city is growing."
+    },
+    {
+      "q": "When is the best time of year to visit Sioux Falls?",
+      "a": "Late spring through early fall gives you the best weather for outdoor exploring, with May through September being the most comfortable stretch. Summer brings festivals and longer daylight hours, while fall adds color along the river trails and in older neighborhoods. Winter is genuinely cold and windy, but Falls Park and several indoor attractions remain open year-round for those who do not mind bundling up."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }

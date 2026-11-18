@@ -13,7 +13,41 @@
   },
   "seo": {
     "title": "Spotlight Giveaways in Sioux Falls",
-    "description": "Spotlight Giveaways \u2014 local Sioux Falls content and resources."
+    "description": "Compare local Sioux Falls businesses featured in Spotlight Giveaways, find contact details, hours, and reader reviews all in one place."
   },
-  "icon": "gift"
+  "icon": "gift",
+  "intro": "Spotlight Giveaways is a category we use to highlight local Sioux Falls businesses that are offering something special to our readers, a free consultation, a discounted first visit, a sample, or another introductory offer. When a locally owned business wants to introduce itself to the community, this is where it shows up.\n\nRight now there are no active giveaways listed here. That changes as new businesses join the directory and choose to run a spotlight. Check back soon, or browse other categories to find locally owned shops and services across Sioux Falls.",
+  "tips": [
+    "When you see a spotlight offer, read the fine print on expiration dates and any conditions before you contact the business.",
+    "Ask the business directly whether the offer is available to new customers only or to returning customers as well.",
+    "Take note of the business address and hours before you make a trip, since spotlight listings may come from any part of the city, from downtown to Harrisburg or Tea.",
+    "If you find a business through a giveaway and have a good experience, leaving a review helps other Sioux Falls residents find them too."
+  ],
+  "faqs": [
+    {
+      "q": "What is a spotlight giveaway on Sioux Falls Go?",
+      "a": "A spotlight giveaway is a short-term offer posted by a locally owned Sioux Falls business to introduce itself to new customers. It might be a free item, a free consultation, or a trial service. The business sets the terms, and you contact them directly to claim it."
+    },
+    {
+      "q": "Are there any active spotlight giveaways right now?",
+      "a": "There are no giveaways listed in this category at the moment. New offers appear when local businesses choose to run a spotlight, so it is worth checking back periodically."
+    },
+    {
+      "q": "Do I need to pay anything to claim a spotlight giveaway?",
+      "a": "That depends entirely on the individual business and the specific offer. Always read the listing carefully and ask the business directly whether there are any costs, commitments, or conditions attached before you show up or give your contact information."
+    },
+    {
+      "q": "How do I know a spotlight giveaway is from a real local business?",
+      "a": "Every business listed on Sioux Falls Go is locally owned and based in the Sioux Falls area. If you want to verify before you visit, look up the business address, call ahead, and confirm the offer is still active."
+    },
+    {
+      "q": "Can a business run a spotlight giveaway more than once?",
+      "a": "That is up to the individual business and how they choose to use their listing. If a business you liked ran a past offer, it is worth contacting them directly to ask whether they plan to run another one or whether they offer any similar promotions."
+    },
+    {
+      "q": "How do I find other local deals if there are no spotlight giveaways right now?",
+      "a": "Browse the other categories on Sioux Falls Go to find locally owned businesses across the city. Many businesses offer their own promotions independently, so calling or visiting their websites is a good way to find current deals even outside of this category."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }

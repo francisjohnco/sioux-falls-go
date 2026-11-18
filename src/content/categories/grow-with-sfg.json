@@ -15,7 +15,41 @@
   },
   "seo": {
     "title": "Grow with Sioux Falls Go in Sioux Falls",
-    "description": "Grow with Sioux Falls Go \u2014 local Sioux Falls content and resources."
+    "description": "Compare local Sioux Falls businesses listed on Sioux Falls Go, your neighborhood directory with hours, phone numbers, reviews, and local guides."
   },
-  "icon": "rocket"
+  "icon": "rocket",
+  "intro": "Sioux Falls Go is a local directory built for people who want to support independently owned businesses in Sioux Falls and the surrounding communities of Brandon, Harrisburg, and Tea. Whether you are looking for a plumber who knows clay soil, a restaurant near McKennan Park, or a contractor familiar with freeze and thaw damage, this is the place to find neighbors who do the work.\n\nThis category is new, and local businesses are just getting started here. Check back soon, or if you own a business in Sioux Falls, read on to learn how being listed can help customers find you.",
+  "tips": [
+    "When browsing any directory, look for listings that include real hours, a local phone number, and responses to customer reviews, those details signal an active, accountable business.",
+    "Ask any business you find here how long they have operated in the Sioux Falls area, longevity in a market this size usually means something.",
+    "Use the neighborhood or suburb filters when they appear, a business based in Harrisburg may serve you differently than one based downtown.",
+    "If a category page looks empty, use the site search to find businesses that may be listed under a related category before assuming no one local offers the service."
+  ],
+  "faqs": [
+    {
+      "q": "What is Sioux Falls Go?",
+      "a": "Sioux Falls Go is a local business directory focused on independently owned businesses in Sioux Falls, South Dakota and nearby communities. It gives residents a place to find contact information, hours, and local guides without sorting through national chain results. The goal is to make it easier to spend your money close to home."
+    },
+    {
+      "q": "How do I get my Sioux Falls business listed on Sioux Falls Go?",
+      "a": "Look for the listing or contact option on this site to submit your business information. Being listed puts you in front of Sioux Falls residents who are actively searching for what you offer. It is worth making sure your hours, phone number, and service area are accurate before you go live."
+    },
+    {
+      "q": "Is Sioux Falls Go free to use as a shopper?",
+      "a": "Yes, browsing the directory costs you nothing. You can search by category, read local guides, and get contact information for businesses without creating an account. The directory is meant to be a quick, useful resource for everyday decisions."
+    },
+    {
+      "q": "Why should I use a local directory instead of a general search engine?",
+      "a": "General search results often surface national chains or paid ads before showing you the independent shop two miles from your house. A local directory filters for businesses that are actually based in Sioux Falls and the surrounding area. That can save you time and help you find someone who understands the local market."
+    },
+    {
+      "q": "How current is the business information on Sioux Falls Go?",
+      "a": "Directory listings are only as good as the information businesses keep updated, so it is always smart to call ahead or check a business's own website to confirm hours, especially around holidays. If you spot outdated information on a listing, most directories have a way to flag it. Fresh, accurate details are something Sioux Falls Go works to maintain."
+    },
+    {
+      "q": "Can I leave a review for a business on Sioux Falls Go?",
+      "a": "Review features vary as the directory grows, so check the individual listing page to see what options are available. If reviews are not yet active for a specific category, you can still use the contact or share features to pass along a recommendation. Honest local feedback is one of the most useful things a neighborhood directory can offer."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
