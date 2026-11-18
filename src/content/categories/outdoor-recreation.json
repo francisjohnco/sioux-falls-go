@@ -16,8 +16,42 @@
   },
   "seo": {
     "title": "Outdoor Recreation in Sioux Falls, SD",
-    "description": "Discover outdoor recreation in Sioux Falls."
+    "description": "Compare outdoor recreation spots in Sioux Falls, SD. Browse locally owned options with hours, contact info, reviews, and a local guide to help you get outside."
   },
   "icon": "tree",
-  "parentCategory": "things-to-do"
+  "parentCategory": "things-to-do",
+  "intro": "Sioux Falls sits at a surprisingly good crossroads for outdoor recreation. The Big Sioux River runs right through the city, the Falls Park area draws people year-round, and within a short drive you can reach open prairie, lakes, and trails that most visitors never find. Whether you are looking for guided activities, gear rentals, or a place to sign the kids up for something new, locally owned outdoor recreation businesses tend to know the terrain in a way that national chains simply do not.\n\nA good operator here understands South Dakota seasons honestly. That means being ready for frozen ground from November through March, muddy spring trails, and summer heat that arrives fast.",
+  "tips": [
+    "Ask whether the business operates year-round or closes seasonally, since many outdoor activities in Sioux Falls shift significantly between summer and winter.",
+    "Look for staff who can give you specific local trail or water conditions rather than general advice that could apply anywhere.",
+    "If you have kids, ask about age or skill minimums before booking, since some activities near the river or on rougher terrain have real safety thresholds.",
+    "Check whether rentals include safety gear and whether instruction is available, especially for water-based or higher-risk activities where Sioux Falls weather can change quickly."
+  ],
+  "faqs": [
+    {
+      "q": "What outdoor activities can you do in Sioux Falls year-round?",
+      "a": "Hiking and walking trails around the Big Sioux River and throughout the city's park system stay accessible in most weather, though ice and snow require good footwear in winter. Some locally owned recreation businesses also offer cold-weather programming like winter kayaking or fat-tire biking. Ask any operator directly what they run once temperatures drop."
+    },
+    {
+      "q": "Is kayaking or canoeing available in Sioux Falls?",
+      "a": "Yes, the Big Sioux River is the primary waterway used for paddling in and around the city. Conditions vary a lot by season, with spring runoff making the current significantly stronger, so always ask about current water levels before you go. A local outfitter can tell you which stretches are suitable for your experience level."
+    },
+    {
+      "q": "Are there good trails for mountain biking near Sioux Falls?",
+      "a": "There are dedicated off-road biking trails in the Sioux Falls area, and locally owned recreation businesses can point you to the ones that match your skill level. Clay soil in this region gets very slick after rain, so trail conditions matter more here than in sandier areas. It is worth calling ahead or checking local trail reports before heading out."
+    },
+    {
+      "q": "What should I know about outdoor recreation near Harrisburg, Brandon, or Tea?",
+      "a": "The suburbs south and east of Sioux Falls have been growing fast, and some newer recreation areas and privately run outdoor businesses have opened to serve those communities. Access to open land and quieter trails can actually be easier from those areas than from central Sioux Falls. A locally owned business in your suburb will know what is nearby and what requires a drive."
+    },
+    {
+      "q": "How do Sioux Falls summers affect outdoor activities?",
+      "a": "Summers here get genuinely hot, often above 90 degrees Fahrenheit for stretches in July and August, and afternoon thunderstorms are common. Good local operators schedule morning sessions for strenuous activities and have clear weather cancellation policies. Always ask what happens to your booking if lightning or severe weather moves in."
+    },
+    {
+      "q": "Do outdoor recreation businesses in Sioux Falls offer group or corporate events?",
+      "a": "Many locally owned operators do offer group bookings for things like team outings, family reunions, or youth programs, but availability and format vary a lot between businesses. It is worth asking early, especially for summer dates, since group slots can fill up well before the season starts. Get the cancellation and deposit terms in writing before you commit."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
