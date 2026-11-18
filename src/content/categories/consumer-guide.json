@@ -13,7 +13,7 @@
   },
   "seo": {
     "title": "Consumer Guide in Sioux Falls",
-    "description": "Consumer Guide — local Sioux Falls content and resources."
+    "description": "Compare locally owned businesses in Sioux Falls, SD. Browse hours, phone numbers, reviews, and neighborhood guides to find the right fit for you."
   },
   "icon": "clipboard",
   "heroImage": "https://images.pexels.com/photos/4971967/pexels-photo-4971967.jpeg",
@@ -22,5 +22,39 @@
     "photographer": "Gustavo Fring",
     "profileUrl": "https://www.pexels.com/@gustavo-fring",
     "source": "Pexels"
-  }
+  },
+  "intro": "Sioux Falls has grown fast, and so has the number of locally owned businesses competing for your attention. Whether you are tracking down a reliable plumber before a pipe freezes, looking for a neighborhood restaurant you have never tried, or figuring out which auto shop actually knows its way around South Dakota winters, a good local directory saves you time and guesswork.\n\nThe businesses listed here are locally owned, meaning the people who run them live in the same community you do. That tends to matter when something goes wrong or when you just want someone who knows the difference between a McKennan Park bungalow and a new build out in Harrisburg.",
+  "tips": [
+    "Search by neighborhood as well as category, because a business close to you is easier to revisit and easier to hold accountable.",
+    "Check whether the listing includes current hours before you drive over, especially around holidays when local shops often keep their own schedules.",
+    "Read the most recent reviews rather than the overall star rating, since a business can change ownership or staff and older scores may no longer reflect the experience you will have.",
+    "Call ahead with one specific question related to your situation, because how a business answers tells you a lot about whether they will be easy to work with."
+  ],
+  "faqs": [
+    {
+      "q": "What is Sioux Falls Go and who is it for?",
+      "a": "Sioux Falls Go is a local directory focused entirely on locally owned businesses in Sioux Falls and the surrounding communities including Brandon, Tea, and Harrisburg. It is built for residents who want to find and support local businesses rather than national chains."
+    },
+    {
+      "q": "How do I find a good locally owned business in Sioux Falls?",
+      "a": "Start by browsing the category that fits your need, then read recent reviews and check contact details. Calling the business directly with a quick question is often the fastest way to judge whether they are a good match for your situation."
+    },
+    {
+      "q": "Are the businesses on this site screened or verified?",
+      "a": "Sioux Falls Go lists locally owned businesses and encourages readers to do their own research including checking reviews, asking neighbors, and verifying any licenses relevant to the work they need done. No directory listing is a substitute for your own due diligence."
+    },
+    {
+      "q": "Why should I hire a locally owned business instead of a national chain?",
+      "a": "Locally owned businesses generally keep more of your money circulating in the Sioux Falls economy, and their owners are often easier to reach directly when you have a problem. Many local operators also have specific knowledge of local conditions like clay soil, hard water, or freeze and thaw cycles that affect how certain work gets done here."
+    },
+    {
+      "q": "How do I know if a business listing is up to date?",
+      "a": "Check the listed phone number and call ahead to confirm hours and availability, since business details can change between updates to any directory. If a number is disconnected or no one answers, that is useful information before you make a trip across town."
+    },
+    {
+      "q": "Can I add or suggest a locally owned Sioux Falls business to this directory?",
+      "a": "Most directories have a submission or contact process you can find in the site navigation. If you know a locally owned business that belongs here, reaching out directly is the quickest way to get them listed and visible to other Sioux Falls residents."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }

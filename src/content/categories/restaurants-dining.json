@@ -21,5 +21,39 @@
     "description": "Find locally owned restaurants and dining spots in Sioux Falls, recommended by the community."
   },
   "icon": "utensils",
-  "parentCategory": "food-retail"
+  "parentCategory": "food-retail",
+  "intro": "Sioux Falls has a dining scene that keeps growing, with locally owned spots ranging from weekday lunch counters near the downtown core to weekend dinner destinations tucked into quieter neighborhoods. Whether you are looking for a quick bite before a show at the Orpheum or a long meal to celebrate something worth celebrating, the city has options well beyond the chains along Louise Avenue.\n\nPicking a good local restaurant comes down to a few things: consistency, sourcing when it matters to you, and whether the place actually fits the occasion. A good locally owned spot usually has a reason it exists, and you can often feel that in the food.",
+  "tips": [
+    "Ask whether the kitchen sources any ingredients locally or regionally, since several South Dakota farms supply Sioux Falls restaurants and that often shows up in seasonal menus.",
+    "Check whether the restaurant takes reservations, especially on Friday and Saturday nights, because popular locally owned spots in Sioux Falls fill up faster than their square footage suggests.",
+    "Look at how recently the online menu was updated before you go, since prices and dishes at independent restaurants can change more often than at chains.",
+    "If you have a large group, call ahead and ask whether the space can accommodate you comfortably, because many local spots in older buildings downtown have limited seating layouts."
+  ],
+  "faqs": [
+    {
+      "q": "What are some good locally owned restaurants in downtown Sioux Falls?",
+      "a": "Downtown Sioux Falls has a concentration of independently owned restaurants within walking distance of Phillips Avenue and the Falls Park area. The best way to find current options is to browse this directory and filter by neighborhood, since hours and ownership change over time."
+    },
+    {
+      "q": "Are there locally owned restaurants open late in Sioux Falls?",
+      "a": "Late night dining at locally owned spots is limited in Sioux Falls compared to larger cities, with most independent restaurants closing by 9 or 10 on weeknights. Your best bet is to call ahead or check current hours in this directory before making a late plan."
+    },
+    {
+      "q": "Do Sioux Falls restaurants close during bad winter weather?",
+      "a": "Some locally owned restaurants do adjust hours or close during significant winter storms, since staff travel and customer traffic both drop when roads get bad. It is always worth calling or checking social media on days when South Dakota weather looks uncertain."
+    },
+    {
+      "q": "Is there good ethnic food at locally owned restaurants in Sioux Falls?",
+      "a": "Yes, Sioux Falls has a genuinely diverse set of locally owned ethnic restaurants reflecting the city's refugee and immigrant communities, with options that include East African, Vietnamese, Mexican, and other cuisines. Browsing by cuisine type in this directory is the quickest way to find what you are in the mood for."
+    },
+    {
+      "q": "How do I know if a Sioux Falls restaurant is actually locally owned?",
+      "a": "The businesses listed in this directory are locally owned, which is the main reason this directory exists. If you are searching outside this list, a quick way to check is to look up whether the restaurant has locations in other cities, since a single Sioux Falls location with no franchise parent is a reasonable sign of local ownership."
+    },
+    {
+      "q": "Are there locally owned restaurants near McKennan Park?",
+      "a": "The McKennan Park neighborhood and the streets around it have a small but steady cluster of independent eateries that draw both neighbors and people coming from across town. Use the neighborhood filter in this directory to see what is currently listed in that part of the city."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-18"
 }
