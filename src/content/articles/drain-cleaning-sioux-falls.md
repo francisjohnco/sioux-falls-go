@@ -1,7 +1,7 @@
 ---
 title: "The Sioux Falls Homeowner's Guide to Drain Cleaning"
 sponsoredBy: "605-drain-solutions"
-category: "plumbers"
+category: "drain-cleaning"
 contentType: "local-resource"
 cluster: "drain-cleaning"
 clusterRole: "pillar"

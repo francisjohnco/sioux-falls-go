@@ -1,6 +1,6 @@
 ---
 title: "Is Professional Drain Cleaning Worth It in Sioux Falls? DIY vs. Calling a Pro"
-category: "plumbers"
+category: "drain-cleaning"
 cluster: "drain-cleaning"
 clusterRole: "support"
 contentType: "comparison"

@@ -1,6 +1,6 @@
 ---
 title: "What to Do When Your Drain Backs Up in Sioux Falls (Emergency Guide)"
-category: "plumbers"
+category: "drain-cleaning"
 cluster: "drain-cleaning"
 clusterRole: "support"
 contentType: "safety-information"

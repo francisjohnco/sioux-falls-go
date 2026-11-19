@@ -3,12 +3,9 @@
   "queues": [
     {
       "campaign": "Drain cleaning in Sioux Falls",
-      "category": "plumbers",
-      "categoryName": "Plumbers",
-      "relatedBusinesses": [
-        "605-drain-solutions",
-        "jurrens-plumbing"
-      ],
+      "category": "drain-cleaning",
+      "categoryName": "Drain Cleaning",
+      "relatedBusinesses": [],
       "note": "One main guide (pillar) plus supporting articles, written in this order, one per scheduled run. Each supporting article links to the main guide and to related articles in the cluster. A topic counts as done once an article with its slug exists or a draft for it is waiting for review.",
       "topics": [
         {

@@ -1,0 +1,69 @@
+{
+  "name": "Drain Cleaning",
+  "slug": "drain-cleaning",
+  "aliases": [
+    "Drain Cleaning Services",
+    "Drain Experts",
+    "Drain Cleaners",
+    "Sewer Line Cleaning",
+    "Hydro Jetting"
+  ],
+  "createdAt": "2026-11-19",
+  "parentCategory": "plumbers",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "maintenance-guide",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Drain Cleaning in Sioux Falls, SD",
+    "description": "Drain cleaning experts in Sioux Falls, SD. Compare local pros for clogs, sewer backups, and hydro jetting, with straight answers on cost and what to ask."
+  },
+  "icon": "wrench",
+  "intro": "A slow drain in Sioux Falls is rarely just a nuisance for long. Grease and soap build up in kitchen lines, older neighborhoods have aging clay and cast iron sewer laterals that roots love, and a basement floor drain backing up during a spring thaw is a call nobody wants to make on a weekend.\n\nA good drain cleaning company finds the cause before it quotes the fix. That often means a camera inspection for repeat or main line clogs, a clear choice between snaking and hydro jetting, and a written price before any work starts.",
+  "tips": [
+    "Ask whether they can run a camera through the line, especially for a main line or a clog that keeps coming back, so you pay to fix the cause and not just the symptom.",
+    "Have them explain snaking versus hydro jetting for your pipes, and why they recommend one over the other.",
+    "Get the price in writing before work starts, including any after hours or weekend fee.",
+    "If roots or a broken pipe show up on camera, ask for the video and a written repair estimate so you can compare options.",
+    "Ask what warranty, if any, comes with the cleaning, and how long it lasts."
+  ],
+  "faqs": [
+    {
+      "q": "How much does drain cleaning cost in Sioux Falls?",
+      "a": "It depends on which drain is clogged and how the job is done. A single sink or tub line is usually the simplest call, while a main sewer line, a camera inspection, or hydro jetting costs more. Ask for a written price before work starts, including any after hours fee."
+    },
+    {
+      "q": "What is the difference between snaking and hydro jetting?",
+      "a": "Snaking uses a cable to punch through or pull out a clog, which works well for many simple blockages. Hydro jetting sprays high pressure water to scour grease, scale, and roots off the pipe walls, which is better for heavy buildup and repeat clogs. A camera inspection helps decide which one your pipes need."
+    },
+    {
+      "q": "Why does my basement floor drain back up?",
+      "a": "A floor drain is often the lowest opening in the house, so when the main sewer line is clogged or roots are blocking it, water comes up there first. A backup at the floor drain usually points to a main line problem, so call a drain professional rather than using chemical cleaners."
+    },
+    {
+      "q": "Are chemical drain cleaners safe for my pipes?",
+      "a": "They can damage older pipes and rarely clear a serious clog, and they make the job more dangerous for the technician who comes next. For a slow drain, try a plunger or a drain snake first, and call a professional if the clog keeps returning."
+    },
+    {
+      "q": "How often should main sewer lines be cleaned?",
+      "a": "Most homes only need it when there is a problem, but homes with mature trees near the sewer line or a history of root clogs may benefit from regular maintenance cleanings. A camera inspection can show whether roots or buildup are returning."
+    },
+    {
+      "q": "Should I call a plumber or a drain cleaning company?",
+      "a": "For clogs, backups, and sewer line cleaning, a drain cleaning specialist is often the faster and more focused choice. For broken pipes, new fixtures, or water heater work, call a licensed plumber. Many problems found by a drain camera end up needing both."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-19"
+}

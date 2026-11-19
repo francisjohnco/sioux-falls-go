@@ -1,6 +1,6 @@
 ---
 title: "Hydro Jetting vs. Snaking for Sioux Falls Homes"
-category: "plumbers"
+category: "drain-cleaning"
 cluster: "drain-cleaning"
 clusterRole: "support"
 contentType: "comparison"
