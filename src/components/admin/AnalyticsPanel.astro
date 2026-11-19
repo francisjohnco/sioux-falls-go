@@ -11,9 +11,21 @@ const { names } = Astro.props;
     </div>
     <button class="button button--ghost" id="an-refresh" type="button">Refresh now</button>
   </div>
+  <p class="an-fresh" id="an-fresh" hidden></p>
   <p class="an-msg" id="an-msg">Loading analytics...</p>
 
   <div id="an-body" hidden>
+    <section class="an-story" id="an-story" hidden>
+      <h2>In plain English</h2>
+      <ul id="an-story-list"></ul>
+    </section>
+
+    <section class="an-card an-river-card" id="an-river" hidden>
+      <div class="an-card-head"><h2>The River, from a Google search to a customer</h2><p>Last 4 weeks. Each stop shows how many people made it that far, and the river narrows the way real interest does.</p></div>
+      <div id="an-river-svg"></div>
+      <p class="an-small">"Opened a business" counts every visit to a business profile, including people who arrived from inside Sioux Falls Go, not only from Google.</p>
+    </section>
+
     <div class="an-kpis" id="an-kpis"></div>
 
     <section class="an-card" id="an-trend" hidden>
@@ -21,16 +33,22 @@ const { names } = Astro.props;
       <div id="an-chart"></div>
     </section>
 
-    <div class="an-two">
-      <section class="an-card" id="an-wins" hidden>
-        <div class="an-card-head"><h2>Quick wins: better titles</h2><p>Pages Google shows often near the top, but few people click. A sharper title and description usually lifts these first.</p></div>
-        <div class="an-table-wrap"><table class="an-table" id="an-wins-t"></table></div>
-      </section>
-      <section class="an-card" id="an-near" hidden>
-        <div class="an-card-head"><h2>Almost on top</h2><p>Searches where the site sits in spots 5 to 15. One stronger guide or page can move these into the first few results.</p></div>
-        <div class="an-table-wrap"><table class="an-table" id="an-near-t"></table></div>
-      </section>
+    <div class="an-glance" id="an-glance" hidden>
+      <section class="an-card"><div class="an-card-head"><h2>Where Google sends people</h2><p>Clicks from Google by kind of page.</p></div><div id="an-types"></div></section>
+      <section class="an-card"><div class="an-card-head"><h2>Phone or computer</h2><p>Clicks from Google by device.</p></div><div id="an-devices"></div></section>
+      <section class="an-card"><div class="an-card-head"><h2>New people finding you</h2><p>Clicks from searches that did not include "Sioux Falls Go".</p></div><div id="an-discovery"></div></section>
+      <section class="an-card"><div class="an-card-head"><h2>What visitors tap</h2><p>Contact taps on business profiles this month.</p></div><div id="an-taps"></div></section>
     </div>
+
+    <section class="an-card" id="an-ind" hidden>
+      <div class="an-card-head"><h2>Your Google position by industry</h2><p>Each industry's category page, guides, and business profiles together. The bar shows how often Google showed them; position is the average spot on the results page (1 is the top, lower is better).</p></div>
+      <div class="an-ind" id="an-ind-list"></div>
+    </section>
+
+    <section class="an-card" id="an-wins" hidden>
+      <div class="an-card-head"><h2>Quick wins: better titles</h2><p>Pages Google shows often near the top, but few people click. A sharper title and description usually lifts these first.</p></div>
+      <div class="an-table-wrap"><table class="an-table" id="an-wins-t"></table></div>
+    </section>
 
     <section class="an-card" id="an-queries" hidden>
       <div class="an-card-head"><h2>Top searches</h2><p>Last 4 weeks, sorted by clicks.</p></div>
@@ -58,12 +76,79 @@ const { names } = Astro.props;
   const n = (v: number) => Math.round(v).toLocaleString();
   const d = (s: string) => new Date(`${s}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   let loaded = false;
+  const SERIES = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4'];
+  const DARK_TEXT = new Set(['#eda100', '#e87ba4']);
+
+  // One whole split into parts: a tall segmented bar with the share printed on
+  // each block where it fits, and a legend that names every part.
+  function segBar(parts: { label: string; value: number }[], unit = 'clicks') {
+    const total = parts.reduce((t, p) => t + p.value, 0);
+    if (!total) return '<p class="an-empty">Nothing counted yet.</p>';
+    const shown = parts.filter((p) => p.value > 0).slice(0, 5);
+    const blocks = shown.map((p, i) => {
+      const pct = (p.value / total) * 100, c = SERIES[i];
+      return `<div class="seg" style="flex:${p.value};background:${c};color:${DARK_TEXT.has(c) ? '#0b0b0b' : '#fff'}" title="${esc(p.label)}: ${n(p.value)} ${unit} (${Math.round(pct)}%)">${pct >= 12 ? `${Math.round(pct)}%` : ''}</div>`;
+    }).join('');
+    const legend = shown.map((p, i) => `<li><i style="background:${SERIES[i]}"></i>${esc(p.label)}<b>${n(p.value)}</b></li>`).join('');
+    return `<div class="segbar" role="img" aria-label="${shown.map((p) => `${p.label} ${Math.round((p.value / total) * 100)}%`).join(', ')}">${blocks}</div><ul class="seglegend">${legend}</ul>`;
+  }
+
+  // The River: four stops, the band's width shrinking with each step.
+  // On phones the river runs top to bottom so every label stays readable.
+  function riverVertical(stops: { label: string; value: number }[]) {
+    const W = 360, H = 520, mid = 70, ys = [50, 180, 310, 440];
+    const max = Math.max(...stops.map((s2) => s2.value), 1);
+    const th = stops.map((s2) => 10 + 70 * (Math.log10(s2.value + 1) / Math.log10(max + 1)));
+    const curve = (pts: number[][], move = true) => pts.map((p, i) => (i === 0 ? `${move ? 'M' : 'L'}${p[0]},${p[1]}` : `C${pts[i - 1][0]},${(pts[i - 1][1] + p[1]) / 2} ${p[0]},${(pts[i - 1][1] + p[1]) / 2} ${p[0]},${p[1]}`)).join(' ');
+    const left = ys.map((y, i) => [mid - th[i] / 2, y]), right = ys.map((y, i) => [mid + th[i] / 2, y]).reverse();
+    const band = `<path d="${curve(left)} ${curve(right, false)} Z" fill="url(#rvv)" />`;
+    const marks = stops.map((s2, i) => `<circle cx="${mid}" cy="${ys[i]}" r="9" fill="#fff" stroke="#1B2A4A" stroke-width="3"/><text x="${mid + 58}" y="${ys[i] - 2}" class="rv-num">${n(s2.value)}</text><text x="${mid + 58}" y="${ys[i] + 18}" class="rv-lab">${esc(s2.label)}</text>`).join('');
+    const steps = stops.slice(1).map((s2, i) => {
+      const prev = stops[i].value; if (!prev || s2.value > prev) return '';
+      const pct = (s2.value / prev) * 100;
+      return `<text x="${mid + 58}" y="${(ys[i] + ys[i + 1]) / 2 + 6}" class="rv-step">↓ ${pct < 1 ? pct.toFixed(1) : Math.round(pct)}% kept going</text>`;
+    }).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="rv rv--v" role="img" aria-label="${stops.map((s2) => `${s2.label}: ${s2.value}`).join(', ')}"><defs><linearGradient id="rvv" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9CC3EC"/><stop offset="0.55" stop-color="#2a78d6"/><stop offset="1" stop-color="#1B4F94"/></linearGradient></defs>${band}${marks}${steps}</svg>`;
+  }
+
+  function river(stops: { label: string; value: number }[]) {
+    if (root.clientWidth < 620) return riverVertical(stops);
+    const W = 760, H = 250, mid = 118, xs = [60, 273, 487, 700];
+    const max = Math.max(...stops.map((s2) => s2.value), 1);
+    const th = stops.map((s2) => 10 + 70 * (Math.log10(s2.value + 1) / Math.log10(max + 1)));
+    const top = xs.map((x, i) => [x, mid - th[i] / 2]), bot = xs.map((x, i) => [x, mid + th[i] / 2]);
+    const curve = (pts: number[][]) => pts.map((p, i) => (i === 0 ? `M${p[0]},${p[1]}` : `C${(pts[i - 1][0] + p[0]) / 2},${pts[i - 1][1]} ${(pts[i - 1][0] + p[0]) / 2},${p[1]} ${p[0]},${p[1]}`)).join(' ');
+    const rev = [...bot].reverse();
+    const bottomPath = rev.map((p, i) => (i === 0 ? `L${p[0]},${p[1]}` : `C${(rev[i - 1][0] + p[0]) / 2},${rev[i - 1][1]} ${(rev[i - 1][0] + p[0]) / 2},${p[1]} ${p[0]},${p[1]}`)).join(' ');
+    const band = `<path d="${curve(top)} ${bottomPath} Z" fill="url(#rv)" />`;
+    const ripples = [0.3, 0.55, 0.8].map((f) => `<path d="${curve(xs.map((x, i) => [x, mid - th[i] / 2 + th[i] * f]))}" fill="none" stroke="#fff" stroke-opacity="0.28" stroke-width="1.5" stroke-dasharray="10 14" />`).join('');
+    const marks = stops.map((s2, i) => `<g><circle cx="${xs[i]}" cy="${mid}" r="9" fill="#fff" stroke="#1B2A4A" stroke-width="3"><title>${esc(s2.label)}: ${n(s2.value)}</title></circle>
+      <text x="${xs[i]}" y="${mid - th[i] / 2 - 30}" text-anchor="middle" class="rv-num">${n(s2.value)}</text>
+      <text x="${xs[i]}" y="${mid - th[i] / 2 - 12}" text-anchor="middle" class="rv-lab">${esc(s2.label)}</text></g>`).join('');
+    const steps = stops.slice(1).map((s2, i) => {
+      const prev = stops[i].value; if (!prev || s2.value > prev) return '';
+      const pct = (s2.value / prev) * 100;
+      return `<text x="${(xs[i] + xs[i + 1]) / 2}" y="${H - 14}" text-anchor="middle" class="rv-step">${pct < 1 ? pct.toFixed(1) : Math.round(pct)}% kept going</text>`;
+    }).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="rv" role="img" aria-label="${stops.map((s2) => `${s2.label}: ${s2.value}`).join(', ')}"><defs><linearGradient id="rv" x1="0" x2="1"><stop offset="0" stop-color="#9CC3EC"/><stop offset="0.55" stop-color="#2a78d6"/><stop offset="1" stop-color="#1B4F94"/></linearGradient></defs>${band}${ripples}${marks}${steps}</svg>`;
+  }
+
+  function meter(part: number, whole: number, label: string) {
+    if (!whole) return '<p class="an-empty">Nothing counted yet.</p>';
+    const pct = Math.round((part / whole) * 100);
+    return `<div class="an-hero">${pct}%</div><div class="meter"><div style="width:${pct}%"></div></div><p class="an-small">${n(part)} of ${n(whole)} ${label}</p>`;
+  }
+
 
   function chg(cur: number, prev: number, lowerIsBetter = false) {
     if (!prev) return '';
+    if (lowerIsBetter) {
+      const delta = Math.round((prev - cur) * 10) / 10;
+      if (!delta) return '<span class="an-chg">no change</span>';
+      return `<span class="an-chg ${delta > 0 ? 'up' : 'down'}">${delta > 0 ? '▲ up' : '▼ down'} ${Math.abs(delta)} spots</span>`;
+    }
     const p = Math.round(((cur - prev) / prev) * 100);
-    const good = lowerIsBetter ? p <= 0 : p >= 0;
-    return `<span class="an-chg ${good ? 'up' : 'down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}%</span>`;
+    return `<span class="an-chg ${p >= 0 ? 'up' : 'down'}">${p >= 0 ? '▲' : '▼'} ${Math.abs(p)}%</span>`;
   }
 
   function chart(weeks: any[]) {
@@ -90,7 +175,6 @@ const { names } = Astro.props;
       const g = r.gsc;
       const k: string[] = [];
       if (g.connected) {
-        $('an-range').textContent = `Last 4 weeks: ${d(r.range.start)} to ${d(r.range.end)}, compared with the 4 weeks before. Google data runs about two days behind.`;
         const c = g.current, p = g.previous;
         k.push(`<div class="an-kpi"><span>Clicks from Google</span><strong>${n(c.clicks)}</strong>${chg(c.clicks, p.clicks)}</div>`);
         k.push(`<div class="an-kpi"><span>Times seen on Google</span><strong>${n(c.impressions)}</strong>${chg(c.impressions, p.impressions)}</div>`);
@@ -105,8 +189,60 @@ const { names } = Astro.props;
 
       if (g.connected && g.weekly.length > 1) { $('an-chart').innerHTML = chart(g.weekly.slice(-13)); $('an-trend').hidden = false; }
       if (g.connected && g.titleWins.length) { table('an-wins-t', ['Page', 'Seen', 'CTR', 'Position'], g.titleWins.map((p: any) => [`<a href="${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path)}</a>`, n(p.impressions), `${p.ctr}%`, p.position])); $('an-wins').hidden = false; }
-      if (g.connected && g.nearTop.length) { table('an-near-t', ['Search', 'Seen', 'Clicks', 'Position'], g.nearTop.map((q: any) => [esc(q.query), n(q.impressions), n(q.clicks), q.position])); $('an-near').hidden = false; }
-      if (g.connected && g.queries.length) { table('an-queries-t', ['Search', 'Clicks', 'Seen', 'CTR', 'Position'], g.queries.map((q: any) => [esc(q.query), n(q.clicks), n(q.impressions), `${q.ctr}%`, q.position])); $('an-queries').hidden = false; }
+      $('an-fresh').innerHTML = `${g.connected ? `Google data through <b>${d(g.dataThrough || r.range.end)}</b> (Google runs about two days behind). ` : ''}Profile visits and taps count live. Last refreshed ${new Date(r.generatedAt).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}.`;
+      $('an-fresh').hidden = false;
+
+      if (g.connected) {
+        const ra = r.rangeActivity || { view: 0, contacts: 0 };
+        $('an-river-svg').innerHTML = river([
+          { label: 'Saw you on Google', value: g.current.impressions },
+          { label: 'Clicked through', value: g.current.clicks },
+          { label: 'Opened a business', value: ra.view },
+          { label: 'Reached out', value: ra.contacts },
+        ]);
+        $('an-river').hidden = false;
+
+        const lines: string[] = [];
+        const c = g.current, p = g.previous;
+        const imprCh = p.impressions ? Math.round(((c.impressions - p.impressions) / p.impressions) * 100) : null;
+        lines.push(`Google showed Sioux Falls Go <b>${n(c.impressions)}</b> times in the last 4 weeks${imprCh !== null ? `, <b>${Math.abs(imprCh)}% ${imprCh >= 0 ? 'more' : 'fewer'}</b> than the 4 weeks before` : ''}, and <b>${n(c.clicks)}</b> people clicked.`);
+        const disc = g.discovery, dt2 = disc.otherClicks + disc.brandClicks;
+        if (dt2) lines.push(`<b>${Math.round((disc.otherClicks / dt2) * 100)}%</b> of clicks came from people who did not search for Sioux Falls Go by name. They searched for a service or a question, and found you.`);
+        const ind = g.industries || [];
+        if (ind.length) lines.push(`<b>${esc(ind[0].name)}</b> is your most visible industry: seen ${n(ind[0].impressions)} times at an average position of ${ind[0].position}.`);
+        const movers = ind.filter((x: any) => x.previous !== null).map((x: any) => ({ ...x, delta: Math.round((x.previous - x.position) * 10) / 10 })).sort((a: any, b2: any) => b2.delta - a.delta);
+        if (movers[0]?.delta > 0) lines.push(`Biggest climb: <b>${esc(movers[0].name)}</b> moved up ${movers[0].delta} spots on Google.`);
+        const phone = (g.devices || []).find((x: any) => x.label === 'Phone');
+        if (phone && c.clicks) lines.push(`<b>${Math.round((phone.clicks / c.clicks) * 100)}%</b> of Google clicks came from phones.`);
+        $('an-story-list').innerHTML = lines.map((l) => `<li>${l}</li>`).join('');
+        $('an-story').hidden = false;
+      }
+
+      const tapTotals = ['call', 'directions', 'website', 'quote'].map((k) => r.businesses.reduce((s2: number, b: any) => s2 + b[k], 0));
+      $('an-taps').innerHTML = segBar([{ label: 'Calls', value: tapTotals[0] }, { label: 'Website', value: tapTotals[2] }, { label: 'Directions', value: tapTotals[1] }, { label: 'Quote requests', value: tapTotals[3] }].sort((a, b2) => b2.value - a.value), 'taps');
+      if (g.connected) {
+        $('an-types').innerHTML = segBar(g.pageTypes.map((t: any) => ({ label: t.label, value: t.clicks })));
+        $('an-devices').innerHTML = segBar(g.devices.map((t: any) => ({ label: t.label, value: t.clicks })));
+        const disc = g.discovery;
+        $('an-discovery').innerHTML = meter(disc.otherClicks, disc.otherClicks + disc.brandClicks, 'clicks came from people searching for a service, a topic, or a business, not for Sioux Falls Go by name');
+      } else {
+        ['an-types', 'an-devices', 'an-discovery'].forEach((id) => { $(id).innerHTML = '<p class="an-empty">Shows once Search Console is connected.</p>'; });
+      }
+      $('an-glance').hidden = false;
+
+      if (g.connected && g.industries?.length) {
+        const max = Math.max(...g.industries.map((x: any) => x.impressions));
+        $('an-ind-list').innerHTML = g.industries.map((x: any) => {
+          let trend = '';
+          if (x.previous !== null) {
+            const delta = Math.round((x.previous - x.position) * 10) / 10;
+            trend = delta === 0 ? '<span class="an-trend">no change</span>' : `<span class="an-trend ${delta > 0 ? 'up' : 'down'}">${delta > 0 ? '▲ up' : '▼ down'} ${Math.abs(delta)}</span>`;
+          }
+          return `<div class="ind-row"><a href="/${esc(x.slug)}" target="_blank" rel="noopener" class="ind-name">${esc(x.name)}</a><div class="ind-bar" title="${esc(x.name)}: seen ${n(x.impressions)} times, ${n(x.clicks)} clicks"><div style="width:${Math.max(2, (x.impressions / max) * 100)}%"></div></div><div class="ind-fig"><b>${x.position}</b><small>avg position</small>${trend}</div><div class="ind-sub">${n(x.impressions)} seen · ${n(x.clicks)} clicks</div></div>`;
+        }).join('');
+        $('an-ind').hidden = false;
+      }
+      if (g.connected && g.queries.length) { table('an-queries-t', ['Search', 'Clicks', 'Seen', 'CTR'], g.queries.map((q: any) => [esc(q.query), n(q.clicks), n(q.impressions), `${q.ctr}%`])); $('an-queries').hidden = false; }
       if (g.connected && g.pages.length) { table('an-pages-t', ['Page', 'Type', 'Clicks', 'Seen', 'CTR', 'Position'], g.pages.map((p: any) => [`<a href="${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path)}</a>`, esc(p.type), n(p.clicks), n(p.impressions), `${p.ctr}%`, p.position])); $('an-pages').hidden = false; }
 
       const biz = r.businesses.length ? r.businesses : [];
@@ -114,7 +250,7 @@ const { names } = Astro.props;
         ? biz.map((b: any) => [esc(names[b.slug] || b.slug), n(b.view), n(b.call), n(b.directions), n(b.website), n(b.quote), `<a href="/business-report/?b=${encodeURIComponent(b.slug)}" target="_blank" rel="noopener">Report →</a>`])
         : [['No profile visits counted yet this month. Counting started November 17, 2026.', '', '', '', '', '', '']]);
 
-      $('an-note').textContent = g.connected ? `Updated ${new Date(r.generatedAt).toLocaleString()}. Refreshes every three hours, or click Refresh now.`
+      $('an-note').textContent = g.connected ? 'Google numbers refresh every three hours, or click Refresh now. Google hides very rare searches for privacy, so search lists can add up to slightly less than the totals.'
         : g.error ? `Google search numbers are unavailable: ${g.error}` : 'Google search numbers appear here once Search Console is connected (Content Engine tab, Connect Search Console) and GSC_SITE_PROPERTY is set in Netlify.';
       $('an-msg').hidden = true; $('an-body').hidden = false;
       loaded = true;
@@ -157,5 +293,42 @@ const { names } = Astro.props;
   .an-table td:not(:first-child), .an-table th:not(:first-child) { text-align: right; white-space: nowrap; }
   .an-table a { color: var(--color-river); font-weight: 600; word-break: break-all; }
   .an-note { font-size: 0.8rem; color: var(--color-navy-light); }
-  @media (max-width: 900px) { .an-two { grid-template-columns: 1fr; } }
+  .an-story { background: linear-gradient(135deg, #1B2A4A, #2E4470); color: #fff; border-radius: 1rem; padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+  .an-story[hidden] { display: none; }
+  .an-story h2 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--color-gold); }
+  .an-story ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.45rem; line-height: 1.5; font-size: 0.95rem; }
+  .an-story b { color: #fff; }
+  .rv { width: 100%; height: auto; display: block; }
+  .rv-num { font-size: 22px; font-weight: 800; fill: #1B2A4A; font-family: var(--font-display); }
+  .rv-lab { font-size: 12px; fill: #52514e; font-weight: 600; }
+  .rv--v { max-width: 26rem; margin: 0 auto; }
+  .rv--v .rv-num { font-size: 26px; }
+  .rv--v .rv-lab, .rv--v .rv-step { font-size: 15px; }
+  .rv-step { font-size: 12px; fill: #2E6F9E; font-weight: 700; }
+  .an-fresh { font-size: 0.85rem; color: var(--color-navy-light); background: #fff; border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 0.55rem 0.8rem; margin: 0 0 1rem; }
+  .an-glance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .an-glance[hidden] { display: none; }
+  .segbar { display: flex; gap: 2px; height: 2.6rem; }
+  .seg { border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; min-width: 4px; }
+  .seglegend { list-style: none; margin: 0.8rem 0 0; padding: 0; display: grid; gap: 0.4rem; font-size: 0.875rem; color: var(--color-ink); }
+  .seglegend li { display: flex; align-items: center; gap: 0.5rem; }
+  .seglegend i { width: 0.75rem; height: 0.75rem; border-radius: 3px; flex: none; }
+  .seglegend b { margin-left: auto; color: var(--color-navy); }
+  .an-hero { font-size: 2.6rem; font-weight: 800; color: var(--color-navy); font-family: var(--font-display); line-height: 1; }
+  .meter { height: 0.75rem; background: #DCE8F4; border-radius: 99px; overflow: hidden; margin: 0.7rem 0 0.5rem; }
+  .meter div { height: 100%; background: #2a78d6; border-radius: 99px; }
+  .an-small, .an-empty { font-size: 0.85rem; color: var(--color-navy-light); margin: 0; line-height: 1.45; }
+  .an-ind { display: grid; gap: 0.2rem; }
+  .ind-row { display: grid; grid-template-columns: 11rem 1fr 7.5rem; grid-template-areas: "name bar fig" "name sub fig"; column-gap: 1rem; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid var(--color-line); }
+  .ind-name { grid-area: name; font-weight: 700; color: var(--color-navy); text-decoration: none; font-size: 0.9rem; }
+  .ind-bar { grid-area: bar; height: 0.7rem; background: #EEF3F9; border-radius: 99px; }
+  .ind-bar div { height: 100%; background: #2a78d6; border-radius: 99px; }
+  .ind-sub { grid-area: sub; font-size: 0.75rem; color: var(--color-navy-light); margin-top: 0.15rem; }
+  .ind-fig { grid-area: fig; text-align: right; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15; }
+  .ind-fig b { font-size: 1.25rem; color: var(--color-navy); }
+  .ind-fig small { font-size: 0.7rem; color: var(--color-navy-light); }
+  .an-trend { font-size: 0.72rem; font-weight: 800; color: var(--color-navy-light); }
+  .an-trend.up { color: var(--color-success); }
+  .an-trend.down { color: #B4432F; }
+  @media (max-width: 900px) { .an-glance { grid-template-columns: 1fr; } .ind-row { grid-template-columns: 1fr 6rem; grid-template-areas: "name fig" "bar fig" "sub fig"; } }
 </style>

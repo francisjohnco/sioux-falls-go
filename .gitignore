@@ -13,3 +13,5 @@ public/hero-manifest.json
 public/badges/
 public/build-info.json
 node_modules
+public/category-index.json
+public/page-categories.json

@@ -199,9 +199,12 @@ function main() {
   // Categories and whether each has its own header photo yet, read by the
   // photo finder so it only opens the category files that need a photo.
   const businessCount = {};
+  // Which industry each page belongs to, so analytics can group search results by industry.
+  const pageCategory = {};
   if (fs.existsSync(bizDir)) for (const f of fs.readdirSync(bizDir).filter((x) => x.endsWith('.md'))) {
     const m = fs.readFileSync(path.join(bizDir, f), 'utf8').match(/^category:\s*"?([a-z0-9-]+)"?/m);
     if (m) businessCount[m[1]] = (businessCount[m[1]] || 0) + 1;
+    if (m) pageCategory[`/businesses/${f.replace(/\.md$/, '')}`] = m[1];
   }
   const categoryIndex = categories.map((c) => ({
     slug: c.slug, name: c.name, description: c.seo?.description || '', parent: c.parentCategory || '',
@@ -212,6 +215,9 @@ function main() {
     hasIntro: !!c.intro,
   })).sort((a, b) => a.name.localeCompare(b.name));
   fs.writeFileSync(path.join(ROOT, 'public/category-index.json'), JSON.stringify(categoryIndex, null, 2));
+  for (const c of categories) pageCategory[`/${c.slug}`] = c.slug;
+  for (const a of articles) if (a.category) pageCategory[`/guides/${a.file.replace(/\.md$/, '')}`] = a.category;
+  fs.writeFileSync(path.join(ROOT, 'public/page-categories.json'), JSON.stringify(pageCategory));
 
   // When each article file was first committed, so two articles published on
   // the same day still sort newest first (the later one is the latest).

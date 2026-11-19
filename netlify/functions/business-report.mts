@@ -3,6 +3,7 @@ import { isAdmin, businessFromCookie } from './_shared/auth.mts';
 import { readBusinessFile, readField } from './_shared/business-file.mts';
 import { readText } from './_shared/git-batch.mts';
 import { gscClient, daysAgo, type GscRow } from './_shared/gsc.mts';
+import { loadStats, sumMonth } from './_shared/stats.mts';
 
 // One business's report: how people find it on Google through Sioux Falls Go
 // (its own profile, plus its category page and the guides in its industry),
@@ -71,11 +72,8 @@ export default async (req: Request) => {
   };
 
   // What people did on the profile, from our own counter.
-  const stats = getStore('biz-stats');
-  for (const m of monthKeys(3)) {
-    const rec: any = (await stats.get(`${slug}/${m}`, { type: 'json' })) || {};
-    report.actions.push({ month: m, view: rec.view || 0, call: rec.call || 0, directions: rec.directions || 0, website: rec.website || 0, quote: rec.quote || 0 });
-  }
+  const days = (await loadStats(`${slug}/`)).get(slug);
+  for (const m of monthKeys(3)) report.actions.push({ month: m, ...sumMonth(days, m) });
 
   try {
     const q = await gscClient();
