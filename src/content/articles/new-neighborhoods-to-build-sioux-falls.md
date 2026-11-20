@@ -16,6 +16,12 @@ updatedAt: 2026-11-30
 seo:
   title: "New Neighborhoods to Build In Around Sioux Falls 2026"
   description: "Lots in The Sanctuary, Mapleton Highlands, Westwater, Willow Ridge, and more. Real 2026 prices and what to ask before you buy a lot in Sioux Falls."
+heroImage: "https://images.pexels.com/photos/37520984/pexels-photo-37520984.jpeg"
+heroImageAlt: "Suburban homes bordering a large open grassy lot under a dramatic cloudy sky."
+heroImageCredit:
+  photographer: "Rajesh S  Balouria"
+  profileUrl: "https://www.pexels.com/@rajesh-s-balouria-1289088"
+  source: "Pexels"
 ---
 
 If you are ready to build a custom home in Sioux Falls, one of the first real decisions is where you are going to put it. The lot shapes everything else: your builder options, your commute, your school district, your drainage situation, and ultimately a big chunk of your budget. The good news is that 2026 has brought several notable new developments to the market, ranging from golf course-adjacent lots in the mid-$100,000s to premium northeast Sioux Falls parcels pushing past $300,000. Before you go too far into plans and builder conversations, read through [How to Build a Custom Home in Sioux Falls (2026 Guide)](/guides/build-custom-home-sioux-falls) so you understand how lot selection fits into the full sequence of decisions. Then come back here and dig into the specific neighborhoods that are actively selling lots right now.
