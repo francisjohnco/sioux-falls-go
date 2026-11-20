@@ -730,6 +730,238 @@
           "brief": "For shops, warehouses, and storefronts: door and operator types, preventive maintenance contracts, high cycle springs, dock doors, and downtime planning in winter."
         }
       ]
+    },
+    {
+      "cluster": "local-business-marketing",
+      "campaign": "Marketing a local business in Sioux Falls",
+      "category": "marketing-agencies",
+      "categoryName": "Marketing Agencies",
+      "relatedBusinesses": [],
+      "everyNDays": 2,
+      "publishWeekdays": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "bufferTarget": 3,
+      "note": "Written for Sioux Falls business owners. The main guide is the four pillars (visibility, authority, reputation, retention), dated November 18, 2026; supporting articles publish every other day.",
+      "voice": "AUDIENCE AND VOICE: Every article talks directly to a Sioux Falls business owner or operator (a contractor, shop, restaurant, clinic, or service business), as a knowledgeable local marketer helping them, never selling to them. Address them as \"you\" and \"your business\". Give concrete steps they can take this week. Ignore any default instruction to mention frost lines, hard water, clay soil, or home repair; use local business context instead (a growing city, word of mouth, community events, newcomers who do not know anyone yet). Never name, recommend, or promote any marketing agency or business, and do not invent statistics.",
+      "localFacts": [
+        "Sioux Falls had 224,676 residents at the end of 2025, up 2.3% and 5,088 new residents in one year; the four-county metro is about 308,000 and is projected to reach 360,000 by 2030. (Source: Mayor Paul TenHaken, reported by SiouxFalls.Business, January 2026)",
+        "Google says local search results are based mainly on relevance, distance, and prominence. Prominence includes how well known a business is, including links from other websites and how many reviews it has, and Google says more reviews and positive ratings can help local ranking. (Source: Google Business Profile Help, 'Tips to improve your local ranking on Google')",
+        "Google says businesses with complete and accurate information (address, hours, category, attributes) are more likely to show in local results, that replying to reviews shows customers you value their feedback, and that there is no way to pay for a better local ranking. (Source: Google Business Profile Help)"
+      ],
+      "pillar": {
+        "slug": "four-pillars-local-business-growth-sioux-falls",
+        "title": "The 4 Pillars of a Growing Sioux Falls Business"
+      },
+      "topics": [
+        {
+          "slug": "local-marketing-beyond-your-website-sioux-falls",
+          "title": "Marketing Is More Than a Website, 3 Ways to Win Customers",
+          "contentType": "educational-article",
+          "keywords": [
+            "local marketing Sioux Falls",
+            "how to get more customers Sioux Falls",
+            "small business marketing Sioux Falls"
+          ],
+          "brief": "Marketing has evolved past having a website. Cover the three things that actually bring customers in today: being found where people search (Google Business Profile, maps, and AI answers), being chosen (reviews and proof), and being remembered (follow up and staying in touch). Practical first steps for each."
+        },
+        {
+          "slug": "what-your-website-does-for-a-local-business",
+          "title": "What Your Website Really Does for a Sioux Falls Business",
+          "contentType": "educational-article",
+          "keywords": [
+            "is a website worth it for small business",
+            "small business website Sioux Falls"
+          ],
+          "brief": "A website is still valuable, but it serves different purposes than owners think: proof you are real and established, the place Google and AI tools read to understand what you do, a conversion tool for people who already found you, and an asset you own when platforms change. What a good local business website must include, and what to stop worrying about."
+        },
+        {
+          "slug": "local-business-visibility-sioux-falls",
+          "title": "Visibility, How Sioux Falls Customers Find Your Business",
+          "contentType": "educational-article",
+          "keywords": [
+            "how to get found on Google Sioux Falls",
+            "local visibility small business"
+          ],
+          "brief": "Pillar 1 in depth. Every place a Sioux Falls customer looks (Google search, the map pack, AI assistants, local directories, social, word of mouth) and how to show up in each. Use Google's relevance, distance, and prominence explanation."
+        },
+        {
+          "slug": "local-business-authority-sioux-falls",
+          "title": "Authority, Why Customers Pick You Over the Next Name",
+          "contentType": "educational-article",
+          "keywords": [
+            "build authority local business",
+            "expert positioning small business"
+          ],
+          "brief": "Pillar 2 in depth. Authority is why someone chooses you after they find you: helpful content that answers real questions, local press and community involvement, credentials shown clearly, photos of real work, and being the one who explains things."
+        },
+        {
+          "slug": "local-business-reputation-sioux-falls",
+          "title": "Reputation, How Reviews Win or Lose Sioux Falls Customers",
+          "contentType": "educational-article",
+          "keywords": [
+            "online reputation small business",
+            "Google reviews local business"
+          ],
+          "brief": "Pillar 3 in depth. How customers read reviews, how to earn a steady flow of honest reviews, replying to every review, handling a bad one, and why reputation offline and online are the same thing in a city where people talk."
+        },
+        {
+          "slug": "customer-retention-sioux-falls-business",
+          "title": "Retention, Turning One Sioux Falls Customer Into Ten",
+          "contentType": "educational-article",
+          "keywords": [
+            "customer retention small business",
+            "repeat customers local business"
+          ],
+          "brief": "Pillar 4 in depth. Keeping customers is cheaper than finding new ones: follow up, service reminders, staying in touch by email or text, thank yous, referral asks, and making it easy to come back."
+        },
+        {
+          "slug": "google-business-profile-checklist-sioux-falls",
+          "title": "Google Business Profile Checklist for Sioux Falls Businesses",
+          "contentType": "checklist",
+          "keywords": [
+            "Google Business Profile optimization",
+            "Google Business Profile Sioux Falls"
+          ],
+          "brief": "A complete step by step checklist: categories, services, hours, holiday hours, photos, attributes, description, questions, posts, review replies, and checking it monthly. Use Google's guidance from the local facts."
+        },
+        {
+          "slug": "get-more-google-reviews-local-business",
+          "title": "How to Get More Google Reviews Without Breaking the Rules",
+          "contentType": "buying-guide",
+          "keywords": [
+            "how to get more Google reviews",
+            "ask customers for reviews"
+          ],
+          "brief": "When and how to ask, making it easy with a direct link, scripts for in person, text, and email, what Google does not allow (no buying reviews, no incentives, no gating), and building the habit into your process."
+        },
+        {
+          "slug": "respond-to-negative-review-local-business",
+          "title": "How to Respond to a Bad Review, With Examples",
+          "contentType": "checklist",
+          "keywords": [
+            "how to respond to a negative review",
+            "bad Google review response"
+          ],
+          "brief": "A calm step by step approach, what to say and never say, three example replies for common situations, when to take it offline, and how to flag reviews that break Google's rules."
+        },
+        {
+          "slug": "google-map-pack-sioux-falls",
+          "title": "How to Show Up in the Google Map Pack in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "Google map pack ranking",
+            "show up on Google Maps Sioux Falls"
+          ],
+          "brief": "Explain the map results and what moves them, using Google's relevance, distance, and prominence. Realistic expectations about distance, and the steps that help: profile completeness, categories, reviews, website signals, and consistent business information across the web."
+        },
+        {
+          "slug": "ai-search-local-business-recommendations",
+          "title": "Will ChatGPT and Google AI Recommend Your Business?",
+          "contentType": "educational-article",
+          "keywords": [
+            "AI search local business",
+            "how to show up in ChatGPT recommendations"
+          ],
+          "brief": "How AI assistants and AI answers in Google pull information about local businesses from the web, reviews, and directories, and what an owner can do: clear website content, consistent listings, real reviews, and being mentioned on trusted local sites. No invented statistics."
+        },
+        {
+          "slug": "marketing-budget-small-business-sioux-falls",
+          "title": "How Much Should a Sioux Falls Business Spend on Marketing?",
+          "contentType": "cost-guide",
+          "keywords": [
+            "small business marketing budget",
+            "how much to spend on marketing"
+          ],
+          "brief": "A practical way to set a budget based on goals, average customer value, and capacity, where to spend first, what to measure, and mistakes like spreading too thin. No invented percentages presented as rules; give a method."
+        },
+        {
+          "slug": "track-marketing-results-local-business",
+          "title": "How to Tell If Your Marketing Is Actually Working",
+          "contentType": "checklist",
+          "keywords": [
+            "track marketing results small business",
+            "marketing ROI local business"
+          ],
+          "brief": "Simple tracking any owner can do: asking every new customer how they found you, call tracking basics, Google Business Profile insights, website analytics, and a one page monthly scorecard."
+        },
+        {
+          "slug": "email-marketing-for-local-businesses",
+          "title": "Email Marketing for Local Businesses That People Actually Open",
+          "contentType": "educational-article",
+          "keywords": [
+            "email marketing small business",
+            "email newsletter local business"
+          ],
+          "brief": "Building a list from real customers, what to send (useful tips, reminders, seasonal offers), how often, subject lines, and keeping it personal."
+        },
+        {
+          "slug": "referral-program-local-business",
+          "title": "How to Build a Referral Engine for a Local Business",
+          "contentType": "buying-guide",
+          "keywords": [
+            "customer referral program small business",
+            "get more referrals"
+          ],
+          "brief": "When and how to ask for referrals, making it easy, thanking people, partner referrals with complementary local businesses, and tracking where referrals come from."
+        },
+        {
+          "slug": "community-sponsorships-sioux-falls-business",
+          "title": "Do Community Sponsorships Pay Off for Sioux Falls Businesses?",
+          "contentType": "comparison",
+          "keywords": [
+            "local sponsorships small business",
+            "community marketing Sioux Falls"
+          ],
+          "brief": "Youth sports, school events, charity runs, and festivals: what you really get (goodwill, visibility, local links and mentions), how to choose, and how to make a sponsorship work harder online."
+        },
+        {
+          "slug": "social-media-for-sioux-falls-businesses",
+          "title": "Social Media for Sioux Falls Businesses, What Actually Works",
+          "contentType": "educational-article",
+          "keywords": [
+            "social media for local business",
+            "Facebook marketing small business"
+          ],
+          "brief": "Which platforms fit which businesses, posting real work and real people, local Facebook groups, consistency over volume, and how social supports visibility and reputation rather than replacing them."
+        },
+        {
+          "slug": "helpful-content-wins-local-customers",
+          "title": "Why Helpful Content Wins Local Customers",
+          "contentType": "educational-article",
+          "keywords": [
+            "content marketing local business",
+            "blog for small business"
+          ],
+          "brief": "Answering the questions customers ask before they buy, turning everyday questions into pages and posts, and how that builds authority with people, Google, and AI tools."
+        },
+        {
+          "slug": "reach-new-residents-sioux-falls",
+          "title": "How to Reach the Thousands of New Sioux Falls Residents Each Year",
+          "contentType": "educational-article",
+          "keywords": [
+            "marketing to new residents",
+            "new movers marketing Sioux Falls"
+          ],
+          "brief": "Use the population growth facts. Newcomers have no go to plumber, dentist, or coffee shop yet; how to be found first by people moving in (search, maps, reviews, local guides, neighborhood groups, welcome offers)."
+        },
+        {
+          "slug": "local-seo-mistakes-sioux-falls",
+          "title": "7 Local SEO Mistakes Sioux Falls Businesses Make",
+          "contentType": "checklist",
+          "keywords": [
+            "local SEO mistakes",
+            "local SEO Sioux Falls"
+          ],
+          "brief": "Exactly 7 numbered mistakes (wrong or incomplete categories, inconsistent business info, ignoring reviews, no service pages, no photos, chasing vanity keywords, setting and forgetting), each with the fix."
+        }
+      ]
     }
   ]
 }

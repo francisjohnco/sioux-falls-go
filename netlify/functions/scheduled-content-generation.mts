@@ -147,6 +147,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
     isPillar ? '' : 'Also link naturally to 2 or 3 other articles from the list below that a reader of this article would want next.',
     next.keywords?.length ? `Work these search phrases in naturally, without stuffing: ${next.keywords.join('; ')}.` : '',
     next.brief || '',
+    queue.voice || '',
     queue.localFacts?.length ? `VERIFIED LOCAL FACTS. Use the ones that fit this article; they are what makes it more useful than anything else online. When you use a number or a named place from this list, name the source in the sentence (for example "according to the City of Sioux Falls" or "SiouxFalls.Business reported in April 2026"). Do not state any other Sioux Falls specific numbers, prices, or names.\n- ${queue.localFacts.join('\n- ')}` : '',
     'Make it the most helpful page a Sioux Falls reader could find: specific steps, real local names, the questions to ask, the mistakes to avoid, and a clear next step. No filler.',
     'Never use em dashes or en dashes anywhere. Use commas, periods, parentheses, or the word "to" for ranges.',
@@ -170,7 +171,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
 
   if (autoPublish && problems.length === 0) {
     const clusterDates = articleIndex.filter((a) => a.cluster === cluster).map((a) => a.publishedAt).filter(Boolean);
-    const publishDate = planClusterSlot(clusterDates, chicagoToday(), queue.publishWeekdays || PUBLISH_WEEKDAYS, queue.firstPublishDate);
+    const publishDate = planClusterSlot(clusterDates, chicagoToday(), queue.publishWeekdays || PUBLISH_WEEKDAYS, queue.firstPublishDate, queue.everyNDays);
     const file = buildArticleFile({ draft: withImage, categorySlug, contentType: next.contentType, relatedBusinesses, publishDate, slug: next.slug, cluster, clusterRole: isPillar ? 'pillar' : 'support' });
     const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
     if (res.ok) {

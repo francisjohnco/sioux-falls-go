@@ -62,9 +62,16 @@ export function nextSlotOn(dateStr: string, weekdays: number[]): string {
 // The next date for a cluster: its first date when it has nothing yet (this
 // may be in the past, which publishes it right away), otherwise the slot after
 // its furthest-out article, never earlier than tomorrow.
-export function planClusterSlot(clusterDates: string[], today: string, weekdays: number[], firstDate?: string): string {
+export function planClusterSlot(clusterDates: string[], today: string, weekdays: number[], firstDate?: string, everyNDays?: number): string {
   const dates = clusterDates.filter(isValidDateString).sort();
   if (!dates.length && firstDate && isValidDateString(firstDate)) return firstDate;
   const last = dates.length ? dates[dates.length - 1] : today;
+  if (everyNDays && everyNDays > 0) {
+    // A fixed gap ("every other day"), never earlier than tomorrow, sliding past skipped holidays.
+    let d = addDays(last, everyNDays);
+    while (d <= today) d = addDays(d, everyNDays);
+    while (SKIP_DATES.has(d)) d = addDays(d, 1);
+    return d;
+  }
   return nextSlotOn(last > today ? last : today, weekdays);
 }
