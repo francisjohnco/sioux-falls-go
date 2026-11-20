@@ -16,6 +16,12 @@ updatedAt: 2026-11-24
 seo:
   title: "How Sioux Falls Customers Find Your Business Online"
   description: "Search, maps, AI tools, directories, social, word of mouth. Here is exactly how Sioux Falls customers find a local business and what to do this week."
+heroImage: "https://images.pexels.com/photos/20044367/pexels-photo-20044367.jpeg"
+heroImageAlt: "Hands holding a smartphone with a laptop open in the background on a desk with a coffee cup nearby."
+heroImageCredit:
+  photographer: "Airam Dato-on"
+  profileUrl: "https://www.pexels.com/@airamdphoto"
+  source: "Pexels"
 ---
 
 Every customer your business will ever have starts somewhere. They type a question into Google, ask a friend, scroll through a neighborhood Facebook group, or let an AI assistant name a few options. That first moment, before they have read a single review or landed on your website, is visibility. If you are not showing up where they are looking, the rest of your marketing never gets a chance to work. [The 4 Pillars of a Growing Sioux Falls Business](/guides/four-pillars-local-business-growth-sioux-falls) lays out why visibility is the foundation everything else builds on, and this article goes deep on exactly how to earn it in a city that is growing faster than most people realize.
