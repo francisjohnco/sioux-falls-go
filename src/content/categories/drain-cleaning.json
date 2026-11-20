@@ -65,5 +65,12 @@
       "a": "For clogs, backups, and sewer line cleaning, a drain cleaning specialist is often the faster and more focused choice. For broken pipes, new fixtures, or water heater work, call a licensed plumber. Many problems found by a drain camera end up needing both."
     }
   ],
-  "contentUpdatedAt": "2026-11-19"
+  "contentUpdatedAt": "2026-11-19",
+  "heroImage": "https://images.pexels.com/photos/4239115/pexels-photo-4239115.jpeg",
+  "heroImageAlt": "A yellow-gloved hand scrubbing around a clogged bathtub drain with soap suds and grime visible.",
+  "heroImageCredit": {
+    "photographer": "https://kaboompics.com/",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }
