@@ -749,7 +749,7 @@
       ],
       "bufferTarget": 3,
       "note": "Written for Sioux Falls business owners. The main guide is the four pillars (visibility, authority, reputation, retention), dated November 18, 2026; supporting articles publish every other day.",
-      "voice": "AUDIENCE AND VOICE: Every article talks directly to a Sioux Falls business owner or operator (a contractor, shop, restaurant, clinic, or service business), as a knowledgeable local marketer helping them, never selling to them. Address them as \"you\" and \"your business\". Give concrete steps they can take this week. Ignore any default instruction to mention frost lines, hard water, clay soil, or home repair; use local business context instead (a growing city, word of mouth, community events, newcomers who do not know anyone yet). Never name, recommend, or promote any marketing agency or business, and do not invent statistics.",
+      "voice": "AUDIENCE AND VOICE: Every article talks directly to a Sioux Falls business owner or operator (a contractor, shop, restaurant, clinic, or service business), as a knowledgeable local marketer helping them, never selling to them. Address them as \"you\" and \"your business\". Give concrete steps they can take this week. Ignore any default instruction to mention frost lines, hard water, clay soil, or home repair; use local business context instead (a growing city, word of mouth, community events, newcomers who do not know anyone yet). Never name, recommend, or promote any marketing agency or business, and do not invent statistics. FRAMEWORK: Use the four pillars consistently. The customer journey is search (visibility), evaluate (authority), decide and call (reputation), return and refer (retention); a break at any step loses the customer, usually without the owner knowing. The pillars feed each other: reputation lifts visibility (reviews count toward prominence), authority lifts visibility, retention lifts reputation (follow up is when reviews get asked for), and visibility decides whether the rest is seen. Common patterns: the Invisible Expert (strong reviews, weak visibility), the Well-Known Commodity (visible, weak reputation), the One-Time Wonder (no retention), the Foundation Rebuild (weak everywhere, start with visibility). Advise fixing the weakest pillar first. Do not use statistics like map pack call shares or review influence percentages unless a source is given in the local facts.",
       "localFacts": [
         "Sioux Falls had 224,676 residents at the end of 2025, up 2.3% and 5,088 new residents in one year; the four-county metro is about 308,000 and is projected to reach 360,000 by 2030. (Source: Mayor Paul TenHaken, reported by SiouxFalls.Business, January 2026)",
         "Google says local search results are based mainly on relevance, distance, and prominence. Prominence includes how well known a business is, including links from other websites and how many reviews it has, and Google says more reviews and positive ratings can help local ranking. (Source: Google Business Profile Help, 'Tips to improve your local ranking on Google')",
@@ -820,6 +820,16 @@
             "repeat customers local business"
           ],
           "brief": "Pillar 4 in depth. Keeping customers is cheaper than finding new ones: follow up, service reminders, staying in touch by email or text, thank yous, referral asks, and making it easy to come back."
+        },
+        {
+          "slug": "four-patterns-costing-local-businesses-customers",
+          "title": "4 Patterns That Quietly Cost Local Businesses Customers",
+          "contentType": "educational-article",
+          "keywords": [
+            "why is my business slow",
+            "why am I not getting calls small business"
+          ],
+          "brief": "A self diagnosis article built on the four patterns: the Invisible Expert, the Well-Known Commodity, the One-Time Wonder, and the Foundation Rebuild. For each, the signs an owner would notice, why it happens, a short realistic Sioux Falls example (described generally, never a real named business), and the first fix. Close with how to tell which pattern fits you."
         },
         {
           "slug": "google-business-profile-checklist-sioux-falls",

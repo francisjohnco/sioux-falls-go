@@ -22,6 +22,15 @@ Most Sioux Falls business owners did not start a business to become marketers. Y
 
 That is the whole game, and it breaks down into four pillars: **visibility, authority, reputation, and retention**. Every marketing tactic you have ever been pitched, from a new website to social media to ads, fits under one of these four. When all four are strong, a local business grows steadily. When one is weak, customers leak out somewhere, and no amount of spending on the other three fully patches the hole.
 
+Here is a useful way to see it. Every new customer takes the same short trip before they become a customer:
+
+1. **They search.** Can they find you? That is visibility.
+2. **They evaluate.** Do you look like the right business for the job? That is authority.
+3. **They decide and call.** Do other people vouch for you enough to make the call easy? That is reputation.
+4. **They come back and refer.** After the job, do they return and send their friends? That is retention.
+
+If the trip breaks at any step, the customer is gone, and you usually never find out it happened. That is why a lot of lost business looks like "slow season" when it is really a system with one weak link.
+
 This guide walks through each pillar, what it means for a business in Sioux Falls, and the first steps you can take this week.
 
 ## Why This Matters More in Sioux Falls Right Now
@@ -100,17 +109,26 @@ You may have noticed the website did not get its own pillar. That is not because
 
 What a website rarely does anymore is bring in customers all by itself. We explain the difference, and what a local business website must have, in [What Your Website Really Does for a Sioux Falls Business](/guides/what-your-website-does-for-a-local-business).
 
-## How to Tell Which Pillar Is Weakest
+## How the Four Pillars Feed Each Other
 
-Every business is strong somewhere and weak somewhere else. Here is a quick way to find your weak spot:
+The pillars are not separate projects. They push on each other, which is why fixing one often lifts another:
 
-- **Weak visibility:** few calls from people who have never heard of you, and you rarely show up when you search for your own service in Sioux Falls.
-- **Weak authority:** people find you, but you lose jobs to competitors on price, because customers cannot tell you apart.
-- **Weak reputation:** few recent reviews, unanswered reviews, or a rating noticeably lower than your competitors.
-- **Weak retention:** plenty of one-time customers, few repeat customers, and almost no referrals.
+- **Reputation lifts visibility.** Google counts reviews as part of prominence, so a steady flow of good reviews helps you show up more often.
+- **Authority lifts visibility.** Clear, detailed information about your services helps Google and AI tools understand exactly what you do, and helps you show up for more of the searches that matter.
+- **Retention lifts reputation.** Following up with customers after the job is the most natural moment to ask for a review, so a good retention habit keeps new reviews coming.
+- **Visibility decides whether the rest gets seen.** The best website and the best reviews in town do nothing if customers never find you in the first place.
 
-Fix the weakest pillar first. It is where you are losing the most customers today. Then build the rest steadily, because growth comes from consistency far more than from any single campaign. To see whether your changes are working, start with [How to Tell If Your Marketing Is Actually Working](/guides/track-marketing-results-local-business).
+## Four Patterns That Quietly Cost Local Businesses Customers
+
+Most businesses are strong somewhere and weak somewhere else, and the weak spot is often not the one the owner suspects. See if you recognize one of these:
+
+- **The Invisible Expert.** Years of great work, loyal customers, and strong reviews, but new customers rarely find you because you barely show up in search or the map results. Owners in this spot often assume they need more reviews, when the real gap is visibility. Fix visibility first.
+- **The Well-Known Commodity.** You show up everywhere, but your reviews are thin, old, or mixed, so people find you and then call someone else. Focus on reputation.
+- **The One-Time Wonder.** Plenty of new customers, almost no repeat business or referrals. Every month starts from zero. Build retention.
+- **The Foundation Rebuild.** Weak on all four. Start with visibility, because nothing else gets a chance until people can find you, then work through the others in order.
+
+Whatever your pattern, fix the weakest pillar first, not the one you are most comfortable working on. It is where you are losing the most customers today. Then build the rest steadily, because growth comes from consistency far more than from any single campaign. To see whether your changes are working, start with [How to Tell If Your Marketing Is Actually Working](/guides/track-marketing-results-local-business).
 
 ## The Short Version
 
-Visibility gets you found. Authority gets you chosen. Reputation gets you trusted. Retention brings people back and sends you their friends. A Sioux Falls business that works on all four, a little every month, does not have to chase customers. Customers find their way to it. If you want outside help, our guides on [how to choose a marketing agency in Sioux Falls](/guides/how-to-choose-a-marketing-agency-in-sioux-falls) and [what it costs to hire one](/guides/how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls) cover the questions to ask first.
+Visibility gets you found. Authority gets you chosen. Reputation makes the decision easy. Retention makes one customer worth three, because they come back and they send their friends. A Sioux Falls business that works on all four, a little every month, does not have to chase customers. Customers find their way to it. If you want outside help, our guides on [how to choose a marketing agency in Sioux Falls](/guides/how-to-choose-a-marketing-agency-in-sioux-falls) and [what it costs to hire one](/guides/how-much-does-it-cost-to-hire-a-marketing-agency-in-sioux-falls) cover the questions to ask first.
