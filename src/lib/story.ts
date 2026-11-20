@@ -26,11 +26,11 @@ function photoBlock(src: string, alt: string) {
 // Splits long paragraphs into short ones (about two sentences, never more
 // than about 55 words) so the story reads easily on a phone. Never cuts
 // inside a link or other tag.
-export function shortenParagraphs(html: string): string {
+export function shortenParagraphs(html: string, maxWords = 55, maxSentences = 2): string {
   return html.replace(/<p>([\s\S]*?)<\/p>/g, (whole, inner: string) => {
     if (/<(p|div|ul|ol|figure|blockquote|img)\b/i.test(inner)) return whole;
     const words = inner.replace(/<[^>]+>/g, '').split(/\s+/).length;
-    if (words <= 55) return whole;
+    if (words <= maxWords) return whole;
     // sentence ends: . ! ? (optionally followed by a closing quote or bracket), a space, then a capital or opening quote
     const cuts: number[] = [];
     const re = /[.!?]["”’)]?\s+(?=["“A-Z0-9])/g;
@@ -51,7 +51,7 @@ export function shortenParagraphs(html: string): string {
     let cur: string[] = [];
     const wc = (t: string) => t.replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length;
     for (const sentence of sentences.filter(Boolean)) {
-      if (cur.length && (cur.length >= 2 || wc(cur.join(' ')) + wc(sentence) > 55)) { out.push(cur.join(' ')); cur = []; }
+      if (cur.length && (cur.length >= maxSentences || wc(cur.join(' ')) + wc(sentence) > maxWords)) { out.push(cur.join(' ')); cur = []; }
       cur.push(sentence);
     }
     if (cur.length) out.push(cur.join(' '));

@@ -1,4 +1,5 @@
 ---
+import { shortenParagraphs } from '../../lib/story';
 import { getCollection, getEntry, render } from 'astro:content';
 import { getLiveArticles, isLive } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -44,7 +45,21 @@ const clusterSupports = pillar ? clusterLive.filter((a) => a.id !== pillar.id).s
 const siblings = clusterSupports.filter((a) => a.id !== article.id);
 
 // For splitting content around the sponsor banner, get the rendered HTML
-const rawHtml = unwrapUnpublishedLinks(article.rendered?.html ?? '');
+// Short paragraphs for phone reading (two sentences, about 45 words at most),
+// and a mid-article pointer to local pros at the heading nearest the middle.
+const categoryBusinessCount = (await getCollection('businesses')).filter((b) => b.data.category.id === category.id).length;
+function addMidCta(html: string): string {
+  if (!categoryBusinessCount) return html;
+  const heads = [...html.matchAll(/<h2[\s>]/g)].map((m) => m.index!);
+  if (heads.length < 3) return html;
+  const middle = html.length / 2;
+  const candidates = heads.slice(1, -1);
+  const at = candidates.reduce((best, i) => (Math.abs(i - middle) < Math.abs(best - middle) ? i : best), candidates[0]);
+  const lower = category.data.name.toLowerCase();
+  const cta = `<aside class="mid-cta"><span class="mid-cta-eyebrow">Local help</span><p class="mid-cta-title">Rather have a pro handle this?</p><p>Compare top-rated ${lower} in Sioux Falls, with hours, phone numbers, and real reviews in one place.</p><a class="mid-cta-btn" href="/${category.data.slug}">See top-rated ${lower} &rarr;</a></aside>`;
+  return html.slice(0, at) + cta + html.slice(at);
+}
+const rawHtml = addMidCta(shortenParagraphs(unwrapUnpublishedLinks(article.rendered?.html ?? ''), 45, 2));
 const firstParaEnd = rawHtml.indexOf('</p>');
 const introHtml = firstParaEnd !== -1 ? rawHtml.slice(0, firstParaEnd + 4) : '';
 const restHtml = firstParaEnd !== -1 ? rawHtml.slice(firstParaEnd + 4) : rawHtml;
@@ -366,4 +381,10 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
   .related-tag { font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-orange); }
   .related-card h3 { font-size: 1.0625rem; margin: 0.3rem 0 0.35rem; }
   .related-card p { color: var(--color-navy-light); font-size: 0.9375rem; margin: 0; }
+  .prose :global(.mid-cta) { margin: var(--space-4) 0; padding: 1.2rem 1.3rem; border-radius: 1rem; background: var(--color-river-light); border-left: 4px solid var(--color-orange); }
+  .prose :global(.mid-cta-eyebrow) { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-orange-dark); }
+  .prose :global(.mid-cta-title) { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--color-navy); margin: 0.25rem 0 0.35rem; }
+  .prose :global(.mid-cta p) { margin: 0 0 0.8rem; }
+  .prose :global(.mid-cta-btn) { display: inline-block; background: var(--color-orange); color: #fff !important; font-weight: 700; padding: 0.6rem 1.1rem; border-radius: 0.6rem; text-decoration: none; }
+  .prose :global(.mid-cta-btn:hover) { background: var(--color-orange-dark); }
 </style>
