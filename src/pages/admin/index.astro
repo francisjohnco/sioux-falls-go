@@ -1578,6 +1578,70 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .gsc-widget, .attention-item { border-left: 4px solid #2E6F9E; }
 </style>
 
+
+<style is:global>
+  /* ── Admin design system: one layer every tab shares, including rows added by script ── */
+  .admin-main input[type=text], .admin-main input[type=search], .admin-main input[type=email], .admin-main input[type=url],
+  .admin-main input[type=number], .admin-main input[type=date], .admin-main input[type=tel], .admin-main input:not([type]),
+  .admin-main select, .admin-main textarea {
+    padding: 0.62rem 0.8rem; border: 1px solid #CBD3E0; border-radius: 0.6rem; background: #fff; font: inherit; font-size: 0.92rem;
+    color: var(--color-ink); transition: border-color 0.15s, box-shadow 0.15s; max-width: 100%;
+  }
+  .admin-main input:focus, .admin-main select:focus, .admin-main textarea:focus { outline: none; border-color: var(--color-orange); box-shadow: 0 0 0 3px rgba(240,126,35,0.18); }
+  .admin-main .directory-search, .admin-main .search-input { border-radius: 99px !important; padding-left: 1.1rem !important; min-height: 2.75rem; }
+
+  .admin-main .button--ghost { border: 1.5px solid #D5DCE7; background: #fff; color: var(--color-navy); }
+  .admin-main .button--ghost:hover { border-color: var(--color-orange); color: var(--color-orange-dark); background: #FFF8F1; }
+
+  /* Cards */
+  .admin-main .gsc-widget, .admin-main .gap-queue-section, .admin-main .pending-draft-card, .admin-main .biz-table, .admin-main .hp, .admin-main .cm {
+    border-radius: 1rem; box-shadow: 0 4px 18px rgba(27,42,74,0.05);
+  }
+  .admin-main .gap-queue-section { padding: 1.1rem 1.3rem; border-left: 4px solid #1baf7a; }
+
+  /* Content Engine priority queue */
+  .gap-queue-list { gap: 0.55rem !important; }
+  .gap-item { display: grid; grid-template-columns: 2.2rem 1fr auto; align-items: center; gap: 0.8rem; padding: 0.75rem 0.9rem;
+    background: #fff; border: 1px solid var(--color-line); border-radius: 0.8rem; border-left: 4px solid var(--rank, #2a78d6); transition: box-shadow 0.15s; }
+  .gap-item:hover { box-shadow: 0 6px 18px rgba(27,42,74,0.08); }
+  .gap-item:nth-child(1) { --rank: #F07E23; } .gap-item:nth-child(2) { --rank: #eda100; } .gap-item:nth-child(3) { --rank: #1baf7a; } .gap-item:nth-child(4) { --rank: #2a78d6; } .gap-item:nth-child(5) { --rank: #6250d6; }
+  .gap-rank { width: 2.2rem; height: 2.2rem; border-radius: 50%; display: grid; place-items: center; background: var(--rank, #2a78d6); color: #fff;
+    font-family: var(--font-display); font-weight: 800; }
+  .gap-item strong { color: var(--color-navy); font-size: 0.98rem; }
+  .gap-item p { margin: 0.15rem 0 0; font-size: 0.82rem; color: var(--color-navy-light); }
+
+  /* Pending drafts */
+  .pending-draft-card { border-left: 4px solid #eda100 !important; }
+  .pending-draft-note { background: #FFF4D6; padding: 0.3rem 0.6rem; border-radius: 0.4rem; display: inline-block; }
+
+  /* Article list */
+  .article-row { border-radius: 0.75rem !important; padding: 0.75rem 1rem !important; border-left: 4px solid #D5DCE7 !important; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+  .article-row:hover { border-left-color: var(--color-orange) !important; box-shadow: 0 6px 18px rgba(27,42,74,0.08); transform: translateX(2px); }
+  .article-row-title { font-weight: 700; color: var(--color-navy); }
+  .article-row-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; margin-top: 0.25rem; font-size: 0.78rem; color: var(--color-navy-light); }
+  .sched-chip { background: #FFF4D6; color: #8A6100; border-radius: 99px; padding: 0.1rem 0.55rem; font-weight: 700; }
+  .sponsor-chip { background: #FDEBDD; color: #B4560B; border-radius: 99px; padding: 0.1rem 0.55rem; font-weight: 700; }
+
+  /* Tables: Directory and Stays */
+  .admin-main .biz-row--header { background: linear-gradient(90deg, #1B2A4A, #2E4470) !important; color: #fff !important; }
+  .admin-main .biz-row--header a { color: #FFD9A8 !important; }
+  .admin-main .biz-row:not(.biz-row--header):hover { background: #FAFBFD; }
+  #panel-stays .biz-row { background: #fff; border: 1px solid var(--color-line); }
+  #panel-stays .biz-row--header { border-radius: 1rem 1rem 0 0; }
+  #panel-stays .biz-row:last-child { border-radius: 0 0 1rem 1rem; }
+  .admin-main .biz-name--link { color: var(--color-navy); font-weight: 700; }
+  .admin-main .biz-name--link:hover { color: var(--color-orange-dark); }
+
+  /* Empty and loading states */
+  .admin-main .empty-note { background: #fff; border: 1px dashed #CBD3E0; border-radius: 0.8rem; padding: 0.9rem 1rem; color: var(--color-navy-light); }
+
+  /* Edit modals */
+  .edit-modal { border-radius: 1.1rem !important; overflow: hidden; }
+  .edit-modal-header { background: linear-gradient(100deg, #1B2A4A, #2E6F9E) !important; color: #fff !important; }
+  .edit-modal-header h2 { color: #fff !important; }
+  .edit-modal-close { color: #fff !important; }
+</style>
+
 <script>
   import { planNextSlot, chicagoToday } from '../../../netlify/functions/_shared/schedule.mts';
   const scheduledDates: string[] = JSON.parse(document.getElementById('schedule-data')?.dataset.dates || '[]');
