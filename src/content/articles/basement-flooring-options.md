@@ -16,6 +16,13 @@ updatedAt: 2026-11-18
 seo:
   title: "Best Basement Flooring for Sioux Falls Homes 2025"
   description: "Sioux Falls basements need moisture-proof, cold-tolerant floors. Here's what works, what fails, and how to prep concrete before you buy anything."
+heroImage: "https://images.pexels.com/photos/36777934/pexels-photo-36777934.jpeg"
+heroImageAlt: "Spacious basement room featuring stylish decor, large couch, and TV setup."
+heroImageCredit:
+  photographer: "Curtis Adams"
+  profileUrl: "https://www.pexels.com/@curtis-adams-1694007"
+  source: "Pexels"
+heroImageLocked: true
 ---
 
 Sioux Falls basements are not like basements in drier climates. Concrete slabs here sit below a frost line that the City of Sioux Falls sets at 42 inches, meaning the ground around your foundation heaves, shifts, and releases moisture in ways that can quietly destroy the wrong floor choice.
