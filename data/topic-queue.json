@@ -972,6 +972,242 @@
           "brief": "Exactly 7 numbered mistakes (wrong or incomplete categories, inconsistent business info, ignoring reviews, no service pages, no photos, chasing vanity keywords, setting and forgetting), each with the fix."
         }
       ]
+    },
+    {
+      "cluster": "roofing-sioux-falls",
+      "campaign": "Roof repair and replacement in Sioux Falls",
+      "category": "roofing",
+      "categoryName": "Roofing",
+      "relatedBusinesses": [],
+      "publishWeekdays": [
+        0,
+        6
+      ],
+      "bufferTarget": 3,
+      "note": "For homeowners. Ten articles backdated about every three days from October 23 to November 20, 2026, then the rest on Saturdays and Sundays.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for roofers. Start from the real situation and worries in the voice-of-the-customer notes (insurance pushback, short checks, storm chasers, run-around, leaks, winter timing) and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend a roofing company. Do not invent statistics, prices, insurance rules, or warranty terms; when something depends on the policy or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "In Sioux Falls, shingle work on homes requires a building permit, and a contractor doing it must hold a city Residential Roofing and Repair Contractor license (or the broader Residential Building Contractor license). That license requires a $20,000 compliance bond made to the City of Sioux Falls and at least $300,000 in general liability insurance. Homeowners can call Building Services licensing at 605-367-8670. (Source: City of Sioux Falls, Residential Roofing and Repair Contractor page)",
+        "The South Dakota Attorney General's consumer protection office warns homeowners after hailstorms: do not be pressured into a quick agreement, ask for proof of insurance or bond, get a written contract with the work and price, be cautious of cash only terms, do not pay in full before the job is done, call local references, and ask to see a current South Dakota sales or contractor's excise tax license. Door to door sales contracts typically carry a three day right to cancel, with a refund due within 10 days of cancellation. Consumer Protection: 1-800-300-1986. (Source: South Dakota Attorney General, hailstorm scam alert)",
+        "The South Dakota Division of Insurance tells homeowners filing a claim to read their policy, file promptly because policies can set notice deadlines, make temporary repairs to prevent more damage and keep the receipts, not make permanent repairs before contacting the insurer, photograph damage, keep a log of every contact, and ask for an itemized explanation of any settlement. Insurers must respond to claim communications within 30 days. Division of Insurance: 605-773-3563. (Source: SD Division of Insurance, claims process guidance)",
+        "On July 25, 2026, storms brought a 72 mph gust at the Sioux Falls airport and 77 mph near Harrisburg, with widespread tree and fence damage and some roof damage in the southern Sioux Falls metro. (Source: National Weather Service Sioux Falls)",
+        "In January 2023, after winter storms, roof rakes and ice melt sold out in Sioux Falls; one local hardware store said its 150 roof rakes sold out in about two days, and roofing experts advised calling a professional when heavy ice builds up. (Source: Dakota News Now, January 2023)",
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local roofers (never quote or name them): insurance refusing to cover an older roof after years of hail; the insurance payment coming up short and needing a roofer willing to wait for the final check; wanting a roofer who deals with the adjuster for them; getting the run-around from several roofers with winter coming; small repairs other roofers did not want; wind lifting shingles on a weekend; leaks into garages after heavy rain; low-slope tar and gravel roofs that few roofers would quote; wanting honest answers instead of sugarcoating during a pre-purchase inspection; valuing clear timelines, crews protecting landscaping, same-day cleanup and dumpster removal, and follow-up after the job."
+      ],
+      "pillar": {
+        "slug": "roof-repair-replacement-sioux-falls",
+        "title": "Roof Repair and Replacement in Sioux Falls, the Complete Guide",
+        "contentType": "buying-guide",
+        "publishDate": "2026-10-23",
+        "keywords": [
+          "roof repair Sioux Falls",
+          "roof replacement Sioux Falls",
+          "roofers Sioux Falls SD",
+          "Sioux Falls roofing"
+        ],
+        "brief": "The homeowner's roadmap: how Sioux Falls weather (hail, wind, ice dams, freeze and thaw) wears roofs, the signs of trouble, repair versus replace, hail and insurance claims, avoiding storm chasers, choosing a licensed roofer, what it costs and why, what install day looks like, warranties, and winter timing. Each section points to the supporting article. Lead with the worries homeowners actually have."
+      },
+      "topics": [
+        {
+          "slug": "hail-damage-roof-sioux-falls-first-steps",
+          "title": "Hail Hit Your Sioux Falls Roof? What to Do in the First 48 Hours",
+          "contentType": "checklist",
+          "keywords": [
+            "hail damage roof Sioux Falls",
+            "what to do after hail storm roof"
+          ],
+          "brief": "A step by step first 48 hours: stay safe and off the roof, photograph damage from the ground (gutters, vents, siding, car), make temporary repairs and keep receipts, read the policy, file promptly, do not sign anything at the door, and how to get a legitimate inspection. Use the Division of Insurance and Attorney General facts.",
+          "publishDate": "2026-10-26"
+        },
+        {
+          "slug": "roof-insurance-claim-south-dakota",
+          "title": "How a Roof Insurance Claim Works in South Dakota",
+          "contentType": "educational-article",
+          "keywords": [
+            "roof insurance claim South Dakota",
+            "hail claim roof Sioux Falls"
+          ],
+          "brief": "Walk the homeowner through a claim from first call to final check: deductible, adjuster inspection, having your roofer present, the estimate, supplements, payments in stages, and what to do if you disagree or are denied (itemized explanation, Division of Insurance). Address the real worry of insurance refusing older roofs. No invented policy terms.",
+          "publishDate": "2026-10-29"
+        },
+        {
+          "slug": "storm-chasers-sioux-falls-roofing-scams",
+          "title": "Storm Chasers After Sioux Falls Hail, How to Spot Them",
+          "contentType": "safety-information",
+          "keywords": [
+            "storm chasers roofing Sioux Falls",
+            "roofing scams South Dakota"
+          ],
+          "brief": "The door knock pattern after a storm, red flags (pressure, cash only, out of state plates, no city license, asking you to sign an insurance agreement on the spot, big deposits), the three day cancel right, checking the city license and the state tax license, and who to call. Use the Attorney General and city license facts.",
+          "publishDate": "2026-11-01"
+        },
+        {
+          "slug": "roof-replacement-cost-sioux-falls",
+          "title": "Roof Replacement Cost in Sioux Falls, What Drives the Price",
+          "contentType": "cost-guide",
+          "keywords": [
+            "roof replacement cost Sioux Falls",
+            "how much is a new roof Sioux Falls"
+          ],
+          "brief": "What actually changes the price: roof size and pitch, layers to tear off, decking repairs found after tear-off, materials (architectural, impact resistant, metal, low slope systems), ventilation, flashing, permits, access, and season. How insurance changes what you pay (deductible). How to compare bids line by line. No invented price figures.",
+          "publishDate": "2026-11-04"
+        },
+        {
+          "slug": "how-to-choose-a-roofer-sioux-falls",
+          "title": "How to Choose a Roofer in Sioux Falls, Questions to Ask",
+          "contentType": "buying-guide",
+          "keywords": [
+            "best roofers Sioux Falls",
+            "how to choose a roofing contractor"
+          ],
+          "brief": "A vetting process built from what homeowners value in reviews: city license and bond, insurance, local address, written contract, who manages the job, timeline communication, landscaping protection and cleanup, working with your insurance adjuster, warranty in writing, and follow-up. A list of questions to ask and answers that should worry you.",
+          "publishDate": "2026-11-07"
+        },
+        {
+          "slug": "repair-or-replace-roof-sioux-falls",
+          "title": "Repair or Replace Your Roof? A Sioux Falls Homeowner's Guide",
+          "contentType": "comparison",
+          "keywords": [
+            "repair or replace roof",
+            "how long does a roof last South Dakota"
+          ],
+          "brief": "Signs a repair is enough versus signs of replacement: age, curling or missing shingles, granule loss, repeated leaks, soft decking, hail bruising, multiple layers. Spot repairs on an older roof and matching shingles. When a second opinion is wise, including the small-repair problem homeowners describe.",
+          "publishDate": "2026-11-10"
+        },
+        {
+          "slug": "ice-dams-sioux-falls-roof",
+          "title": "Ice Dams on Sioux Falls Roofs, Prevention and Safe Fixes",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "ice dams Sioux Falls",
+            "how to prevent ice dams"
+          ],
+          "brief": "What ice dams are and why they form here (heat loss, attic insulation and ventilation, freeze and thaw), signs inside and out, safe steps (roof rake from the ground, no chipping, no climbing), when to call a pro, and long-term fixes. Use the 2023 roof rake sellout fact.",
+          "publishDate": "2026-11-13"
+        },
+        {
+          "slug": "wind-damage-shingles-sioux-falls",
+          "title": "Wind Damage to Shingles After a Sioux Falls Storm",
+          "contentType": "checklist",
+          "keywords": [
+            "wind damaged shingles",
+            "roof wind damage Sioux Falls"
+          ],
+          "brief": "How wind damages shingles (lifted, creased, missing), what to check from the ground, temporary protection, filing with insurance, and timing repairs. Use the July 25, 2026 wind event facts.",
+          "publishDate": "2026-11-16"
+        },
+        {
+          "slug": "replace-roof-in-winter-sioux-falls",
+          "title": "Can You Replace a Roof in a Sioux Falls Winter?",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "roof replacement in winter",
+            "winter roofing South Dakota"
+          ],
+          "brief": "What winter changes: shingle sealing in cold, adhesives, safety, shorter days, scheduling, emergency repairs and tarps, when waiting until spring is fine and when it is not. Address the run-around homeowners get when winter is coming.",
+          "publishDate": "2026-11-20"
+        },
+        {
+          "slug": "roof-insurance-depreciation-explained",
+          "title": "Why Your Roof Insurance Check Came Up Short",
+          "contentType": "educational-article",
+          "keywords": [
+            "recoverable depreciation roof",
+            "insurance check roof replacement"
+          ],
+          "brief": "Explain in plain terms why a first payment can be less than the full cost (deductible, depreciation on some policies, payments released after work is done), what to ask the insurer, keeping invoices, and why some roofers wait for the final check. Policies differ, so tell readers to check theirs."
+        },
+        {
+          "slug": "sioux-falls-roofing-permit-license-check",
+          "title": "Sioux Falls Roofing Permits and Licenses, What to Check",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls roofing permit",
+            "licensed roofer Sioux Falls"
+          ],
+          "brief": "Shingle work needs a permit; the contractor needs the city license with its bond and insurance; how to check; why it protects you (inspection, accountability) and what happens with unpermitted work. Homes outside city limits follow their own city or county."
+        },
+        {
+          "slug": "impact-resistant-shingles-sioux-falls",
+          "title": "Impact-Resistant Shingles in Sioux Falls, Worth It?",
+          "contentType": "comparison",
+          "keywords": [
+            "impact resistant shingles",
+            "class 4 shingles Sioux Falls"
+          ],
+          "brief": "What impact-resistant ratings mean, pros and cons, cost difference in general terms, asking your insurer about possible premium credits (do not promise one), and who benefits most in hail country."
+        },
+        {
+          "slug": "roof-inspection-buying-home-sioux-falls",
+          "title": "Roof Inspections When Buying a Sioux Falls Home",
+          "contentType": "checklist",
+          "keywords": [
+            "roof inspection before buying house",
+            "home inspection roof"
+          ],
+          "brief": "Why a roofer's inspection adds to a general home inspection, what to look for, questions to ask the seller (age, claims, permits), negotiating repairs, and wanting honest answers rather than sugarcoating."
+        },
+        {
+          "slug": "low-slope-flat-roof-sioux-falls",
+          "title": "Low-Slope and Flat Roofs in Sioux Falls, Options and Fixes",
+          "contentType": "comparison",
+          "keywords": [
+            "flat roof repair Sioux Falls",
+            "low slope roof replacement"
+          ],
+          "brief": "Tar and gravel, modified bitumen, EPDM, TPO in plain words; leaks and ponding; snow load; why some roofers will not quote them; questions for a contractor."
+        },
+        {
+          "slug": "roof-leak-after-heavy-rain",
+          "title": "Roof Leaking After Heavy Rain? Common Causes and Fixes",
+          "contentType": "checklist",
+          "keywords": [
+            "roof leak after rain",
+            "garage roof leak"
+          ],
+          "brief": "Find the source (flashing, vents, valleys, skylights, gutters, ice damage), temporary steps, what a roofer will check, and why the leak spot inside is often not where the problem is."
+        },
+        {
+          "slug": "what-to-expect-roof-replacement-day",
+          "title": "What to Expect on Roof Replacement Day",
+          "contentType": "checklist",
+          "keywords": [
+            "what to expect roof replacement",
+            "roof replacement prep"
+          ],
+          "brief": "Prep the night before (cars, attic items, patio furniture, pets, kids), noise, how long it takes, the dumpster, protecting landscaping, magnet sweep for nails, final walkthrough, and paperwork to keep."
+        },
+        {
+          "slug": "roof-warranty-explained",
+          "title": "Roof Warranties Explained, Manufacturer vs Workmanship",
+          "contentType": "educational-article",
+          "keywords": [
+            "roof warranty",
+            "roofing workmanship warranty"
+          ],
+          "brief": "The difference between the shingle maker's warranty and the roofer's workmanship warranty, registration, what voids coverage, transferring when you sell, and getting it in writing. No invented terms."
+        },
+        {
+          "slug": "attic-ventilation-roof-lifespan",
+          "title": "Attic Ventilation and Your Roof's Lifespan",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "attic ventilation roof",
+            "roof vents winter"
+          ],
+          "brief": "How intake and exhaust ventilation and insulation affect shingle life, ice dams, and moisture; signs of poor ventilation; what to ask during a replacement."
+        },
+        {
+          "slug": "sioux-falls-roofing-faq",
+          "title": "Sioux Falls Roofing FAQ, Straight Answers",
+          "contentType": "faq",
+          "keywords": [
+            "roofing questions",
+            "Sioux Falls roof FAQ"
+          ],
+          "brief": "Twelve to fifteen real homeowner questions answered in 2 to 4 sentences each, linking to the deeper articles."
+        }
+      ]
     }
   ]
 }

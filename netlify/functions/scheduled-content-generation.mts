@@ -171,7 +171,11 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
 
   if (autoPublish && problems.length === 0) {
     const clusterDates = articleIndex.filter((a) => a.cluster === cluster).map((a) => a.publishedAt).filter(Boolean);
-    const publishDate = planClusterSlot(clusterDates, chicagoToday(), queue.publishWeekdays || PUBLISH_WEEKDAYS, queue.firstPublishDate, queue.everyNDays);
+    // A topic can carry its own date (used to backfill a series into the past);
+    // otherwise it takes the series' next open slot.
+    const publishDate = next.publishDate && /^\d{4}-\d{2}-\d{2}$/.test(next.publishDate)
+      ? next.publishDate
+      : planClusterSlot(clusterDates, chicagoToday(), queue.publishWeekdays || PUBLISH_WEEKDAYS, queue.firstPublishDate, queue.everyNDays);
     const file = buildArticleFile({ draft: withImage, categorySlug, contentType: next.contentType, relatedBusinesses, publishDate, slug: next.slug, cluster, clusterRole: isPillar ? 'pillar' : 'support' });
     const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
     if (res.ok) {
@@ -264,6 +268,6 @@ async function runGapDriven(siteUrl: string, articleIndex: any[], pending: any[]
 }
 
 export const config = {
-  schedule: '7 * * * *', // hourly; it only writes when a series is running low
+  schedule: '7,27,47 * * * *', // every 20 minutes; it only writes when a series is running low or backfilling
   background: true, // generation can take longer than the 10s synchronous limit
 };
