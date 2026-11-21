@@ -27,8 +27,7 @@ const FALLBACK_BY_GROUP: [RegExp, string][] = [
   [/real-estate|mortgage|property|home-inspectors|custom-home/, '/images/stock/real-estate-keys.jpg'],
   [/lawn|landscap|tree|pressure-washing|window-cleaning/, '/images/stock/lawn-mower.jpg'],
   [/shopping|retail|boutique|gift|for-local-businesses|grow-with-sfg|marketing|spotlight/, '/images/stock/shop-local-chalkboard.jpg'],
-  [/plumb|electric|hvac|roof|paint|floor|clean|appliance|handyman|remodel|home|garage|concrete|pest|carpet/, '/images/scenic/mckennan-park.jpg'],
-  [/for-locals|consumer|community|local-news/, '/images/scenic/downtown-2.jpg'],
+    [/for-locals|consumer|community|local-news/, '/images/scenic/downtown-2.jpg'],
 ];
 const DEFAULT_FALLBACK = '/images/scenic/falls-park-golden.jpg';
 const FALLBACK_ALT: Record<string, string> = {
@@ -36,7 +35,6 @@ const FALLBACK_ALT: Record<string, string> = {
   '/images/stock/real-estate-keys.jpg': 'Real estate agent handing house keys to a couple',
   '/images/stock/lawn-mower.jpg': 'Lawn mower on freshly cut green grass',
   '/images/stock/shop-local-chalkboard.jpg': 'Chalkboard sign reading thank you for shopping local',
-  '/images/scenic/mckennan-park.jpg': 'McKennan Park sign and pine trees in Sioux Falls',
   '/images/scenic/downtown-2.jpg': 'Downtown Sioux Falls and the Big Sioux River at sunset',
   '/images/scenic/falls-park-golden.jpg': 'Waterfalls at Falls Park in Sioux Falls',
 };

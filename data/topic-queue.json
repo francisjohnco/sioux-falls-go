@@ -1208,6 +1208,808 @@
           "brief": "Twelve to fifteen real homeowner questions answered in 2 to 4 sentences each, linking to the deeper articles."
         }
       ]
+    },
+    {
+      "cluster": "hvac-sioux-falls",
+      "campaign": "Heating and cooling in Sioux Falls",
+      "category": "hvac",
+      "categoryName": "HVAC",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. All 20 articles backdated, completed November 17, 2026.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, or warranty terms; when something depends on the home, the policy, or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "Sioux Falls requires separate electrical, plumbing, and mechanical (heating and air conditioning) permits; a building permit does not cover that work unless licensed electrical, mechanical, and plumbing contractors do it. An owner who lives in and owns a single-family home and does the work personally must pull those permits. The city licenses electrical, plumbing, and mechanical contractors; homeowners can verify a contractor at 605-367-8672 or on the city's Currently Licensed Contractors list, and look up permits on the city's permit site, which updates every Sunday. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Call 811 (South Dakota One Call) before any digging so underground utilities are marked. (Source: City of Sioux Falls)",
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local HVAC companies (never quote or name them): being quoted very different prices for the same repair and saving a lot with a second opinion; wanting same-day service when the AC or furnace quits; valuing technicians who explain options without pressure and teach them how to use a new system; fall furnace checks and filter changes; adding whole-home humidifiers; duct cleaning with before and after photos, and paying for duct work that did not seem done; boot covers and floor protection, and sticky residue left from floor protection; trouble getting appointments with several companies; panel capacity limits when adding an electric heat pump; honesty about substantial costs."
+      ],
+      "pillar": {
+        "slug": "hvac-guide-sioux-falls",
+        "title": "Heating and Cooling in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "publishDate": "2026-10-01",
+        "keywords": [
+          "HVAC Sioux Falls",
+          "furnace repair Sioux Falls",
+          "AC repair Sioux Falls",
+          "heating and cooling Sioux Falls"
+        ],
+        "brief": "The homeowner's roadmap: how Sioux Falls winters and summers work a system, signs of trouble, repair or replace, cost drivers, choosing a company, permits, maintenance, safety, and comfort upgrades. Each section points to the supporting article."
+      },
+      "topics": [
+        {
+          "slug": "furnace-not-working-sioux-falls",
+          "title": "Furnace Not Working? What to Check Before You Call",
+          "contentType": "checklist",
+          "keywords": [
+            "furnace not working",
+            "furnace won't turn on"
+          ],
+          "brief": "Safe checks a homeowner can do (thermostat, filter, breaker, switch, gas valve, condensate line, blinking codes), when to stop and call, carbon monoxide warning signs, and what to tell the technician.",
+          "publishDate": "2026-10-03"
+        },
+        {
+          "slug": "furnace-repair-or-replace-sioux-falls",
+          "title": "Repair or Replace Your Furnace? A Sioux Falls Guide",
+          "contentType": "comparison",
+          "keywords": [
+            "repair or replace furnace",
+            "how long does a furnace last"
+          ],
+          "brief": "Age, repair history, efficiency, safety, comfort problems, and the second opinion question when a big repair is quoted. Use the VOC about very different quotes for the same part.",
+          "publishDate": "2026-10-06"
+        },
+        {
+          "slug": "hvac-replacement-cost-sioux-falls",
+          "title": "New Furnace and AC Cost in Sioux Falls, What Drives the Price",
+          "contentType": "cost-guide",
+          "keywords": [
+            "furnace replacement cost Sioux Falls",
+            "new AC cost"
+          ],
+          "brief": "What changes the price: equipment type and efficiency, sizing, ductwork, venting, electrical, permits, add-ons like humidifiers and air cleaners, and season. How to compare bids line by line. No invented price figures.",
+          "publishDate": "2026-10-08"
+        },
+        {
+          "slug": "how-to-choose-hvac-company-sioux-falls",
+          "title": "How to Choose an HVAC Company in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "best HVAC company Sioux Falls",
+            "furnace company Sioux Falls"
+          ],
+          "brief": "License check, mechanical permit, load calculation instead of sizing by the old unit, written quotes, explaining options without pressure, floor protection and cleanup, warranty registration, and service after install.",
+          "publishDate": "2026-10-11"
+        },
+        {
+          "slug": "furnace-tune-up-before-winter",
+          "title": "Is a Furnace Tune-Up Before Winter Worth It?",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "furnace tune up",
+            "furnace maintenance before winter"
+          ],
+          "brief": "What a real tune-up includes, why fall timing matters in Sioux Falls, what you can do yourself (filters), maintenance plans, and red flags like a tune-up that turns into a hard sell.",
+          "publishDate": "2026-10-13"
+        },
+        {
+          "slug": "frozen-pipes-and-furnace-failure-cold-snap",
+          "title": "What to Do When Your Furnace Quits in a Sioux Falls Cold Snap",
+          "contentType": "safety-information",
+          "keywords": [
+            "furnace out in winter",
+            "no heat emergency"
+          ],
+          "brief": "Keep the house safe: protecting pipes, safe space heater use, carbon monoxide, when to call for emergency service, after-hours fees, and what to ask on the phone.",
+          "publishDate": "2026-10-16"
+        },
+        {
+          "slug": "ac-not-cooling-sioux-falls",
+          "title": "AC Not Cooling? Common Causes and Quick Checks",
+          "contentType": "checklist",
+          "keywords": [
+            "AC not cooling",
+            "air conditioner blowing warm air"
+          ],
+          "brief": "Filter, thermostat, breaker, outdoor unit airflow, frozen coil, refrigerant leaks, and when to call. Same-day service expectations from the VOC.",
+          "publishDate": "2026-10-18"
+        },
+        {
+          "slug": "heat-pump-sioux-falls-winters",
+          "title": "Do Heat Pumps Work in Sioux Falls Winters?",
+          "contentType": "comparison",
+          "keywords": [
+            "heat pump cold climate",
+            "heat pump South Dakota"
+          ],
+          "brief": "Cold-climate heat pumps versus furnaces, dual fuel setups, electrical panel capacity (VOC about panel limits), comfort, and questions to ask. No invented efficiency numbers.",
+          "publishDate": "2026-10-21"
+        },
+        {
+          "slug": "furnace-filter-guide",
+          "title": "Furnace Filters, Which One and How Often",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "furnace filter how often",
+            "best furnace filter"
+          ],
+          "brief": "Filter sizes and ratings in plain terms, airflow tradeoffs, how often to change in Sioux Falls seasons, pets and remodeling dust, and setting reminders.",
+          "publishDate": "2026-10-23"
+        },
+        {
+          "slug": "whole-home-humidifier-sioux-falls",
+          "title": "Is a Whole-Home Humidifier Worth It in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "whole house humidifier",
+            "dry air winter"
+          ],
+          "brief": "Why winter air gets so dry, symptoms in the home, whole-home versus portable, maintenance, and avoiding window condensation.",
+          "publishDate": "2026-10-26"
+        },
+        {
+          "slug": "hvac-second-opinion",
+          "title": "When to Get a Second Opinion on an HVAC Repair",
+          "contentType": "buying-guide",
+          "keywords": [
+            "HVAC second opinion",
+            "furnace repair quote too high"
+          ],
+          "brief": "Signs a quote deserves a second look, what to ask for in writing (part, labor, diagnosis), and how to compare honestly. Built on the VOC about a large price difference for the same part.",
+          "publishDate": "2026-10-28"
+        },
+        {
+          "slug": "duct-cleaning-worth-it",
+          "title": "Is Duct Cleaning Worth It? What to Expect",
+          "contentType": "educational-article",
+          "keywords": [
+            "duct cleaning worth it",
+            "air duct cleaning Sioux Falls"
+          ],
+          "brief": "When it makes sense (after remodels, pests, visible debris, new system), what a thorough job looks like (before and after photos), red flags from the VOC about paying for work not done.",
+          "publishDate": "2026-10-31"
+        },
+        {
+          "slug": "carbon-monoxide-safety-furnace",
+          "title": "Carbon Monoxide and Your Furnace, What Every Homeowner Should Know",
+          "contentType": "safety-information",
+          "keywords": [
+            "carbon monoxide furnace",
+            "CO detector placement"
+          ],
+          "brief": "How CO happens, detectors and placement, warning signs, what to do if an alarm sounds, and the role of annual inspections.",
+          "publishDate": "2026-11-02"
+        },
+        {
+          "slug": "hvac-maintenance-plans-explained",
+          "title": "HVAC Maintenance Plans, Are They Worth Paying For?",
+          "contentType": "comparison",
+          "keywords": [
+            "HVAC maintenance plan",
+            "furnace service plan"
+          ],
+          "brief": "What plans usually include, priority scheduling, discounts, the fine print, and how to judge value for your home.",
+          "publishDate": "2026-11-05"
+        },
+        {
+          "slug": "thermostat-settings-winter-sioux-falls",
+          "title": "Thermostat Settings for a Sioux Falls Winter",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "best thermostat setting winter",
+            "smart thermostat"
+          ],
+          "brief": "Comfort versus savings, setbacks, smart thermostats, vacations and pipes, and heat pump thermostat tips. No invented savings percentages.",
+          "publishDate": "2026-11-07"
+        },
+        {
+          "slug": "new-hvac-install-day-what-to-expect",
+          "title": "What to Expect When Your New Furnace or AC Is Installed",
+          "contentType": "checklist",
+          "keywords": [
+            "HVAC installation what to expect",
+            "furnace install day"
+          ],
+          "brief": "Prep, how long it takes, permits and inspection, floor protection, startup and walkthrough, warranty registration, and paperwork to keep.",
+          "publishDate": "2026-11-10"
+        },
+        {
+          "slug": "uneven-heating-cold-rooms",
+          "title": "Cold Rooms and Uneven Heat, Causes and Fixes",
+          "contentType": "educational-article",
+          "keywords": [
+            "uneven heating house",
+            "cold room fix"
+          ],
+          "brief": "Ductwork, dampers, returns, insulation, windows, zoning, and what an HVAC company should check before selling new equipment.",
+          "publishDate": "2026-11-12"
+        },
+        {
+          "slug": "ac-replacement-timing-sioux-falls",
+          "title": "When to Replace Your AC in Sioux Falls",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "when to replace air conditioner",
+            "AC replacement timing"
+          ],
+          "brief": "Age and refrigerant considerations in general terms, matching with the furnace, and scheduling before summer demand.",
+          "publishDate": "2026-11-15"
+        },
+        {
+          "slug": "sioux-falls-hvac-faq",
+          "title": "Sioux Falls HVAC FAQ, Straight Answers",
+          "contentType": "faq",
+          "keywords": [
+            "HVAC questions",
+            "furnace FAQ"
+          ],
+          "brief": "Twelve to fifteen real homeowner questions answered in 2 to 4 sentences, linking to the deeper articles.",
+          "publishDate": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "cluster": "electrical-sioux-falls",
+      "campaign": "Home electrical work in Sioux Falls",
+      "category": "electricians",
+      "categoryName": "Electricians",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Three articles backdated, then one a week.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, or warranty terms; when something depends on the home, the policy, or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "Sioux Falls requires separate electrical, plumbing, and mechanical (heating and air conditioning) permits; a building permit does not cover that work unless licensed electrical, mechanical, and plumbing contractors do it. An owner who lives in and owns a single-family home and does the work personally must pull those permits. The city licenses electrical, plumbing, and mechanical contractors; homeowners can verify a contractor at 605-367-8672 or on the city's Currently Licensed Contractors list, and look up permits on the city's permit site, which updates every Sunday. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Call 811 (South Dakota One Call) before any digging so underground utilities are marked. (Source: City of Sioux Falls)",
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local electricians (never quote or name them): new homeowners who know little about electrical and want patient explanations; a verbal quote that grew on the invoice months later; paying holiday pricing or waiting days without power; a storm laying a tree on the service lines and mast; panel limits when adding a heat pump; wiring an unfinished basement; switching appliances that need different outlets; lights and outlets acting up; ceiling fan installs around a work-from-home schedule; home safety inspections; quick callbacks and Saturday appointments."
+      ],
+      "pillar": {
+        "slug": "home-electrical-guide-sioux-falls",
+        "title": "Home Electrical Work in Sioux Falls, What Homeowners Should Know",
+        "contentType": "buying-guide",
+        "keywords": [
+          "electrician Sioux Falls",
+          "home electrical repair Sioux Falls"
+        ],
+        "brief": "Roadmap for homeowners: warning signs, what is safe to DIY and what is not, permits and inspections, panel upgrades, EV chargers, basement finishing, storm damage to the service mast, and choosing an electrician. Each section points to the supporting article.",
+        "publishDate": "2026-11-12"
+      },
+      "topics": [
+        {
+          "slug": "electrical-panel-upgrade-sioux-falls",
+          "title": "Do You Need an Electrical Panel Upgrade?",
+          "contentType": "educational-article",
+          "keywords": [
+            "panel upgrade",
+            "200 amp service"
+          ],
+          "brief": "Signs a panel is maxed out, adding heat pumps, EV chargers, hot tubs, or a basement, load management options, permits, and questions to ask. No invented prices.",
+          "publishDate": "2026-11-16"
+        },
+        {
+          "slug": "electrical-warning-signs-home",
+          "title": "Electrical Warning Signs You Should Never Ignore",
+          "contentType": "safety-information",
+          "keywords": [
+            "flickering lights",
+            "outlet warm to touch"
+          ],
+          "brief": "Flickering, buzzing, warm outlets, tripping breakers, burning smell, and what to do right away versus soon.",
+          "publishDate": "2026-11-20"
+        },
+        {
+          "slug": "ev-charger-installation-sioux-falls",
+          "title": "Installing an EV Charger at Home in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "EV charger installation",
+            "level 2 charger home"
+          ],
+          "brief": "Panel capacity, circuit, location, permits, garage considerations in winter, and quotes."
+        },
+        {
+          "slug": "storm-damage-electrical-service-mast",
+          "title": "Storm Took Down Your Power Line? What Homeowners Should Do",
+          "contentType": "safety-information",
+          "keywords": [
+            "service mast damage",
+            "power line down house"
+          ],
+          "brief": "Safety first, utility versus homeowner responsibility in general terms, emergency electricians, and insurance. VOC about storm damage to the service mast."
+        },
+        {
+          "slug": "basement-finishing-electrical",
+          "title": "Wiring a Finished Basement, What to Plan",
+          "contentType": "checklist",
+          "keywords": [
+            "basement wiring",
+            "basement finishing electrical"
+          ],
+          "brief": "Circuits, outlets, lighting, egress lighting, permits and inspections, and coordinating with other trades."
+        },
+        {
+          "slug": "get-electrical-quote-in-writing",
+          "title": "Why Every Electrical Quote Should Be in Writing",
+          "contentType": "buying-guide",
+          "keywords": [
+            "electrician quote",
+            "electrical estimate"
+          ],
+          "brief": "VOC about a verbal quote that grew on the invoice; how to get scope, price, and change rules written down; holiday and after-hours pricing."
+        },
+        {
+          "slug": "gfci-afci-outlets-explained",
+          "title": "GFCI and AFCI Protection Explained for Homeowners",
+          "contentType": "educational-article",
+          "keywords": [
+            "GFCI outlet",
+            "AFCI breaker"
+          ],
+          "brief": "What they do, where they are typically required, why they trip, and testing them."
+        },
+        {
+          "slug": "home-generator-sioux-falls",
+          "title": "Home Generators for Sioux Falls Outages, Options and Safety",
+          "contentType": "comparison",
+          "keywords": [
+            "home generator",
+            "standby generator"
+          ],
+          "brief": "Portable versus standby, transfer switches, safety and carbon monoxide, and installation questions."
+        },
+        {
+          "slug": "lighting-and-ceiling-fan-installs",
+          "title": "Ceiling Fans and Lighting, When to Call an Electrician",
+          "contentType": "educational-article",
+          "keywords": [
+            "ceiling fan installation",
+            "light fixture install"
+          ],
+          "brief": "Which small jobs need a pro, boxes rated for fans, permits, and scheduling around working from home."
+        },
+        {
+          "slug": "electrical-inspection-older-home",
+          "title": "Electrical Inspections for Older Sioux Falls Homes",
+          "contentType": "checklist",
+          "keywords": [
+            "home electrical inspection",
+            "old wiring"
+          ],
+          "brief": "What a safety inspection checks, older wiring types in general terms, insurance questions, and planning upgrades over time."
+        },
+        {
+          "slug": "sioux-falls-electrical-permit-guide",
+          "title": "Electrical Permits in Sioux Falls, What Homeowners Should Know",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls electrical permit",
+            "homeowner electrical permit"
+          ],
+          "brief": "Use the city facts: separate electrical permits, homeowner permits for owner-occupied single-family homes, licensed contractors, and checking permits."
+        }
+      ]
+    },
+    {
+      "cluster": "water-damage-sioux-falls",
+      "campaign": "Water damage in Sioux Falls homes",
+      "category": "water-damage-restoration",
+      "categoryName": "Water Damage Restoration",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Three articles backdated, then one a week.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, or warranty terms; when something depends on the home, the policy, or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "The South Dakota Division of Insurance tells homeowners filing a claim to read their policy, file promptly because policies can set notice deadlines, make temporary repairs to prevent more damage and keep the receipts, not make permanent repairs before contacting the insurer, photograph damage, keep a log of every contact, and ask for an itemized explanation of any settlement. Insurers must respond to claim communications within 30 days. Division of Insurance: 605-773-3563. (Source: SD Division of Insurance, claims process guidance)",
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local restoration companies (never quote or name them): a pipe bursting inside a wall; a basement flooding and a crew on site within hours; mold after a leak in a furnace closet; crews setting up safe zones around mold; long days of drying and cleaning; wanting someone to work with the insurance adjuster directly; switching companies after a bad experience; being kept informed at every stage; getting a parent's house ready to sell quickly."
+      ],
+      "pillar": {
+        "slug": "water-damage-guide-sioux-falls",
+        "title": "Water Damage in Your Sioux Falls Home, What to Do",
+        "contentType": "buying-guide",
+        "keywords": [
+          "water damage restoration Sioux Falls",
+          "flooded basement Sioux Falls"
+        ],
+        "brief": "Roadmap from the first hour to the finished repair: stopping the water, safety, calling insurance, drying, mold, choosing a restoration company, and rebuilding. Each section points to the supporting article.",
+        "publishDate": "2026-11-11"
+      },
+      "topics": [
+        {
+          "slug": "flooded-basement-first-steps",
+          "title": "Flooded Basement? What to Do in the First Hours",
+          "contentType": "checklist",
+          "keywords": [
+            "flooded basement what to do",
+            "basement water"
+          ],
+          "brief": "Safety (electricity, gas), stop the source, photos, protect belongings, call insurance, and why speed matters for drying and mold.",
+          "publishDate": "2026-11-15"
+        },
+        {
+          "slug": "burst-pipe-water-damage",
+          "title": "Burst Pipe in the Wall, What Happens Next",
+          "contentType": "educational-article",
+          "keywords": [
+            "burst pipe water damage",
+            "pipe burst in wall"
+          ],
+          "brief": "Shutting off water, finding the main valve, what drying involves, opening walls, mold prevention, and repairs.",
+          "publishDate": "2026-11-19"
+        },
+        {
+          "slug": "water-damage-insurance-claim",
+          "title": "Water Damage Insurance Claims, What Homeowners Should Know",
+          "contentType": "educational-article",
+          "keywords": [
+            "water damage insurance claim",
+            "is water damage covered"
+          ],
+          "brief": "Sudden versus gradual damage in general terms, flood versus water backup coverage as questions to ask the insurer, documentation, and the Division of Insurance steps. No invented policy terms."
+        },
+        {
+          "slug": "mold-after-water-damage",
+          "title": "Mold After Water Damage, Signs and What to Do",
+          "contentType": "safety-information",
+          "keywords": [
+            "mold after water damage",
+            "mold remediation"
+          ],
+          "brief": "How fast mold can follow, signs, containment, what professional remediation looks like (VOC about safe zones), and health cautions in general terms."
+        },
+        {
+          "slug": "choose-water-damage-restoration-company",
+          "title": "How to Choose a Water Damage Restoration Company",
+          "contentType": "buying-guide",
+          "keywords": [
+            "water damage restoration company",
+            "restoration company Sioux Falls"
+          ],
+          "brief": "Response time, working with the adjuster, drying documentation, communication, and red flags. VOC about switching after a bad experience."
+        },
+        {
+          "slug": "sump-pump-failure-sioux-falls",
+          "title": "Sump Pump Failure, Prevention and Backup Options",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "sump pump failure",
+            "battery backup sump pump"
+          ],
+          "brief": "Testing, backups, spring thaw and heavy rain, discharge lines freezing in winter, and alarms."
+        },
+        {
+          "slug": "water-heater-leak-what-to-do",
+          "title": "Water Heater Leaking? What to Do Right Now",
+          "contentType": "checklist",
+          "keywords": [
+            "water heater leaking",
+            "water heater flood"
+          ],
+          "brief": "Shut off water and power or gas, drain safely, protect floors, and repair versus replace."
+        },
+        {
+          "slug": "drying-process-explained",
+          "title": "How Professional Drying Works After Water Damage",
+          "contentType": "educational-article",
+          "keywords": [
+            "water damage drying process",
+            "how long does water damage take to dry"
+          ],
+          "brief": "Extraction, air movers, dehumidifiers, moisture readings, and why it can take days."
+        },
+        {
+          "slug": "frozen-pipe-prevention-sioux-falls",
+          "title": "Frozen Pipes in Sioux Falls, Prevention and What to Do",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "frozen pipes",
+            "prevent frozen pipes"
+          ],
+          "brief": "Vulnerable spots, heat settings when away, dripping faucets, thawing safely, and when a frozen pipe has burst."
+        },
+        {
+          "slug": "appliance-leaks-water-damage",
+          "title": "Hidden Leaks From Appliances and Fixtures",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "washing machine leak",
+            "dishwasher leak"
+          ],
+          "brief": "Washing machine hoses, dishwashers, fridges, toilets, furnace closets (VOC), leak sensors, and shutoff valves."
+        },
+        {
+          "slug": "rebuilding-after-water-damage",
+          "title": "Rebuilding After Water Damage, What to Expect",
+          "contentType": "checklist",
+          "keywords": [
+            "water damage repair",
+            "rebuild after flood"
+          ],
+          "brief": "From dry-out to drywall, flooring, and paint; timelines; working with one company or two; and keeping receipts."
+        }
+      ]
+    },
+    {
+      "cluster": "flooring-sioux-falls",
+      "campaign": "Choosing and installing floors in Sioux Falls",
+      "category": "flooring",
+      "categoryName": "Flooring",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Three articles backdated, then one a week.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, or warranty terms; when something depends on the home, the policy, or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local flooring stores and installers (never quote or name them): taking samples home and changing their minds; picking LVP colors to go with trim and cabinets; matching existing hardwood or vinyl; one company measuring about 100 more square feet than another; the wrong color ordered after telling several associates; installers damaging walls; finishing a whole basement, stairs, and bathrooms in one day when two were expected; buying materials only and installing themselves with help from the store; poor service on warranty questions after installation; removing carpet in a newly bought house."
+      ],
+      "pillar": {
+        "slug": "flooring-guide-sioux-falls",
+        "title": "New Floors in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "flooring Sioux Falls",
+          "flooring installation Sioux Falls"
+        ],
+        "brief": "Roadmap: choosing materials room by room, basements and Sioux Falls humidity swings, measuring and quotes, install day, matching existing floors, warranties, and care. Each section points to the supporting article.",
+        "publishDate": "2026-11-10"
+      },
+      "topics": [
+        {
+          "slug": "lvp-vs-laminate-vs-hardwood",
+          "title": "LVP, Laminate, or Hardwood? Choosing for a Sioux Falls Home",
+          "contentType": "comparison",
+          "keywords": [
+            "LVP vs laminate",
+            "LVP vs hardwood"
+          ],
+          "brief": "Water resistance, comfort, wear, pets and kids, basements, look, and resale in plain terms. No invented prices.",
+          "publishDate": "2026-11-14"
+        },
+        {
+          "slug": "basement-flooring-options",
+          "title": "Best Flooring for a Sioux Falls Basement",
+          "contentType": "buying-guide",
+          "keywords": [
+            "basement flooring",
+            "basement LVP"
+          ],
+          "brief": "Moisture, concrete prep, subfloors, temperature, and what to avoid.",
+          "publishDate": "2026-11-18"
+        },
+        {
+          "slug": "flooring-measurements-quotes",
+          "title": "Why Flooring Quotes Differ (and How to Compare Them)",
+          "contentType": "buying-guide",
+          "keywords": [
+            "flooring quote",
+            "flooring measurement"
+          ],
+          "brief": "VOC about one company measuring far more square feet; waste factors, stairs, transitions, removal, furniture moving, and getting quotes itemized."
+        },
+        {
+          "slug": "matching-existing-floors",
+          "title": "Can You Match Existing Floors? What to Expect",
+          "contentType": "educational-article",
+          "keywords": [
+            "match existing hardwood",
+            "matching flooring"
+          ],
+          "brief": "Why matching is hard, sample boards, transitions, and when to redo a whole area."
+        },
+        {
+          "slug": "flooring-install-day-what-to-expect",
+          "title": "What to Expect on Flooring Install Day",
+          "contentType": "checklist",
+          "keywords": [
+            "flooring installation what to expect",
+            "prepare for flooring install"
+          ],
+          "brief": "Prep, furniture, baseboards, dust, timelines (VOC about one day versus two), walls and trim protection, and final walkthrough."
+        },
+        {
+          "slug": "hardwood-refinishing-sioux-falls",
+          "title": "Refinishing Hardwood Floors, Is It Worth It?",
+          "contentType": "comparison",
+          "keywords": [
+            "hardwood refinishing",
+            "refinish vs replace hardwood"
+          ],
+          "brief": "When refinishing works, dust and fumes, timing, and finishes in general terms."
+        },
+        {
+          "slug": "carpet-still-worth-it",
+          "title": "Is Carpet Still a Good Choice in Sioux Falls Homes?",
+          "contentType": "comparison",
+          "keywords": [
+            "carpet vs LVP",
+            "bedroom carpet"
+          ],
+          "brief": "Warmth, comfort, noise, pads, stains, and where carpet still makes sense."
+        },
+        {
+          "slug": "winter-flooring-gaps-humidity",
+          "title": "Why Floors Gap and Cup in Sioux Falls Winters",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "hardwood gaps winter",
+            "floor cupping"
+          ],
+          "brief": "Humidity swings, acclimation, humidifiers, and when to call."
+        },
+        {
+          "slug": "flooring-warranty-and-service",
+          "title": "Flooring Warranties and After-Install Service",
+          "contentType": "educational-article",
+          "keywords": [
+            "flooring warranty",
+            "installation warranty"
+          ],
+          "brief": "Manufacturer versus installation warranties, what voids them, and asking about service after the job (VOC about poor follow-up)."
+        },
+        {
+          "slug": "diy-flooring-vs-pro-install",
+          "title": "DIY Flooring or Pro Install? An Honest Look",
+          "contentType": "comparison",
+          "keywords": [
+            "DIY LVP install",
+            "flooring installation cost"
+          ],
+          "brief": "Which floors are DIY friendly, tools, subfloor prep, stairs, and where pros earn their keep (VOC about buying materials only with expert support)."
+        },
+        {
+          "slug": "flooring-for-pets-and-kids",
+          "title": "Flooring for Pets and Kids That Holds Up",
+          "contentType": "buying-guide",
+          "keywords": [
+            "pet friendly flooring",
+            "durable flooring"
+          ],
+          "brief": "Scratch and water resistance, traction, cleaning, and comfort."
+        }
+      ]
+    },
+    {
+      "cluster": "concrete-sioux-falls",
+      "campaign": "Concrete driveways, sidewalks, and patios in Sioux Falls",
+      "category": "concrete-contractors",
+      "categoryName": "Concrete Contractors",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Three articles backdated, then one a week.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, or warranty terms; when something depends on the home, the policy, or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "Sioux Falls requires separate electrical, plumbing, and mechanical (heating and air conditioning) permits; a building permit does not cover that work unless licensed electrical, mechanical, and plumbing contractors do it. An owner who lives in and owns a single-family home and does the work personally must pull those permits. The city licenses electrical, plumbing, and mechanical contractors; homeowners can verify a contractor at 605-367-8672 or on the city's Currently Licensed Contractors list, and look up permits on the city's permit site, which updates every Sunday. (Source: City of Sioux Falls Building Permit FAQs)",
+        "Call 811 (South Dakota One Call) before any digging so underground utilities are marked. (Source: City of Sioux Falls)",
+        "The City of Sioux Falls Zoning Department handles fence, carport, and driveway permits. (Source: City of Sioux Falls Building Permit FAQs)",
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local concrete contractors (never quote or name them): replacing part of a driveway after road construction and wanting the permits handled; waiting about four weeks from accepted bid to start; projects running longer than the original timeline; a driveway and sidewalk graded to drain so erosion stopped; forms set right and a smooth pour; fair bids that included extra detail; repairing cracking near replaced squares; an old-school hand finish valued for strength; quick replies and not waiting months."
+      ],
+      "pillar": {
+        "slug": "concrete-guide-sioux-falls",
+        "title": "Concrete Driveways and Patios in Sioux Falls, the Complete Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "concrete contractor Sioux Falls",
+          "concrete driveway Sioux Falls"
+        ],
+        "brief": "Roadmap: how freeze and thaw, clay soil, and drainage affect concrete here, repair versus replace, permits for driveways, timelines and seasons, choosing a contractor, and care. Each section points to the supporting article.",
+        "publishDate": "2026-11-13"
+      },
+      "topics": [
+        {
+          "slug": "concrete-driveway-replacement-cost",
+          "title": "Concrete Driveway Cost in Sioux Falls, What Drives the Price",
+          "contentType": "cost-guide",
+          "keywords": [
+            "concrete driveway cost",
+            "driveway replacement Sioux Falls"
+          ],
+          "brief": "Size, removal, base prep, thickness, reinforcement, approaches, finishes, access, and permits. No invented price figures.",
+          "publishDate": "2026-11-17"
+        },
+        {
+          "slug": "concrete-cracks-repair-or-replace",
+          "title": "Cracked Concrete, Repair or Replace?",
+          "contentType": "comparison",
+          "keywords": [
+            "concrete crack repair",
+            "replace sidewalk"
+          ],
+          "brief": "Hairline versus structural cracks, heaving, settling, mudjacking or foam lifting in general terms, and when to replace.",
+          "publishDate": "2026-11-20"
+        },
+        {
+          "slug": "driveway-permit-sioux-falls",
+          "title": "Do You Need a Permit for a Driveway in Sioux Falls?",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls driveway permit",
+            "approach permit"
+          ],
+          "brief": "The city's Zoning Department handles driveway permits; what that means for approaches and widening; who pulls it; and asking the contractor. Do not invent rules beyond that."
+        },
+        {
+          "slug": "concrete-drainage-and-grading",
+          "title": "Drainage and Grading, the Secret to Concrete That Lasts",
+          "contentType": "educational-article",
+          "keywords": [
+            "concrete drainage",
+            "driveway grading"
+          ],
+          "brief": "Slope away from the house, erosion (VOC), downspouts, clay soil, and freeze and thaw damage."
+        },
+        {
+          "slug": "best-time-to-pour-concrete-sioux-falls",
+          "title": "When to Pour Concrete in Sioux Falls",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "when to pour concrete",
+            "cold weather concrete"
+          ],
+          "brief": "Season, curing in cold and heat, scheduling backlogs (VOC about waiting weeks), and booking early."
+        },
+        {
+          "slug": "choose-concrete-contractor-sioux-falls",
+          "title": "How to Choose a Concrete Contractor in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "concrete contractor",
+            "concrete company"
+          ],
+          "brief": "Written bids, base prep and thickness in writing, reinforcement, permits, timelines, cleanup, and warranty."
+        },
+        {
+          "slug": "concrete-patio-ideas-sioux-falls",
+          "title": "Concrete Patios, Options and What to Ask",
+          "contentType": "buying-guide",
+          "keywords": [
+            "concrete patio",
+            "stamped concrete patio"
+          ],
+          "brief": "Broom, exposed aggregate, stamped, and colored finishes, maintenance, and winter durability in general terms."
+        },
+        {
+          "slug": "sidewalk-repair-sioux-falls",
+          "title": "Sidewalk Repair and Replacement, What Homeowners Should Know",
+          "contentType": "educational-article",
+          "keywords": [
+            "sidewalk repair Sioux Falls",
+            "replace sidewalk squares"
+          ],
+          "brief": "Trip hazards, replacing squares, road construction impacts (VOC), and permits as a question to ask the city."
+        },
+        {
+          "slug": "concrete-sealing-and-salt",
+          "title": "Sealing Concrete and Using De-Icers Without Damage",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "seal concrete driveway",
+            "salt damage concrete"
+          ],
+          "brief": "Why winter salt and freeze and thaw cause scaling, sealers in general terms, safer de-icers, and new concrete cautions."
+        },
+        {
+          "slug": "new-concrete-pour-what-to-expect",
+          "title": "What to Expect When Concrete Is Poured",
+          "contentType": "checklist",
+          "keywords": [
+            "concrete pour what to expect",
+            "new driveway care"
+          ],
+          "brief": "Removal, forms, base, pour day, finishing, curing time before walking and driving, and cleanup."
+        },
+        {
+          "slug": "garage-floor-concrete-options",
+          "title": "Garage Floor Cracks and Coatings",
+          "contentType": "comparison",
+          "keywords": [
+            "garage floor repair",
+            "epoxy garage floor"
+          ],
+          "brief": "Cracks, settling, coatings in general terms, and winter salt from cars."
+        }
+      ]
     }
   ]
 }

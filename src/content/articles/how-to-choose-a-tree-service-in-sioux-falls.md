@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Tree Service in Sioux Falls"
 category: "local-tree-services"
-heroImage: "/images/scenic/mckennan-park.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-tree-trimming-cost-in-sioux-falls-in-2025", "preparing-your-trees-for-south-dakota-winter-and-ice-storms", "how-to-know-when-a-tree-needs-to-come-down-in-south-dakota"]
 relatedBusinesses: ["american-tree-service"]

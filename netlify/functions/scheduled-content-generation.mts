@@ -85,26 +85,39 @@ export default async () => {
   const file = queueRes.ok ? await queueRes.json() : null;
   const queues: any[] = file ? (file.queues || [file]) : [];
 
-  const due: { queue: any; topic: any; ahead: number }[] = [];
+  // Up to four articles per run while a series is being backfilled into the
+  // past; otherwise one. Each article written is added to the local index so
+  // the next pick in the same run sees it.
+  const started = Date.now();
+  let last: Response | null = null;
   let unfinished = 0;
-  for (const queue of queues) {
-    const open = (slug: string) => !allSlugs.has(slug) && !pendingSlugs.has(slug);
-    const pillarTopic = queue.pillar?.contentType && open(queue.pillar.slug) ? { ...queue.pillar, role: 'pillar' } : null;
-    const topic = pillarTopic || (queue.topics || []).find((t: any) => open(t.slug));
-    if (!topic) continue;
-    unfinished++;
-    const ahead = articleIndex.filter((a) => a.cluster === queue.cluster && a.publishedAt > today).length
-      + pending.filter((p) => p.cluster === queue.cluster).length;
-    if (ahead < (queue.bufferTarget || 3)) due.push({ queue, topic, ahead });
-  }
-
-  if (due.length) {
+  for (let run = 0; run < 4 && Date.now() - started < 9 * 60 * 1000; run++) {
+    const due: { queue: any; topic: any; ahead: number }[] = [];
+    unfinished = 0;
+    for (const queue of queues) {
+      const open = (slug: string) => !allSlugs.has(slug) && !pendingSlugs.has(slug);
+      const pillarTopic = queue.pillar?.contentType && open(queue.pillar.slug) ? { ...queue.pillar, role: 'pillar' } : null;
+      const topic = pillarTopic || (queue.topics || []).find((t: any) => open(t.slug));
+      if (!topic) continue;
+      unfinished++;
+      const ahead = articleIndex.filter((a) => a.cluster === queue.cluster && a.publishedAt > today).length
+        + pending.filter((p) => p.cluster === queue.cluster).length;
+      const backfill = topic.publishDate && topic.publishDate <= today;
+      if (backfill || ahead < (queue.bufferTarget || 3)) due.push({ queue, topic, ahead: backfill ? -1 : ahead });
+    }
+    if (!due.length) break;
     due.sort((a, b) => a.ahead - b.ahead);
     const { queue, topic } = due[0];
     const res = await runQueuedTopic(topic, queue, articleIndex);
-    if (res.status >= 500) await engine.set('last-failure', new Date().toISOString());
-    return res;
+    last = res;
+    if (res.status >= 500) { await engine.set('last-failure', new Date().toISOString()); break; }
+    const date = res.headers.get('x-published');
+    if (date) articleIndex.push({ slug: topic.slug, title: topic.title, cluster: queue.cluster, category: queue.category, publishedAt: date, live: date <= today, description: topic.brief || '' });
+    else pending.push({ slug: topic.slug, cluster: queue.cluster });
+    allSlugs.add(topic.slug);
+    if (!(topic.publishDate && topic.publishDate <= today)) break;
   }
+  if (last) return last;
   if (unfinished) return new Response('Every series is far enough ahead', { status: 200 });
 
   // All queues finished: fall back to the gap filler on its old schedule only.
@@ -180,7 +193,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
     const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
     if (res.ok) {
       console.log(`Auto-scheduled "${draft.title}" for ${publishDate}`);
-      return new Response(`Scheduled "${draft.title}" for ${publishDate}`, { status: 200 });
+      return new Response(`Scheduled "${draft.title}" for ${publishDate}`, { status: 200, headers: { 'x-published': publishDate } });
     }
     console.error('Auto-publish commit failed, sending to review instead:', res.status, res.detail);
   } else if (autoPublish) {

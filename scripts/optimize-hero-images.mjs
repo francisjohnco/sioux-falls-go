@@ -23,7 +23,7 @@ const WIDTHS = [480, 960, 1600];
 // Safety net images (see src/lib/hero.ts). Always optimized so a fallback is
 // never a heavy file either.
 const FALLBACKS = [
-  '/images/scenic/falls-park-golden.jpg', '/images/scenic/mckennan-park.jpg', '/images/scenic/downtown-2.jpg',
+  '/images/scenic/falls-park-golden.jpg', '/images/scenic/downtown-2.jpg',
   '/images/stock/restaurant-workers.jpg', '/images/stock/real-estate-keys.jpg', '/images/stock/shop-local-chalkboard.jpg',
   '/images/stock/lawn-mower.jpg',
 ];

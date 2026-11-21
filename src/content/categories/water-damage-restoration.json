@@ -1,0 +1,34 @@
+{
+  "name": "Water Damage Restoration",
+  "slug": "water-damage-restoration",
+  "aliases": [
+    "Water Damage",
+    "Flood Cleanup",
+    "Water Removal",
+    "Mold Remediation",
+    "Restoration Services"
+  ],
+  "createdAt": "2026-11-20",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "buying-guide",
+      "checklist",
+      "educational-article",
+      "safety-information",
+      "maintenance-guide",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Top-Rated Water Damage Restoration in Sioux Falls, SD",
+    "description": "Water damage restoration in Sioux Falls, SD. Flooded basements, burst pipes, and mold, with what to do first and how to choose a company you can trust."
+  },
+  "icon": "home"
+}
