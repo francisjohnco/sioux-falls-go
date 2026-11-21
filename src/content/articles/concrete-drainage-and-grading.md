@@ -16,6 +16,12 @@ updatedAt: 2026-12-05
 seo:
   title: "Drainage and Grading for Concrete in Sioux Falls"
   description: "Poor grading causes more cracked driveways in Sioux Falls than bad concrete. Learn the right slopes, clay soil risks, and what to ask your contractor."
+heroImage: "https://images.pexels.com/photos/8134845/pexels-photo-8134845.jpeg"
+heroImageAlt: "Large paved driveway in front of a modern two-story house with landscaped greenery and a cloudy sky."
+heroImageCredit:
+  photographer: "Max Vakhtbovych"
+  profileUrl: "https://www.pexels.com/@artbovich"
+  source: "Pexels"
 ---
 
 Water is the quiet enemy of every concrete driveway, sidewalk, and patio in Sioux Falls. Get the grading right and the slab can last decades. Get it wrong and no amount of thick concrete or good mix design will save you from heaving, cracking, and erosion eating away at your yard.
