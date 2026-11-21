@@ -1,0 +1,161 @@
+---
+// Sponsor Manager: pick a business, see the articles that fit it, and
+// sponsor (or un-sponsor) many at once. One save, one rebuild.
+interface Biz { slug: string; name: string; category: string; categoryName: string; champion: boolean }
+interface Art { slug: string; title: string; category: string; categoryName: string; series: string; seriesName: string; date: string; live: boolean; sponsor: string; sponsorName: string }
+interface Props { businesses: Biz[]; articles: Art[] }
+const { businesses, articles } = Astro.props;
+const cats = [...new Map(articles.map((a) => [a.category, a.categoryName])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+const series = [...new Map(articles.filter((a) => a.series).map((a) => [a.series, a.seriesName])).entries()].sort((a, b) => a[1].localeCompare(b[1]));
+const champs = businesses.filter((b) => b.champion), others = businesses.filter((b) => !b.champion);
+---
+<div class="sm" id="sponsor-manager" data-articles={JSON.stringify(articles)} data-businesses={JSON.stringify(businesses)}>
+  <div class="sm-head">
+    <div class="sm-step"><span class="sm-num">1</span><div class="sm-col">
+      <label>Who is sponsoring?
+        <select id="sm-biz">
+          <option value="">Choose a business…</option>
+          {champs.length > 0 && <optgroup label="Community Champions">{champs.map((b) => <option value={b.slug}>{b.name}</option>)}</optgroup>}
+          <optgroup label="Other businesses">{others.map((b) => <option value={b.slug}>{b.name}</option>)}</optgroup>
+        </select>
+      </label>
+      <p class="sm-bizcat" id="sm-bizcat"></p>
+    </div></div>
+    <div class="sm-step"><span class="sm-num">2</span>
+      <div class="sm-filters">
+        <input type="search" id="sm-q" placeholder="Search article titles…" />
+        <select id="sm-cat"><option value="">All industries</option>{cats.map(([v, n]) => <option value={v}>{n}</option>)}</select>
+        <select id="sm-series"><option value="">All series</option>{series.map(([v, n]) => <option value={v}>{n}</option>)}</select>
+        <label class="sm-check"><input type="checkbox" id="sm-open" /> Open spots only</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="sm-bar">
+    <span id="sm-count">Choose a business to start.</span>
+    <div class="sm-bar-actions">
+      <button type="button" class="sm-link" id="sm-all">Select all shown</button>
+      <button type="button" class="sm-link" id="sm-none">Clear</button>
+      <button type="button" class="sm-save" id="sm-save" disabled>Save</button>
+    </div>
+  </div>
+  <p class="sm-msg" id="sm-msg" hidden></p>
+  <div class="sm-list" id="sm-list"></div>
+</div>
+
+<script>
+  const root = document.getElementById('sponsor-manager')!;
+  const articles: any[] = JSON.parse(root.dataset.articles || '[]');
+  const businesses: any[] = JSON.parse(root.dataset.businesses || '[]');
+  const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
+  const esc = (s: string) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+  const nice = (d: string) => new Date(`${d}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+  const want = new Map<string, boolean>(); // slug -> should this business sponsor it
+
+  const biz = () => businesses.find((b) => b.slug === $<HTMLSelectElement>('sm-biz').value);
+
+  function render() {
+    const b = biz();
+    const q = $<HTMLInputElement>('sm-q').value.trim().toLowerCase();
+    const cat = $<HTMLSelectElement>('sm-cat').value, ser = $<HTMLSelectElement>('sm-series').value, open = $<HTMLInputElement>('sm-open').checked;
+    const shown = articles.filter((a) => (!q || a.title.toLowerCase().includes(q)) && (!cat || a.category === cat) && (!ser || a.series === ser) && (!open || !a.sponsor || (b && a.sponsor === b.slug)));
+    $('sm-list').innerHTML = shown.length ? shown.map((a) => {
+      const mine = b && a.sponsor === b.slug;
+      const on = want.has(a.slug) ? want.get(a.slug) : mine;
+      const other = a.sponsor && !mine;
+      return `<label class="sm-row ${on ? 'is-on' : ''} ${!b ? 'is-disabled' : ''}" data-slug="${a.slug}">
+        <input type="checkbox" ${on ? 'checked' : ''} ${!b ? 'disabled' : ''} />
+        <span class="sm-title">${esc(a.title)}</span>
+        <span class="sm-tags">
+          <span class="sm-tag sm-tag--cat">${esc(a.categoryName)}</span>
+          ${a.seriesName ? `<span class="sm-tag sm-tag--series">${esc(a.seriesName)}</span>` : ''}
+          <span class="sm-tag ${a.live ? 'sm-tag--live' : 'sm-tag--sched'}">${a.live ? 'Live' : `Scheduled ${nice(a.date)}`}</span>
+          ${mine ? '<span class="sm-tag sm-tag--mine">Sponsored by them</span>' : other ? `<span class="sm-tag sm-tag--other">Now: ${esc(a.sponsorName)}</span>` : '<span class="sm-tag sm-tag--open">Open spot</span>'}
+        </span></label>`;
+    }).join('') : '<p class="sm-empty">No articles match these filters.</p>';
+    const adds = [...want].filter(([s, v]) => v && articles.find((a) => a.slug === s)?.sponsor !== b?.slug).length;
+    const removes = [...want].filter(([s, v]) => !v && articles.find((a) => a.slug === s)?.sponsor === b?.slug).length;
+    const mineCount = b ? articles.filter((a) => a.sponsor === b.slug).length : 0;
+    $('sm-count').textContent = !b ? 'Choose a business to start.' : `${shown.length} shown · ${b.name} sponsors ${mineCount}${adds ? ` · ${adds} to add` : ''}${removes ? ` · ${removes} to remove` : ''}`;
+    const save = $<HTMLButtonElement>('sm-save');
+    save.disabled = !b || (!adds && !removes);
+    save.textContent = adds || removes ? `Save ${adds ? `+${adds}` : ''}${adds && removes ? ' ' : ''}${removes ? `−${removes}` : ''}` : 'Save';
+  }
+
+  $('sm-biz').addEventListener('change', () => {
+    want.clear();
+    const b = biz();
+    $('sm-bizcat').textContent = b ? `${b.categoryName} business. Showing ${b.categoryName.toLowerCase()} articles first; change the industry to see more.` : '';
+    if (b && articles.some((a) => a.category === b.category)) $<HTMLSelectElement>('sm-cat').value = b.category;
+    render();
+  });
+  ['sm-q', 'sm-cat', 'sm-series', 'sm-open'].forEach((id) => $(id).addEventListener('input', render));
+  $('sm-list').addEventListener('change', (e) => {
+    const row = (e.target as HTMLElement).closest<HTMLElement>('.sm-row'); if (!row) return;
+    want.set(row.dataset.slug!, (e.target as HTMLInputElement).checked); render();
+  });
+  $('sm-all').addEventListener('click', () => { if (!biz()) return; document.querySelectorAll<HTMLElement>('#sm-list .sm-row').forEach((r) => want.set(r.dataset.slug!, true)); render(); });
+  $('sm-none').addEventListener('click', () => { const b = biz(); if (!b) return; document.querySelectorAll<HTMLElement>('#sm-list .sm-row').forEach((r) => want.set(r.dataset.slug!, false)); render(); });
+  $('sm-save').addEventListener('click', async () => {
+    const b = biz(); if (!b) return;
+    const add = [...want].filter(([s, v]) => v && articles.find((a) => a.slug === s)?.sponsor !== b.slug).map(([s]) => s);
+    const remove = [...want].filter(([s, v]) => !v && articles.find((a) => a.slug === s)?.sponsor === b.slug).map(([s]) => s);
+    const taking = add.filter((s) => articles.find((a) => a.slug === s)?.sponsor).length;
+    if (taking && !confirm(`${taking} of these articles already have another sponsor. Replace them with ${b.name}?`)) return;
+    const btn = $<HTMLButtonElement>('sm-save'); btn.disabled = true; btn.textContent = 'Saving…';
+    const msg = $('sm-msg');
+    try {
+      const res = await fetch('/api/sponsor-articles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ business: b.slug, add, remove }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Could not save.');
+      for (const s of add) { const a = articles.find((x) => x.slug === s); if (a) { a.sponsor = b.slug; a.sponsorName = b.name; } }
+      for (const s of remove) { const a = articles.find((x) => x.slug === s); if (a) { a.sponsor = ''; a.sponsorName = ''; } }
+      want.clear();
+      msg.textContent = data.message; msg.className = 'sm-msg is-ok';
+    } catch (err: any) { msg.textContent = err.message; msg.className = 'sm-msg is-error'; }
+    msg.hidden = false; render();
+  });
+  render();
+</script>
+
+<style is:global>
+  .sm { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; overflow: hidden; margin: 1rem 0 1.6rem; box-shadow: 0 6px 24px rgba(27,42,74,0.06); }
+  .sm-head > * { min-width: 0; }
+  .sm-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 1rem; padding: 1.1rem 1.2rem; background: linear-gradient(135deg, #FFF6EC, #EEF5FC); border-bottom: 1px solid var(--color-line); }
+  .sm-step { display: flex; gap: 0.7rem; align-items: flex-start; min-width: 0; }
+  .sm-col { flex: 1; min-width: 0; }
+  .sm-num { flex: none; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--color-orange); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 0.9rem; margin-top: 0.15rem; }
+  .sm-step label { display: flex; flex-direction: column; gap: 0.35rem; font-weight: 700; color: var(--color-navy); font-size: 0.85rem; flex: 1; }
+  .sm select, .sm input[type=search] { padding: 0.6rem 0.7rem; border: 1px solid #CBD3E0; border-radius: 0.55rem; font: inherit; font-weight: 400; background: #fff; }
+  .sm-bizcat { margin: 0.4rem 0 0; font-size: 0.78rem; color: var(--color-navy-light); }
+  .sm-filters { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0.5rem; flex: 1; min-width: 0; align-items: center; }
+  .sm-filters input[type=search] { grid-column: 1 / -1; }
+  .sm-filters select { width: 100%; }
+  .sm-check { display: inline-flex !important; flex-direction: row !important; align-items: center; gap: 0.35rem; font-size: 0.85rem; font-weight: 600; color: var(--color-navy); }
+  .sm-bar { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap; padding: 0.7rem 1.2rem; background: var(--color-navy); color: #fff; font-size: 0.85rem; position: sticky; top: 0; z-index: 2; }
+  .sm-bar-actions { display: flex; gap: 0.5rem; align-items: center; }
+  .sm-link { background: none; border: 0; color: #FFD9A8; font-weight: 700; cursor: pointer; font: inherit; font-size: 0.85rem; }
+  .sm-save { background: var(--color-orange); color: #fff; border: 0; border-radius: 0.5rem; padding: 0.5rem 1rem; font-weight: 800; cursor: pointer; font: inherit; }
+  .sm-save:disabled { opacity: 0.45; cursor: default; }
+  .sm-msg { margin: 0; padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: 600; }
+  .sm-msg.is-ok { background: #E6F4EC; color: #1E7B4F; }
+  .sm-msg.is-error { background: #FBE9E7; color: #A93226; }
+  .sm-list { max-height: 32rem; overflow-y: auto; }
+  .sm-row { display: grid; grid-template-columns: auto 1fr; column-gap: 0.75rem; row-gap: 0.3rem; padding: 0.7rem 1.2rem; border-bottom: 1px solid var(--color-line); cursor: pointer; border-left: 4px solid transparent; }
+  .sm-row:hover { background: #FAFBFD; }
+  .sm-row.is-on { background: #FFF6EC; border-left-color: var(--color-orange); }
+  .sm-row.is-disabled { cursor: default; opacity: 0.85; }
+  .sm-row input { grid-row: span 2; width: 1.15rem; height: 1.15rem; margin-top: 0.15rem; accent-color: var(--color-orange); }
+  .sm-title { font-weight: 700; color: var(--color-navy); font-size: 0.92rem; }
+  .sm-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .sm-tag { font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 99px; }
+  .sm-tag--cat { background: #EAF2F8; color: #2E6F9E; }
+  .sm-tag--series { background: #F0ECFB; color: #5A47B8; }
+  .sm-tag--live { background: #E6F4EC; color: #1E7B4F; }
+  .sm-tag--sched { background: #FFF4D6; color: #8A6100; }
+  .sm-tag--mine { background: var(--color-orange); color: #fff; }
+  .sm-tag--other { background: #FBE9E7; color: #A93226; }
+  .sm-tag--open { background: #F1F3F6; color: #52607A; }
+  .sm-empty { padding: 1.2rem; color: var(--color-navy-light); margin: 0; }
+  @media (max-width: 860px) { .sm-head { grid-template-columns: 1fr; } }
+</style>

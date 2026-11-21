@@ -10,6 +10,7 @@ import ProfileInterview from '../../components/admin/ProfileInterview.astro';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import CategoryManager from '../../components/admin/CategoryManager.astro';
 import AnalyticsPanel from '../../components/admin/AnalyticsPanel.astro';
+import SponsorManager from '../../components/admin/SponsorManager.astro';
 import { categoryHero } from '../../lib/hero';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
@@ -50,6 +51,7 @@ const champions = businesses
 // category (e.g. a marketing agency sponsoring an electrician guide) —
 // still allowed, just surfaced so it's a deliberate choice, not an accident.
 const allArticlesForSponsors = await getCollection('articles');
+const allCategoriesEarly = new Map((await getCollection('categories')).map((c) => [c.id, c.data.name]));
 const articleCategoryCache = new Map<string, Awaited<ReturnType<typeof getEntry>>>();
 for (const a of allArticlesForSponsors) {
   if (!articleCategoryCache.has(a.data.category.id)) {
@@ -57,6 +59,18 @@ for (const a of allArticlesForSponsors) {
   }
 }
 const sponsoredArticles = allArticlesForSponsors.filter((a) => a.data.sponsoredBy);
+// Data for the Sponsor Manager: every article with its industry, series, and current sponsor.
+const catName = (id: string) => articleCategoryCache.get(id)?.data.name ?? id;
+const bizName = (id: string) => businesses.find((b) => b.id === id)?.data.name ?? id;
+const seriesName = new Map(allArticlesForSponsors.filter((a) => a.data.clusterRole === 'pillar' && a.data.cluster).map((a) => [a.data.cluster!, a.data.title]));
+const smArticles = allArticlesForSponsors.map((a) => {
+  const date = publishDay(a);
+  return { slug: a.id, title: a.data.title, category: a.data.category.id, categoryName: catName(a.data.category.id),
+    series: a.data.cluster || '', seriesName: a.data.cluster ? (seriesName.get(a.data.cluster) || a.data.cluster.replace(/-/g, ' ')) : '',
+    date, live: isLive(a), sponsor: a.data.sponsoredBy?.id || '', sponsorName: a.data.sponsoredBy ? bizName(a.data.sponsoredBy.id) : '' };
+}).sort((a, b) => b.date.localeCompare(a.date));
+const smBusinesses = businesses.map((b) => ({ slug: b.id, name: b.data.name, category: b.data.category.id, categoryName: allCategoriesEarly.get(b.data.category.id) || b.data.category.id, champion: b.data.partnershipTier === 'community-champion' }))
+  .sort((a, b) => a.name.localeCompare(b.name));
 const sponsorshipsByBusiness = champions.map((champion) => {
   const articlesSponsored = sponsoredArticles
     .filter((a) => a.data.sponsoredBy?.id === champion.id)
@@ -500,7 +514,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <HeroPhotos items={heroItems} />
 
         <h3 class="section-heading">All Published Articles</h3>
-        <input type="text" id="article-search" class="directory-search" placeholder="Search articles by title…" />
+        <div class="article-filters">
+          <input type="text" id="article-search" class="directory-search" placeholder="Search articles by title…" />
+          <select id="article-cat"><option value="">All industries</option>{[...new Map(allArticles.map((a) => [a.data.category.id, catName(a.data.category.id)])).entries()].sort((x, y) => x[1].localeCompare(y[1])).map(([v, n]) => <option value={v}>{n}</option>)}</select>
+          <select id="article-status"><option value="">Live and scheduled</option><option value="live">Live only</option><option value="scheduled">Scheduled only</option><option value="sponsored">Sponsored</option><option value="open">No sponsor</option></select>
+        </div>
         <div id="articles-list" class="articles-list">
           {allArticles
             .sort((a, b) => (b.data.publishedAt?.toString() || '').localeCompare(a.data.publishedAt?.toString() || ''))
@@ -508,6 +526,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
               <button
                 class="article-row"
                 data-search={a.data.title.toLowerCase()}
+                data-cat={a.data.category.id}
+                data-status={`${isLive(a) ? 'live' : 'scheduled'} ${a.data.sponsoredBy ? 'sponsored' : 'open'}`}
                 data-open-article={a.id}
                 data-article={JSON.stringify({
                   title: a.data.title,
@@ -567,7 +587,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       <!-- ── SPONSORSHIPS ── -->
       <section class="tab-panel" id="panel-sponsorships">
         <h1>Sponsorships</h1>
-        <p class="panel-sub">Every article a Community Champion is sponsoring, at a glance — no need to open each one.</p>
+        <p class="panel-sub">Pick a business, check the articles it should sponsor, and save. Every change goes out in one update.</p>
+
+        <SponsorManager businesses={smBusinesses} articles={smArticles} />
 
         <div class="sponsor-stats">
           <div class="sponsor-stat">
@@ -1201,6 +1223,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .attention-link:hover { text-decoration: underline; }
 
   /* Content Engine */
+  .article-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .article-filters .directory-search { flex: 1 1 16rem; }
+  .article-filters select { padding: 0.6rem 0.7rem; border: 1px solid var(--color-line); border-radius: 0.55rem; font: inherit; background: #fff; }
   .link-button { background: none; border: 0; padding: 0; font: inherit; color: var(--color-orange-dark); font-weight: 700; cursor: pointer; }
   .gsc-widget { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius); padding: var(--space-2) var(--space-3); margin-top: var(--space-2); }
   .gsc-widget-header { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
@@ -1521,6 +1546,36 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .edit-modal-status { font-size: 0.8125rem; font-weight: 600; margin: 0.8rem 0 0; }
   .edit-modal-status.is-success { color: var(--color-success); }
   .edit-modal-status.is-error { color: #C0392B; }
+
+  /* ── Color and design layer ── */
+  .admin-topbar { background: linear-gradient(100deg, #1B2A4A 0%, #22396A 55%, #2E6F9E 100%); }
+  .admin-main { background:
+    radial-gradient(circle at 100% 0, rgba(240,126,35,0.10) 0, transparent 28rem),
+    radial-gradient(circle at 15% 0, rgba(46,111,158,0.10) 0, transparent 26rem); }
+  .admin-main h1::after { content: ''; display: block; width: 4rem; height: 5px; border-radius: 99px; margin-top: 0.45rem;
+    background: linear-gradient(90deg, #F07E23, #F5B429 55%, #2E6F9E); }
+  .section-heading { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+  .section-heading::before { content: ''; width: 0.7rem; height: 0.7rem; border-radius: 3px; background: linear-gradient(135deg, #F07E23, #F5B429); flex: none; }
+  .nav-icon { width: 1.95rem; height: 1.95rem; border-radius: 0.6rem; align-items: center; justify-content: center; background: var(--chip-bg, #EEF1F6); color: var(--chip, #445070); transition: transform 0.15s; }
+  .nav-item:hover .nav-icon { transform: scale(1.06); }
+  .admin-sidebar .nav-item:nth-of-type(8n+1) { --chip: #2a78d6; --chip-bg: #E7F0FB; }
+  .admin-sidebar .nav-item:nth-of-type(8n+2) { --chip: #D3660F; --chip-bg: #FDEBDD; }
+  .admin-sidebar .nav-item:nth-of-type(8n+3) { --chip: #13865E; --chip-bg: #E2F5EE; }
+  .admin-sidebar .nav-item:nth-of-type(8n+4) { --chip: #9A6A00; --chip-bg: #FCF1D6; }
+  .admin-sidebar .nav-item:nth-of-type(8n+5) { --chip: #C2416F; --chip-bg: #FCE8EF; }
+  .admin-sidebar .nav-item:nth-of-type(8n+6) { --chip: #4F40C2; --chip-bg: #ECEAFB; }
+  .admin-sidebar .nav-item:nth-of-type(8n+7) { --chip: #C23B3A; --chip-bg: #FBE6E6; }
+  .admin-sidebar .nav-item:nth-of-type(8n+8) { --chip: #0E7C86; --chip-bg: #DFF3F4; }
+  .nav-item.is-active .nav-icon { background: var(--chip, #F07E23); color: #fff; }
+  .stat-card { border-top: 4px solid var(--card, #2a78d6); }
+  .stat-grid > :nth-child(5n+1) { --card: #2a78d6; --card-bg: #E7F0FB; }
+  .stat-grid > :nth-child(5n+2) { --card: #F07E23; --card-bg: #FDEBDD; }
+  .stat-grid > :nth-child(5n+3) { --card: #1baf7a; --card-bg: #E2F5EE; }
+  .stat-grid > :nth-child(5n+4) { --card: #eda100; --card-bg: #FCF1D6; }
+  .stat-grid > :nth-child(5n+5) { --card: #6250d6; --card-bg: #ECEAFB; }
+  .stat-icon { background: var(--card-bg, #EEF1F6); color: var(--card, #445070); }
+  .stat-card--accent .stat-icon, .stat-icon--accent { background: var(--color-orange); color: #fff; }
+  .gsc-widget, .attention-item { border-left: 4px solid #2E6F9E; }
 </style>
 
 <script>
@@ -2609,13 +2664,16 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   });
 
   // Article search — same pattern as the Directory search
-  document.getElementById('article-search')?.addEventListener('input', (e) => {
-    const query = (e.target as HTMLInputElement).value.toLowerCase();
+  function filterArticles() {
+    const query = (document.getElementById('article-search') as HTMLInputElement).value.toLowerCase();
+    const cat = (document.getElementById('article-cat') as HTMLSelectElement).value;
+    const st = (document.getElementById('article-status') as HTMLSelectElement).value;
     document.querySelectorAll('.article-row').forEach((row) => {
       const el = row as HTMLElement;
-      el.hidden = !el.dataset.search?.includes(query);
+      el.hidden = !el.dataset.search?.includes(query) || (!!cat && el.dataset.cat !== cat) || (!!st && !el.dataset.status?.split(' ').includes(st));
     });
-  });
+  }
+  ['article-search', 'article-cat', 'article-status'].forEach((id) => document.getElementById(id)?.addEventListener('input', filterArticles));
 
   // Article edit modal
   const articleModalBackdrop = document.getElementById('article-edit-modal-backdrop');
