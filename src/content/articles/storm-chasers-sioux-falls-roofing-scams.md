@@ -16,6 +16,12 @@ updatedAt: 2026-11-01
 seo:
   title: "Storm Chasers After Sioux Falls Hail How to Spot Them"
   description: "Out-of-state roofers flood Sioux Falls after hail. Learn the red flags, your 3-day cancel right, and how to check a city license before you sign anything."
+heroImage: "https://images.pexels.com/photos/2663254/pexels-photo-2663254.jpeg"
+heroImageAlt: "Rain cascades off rows of brown roof shingles into pooling water below under an overcast sky."
+heroImageCredit:
+  photographer: "Adrien Olichon"
+  profileUrl: "https://www.pexels.com/@adrien-olichon-1257089"
+  source: "Pexels"
 ---
 
 After a significant hail event, the knocking starts fast. Sometimes it begins the same afternoon, before you have even walked your yard to look at the damage yourself. These contractors, often called storm chasers, travel from city to city following severe weather, and Sioux Falls gets its share of them. The [Roof Repair and Replacement in Sioux Falls, the Complete Guide](/guides/roof-repair-replacement-sioux-falls) covers the full picture of finding a legitimate roofer, but this article focuses on one specific threat: the high-pressure sales visit at your door after a storm.
