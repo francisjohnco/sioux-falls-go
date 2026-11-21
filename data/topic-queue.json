@@ -985,7 +985,7 @@
       ],
       "bufferTarget": 3,
       "note": "For homeowners. Ten articles backdated about every three days from October 23 to November 20, 2026, then the rest on Saturdays and Sundays.",
-      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for roofers. Start from the real situation and worries in the voice-of-the-customer notes (insurance pushback, short checks, storm chasers, run-around, leaks, winter timing) and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend a roofing company. Do not invent statistics, prices, insurance rules, or warranty terms; when something depends on the policy or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan. EXTERNAL RESOURCE: Where it genuinely helps the reader go deeper, link once per article to the matching guide on siouxfallsroofs.com, a Sioux Falls homeowner roofing resource, with natural descriptive anchor text (not 'click here', not the bare domain). Never in the first paragraph, at most one link to that site per article, and never describe it as a company or name any business on it. Matching guides: complete roofing guide https://siouxfallsroofs.com/complete-sioux-falls-roofing-guide/ ; hail insurance claims https://siouxfallsroofs.com/hail-damage-insurance-claim-guide/ ; storm chasers https://siouxfallsroofs.com/storm-chaser-contractors-sioux-falls/ ; choosing a contractor https://siouxfallsroofs.com/how-to-choose-roofing-contractor-sioux-falls/ ; signs a roof needs replacement https://siouxfallsroofs.com/signs-your-sioux-falls-roof-needs-replacement/ ; replacement cost https://siouxfallsroofs.com/roof-replacement-cost-sioux-falls/ ; hail season https://siouxfallsroofs.com/sioux-falls-hail-season-guide/ ; roofing materials https://siouxfallsroofs.com/category/roofing-materials/ ; roof maintenance https://siouxfallsroofs.com/category/roof-maintenance/ .",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for roofers. Start from the real situation and worries in the voice-of-the-customer notes (insurance pushback, short checks, storm chasers, run-around, leaks, winter timing) and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend a roofing company. Do not invent statistics, prices, insurance rules, or warranty terms; when something depends on the policy or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
       "localFacts": [
         "In Sioux Falls, shingle work on homes requires a building permit, and a contractor doing it must hold a city Residential Roofing and Repair Contractor license (or the broader Residential Building Contractor license). That license requires a $20,000 compliance bond made to the City of Sioux Falls and at least $300,000 in general liability insurance. Homeowners can call Building Services licensing at 605-367-8670. (Source: City of Sioux Falls, Residential Roofing and Repair Contractor page)",
         "The South Dakota Attorney General's consumer protection office warns homeowners after hailstorms: do not be pressured into a quick agreement, ask for proof of insurance or bond, get a written contract with the work and price, be cautious of cash only terms, do not pay in full before the job is done, call local references, and ask to see a current South Dakota sales or contractor's excise tax license. Door to door sales contracts typically carry a three day right to cancel, with a refund due within 10 days of cancellation. Consumer Protection: 1-800-300-1986. (Source: South Dakota Attorney General, hailstorm scam alert)",
@@ -1027,7 +1027,7 @@
             "roof insurance claim South Dakota",
             "hail claim roof Sioux Falls"
           ],
-          "brief": "Walk the homeowner through a claim from first call to final check: deductible, adjuster inspection, having your roofer present, the estimate, supplements, payments in stages, and what to do if you disagree or are denied (itemized explanation, Division of Insurance). Address the real worry of insurance refusing older roofs. No invented policy terms.",
+          "brief": "Walk the homeowner through a claim from first call to final check: deductible, adjuster inspection, having your roofer present, the estimate, supplements, payments in stages, and what to do if you disagree or are denied (itemized explanation, Division of Insurance). Address the real worry of insurance refusing older roofs. No invented policy terms. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner roofing resource with descriptive anchor text: https://siouxfallsroofs.com/hail-damage-insurance-claim-guide/ (do not call it a company or name any business).",
           "publishDate": "2026-10-29"
         },
         {
@@ -1038,7 +1038,7 @@
             "storm chasers roofing Sioux Falls",
             "roofing scams South Dakota"
           ],
-          "brief": "The door knock pattern after a storm, red flags (pressure, cash only, out of state plates, no city license, asking you to sign an insurance agreement on the spot, big deposits), the three day cancel right, checking the city license and the state tax license, and who to call. Use the Attorney General and city license facts.",
+          "brief": "The door knock pattern after a storm, red flags (pressure, cash only, out of state plates, no city license, asking you to sign an insurance agreement on the spot, big deposits), the three day cancel right, checking the city license and the state tax license, and who to call. Use the Attorney General and city license facts. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner roofing resource with descriptive anchor text: https://siouxfallsroofs.com/storm-chaser-contractors-sioux-falls/ (do not call it a company or name any business).",
           "publishDate": "2026-11-01"
         },
         {
@@ -1049,7 +1049,7 @@
             "roof replacement cost Sioux Falls",
             "how much is a new roof Sioux Falls"
           ],
-          "brief": "What actually changes the price: roof size and pitch, layers to tear off, decking repairs found after tear-off, materials (architectural, impact resistant, metal, low slope systems), ventilation, flashing, permits, access, and season. How insurance changes what you pay (deductible). How to compare bids line by line. No invented price figures.",
+          "brief": "What actually changes the price: roof size and pitch, layers to tear off, decking repairs found after tear-off, materials (architectural, impact resistant, metal, low slope systems), ventilation, flashing, permits, access, and season. How insurance changes what you pay (deductible). How to compare bids line by line. No invented price figures. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner roofing resource with descriptive anchor text: https://siouxfallsroofs.com/roof-replacement-cost-sioux-falls/ (do not call it a company or name any business).",
           "publishDate": "2026-11-04"
         },
         {
@@ -1071,7 +1071,7 @@
             "repair or replace roof",
             "how long does a roof last South Dakota"
           ],
-          "brief": "Signs a repair is enough versus signs of replacement: age, curling or missing shingles, granule loss, repeated leaks, soft decking, hail bruising, multiple layers. Spot repairs on an older roof and matching shingles. When a second opinion is wise, including the small-repair problem homeowners describe.",
+          "brief": "Signs a repair is enough versus signs of replacement: age, curling or missing shingles, granule loss, repeated leaks, soft decking, hail bruising, multiple layers. Spot repairs on an older roof and matching shingles. When a second opinion is wise, including the small-repair problem homeowners describe. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner roofing resource with descriptive anchor text: https://siouxfallsroofs.com/signs-your-sioux-falls-roof-needs-replacement/ (do not call it a company or name any business).",
           "publishDate": "2026-11-10"
         },
         {
@@ -1135,7 +1135,7 @@
             "impact resistant shingles",
             "class 4 shingles Sioux Falls"
           ],
-          "brief": "What impact-resistant ratings mean, pros and cons, cost difference in general terms, asking your insurer about possible premium credits (do not promise one), and who benefits most in hail country."
+          "brief": "What impact-resistant ratings mean, pros and cons, cost difference in general terms, asking your insurer about possible premium credits (do not promise one), and who benefits most in hail country. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner roofing resource with descriptive anchor text: https://siouxfallsroofs.com/category/roofing-materials/ (do not call it a company or name any business)."
         },
         {
           "slug": "roof-inspection-buying-home-sioux-falls",
