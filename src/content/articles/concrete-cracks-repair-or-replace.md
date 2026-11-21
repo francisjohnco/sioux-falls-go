@@ -16,6 +16,12 @@ updatedAt: 2026-11-20
 seo:
   title: "Cracked Concrete in Sioux Falls: Repair or Replace?"
   description: "Sioux Falls freeze-thaw cycles crack concrete fast. Learn which cracks you can repair, which mean replacement, and what mudjacking vs. foam lifting involves."
+heroImage: "https://images.pexels.com/photos/14887766/pexels-photo-14887766.jpeg"
+heroImageAlt: "A wide crack running across a concrete sidewalk slab with exposed aggregate along the break."
+heroImageCredit:
+  photographer: "Joshua Mueller"
+  profileUrl: "https://www.pexels.com/@joshua-mueller-403440660"
+  source: "Pexels"
 ---
 
 Concrete in Sioux Falls takes a beating that most of the country never sees. The freeze-thaw cycle here runs dozens of swings a year, the clay soil underneath shifts with every wet spring, and hard water from the Big Sioux Aquifer leaves mineral deposits that work into surface pores over time. The result is that most driveways, sidewalks, and patios here eventually crack, and the real question is whether a crack is cosmetic or a warning sign. For the full picture on concrete in Sioux Falls, start with the [Concrete Driveways and Patios in Sioux Falls, the Complete Guide](/guides/concrete-guide-sioux-falls).

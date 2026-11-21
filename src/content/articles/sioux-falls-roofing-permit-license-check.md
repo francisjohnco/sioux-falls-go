@@ -16,6 +16,12 @@ updatedAt: 2026-11-22
 seo:
   title: "Sioux Falls Roofing Permits and Licenses to Check"
   description: "Sioux Falls requires a permit and a city-licensed roofer for shingle work. Learn what to verify, who to call at 605-367-8670, and what unpermitted work costs you."
+heroImage: "https://images.pexels.com/photos/38346822/pexels-photo-38346822.jpeg"
+heroImageAlt: "A roofer wearing a safety harness and tool belt stands on a residential shingle roof surrounded by trees."
+heroImageCredit:
+  photographer: "Daniel & Hannah Snipes"
+  profileUrl: "https://www.pexels.com/@prolificpeople"
+  source: "Pexels"
 ---
 
 Getting a new roof or major repair in Sioux Falls involves more than picking a contractor and writing a check. The city requires both a building permit and a licensed contractor for shingle work on homes, and skipping either one can create real problems when you sell, file a claim, or discover defective work later. This article covers exactly what is required, how to verify it, and what happens if something goes wrong. For a broader look at the full replacement or repair process, start with the [Roof Repair and Replacement in Sioux Falls, the Complete Guide](/guides/roof-repair-replacement-sioux-falls).
