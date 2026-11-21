@@ -142,7 +142,7 @@ const schema = [articleSchema, breadcrumbSchema, ...faqSchema];
 
     <span class="eyebrow">{article.data.contentType.replace('-', ' ')}</span>
     <h1>{article.data.title}</h1>
-    <p class="byline">By {article.data.author} · Updated {article.data.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+    <p class="byline">By {article.data.author} · Updated {article.data.updatedAt.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}</p>
 
     <figure class="article-hero">
       <img src={hero.src} srcset={hero.srcset} sizes={HERO_SIZES} alt={hero.alt} width={hero.width} height={hero.height} fetchpriority="high" decoding="async" class="article-hero-img" />
