@@ -16,6 +16,12 @@ updatedAt: 2026-10-23
 seo:
   title: "Best Furnace Filter for Sioux Falls Homes 2025"
   description: "Hard water, clay dust, and 38 inches of snow a year affect your filter fast. Here's which MERV rating to pick and how often to change it."
+heroImage: "https://images.pexels.com/photos/9756933/pexels-photo-9756933.jpeg"
+heroImageAlt: "Close-up of a heavily clogged foam air filter covered in dust and debris."
+heroImageCredit:
+  photographer: "Engin Akyurt"
+  profileUrl: "https://www.pexels.com/@enginakyurt"
+  source: "Pexels"
 ---
 
 Swapping your furnace filter is the one piece of HVAC maintenance almost every Sioux Falls homeowner can do without any tools and without calling anyone. It is also the one task that gets skipped the longest, usually because nobody is sure which filter to buy or how often to actually change it. Get it wrong in either direction and you either breathe more dust or you choke your furnace into working twice as hard. The full picture of how your heating system fits together is in the [Heating and Cooling in Sioux Falls, the Homeowner's Guide](/guides/hvac-guide-sioux-falls), but this article goes deep on filters specifically.
