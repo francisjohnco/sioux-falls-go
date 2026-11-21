@@ -15,6 +15,17 @@ const { names } = Astro.props;
   <p class="an-msg" id="an-msg">Loading analytics...</p>
 
   <div id="an-body" hidden>
+    <section class="an-wait" id="an-wait" hidden>
+      <h2>Your full analytics view is waiting on Google</h2>
+      <p id="an-wait-why">The plain-English summary, the River, your position by industry, the weekly chart, and the search splits all come from Google Search Console, which is not connected yet. Profile visits and taps below are already counting.</p>
+      <ol>
+        <li>In Google Search Console, verify siouxfallsgo.com with the <b>HTML tag</b> method (the tag is already on the site).</li>
+        <li>In Netlify, set <b>GSC_SITE_PROPERTY</b> to <b>https://siouxfallsgo.com/</b> and redeploy.</li>
+        <li>Here in Admin, open <b>Content Engine</b> and click <b>Connect Search Console</b>, using the same Google account.</li>
+      </ol>
+      <p class="an-small">Google needs a few days after connecting before numbers appear, and always runs about two days behind.</p>
+    </section>
+
     <section class="an-story" id="an-story" hidden>
       <h2>In plain English</h2>
       <ul id="an-story-list"></ul>
@@ -192,6 +203,10 @@ const { names } = Astro.props;
       $('an-fresh').innerHTML = `${g.connected ? `Google data through <b>${d(g.dataThrough || r.range.end)}</b> (Google runs about two days behind). ` : ''}Profile visits and taps count live. Last refreshed ${new Date(r.generatedAt).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })}.`;
       $('an-fresh').hidden = false;
 
+      if (!g.connected) {
+        if (g.error) $('an-wait-why').textContent = `Google search numbers could not load: ${g.error}. The summary, the River, your position by industry, and the charts appear once this is fixed. Profile visits and taps below are already counting.`;
+        $('an-wait').hidden = false;
+      } else $('an-wait').hidden = true;
       if (g.connected) {
         const ra = r.rangeActivity || { view: 0, contacts: 0 };
         $('an-river-svg').innerHTML = river([
@@ -293,6 +308,11 @@ const { names } = Astro.props;
   .an-table td:not(:first-child), .an-table th:not(:first-child) { text-align: right; white-space: nowrap; }
   .an-table a { color: var(--color-river); font-weight: 600; word-break: break-all; }
   .an-note { font-size: 0.8rem; color: var(--color-navy-light); }
+  .an-wait { background: #fff; border: 2px dashed #F0B37E; border-radius: 1rem; padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+  .an-wait[hidden] { display: none; }
+  .an-wait h2 { margin: 0 0 0.5rem; font-size: 1.1rem; color: var(--color-navy); }
+  .an-wait p, .an-wait li { color: var(--color-ink); line-height: 1.55; font-size: 0.92rem; }
+  .an-wait ol { margin: 0.6rem 0; padding-left: 1.2rem; display: grid; gap: 0.35rem; }
   .an-story { background: linear-gradient(135deg, #1B2A4A, #2E4470); color: #fff; border-radius: 1rem; padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
   .an-story[hidden] { display: none; }
   .an-story h2 { margin: 0 0 0.6rem; font-size: 1rem; color: var(--color-gold); }
