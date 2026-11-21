@@ -16,6 +16,12 @@ updatedAt: 2026-10-26
 seo:
   title: "Hail Hit Your Sioux Falls Roof? First 48 Hours Guide"
   description: "Sioux Falls homeowner steps after hail: photograph damage, make temp repairs, file your claim right, and avoid storm chasers. SD Division of Insurance and AG facts inside."
+heroImage: "https://images.pexels.com/photos/33404248/pexels-photo-33404248.jpeg"
+heroImageAlt: "A roofer uses a nail gun to install dark asphalt shingles on a residential roof under a blue sky."
+heroImageCredit:
+  photographer: "Ryan  Stephens"
+  profileUrl: "https://www.pexels.com/@rstephens"
+  source: "Pexels"
 ---
 
 A hailstorm rolls through Sioux Falls and by morning your neighbors are already getting door knocks from out-of-state contractors. The pressure starts fast, and so does the clock on your insurance claim.
