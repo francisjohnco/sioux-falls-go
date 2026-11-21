@@ -16,6 +16,13 @@ updatedAt: 2026-11-28
 seo:
   title: "Build Authority as a Sioux Falls Business Owner in 2025"
   description: "Authority is what turns a Sioux Falls searcher into a paying customer. Real steps: helpful content, local press, credentials, and photos of real work."
+heroImage: "https://images.pexels.com/photos/9050560/pexels-photo-9050560.jpeg"
+heroImageAlt: "A cheerful barista in a hat takes an order from a customer at a cozy coffee shop counter."
+heroImageCredit:
+  photographer: "Mike Jones"
+  profileUrl: "https://www.pexels.com/@mike-jones"
+  source: "Pexels"
+heroImageLocked: true
 ---
 
 Visibility gets you found. Authority is what makes someone choose you once they find you. These are two different problems, and a lot of Sioux Falls business owners solve the first one and wonder why the phones still feel quiet. Someone searches for a plumber, a chiropractor, or a remodeling contractor, they see your name, and then they look a little harder before they call. What they find in those next thirty seconds is what this article is about. If you haven't read [The 4 Pillars of a Growing Sioux Falls Business](/guides/four-pillars-local-business-growth-sioux-falls) yet, start there, because authority is Pillar 2 and it only works when the other pillars are pulling alongside it.
