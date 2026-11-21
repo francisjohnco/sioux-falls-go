@@ -16,6 +16,12 @@ updatedAt: 2026-11-10
 seo:
   title: "New Furnace or AC Installation Day in Sioux Falls"
   description: "Permits, floor protection, startup, and paperwork explained. Here's exactly what happens on furnace install day in Sioux Falls, step by step."
+heroImage: "https://images.pexels.com/photos/34938439/pexels-photo-34938439.jpeg"
+heroImageAlt: "A technician in work gloves services the interior components of a wall-mounted heating unit."
+heroImageCredit:
+  photographer: "МОБО Модульные Котельные"
+  profileUrl: "https://www.pexels.com/@2157750954"
+  source: "Pexels"
 ---
 
 Getting a new furnace or air conditioner is one of the bigger home investments you'll make, and most homeowners have no idea what actually happens on installation day until the crew shows up. Knowing the sequence, what to watch for, and what questions to ask makes the whole thing less stressful and helps you catch problems early. This article walks through the full day, from prep the night before to the paperwork you need to keep. For the broader picture on equipment choices, sizing, and costs, start with [Heating and Cooling in Sioux Falls, the Homeowner's Guide](/guides/hvac-guide-sioux-falls).
