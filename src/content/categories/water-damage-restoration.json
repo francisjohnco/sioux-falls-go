@@ -30,5 +30,39 @@
     "title": "Top-Rated Water Damage Restoration in Sioux Falls, SD",
     "description": "Water damage restoration in Sioux Falls, SD. Flooded basements, burst pipes, and mold, with what to do first and how to choose a company you can trust."
   },
-  "icon": "home"
+  "icon": "home",
+  "intro": "Water damage in Sioux Falls rarely waits for a convenient moment. A pipe can burst inside a wall during a January cold snap, spring snowmelt can push water through a basement wall, or a slow leak behind a furnace can feed mold for weeks before anyone notices. When it happens, you need a crew that can arrive fast, dry the structure thoroughly, and document everything for your insurance claim.\n\nA good restoration company here understands clay soil that holds moisture, hard water that corrodes pipes faster, and the particular stress that freeze-thaw cycles put on older homes. Speed matters, but so does the thoroughness of the drying process and clear communication throughout.",
+  "tips": [
+    "Ask how quickly the company can have equipment on site, and confirm they have enough drying gear to handle your square footage without stretching it across multiple jobs.",
+    "Find out whether the company will communicate directly with your insurance adjuster and provide the documentation the adjuster needs, or whether that work falls entirely on you.",
+    "Ask what certifications their technicians hold for water damage and mold remediation, since training standards vary significantly across companies.",
+    "Before anyone starts permanent repairs, follow the South Dakota Division of Insurance guidance and contact your insurer first, photograph all damage, and save receipts for any temporary fixes you make to stop further damage."
+  ],
+  "faqs": [
+    {
+      "q": "How fast should a water damage company arrive after I call in Sioux Falls?",
+      "a": "Most reputable companies aim to have a crew on site within a few hours of your call, since water spreads quickly into walls, flooring, and subfloor. Ask each company directly what their average response time is before you need them. Having a name ready before an emergency saves that conversation when every hour counts."
+    },
+    {
+      "q": "Does my homeowner's insurance cover water damage restoration in South Dakota?",
+      "a": "It depends on the cause. Sudden and accidental damage like a burst pipe is typically covered, while gradual leaks or flooding from outside often require separate coverage. Read your policy carefully, and according to the South Dakota Division of Insurance, file your claim promptly because your policy may set a notice deadline."
+    },
+    {
+      "q": "What should I do immediately after finding water damage in my home?",
+      "a": "Stop the water source if you can, then photograph everything before touching it. The South Dakota Division of Insurance advises making temporary repairs to prevent additional damage and keeping all receipts, but not making permanent repairs until you have spoken with your insurer. Call a restoration company and your insurance company as soon as possible."
+    },
+    {
+      "q": "How do I know if water damage has caused mold in my Sioux Falls home?",
+      "a": "Mold can begin growing within 24 to 48 hours in a wet space, so any area that stayed damp for more than a day or two is worth inspecting. A musty smell, discoloration on drywall or wood, or a leak near a furnace or water heater are common warning signs. A restoration company can assess the area and set up containment if mold is present."
+    },
+    {
+      "q": "How long does the drying process take after a basement flood?",
+      "a": "Drying typically takes several days and sometimes longer depending on how much water entered, what materials absorbed it, and how much airflow and equipment are deployed. Homeowners have described long stretches of industrial fans and dehumidifiers running around the clock before the structure tested dry. Cutting corners on drying time leads to mold problems later."
+    },
+    {
+      "q": "What should I watch out for when choosing a water damage company in Sioux Falls?",
+      "a": "Look for a company that keeps you informed at every stage, provides written documentation for your insurance claim, and does not pressure you to skip steps. Some homeowners have switched companies mid-job after poor communication or feeling left out of decisions. Ask for a clear written scope of work before any equipment goes in."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-21"
 }
