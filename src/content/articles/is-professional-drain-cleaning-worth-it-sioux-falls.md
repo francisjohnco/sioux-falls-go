@@ -11,8 +11,8 @@ embeddedFaqs: [{"question": "Can baking soda and vinegar unclog a drain?", "answ
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true
-publishedAt: 2026-11-24
-updatedAt: 2026-11-24
+publishedAt: 2026-10-12
+updatedAt: 2026-11-21
 seo:
   title: "Is Professional Drain Cleaning Worth It in Sioux Falls?"
   description: "When a DIY fix is enough, when a pro pays for itself, and why chemical drain cleaners can make a plumber's job harder in Sioux Falls."
