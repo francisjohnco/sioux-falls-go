@@ -1,6 +1,7 @@
 ---
 title: "Authority, Why Customers Pick You Over the Next Name"
 category: "marketing-agencies"
+sponsoredBy: "sajmedia-marketing"
 contentType: "educational-article"
 cluster: "local-business-marketing"
 clusterRole: "support"

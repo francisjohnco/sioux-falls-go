@@ -1,6 +1,7 @@
 ---
 title: "How Much Does It Cost to Hire a Marketing Agency in Sioux Falls?"
 category: "marketing-agencies"
+sponsoredBy: "sajmedia-marketing"
 contentType: "cost-guide"
 cluster: "local-business-marketing"
 clusterRole: "support"

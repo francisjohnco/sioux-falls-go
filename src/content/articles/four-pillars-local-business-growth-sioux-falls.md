@@ -1,6 +1,7 @@
 ---
 title: "The 4 Pillars of a Growing Sioux Falls Business"
 category: "marketing-agencies"
+sponsoredBy: "sajmedia-marketing"
 contentType: "buying-guide"
 cluster: "local-business-marketing"
 clusterRole: "pillar"

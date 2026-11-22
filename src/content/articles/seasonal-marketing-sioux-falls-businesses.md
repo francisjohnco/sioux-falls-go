@@ -1,6 +1,7 @@
 ---
 title: "Seasonal Marketing for Sioux Falls Businesses, When to Invest"
 category: "marketing-agencies"
+sponsoredBy: "sajmedia-marketing"
 heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 cluster: "local-business-marketing"
