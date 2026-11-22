@@ -11,8 +11,8 @@ embeddedFaqs: [{"question":"Can I use a garbage disposal if my kitchen sink is a
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true
-publishedAt: 2026-12-08
-updatedAt: 2026-12-08
+publishedAt: 2026-11-08
+updatedAt: 2026-11-21
 seo:
   title: "Kitchen Sink Clogs in Sioux Falls Homes (Grease Guide)"
   description: "Grease, disposal myths, and hard water scale all clog Sioux Falls kitchen drains. Here are the real causes, safe DIY steps, and when to call a plumber."
