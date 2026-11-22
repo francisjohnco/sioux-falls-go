@@ -1,7 +1,6 @@
 ---
 title: "How to Choose a Home Watch Company in Sioux Falls"
 category: "home-watch-services"
-heroImage: "/images/stock/rustic-bedroom.jpg"
 contentType: "buying-guide"
 relatedArticles: ["how-much-does-it-cost-to-hire-a-home-watch-company-in-sioux-falls", "home-watch-services-faq-sioux-falls"]
 relatedBusinesses: ["while-away"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Certification through an organization like the National Home Watch Association indicates the provider has met defined standards for training, insurance, and ethics — a meaningful signal, though experienced uncertified providers can also be excellent."
   - question: "How often should I expect to hear from my home watch provider?"
     answer: "At minimum, a report after each scheduled visit. Beyond that, expectations vary — discuss upfront how they'll reach you if something needs immediate attention versus routine documentation."
+heroImage: "https://images.pexels.com/photos/6835109/pexels-photo-6835109.jpeg"
+heroImageAlt: "Sunlit empty room with light blue walls, hardwood floors, vaulted ceiling, and French doors leading outside."
+heroImageCredit:
+  photographer: "Curtis Adams"
+  profileUrl: "https://www.pexels.com/@curtis-adams-1694007"
+  source: "Pexels"
 ---
 
 Home watch means trusting someone with access to your home while you're away, sometimes for months at a time — which makes verification and clear communication expectations more important here than for almost any other home service.

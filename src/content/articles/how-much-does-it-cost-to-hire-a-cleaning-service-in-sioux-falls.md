@@ -1,7 +1,6 @@
 ---
 title: "How Much Does It Cost to Hire a Cleaning Service in Sioux Falls?"
 category: "cleaning-services"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "cost-guide"
 relatedArticles: ["how-to-choose-a-cleaning-service-in-sioux-falls", "cleaning-services-faq-sioux-falls"]
 relatedBusinesses: ["t-j-vance-quality-cleaning"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Most do, but confirm this upfront — some offer a discount if you provide your own supplies, and some homeowners prefer specific products for allergy or preference reasons."
   - question: "Does home size alone determine the price?"
     answer: "Size matters, but so does current condition and number of bathrooms, which tend to take disproportionately more time than square footage alone would suggest."
+heroImage: "https://images.pexels.com/photos/5591930/pexels-photo-5591930.jpeg"
+heroImageAlt: "Hands wiping down a stainless steel refrigerator door with a cloth during a home cleaning."
+heroImageCredit:
+  photographer: "RDNE Stock project"
+  profileUrl: "https://www.pexels.com/@rdne"
+  source: "Pexels"
 ---
 
 Recurring house cleaning in Sioux Falls typically runs $100-$200 per visit for an average home, with bi-weekly or monthly service usually priced lower per visit than one-time bookings.
