@@ -1,7 +1,6 @@
 ---
 title: "Sioux Falls HVAC FAQ: Heating & Air Conditioning Questions Answered"
 category: "consumer-guide"
-heroImage: "/images/articles/sioux-falls-hvac-faq-heating-air-conditioning-questions-answered.png"
 contentType: "faq"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "Sioux Falls HVAC FAQ"
   description: "Get clear answers to common HVAC questions in Sioux Falls. Learn about heating, cooling, repairs, maintenance, and choosing the right local HVAC company."
 sourceUrl: "/guides/sioux-falls-hvac-faq-heating-air-conditioning-questions-answered"
+heroImage: "https://images.pexels.com/photos/7937300/pexels-photo-7937300.jpeg"
+heroImageAlt: "Steel pipes, valves, and a pressure gauge in a residential heating system mechanical room."
+heroImageCredit:
+  photographer: "Pavel Danilyuk"
+  profileUrl: "https://www.pexels.com/@pavel-danilyuk"
+  source: "Pexels"
 ---
 
 **Sioux Falls HVAC Questions, Answered**

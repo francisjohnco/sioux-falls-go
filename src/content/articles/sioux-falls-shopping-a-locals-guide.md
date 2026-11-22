@@ -1,7 +1,6 @@
 ---
 title: "Sioux Falls Shopping: A Local's Guide"
 category: "shopping-retail"
-heroImage: "/images/stock/florist-bouquet.jpg"
 contentType: "local-resource"
 relatedArticles: ["best-shopping-in-sioux-falls", "visiting-sioux-falls-where-to-shop"]
 relatedBusinesses: ["animalwisedco"]
@@ -17,6 +16,12 @@ seo:
 embeddedFaqs:
   - question: "Are there good local options for gifts, or does everyone default to the mall?"
     answer: "Sioux Falls has a genuine independent gift and specialty shop scene, particularly downtown — worth exploring before defaulting to mall-based options for gift shopping specifically."
+heroImage: "https://images.pexels.com/photos/6540066/pexels-photo-6540066.jpeg"
+heroImageAlt: "A smiling woman in a pink jacket browses a cheerful shop window display on a sunny day."
+heroImageCredit:
+  photographer: "RDNE Stock project"
+  profileUrl: "https://www.pexels.com/@rdne"
+  source: "Pexels"
 ---
 
 For Sioux Falls residents, building a real mental map of where to shop for different needs saves time and often supports better, more distinctive finds than defaulting to the same big-box trip every time.

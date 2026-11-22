@@ -1,7 +1,6 @@
 ---
 title: "Best Restaurants in Sioux Falls"
 category: "restaurants-dining"
-heroImage: "/images/stock/restaurant-workers.jpg"
 contentType: "local-resource"
 relatedArticles: ["sioux-falls-dining-a-locals-guide", "where-to-eat-downtown-sioux-falls-visitors"]
 relatedBusinesses: ["shahi-india-grill"]
@@ -21,6 +20,12 @@ embeddedFaqs:
     answer: "Downtown has real concentration and variety, but excellent restaurants exist throughout the metro — worth exploring beyond downtown, especially for specific cuisine types."
   - question: "Are reservations necessary at most Sioux Falls restaurants?"
     answer: "Varies by restaurant and night — popular spots on weekend evenings often benefit from a reservation, while many casual spots are fine walking in most nights."
+heroImage: "https://images.pexels.com/photos/37307283/pexels-photo-37307283.jpeg"
+heroImageAlt: "Two diners share drinks at a warmly lit table inside a cozy, dimly lit restaurant with green walls."
+heroImageCredit:
+  photographer: "Le Salama"
+  profileUrl: "https://www.pexels.com/@le-salama-2161202416"
+  source: "Pexels"
 ---
 
 Sioux Falls's restaurant scene is genuinely more diverse than its size might suggest, with real depth across cuisines — not just a handful of predictable chain-adjacent options.

@@ -1,7 +1,6 @@
 ---
 title: "Why Sioux Falls' Best Restaurants Aren't Winning on Google"
 category: "restaurants-dining"
-heroImage: "/images/scenic/downtown-1.jpg"
 contentType: "educational-article"
 relatedBusinesses: ["chef-lances-on-phillips", "harvester-kitchen-by-bryan"]
 evergreen: true
@@ -18,6 +17,12 @@ embeddedFaqs:
     answer: "Not necessarily. Many well-regarded, longstanding Sioux Falls restaurants sit in the 4.3 to 4.7 range despite consistently positive reviews, because passive review collection skews toward the rare bad night rather than the many good ones."
   - question: "Why do newer restaurants sometimes have higher ratings than established ones?"
     answer: "Newer restaurants often have a smaller, more recent pool of reviews and are more likely to actively ask happy guests for a review in the moment, rather than relying on customers to remember later."
+heroImage: "https://images.pexels.com/photos/36430088/pexels-photo-36430088.jpeg"
+heroImageAlt: "A tattooed chef carefully garnishes a gourmet dish on a blue plate in a professional kitchen."
+heroImageCredit:
+  photographer: "Willians Huerta"
+  profileUrl: "https://www.pexels.com/@willians-huerta-2157111846"
+  source: "Pexels"
 ---
 
 We recently set out to build a Fine Dining section for this directory. The bar we set was simple. A restaurant needed a 4.8 star rating or higher on Google to qualify. We expected this to be easy. Sioux Falls has a genuinely strong food scene, and we had a long list of restaurants that locals talk about constantly.

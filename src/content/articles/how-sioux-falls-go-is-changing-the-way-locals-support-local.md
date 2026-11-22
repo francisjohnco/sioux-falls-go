@@ -1,7 +1,6 @@
 ---
 title: "How Sioux Falls Go Is Changing the Way Locals Support Local"
 category: "for-local-businesses"
-heroImage: "/images/scenic/falls-park-1.jpg"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "How Sioux Falls Go Is Changing the Way Locals Support Local"
   description: "How Sioux Falls Go Is Changing the Way Locals Support Local \u2014 local guidance from Sioux Falls Go."
 sourceUrl: "/guides/how-sioux-falls-go-is-changing-the-way-locals-support-local"
+heroImage: "https://images.pexels.com/photos/3796810/pexels-photo-3796810.jpeg"
+heroImageAlt: "A smiling barista hands a coffee cup to a customer across a warm, welcoming café counter."
+heroImageCredit:
+  photographer: "Andrea Piacquadio"
+  profileUrl: "https://www.pexels.com/@olly"
+  source: "Pexels"
 ---
 
 **When Every Dollar Counts...We help stretch it.**

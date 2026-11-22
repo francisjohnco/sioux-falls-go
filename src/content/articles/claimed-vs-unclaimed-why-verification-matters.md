@@ -1,7 +1,6 @@
 ---
 title: "Claimed vs. Unclaimed: Why Verification Changes Everything on Sioux Falls Go"
 category: "for-local-businesses"
-heroImage: "https://images.unsplash.com/photo-1758518730384-be3d205838e8?fm=jpg&q=80&w=1600&auto=format&fit=crop"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -19,6 +18,12 @@ embeddedFaqs:
     answer: "It means confirming you're the real owner or authorized representative of the business, so we can mark the listing Verified instead of Not Verified — the same badge visitors already see on every business card and profile page across the site."
   - question: "Is claiming a listing free?"
     answer: "Yes. Claiming and verifying your listing costs nothing. It's the same process covered on our Get Featured page."
+heroImage: "https://images.pexels.com/photos/5999905/pexels-photo-5999905.jpeg"
+heroImageAlt: "Professional in a gray coat holds a tablet while standing on a sunny city street."
+heroImageCredit:
+  photographer: "Ono  Kosuki"
+  profileUrl: "https://www.pexels.com/@ono-kosuki"
+  source: "Pexels"
 ---
 
 Every business on Sioux Falls Go shows one of two badges: **Verified** or **Not Verified**. It sits right on the category page, right next to your name, in the exact same spot every visitor looks first.

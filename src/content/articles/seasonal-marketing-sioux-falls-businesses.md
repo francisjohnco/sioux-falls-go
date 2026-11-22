@@ -2,7 +2,6 @@
 title: "Seasonal Marketing for Sioux Falls Businesses, When to Invest"
 category: "marketing-agencies"
 sponsoredBy: "sajmedia-marketing"
-heroImage: "/images/scenic/downtown-2.jpg"
 contentType: "seasonal-guide"
 cluster: "local-business-marketing"
 clusterRole: "support"
@@ -26,6 +25,12 @@ embeddedFaqs:
     answer: "Yes. Restaurants and retail have steadier demand with spikes around holidays and events, so timing is about hitting those windows. Trades like lawn care, roofing, and painting swing harder with the weather."
   - question: "Should I cut marketing in a slow month?"
     answer: "Cut spending that only works in the busy season, like ads for services nobody needs right now, but keep building the things that compound, like reviews, content, and your Google profile."
+heroImage: "https://images.pexels.com/photos/6172482/pexels-photo-6172482.jpeg"
+heroImageAlt: "A person writes notes in a large desk calendar with colorful tabs, planning out a monthly schedule."
+heroImageCredit:
+  photographer: "RDNE Stock project"
+  profileUrl: "https://www.pexels.com/@rdne"
+  source: "Pexels"
 ---
 
 Sioux Falls has real seasons, and so does almost every business here. Lawn care disappears under snow. Furnace calls spike in January. Patios fill up in June, and shops live for December.
