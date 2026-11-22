@@ -1,7 +1,6 @@
 ---
 title: "The Best Free Things to Do in Sioux Falls"
 category: "explore-sioux-falls"
-heroImage: "/images/articles/the-best-free-things-to-do-in-sioux-falls.png"
 contentType: "local-resource"
 relatedNeighborhoods: []
 relatedArticles: []
@@ -15,6 +14,12 @@ seo:
   title: "The Best Free Things to Do in Sioux Falls"
   description: "Discover the best free things to do in Sioux Falls\u2014from water falls and sculpture walks to museums and concerts. Explore BIG fun without spending a dime."
 sourceUrl: "/guides/the-best-free-things-to-do-in-sioux-falls"
+heroImage: "https://images.pexels.com/photos/30558492/pexels-photo-30558492.jpeg"
+heroImageAlt: "A couple walks hand-in-hand along a modern park's cascading water features and landscaped paths at golden hour."
+heroImageCredit:
+  photographer: "Lin."
+  profileUrl: "https://www.pexels.com/@liiiiin"
+  source: "Pexels"
 ---
 
 **The Best Free Things to Do in Sioux Falls**

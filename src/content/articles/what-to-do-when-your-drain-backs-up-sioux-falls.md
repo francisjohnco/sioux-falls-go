@@ -17,6 +17,12 @@ updatedAt: 2026-12-03
 seo:
   title: "Drain Backing Up in Sioux Falls? What to Do Now"
   description: "A calm first-hour checklist for a backed-up drain in Sioux Falls, how to tell an emergency from a slow sink, and what to ask when you call."
+heroImage: "https://images.pexels.com/photos/34295402/pexels-photo-34295402.jpeg"
+heroImageAlt: "A chrome faucet drips water into a stainless steel kitchen sink against a marble-patterned wall."
+heroImageCredit:
+  photographer: "Zulfugar Karimov"
+  profileUrl: "https://www.pexels.com/@zulfugarkarimov"
+  source: "Pexels"
 ---
 
 A drain backing up is stressful, and the first few minutes matter. The right moves can limit the mess, protect your family, and make the repair faster and cheaper. Here is what to do right now, how to tell whether it is a true emergency, and what to ask when you call a company in Sioux Falls. Once things are under control, our [complete guide to drain cleaning in Sioux Falls](/guides/drain-cleaning-sioux-falls) explains causes, fixes, and costs.
