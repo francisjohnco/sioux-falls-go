@@ -12,8 +12,8 @@ embeddedFaqs: [{"question":"How long does it take to show up in Google map resul
 evergreen: true
 author: "Sioux Falls Go Editorial"
 aiAssisted: true
-publishedAt: 2026-11-24
-updatedAt: 2026-11-24
+publishedAt: 2026-11-23
+updatedAt: 2026-11-23
 seo:
   title: "How Sioux Falls Customers Find Your Business Online"
   description: "Search, maps, AI tools, directories, social, word of mouth. Here is exactly how Sioux Falls customers find a local business and what to do this week."
