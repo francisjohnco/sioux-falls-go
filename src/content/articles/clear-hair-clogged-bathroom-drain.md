@@ -1,6 +1,7 @@
 ---
 title: "How to Clear a Hair Clog From a Bathroom Sink or Shower in Sioux Falls"
 category: "drain-cleaning"
+sponsoredBy: "605-drain-solutions"
 contentType: "checklist"
 cluster: "drain-cleaning"
 clusterRole: "support"

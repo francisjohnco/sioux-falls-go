@@ -1,6 +1,7 @@
 ---
 title: "Kitchen Sink Clogs in Sioux Falls Homes (Grease, Disposals, and What Actually Works)"
 category: "drain-cleaning"
+sponsoredBy: "605-drain-solutions"
 contentType: "educational-article"
 cluster: "drain-cleaning"
 clusterRole: "support"
