@@ -47,7 +47,7 @@ reviews:
   - author: "Corey Thorson"
     rating: 5
     text: "Francis was very knowledgeable. He took the time to go over everything and explain in detail how everything works.  It was a pleasure working with him."
-    date: "7 months ago"
+    date: "8 months ago"
   - author: "Mike McComber"
     rating: 5
     text: "We are extremely grateful for Francis and SAJMedia for the professional way he guided us through the process of building our website.  My wife and I know nothing about this process and Francis did such a wonderful job at explaining every step as we went.  Francis is also excellent at goal setting, and meeting expected time frames.  We would highly recommend his services."
