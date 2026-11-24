@@ -53,5 +53,12 @@
       "a": "Yes, particularly with fast-growing species like silver maple or cottonwood planted close to a home. Sioux Falls clay soil can also shift with moisture changes and amplify pressure from root systems, so if you have large trees near your foundation or older pipes, it is worth having an arborist take a look."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/7812847/pexels-photo-7812847.jpeg",
+  "heroImageAlt": "A tree service worker in safety gear uses a chainsaw near cut logs while a crane truck stands ready in the background.",
+  "heroImageCredit": {
+    "photographer": "Helena Jankovičová Kováčová",
+    "profileUrl": "https://www.pexels.com/@helen1",
+    "source": "Pexels"
+  }
 }

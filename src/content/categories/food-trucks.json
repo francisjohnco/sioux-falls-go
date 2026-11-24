@@ -19,5 +19,12 @@
     "description": "Discover food trucks in Sioux Falls."
   },
   "icon": "utensils",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/5779926/pexels-photo-5779926.jpeg",
+  "heroImageAlt": "A smiling food truck vendor hands a dessert to a happy customer through the service window at night.",
+  "heroImageCredit": {
+    "photographer": "RDNE Stock project",
+    "profileUrl": "https://www.pexels.com/@rdne",
+    "source": "Pexels"
+  }
 }

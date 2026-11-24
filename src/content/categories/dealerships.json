@@ -19,5 +19,12 @@
     "description": "Sioux falls auto dealers"
   },
   "icon": "key",
-  "parentCategory": "automotive"
+  "parentCategory": "automotive",
+  "heroImage": "https://images.pexels.com/photos/7144177/pexels-photo-7144177.jpeg",
+  "heroImageAlt": "A salesperson with a clipboard talks with a couple browsing vehicles inside a bright car dealership showroom.",
+  "heroImageCredit": {
+    "photographer": "Antoni Shkraba",
+    "profileUrl": "https://www.pexels.com/@shkrabaanthony",
+    "source": "Pexels"
+  }
 }

@@ -18,5 +18,12 @@
     "title": "Top-Rated Automotive in Sioux Falls, SD",
     "description": "Sioux Falls automotive services"
   },
-  "icon": "wrench"
+  "icon": "wrench",
+  "heroImage": "https://images.pexels.com/photos/8986130/pexels-photo-8986130.jpeg",
+  "heroImageAlt": "A white SUV raised on a hydraulic lift inside a well-equipped automotive repair shop.",
+  "heroImageCredit": {
+    "photographer": "Artem Podrez",
+    "profileUrl": "https://www.pexels.com/@artempodrez",
+    "source": "Pexels"
+  }
 }

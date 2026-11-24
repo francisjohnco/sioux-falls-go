@@ -18,5 +18,12 @@
     "title": "Top-Rated Beauty & Personal Care in Sioux Falls, SD",
     "description": "Find trusted beauty & personal care in Sioux Falls."
   },
-  "icon": "sparkles"
+  "icon": "sparkles",
+  "heroImage": "https://images.pexels.com/photos/7755216/pexels-photo-7755216.jpeg",
+  "heroImageAlt": "A hairstylist combs through a client's dark curly hair while holding scissors in a bright salon.",
+  "heroImageCredit": {
+    "photographer": "RDNE Stock project",
+    "profileUrl": "https://www.pexels.com/@rdne",
+    "source": "Pexels"
+  }
 }

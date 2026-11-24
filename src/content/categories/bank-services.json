@@ -18,5 +18,12 @@
     "title": "Top-Rated Bank in Sioux Falls, SD",
     "description": "Discover bank in Sioux Falls."
   },
-  "icon": "briefcase"
+  "icon": "briefcase",
+  "heroImage": "https://images.pexels.com/photos/36328523/pexels-photo-36328523.jpeg",
+  "heroImageAlt": "An ATM machine stands in a bright modern bank lobby beside a potted plant and wooden side table.",
+  "heroImageCredit": {
+    "photographer": "Alec Adriano",
+    "profileUrl": "https://www.pexels.com/@alec",
+    "source": "Pexels"
+  }
 }

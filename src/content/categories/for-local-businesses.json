@@ -49,5 +49,12 @@
       "a": "Yes, because local directories filter results by geography, putting you on equal footing with bigger companies that may not serve Sioux Falls as closely as you do. Customers who care about keeping money in the local economy will often choose a well-presented local listing over a national brand, so the more complete and trustworthy your profile looks, the stronger that advantage becomes."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/3894371/pexels-photo-3894371.jpeg",
+  "heroImageAlt": "A woman in a black apron stands outside a flower shop with potted blooms and decorative lanterns in the window.",
+  "heroImageCredit": {
+    "photographer": "Andrea Piacquadio",
+    "profileUrl": "https://www.pexels.com/@olly",
+    "source": "Pexels"
+  }
 }
