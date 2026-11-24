@@ -126,7 +126,7 @@ async function pickWithVision(
 ): Promise<{ index: number; alt: string } | null> {
   const content: any[] = [{
     type: 'text',
-    text: `You are choosing the header photo for a local guide on Sioux Falls Go, a website for Sioux Falls, South Dakota.\n\nArticle title: ${a.title}\nSummary: ${a.description || ''}\n\nBelow are ${options.length} numbered photos.${options[0]?.isCurrent ? ' Photo 0 is the image the article uses now.' : ''}\n\nPick the single photo that is BOTH clearly about this article's subject AND beautiful: sharp, well lit, natural looking, inviting, works as a wide 16:9 banner.\n\nReject any photo that has text, words, logos, watermarks, or graphic design overlaid; looks like a cheesy posed stock cliche; shows a clearly non-American setting (European street signs, tropical landmarks, foreign storefronts); or is only loosely related to the subject. A photo showing a generic city or park is NOT acceptable for a home services, trade, or shopping topic.${a.mustShow ? ` The photo MUST clearly show ${a.mustShow}. Reject every photo that does not, however nice it is.` : ''}\n\nThen write alt text for the chosen photo: one plain sentence under 120 characters describing what is actually visible. Do not start with "Image of" or "Photo of", and do not claim the photo shows Sioux Falls unless it clearly does.\n\nRespond with only JSON: {"choice": <number, or -1 if none is good enough>, "alt": "<alt text>"}`,
+    text: `You are choosing the header photo for a local guide on Sioux Falls Go, a website for Sioux Falls, South Dakota.\n\nArticle title: ${a.title}\nSummary: ${a.description || ''}\n\nBelow are ${options.length} numbered photos.${options[0]?.isCurrent ? ' Photo 0 is the image the article uses now.' : ''}\n\nPick the single photo that is BOTH clearly about this article's subject AND beautiful: sharp, well lit, natural looking, inviting, works as a wide 16:9 banner.\n\nReject any photo that has text, words, logos, watermarks, or graphic design overlaid; looks like a cheesy posed stock cliche; shows a clearly non-American setting (European street signs, tropical landmarks, foreign storefronts); or is only loosely related to the subject. A photo showing a generic city or park is NOT acceptable for a home services, trade, or shopping topic.${a.mustShow ? ` The photo MUST clearly show ${a.mustShow}. Reject every photo that does not, however nice it is. For this site section, any beautiful, well lit photo of ${a.mustShow} fits the article, even if it does not show the article's exact detail; prefer one that comes closest to the article's angle.` : ''}\n\nThen write alt text for the chosen photo: one plain sentence under 120 characters describing what is actually visible. Do not start with "Image of" or "Photo of", and do not claim the photo shows Sioux Falls unless it clearly does.\n\nRespond with only JSON: {"choice": <number, or -1 if none is good enough>, "alt": "<alt text>"}`,
   }];
   options.forEach((o, i) => {
     content.push({ type: 'text', text: `Photo ${i}${o.isCurrent ? ' (current image)' : ''}${o.description ? `: ${o.description}` : ''}` });
@@ -167,10 +167,14 @@ export async function findHeroPhoto(a: { title: string; description?: string; ca
   const queries = await searchQueries(a);
   const seen = new Set<string>();
   const candidates: Candidate[] = [];
+  // Every search gets a fair share of the 12 photos the picker looks at, so
+  // the plain fallback search is never crowded out.
+  const share = Math.ceil(12 / queries.length);
   for (const q of queries) {
+    let taken = 0;
     for (const c of await searchBoth(q, 6)) {
       const k = `${c.provider}:${c.id}`;
-      if (!seen.has(k) && !a.exclude?.has(photoKey(c.url))) { seen.add(k); candidates.push(c); }
+      if (taken < share && !seen.has(k) && !a.exclude?.has(photoKey(c.url))) { seen.add(k); candidates.push(c); taken++; }
     }
   }
   const pool = candidates.slice(0, 12);

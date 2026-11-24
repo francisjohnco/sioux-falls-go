@@ -49,7 +49,7 @@ The result can look exactly the way you want it. Large-format tiles, a bench, a 
 
 One real advantage in Sioux Falls specifically: our water is hard. According to the City of Sioux Falls 2020 finished water quality report, total hardness runs around 15 grains per gallon for city-treated water and around 10 grains per gallon for Lewis and Clark water. That mineral load leaves scale on glass doors and grout. With tile, you choose your grout color, finish, and sealant with that in mind. Larger tiles mean fewer grout lines to scrub. The [Hard Water and Your New Bathroom in Sioux Falls](/guides/hard-water-bathroom-sioux-falls) guide goes deeper on what that means for finishes and cleaning habits.
 
-Custom tile also allows for a true curbless or low-threshold entry, which matters a lot for accessibility. If you are planning for the long term, that is worth factoring in early. A local homeowner guide at [siouxfallsrevamp.com](https://siouxfallsrevamp.com/add-value-to-your-home-with-a-custom-sioux-falls-shower-remodel/) walks through how custom showers affect home value and what decisions tend to matter most.
+Custom tile also allows for a true curbless or low-threshold entry, which matters a lot for accessibility. If you are planning for the long term, that is worth factoring in early. This [Sioux Falls shower remodel guide](https://siouxfallsrevamp.com/add-value-to-your-home-with-a-custom-sioux-falls-shower-remodel/) walks through how custom showers affect home value and what decisions tend to matter most.
 
 ## Waterproofing Behind the Walls, the Part Nobody Sees
 

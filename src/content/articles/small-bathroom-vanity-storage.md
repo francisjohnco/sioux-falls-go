@@ -69,7 +69,7 @@ For more on how hard water affects every surface in a remodeled bathroom, see [H
 
 A single vanity cabinet is almost never enough storage, especially in a bathroom shared by two or more people. The good news is that small bathrooms usually have more usable wall and ceiling space than homeowners realize.
 
-A local homeowner guide at [siouxfallsrevamp.com/sioux-falls-bathroom-vanity-guide/](https://siouxfallsrevamp.com/sioux-falls-bathroom-vanity-guide/) goes deeper on measuring and matching vanity styles to small bathroom layouts, and it is worth reading before you finalize anything.
+This local guide to [choosing a bathroom vanity in Sioux Falls](https://siouxfallsrevamp.com/sioux-falls-bathroom-vanity-guide/) goes deeper on measuring and matching vanity styles to small bathroom layouts, and it is worth reading before you finalize anything.
 
 **Medicine cabinets** are the most underused storage option in small bathrooms. A recessed medicine cabinet sits inside the wall, so it adds storage without sticking out into the room. In an older Sioux Falls home, the stud spacing is usually 16 inches on center, which fits a standard 14-inch-wide recessed cabinet without cutting studs. A wider cabinet means a header and more carpentry work.
 

@@ -69,7 +69,7 @@ What makes this choice more than just an aesthetic one is what happens behind th
 
 For a full comparison of one-day systems versus custom tile, including waterproofing behind the panels, [Tub to Shower Conversion, One Day Install or Custom Tile?](/guides/tub-to-shower-conversion) covers this in detail.
 
-A local homeowner guide at [siouxfallsrevamp.com](https://siouxfallsrevamp.com/sioux-falls-bathroom-remodel/) also walks through these tradeoffs from a Sioux Falls homeowner's perspective and is worth reading alongside your contractor bids.
+This local [Sioux Falls bathroom remodel guide](https://siouxfallsrevamp.com/sioux-falls-bathroom-remodel/) also walks through these tradeoffs from a Sioux Falls homeowner's perspective and is worth reading alongside your contractor bids.
 
 ## Fixtures, Finishes, and the Choices Only You Can Make
 
