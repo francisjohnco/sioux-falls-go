@@ -2094,7 +2094,12 @@
             "hard water shower glass"
           ],
           "brief": "Use the City water report hardness facts. How scale affects glass doors, faucets, showerheads, grout, and toilets; finishes and glass that are easier to keep clean; cleaning habits; and when to ask a plumber about a softener. No product names.",
-          "publishDate": "2026-11-10"
+          "publishDate": "2026-11-10",
+          "photoQueries": [
+            "glass shower door bathroom",
+            "chrome bathroom faucet sink",
+            "white bathroom shower"
+          ]
         },
         {
           "slug": "hidden-water-damage-bathroom",

@@ -158,13 +158,14 @@ export function photoSubjectFor(category?: string): string | undefined {
   return subjectEntry(category)?.show;
 }
 
-export async function findHeroPhoto(a: { title: string; description?: string; category?: string; currentImageUrl?: string; exclude?: Set<string>; mustShow?: string }): Promise<FindResult> {
+export async function findHeroPhoto(a: { title: string; description?: string; category?: string; currentImageUrl?: string; exclude?: Set<string>; mustShow?: string; queries?: string[] }): Promise<FindResult> {
   a = { ...a, mustShow: a.mustShow || photoSubjectFor(a.category) };
   const keys = photoKeys();
   if (!keys.anthropic) return { kind: 'none', reason: 'ANTHROPIC_API_KEY is not set' };
   if (!keys.unsplash && !keys.pexels) return { kind: 'none', reason: 'No photo source key. Add UNSPLASH_ACCESS_KEY or PEXELS_API_KEY in Netlify.' };
 
-  const queries = await searchQueries(a);
+  // A topic can name its own photo searches when the automatic ones miss.
+  const queries = a.queries?.length ? a.queries.slice(0, 3) : await searchQueries(a);
   const seen = new Set<string>();
   const candidates: Candidate[] = [];
   // Every search gets a fair share of the 12 photos the picker looks at, so

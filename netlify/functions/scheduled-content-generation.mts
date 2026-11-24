@@ -174,7 +174,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   // skip this run without writing anything. The next run tries again.
   let lockedPhoto: { heroImage?: string; heroImageAlt?: string; heroImageCredit?: any } | null = null;
   if (photoSubjectFor(categorySlug) || photoSubjectFor(categoryName)) {
-    lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()) });
+    lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()), queries: next.photoQueries });
     if (!lockedPhoto.heroImage) {
       console.warn(`No fitting photo yet for "${next.title}", will try again next run.`);
       return new Response(`Waiting for a fitting photo for "${next.title}"`, { status: 202 });
