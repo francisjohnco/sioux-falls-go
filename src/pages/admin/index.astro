@@ -5,7 +5,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/Icon.astro';
 import HeroPhotos from '../../components/admin/HeroPhotos.astro';
 import { articleHero } from '../../lib/hero';
-import DealSubmissions from '../../components/admin/DealSubmissions.astro';
+import DealsPanel from '../../components/admin/DealsPanel.astro';
+import type { AdminDeal } from '../../components/admin/DealsPanel.astro';
 import ProfileInterview from '../../components/admin/ProfileInterview.astro';
 import OwnerAccess from '../../components/admin/OwnerAccess.astro';
 import CategoryManager from '../../components/admin/CategoryManager.astro';
@@ -18,6 +19,7 @@ import { isLive, publishDay } from '../../lib/articles';
 import { todayCentral, dateKey } from '../../lib/dates';
 import nodePath from 'node:path';
 import nodeFs from 'node:fs';
+import { execSync } from 'node:child_process';
 
 const businesses = await getCollection('businesses');
 const businessesWithCategory = await Promise.all(
@@ -111,7 +113,31 @@ const allArticles = await getCollection('articles');
 // have no page yet. The admin sees them; the public site does not.
 const scheduledArticles = allArticles.filter((a) => !isLive(a)).sort((a, b) => publishDay(a).localeCompare(publishDay(b)));
 const liveArticleCount = allArticles.length - scheduledArticles.length;
-const blackFridayLiveCount = (await getCollection('deals')).filter((d) => d.data.promotion === 'black-friday').length;
+// Deals tab: every deal, with when its file first landed (for "Added today").
+const dealAddedAt: Record<string, number> = {};
+try {
+  const log = execSync("git log --diff-filter=A --format=@%ct --name-only -- src/content/deals", { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  let t = 0;
+  for (const line of log.split('\n')) {
+    if (line.startsWith('@')) t = Number(line.slice(1)) * 1000;
+    else if (line.trim()) { const id = nodePath.basename(line.trim(), '.json'); if (!dealAddedAt[id]) dealAddedAt[id] = t; }
+  }
+} catch {}
+const bizNames = new Map(businesses.map((b) => [b.id, b.data.name]));
+const dayOf = (d?: Date) => (d ? d.toISOString().slice(0, 10) : '');
+const todayForDeals = todayCentral();
+const statusRank = { live: 0, upcoming: 1, ended: 2 };
+const adminDeals: AdminDeal[] = allDealsForAdmin.map((d) => {
+  const startsAt = dayOf(d.data.activatesAt), endsAt = dayOf(d.data.expiresAt);
+  const status: AdminDeal['status'] = endsAt && endsAt < todayForDeals ? 'ended' : startsAt && startsAt > todayForDeals ? 'upcoming' : 'live';
+  return {
+    id: d.id, business: d.data.business.id, businessName: bizNames.get(d.data.business.id) ?? d.data.business.id,
+    title: d.data.title, description: d.data.description, discountType: d.data.discountType,
+    startsAt, endsAt, blackFriday: d.data.promotion === 'black-friday', mailer: d.data.mailerCampaign ?? '',
+    redeemMethod: d.data.redeemMethod ?? 'show', redeemValue: d.data.redeemValue ?? '', redeemNote: d.data.redeemNote ?? '',
+    terms: d.data.terms ?? '', status, addedAt: dealAddedAt[d.id] ?? 0, source: d.data.submittedBy ?? '',
+  };
+}).sort((a, b) => statusRank[a.status] - statusRank[b.status] || b.addedAt - a.addedAt);
 const heroItems = allArticles.map((a) => {
   const h = articleHero(a);
   const state = h.isFallback ? 'fallback' : a.data.heroImageLocked ? 'locked' : a.data.heroImageAlt ? 'chosen' : 'review';
@@ -240,6 +266,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         <button class="nav-item" data-tab="sponsorships">
           <span class="nav-icon"><Icon name="star" size={18} /></span> Sponsorships
         </button>
+        <button class="nav-item" data-tab="deals">
+          <span class="nav-icon"><Icon name="zap" size={18} /></span> Deals <span class="nav-count" id="nav-deals-count" hidden></span>
+        </button>
         <button class="nav-item" data-tab="mailer-deals">
           <span class="nav-icon"><Icon name="mail" size={18} /></span> Mailer Deals
         </button>
@@ -325,7 +354,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           <li id="attention-bf-deals" hidden>
             <span class="activity-dot activity-dot--new"></span>
             <strong>Black Friday deals</strong> from businesses waiting for your approval
-            <button class="attention-link attention-link--btn" data-jump-tab="mailer-deals">Review →</button>
+            <button class="attention-link attention-link--btn" data-jump-tab="deals">Review →</button>
           </li>
           <li id="attention-owner-changes" hidden>
             <span class="activity-dot activity-dot--new"></span>
@@ -349,7 +378,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
             <li>
               <span class="activity-dot activity-dot--new"></span>
               <strong>{mailerDealsExpiringSoon.length} mailer deal{mailerDealsExpiringSoon.length === 1 ? '' : 's'}</strong> expiring within a week — {mailerDealsExpiringSoon.map((d) => d.business?.data.name).join(', ')}
-              <button class="attention-link attention-link--btn" data-jump-tab="mailer-deals">Review in Mailer Deals →</button>
+              <button class="attention-link attention-link--btn" data-jump-tab="deals">Review in Mailer Deals →</button>
             </li>
           )}
           {upcomingEventCount < 4 && (
@@ -640,6 +669,18 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </div>
       </section>
 
+      <!-- ── DEALS ── -->
+      <section class="tab-panel" id="panel-deals">
+        <div class="panel-header-row">
+          <div>
+            <h1>Deals</h1>
+            <p class="panel-sub">Every deal on the site. New ones from businesses wait at the top for your okay. Changes show on the site in about a minute.</p>
+          </div>
+          <button class="button" type="button" id="dl-add-btn">+ Add a deal</button>
+        </div>
+        <DealsPanel deals={adminDeals} businesses={businesses.map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name))} today={todayCentral()} />
+      </section>
+
       <!-- ── MAILER DEALS ── -->
       <section class="tab-panel" id="panel-mailer-deals">
         <div class="panel-header-row">
@@ -650,10 +691,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
           <button class="button" id="open-create-deal-btn"><Icon name="mail" size={16} /> New Mailer Deal</button>
         </div>
 
-        <DealSubmissions
-          businesses={businesses.map((b) => ({ slug: b.id, name: b.data.name })).sort((a, b) => a.name.localeCompare(b.name))}
-          liveCount={blackFridayLiveCount}
-        />
+        <p class="panel-sub">Deals businesses send in, Black Friday deals, and every other deal now live in the <button class="button--link" type="button" data-jump-tab="deals">Deals tab</button>.</p>
 
         <div class="sponsor-stats">
           <div class="sponsor-stat">
@@ -1503,6 +1541,41 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .biz-name--link { background: none; border: none; padding: 0; text-align: left; font-weight: 700; color: var(--color-navy); cursor: pointer; font-family: inherit; font-size: inherit; text-decoration: underline; text-decoration-color: transparent; transition: text-decoration-color 0.15s ease; }
   .biz-name--link:hover { text-decoration-color: var(--color-orange); color: var(--color-orange-dark); }
 
+  /* ── Color and design layer ── */
+  .admin-topbar { background: linear-gradient(100deg, #1B2A4A 0%, #22396A 55%, #2E6F9E 100%); }
+  .admin-main { background:
+    radial-gradient(circle at 100% 0, rgba(240,126,35,0.10) 0, transparent 28rem),
+    radial-gradient(circle at 15% 0, rgba(46,111,158,0.10) 0, transparent 26rem); }
+  .admin-main h1::after { content: ''; display: block; width: 4rem; height: 5px; border-radius: 99px; margin-top: 0.45rem;
+    background: linear-gradient(90deg, #F07E23, #F5B429 55%, #2E6F9E); }
+  .section-heading { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+  .section-heading::before { content: ''; width: 0.7rem; height: 0.7rem; border-radius: 3px; background: linear-gradient(135deg, #F07E23, #F5B429); flex: none; }
+  .nav-icon { width: 1.95rem; height: 1.95rem; border-radius: 0.6rem; align-items: center; justify-content: center; background: var(--chip-bg, #EEF1F6); color: var(--chip, #445070); transition: transform 0.15s; }
+  .nav-item:hover .nav-icon { transform: scale(1.06); }
+  .admin-sidebar .nav-item:nth-of-type(8n+1) { --chip: #2a78d6; --chip-bg: #E7F0FB; }
+  .admin-sidebar .nav-item:nth-of-type(8n+2) { --chip: #D3660F; --chip-bg: #FDEBDD; }
+  .admin-sidebar .nav-item:nth-of-type(8n+3) { --chip: #13865E; --chip-bg: #E2F5EE; }
+  .admin-sidebar .nav-item:nth-of-type(8n+4) { --chip: #9A6A00; --chip-bg: #FCF1D6; }
+  .admin-sidebar .nav-item:nth-of-type(8n+5) { --chip: #C2416F; --chip-bg: #FCE8EF; }
+  .admin-sidebar .nav-item:nth-of-type(8n+6) { --chip: #4F40C2; --chip-bg: #ECEAFB; }
+  .admin-sidebar .nav-item:nth-of-type(8n+7) { --chip: #C23B3A; --chip-bg: #FBE6E6; }
+  .admin-sidebar .nav-item:nth-of-type(8n+8) { --chip: #0E7C86; --chip-bg: #DFF3F4; }
+  .nav-item.is-active .nav-icon { background: var(--chip, #F07E23); color: #fff; }
+  .stat-card { border-top: 4px solid var(--card, #2a78d6); }
+  .stat-grid > :nth-child(5n+1) { --card: #2a78d6; --card-bg: #E7F0FB; }
+  .stat-grid > :nth-child(5n+2) { --card: #F07E23; --card-bg: #FDEBDD; }
+  .stat-grid > :nth-child(5n+3) { --card: #1baf7a; --card-bg: #E2F5EE; }
+  .stat-grid > :nth-child(5n+4) { --card: #eda100; --card-bg: #FCF1D6; }
+  .stat-grid > :nth-child(5n+5) { --card: #6250d6; --card-bg: #ECEAFB; }
+  .stat-icon { background: var(--card-bg, #EEF1F6); color: var(--card, #445070); }
+  .stat-card--accent .stat-icon, .stat-icon--accent { background: var(--color-orange); color: #fff; }
+  .gsc-widget, .attention-item { border-left: 4px solid #2E6F9E; }
+</style>
+
+
+<style is:global>
+  .traffic-status.is-waiting { color: #1D5FAE !important; background: #E7F0FB; border-radius: 0.5rem; padding: 0.6rem 0.8rem; font-weight: 600; }
+  /* Modals shared by the admin and its components */
   .edit-modal-backdrop {
     position: fixed; inset: 0; background: rgba(13,23,48,0.5); z-index: 100;
     display: flex; align-items: center; justify-content: center; padding: 2rem;
@@ -1547,39 +1620,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
   .edit-modal-status.is-success { color: var(--color-success); }
   .edit-modal-status.is-error { color: #C0392B; }
 
-  /* ── Color and design layer ── */
-  .admin-topbar { background: linear-gradient(100deg, #1B2A4A 0%, #22396A 55%, #2E6F9E 100%); }
-  .admin-main { background:
-    radial-gradient(circle at 100% 0, rgba(240,126,35,0.10) 0, transparent 28rem),
-    radial-gradient(circle at 15% 0, rgba(46,111,158,0.10) 0, transparent 26rem); }
-  .admin-main h1::after { content: ''; display: block; width: 4rem; height: 5px; border-radius: 99px; margin-top: 0.45rem;
-    background: linear-gradient(90deg, #F07E23, #F5B429 55%, #2E6F9E); }
-  .section-heading { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
-  .section-heading::before { content: ''; width: 0.7rem; height: 0.7rem; border-radius: 3px; background: linear-gradient(135deg, #F07E23, #F5B429); flex: none; }
-  .nav-icon { width: 1.95rem; height: 1.95rem; border-radius: 0.6rem; align-items: center; justify-content: center; background: var(--chip-bg, #EEF1F6); color: var(--chip, #445070); transition: transform 0.15s; }
-  .nav-item:hover .nav-icon { transform: scale(1.06); }
-  .admin-sidebar .nav-item:nth-of-type(8n+1) { --chip: #2a78d6; --chip-bg: #E7F0FB; }
-  .admin-sidebar .nav-item:nth-of-type(8n+2) { --chip: #D3660F; --chip-bg: #FDEBDD; }
-  .admin-sidebar .nav-item:nth-of-type(8n+3) { --chip: #13865E; --chip-bg: #E2F5EE; }
-  .admin-sidebar .nav-item:nth-of-type(8n+4) { --chip: #9A6A00; --chip-bg: #FCF1D6; }
-  .admin-sidebar .nav-item:nth-of-type(8n+5) { --chip: #C2416F; --chip-bg: #FCE8EF; }
-  .admin-sidebar .nav-item:nth-of-type(8n+6) { --chip: #4F40C2; --chip-bg: #ECEAFB; }
-  .admin-sidebar .nav-item:nth-of-type(8n+7) { --chip: #C23B3A; --chip-bg: #FBE6E6; }
-  .admin-sidebar .nav-item:nth-of-type(8n+8) { --chip: #0E7C86; --chip-bg: #DFF3F4; }
-  .nav-item.is-active .nav-icon { background: var(--chip, #F07E23); color: #fff; }
-  .stat-card { border-top: 4px solid var(--card, #2a78d6); }
-  .stat-grid > :nth-child(5n+1) { --card: #2a78d6; --card-bg: #E7F0FB; }
-  .stat-grid > :nth-child(5n+2) { --card: #F07E23; --card-bg: #FDEBDD; }
-  .stat-grid > :nth-child(5n+3) { --card: #1baf7a; --card-bg: #E2F5EE; }
-  .stat-grid > :nth-child(5n+4) { --card: #eda100; --card-bg: #FCF1D6; }
-  .stat-grid > :nth-child(5n+5) { --card: #6250d6; --card-bg: #ECEAFB; }
-  .stat-icon { background: var(--card-bg, #EEF1F6); color: var(--card, #445070); }
-  .stat-card--accent .stat-icon, .stat-icon--accent { background: var(--color-orange); color: #fff; }
-  .gsc-widget, .attention-item { border-left: 4px solid #2E6F9E; }
-</style>
-
-
-<style is:global>
+  .button--danger { background: #fff; border: 1.5px solid #D9534F; color: #D9534F; }
+  .button--danger:hover { background: #FBEAEA; }
+  .edit-modal-footer-right { display: flex; gap: 0.7rem; }
   /* ── Admin design system: one layer every tab shares, including rows added by script ── */
   .admin-main input[type=text], .admin-main input[type=search], .admin-main input[type=email], .admin-main input[type=url],
   .admin-main input[type=number], .admin-main input[type=date], .admin-main input[type=tel], .admin-main input:not([type]),
@@ -1871,10 +1914,11 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       const data = await res.json();
       if (!res.ok) {
         if (trafficStatus) {
-          trafficStatus.textContent = data.error === 'Search Console not connected'
-            ? 'Connect Search Console (Content Engine tab) to see real search traffic here.'
-            : `Couldn't load search traffic: ${data.error}`;
-          trafficStatus.className = 'traffic-status is-error';
+          const notSetUp = data.error === 'Search Console not connected' || data.error === 'GSC_SITE_PROPERTY not configured';
+          trafficStatus.textContent = notSetUp
+            ? 'Waiting on Google. Search traffic shows here once Search Console is connected. The Analytics tab walks you through the three steps.'
+            : `Google did not answer this time (${data.error}). It usually clears on the next refresh.`;
+          trafficStatus.className = notSetUp ? 'traffic-status is-waiting' : 'traffic-status is-error';
           trafficStatus.hidden = false;
         }
         return;
@@ -1886,7 +1930,7 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       set('traffic-position', String(data.avgPosition));
     } catch (err: any) {
       if (trafficStatus) {
-        trafficStatus.textContent = `Couldn't load search traffic: ${err.message}`;
+        trafficStatus.textContent = 'Search traffic could not load just now. Try a refresh in a minute.';
         trafficStatus.className = 'traffic-status is-error';
         trafficStatus.hidden = false;
       }

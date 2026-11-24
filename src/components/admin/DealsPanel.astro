@@ -1,0 +1,244 @@
+---
+// The Deals tab: every deal on the site in one place. Edit, end early,
+// remove, or add one for any business. Pending submissions sit on top.
+import DealSubmissions from './DealSubmissions.astro';
+
+export interface AdminDeal {
+  id: string; business: string; businessName: string; title: string; description: string;
+  discountType: string; startsAt: string; endsAt: string; blackFriday: boolean; mailer: string;
+  redeemMethod: string; redeemValue: string; redeemNote: string; terms: string;
+  status: 'live' | 'upcoming' | 'ended'; addedAt: number; source: string;
+}
+interface Props { deals: AdminDeal[]; businesses: { slug: string; name: string }[]; today: string }
+const { deals, businesses, today } = Astro.props;
+const live = deals.filter((d) => d.status === 'live').length;
+const upcoming = deals.filter((d) => d.status === 'upcoming').length;
+const ended = deals.filter((d) => d.status === 'ended').length;
+const addedToday = deals.filter((d) => d.addedAt && new Date(d.addedAt).toLocaleDateString('en-CA', { timeZone: 'America/Chicago' }) === today).length;
+const bf = deals.filter((d) => d.blackFriday && d.status !== 'ended').length;
+const fmt = (s: string) => s ? new Date(s + 'T12:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }) : '';
+const label = { live: 'Live now', upcoming: 'Starts soon', ended: 'Ended' };
+---
+<div id="panel-deals-inner">
+  <div class="dl-stats">
+    <div class="dl-stat dl-stat--today"><span id="dl-today-num" data-base={addedToday}>{addedToday}</span><small>New today</small></div>
+    <div class="dl-stat dl-stat--live"><span>{live}</span><small>Live now</small></div>
+    <div class="dl-stat dl-stat--soon"><span>{upcoming}</span><small>Starting soon</small></div>
+    <div class="dl-stat dl-stat--bf"><span>{bf}</span><small>Black Friday</small></div>
+  </div>
+
+  <DealSubmissions businesses={businesses} liveCount={bf} />
+
+  <div class="dl-card">
+    <div class="dl-card-head">
+      <h3>All deals</h3>
+      <div class="dl-filters" role="tablist">
+        <button type="button" class="is-on" data-dl-filter="all">All {deals.length}</button>
+        <button type="button" data-dl-filter="live">Live {live}</button>
+        <button type="button" data-dl-filter="upcoming">Soon {upcoming}</button>
+        <button type="button" data-dl-filter="ended">Ended {ended}</button>
+      </div>
+    </div>
+    {deals.length === 0 && <p class="ds-empty">No deals yet.</p>}
+    <div class="dl-list">
+      {deals.map((d) => (
+        <article class={`dl-row dl-row--${d.status}`} data-status={d.status} data-deal={JSON.stringify(d)}>
+          <div class="dl-row-main">
+            <div class="dl-badges">
+              <span class={`dl-badge dl-badge--${d.status}`}>{label[d.status]}</span>
+              {d.blackFriday && <span class="dl-badge dl-badge--bf">Black Friday</span>}
+              {d.mailer && <span class="dl-badge dl-badge--mail">Postcard {d.mailer}</span>}
+              {d.addedAt && new Date(d.addedAt).toLocaleDateString('en-CA', { timeZone: 'America/Chicago' }) === today && <span class="dl-badge dl-badge--new">Added today</span>}
+            </div>
+            <strong class="dl-title">{d.title}</strong>
+            <span class="dl-biz">{d.businessName}</span>
+            <span class="dl-dates">
+              {d.startsAt && d.endsAt ? `${fmt(d.startsAt)} to ${fmt(d.endsAt)}` : d.endsAt ? `Ends ${fmt(d.endsAt)}` : d.startsAt ? `Starts ${fmt(d.startsAt)}` : 'No end date'}
+              {d.source === 'business-owner' ? ' · sent by the business' : ''}
+            </span>
+          </div>
+          <div class="dl-row-actions">
+            <a class="button button--ghost button--sm" href={d.blackFriday ? '/local-deals/black-friday/' : `/businesses/${d.business}/`} target="_blank">View</a>
+            <button class="button button--sm" type="button" data-dl-edit>Edit</button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="edit-modal-backdrop" id="dl-modal">
+    <div class="edit-modal">
+      <div class="edit-modal-header">
+        <h2 id="dl-modal-title">Edit deal</h2>
+        <button class="edit-modal-close" type="button" data-dl-close aria-label="Close">✕</button>
+      </div>
+      <div class="edit-modal-body">
+        <label class="edit-field-full" id="dl-biz-wrap">Business
+          <select id="dl-business">
+            <option value="">Pick the business</option>
+            {businesses.map((b) => <option value={b.slug}>{b.name}</option>)}
+          </select>
+        </label>
+        <label class="edit-field-full">Deal title <input id="dl-title" maxlength="80" placeholder="50% off a drain cleaning" /></label>
+        <label class="edit-field-full">Description <textarea id="dl-description" rows="2" maxlength="300"></textarea></label>
+        <div class="edit-field-grid">
+          <label>Starts <input type="date" id="dl-startsAt" /></label>
+          <label>Ends <input type="date" id="dl-endsAt" /></label>
+        </div>
+        <div class="edit-field-grid">
+          <label>Kind of deal
+            <select id="dl-discountType">
+              <option value="percent-off">Percent off</option>
+              <option value="dollar-off">Dollar off</option>
+              <option value="bogo">Buy one, get one</option>
+              <option value="free-item">Free item</option>
+              <option value="bundle">Bundle</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>How to redeem
+            <select id="dl-redeemMethod">
+              <option value="show">Show at checkout</option>
+              <option value="call">Call</option>
+              <option value="link">Online link</option>
+              <option value="code">Promo code</option>
+            </select>
+          </label>
+        </div>
+        <label class="edit-field-full">Phone, link, or code <input id="dl-redeemValue" placeholder="Leave empty for show at checkout" /></label>
+        <label class="edit-field-full">Redeem instructions <input id="dl-redeemNote" maxlength="200" /></label>
+        <label class="edit-field-full">Fine print <input id="dl-terms" maxlength="200" /></label>
+        <label class="dl-check"><input type="checkbox" id="dl-blackFriday" /> Show on the Black Friday page</label>
+        <p class="edit-modal-status" id="dl-status" hidden></p>
+      </div>
+      <div class="edit-modal-footer">
+        <div class="dl-foot-left">
+          <button class="button button--ghost" type="button" id="dl-end">End today</button>
+          <button class="button button--danger" type="button" id="dl-delete">Remove</button>
+        </div>
+        <div class="edit-modal-footer-right">
+          <button class="button button--ghost" type="button" data-dl-close>Cancel</button>
+          <button class="button" type="button" id="dl-save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dl-today" data-today={today} hidden></div>
+</div>
+
+<style is:global>
+  .dl-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; margin: 1.2rem 0 0; }
+  .dl-stat { border-radius: 0.9rem; padding: 0.9rem 1rem; color: #fff; display: flex; flex-direction: column; gap: 0.1rem; }
+  .dl-stat span { font-family: var(--font-display); font-size: 1.9rem; font-weight: 800; line-height: 1; }
+  .dl-stat small { font-size: 0.78rem; font-weight: 700; opacity: 0.92; }
+  .dl-stat--today { background: linear-gradient(135deg, #F07E23, #D3660F); }
+  .dl-stat--live { background: linear-gradient(135deg, #17A06F, #13865E); }
+  .dl-stat--soon { background: linear-gradient(135deg, #3B86DB, #2a78d6); }
+  .dl-stat--bf { background: linear-gradient(135deg, #1B2540, #0E1424); }
+  .dl-card { background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1.2rem 1.3rem; }
+  .dl-card-head { display: flex; justify-content: space-between; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .dl-card-head h3 { margin: 0; font-family: var(--font-display); color: var(--color-navy); }
+  .dl-filters { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .dl-filters button { font: inherit; font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.75rem; border-radius: 999px; border: 1px solid var(--color-line); background: #fff; color: var(--color-navy); cursor: pointer; }
+  .dl-filters button.is-on { background: var(--color-navy); color: #fff; border-color: var(--color-navy); }
+  .dl-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .dl-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.85rem 1rem; border: 1px solid var(--color-line); border-left: 4px solid #13865E; border-radius: 0.6rem; }
+  .dl-row--upcoming { border-left-color: #2a78d6; }
+  .dl-row--ended { border-left-color: #B8BFCC; opacity: 0.75; }
+  .dl-row-main { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+  .dl-badges { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+  .dl-badge { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.02em; padding: 0.15rem 0.5rem; border-radius: 999px; background: #EEF1F5; color: var(--color-navy); }
+  .dl-badge--live { background: #E2F5EE; color: #0F6E4C; }
+  .dl-badge--upcoming { background: #E7F0FB; color: #1D5FAE; }
+  .dl-badge--ended { background: #EEF1F5; color: #5B6478; }
+  .dl-badge--bf { background: #0E1424; color: #fff; }
+  .dl-badge--mail { background: #FCF1D6; color: #7A5400; }
+  .dl-badge--new { background: #FDEBDD; color: #B4530B; }
+  .dl-title { color: var(--color-navy); font-size: 0.98rem; }
+  .dl-biz { font-size: 0.85rem; color: var(--color-orange-dark); font-weight: 700; }
+  .dl-dates { font-size: 0.8rem; color: var(--color-navy-light); }
+  .dl-row-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+  .button--sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+  .edit-modal label.dl-check { flex-direction: row; text-transform: none; letter-spacing: 0; font-size: 0.9rem; color: var(--color-navy); }
+  .dl-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; font-weight: 700; color: var(--color-navy); margin-top: 0.4rem; }
+  .dl-foot-left { display: flex; gap: 0.5rem; }
+  .nav-count { margin-left: auto; min-width: 1.3rem; height: 1.3rem; padding: 0 0.35rem; border-radius: 999px; background: #F07E23; color: #fff; font-size: 0.7rem; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; }
+  .nav-count[hidden] { display: none; }
+  .ds-new { display: inline-block; font-size: 0.68rem; font-weight: 800; padding: 0.12rem 0.45rem; border-radius: 999px; background: #F07E23; color: #fff; margin-left: 0.35rem; vertical-align: 1px; }
+  @media (max-width: 40rem) {
+    .dl-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .dl-row { flex-direction: column; align-items: stretch; }
+    .dl-row-actions .button { flex: 1; text-align: center; }
+    .edit-modal-footer { flex-direction: column-reverse; gap: 0.6rem; }
+    .dl-foot-left, .edit-modal-footer-right { width: 100%; }
+    .dl-foot-left .button, .edit-modal-footer-right .button { flex: 1; }
+  }
+</style>
+
+<script>
+  const panel = document.getElementById('panel-deals-inner')!;
+  const modal = document.getElementById('dl-modal')!;
+  const $ = <T extends HTMLElement = HTMLInputElement>(id: string) => document.getElementById(id) as T;
+  const status = $<HTMLElement>('dl-status');
+  const today = $<HTMLElement>('dl-today').dataset.today || new Date().toISOString().slice(0, 10);
+  const FIELDS = ['title', 'description', 'startsAt', 'endsAt', 'discountType', 'redeemMethod', 'redeemValue', 'redeemNote', 'terms'];
+  let current: any = null;
+
+  panel.querySelectorAll<HTMLButtonElement>('[data-dl-filter]').forEach((b) => b.addEventListener('click', () => {
+    panel.querySelectorAll('[data-dl-filter]').forEach((x) => x.classList.toggle('is-on', x === b));
+    const f = b.dataset.dlFilter;
+    panel.querySelectorAll<HTMLElement>('.dl-row').forEach((r) => { r.hidden = f !== 'all' && r.dataset.status !== f; });
+  }));
+
+  function open(deal: any | null) {
+    current = deal;
+    $<HTMLElement>('dl-modal-title').textContent = deal ? 'Edit deal' : 'Add a deal';
+    $<HTMLElement>('dl-biz-wrap').hidden = !!deal;
+    $<HTMLSelectElement>('dl-business').value = '';
+    FIELDS.forEach((k) => { ($(`dl-${k}`) as HTMLInputElement).value = deal?.[k] ?? (k === 'discountType' ? 'percent-off' : k === 'redeemMethod' ? 'show' : ''); });
+    $('dl-blackFriday').checked = !!deal?.blackFriday;
+    $<HTMLElement>('dl-end').hidden = !deal || deal.status === 'ended';
+    $<HTMLElement>('dl-delete').hidden = !deal;
+    status.hidden = true;
+    modal.classList.add('is-open');
+  }
+  const close = () => modal.classList.remove('is-open');
+  modal.querySelectorAll('[data-dl-close]').forEach((b) => b.addEventListener('click', close));
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  $<HTMLElement>('dl-add-btn').addEventListener('click', () => open(null));
+  panel.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('[data-dl-edit]');
+    if (btn) open(JSON.parse(btn.closest<HTMLElement>('.dl-row')!.dataset.deal!));
+  });
+
+  async function send(body: any, btn: HTMLButtonElement) {
+    btn.disabled = true; status.hidden = false; status.textContent = 'Saving...'; status.style.color = '';
+    try {
+      const res = await fetch('/api/manage-deal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      status.textContent = data.message; status.style.color = '#2E7D4F';
+      setTimeout(close, 1600);
+    } catch (err: any) { status.textContent = err.message; status.style.color = '#A93226'; }
+    btn.disabled = false;
+  }
+  function form() {
+    const o: any = {};
+    FIELDS.forEach((k) => { o[k] = ($(`dl-${k}`) as HTMLInputElement).value.trim(); });
+    o.blackFriday = $('dl-blackFriday').checked;
+    return o;
+  }
+  $<HTMLButtonElement>('dl-save').addEventListener('click', (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    send(current ? { action: 'update', id: current.id, ...form() } : { action: 'create', business: $<HTMLSelectElement>('dl-business').value, ...form() }, btn);
+  });
+  $<HTMLButtonElement>('dl-end').addEventListener('click', (e) => {
+    if (!current) return;
+    $('dl-endsAt').value = today;
+    send({ action: 'update', id: current.id, endsAt: today }, e.currentTarget as HTMLButtonElement);
+  });
+  $<HTMLButtonElement>('dl-delete').addEventListener('click', (e) => {
+    if (!current || !confirm(`Remove "${current.title}" from the site? This cannot be undone.`)) return;
+    send({ action: 'delete', id: current.id }, e.currentTarget as HTMLButtonElement);
+  });
+</script>

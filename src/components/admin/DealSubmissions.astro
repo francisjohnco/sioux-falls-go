@@ -7,8 +7,8 @@ const { businesses, liveCount } = Astro.props;
 <div class="ds" id="deal-submissions">
   <div class="ds-head">
     <div>
-      <h3>Black Friday deals from businesses</h3>
-      <p>Businesses send these from the <a href="/local-deals/black-friday/" target="_blank">Black Friday page</a>. Fix anything you want, match it to the right listing, then approve. {liveCount} Black Friday deal{liveCount === 1 ? ' is' : 's are'} on the page now.</p>
+      <h3>Waiting for your okay</h3>
+      <p>Deals businesses sent from the <a href="/local-deals/black-friday/" target="_blank">deals page</a>, even before they have their own login. Fix anything you want, match it to the right listing, then approve. {liveCount} Black Friday deal{liveCount === 1 ? ' is' : 's are'} on the site now.</p>
     </div>
   </div>
   <div id="ds-list"><p class="ds-empty">Loading...</p></div>
@@ -46,15 +46,26 @@ const { businesses, liveCount } = Astro.props;
     return data;
   }
 
+  const centralDay = (d: Date) => d.toLocaleDateString('en-CA', { timeZone: 'America/Chicago' });
+  const isToday = (iso: string) => !!iso && centralDay(new Date(iso)) === centralDay(new Date());
+  function sentLabel(iso: string) {
+    const d = new Date(iso);
+    const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Chicago' });
+    return isToday(iso) ? `sent today at ${time} <span class="ds-new">New today</span>` : `sent ${d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'America/Chicago' })} at ${time}`;
+  }
+
   async function load() {
     const list = document.getElementById('ds-list')!;
     try {
       const { submissions } = await call();
       const att = document.getElementById('attention-bf-deals');
       if (att) { att.hidden = !submissions.length; const n = att.querySelector('strong'); if (n) n.textContent = `${submissions.length} Black Friday deal${submissions.length === 1 ? '' : 's'}`; }
+      const todayN = submissions.filter((s: any) => isToday(s.submittedAt)).length;
+      const tn = document.getElementById('dl-today-num'); if (tn) tn.textContent = String(Number(tn.dataset.base || 0) + todayN);
+      const nc = document.getElementById('nav-deals-count'); if (nc) { nc.hidden = !submissions.length; nc.textContent = String(submissions.length); }
       list.innerHTML = submissions.length ? submissions.map((s: any) => `
         <div class="ds-item" data-id="${esc(s.id)}">
-          <p class="ds-meta"><strong>${esc(s.businessName)}</strong> · from ${esc(s.contactName)}, <a href="mailto:${esc(s.email)}">${esc(s.email)}</a>${s.phone ? `, ${esc(s.phone)}` : ''} · sent ${new Date(s.submittedAt).toLocaleDateString()}</p>
+          <p class="ds-meta"><strong>${esc(s.businessName)}</strong> · from ${esc(s.contactName)}, <a href="mailto:${esc(s.email)}">${esc(s.email)}</a>${s.phone ? `, ${esc(s.phone)}` : ''} · ${sentLabel(s.submittedAt)}</p>
           <div class="ds-grid">
             <label>Listing <input data-k="businessSlug" list="ds-biz" value="${esc(s.businessSlug)}" placeholder="Start typing the business" />
               ${s.businessSlug && known.has(s.businessSlug) ? '' : '<span class="ds-warn">Not matched to a listing yet. Pick one, or add the business in Directory first.</span>'}</label>
@@ -73,7 +84,7 @@ const { businesses, liveCount } = Astro.props;
             <button class="button button--ghost" type="button" data-ds="reject">Reject</button>
             <span class="ds-note"></span>
           </div>
-        </div>`).join('') : '<p class="ds-empty">No Black Friday deals waiting right now.</p>';
+        </div>`).join('') : '<p class="ds-empty">Nothing waiting right now. New deals from businesses show up here.</p>';
     } catch (err: any) { list.innerHTML = `<p class="ds-empty">${esc(err.message)}</p>`; }
   }
 
