@@ -54,7 +54,7 @@ const renderedFaqs = await Promise.all(
 
 // The category's own photo, picked to show what the category is about.
 // Never borrowed from a business in the category.
-const hero = categoryHero(category);
+const hero = categoryHero(category, articles);
 const heroPhoto = hero.large;
 
 const INITIAL_COUNT = 6;

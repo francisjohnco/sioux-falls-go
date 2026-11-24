@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
+import { photoSubjectFor } from './_shared/hero-photo.mts';
 import { buildArticleFile, commitNewFile, cleanDraft, validateDraft, isNearDuplicate } from './_shared/article-file.mts';
 import { chicagoToday, planNextSlot, planClusterSlot, PUBLISH_WEEKDAYS } from './_shared/schedule.mts';
 
@@ -111,6 +112,7 @@ export default async () => {
     const res = await runQueuedTopic(topic, queue, articleIndex);
     last = res;
     if (res.status >= 500) { await engine.set('last-failure', new Date().toISOString()); break; }
+    if (res.status === 202) { allSlugs.add(topic.slug); continue; } // no photo yet: move on, retry next run
     const date = res.headers.get('x-published');
     if (date) articleIndex.push({ slug: topic.slug, title: topic.title, cluster: queue.cluster, category: queue.category, publishedAt: date, live: date <= today, description: topic.brief || '' });
     else pending.push({ slug: topic.slug, cluster: queue.cluster });
@@ -167,6 +169,18 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
     'Do not present any price as a Sioux Falls average unless you were given a source for it. If you mention costs, call them typical national ranges and tell the reader to get a written quote.',
   ].filter(Boolean).join('\n');
 
+  // Categories whose photos must show one subject (bathrooms, say) never
+  // publish with a stand-in photo: find the photo first, and if none fits yet,
+  // skip this run without writing anything. The next run tries again.
+  let lockedPhoto: { heroImage?: string; heroImageAlt?: string; heroImageCredit?: any } | null = null;
+  if (photoSubjectFor(categorySlug) || photoSubjectFor(categoryName)) {
+    lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()) });
+    if (!lockedPhoto.heroImage) {
+      console.warn(`No fitting photo yet for "${next.title}", will try again next run.`);
+      return new Response(`Waiting for a fitting photo for "${next.title}"`, { status: 202 });
+    }
+  }
+
   let draft;
   try {
     draft = await runDraftGeneration({ categoryName, categorySlug, contentType: next.contentType, direction, existingArticles: clusterTargets });
@@ -176,7 +190,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   }
 
   draft = cleanDraft(draft);
-  const withImage = { ...draft, ...(await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: categoryName, exclude: usedPhotos(articleIndex, await loadPending()) })) };
+  const withImage = { ...draft, ...(lockedPhoto || await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: categoryName, exclude: usedPhotos(articleIndex, await loadPending()) })) };
 
   const autoPublish = (await getStore('admin-settings').get('auto-publish')) === 'on';
   const problems = validateDraft(withImage, knownSlugs(articleIndex, queue));

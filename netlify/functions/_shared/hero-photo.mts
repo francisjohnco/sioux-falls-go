@@ -105,24 +105,28 @@ function parseJson(text: string): any {
   try { return m ? JSON.parse(m[0]) : null; } catch { return null; }
 }
 
-async function searchQueries(a: { title: string; description?: string; category?: string }): Promise<string[]> {
+async function searchQueries(a: { title: string; description?: string; category?: string; mustShow?: string }): Promise<string[]> {
   const msg = await client().messages.create({
     model: MODEL, max_tokens: 200,
-    messages: [{ role: 'user', content: `Write two stock photo searches (2 to 5 words each) for the header photo of this local guide on a Sioux Falls, South Dakota website. Each search should describe what the photo should SHOW (a concrete scene, object, or person doing the work), not the topic in abstract. The first should be the most direct scene; the second a softer, more atmospheric alternative.\n\nTitle: ${a.title}\nSummary: ${a.description || ''}\nCategory: ${a.category || ''}\n\nRespond with only JSON like {"queries": ["plumber clearing kitchen drain", "clean modern kitchen sink"]}` }],
+    messages: [{ role: 'user', content: `Write two stock photo searches (2 to 5 words each) for the header photo of this local guide on a Sioux Falls, South Dakota website. Each search should describe what the photo should SHOW (a concrete scene, object, or person doing the work), not the topic in abstract. The first should be the most direct scene; the second a softer, more atmospheric alternative.${a.mustShow ? ` Both searches MUST describe ${a.mustShow}; never search for anything else.` : ''}\n\nTitle: ${a.title}\nSummary: ${a.description || ''}\nCategory: ${a.category || ''}\n\nRespond with only JSON like {"queries": ["plumber clearing kitchen drain", "clean modern kitchen sink"]}` }],
   });
   const t = msg.content.find((b: any) => b.type === 'text') as any;
   const q = parseJson(t?.text || '')?.queries;
-  return Array.isArray(q) && q.length ? q.slice(0, 2).map(String) : [a.title];
+  const out = Array.isArray(q) && q.length ? q.slice(0, 2).map(String) : [a.title];
+  // A plain, reliable search as the last resort for subject-locked categories.
+  const fallback = subjectEntry(a.category)?.query;
+  if (a.mustShow && fallback) out.push(fallback);
+  return out;
 }
 
 // Asks Claude to look at the photos and pick one. index 0 is the current image when given.
 async function pickWithVision(
-  a: { title: string; description?: string },
+  a: { title: string; description?: string; mustShow?: string },
   options: { thumb: string; description: string; isCurrent?: boolean }[],
 ): Promise<{ index: number; alt: string } | null> {
   const content: any[] = [{
     type: 'text',
-    text: `You are choosing the header photo for a local guide on Sioux Falls Go, a website for Sioux Falls, South Dakota.\n\nArticle title: ${a.title}\nSummary: ${a.description || ''}\n\nBelow are ${options.length} numbered photos.${options[0]?.isCurrent ? ' Photo 0 is the image the article uses now.' : ''}\n\nPick the single photo that is BOTH clearly about this article's subject AND beautiful: sharp, well lit, natural looking, inviting, works as a wide 16:9 banner.\n\nReject any photo that has text, words, logos, watermarks, or graphic design overlaid; looks like a cheesy posed stock cliche; shows a clearly non-American setting (European street signs, tropical landmarks, foreign storefronts); or is only loosely related to the subject. A photo showing a generic city or park is NOT acceptable for a home services, trade, or shopping topic.\n\nThen write alt text for the chosen photo: one plain sentence under 120 characters describing what is actually visible. Do not start with "Image of" or "Photo of", and do not claim the photo shows Sioux Falls unless it clearly does.\n\nRespond with only JSON: {"choice": <number, or -1 if none is good enough>, "alt": "<alt text>"}`,
+    text: `You are choosing the header photo for a local guide on Sioux Falls Go, a website for Sioux Falls, South Dakota.\n\nArticle title: ${a.title}\nSummary: ${a.description || ''}\n\nBelow are ${options.length} numbered photos.${options[0]?.isCurrent ? ' Photo 0 is the image the article uses now.' : ''}\n\nPick the single photo that is BOTH clearly about this article's subject AND beautiful: sharp, well lit, natural looking, inviting, works as a wide 16:9 banner.\n\nReject any photo that has text, words, logos, watermarks, or graphic design overlaid; looks like a cheesy posed stock cliche; shows a clearly non-American setting (European street signs, tropical landmarks, foreign storefronts); or is only loosely related to the subject. A photo showing a generic city or park is NOT acceptable for a home services, trade, or shopping topic.${a.mustShow ? ` The photo MUST clearly show ${a.mustShow}. Reject every photo that does not, however nice it is.` : ''}\n\nThen write alt text for the chosen photo: one plain sentence under 120 characters describing what is actually visible. Do not start with "Image of" or "Photo of", and do not claim the photo shows Sioux Falls unless it clearly does.\n\nRespond with only JSON: {"choice": <number, or -1 if none is good enough>, "alt": "<alt text>"}`,
   }];
   options.forEach((o, i) => {
     content.push({ type: 'text', text: `Photo ${i}${o.isCurrent ? ' (current image)' : ''}${o.description ? `: ${o.description}` : ''}` });
@@ -144,7 +148,18 @@ export type FindResult =
 // Photos already used by another article, compared without size parameters.
 export const photoKey = (u: string) => u.split('?')[0];
 
-export async function findHeroPhoto(a: { title: string; description?: string; category?: string; currentImageUrl?: string; exclude?: Set<string> }): Promise<FindResult> {
+// Categories whose header photos must show one specific subject, no matter
+// what the article is about. Keyed by category slug or name.
+const PHOTO_SUBJECTS: Record<string, { show: string; query: string }> = {
+  'bathroom-remodeling': { show: 'a residential bathroom (shower, tub, vanity, tile, or toilet area)', query: 'modern bathroom interior' },
+};
+const subjectEntry = (category?: string) => (category ? PHOTO_SUBJECTS[category.toLowerCase().trim().replace(/\s+/g, '-')] : undefined);
+export function photoSubjectFor(category?: string): string | undefined {
+  return subjectEntry(category)?.show;
+}
+
+export async function findHeroPhoto(a: { title: string; description?: string; category?: string; currentImageUrl?: string; exclude?: Set<string>; mustShow?: string }): Promise<FindResult> {
+  a = { ...a, mustShow: a.mustShow || photoSubjectFor(a.category) };
   const keys = photoKeys();
   if (!keys.anthropic) return { kind: 'none', reason: 'ANTHROPIC_API_KEY is not set' };
   if (!keys.unsplash && !keys.pexels) return { kind: 'none', reason: 'No photo source key. Add UNSPLASH_ACCESS_KEY or PEXELS_API_KEY in Netlify.' };

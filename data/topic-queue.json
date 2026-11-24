@@ -2010,6 +2010,137 @@
           "brief": "Cracks, settling, coatings in general terms, and winter salt from cars."
         }
       ]
+    },
+    {
+      "cluster": "bathroom-remodeling-sioux-falls",
+      "campaign": "Planning a bathroom remodel in Sioux Falls",
+      "category": "bathroom-remodeling",
+      "categoryName": "Bathroom Remodeling",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Ten articles backdated from Oct 26 to Nov 22, every three days. Header photos must show a bathroom.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER planning or living through a bathroom remodel, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, timelines in days, or warranty terms; do not state dollar figures at all. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local bathroom remodelers, tile installers, and shower conversion companies (never quote or name them): putting off a remodel for years because they assumed it would cost too much and they would lose their only bathroom for weeks; being surprised a tub to shower conversion was finished in a day; a large whirlpool tub that was never used, torn out for a big walk-in shower; older couples wanting a shower they can step into safely; a shower repair that started as cracked floor grout and turned out to be leaks and rot in several places; a new shower that leaked into the basement below where it was plumbed; tape left inside a new showerhead; waiting months for a busy remodeler's schedule; a remodeler bringing in a painter they had never used before; meeting their remodeler at a home show; praise for crews who answered every question up front, kept the house clean, and did what they promised.",
+        "City of Sioux Falls, Building Permit FAQs: a building permit does not cover electrical, mechanical, or plumbing work unless licensed electrical, mechanical, and plumbing contractors do that work. Homeowners who own and live in a single-family home and do the work themselves must get separate electrical, plumbing, and mechanical permits. The City publishes a Currently Licensed Contractors list homeowners can check.",
+        "City of Sioux Falls: a Residential Building Contractor's License is required of all contractors working on residential one and two family homes and townhomes within city limits. A plumbing contractor license is required for anyone doing plumbing work in city limits, and the City does not accept licenses from other states.",
+        "City of Sioux Falls homeowner electrical guide: a homeowner may do their own wiring only if they own and live in the single-family home, and homeowner electrical permits are not issued to friends or family members.",
+        "City of Sioux Falls (April 2026 home improvement reminder): projects that involve a home's building, electrical, mechanical, or plumbing systems require city permits to protect life safety and building quality. Homes outside city limits in Minnehaha County go through the county's Planning and Zoning office instead.",
+        "City of Sioux Falls 2020 finished water quality report: total hardness was about 15 grains per gallon for water treated at the City's own plant and about 10 grains per gallon for Lewis and Clark water. Which water a home gets, and how hard it is, can vary."
+      ],
+      "pillar": {
+        "slug": "bathroom-remodel-guide-sioux-falls",
+        "title": "Remodeling a Bathroom in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "bathroom remodel Sioux Falls",
+          "bathroom remodeling Sioux Falls"
+        ],
+        "brief": "Roadmap from first idea to final walkthrough: deciding scope, what drives cost, tub or shower, how long you lose the room, permits and licensed trades, hard water, what hides behind old tile, storage and vanities, aging in place, and choosing a remodeler. Each section points to the supporting article.",
+        "publishDate": "2026-10-26"
+      },
+      "topics": [
+        {
+          "slug": "bathroom-remodel-cost-sioux-falls",
+          "title": "What Drives the Cost of a Bathroom Remodel in Sioux Falls",
+          "contentType": "cost-guide",
+          "keywords": [
+            "bathroom remodel cost Sioux Falls",
+            "bathroom remodel estimate"
+          ],
+          "brief": "Answer the VOC worry of putting it off because of cost. Explain what moves the price (scope, moving plumbing, tile versus prefabricated walls, fixtures, hidden damage), how to read an itemized bid, why bids differ, and why to keep a contingency for what turns up behind the walls. No dollar figures. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner renovation resource with descriptive anchor text: https://siouxfallsrevamp.com/sioux-falls-bathroom-remodel/ (describe it as a local homeowner guide; do not call it a company or name any business).",
+          "publishDate": "2026-10-29"
+        },
+        {
+          "slug": "tub-to-shower-conversion",
+          "title": "Tub to Shower Conversion, One Day Install or Custom Tile?",
+          "contentType": "comparison",
+          "keywords": [
+            "tub to shower conversion Sioux Falls",
+            "walk-in shower conversion"
+          ],
+          "brief": "Compare prefabricated one-day systems with custom tile: speed, look, cleaning, waterproofing behind the walls, resale questions about keeping a tub somewhere in the house, and replacing an unused whirlpool tub with a walk-in shower (VOC). Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner renovation resource with descriptive anchor text: https://siouxfallsrevamp.com/add-value-to-your-home-with-a-custom-sioux-falls-shower-remodel/ (describe it as a local homeowner guide; do not call it a company or name any business).",
+          "publishDate": "2026-11-01"
+        },
+        {
+          "slug": "bathroom-remodel-timeline",
+          "title": "How Long a Bathroom Remodel Takes and Living Without One",
+          "contentType": "checklist",
+          "keywords": [
+            "how long does a bathroom remodel take",
+            "bathroom remodel timeline"
+          ],
+          "brief": "Answer the VOC fear of losing the only bathroom for weeks. Walk through the stages (demo, rough plumbing and electrical, inspections, waterproofing, tile, fixtures, punch list), what slows each one, and a practical plan for a one-bathroom household. Waiting months for a busy remodeler's schedule. No invented day counts.",
+          "publishDate": "2026-11-04"
+        },
+        {
+          "slug": "bathroom-remodel-permits-sioux-falls",
+          "title": "Bathroom Remodel Permits in Sioux Falls, What Needs One",
+          "contentType": "educational-article",
+          "keywords": [
+            "bathroom remodel permit Sioux Falls",
+            "Sioux Falls building permit"
+          ],
+          "brief": "Use the City of Sioux Falls facts: what triggers a permit, licensed contractors versus homeowner permits, checking the Currently Licensed Contractors list, why unpermitted work matters when you sell, and homes outside city limits. Tell the reader to confirm with City Building Services for their exact project.",
+          "publishDate": "2026-11-07"
+        },
+        {
+          "slug": "hard-water-bathroom-sioux-falls",
+          "title": "Hard Water and Your New Bathroom in Sioux Falls",
+          "contentType": "buying-guide",
+          "keywords": [
+            "hard water bathroom",
+            "hard water shower glass"
+          ],
+          "brief": "Use the City water report hardness facts. How scale affects glass doors, faucets, showerheads, grout, and toilets; finishes and glass that are easier to keep clean; cleaning habits; and when to ask a plumber about a softener. No product names.",
+          "publishDate": "2026-11-10"
+        },
+        {
+          "slug": "hidden-water-damage-bathroom",
+          "title": "What Remodelers Find Under Old Bathroom Tile",
+          "contentType": "educational-article",
+          "keywords": [
+            "water damage under shower tile",
+            "bathroom subfloor rot"
+          ],
+          "brief": "Built on the VOC of a repair that started as cracked grout and turned into leaks and rot, and a new shower leaking into the basement. Warning signs before a remodel (soft floor, loose tile, stains on the ceiling below, musty smell), why waterproofing behind tile matters, how change orders for hidden damage should be handled, and testing for leaks after. In the section about leaks spreading to the rest of the house, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Water Damage in Your Sioux Falls Home, What to Do](/guides/water-damage-guide-sioux-falls).",
+          "publishDate": "2026-11-13"
+        },
+        {
+          "slug": "small-bathroom-vanity-storage",
+          "title": "Choosing a Vanity and Storage for a Small Sioux Falls Bathroom",
+          "contentType": "buying-guide",
+          "keywords": [
+            "bathroom vanity",
+            "small bathroom storage"
+          ],
+          "brief": "Sizing for older and smaller bathrooms, door and walkway clearance, materials that hold up to steamy bathrooms, countertop choices, medicine cabinets and niches, and lighting at the mirror. No prices. Somewhere past the first section where a reader would want more depth, include exactly one natural link to this Sioux Falls homeowner renovation resource with descriptive anchor text: https://siouxfallsrevamp.com/sioux-falls-bathroom-vanity-guide/ (describe it as a local homeowner guide; do not call it a company or name any business).",
+          "publishDate": "2026-11-16"
+        },
+        {
+          "slug": "aging-in-place-bathroom",
+          "title": "Aging in Place Bathroom Updates That Make Sense",
+          "contentType": "buying-guide",
+          "keywords": [
+            "aging in place bathroom",
+            "accessible bathroom remodel"
+          ],
+          "brief": "VOC of older couples wanting a shower they can step into safely. Low or no threshold showers, blocking in the walls for grab bars, seats, handheld showerheads, comfort height toilets, lighting, slip resistant floors, and wider doorways. Planning for later without making the room feel clinical. Tell readers to ask a doctor or occupational therapist about specific needs.",
+          "publishDate": "2026-11-19"
+        },
+        {
+          "slug": "hiring-bathroom-remodeler-questions",
+          "title": "Questions to Ask a Bathroom Remodeler Before You Sign",
+          "contentType": "checklist",
+          "keywords": [
+            "bathroom remodeler Sioux Falls",
+            "hiring a bathroom contractor"
+          ],
+          "brief": "Use the City licensing facts. Questions about licensing, permits, who will be in the home including subcontractors they have not used before (VOC), schedule, cleanup, how hidden damage and change orders are priced, payment schedule, warranty in writing, and a final walkthrough checklist (run every fixture, check the ceiling or basement below for drips, check nothing was left in the showerhead, fan vents outside). Meeting remodelers at a home show is fine, but still compare bids.",
+          "publishDate": "2026-11-22"
+        }
+      ]
     }
   ]
 }

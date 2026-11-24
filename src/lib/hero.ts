@@ -93,7 +93,15 @@ export function articleHero(article: { data: any }): Hero {
 
 // A category page's header photo: the category's own photo, never a photo
 // borrowed from one of its businesses.
-export function categoryHero(category: { data: any }): Hero {
+// Until a category has its own photo, it borrows the photo of one of its own
+// guides (always on topic) before falling back to a scenic Sioux Falls shot.
+export function categoryHero(category: { data: any }, guides: { data: any }[] = []): Hero {
   const d = category.data;
-  return articleHero({ data: { ...d, title: `${d.name} in Sioux Falls`, category: d.slug } });
+  const own = articleHero({ data: { ...d, title: `${d.name} in Sioux Falls`, category: d.slug } });
+  if (!own.isFallback) return own;
+  for (const g of guides) {
+    const h = articleHero(g);
+    if (!h.isFallback) return h;
+  }
+  return own;
 }

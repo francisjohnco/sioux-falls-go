@@ -1,0 +1,68 @@
+{
+  "name": "Bathroom Remodeling",
+  "slug": "bathroom-remodeling",
+  "aliases": [
+    "Bathroom Remodelers",
+    "Bath Remodeling",
+    "Shower Remodeling",
+    "Tub to Shower Conversion",
+    "Kitchen and Bath Remodelers"
+  ],
+  "createdAt": "2026-11-23",
+  "parentCategory": "home-remodeling",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "local-resource"
+    ]
+  },
+  "seo": {
+    "title": "Bathroom Remodeling in Sioux Falls, SD",
+    "description": "Planning a bathroom remodel in Sioux Falls? Local guides on cost, timelines, permits, tub to shower conversions, hard water, and what to ask a remodeler."
+  },
+  "icon": "home",
+  "intro": "Most Sioux Falls homeowners put off a bathroom remodel for the same two reasons: they worry about the cost, and they dread losing the bathroom for weeks. Both are fair, and both get easier once you know what drives the price and the schedule.\n\nA bathroom here also has a few local quirks worth planning around. City water is hard enough to leave scale on glass and fixtures, older homes often hide water damage under cracked grout, and work that touches plumbing or wiring inside city limits needs a licensed contractor or a homeowner permit.",
+  "tips": [
+    "Ask for an itemized written bid that separates demolition, plumbing, tile, fixtures, and finish work, so you can compare bids on equal terms.",
+    "Ask what happens if they find rot or a leak once the old tile comes off, and how that extra work gets priced and approved.",
+    "Ask who will actually be in your home each day, and whether any of the trades are subcontractors they have not used before.",
+    "Ask how long you will be without a working toilet and shower, and plan around it before demolition starts.",
+    "At the final walkthrough, run every fixture and check the ceiling or basement below the bathroom for drips before you make the last payment."
+  ],
+  "faqs": [
+    {
+      "q": "How much does a bathroom remodel cost in Sioux Falls?",
+      "a": "It depends mostly on scope. Swapping a tub for a prefabricated shower is a very different job from a full gut with custom tile and moved plumbing. Get two or three itemized bids for your exact project, and keep some money set aside for what turns up behind the walls."
+    },
+    {
+      "q": "Do I need a permit to remodel a bathroom in Sioux Falls?",
+      "a": "Usually yes if the work touches plumbing, wiring, or the structure. According to the City of Sioux Falls, that work must be done by contractors licensed with the city, or by a homeowner who owns and lives in a single-family home and pulls their own permits. Cosmetic updates like paint generally do not need one."
+    },
+    {
+      "q": "How long will I be without my bathroom?",
+      "a": "A one-day tub to shower conversion and a full custom tile remodel are worlds apart. Ask each contractor for a written schedule that shows when the toilet and shower will be out of service, and plan to use another bathroom or a neighbor's during that stretch."
+    },
+    {
+      "q": "Is a one-day shower conversion as good as custom tile?",
+      "a": "They solve different problems. A prefabricated surround is fast and has few grout lines to clean, while custom tile gives you more design choices and takes longer. Ask what goes behind the new walls in either case, because that is what keeps water out of your framing."
+    },
+    {
+      "q": "Does hard water matter for a new bathroom?",
+      "a": "Yes. The City of Sioux Falls reports hard water, which leaves scale on glass doors, faucets, and showerheads. Choose finishes and glass that are easy to wipe down, and ask whether a water softener makes sense for your home."
+    },
+    {
+      "q": "What should I check before the final payment?",
+      "a": "Run every faucet, the shower, and the toilet, and look for drips in the ceiling or basement under the bathroom. Check that the exhaust fan works and vents outside, caulk lines are complete, and nothing was left in the showerhead or drains."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-23"
+}
