@@ -180,7 +180,7 @@ const schema = [
       </section>
     ) : (
       <div class="empty-state">
-        <p>This category is set up but doesn't have content yet.</p>
+        <p>{articles.length > 0 ? `No ${category.data.name.toLowerCase()} businesses are listed yet. The local guides below are a good place to start.` : "This category is set up but doesn't have content yet."}</p>
         <a class="button" href="/get-featured">Know a great {category.data.name.toLowerCase()} business? Suggest them →</a>
       </div>
     )}
