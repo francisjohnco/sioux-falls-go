@@ -48,7 +48,7 @@ function setReviewsBlock(frontmatter: string, reviews: GoogleReview[]): string {
   let endIdx = lines.length;
   if (startIdx !== -1) {
     for (let i = startIdx + 1; i < lines.length; i++) {
-      if (lines[i].match(/^\S/)) { endIdx = i; break; }
+      if (lines[i].match(/^[A-Za-z][\w-]*:/)) { endIdx = i; break; } // next real top-level field
     }
   }
 
@@ -58,10 +58,12 @@ function setReviewsBlock(frontmatter: string, reviews: GoogleReview[]): string {
       : [
           'reviews:',
           ...reviews.flatMap((r) => [
-            `  - author: "${yamlEscape(r.author_name)}"`,
-            `    rating: ${r.rating}`,
-            `    text: "${yamlEscape(r.text)}"`,
-            `    date: "${yamlEscape(r.relative_time_description)}"`,
+            // JSON strings are valid YAML double-quoted strings, and they escape
+            // line breaks, so a multi-line review can never break the file.
+            `  - author: ${JSON.stringify(r.author_name || '')}`,
+            `    rating: ${Number(r.rating) || 0}`,
+            `    text: ${JSON.stringify(r.text || '')}`,
+            `    date: ${JSON.stringify(r.relative_time_description || '')}`,
           ]),
         ];
 

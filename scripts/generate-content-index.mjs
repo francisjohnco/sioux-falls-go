@@ -221,9 +221,11 @@ function main() {
 
   // When each article file was first committed, so two articles published on
   // the same day still sort newest first (the later one is the latest).
+  // When each article's publish date was last set (its first commit, or a
+  // later reschedule), so the newest one leads even among same-day articles.
   const times = {};
   try {
-    const log = execSync('git log --diff-filter=A --format=@%ct --name-only -- src/content/articles', { cwd: ROOT, encoding: 'utf8', maxBuffer: 20 * 1024 * 1024 });
+    const log = execSync("git log --format=@%ct --name-only -G'^publishedAt:' -- src/content/articles", { cwd: ROOT, encoding: 'utf8', maxBuffer: 50 * 1024 * 1024 });
     let t = 0;
     for (const line of log.split('\n')) {
       if (line.startsWith('@')) t = Number(line.slice(1));
