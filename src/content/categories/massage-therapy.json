@@ -53,5 +53,12 @@
       "a": "Both can offer quality work, and the right choice depends on what you want from the experience. Spas often provide a more polished environment and are easier to book as a gift or for a one-time treat. Independent therapists sometimes offer more flexibility, longer sessions, and the chance to build an ongoing therapeutic relationship, which matters if you have a specific health goal."
     }
   ],
-  "contentUpdatedAt": "2026-11-17"
+  "contentUpdatedAt": "2026-11-17",
+  "heroImage": "https://images.pexels.com/photos/6629610/pexels-photo-6629610.jpeg",
+  "heroImageAlt": "A massage therapist works on a client's bare back on a table in a warmly lit spa room.",
+  "heroImageCredit": {
+    "photographer": "kaboompics",
+    "profileUrl": "https://www.pexels.com/@karola-g",
+    "source": "Pexels"
+  }
 }

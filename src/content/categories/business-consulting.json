@@ -53,5 +53,12 @@
       "a": "Some consultants specialize in loan readiness and can help you organize financials, build projections, and prepare for lender conversations. South Dakota's strong agricultural and small business lending environment means local banks often have specific expectations, so working with someone familiar with that landscape can help. Ask directly whether loan preparation is part of what they offer."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/7433898/pexels-photo-7433898.jpeg",
+  "heroImageAlt": "A senior consultant presents growth charts on a whiteboard to attentive colleagues around a conference table in a bright modern office.",
+  "heroImageCredit": {
+    "photographer": "Vlada Karpovich",
+    "profileUrl": "https://www.pexels.com/@vlada-karpovich",
+    "source": "Pexels"
+  }
 }

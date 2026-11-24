@@ -53,5 +53,12 @@
       "a": "Many parks host seasonal events including outdoor concerts, farmers markets near certain green spaces, and holiday lighting displays. Checking the city's parks and recreation calendar before your visit is the easiest way to find out what is happening close to you."
     }
   ],
-  "contentUpdatedAt": "2026-11-17"
+  "contentUpdatedAt": "2026-11-17",
+  "heroImage": "https://images.pexels.com/photos/9827228/pexels-photo-9827228.jpeg",
+  "heroImageAlt": "A group of people relaxing on a wide green lawn beneath tall trees under a bright blue sky.",
+  "heroImageCredit": {
+    "photographer": "Brian Phetmeuangmay",
+    "profileUrl": "https://www.pexels.com/@bphet",
+    "source": "Pexels"
+  }
 }

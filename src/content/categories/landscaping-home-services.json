@@ -53,5 +53,12 @@
       "a": "Permits are typically required for projects that involve grading, retaining walls above a certain height, or work near a floodplain, including areas close to the Big Sioux River. Ask your landscaper and check with the City of Sioux Falls permitting office to confirm what your specific project requires before work begins."
     }
   ],
-  "contentUpdatedAt": "2026-11-17"
+  "contentUpdatedAt": "2026-11-17",
+  "heroImage": "https://images.pexels.com/photos/11364122/pexels-photo-11364122.jpeg",
+  "heroImageAlt": "A string trimmer cuts through grass at ground level in a sunny yard, with clippings flying in the air.",
+  "heroImageCredit": {
+    "photographer": "Pascal Küffer",
+    "profileUrl": "https://www.pexels.com/@pascal-kuffer-190126462",
+    "source": "Pexels"
+  }
 }

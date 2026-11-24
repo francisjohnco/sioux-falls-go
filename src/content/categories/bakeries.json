@@ -53,5 +53,12 @@
       "a": "It helps to bring a general idea of your guest count, any photo references for design inspiration, and information about dietary restrictions in your group. Many Sioux Falls bakeries will walk you through flavor options and pricing once they understand the size and style you are looking for."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/32547536/pexels-photo-32547536.jpeg",
+  "heroImageAlt": "A baker's tongs reach into a glass display case filled with golden croissants and assorted pastries.",
+  "heroImageCredit": {
+    "photographer": "Đan Thy Nguyễn Mai",
+    "profileUrl": "https://www.pexels.com/@peterdanthy",
+    "source": "Pexels"
+  }
 }

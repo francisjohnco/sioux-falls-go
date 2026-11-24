@@ -53,5 +53,12 @@
       "a": "Yes, running power to a detached garage, shed, or outbuilding is a common request and well within what a licensed electrician handles. In Sioux Falls the underground conduit or direct-burial cable has to be buried at the right depth to handle frost, so local experience with the freeze-thaw cycle here is worth asking about specifically."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/6964278/pexels-photo-6964278.jpeg",
+  "heroImageAlt": "An American light switch on a warm stucco wall with diagonal railing shadows cast by bright sunlight.",
+  "heroImageCredit": {
+    "photographer": "Nothing Ahead",
+    "profileUrl": "https://www.pexels.com/@ian-panelo",
+    "source": "Pexels"
+  }
 }

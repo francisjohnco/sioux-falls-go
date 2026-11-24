@@ -53,5 +53,12 @@
       "a": "Downtown, particularly around Phillips Avenue and the nearby blocks, has the most venues within walking distance of each other. That makes it easy to check out more than one spot in a single evening without needing to drive between locations."
     }
   ],
-  "contentUpdatedAt": "2026-11-18"
+  "contentUpdatedAt": "2026-11-18",
+  "heroImage": "https://images.pexels.com/photos/2990830/pexels-photo-2990830.jpeg",
+  "heroImageAlt": "A band performs on stage beneath dramatic white and yellow spotlights with smoke filling a concert venue.",
+  "heroImageCredit": {
+    "photographer": "Tomáš Malík",
+    "profileUrl": "https://www.pexels.com/@tomas-malik-793526",
+    "source": "Pexels"
+  }
 }

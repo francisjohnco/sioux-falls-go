@@ -53,5 +53,12 @@
       "a": "Most gift shops in Sioux Falls are open on Saturdays, and some are open Sundays, though Sunday hours are often shorter. Always confirm current hours directly with the shop, since holiday seasons and local events can cause schedules to shift."
     }
   ],
-  "contentUpdatedAt": "2026-11-17"
+  "contentUpdatedAt": "2026-11-17",
+  "heroImage": "https://images.pexels.com/photos/5799285/pexels-photo-5799285.jpeg",
+  "heroImageAlt": "Bright gift shop interior with pendant lights, shelves of home décor, dried florals, and holiday merchandise on display tables.",
+  "heroImageCredit": {
+    "photographer": "Serena Koi",
+    "profileUrl": "https://www.pexels.com/@serenakoi",
+    "source": "Pexels"
+  }
 }
