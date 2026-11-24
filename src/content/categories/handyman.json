@@ -18,5 +18,12 @@
     "title": "Top-Rated Handyman in Sioux Falls, SD",
     "description": "Find the local's favorite handyman to get all your repairs done in a timely manner."
   },
-  "icon": "wrench"
+  "icon": "wrench",
+  "heroImage": "https://images.pexels.com/photos/8961337/pexels-photo-8961337.jpeg",
+  "heroImageAlt": "A handyman in a yellow cap uses a power drill on a wooden plank outside a rustic wood-sided building.",
+  "heroImageCredit": {
+    "photographer": "Mikael Blomkvist",
+    "profileUrl": "https://www.pexels.com/@mikael-blomkvist",
+    "source": "Pexels"
+  }
 }

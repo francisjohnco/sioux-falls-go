@@ -19,5 +19,12 @@
     "description": "Discover ice cream & dessert in Sioux Falls."
   },
   "icon": "utensils",
-  "parentCategory": "restaurants-dining"
+  "parentCategory": "restaurants-dining",
+  "heroImage": "https://images.pexels.com/photos/5108030/pexels-photo-5108030.jpeg",
+  "heroImageAlt": "A server scoops ice cream into a waffle cone at a bright, cheerful ice cream shop counter.",
+  "heroImageCredit": {
+    "photographer": "Hc Digital",
+    "profileUrl": "https://www.pexels.com/@hcdigital",
+    "source": "Pexels"
+  }
 }

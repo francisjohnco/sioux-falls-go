@@ -18,5 +18,12 @@
     "title": "Top-Rated Things To Do in Sioux Falls, SD",
     "description": "Find trusted things to do in Sioux Falls."
   },
-  "icon": "star"
+  "icon": "star",
+  "heroImage": "https://images.pexels.com/photos/31874023/pexels-photo-31874023.jpeg",
+  "heroImageAlt": "Families browse colorful toy and gift booths at a sunny outdoor festival market.",
+  "heroImageCredit": {
+    "photographer": "Helena Jankovičová Kováčová",
+    "profileUrl": "https://www.pexels.com/@helen1",
+    "source": "Pexels"
+  }
 }

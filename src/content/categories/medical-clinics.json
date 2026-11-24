@@ -19,5 +19,12 @@
     "description": "Discover medical clinics in Sioux Falls."
   },
   "icon": "heart",
-  "parentCategory": "health-wellness"
+  "parentCategory": "health-wellness",
+  "heroImage": "https://images.pexels.com/photos/7579824/pexels-photo-7579824.jpeg",
+  "heroImageAlt": "A doctor in a white coat examines a patient's throat during a clinic appointment.",
+  "heroImageCredit": {
+    "photographer": "cottonbro studio",
+    "profileUrl": "https://www.pexels.com/@cottonbro",
+    "source": "Pexels"
+  }
 }

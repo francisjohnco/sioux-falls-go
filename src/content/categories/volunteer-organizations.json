@@ -19,5 +19,12 @@
     "description": "Discover volunteer organizations in Sioux Falls."
   },
   "icon": "handshake",
-  "parentCategory": "community-local-resources"
+  "parentCategory": "community-local-resources",
+  "heroImage": "https://images.pexels.com/photos/6995221/pexels-photo-6995221.jpeg",
+  "heroImageAlt": "Volunteers pass a plastic container of food and supplies across a table at a community distribution event.",
+  "heroImageCredit": {
+    "photographer": "Julia M Cameron",
+    "profileUrl": "https://www.pexels.com/@julia-m-cameron",
+    "source": "Pexels"
+  }
 }

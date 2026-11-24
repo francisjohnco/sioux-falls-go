@@ -18,5 +18,12 @@
     "title": "Hotels in Sioux Falls, SD",
     "description": "Discover hotels in Sioux Falls."
   },
-  "icon": "home"
+  "icon": "home",
+  "heroImage": "https://images.pexels.com/photos/6876590/pexels-photo-6876590.jpeg",
+  "heroImageAlt": "Warm hotel lobby with wood paneling, a red Persian rug, chandelier, and staff at the front desk.",
+  "heroImageCredit": {
+    "photographer": "Quang Nguyen Vinh",
+    "profileUrl": "https://www.pexels.com/@quang-nguyen-vinh-222549",
+    "source": "Pexels"
+  }
 }

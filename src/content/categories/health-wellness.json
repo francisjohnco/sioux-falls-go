@@ -18,5 +18,12 @@
     "title": "Top-Rated Health & Wellness in Sioux Falls, SD",
     "description": "Find trusted health & wellness in Sioux Falls."
   },
-  "icon": "heart"
+  "icon": "heart",
+  "heroImage": "https://images.pexels.com/photos/6293245/pexels-photo-6293245.jpeg",
+  "heroImageAlt": "A silver-haired woman holds a low lunge yoga pose on a mat in a sunny park with golden autumn trees.",
+  "heroImageCredit": {
+    "photographer": "cottonbro studio",
+    "profileUrl": "https://www.pexels.com/@cottonbro",
+    "source": "Pexels"
+  }
 }

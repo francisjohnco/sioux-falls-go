@@ -18,5 +18,12 @@
     "title": "Videos in Sioux Falls, SD",
     "description": "Discover videos in Sioux Falls."
   },
-  "icon": "share"
+  "icon": "share",
+  "heroImage": "https://images.pexels.com/photos/4987582/pexels-photo-4987582.jpeg",
+  "heroImageAlt": "A videographer crouches low to the ground operating a professional camera rig during an outdoor shoot at dusk.",
+  "heroImageCredit": {
+    "photographer": "CineDirektor  FILMS",
+    "profileUrl": "https://www.pexels.com/@cinedirektorfilms",
+    "source": "Pexels"
+  }
 }
