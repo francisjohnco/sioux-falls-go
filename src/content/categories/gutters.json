@@ -1,0 +1,62 @@
+{
+  "name": "Gutters",
+  "slug": "gutters",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Gutter Installation and Repair in Sioux Falls, SD",
+    "description": "Gutter help for Sioux Falls homes: overflowing gutters, ice dams, downspouts, guards, seamless gutters and what to ask an installer."
+  },
+  "icon": "home",
+  "intro": "Gutters are easy to ignore until water shows up in the basement or ice hangs off the roof. In Sioux Falls, summer downpours, spring thaw and winter ice all test them.\n\nMost gutter problems come down to size, slope, clogs and where the downspouts send the water. Fix those and a lot of foundation and siding trouble never starts.",
+  "tips": [
+    "Ask where every downspout will discharge, because water dumped next to the foundation is how basements get wet.",
+    "Ask whether the gutters and downspouts are sized for the roof area they drain, especially on steep or large roofs.",
+    "Ask how hangers are spaced and fastened, since snow and ice load gutters heavily here.",
+    "If you are considering guards, ask how they handle ice and what cleaning they still need.",
+    "Get the material, gauge or thickness, color and warranty written into the quote."
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit for gutters in Sioux Falls?",
+      "a": "No. The City of Sioux Falls lists gutters and fascia among aesthetic projects that do not require a permit. Other work done at the same time, like re-siding or roofing, can."
+    },
+    {
+      "q": "Why do my gutters overflow in heavy rain?",
+      "a": "Usually a clog, too little slope, downspouts that are too few or too small, or gutters undersized for the roof area. A contractor can check each one before you replace anything."
+    },
+    {
+      "q": "Do gutters cause ice dams?",
+      "a": "Ice dams start with heat escaping into the attic and melting snow on the roof. Gutters full of ice make them worse, but the fix is usually insulation and ventilation, not just new gutters."
+    },
+    {
+      "q": "Are gutter guards worth it?",
+      "a": "They can cut down on cleaning, but none are maintenance free and some struggle with ice and fine debris. Ask how a guard handles your trees and winter before buying."
+    },
+    {
+      "q": "Where should downspouts drain?",
+      "a": "Well away from the foundation, onto ground that slopes away from the house. Extensions or underground lines help. Make sure the discharge does not freeze across a sidewalk or driveway in winter."
+    },
+    {
+      "q": "How often should gutters be cleaned?",
+      "a": "At least spring and fall, and more under heavy trees. Check after big storms and before winter so meltwater has somewhere to go."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

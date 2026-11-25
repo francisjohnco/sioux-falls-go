@@ -1,0 +1,62 @@
+{
+  "name": "Kitchen Remodeling",
+  "slug": "kitchen-remodeling",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-remodeling",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Kitchen Remodeling in Sioux Falls, SD",
+    "description": "Planning a kitchen remodel in Sioux Falls? Local guides on budgets, layouts, cabinets, counters, permits, timelines and what to ask a remodeler."
+  },
+  "icon": "home",
+  "intro": "A kitchen remodel touches almost every trade in the house: cabinets, counters, plumbing, electrical, flooring and often walls. That is why the planning matters more than the finishes.\n\nKnow what needs a permit, how long you will cook without a kitchen, and where the budget really goes, and the rest gets easier.",
+  "tips": [
+    "Ask for an itemized bid that separates cabinets, counters, plumbing, electrical, flooring and labor.",
+    "Ask which parts of your plan need permits, since cabinets alone do not but plumbing, electrical and walls do.",
+    "Ask how long you will be without a working sink and stove, and plan a temporary kitchen.",
+    "Order cabinets early and ask about lead times before demolition starts.",
+    "Ask how change orders are priced and approved in writing."
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit for a kitchen remodel in Sioux Falls?",
+      "a": "It depends on the work. The City of Sioux Falls says kitchen cabinets and countertops do not need a permit, but electrical, plumbing and structural changes do, and that work must be done by licensed contractors or a homeowner with homeowner permits."
+    },
+    {
+      "q": "How long does a kitchen remodel take?",
+      "a": "It depends on scope and material lead times, especially cabinets and counters. Ask for a written schedule that shows when the kitchen will be out of service."
+    },
+    {
+      "q": "Where does most of a kitchen budget go?",
+      "a": "Cabinets, counters and labor are usually the big pieces, and moving plumbing or walls adds more. An itemized bid shows you where yours goes."
+    },
+    {
+      "q": "Should I refinish or replace cabinets?",
+      "a": "If the boxes are solid and the layout works, refacing or painting can save a lot. Replace when the layout fails you or the boxes are damaged."
+    },
+    {
+      "q": "What counter material holds up best?",
+      "a": "Quartz, granite, laminate and butcher block each have tradeoffs for heat, stains and upkeep. Ask to see samples in your own light."
+    },
+    {
+      "q": "Does hard water matter in a kitchen?",
+      "a": "Yes. The City reports hard water, which leaves scale on faucets, sinks and dishwashers. Choose finishes that wipe clean and ask a plumber about a softener."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

@@ -2379,6 +2379,1412 @@
           "brief": "Product versus installation warranty, glass seal coverage, transferability, registration, and what to get in writing. VOC: a new window that would not lock and who to call."
         }
       ]
+    },
+    {
+      "cluster": "siding-sioux-falls",
+      "campaign": "Siding for Sioux Falls homes",
+      "category": "siding",
+      "categoryName": "Siding",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-01",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-01. Photos must show siding.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local siding and exterior contractors (never quote or name them): bad hail damage that meant new siding, roof, basement window wells and gutters all at once; praise for crews who walked them through the insurance claim; wanting quick, economical vinyl replacement; worry about matching new siding to what stays; being kept informed start to finish; frustration with storm chasers knocking on doors after hail.",
+        "City of Sioux Falls: a Residential Building Contractor's License is required of all contractors working on residential one and two family homes and townhomes within city limits, and the City does not accept licenses from other states. A Residential Roofing and Repair Contractor license (created in 2024) covers re-shingling, re-siding and window or door replacement with no structural changes. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors.",
+        "City of Sioux Falls Building Permit FAQs: projects that need a building permit include additions and remodels, decks, window and exterior door replacement, and re-shingling and re-siding. Painting and similar finish work and kitchen cabinets do not. Building permits do not cover electrical, plumbing or mechanical work unless licensed electrical, plumbing and mechanical contractors do that work; homeowners who own and live in a single-family home and do it themselves need separate homeowner permits."
+      ],
+      "pillar": {
+        "slug": "siding-guide-sioux-falls",
+        "title": "New Siding in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "siding Sioux Falls",
+          "siding replacement Sioux Falls"
+        ],
+        "brief": "Roadmap: hail damage, repair or replace, materials for our climate, what goes under siding, permits and licensed contractors, quotes, insurance, color matching, timing and care. Each section points to the supporting article.",
+        "publishDate": "2026-10-02"
+      },
+      "topics": [
+        {
+          "slug": "hail-damaged-siding",
+          "title": "Hail Damaged Siding, What to Check First",
+          "contentType": "checklist",
+          "keywords": [
+            "hail damage siding",
+            "siding hail damage Sioux Falls"
+          ],
+          "brief": "Walk the house after a storm, what damage looks like on each material, photos, temporary fixes, when to call the insurer, and storm chaser warning signs. In the section about checking the rest of the house, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Hail Damage on Your Sioux Falls Roof, First Steps](/guides/hail-damage-roof-sioux-falls-first-steps).",
+          "publishDate": "2026-10-11"
+        },
+        {
+          "slug": "siding-repair-or-replace",
+          "title": "Siding Repair or Replacement? How to Decide",
+          "contentType": "buying-guide",
+          "keywords": [
+            "siding repair",
+            "replace siding"
+          ],
+          "brief": "Cracks, warping, loose panels, rot underneath, moisture in walls, matching, and when replacement is the better money. No prices.",
+          "publishDate": "2026-10-20"
+        },
+        {
+          "slug": "vinyl-vs-fiber-cement-siding",
+          "title": "Vinyl, Fiber Cement or Engineered Wood Siding?",
+          "contentType": "comparison",
+          "keywords": [
+            "vinyl vs fiber cement siding",
+            "best siding for cold climate"
+          ],
+          "brief": "How each handles hail, wind, deep cold, sun and moisture; upkeep, look, resale. No brand names, no prices.",
+          "publishDate": "2026-10-29"
+        },
+        {
+          "slug": "siding-insurance-claim",
+          "title": "Siding and Your Insurance Claim After a Storm",
+          "contentType": "educational-article",
+          "keywords": [
+            "siding insurance claim",
+            "hail claim siding"
+          ],
+          "brief": "Documenting damage, adjuster visit, having your contractor present, matching disputes, depreciation questions, and what to ask your insurer. No invented policy terms. In the section about how claims move forward, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [How a Roof Insurance Claim Works in South Dakota](/guides/roof-insurance-claim-south-dakota).",
+          "publishDate": "2026-11-07"
+        },
+        {
+          "slug": "siding-permits-licensed-contractors",
+          "title": "Siding Permits and Licensed Contractors in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "siding permit Sioux Falls",
+            "licensed siding contractor"
+          ],
+          "brief": "Use the City facts: re-siding needs a permit, which license covers it, checking the licensed list, and homes outside city limits. Tell readers to confirm with City Building Services.",
+          "publishDate": "2026-11-16"
+        },
+        {
+          "slug": "what-goes-under-siding",
+          "title": "What Goes Under Your Siding and Why It Matters",
+          "contentType": "educational-article",
+          "keywords": [
+            "house wrap",
+            "siding underlayment"
+          ],
+          "brief": "House wrap, flashing at windows and doors, insulation board, and the problems a skipped layer causes."
+        },
+        {
+          "slug": "comparing-siding-quotes",
+          "title": "How to Compare Siding Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "siding quote",
+            "siding estimate Sioux Falls"
+          ],
+          "brief": "Square footage, trim and soffit, removal and disposal, wrap and flashing, warranty, and why bids differ. No prices."
+        },
+        {
+          "slug": "matching-siding-colors",
+          "title": "Matching New Siding to Old After a Repair",
+          "contentType": "buying-guide",
+          "keywords": [
+            "match siding color",
+            "siding repair match"
+          ],
+          "brief": "Fading, discontinued colors, sample boards, which walls to redo, and how insurers view matching. No invented policy terms."
+        },
+        {
+          "slug": "siding-in-winter",
+          "title": "Can Siding Be Installed in Winter?",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winter siding installation",
+            "install siding cold weather"
+          ],
+          "brief": "How cold affects vinyl and other materials, installer practices, scheduling, and questions to ask."
+        },
+        {
+          "slug": "siding-cleaning-maintenance",
+          "title": "Siding Care Through a Sioux Falls Year",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "siding maintenance",
+            "clean vinyl siding"
+          ],
+          "brief": "Seasonal checks, gentle washing, mildew, caulk, and what to watch for after storms."
+        },
+        {
+          "slug": "soffit-and-fascia",
+          "title": "Soffit and Fascia, the Trim That Protects Your Roofline",
+          "contentType": "educational-article",
+          "keywords": [
+            "soffit and fascia",
+            "fascia repair"
+          ],
+          "brief": "What they do, ventilation, rot, critters, and when to replace them with siding."
+        },
+        {
+          "slug": "siding-and-energy",
+          "title": "Does New Siding Make Your Home Warmer?",
+          "contentType": "educational-article",
+          "keywords": [
+            "insulated siding",
+            "siding energy efficiency"
+          ],
+          "brief": "What siding does and does not do for comfort, insulated siding, air sealing, and where insulation matters more. Never claim a tax credit."
+        },
+        {
+          "slug": "storm-chasers-siding",
+          "title": "Spotting Storm Chasers After a Hail Storm",
+          "contentType": "checklist",
+          "keywords": [
+            "storm chaser contractors",
+            "hail scam"
+          ],
+          "brief": "Door knockers, pressure tactics, signing over claims, checking the City licensed list, and taking your time."
+        },
+        {
+          "slug": "siding-colors-resale",
+          "title": "Choosing a Siding Color That Ages Well",
+          "contentType": "buying-guide",
+          "keywords": [
+            "siding colors",
+            "exterior color choice"
+          ],
+          "brief": "Fading, heat, neighborhood fit, trim contrast, and covenants. No brand names."
+        }
+      ]
+    },
+    {
+      "cluster": "gutters-sioux-falls",
+      "campaign": "Gutters for Sioux Falls homes",
+      "category": "gutters",
+      "categoryName": "Gutters",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-02",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-02. Photos must show gutters.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local gutter and exterior companies (never quote or name them): new gutters and screens after hail with no problems years later; gutters replaced along with roof and siding after a bad storm; overflowing gutters in summer downpours; ice in gutters and icicles every winter; water pooling by the foundation; wanting crews who are quick, tidy and explain the options.",
+        "City of Sioux Falls (April 2025 home improvement reminders): aesthetic projects like painting, flooring, cabinets and countertops, and gutters and fascia do not require a permit.",
+        "City of Sioux Falls: when shoveling, place snow in your yard, not on sidewalks, streets or the right of way; depositing snow in the street violates City ordinance.",
+        "City of Sioux Falls: a Residential Building Contractor's License is required of all contractors working on residential one and two family homes and townhomes within city limits, and the City does not accept licenses from other states. A Residential Roofing and Repair Contractor license (created in 2024) covers re-shingling, re-siding and window or door replacement with no structural changes. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors."
+      ],
+      "pillar": {
+        "slug": "gutter-guide-sioux-falls",
+        "title": "Gutters for a Sioux Falls Home, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "gutters Sioux Falls",
+          "gutter installation Sioux Falls"
+        ],
+        "brief": "Roadmap: what gutters protect, overflow problems, ice, downspouts and drainage, seamless gutters, guards, hail, cleaning, and choosing an installer. Each section points to the supporting article.",
+        "publishDate": "2026-10-03"
+      },
+      "topics": [
+        {
+          "slug": "overflowing-gutters",
+          "title": "Why Your Gutters Overflow and How to Fix It",
+          "contentType": "checklist",
+          "keywords": [
+            "gutters overflowing",
+            "gutter overflow fix"
+          ],
+          "brief": "Clogs, slope, downspout count and size, undersized gutters, roof valleys, and what to try before replacing.",
+          "publishDate": "2026-10-12"
+        },
+        {
+          "slug": "downspouts-and-foundation",
+          "title": "Downspouts, Drainage and a Dry Basement",
+          "contentType": "educational-article",
+          "keywords": [
+            "downspout extension",
+            "gutter drainage foundation"
+          ],
+          "brief": "Where water should go, extensions, underground lines, grading, and signs drainage is failing. In the section about water already getting inside, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Water Damage in Your Sioux Falls Home, What to Do](/guides/water-damage-guide-sioux-falls).",
+          "publishDate": "2026-10-21"
+        },
+        {
+          "slug": "gutters-and-ice-dams",
+          "title": "Gutters, Icicles and Ice Dams",
+          "contentType": "educational-article",
+          "keywords": [
+            "ice in gutters",
+            "gutters ice dams"
+          ],
+          "brief": "Why ice forms, what gutters do and do not cause, heat cables, safe removal, and the attic fix. In the section about where ice dams really start, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Ice Dams on Sioux Falls Roofs](/guides/ice-dams-sioux-falls-roof).",
+          "publishDate": "2026-10-30"
+        },
+        {
+          "slug": "seamless-vs-sectional-gutters",
+          "title": "Seamless or Sectional Gutters?",
+          "contentType": "comparison",
+          "keywords": [
+            "seamless gutters",
+            "seamless vs sectional"
+          ],
+          "brief": "Leaks at seams, materials, sizes, install, repairs. No prices, no brands.",
+          "publishDate": "2026-11-08"
+        },
+        {
+          "slug": "gutter-guards-worth-it",
+          "title": "Are Gutter Guards Worth It in Sioux Falls?",
+          "contentType": "buying-guide",
+          "keywords": [
+            "gutter guards",
+            "gutter guards worth it"
+          ],
+          "brief": "Screens, micro mesh, reverse curve, foam; ice and snow; trees; cleaning still needed; warranty questions. No brands, no prices.",
+          "publishDate": "2026-11-17"
+        },
+        {
+          "slug": "gutter-cleaning-schedule",
+          "title": "A Gutter Cleaning Schedule for Sioux Falls",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "gutter cleaning",
+            "when to clean gutters"
+          ],
+          "brief": "Spring, fall, before winter, after storms, ladder safety, and when to hire it out."
+        },
+        {
+          "slug": "hail-damaged-gutters",
+          "title": "Hail Damaged Gutters and What Insurance Looks At",
+          "contentType": "checklist",
+          "keywords": [
+            "hail damage gutters",
+            "dented gutters"
+          ],
+          "brief": "Dents, splits, bent hangers, photos, and including gutters in a storm claim. No invented policy terms."
+        },
+        {
+          "slug": "gutter-sizing",
+          "title": "Gutter Size and Why It Matters",
+          "contentType": "educational-article",
+          "keywords": [
+            "gutter size",
+            "5 inch vs 6 inch gutters"
+          ],
+          "brief": "Roof area, pitch, downspout size and count. Describe the tradeoffs without stating code numbers."
+        },
+        {
+          "slug": "sagging-gutters",
+          "title": "Sagging or Pulling Away Gutters",
+          "contentType": "checklist",
+          "keywords": [
+            "sagging gutters",
+            "gutter pulling away"
+          ],
+          "brief": "Hangers, rotted fascia, ice weight, and repair versus replace."
+        },
+        {
+          "slug": "gutter-materials",
+          "title": "Aluminum, Steel or Copper Gutters",
+          "contentType": "comparison",
+          "keywords": [
+            "gutter materials",
+            "aluminum vs steel gutters"
+          ],
+          "brief": "Strength against ice and hail, rust, look, and upkeep. No prices."
+        },
+        {
+          "slug": "gutters-and-siding",
+          "title": "How Gutters Protect Your Siding and Trim",
+          "contentType": "educational-article",
+          "keywords": [
+            "gutters siding damage",
+            "fascia rot"
+          ],
+          "brief": "Splash-back, staining, rot, and what to fix first."
+        },
+        {
+          "slug": "winter-gutter-prep",
+          "title": "Getting Gutters Ready for Winter",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winterize gutters",
+            "gutters before winter"
+          ],
+          "brief": "Clean, check slope and hangers, extend downspouts, and avoid ice traps."
+        },
+        {
+          "slug": "rain-chains-and-barrels",
+          "title": "Rain Barrels and Rain Chains in a Cold Climate",
+          "contentType": "buying-guide",
+          "keywords": [
+            "rain barrel",
+            "rain chain"
+          ],
+          "brief": "What works here, freezing, overflow, and putting them away for winter."
+        },
+        {
+          "slug": "choosing-gutter-installer",
+          "title": "Questions to Ask a Gutter Installer",
+          "contentType": "checklist",
+          "keywords": [
+            "gutter installer",
+            "gutter contractor"
+          ],
+          "brief": "Sizing, hangers, downspout plan, guards, cleanup, warranty, licensing when combined with siding or roofing."
+        }
+      ]
+    },
+    {
+      "cluster": "insulation-sioux-falls",
+      "campaign": "Insulation for Sioux Falls homes",
+      "category": "insulation",
+      "categoryName": "Insulation",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-03",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-03. Photos must show insulation.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews and project requests for local insulation contractors (never quote or name them): wet spots on upstairs bedroom ceilings in January and ice on the attic framing; rooms that stay cold no matter the thermostat; rooms over an attached garage that never feel warm; praise for blown-in attic jobs done in a single visit; wanting crews who explain what they found in the attic and show photos.",
+        "IRS: the federal Energy Efficient Home Improvement Credit (Section 25C), which covered insulation, windows and doors, does not apply to property placed in service after December 31, 2025. Never tell readers this credit is available."
+      ],
+      "pillar": {
+        "slug": "insulation-guide-sioux-falls",
+        "title": "Insulating a Sioux Falls Home, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "insulation Sioux Falls",
+          "attic insulation Sioux Falls"
+        ],
+        "brief": "Roadmap: where homes lose heat, attic first, air sealing, ventilation, ice dams, frost in the attic, walls, basements and rim joists, materials, and choosing an installer. Each section points to the supporting article.",
+        "publishDate": "2026-10-04"
+      },
+      "topics": [
+        {
+          "slug": "cold-rooms-causes",
+          "title": "Why One Room Is Always Cold",
+          "contentType": "checklist",
+          "keywords": [
+            "cold room in house",
+            "rooms colder than others"
+          ],
+          "brief": "Attic gaps, air leaks, rooms over garages, windows, ducts; how to narrow it down; when to call.",
+          "publishDate": "2026-10-13"
+        },
+        {
+          "slug": "attic-insulation-first",
+          "title": "Why the Attic Comes First",
+          "contentType": "educational-article",
+          "keywords": [
+            "attic insulation",
+            "add attic insulation"
+          ],
+          "brief": "Heat rises, air sealing the attic floor, depth, keeping vents open, and what to expect on install day.",
+          "publishDate": "2026-10-22"
+        },
+        {
+          "slug": "frost-in-attic",
+          "title": "Frost and Wet Spots in the Attic in January",
+          "contentType": "educational-article",
+          "keywords": [
+            "frost in attic",
+            "attic condensation winter"
+          ],
+          "brief": "VOC: wet ceiling spots and ice on framing. Air leaks, bath fans, ventilation, and what to fix first.",
+          "publishDate": "2026-10-31"
+        },
+        {
+          "slug": "insulation-and-ice-dams",
+          "title": "Insulation, Ventilation and Ice Dams",
+          "contentType": "educational-article",
+          "keywords": [
+            "prevent ice dams insulation",
+            "attic ventilation"
+          ],
+          "brief": "How a warm attic melts snow, what air sealing and venting do, and why gutters are not the cure. In the section about what ice dams do to a roof, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Ice Dams on Sioux Falls Roofs](/guides/ice-dams-sioux-falls-roof).",
+          "publishDate": "2026-11-09"
+        },
+        {
+          "slug": "blown-in-vs-spray-foam",
+          "title": "Blown-In, Batts or Spray Foam?",
+          "contentType": "comparison",
+          "keywords": [
+            "blown in vs spray foam",
+            "insulation types"
+          ],
+          "brief": "Where each fits, air sealing, moisture, and mixing types. No prices, no brands.",
+          "publishDate": "2026-11-18"
+        },
+        {
+          "slug": "air-sealing-basics",
+          "title": "Air Sealing, the Cheapest Comfort Upgrade",
+          "contentType": "educational-article",
+          "keywords": [
+            "air sealing",
+            "seal air leaks"
+          ],
+          "brief": "Where leaks hide, what gets sealed, and testing."
+        },
+        {
+          "slug": "rim-joist-insulation",
+          "title": "Basement Rim Joists, the Hidden Cold Spot",
+          "contentType": "educational-article",
+          "keywords": [
+            "rim joist insulation",
+            "basement insulation"
+          ],
+          "brief": "Why rim joists leak, materials, moisture, and DIY versus pro."
+        },
+        {
+          "slug": "room-over-garage",
+          "title": "Warming a Room Over the Garage",
+          "contentType": "checklist",
+          "keywords": [
+            "cold room over garage",
+            "bonus room insulation"
+          ],
+          "brief": "Floor insulation, air sealing, ducts, and what to ask."
+        },
+        {
+          "slug": "wall-insulation-older-homes",
+          "title": "Adding Insulation to Walls in an Older Home",
+          "contentType": "buying-guide",
+          "keywords": [
+            "wall insulation older home",
+            "blown in wall insulation"
+          ],
+          "brief": "Dense pack, checking for wiring, moisture, and siding projects as a chance to insulate."
+        },
+        {
+          "slug": "energy-assessment",
+          "title": "What a Home Energy Assessment Shows",
+          "contentType": "educational-article",
+          "keywords": [
+            "home energy audit",
+            "blower door test"
+          ],
+          "brief": "Blower door, thermal camera, report, and how to use it. Ask your utility about programs. Never claim a federal tax credit."
+        },
+        {
+          "slug": "insulation-quotes",
+          "title": "How to Compare Insulation Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "insulation quote",
+            "attic insulation estimate"
+          ],
+          "brief": "Depth or R-value, air sealing, vent baffles, old insulation removal, cleanup. No prices."
+        },
+        {
+          "slug": "bath-fans-and-attic",
+          "title": "Bath Fans Venting Into the Attic",
+          "contentType": "checklist",
+          "keywords": [
+            "bathroom fan vent attic",
+            "bath fan venting"
+          ],
+          "brief": "Why it causes frost and mold, how to tell, and the fix."
+        },
+        {
+          "slug": "insulation-and-critters",
+          "title": "Mice, Squirrels and Old Insulation",
+          "contentType": "checklist",
+          "keywords": [
+            "rodents in insulation",
+            "attic insulation removal"
+          ],
+          "brief": "Signs, removal, sealing entry points, and starting fresh."
+        },
+        {
+          "slug": "choosing-insulation-contractor",
+          "title": "Questions to Ask an Insulation Contractor",
+          "contentType": "checklist",
+          "keywords": [
+            "insulation contractor",
+            "insulation installer"
+          ],
+          "brief": "Air sealing, ventilation, depth markers, photos, cleanup, warranty."
+        }
+      ]
+    },
+    {
+      "cluster": "fencing-sioux-falls",
+      "campaign": "Fencing for Sioux Falls homes",
+      "category": "fencing",
+      "categoryName": "Fencing",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-04",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-04. Photos must show fencing.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local fence installers (never quote or name them): wanting a fence for dogs and kids quickly; posts that heaved or leaned after a winter; gates that sag and stop latching; neighbors disagreeing about the property line; HOA rules on height and style; praise for crews who handled the permit and cleaned up.",
+        "City of Sioux Falls: a permit is needed to build, move, replace or repair a fence. The City's fence permit pamphlet lists a $20 fee, a required final inspection after construction (call the Zoning Office at 605-367-8254), and permits that expire six months after issue with extensions available.",
+        "City of Sioux Falls residential fence guide: on corner and interior lots, fences can be up to four feet tall in the front yard, and locating property lines should be done by a licensed surveyor.",
+        "Many Sioux Falls neighborhoods have covenants that restrict fence height, style or material beyond City rules; check yours."
+      ],
+      "pillar": {
+        "slug": "fence-guide-sioux-falls",
+        "title": "Building a Fence in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "fence Sioux Falls",
+          "fence installation Sioux Falls"
+        ],
+        "brief": "Roadmap: permits and inspection, height rules, property lines, covenants, materials for our winters, posts and frost, gates, dogs and kids, quotes, and choosing an installer. Each section points to the supporting article.",
+        "publishDate": "2026-10-05"
+      },
+      "topics": [
+        {
+          "slug": "fence-permit-sioux-falls",
+          "title": "Fence Permits in Sioux Falls, What to Know",
+          "contentType": "educational-article",
+          "keywords": [
+            "fence permit Sioux Falls",
+            "fence permit cost"
+          ],
+          "brief": "Use the City facts: every fence needs a permit, the fee, inspection, expiration, and where to apply. Tell readers to confirm with the Zoning Office.",
+          "publishDate": "2026-10-14"
+        },
+        {
+          "slug": "fence-height-rules",
+          "title": "Fence Height Rules by Yard",
+          "contentType": "educational-article",
+          "keywords": [
+            "fence height Sioux Falls",
+            "front yard fence height"
+          ],
+          "brief": "Front, side and rear yards, corner lots and sight lines, covenants. Only state limits given in the facts and tell readers to confirm the rest.",
+          "publishDate": "2026-10-23"
+        },
+        {
+          "slug": "property-line-fence",
+          "title": "Property Lines, Surveys and Your Neighbor",
+          "contentType": "checklist",
+          "keywords": [
+            "property line fence",
+            "fence survey"
+          ],
+          "brief": "Finding pins, surveys, talking to neighbors, setbacks, and putting agreements in writing.",
+          "publishDate": "2026-11-01"
+        },
+        {
+          "slug": "fence-materials-cold-climate",
+          "title": "Wood, Vinyl, Aluminum or Chain Link?",
+          "contentType": "comparison",
+          "keywords": [
+            "fence materials",
+            "vinyl vs wood fence"
+          ],
+          "brief": "Cold, wind, sun, upkeep, privacy, look. No prices, no brands.",
+          "publishDate": "2026-11-10"
+        },
+        {
+          "slug": "fence-posts-frost-heave",
+          "title": "Why Fence Posts Heave and Lean",
+          "contentType": "educational-article",
+          "keywords": [
+            "fence post frost heave",
+            "leaning fence post"
+          ],
+          "brief": "Frost, clay soil, post depth and footing, drainage, and fixes. Do not state code depths.",
+          "publishDate": "2026-11-19"
+        },
+        {
+          "slug": "fence-for-dogs",
+          "title": "Choosing a Fence for Dogs",
+          "contentType": "buying-guide",
+          "keywords": [
+            "dog fence",
+            "fence for dogs"
+          ],
+          "brief": "Height, gaps, digging, climbing, gates, and visibility."
+        },
+        {
+          "slug": "sagging-fence-gate",
+          "title": "Fixing a Sagging Fence Gate",
+          "contentType": "checklist",
+          "keywords": [
+            "sagging gate",
+            "gate not latching"
+          ],
+          "brief": "Hinges, posts, bracing, frost, and when to rebuild."
+        },
+        {
+          "slug": "privacy-fence-options",
+          "title": "Privacy Fences That Still Look Good",
+          "contentType": "buying-guide",
+          "keywords": [
+            "privacy fence",
+            "privacy fence ideas"
+          ],
+          "brief": "Styles, height limits, wind, and neighbors."
+        },
+        {
+          "slug": "fence-quotes",
+          "title": "How to Compare Fence Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "fence quote",
+            "fence estimate"
+          ],
+          "brief": "Linear feet, posts, gates, removal, permit, cleanup, warranty. No prices."
+        },
+        {
+          "slug": "fence-and-hoa",
+          "title": "Fences, Covenants and HOA Approval",
+          "contentType": "checklist",
+          "keywords": [
+            "HOA fence rules",
+            "fence covenants"
+          ],
+          "brief": "Finding covenants, approval steps, and what happens if you skip it."
+        },
+        {
+          "slug": "wood-fence-care",
+          "title": "Making a Wood Fence Last",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "wood fence maintenance",
+            "stain fence"
+          ],
+          "brief": "Staining, sealing, snow piles, sprinklers, and repairs."
+        },
+        {
+          "slug": "fence-in-winter",
+          "title": "Can a Fence Go In During Winter?",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winter fence installation",
+            "frozen ground fence"
+          ],
+          "brief": "Frozen ground, scheduling, and what to ask."
+        },
+        {
+          "slug": "call-811-before-digging",
+          "title": "Call 811 Before You Dig a Fence Line",
+          "contentType": "checklist",
+          "keywords": [
+            "call 811",
+            "utility locate"
+          ],
+          "brief": "How locates work, timing, private lines, and safety."
+        },
+        {
+          "slug": "choosing-fence-company",
+          "title": "Questions to Ask a Fence Company",
+          "contentType": "checklist",
+          "keywords": [
+            "fence company",
+            "fence installer"
+          ],
+          "brief": "Permit, inspection, posts, gates, cleanup, warranty, and timeline."
+        }
+      ]
+    },
+    {
+      "cluster": "deck-builders-sioux-falls",
+      "campaign": "Deck Builders for Sioux Falls homes",
+      "category": "deck-builders",
+      "categoryName": "Deck Builders",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-05",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-05. Photos must show deck builders.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews and project requests for local deck builders (never quote or name them): a 20-year-old deck they want checked to see if it needs a rebuild; replacing an old deck before retirement summers; wanting upper and lower decks quoted together; praise for builders who were on time, polite and cleaned up; composite deck projects; contractors who stopped returning calls.",
+        "City of Sioux Falls Building Permit FAQs: projects that need a building permit include additions and remodels, decks, window and exterior door replacement, and re-shingling and re-siding. Painting and similar finish work and kitchen cabinets do not. Building permits do not cover electrical, plumbing or mechanical work unless licensed electrical, plumbing and mechanical contractors do that work; homeowners who own and live in a single-family home and do it themselves need separate homeowner permits.",
+        "City of Sioux Falls: a Residential Building Contractor's License is required of all contractors working on residential one and two family homes and townhomes within city limits, and the City does not accept licenses from other states. A Residential Roofing and Repair Contractor license (created in 2024) covers re-shingling, re-siding and window or door replacement with no structural changes. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors.",
+        "Footings must reach below the local frost line to avoid frost heave; tell readers to confirm the required depth with City Building Services rather than stating a number."
+      ],
+      "pillar": {
+        "slug": "deck-guide-sioux-falls",
+        "title": "Building a Deck in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "deck builder Sioux Falls",
+          "deck Sioux Falls"
+        ],
+        "brief": "Roadmap: permits, footings and frost, ledger connection, wood or composite, railings and stairs, safety checks on old decks, winter care, quotes, and choosing a builder. Each section points to the supporting article.",
+        "publishDate": "2026-10-06"
+      },
+      "topics": [
+        {
+          "slug": "deck-permit-sioux-falls",
+          "title": "Deck Permits in Sioux Falls, What to Know",
+          "contentType": "educational-article",
+          "keywords": [
+            "deck permit Sioux Falls",
+            "building permit deck"
+          ],
+          "brief": "Use the City facts: decks need a permit, who can pull it, inspections, homes outside city limits. Tell readers to confirm with Building Services.",
+          "publishDate": "2026-10-15"
+        },
+        {
+          "slug": "old-deck-safety-check",
+          "title": "Is Your Old Deck Safe? A Spring Checklist",
+          "contentType": "checklist",
+          "keywords": [
+            "deck safety inspection",
+            "old deck repair"
+          ],
+          "brief": "VOC: a 20-year-old deck. Boards, joists, ledger, posts, hardware, railings, stairs, and when to rebuild.",
+          "publishDate": "2026-10-24"
+        },
+        {
+          "slug": "wood-vs-composite-deck",
+          "title": "Wood or Composite Decking in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "wood vs composite deck",
+            "composite decking"
+          ],
+          "brief": "Cold and heat, upkeep, look, slip, snow, lifespan. No prices, no brands.",
+          "publishDate": "2026-11-02"
+        },
+        {
+          "slug": "deck-footings-frost",
+          "title": "Deck Footings and Frost Heave",
+          "contentType": "educational-article",
+          "keywords": [
+            "deck footings",
+            "frost heave deck"
+          ],
+          "brief": "Why depth matters, signs of heave, fixes. Do not state code depths.",
+          "publishDate": "2026-11-11"
+        },
+        {
+          "slug": "deck-repair-or-replace",
+          "title": "Repair or Replace Your Deck?",
+          "contentType": "buying-guide",
+          "keywords": [
+            "deck repair",
+            "replace deck"
+          ],
+          "brief": "Frame versus boards, resurfacing, rot, and costs to ask about. No prices.",
+          "publishDate": "2026-11-20"
+        },
+        {
+          "slug": "deck-ledger-flashing",
+          "title": "The Ledger Board, Where Decks Fail",
+          "contentType": "educational-article",
+          "keywords": [
+            "deck ledger",
+            "deck flashing"
+          ],
+          "brief": "Attachment, flashing, rot, and inspection."
+        },
+        {
+          "slug": "deck-railings-stairs",
+          "title": "Choosing Deck Railings and Stairs",
+          "contentType": "buying-guide",
+          "keywords": [
+            "deck railing",
+            "deck stairs"
+          ],
+          "brief": "Materials, safety, snow, and look. Do not state code dimensions."
+        },
+        {
+          "slug": "deck-winter-care",
+          "title": "Caring for a Deck Through Winter",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "deck snow removal",
+            "ice melt deck"
+          ],
+          "brief": "Shoveling, ice melt, furniture, and spring checks."
+        },
+        {
+          "slug": "deck-quotes",
+          "title": "How to Compare Deck Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "deck quote",
+            "deck builder estimate"
+          ],
+          "brief": "Size, footings, materials, railings, stairs, permit, demolition, warranty. No prices."
+        },
+        {
+          "slug": "deck-stain-seal",
+          "title": "Staining and Sealing a Wood Deck",
+          "contentType": "maintenance-guide",
+          "keywords": [
+            "deck stain",
+            "seal deck"
+          ],
+          "brief": "Timing, prep, products in general, and frequency."
+        },
+        {
+          "slug": "covered-deck-pergola",
+          "title": "Adding a Roof or Pergola to Your Deck",
+          "contentType": "buying-guide",
+          "keywords": [
+            "covered deck",
+            "pergola deck"
+          ],
+          "brief": "Snow load questions, permits, and shade. No code numbers."
+        },
+        {
+          "slug": "deck-or-patio",
+          "title": "Deck or Patio for Your Yard?",
+          "contentType": "comparison",
+          "keywords": [
+            "deck vs patio",
+            "patio or deck"
+          ],
+          "brief": "Grade, cost questions, upkeep, and use. In the section about patios, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Concrete Work in Sioux Falls](/guides/concrete-guide-sioux-falls)."
+        },
+        {
+          "slug": "hot-tub-on-deck",
+          "title": "Can Your Deck Hold a Hot Tub?",
+          "contentType": "checklist",
+          "keywords": [
+            "hot tub on deck",
+            "deck weight hot tub"
+          ],
+          "brief": "Load, footings, engineer, electrical permit. No numbers."
+        },
+        {
+          "slug": "choosing-deck-builder",
+          "title": "Questions to Ask a Deck Builder",
+          "contentType": "checklist",
+          "keywords": [
+            "deck builder questions",
+            "hire deck builder"
+          ],
+          "brief": "Permit, footings, ledger, hardware, schedule, cleanup, warranty, licensing."
+        }
+      ]
+    },
+    {
+      "cluster": "basement-waterproofing-sioux-falls",
+      "campaign": "Basement Waterproofing for Sioux Falls homes",
+      "category": "basement-waterproofing",
+      "categoryName": "Basement Waterproofing",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-06",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-06. Photos must show basement waterproofing.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local basement and foundation companies (never quote or name them): water in one corner every spring; cracks in the basement wall that grew; bowing walls and sticking doors; a sump pump that failed during a storm; worry about being oversold a whole system when one crack needed sealing; strong frustration with a company that left a bad experience; praise for crews who explained the cause before selling a fix.",
+        "South Dakota Department of Agriculture and Natural Resources: the eastern portion of South Dakota is EPA Radon Zone 1 and the balance is Zone 2; the only way to know a building's radon level is to test, and DANR has offered free radon test kits to residents.",
+        "Dakota News Now (April 2023), citing state data for 2008 to 2017: Minnehaha County, with 1,920 tests, had an estimated mean radon level of 6.5 pCi/L. The EPA recommends action at or above 4.0 pCi/L.",
+        "City of Sioux Falls: a Residential Building Contractor's License is required of all contractors working on residential one and two family homes and townhomes within city limits, and the City does not accept licenses from other states. A Residential Roofing and Repair Contractor license (created in 2024) covers re-shingling, re-siding and window or door replacement with no structural changes. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors."
+      ],
+      "pillar": {
+        "slug": "basement-waterproofing-guide-sioux-falls",
+        "title": "A Dry Basement in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "basement waterproofing Sioux Falls",
+          "foundation repair Sioux Falls"
+        ],
+        "brief": "Roadmap: where water comes from, outside fixes first, cracks, bowing walls, drain tile and sumps, window wells, radon, finishing a basement, and choosing a contractor. Each section points to the supporting article.",
+        "publishDate": "2026-10-07"
+      },
+      "topics": [
+        {
+          "slug": "wet-basement-spring",
+          "title": "Why Your Basement Gets Wet in Spring",
+          "contentType": "educational-article",
+          "keywords": [
+            "wet basement spring",
+            "basement leak after rain"
+          ],
+          "brief": "VOC: water in a corner every spring. Snowmelt, grading, gutters, window wells, cove joint, and what to try first.",
+          "publishDate": "2026-10-16"
+        },
+        {
+          "slug": "foundation-cracks",
+          "title": "Foundation Cracks, Which Ones Matter",
+          "contentType": "checklist",
+          "keywords": [
+            "foundation crack",
+            "basement wall crack"
+          ],
+          "brief": "Hairline, leaking, widening, stair-step, horizontal; when to call an engineer. No prices.",
+          "publishDate": "2026-10-25"
+        },
+        {
+          "slug": "sump-pump-guide",
+          "title": "Sump Pumps, Backups and Storm Season",
+          "contentType": "buying-guide",
+          "keywords": [
+            "sump pump",
+            "sump pump backup"
+          ],
+          "brief": "How they work, testing, backups, alarms, and discharge location.",
+          "publishDate": "2026-11-03"
+        },
+        {
+          "slug": "radon-testing-sioux-falls",
+          "title": "Radon Testing in a Sioux Falls Basement",
+          "contentType": "educational-article",
+          "keywords": [
+            "radon Sioux Falls",
+            "radon test"
+          ],
+          "brief": "Use the radon facts with sources. Testing, results, mitigation basics, and selling a home.",
+          "publishDate": "2026-11-12"
+        },
+        {
+          "slug": "grading-and-downspouts",
+          "title": "Grading and Downspouts, the Cheapest Basement Fix",
+          "contentType": "checklist",
+          "keywords": [
+            "yard grading basement",
+            "downspout basement water"
+          ],
+          "brief": "Slope, extensions, window wells, landscaping, and checking after rain. In the section about water that already got inside, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Water Damage in Your Sioux Falls Home, What to Do](/guides/water-damage-guide-sioux-falls).",
+          "publishDate": "2026-11-21"
+        },
+        {
+          "slug": "interior-vs-exterior-waterproofing",
+          "title": "Interior or Exterior Waterproofing?",
+          "contentType": "comparison",
+          "keywords": [
+            "interior vs exterior waterproofing",
+            "drain tile"
+          ],
+          "brief": "How each works, disruption, and why one is recommended. No prices."
+        },
+        {
+          "slug": "bowing-basement-walls",
+          "title": "Bowing Basement Walls",
+          "contentType": "educational-article",
+          "keywords": [
+            "bowing basement wall",
+            "wall anchors"
+          ],
+          "brief": "Clay soil pressure, signs, engineers, repair approaches in general."
+        },
+        {
+          "slug": "window-wells",
+          "title": "Window Wells That Leak",
+          "contentType": "checklist",
+          "keywords": [
+            "window well leak",
+            "window well cover"
+          ],
+          "brief": "Drains, covers, gravel, and egress."
+        },
+        {
+          "slug": "basement-dehumidifier",
+          "title": "Basement Humidity, Musty Smells and Dehumidifiers",
+          "contentType": "buying-guide",
+          "keywords": [
+            "basement dehumidifier",
+            "musty basement"
+          ],
+          "brief": "Causes, sizing questions, draining, and when it is a water problem instead."
+        },
+        {
+          "slug": "finishing-a-wet-basement",
+          "title": "Before You Finish a Basement That Has Been Wet",
+          "contentType": "checklist",
+          "keywords": [
+            "finish basement moisture",
+            "basement finishing water"
+          ],
+          "brief": "Fix first, wait a season, materials, and permits."
+        },
+        {
+          "slug": "waterproofing-quotes",
+          "title": "How to Compare Waterproofing Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "basement waterproofing quote",
+            "foundation repair estimate"
+          ],
+          "brief": "Cause diagnosis, scope, warranty transfer, and oversell warning signs. No prices."
+        },
+        {
+          "slug": "settling-concrete-floor",
+          "title": "Cracked or Settling Basement Floors",
+          "contentType": "educational-article",
+          "keywords": [
+            "basement floor crack",
+            "settling slab"
+          ],
+          "brief": "Shrinkage cracks, heaving, settling, and what to watch."
+        },
+        {
+          "slug": "basement-backup-vs-seepage",
+          "title": "Sewer Backup or Groundwater?",
+          "contentType": "comparison",
+          "keywords": [
+            "basement water source",
+            "floor drain backup"
+          ],
+          "brief": "How to tell the difference and who to call."
+        },
+        {
+          "slug": "choosing-waterproofing-contractor",
+          "title": "Questions to Ask a Waterproofing Contractor",
+          "contentType": "checklist",
+          "keywords": [
+            "waterproofing contractor",
+            "foundation repair company"
+          ],
+          "brief": "Diagnosis, engineer, warranty, licensing, and references."
+        }
+      ]
+    },
+    {
+      "cluster": "kitchen-remodeling-sioux-falls",
+      "campaign": "Kitchen Remodeling for Sioux Falls homes",
+      "category": "kitchen-remodeling",
+      "categoryName": "Kitchen Remodeling",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-07",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-07. Photos must show kitchen remodeling.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local kitchen remodelers and cabinet shops (never quote or name them): a detailed estimate and timeline that stayed on target; regular communication about what the homeowner needed to do; replacing cabinet fronts and hardware instead of whole cabinets; a designer who planned every inch of the kitchen; living without a kitchen longer than expected; wanting to see work similar to theirs before hiring.",
+        "City of Sioux Falls (April 2025 home improvement reminders): cabinets and countertops, flooring and painting do not require a permit; projects involving building, electrical, mechanical or plumbing systems do.",
+        "City of Sioux Falls Building Permit FAQs: projects that need a building permit include additions and remodels, decks, window and exterior door replacement, and re-shingling and re-siding. Painting and similar finish work and kitchen cabinets do not. Building permits do not cover electrical, plumbing or mechanical work unless licensed electrical, plumbing and mechanical contractors do that work; homeowners who own and live in a single-family home and do it themselves need separate homeowner permits.",
+        "City of Sioux Falls 2020 finished water quality report: total hardness was about 15 grains per gallon for water treated at the City's own plant and about 10 grains per gallon for Lewis and Clark water."
+      ],
+      "pillar": {
+        "slug": "kitchen-remodel-guide-sioux-falls",
+        "title": "Remodeling a Kitchen in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "kitchen remodel Sioux Falls",
+          "kitchen remodeling Sioux Falls"
+        ],
+        "brief": "Roadmap: scope, budget, layout, cabinets, counters, appliances, lighting, permits, timeline and living without a kitchen, and choosing a remodeler. Each section points to the supporting article.",
+        "publishDate": "2026-10-08"
+      },
+      "topics": [
+        {
+          "slug": "kitchen-remodel-budget",
+          "title": "Where a Kitchen Remodel Budget Really Goes",
+          "contentType": "cost-guide",
+          "keywords": [
+            "kitchen remodel cost Sioux Falls",
+            "kitchen budget"
+          ],
+          "brief": "Cabinets, counters, labor, moving plumbing, surprises, contingency, itemized bids. No dollar figures. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to https://siouxfallsrevamp.com/category/kitchen/ (a Sioux Falls homeowner renovation guide covering kitchen projects; do not call it a company or name any business).",
+          "publishDate": "2026-10-17"
+        },
+        {
+          "slug": "reface-or-replace-cabinets",
+          "title": "Refinish, Reface or Replace Kitchen Cabinets?",
+          "contentType": "comparison",
+          "keywords": [
+            "reface cabinets",
+            "replace kitchen cabinets"
+          ],
+          "brief": "VOC: replacing fronts and hardware. When each makes sense. No prices.",
+          "publishDate": "2026-10-26"
+        },
+        {
+          "slug": "kitchen-layout-basics",
+          "title": "Kitchen Layouts That Work Day to Day",
+          "contentType": "buying-guide",
+          "keywords": [
+            "kitchen layout",
+            "kitchen design ideas"
+          ],
+          "brief": "Work zones, aisles, storage, island questions, and common mistakes. Do not state clearance numbers.",
+          "publishDate": "2026-11-04"
+        },
+        {
+          "slug": "kitchen-permits-sioux-falls",
+          "title": "Kitchen Remodel Permits in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "kitchen remodel permit Sioux Falls",
+            "permit for kitchen"
+          ],
+          "brief": "Use the City facts: what needs a permit and what does not, licensed trades, homeowner permits.",
+          "publishDate": "2026-11-13"
+        },
+        {
+          "slug": "living-without-a-kitchen",
+          "title": "Living Without a Kitchen During a Remodel",
+          "contentType": "checklist",
+          "keywords": [
+            "temporary kitchen",
+            "kitchen remodel timeline"
+          ],
+          "brief": "Temporary kitchen setup, schedule stages, dust, and keeping sane.",
+          "publishDate": "2026-11-22"
+        },
+        {
+          "slug": "countertop-materials",
+          "title": "Choosing Countertops You Will Still Like",
+          "contentType": "comparison",
+          "keywords": [
+            "countertop materials",
+            "quartz vs granite"
+          ],
+          "brief": "Heat, stains, seams, upkeep, look. No prices, no brands."
+        },
+        {
+          "slug": "kitchen-lighting",
+          "title": "Kitchen Lighting That Actually Helps",
+          "contentType": "buying-guide",
+          "keywords": [
+            "kitchen lighting",
+            "under cabinet lighting"
+          ],
+          "brief": "Task, ambient, under-cabinet, electrical permit."
+        },
+        {
+          "slug": "cabinet-lead-times",
+          "title": "Ordering Cabinets and Avoiding Delays",
+          "contentType": "checklist",
+          "keywords": [
+            "cabinet lead time",
+            "kitchen cabinets order"
+          ],
+          "brief": "Measuring, ordering, damage on delivery, and sequencing."
+        },
+        {
+          "slug": "hard-water-kitchen",
+          "title": "Hard Water and Your New Kitchen",
+          "contentType": "buying-guide",
+          "keywords": [
+            "hard water kitchen faucet",
+            "hard water dishwasher"
+          ],
+          "brief": "Use the City water fact. Finishes, faucets, dishwashers, softener questions."
+        },
+        {
+          "slug": "kitchen-flooring",
+          "title": "Flooring Under Kitchen Cabinets or Around Them?",
+          "contentType": "educational-article",
+          "keywords": [
+            "kitchen flooring",
+            "floor under cabinets"
+          ],
+          "brief": "Order of work, water resistance, and future changes. In the section about choosing the floor material, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [LVP, Laminate, or Hardwood? Choosing for a Sioux Falls Home](/guides/lvp-vs-laminate-vs-hardwood)."
+        },
+        {
+          "slug": "kitchen-remodel-quotes",
+          "title": "How to Compare Kitchen Remodel Quotes",
+          "contentType": "buying-guide",
+          "keywords": [
+            "kitchen remodel quote",
+            "kitchen contractor estimate"
+          ],
+          "brief": "Itemizing, allowances, change orders, payment schedule, warranty. No prices."
+        },
+        {
+          "slug": "small-kitchen-updates",
+          "title": "Small Kitchen Updates With Big Impact",
+          "contentType": "buying-guide",
+          "keywords": [
+            "kitchen refresh",
+            "small kitchen update"
+          ],
+          "brief": "Hardware, lighting, backsplash, faucet, paint, and what not to bother with."
+        },
+        {
+          "slug": "kitchen-ventilation",
+          "title": "Range Hoods and Kitchen Ventilation",
+          "contentType": "buying-guide",
+          "keywords": [
+            "range hood",
+            "kitchen ventilation"
+          ],
+          "brief": "Venting outside, makeup air questions, noise, and permits in general."
+        },
+        {
+          "slug": "choosing-kitchen-remodeler",
+          "title": "Questions to Ask a Kitchen Remodeler",
+          "contentType": "checklist",
+          "keywords": [
+            "kitchen remodeler questions",
+            "hire kitchen contractor"
+          ],
+          "brief": "VOC: estimates and timelines on target. Licensing, permits, subs, schedule, communication, warranty."
+        }
+      ]
+    },
+    {
+      "cluster": "snow-removal-sioux-falls",
+      "campaign": "Snow Removal for Sioux Falls homes",
+      "category": "snow-removal",
+      "categoryName": "Snow Removal",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-08",
+      "bufferTarget": 2,
+      "note": "For homeowners. Six backdated, then nine weekly from 2026-12-08. Photos must show snow removal.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, measurements, timelines in days, or warranty terms; do not state dollar figures except fees or penalties given in the verified facts. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "COMMON HOMEOWNER CONCERNS about hiring snow removal in Sioux Falls (general, not quotes from specific reviews): wanting the driveway open before leaving for work; services that skip the sidewalk or come back late after a second storm; plows tearing up lawn edges and landscaping; snow piles blocking the mailbox or sight lines at the end of the driveway; confusion about per push versus seasonal pricing; older homeowners who cannot shovel worried about the City's sidewalk rule.",
+        "City of Sioux Falls: sidewalks must be cleared of snow and ice within 48 hours after snow stops falling, edge to edge and down to the concrete, including curb ramps on corner lots (City Ordinance 96.100). Reports filed before the 48-hour mark are not investigated. Residents can report concerns and track violations online, and Property Maintenance can be reached at 605-978-6900.",
+        "City of Sioux Falls: when shoveling or using a snow blower, place snow in your yard, not on sidewalks, streets or the right of way; depositing snow in the street violates City ordinance. City ordinance 96.103 allows the City to remove snow and ice and 96.104 to specially assess the cost.",
+        "City of Sioux Falls: a snow alert is declared when the City plans to plow all streets; vehicles parked on city streets during a snow alert may be ticketed and/or towed. The City runs a Snow Alert Tracker with zone maps and plow progress.",
+        "Dakota News Now, as reported by KSOO in 2025: an uncleared sidewalk can bring a $100 penalty, and the City can hire a snow removal company at the owner's cost."
+      ],
+      "pillar": {
+        "slug": "snow-removal-guide-sioux-falls",
+        "title": "Snow Removal in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "snow removal Sioux Falls",
+          "sidewalk snow rules Sioux Falls"
+        ],
+        "brief": "Roadmap: the 48-hour sidewalk rule, snow alerts and parking, where snow can go, DIY versus hiring, contracts, protecting concrete and lawns, ice, and helping neighbors. Each section points to the supporting article.",
+        "publishDate": "2026-10-09"
+      },
+      "topics": [
+        {
+          "slug": "sidewalk-snow-48-hours",
+          "title": "The 48-Hour Sidewalk Rule, Explained",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls sidewalk snow rule",
+            "48 hour snow removal"
+          ],
+          "brief": "Use the City facts with sources: timing, edge to edge, curb ramps, reports, penalties, City removal.",
+          "publishDate": "2026-10-18"
+        },
+        {
+          "slug": "snow-alert-parking",
+          "title": "Snow Alerts and Where to Park",
+          "contentType": "educational-article",
+          "keywords": [
+            "Sioux Falls snow alert",
+            "snow alert parking"
+          ],
+          "brief": "What a snow alert means, ticketing and towing, the tracker, and planning ahead.",
+          "publishDate": "2026-10-27"
+        },
+        {
+          "slug": "hiring-snow-removal",
+          "title": "Hiring a Snow Removal Service",
+          "contentType": "checklist",
+          "keywords": [
+            "hire snow removal",
+            "snow removal service Sioux Falls"
+          ],
+          "brief": "Triggers, arrival times, sidewalks, piles, damage, insurance, contracts.",
+          "publishDate": "2026-11-05"
+        },
+        {
+          "slug": "per-push-vs-seasonal",
+          "title": "Per Push or Seasonal Snow Contract?",
+          "contentType": "comparison",
+          "keywords": [
+            "per push snow removal",
+            "seasonal snow contract"
+          ],
+          "brief": "How each works, light versus heavy winters, what is included. No dollar figures.",
+          "publishDate": "2026-11-14"
+        },
+        {
+          "slug": "where-to-put-snow",
+          "title": "Where to Put All That Snow",
+          "contentType": "checklist",
+          "keywords": [
+            "where to pile snow",
+            "snow pile rules"
+          ],
+          "brief": "Not in the street, sight lines, drainage in spring, mailboxes and hydrants.",
+          "publishDate": "2026-11-23"
+        },
+        {
+          "slug": "snow-blower-buying",
+          "title": "Choosing a Snow Blower for a Sioux Falls Driveway",
+          "contentType": "buying-guide",
+          "keywords": [
+            "snow blower",
+            "best snow blower"
+          ],
+          "brief": "Single or two stage, size, storage, and maintenance. No brands, no prices."
+        },
+        {
+          "slug": "ice-melt-concrete",
+          "title": "Ice Melt Without Ruining Your Concrete",
+          "contentType": "buying-guide",
+          "keywords": [
+            "ice melt concrete",
+            "safe ice melt"
+          ],
+          "brief": "Types in general, new concrete, pets, plants. In the section about protecting concrete, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Concrete Work in Sioux Falls](/guides/concrete-guide-sioux-falls)."
+        },
+        {
+          "slug": "shoveling-safely",
+          "title": "Shoveling Without Hurting Yourself",
+          "contentType": "checklist",
+          "keywords": [
+            "safe shoveling",
+            "shoveling tips"
+          ],
+          "brief": "Warm up, lifting, breaks, and when to stop. Tell readers with heart or back conditions to ask a doctor."
+        },
+        {
+          "slug": "fire-hydrant-snow",
+          "title": "Clearing Snow Around Fire Hydrants and Mailboxes",
+          "contentType": "checklist",
+          "keywords": [
+            "clear fire hydrant snow",
+            "mailbox snow"
+          ],
+          "brief": "Why it matters and how to help."
+        },
+        {
+          "slug": "snow-removal-damage",
+          "title": "When a Plow Damages Your Lawn or Driveway",
+          "contentType": "checklist",
+          "keywords": [
+            "snow plow damage lawn",
+            "driveway damage plow"
+          ],
+          "brief": "Marking edges, documenting, contract language, and spring repair."
+        },
+        {
+          "slug": "helping-neighbors-snow",
+          "title": "Helping Neighbors Who Cannot Shovel",
+          "contentType": "educational-article",
+          "keywords": [
+            "help neighbors shovel",
+            "snow help seniors"
+          ],
+          "brief": "Being a snow angel, organizing a block, and services."
+        },
+        {
+          "slug": "roof-snow-removal",
+          "title": "Should You Clear Snow Off Your Roof?",
+          "contentType": "checklist",
+          "keywords": [
+            "roof snow removal",
+            "roof rake"
+          ],
+          "brief": "Roof rakes, ice dams, safety, and when to call a pro. In the section about ice dams, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Ice Dams on Sioux Falls Roofs](/guides/ice-dams-sioux-falls-roof)."
+        },
+        {
+          "slug": "winter-storm-prep",
+          "title": "Getting Your Home Ready Before a Big Storm",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winter storm prep",
+            "blizzard checklist"
+          ],
+          "brief": "Supplies, cars, snow alert parking, sidewalks, and generators safety."
+        },
+        {
+          "slug": "snow-removal-contract-checklist",
+          "title": "What a Good Snow Removal Contract Says",
+          "contentType": "checklist",
+          "keywords": [
+            "snow removal contract",
+            "snow plow agreement"
+          ],
+          "brief": "Triggers, timing, sidewalks, ice, piles, damage, payment, and cancellation."
+        }
+      ]
     }
   ]
 }

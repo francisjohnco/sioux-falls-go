@@ -1,0 +1,62 @@
+{
+  "name": "Snow Removal",
+  "slug": "snow-removal",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Snow Removal in Sioux Falls, SD",
+    "description": "Snow removal for Sioux Falls homes: the 48-hour sidewalk rule, snow alerts, hiring a service, per-push or seasonal contracts and protecting your driveway."
+  },
+  "icon": "sparkles",
+  "intro": "In Sioux Falls, clearing snow is not just about getting the car out. The City requires sidewalks cleared within 48 hours after snow stops, edge to edge and down to the concrete.\n\nWhether you shovel, run a snow blower or hire a service, knowing the rules and what a good contract covers saves fines, sore backs and arguments in February.",
+  "tips": [
+    "Ask exactly what triggers a visit, such as a set snowfall depth, and whether sidewalks are included every time.",
+    "Ask what time they arrive after overnight snow, and whether you are early or late on their route.",
+    "Ask where they will pile snow, since pushing it into the street is against City ordinance.",
+    "Ask how they protect lawn edges, landscaping and concrete, and what ice melt they use.",
+    "Get the pricing method in writing: per push, per inch or seasonal."
+  ],
+  "faqs": [
+    {
+      "q": "How long do I have to clear my sidewalk in Sioux Falls?",
+      "a": "According to the City of Sioux Falls, sidewalks must be cleared of snow and ice within 48 hours after snow stops falling, edge to edge and down to the concrete. Corner curb ramps count too."
+    },
+    {
+      "q": "Can I push snow into the street?",
+      "a": "No. The City says placing snow from your driveway or sidewalk onto the street violates City ordinance. Pile it in your yard."
+    },
+    {
+      "q": "What happens if I do not clear my sidewalk?",
+      "a": "The City can follow up on reports after the 48-hour window, and its ordinance allows the City to have the snow removed and charge the property owner."
+    },
+    {
+      "q": "What is a snow alert?",
+      "a": "The City declares a snow alert when it plans to plow all streets. Vehicles parked on city streets during a snow alert may be ticketed or towed, so check the City's snow alert tracker."
+    },
+    {
+      "q": "Per push or seasonal contract?",
+      "a": "Per push can cost less in a light winter, while seasonal gives a fixed price no matter how much falls. Ask what each includes, especially sidewalks and ice."
+    },
+    {
+      "q": "Is ice melt bad for my concrete?",
+      "a": "Some products can damage newer concrete and plants. Ask your service what they use and follow your concrete installer's advice."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

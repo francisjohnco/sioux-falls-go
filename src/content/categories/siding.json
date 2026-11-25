@@ -1,0 +1,62 @@
+{
+  "name": "Siding",
+  "slug": "siding",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Siding Contractors in Sioux Falls, SD",
+    "description": "Planning new siding in Sioux Falls? Local guides on hail damage, materials for South Dakota weather, permits, quotes and what to ask a siding contractor."
+  },
+  "icon": "home",
+  "intro": "Siding in Sioux Falls takes a beating most of the country never sees. Hail, hard prairie wind, subzero cold and summer sun all work on it in the same year.\n\nA good siding job starts with knowing whether you have damage, wear or both, then picking a material and an installer that fit how our weather actually behaves.",
+  "tips": [
+    "Ask whether the contractor is licensed with the City of Sioux Falls, since re-siding needs a permit and a licensed contractor to pull it.",
+    "After hail, have the siding inspected and photographed before you call your insurer, and keep every photo and report.",
+    "Ask what goes under the new siding, such as house wrap and flashing around windows, because that layer keeps water out of the walls.",
+    "Get the material, color, trim and disposal written into the quote so bids compare fairly.",
+    "Ask how they match a partial repair to the siding that stays, because discontinued colors are a common headache."
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit to replace siding in Sioux Falls?",
+      "a": "Yes. The City of Sioux Falls lists re-siding among the projects that need a building permit, and the work must be done by a contractor licensed with the City. Homes outside city limits go through Minnehaha or Lincoln County."
+    },
+    {
+      "q": "How do I know if hail damaged my siding?",
+      "a": "Look for cracks, holes, chips and dents, especially on the side that faced the storm, plus damage to window wraps and gutters. Photograph everything with something for scale and have a contractor inspect before you file a claim."
+    },
+    {
+      "q": "Can I replace just part of my siding?",
+      "a": "Often, yes, if the damaged area is limited and matching material is available. Ask the contractor to show you the closest match before work starts, because faded or discontinued colors may not blend."
+    },
+    {
+      "q": "What siding holds up best in South Dakota weather?",
+      "a": "It depends on budget, look and how much upkeep you want. Vinyl, fiber cement, engineered wood and metal all handle cold differently, so ask each contractor how their product handles hail, expansion and sun."
+    },
+    {
+      "q": "How long does a siding replacement take?",
+      "a": "It depends on the size of the house, the material and the weather. Ask for a written schedule and how they protect windows, landscaping and the inside of the walls while the old siding is off."
+    },
+    {
+      "q": "Should siding and roof be done together after hail?",
+      "a": "Often it makes sense to inspect both after the same storm and file one claim if both are damaged. Ask your insurer how they handle a claim that covers more than one part of the house."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

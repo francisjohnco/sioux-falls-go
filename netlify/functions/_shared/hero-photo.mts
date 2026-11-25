@@ -153,6 +153,14 @@ export const photoKey = (u: string) => u.split('?')[0];
 const PHOTO_SUBJECTS: Record<string, { show: string; query: string }> = {
   'bathroom-remodeling': { show: 'a residential bathroom (shower, tub, vanity, tile, or toilet area)', query: 'modern bathroom interior' },
   'plumbers': { show: 'residential plumbing (pipes, a water heater, a sink or faucet, or a plumber at work in a home)', query: 'plumber fixing pipe under sink' },
+  'siding': { show: "house siding as the clear subject (a home exterior with visible siding, or siding being installed)", query: "house exterior vinyl siding" },
+  'gutters': { show: "house gutters or downspouts as the clear subject", query: "house gutter downspout" },
+  'insulation': { show: "home insulation as the clear subject (attic insulation, insulation being installed, or an attic)", query: "attic insulation installation" },
+  'fencing': { show: "a residential fence as the clear subject (a backyard fence, or a fence being built)", query: "backyard wood fence" },
+  'deck-builders': { show: "a residential deck as the clear subject (a backyard deck or a deck being built)", query: "backyard wood deck" },
+  'basement-waterproofing': { show: "a residential basement or foundation as the clear subject (basement walls, a sump pump, or foundation work)", query: "basement foundation wall" },
+  'kitchen-remodeling': { show: "a residential kitchen as the clear subject (cabinets, counters, or a kitchen being remodeled)", query: "modern home kitchen interior" },
+  'snow-removal': { show: "snow removal at a home (a snowy driveway or sidewalk, a snow blower, shoveling, or a small plow)", query: "snow blower driveway" },
   'window-replacement': { show: 'residential windows as the clear subject (a window being installed, or a home where the windows are the focus)', query: 'new windows house interior' },
 };
 const subjectEntry = (category?: string) => (category ? PHOTO_SUBJECTS[category.toLowerCase().trim().replace(/\s+/g, '-')] : undefined);

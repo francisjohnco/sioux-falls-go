@@ -1,0 +1,62 @@
+{
+  "name": "Deck Builders",
+  "slug": "deck-builders",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Deck Builders in Sioux Falls, SD",
+    "description": "Building or replacing a deck in Sioux Falls? Local guides on permits, footings and frost, wood or composite, safety checks and what to ask a deck builder."
+  },
+  "icon": "home",
+  "intro": "A deck in Sioux Falls spends half the year under snow and the other half in hard sun. The parts you never see, footings below the frost line and a solid connection to the house, decide whether it lasts.\n\nStart with a permit and a builder who explains the structure, then choose the boards and railings you will enjoy looking at.",
+  "tips": [
+    "Ask who pulls the building permit, since decks are on the City's list of projects that need one.",
+    "Ask how deep the footings go and how they protect against frost heave.",
+    "Ask how the deck attaches to the house and how that connection is flashed to keep water out.",
+    "Ask what fasteners and hardware they use, because hidden corrosion is a common failure.",
+    "Get the material, railing, stairs, permit and cleanup written into the quote."
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit to build a deck in Sioux Falls?",
+      "a": "Yes. The City of Sioux Falls lists decks among the projects that need a building permit. A licensed residential contractor or a homeowner pulling their own permit can apply."
+    },
+    {
+      "q": "Why do footings matter so much here?",
+      "a": "Footings that do not reach below the frost line can be lifted by freezing soil, which twists and loosens a deck. Ask your builder and the City what depth your project needs."
+    },
+    {
+      "q": "Wood or composite?",
+      "a": "Wood costs less up front and needs more upkeep. Composite and PVC need less maintenance but handle heat and cold differently. Ask each builder how their product handles our temperature swings."
+    },
+    {
+      "q": "How do I know if my old deck is safe?",
+      "a": "Look for soft or split boards, wobbly railings, rusted hardware and a loose connection to the house. Have a builder inspect it before a big gathering."
+    },
+    {
+      "q": "Can I shovel snow off my deck?",
+      "a": "Yes, gently, with a plastic shovel and without chipping boards. Ask your board maker what ice melt is safe for your surface."
+    },
+    {
+      "q": "How long does a deck take to build?",
+      "a": "It depends on size, permits, weather and materials. Ask for a written schedule that includes inspections."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

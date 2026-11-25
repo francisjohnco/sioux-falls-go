@@ -1,0 +1,62 @@
+{
+  "name": "Basement Waterproofing",
+  "slug": "basement-waterproofing",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Basement Waterproofing and Foundation Repair in Sioux Falls, SD",
+    "description": "Wet basement or foundation cracks in Sioux Falls? Local guides on drainage, sump pumps, cracks, bowing walls, radon and what to ask a contractor."
+  },
+  "icon": "layers",
+  "intro": "Sioux Falls basements deal with spring thaw, heavy summer rain and clay soil that swells and shrinks. A little water in the corner is a message worth listening to.\n\nMany wet basements start outside with gutters, grading and downspouts. Some need drain tile, a sump or structural repair. Knowing which is which keeps you from paying for the wrong fix.",
+  "tips": [
+    "Check grading, gutters and downspouts first, since many wet basements start outside the house.",
+    "Ask whether the contractor recommends interior drainage, exterior work or a simple crack repair, and why.",
+    "For cracks or bowing walls, ask whether an engineer should look before anyone sells you a system.",
+    "Test for radon; the eastern part of South Dakota, including Sioux Falls, is in EPA Radon Zone 1.",
+    "Get the warranty in writing and ask whether it transfers if you sell."
+  ],
+  "faqs": [
+    {
+      "q": "Why is my basement wet only in spring?",
+      "a": "Snowmelt and spring rain saturate the soil around the foundation. Gutters, downspouts and grading that send water toward the house make it worse. Fix the outside first and watch what changes."
+    },
+    {
+      "q": "Are foundation cracks always a problem?",
+      "a": "No. Thin, dry cracks are common as concrete cures. Cracks that leak, widen, or come with bowing walls or sticking doors should be checked by a professional or engineer."
+    },
+    {
+      "q": "Do I need a sump pump?",
+      "a": "If water collects under the floor or a drain tile system is installed, a sump pump moves it out. Ask about a backup in case power fails during a storm."
+    },
+    {
+      "q": "Should I test my basement for radon?",
+      "a": "Yes. South Dakota's Department of Agriculture and Natural Resources says the eastern part of the state is EPA Radon Zone 1, and the only way to know your level is to test. The state has offered free test kits to residents."
+    },
+    {
+      "q": "Interior or exterior waterproofing?",
+      "a": "Interior drain tile and a sump manage water that gets in. Exterior work stops it at the wall but means digging. Ask each contractor why they recommend one for your home."
+    },
+    {
+      "q": "Can I finish a basement that has had water?",
+      "a": "Only after the cause is fixed and the space stays dry through a wet season. Finishing over a moisture problem traps it behind walls."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

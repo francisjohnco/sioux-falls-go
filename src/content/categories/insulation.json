@@ -1,0 +1,62 @@
+{
+  "name": "Insulation",
+  "slug": "insulation",
+  "aliases": [],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": [
+      "hiring",
+      "pricing",
+      "local considerations"
+    ],
+    "contentTypes": [
+      "faq",
+      "cost-guide",
+      "buying-guide",
+      "comparison",
+      "checklist",
+      "seasonal-guide"
+    ]
+  },
+  "seo": {
+    "title": "Insulation Contractors in Sioux Falls, SD",
+    "description": "Cold rooms, ice dams or high heating bills in Sioux Falls? Local guides on attic insulation, air sealing, spray foam, basements and what to ask an installer."
+  },
+  "icon": "layers",
+  "intro": "In a Sioux Falls winter, insulation is the difference between a house that holds heat and one that leaks it into the attic. Cold rooms, ice dams and frost on attic nails are often the same problem showing up in different places.\n\nThe best results usually start with air sealing and the attic, then move to walls and the basement as the house tells you where it is losing heat.",
+  "tips": [
+    "Ask whether they will air seal the attic floor before adding insulation, because insulation alone does not stop air leaks.",
+    "Ask how they will keep soffit vents open so the attic can still breathe.",
+    "Ask what depth or R-value they will reach and how you can see it afterward, such as rulers or markers in the attic.",
+    "Ask how they handle bath fans that vent into the attic, since that moisture causes frost and mold.",
+    "Get the material, coverage, and cleanup in writing, and ask about any utility rebates rather than federal tax credits."
+  ],
+  "faqs": [
+    {
+      "q": "Why are some rooms in my house so cold?",
+      "a": "Common causes are thin or missing attic insulation, air leaks around lights and plumbing, rooms over garages, and ducts in cold spaces. An energy assessment or a contractor with a thermal camera can find which one it is."
+    },
+    {
+      "q": "Does insulation prevent ice dams?",
+      "a": "It helps a lot. Ice dams form when heat leaks into the attic and melts snow on the roof. Air sealing, insulation and ventilation together keep the roof cold so snow stays put."
+    },
+    {
+      "q": "Is blown-in or spray foam better?",
+      "a": "They do different jobs. Blown-in is common for open attic floors, while spray foam seals and insulates tight spots like rim joists. Many homes use both."
+    },
+    {
+      "q": "Is there still a federal tax credit for insulation?",
+      "a": "Not for work placed in service now. According to the IRS, the Energy Efficient Home Improvement Credit does not apply to property placed in service after December 31, 2025. Ask your utility about current rebates."
+    },
+    {
+      "q": "Why is there frost in my attic?",
+      "a": "Warm, moist air from the house is reaching the cold attic and freezing on the roof boards and nails. Air sealing and venting bath fans outside are usually the fix."
+    },
+    {
+      "q": "Can I add insulation over what I already have?",
+      "a": "Usually, if the old insulation is dry and not moldy. A contractor should check for wet spots, critters and blocked vents first."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}
