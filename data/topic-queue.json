@@ -1815,7 +1815,7 @@
             "hardwood refinishing",
             "refinish vs replace hardwood"
           ],
-          "brief": "When refinishing works, dust and fumes, timing, and finishes in general terms."
+          "brief": "When refinishing works, dust and fumes, timing, and finishes in general terms. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to this Sioux Falls homeowner flooring resource: https://siouxfallsflooring.com/hardwood-flooring-sioux-falls/ (describe it as a local flooring guide; do not call it a company or name any business)."
         },
         {
           "slug": "carpet-still-worth-it",
@@ -1825,7 +1825,7 @@
             "carpet vs LVP",
             "bedroom carpet"
           ],
-          "brief": "Warmth, comfort, noise, pads, stains, and where carpet still makes sense."
+          "brief": "Warmth, comfort, noise, pads, stains, and where carpet still makes sense. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to this Sioux Falls homeowner flooring resource: https://siouxfallsflooring.com/carpet-installation-sioux-falls/ (describe it as a local flooring guide; do not call it a company or name any business)."
         },
         {
           "slug": "winter-flooring-gaps-humidity",
@@ -1835,7 +1835,7 @@
             "hardwood gaps winter",
             "floor cupping"
           ],
-          "brief": "Humidity swings, acclimation, humidifiers, and when to call."
+          "brief": "Humidity swings, acclimation, humidifiers, and when to call. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to this Sioux Falls homeowner flooring resource: https://siouxfallsflooring.com/gaps-in-hardwood-floors-winter/ (describe it as a local flooring guide; do not call it a company or name any business)."
         },
         {
           "slug": "flooring-warranty-and-service",
@@ -2144,6 +2144,239 @@
           ],
           "brief": "Use the City licensing facts. Questions about licensing, permits, who will be in the home including subcontractors they have not used before (VOC), schedule, cleanup, how hidden damage and change orders are priced, payment schedule, warranty in writing, and a final walkthrough checklist (run every fixture, check the ceiling or basement below for drips, check nothing was left in the showerhead, fan vents outside). Meeting remodelers at a home show is fine, but still compare bids.",
           "publishDate": "2026-11-22"
+        }
+      ]
+    },
+    {
+      "cluster": "plumbing-sioux-falls",
+      "campaign": "Plumbing problems in Sioux Falls homes",
+      "category": "plumbers",
+      "categoryName": "Plumbers",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "bufferTarget": 2,
+      "note": "For homeowners. Six articles backdated Sep 28 to Nov 21. Photos must show plumbing.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, timelines in days, or warranty terms; do not state dollar figures at all. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local plumbers and drain companies (never quote or name them): a leak that was hard to find until the right tech traced it; a water heater failing at night and needing someone to come right away; tree roots in the main line backing water up into the basement; a crew clearing a sewer line but leaving water on everything; frozen pipes in winter; homeowners told a water heater was dead and needed full replacement, when a second opinion found a small repair; surprise at how far apart quotes were for the same job; praise for techs who explained the problem and the options before starting.",
+        "City of Sioux Falls: a license is required of all contractors doing plumbing work within city limits, and the City does not accept licenses from other states. Homeowners who own and live in a single-family home may do their own plumbing with homeowner plumbing permits and are responsible for code compliance and inspections. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors.",
+        "KELO News, quoting the City of Sioux Falls permitting support manager: water heater change-outs are among the projects that need a city permit and that homeowners sometimes skip.",
+        "City of Sioux Falls 2020 finished water quality report: total hardness was about 15 grains per gallon for water treated at the City's own plant and about 10 grains per gallon for Lewis and Clark water. Which water a home gets, and how hard it is, can vary."
+      ],
+      "pillar": {
+        "slug": "plumbing-guide-sioux-falls",
+        "title": "Plumbing in a Sioux Falls Home, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "plumber Sioux Falls",
+          "plumbing Sioux Falls"
+        ],
+        "brief": "Roadmap: what counts as an emergency, water heaters, frozen pipes, hidden leaks, hard water, permits and licensed plumbers, and when a drain cleaner is enough versus when you need a plumber. Each section points to the supporting article.",
+        "publishDate": "2026-09-28"
+      },
+      "topics": [
+        {
+          "slug": "water-heater-repair-or-replace",
+          "title": "Water Heater Repair or Replace? How to Decide",
+          "contentType": "buying-guide",
+          "keywords": [
+            "water heater repair Sioux Falls",
+            "water heater replacement"
+          ],
+          "brief": "VOC: a heater declared dead when a second opinion found a small fix, and failures at night. Signs of repair versus replacement, what age and leaks mean, hard water sediment, getting a second opinion, permits for change-outs. No prices.",
+          "publishDate": "2026-10-09"
+        },
+        {
+          "slug": "frozen-pipe-what-to-do",
+          "title": "Frozen Pipe in Sioux Falls? What to Do Right Now",
+          "contentType": "checklist",
+          "keywords": [
+            "frozen pipes Sioux Falls",
+            "frozen pipe what to do"
+          ],
+          "brief": "Step by step: find the shutoff, open the faucet, safe ways to thaw and what never to use, when to call a plumber, and how to prevent the next one. In the section about a pipe that already split, include exactly one natural link with descriptive anchor text to this related Sioux Falls Go guide: [Burst Pipe in the Wall, What Happens Next](/guides/burst-pipe-water-damage).",
+          "publishDate": "2026-10-20"
+        },
+        {
+          "slug": "hidden-plumbing-leaks",
+          "title": "Hidden Plumbing Leaks and How They Get Found",
+          "contentType": "educational-article",
+          "keywords": [
+            "hidden water leak",
+            "leak detection Sioux Falls"
+          ],
+          "brief": "VOC: a leak that was hard to find. Warning signs (water bill, meter test, stains, musty smell, warm spots), the meter test step by step, how plumbers trace leaks, and why waiting costs more. No prices.",
+          "publishDate": "2026-10-31"
+        },
+        {
+          "slug": "hard-water-plumbing-sioux-falls",
+          "title": "Hard Water and Your Sioux Falls Plumbing",
+          "contentType": "buying-guide",
+          "keywords": [
+            "hard water Sioux Falls",
+            "water softener Sioux Falls"
+          ],
+          "brief": "Use the City water report facts. Scale on fixtures and in water heaters, softeners and how to size the question for a plumber, maintenance, and what a softener does not fix. No brand names, no prices.",
+          "publishDate": "2026-11-11"
+        },
+        {
+          "slug": "plumber-vs-drain-cleaner",
+          "title": "Plumber or Drain Cleaner? How to Call the Right One",
+          "contentType": "comparison",
+          "keywords": [
+            "plumber vs drain cleaning",
+            "do I need a plumber"
+          ],
+          "brief": "Help the reader avoid paying for a plumber when a clog is all it is, and avoid the danger of using a drain cleaner for a plumbing job. When a drain cleaning company is the right and usually less costly call (simple clogs, slow drains, routine main line cleaning), and when you need a licensed plumber (leaks, broken or collapsed pipe found on camera, water heaters, gas, frozen or burst pipes, anything needing a permit). Explain the risks of the wrong choice: repeat clogs from a broken pipe, unlicensed repairs, failed inspections at sale. Use the City licensing fact. Tell readers to ask a drain company whether it holds a City of Sioux Falls plumbing contractor license if the job could turn into a pipe repair. Early in the article, include exactly one natural link with descriptive anchor text to the Sioux Falls Go drain cleaning guide: [Drain Cleaning in Sioux Falls](/guides/drain-cleaning-sioux-falls).",
+          "publishDate": "2026-11-21"
+        }
+      ]
+    },
+    {
+      "cluster": "window-replacement-sioux-falls",
+      "campaign": "Replacing and repairing windows in Sioux Falls",
+      "category": "window-replacement",
+      "categoryName": "Window Replacement",
+      "relatedBusinesses": [],
+      "everyNDays": 7,
+      "firstPublishDate": "2026-12-01",
+      "bufferTarget": 2,
+      "note": "For homeowners. Seven backdated Oct 25 to Nov 24, then five weekly from Dec 1. Photos must show windows.",
+      "voice": "AUDIENCE AND VOICE: Every article is for a Sioux Falls HOMEOWNER, never for contractors. Start from the real situations and worries in the voice-of-the-customer notes and answer them directly. Be specific and practical: what to do, what to ask, what to watch for, what it usually means. Use the verified facts with their sources named. Never name or recommend any company. Do not invent statistics, prices, code requirements, timelines in days, or warranty terms; do not state dollar figures at all. When something depends on the home or the contractor, say so and tell the reader what to ask. Write for phones: paragraphs of 1 to 3 sentences, never more than about 50 words, with bulleted lists where a reader would scan.",
+      "localFacts": [
+        "VOICE OF THE CUSTOMER, paraphrased from Sioux Falls homeowners' public reviews of local window installers and window shops (never quote or name them): new windows that were still drafty and let in highway noise; a new window that would not lock; feeling happier with the original windows after a poor install; fog and condensation between panes; windows that are hard to open, close and lock; frost on the inside of the glass in deep cold; wanting quotes that compare the same window and the same install method.",
+        "City of Sioux Falls Building Permit FAQs: window and exterior door replacement is on the list of projects that need a building permit. Since 2024 the City offers a Residential Roofing and Repair Contractor license that covers window and door replacement with no structural changes; a full Residential Building Contractor license covers structural work. The City publishes a Currently Licensed Contractors list at siouxfalls.gov/licensed-contractors.",
+        "Minnehaha County Planning and Zoning (for homes outside Sioux Falls city limits): any structural change needs a building permit, and enlarging windows or doors is listed as a structural change.",
+        "ENERGY STAR Version 7.0 for windows (effective October 23, 2023): in the Northern climate zone, windows need a U-factor of 0.22 or lower with an SHGC of 0.17 or higher, with equivalent-performance options that allow a slightly higher U-factor when SHGC is higher. Readers should check the ENERGY STAR climate zone map for their county and the label on the exact window quoted. Lower U-factor means the window loses less heat.",
+        "IRS: the federal Energy Efficient Home Improvement Credit (Section 25C), which covered qualifying windows, is not allowed for property placed in service after December 31, 2025. Do not tell readers a federal window tax credit is available."
+      ],
+      "pillar": {
+        "slug": "window-replacement-guide-sioux-falls",
+        "title": "Replacing Windows in Sioux Falls, the Homeowner's Guide",
+        "contentType": "buying-guide",
+        "keywords": [
+          "window replacement Sioux Falls",
+          "replacement windows Sioux Falls"
+        ],
+        "brief": "Roadmap for a South Dakota climate: repair or replace, window ratings for cold winters, double or triple pane, condensation, comparing quotes, permits and licensed installers, egress windows, frame materials, winter installs, hail, and warranties. Each section points to the supporting article.",
+        "publishDate": "2026-10-25"
+      },
+      "topics": [
+        {
+          "slug": "window-repair-or-replace",
+          "title": "Repair or Replace? What Your Windows Are Telling You",
+          "contentType": "buying-guide",
+          "keywords": [
+            "window repair Sioux Falls",
+            "replace or repair windows"
+          ],
+          "brief": "Fog between panes (failed seal and glass unit replacement), drafts, broken locks and balances, rot, hard to open. What a repair fixes and when replacement is the better money. No prices.",
+          "publishDate": "2026-10-30"
+        },
+        {
+          "slug": "window-ratings-cold-climate",
+          "title": "Window Ratings for a Sioux Falls Winter, U-Factor and SHGC Explained",
+          "contentType": "educational-article",
+          "keywords": [
+            "window U-factor",
+            "energy efficient windows South Dakota"
+          ],
+          "brief": "Read the label: U-factor, SHGC, air leakage, and ENERGY STAR Northern zone criteria, using the verified facts. How to compare two quotes by their numbers. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to this Sioux Falls homeowner window resource: https://siouxfallswindowguide.com/the-math/ (describe it as a local window guide; do not call it a company or name any business).",
+          "publishDate": "2026-11-04"
+        },
+        {
+          "slug": "double-vs-triple-pane-windows",
+          "title": "Double or Triple Pane Windows in Sioux Falls?",
+          "contentType": "comparison",
+          "keywords": [
+            "triple pane windows",
+            "double vs triple pane"
+          ],
+          "brief": "Comfort near the glass, condensation, noise, weight, the ENERGY STAR Northern zone criteria, and when double pane with good coatings is enough. No prices.",
+          "publishDate": "2026-11-09"
+        },
+        {
+          "slug": "window-condensation-winter",
+          "title": "Window Condensation in Winter, When to Worry",
+          "contentType": "educational-article",
+          "keywords": [
+            "window condensation winter",
+            "frost on inside of windows"
+          ],
+          "brief": "Inside condensation and frost (indoor humidity, airflow, coverings) versus fog between panes (failed seal) versus outside dew. What to adjust before replacing anything and when it signals a bad seal or install.",
+          "publishDate": "2026-11-14"
+        },
+        {
+          "slug": "comparing-window-quotes",
+          "title": "Why Window Quotes Differ and How to Compare Them",
+          "contentType": "buying-guide",
+          "keywords": [
+            "window replacement quote",
+            "window installation cost Sioux Falls"
+          ],
+          "brief": "Full-frame versus insert, the exact ratings, install method and insulation, trim and disposal, warranty, and the IRS fact that the federal window tax credit ended. VOC about drafty or noisy windows after a poor install. Somewhere past the first section where a reader would want more depth, include exactly one natural link with descriptive anchor text to this Sioux Falls homeowner window resource: https://siouxfallswindowguide.com/manufacturers/ (describe it as a local window guide; do not call it a company or name any business).",
+          "publishDate": "2026-11-19"
+        },
+        {
+          "slug": "window-permits-licensed-installers",
+          "title": "Window Replacement Permits and Licensed Installers in Sioux Falls",
+          "contentType": "educational-article",
+          "keywords": [
+            "window replacement permit Sioux Falls",
+            "licensed window installer"
+          ],
+          "brief": "Use the City and County facts: what needs a permit, the license types, checking the licensed contractor list, structural changes, and homes outside city limits. Tell readers to confirm with City Building Services.",
+          "publishDate": "2026-11-24"
+        },
+        {
+          "slug": "egress-windows-basement",
+          "title": "Egress Windows for a Sioux Falls Basement",
+          "contentType": "buying-guide",
+          "keywords": [
+            "egress window Sioux Falls",
+            "basement egress window"
+          ],
+          "brief": "Why egress matters for a finished basement bedroom, that cutting or enlarging an opening is structural and needs a building permit, window wells and covers, drainage, and what to ask. Do not state code dimensions."
+        },
+        {
+          "slug": "window-frame-materials",
+          "title": "Vinyl, Fiberglass or Wood Windows in a Prairie Climate",
+          "contentType": "comparison",
+          "keywords": [
+            "vinyl vs fiberglass windows",
+            "window frame materials"
+          ],
+          "brief": "How each frame handles deep cold, sun, expansion and maintenance, look and resale. No brand names, no prices."
+        },
+        {
+          "slug": "winter-window-installation",
+          "title": "Installing Windows in Winter, Can It Be Done?",
+          "contentType": "seasonal-guide",
+          "keywords": [
+            "winter window installation",
+            "replace windows in winter"
+          ],
+          "brief": "How installers work one opening at a time, sealants and cold, scheduling advantages, protecting the house, and questions to ask."
+        },
+        {
+          "slug": "hail-damaged-windows",
+          "title": "Hail and Your Windows, What to Check After a Storm",
+          "contentType": "checklist",
+          "keywords": [
+            "hail damage windows",
+            "window damage after hail"
+          ],
+          "brief": "Cracked glass, dented or split frames, screens and wraps, photos and documentation, temporary protection, and talking to your insurer and installer. No invented policy terms."
+        },
+        {
+          "slug": "window-warranties",
+          "title": "Window Warranties, What They Really Cover",
+          "contentType": "buying-guide",
+          "keywords": [
+            "window warranty",
+            "replacement window warranty"
+          ],
+          "brief": "Product versus installation warranty, glass seal coverage, transferability, registration, and what to get in writing. VOC: a new window that would not lock and who to call."
         }
       ]
     }

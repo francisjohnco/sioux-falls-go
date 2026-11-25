@@ -152,6 +152,8 @@ export const photoKey = (u: string) => u.split('?')[0];
 // what the article is about. Keyed by category slug or name.
 const PHOTO_SUBJECTS: Record<string, { show: string; query: string }> = {
   'bathroom-remodeling': { show: 'a residential bathroom (shower, tub, vanity, tile, or toilet area)', query: 'modern bathroom interior' },
+  'plumbers': { show: 'residential plumbing (pipes, a water heater, a sink or faucet, or a plumber at work in a home)', query: 'plumber fixing pipe under sink' },
+  'window-replacement': { show: 'residential windows as the clear subject (a window being installed, or a home where the windows are the focus)', query: 'new windows house interior' },
 };
 const subjectEntry = (category?: string) => (category ? PHOTO_SUBJECTS[category.toLowerCase().trim().replace(/\s+/g, '-')] : undefined);
 export function photoSubjectFor(category?: string): string | undefined {

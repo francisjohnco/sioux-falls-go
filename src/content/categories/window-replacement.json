@@ -1,0 +1,57 @@
+{
+  "name": "Window Replacement",
+  "slug": "window-replacement",
+  "aliases": [
+    "Window Installation",
+    "Window Installers",
+    "Replacement Windows",
+    "Window Repair",
+    "Windows and Doors"
+  ],
+  "createdAt": "2026-11-25",
+  "parentCategory": "home-services",
+  "playbook": {
+    "topics": ["hiring", "pricing", "local considerations"],
+    "contentTypes": ["faq", "cost-guide", "buying-guide", "comparison", "checklist", "seasonal-guide"]
+  },
+  "seo": {
+    "title": "Window Replacement in Sioux Falls, SD",
+    "description": "Replacing or repairing windows in Sioux Falls? Local guides on window ratings for South Dakota winters, condensation, quotes, permits, and egress windows."
+  },
+  "icon": "window",
+  "intro": "Windows work harder in Sioux Falls than in most of the country. Long subzero stretches, dry winter air inside and wind across open prairie all show up as drafts, frost on the glass and fog between panes.\n\nThe right replacement starts with knowing what the problem actually is. Sometimes a seal, a lock or a little caulk solves it. Other times the frame is done, and the ratings on the new window's label matter more than the brand on the sales sheet.",
+  "tips": [
+    "Ask whether the quote is for full-frame replacement or an insert that fits inside the old frame, because the price and the result are very different.",
+    "Ask for the U-factor and SHGC of the exact window being quoted, in writing, so you can compare bids on equal terms.",
+    "Ask whether the installer is licensed with the City of Sioux Falls and who pulls the permit, since window replacement inside city limits needs one.",
+    "Ask how they insulate and seal the gap around the new window, because a great window installed poorly will still be drafty.",
+    "Get the product warranty and the installation warranty in writing, and ask who you call if something goes wrong."
+  ],
+  "faqs": [
+    {
+      "q": "Do I need a permit to replace windows in Sioux Falls?",
+      "a": "Yes. The City of Sioux Falls lists window and exterior door replacement among the projects that need a building permit. Enlarging an opening or cutting a new one, like an egress window, is a structural change and needs a building permit with a contractor licensed for that work."
+    },
+    {
+      "q": "Is there still a federal tax credit for new windows?",
+      "a": "Not for windows installed now. According to the IRS, the Energy Efficient Home Improvement Credit does not apply to property placed in service after December 31, 2025. Ask your utility and installer about any current local rebates instead."
+    },
+    {
+      "q": "Why is there fog between the panes of my window?",
+      "a": "Fog or moisture trapped between the panes usually means the seal around the insulated glass has failed. The window still works, but it insulates less. Depending on the window, the glass unit can sometimes be replaced without replacing the whole window."
+    },
+    {
+      "q": "What window ratings matter most for a Sioux Falls winter?",
+      "a": "U-factor matters most, and lower is better. ENERGY STAR's Version 7 criteria set a U-factor of 0.22 or lower for windows in its Northern climate zone. Check the label on the exact window you are quoted, and compare U-factor and SHGC side by side."
+    },
+    {
+      "q": "Can windows be replaced in winter?",
+      "a": "Often, yes. Many installers work year round by replacing one opening at a time to limit how long each room is open. Ask how they handle cold days and how long each window will be open to the weather."
+    },
+    {
+      "q": "Should I repair or replace my windows?",
+      "a": "Repair makes sense when the frame is solid and the problem is a lock, a balance, weatherstripping or a single glass unit. Replacement makes sense when frames are rotted, many seals have failed, or the windows no longer open, close and lock properly."
+    }
+  ],
+  "contentUpdatedAt": "2026-11-25"
+}

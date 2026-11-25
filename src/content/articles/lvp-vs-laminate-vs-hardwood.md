@@ -38,6 +38,8 @@ Hardwood is exactly what it sounds like: a solid or engineered plank of real woo
 
 Knowing what is inside each product matters because that core determines where it can go and what happens when something goes wrong.
 
+If you want to see every floor type side by side, this local guide to [comparing flooring types in Sioux Falls](https://siouxfallsflooring.com/flooring-services/) lays them out in one place.
+
 ## Water Resistance and What That Means Here
 
 Sioux Falls homeowners often finish basements, and that changes the conversation immediately. LVP wins on water resistance without any competition. Because the core is plastic, a flooded utility room or a slow appliance leak does not mean a ruined floor if you catch it reasonably fast.
