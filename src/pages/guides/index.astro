@@ -15,7 +15,7 @@ const allArticles = await getLiveArticles();
 // Real category groupings, matching how the original site segmented "The Loop"
 const LOCALS_CATEGORIES = ['consumer-guide', 'for-locals', 'community-spotlight', 'local-spotlights'];
 const VISITOR_CATEGORIES = ['explore-sioux-falls'];
-const BUSINESS_CATEGORIES = ['for-local-businesses', 'grow-with-sfg', 'marketing-tips-insights'];
+const BUSINESS_CATEGORIES = ['for-local-businesses', 'grow-with-sfg', 'marketing-tips-insights', 'marketing-agencies'];
 
 function sortByDateDesc(articles: typeof allArticles) {
   return [...articles].sort(newestFirst);

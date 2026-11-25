@@ -28,7 +28,8 @@ export default defineConfig({
     sitemap({
       filter: (page) =>
         !page.includes('/admin') && !page.includes('/login') && !page.includes('/host-dashboard') &&
-        !page.includes('/host-login') && !page.includes('/business-login') && !page.includes('/my-business'),
+        !page.includes('/host-login') && !page.includes('/business-login') && !page.includes('/my-business') &&
+        !/\/marketing-tips-insights\/?$/.test(page),
       serialize(item) {
         const m = item.url.match(/\/guides\/([^/]+)\/?$/);
         // Articles: their real update date. Hub pages (home, categories,

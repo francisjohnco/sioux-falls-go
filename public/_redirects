@@ -70,7 +70,7 @@
 /category/local-spotlights/  /local-spotlights  301
 /category/local-tree-services/  /local-tree-services  301
 /category/marketing-agencies/  /marketing-agencies  301
-/category/marketing-tips-insights/  /marketing-tips-insights  301
+/category/marketing-tips-insights/  /marketing-agencies  301
 /category/painters/  /painters  301
 /category/plumber/  /plumbers  301
 /category/plumbing/  /plumbers  301
@@ -96,7 +96,7 @@
 /category/for-local-businesses/grow-with-sioux-falls-go/  /grow-with-sfg  301
 /category/for-local-businesses/guardian-expert-advice/  /guides  301
 /category/for-locals/local-spotlights/  /local-spotlights  301
-/category/for-local-businesses/marketing-tips-insights/  /marketing-tips-insights  301
+/category/for-local-businesses/marketing-tips-insights/  /marketing-agencies  301
 /category/for-locals/sioux-falls-stories/  /guides  301
 /category/for-locals/community-spotlight/  /community-spotlight  301
 /category/for-locals/explore-sioux-falls/  /explore-sioux-falls  301
@@ -124,3 +124,8 @@
 /plumbing/  /plumbers  301
 /black-friday  /local-deals/black-friday/  301
 /black-friday/  /local-deals/black-friday/  301
+
+# The marketing articles live under Marketing Agencies; the old editorial
+# category had no articles of its own.
+/marketing-tips-insights  /marketing-agencies  301!
+/marketing-tips-insights/  /marketing-agencies  301!
