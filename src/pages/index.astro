@@ -101,30 +101,27 @@ const schema = {
 
   <section class="about" id="about">
     <div class="container">
-      <div class="about-grid">
-        <h2>What Is Sioux Falls Go?</h2>
-        <div class="about-photo-wrap">
-          <div class="shop-local-collage">
-            <img src="/images/businesses/la-luna-cafe.jpg" alt="A local Sioux Falls storefront welcoming customers" class="collage-photo collage-photo--top" />
-            <img src="/images/businesses/shahi-india-grill.jpeg" alt="A spread of dishes from a local Sioux Falls restaurant" class="collage-photo collage-photo--bottom" />
-            <div class="shop-local-badge">
-              <span class="badge-line1">Shop</span>
-              <span class="badge-line2">Local</span>
+      <div class="about-bento">
+        <div class="ab-txt">
+          <span class="ab-eyebrow">What is Sioux Falls Go</span>
+          <h2>Meet Sioux Falls Go.</h2>
+          <div class="about-copy" id="about-copy">
+            <p>Sioux Falls Go helps locals discover trusted businesses, local favorites, special offers, and giveaways, while supporting the businesses that make our community great.</p>
+            <div class="about-more">
+              <p>We hand pick trusted local businesses and introduce them to more people through spotlights, local content, offers, and giveaways. Because the best businesses in Sioux Falls are not always the ones with the biggest advertising budgets.</p>
+              <p>They are often the ones quietly doing great work, earning trust, and making an impact in our community. They should not have to compete with deep pockets just to keep doing what they do best.</p>
+              <p class="pull">When local businesses win, our community wins.</p>
+              <p>Our listings are free, but invitation only. You are not seeing who paid the most to be here. You are discovering owners who value quality, honesty, and community, and who help build our local economy.</p>
+              <p>Sioux Falls Go is building a stronger Sioux Falls, one local business at a time.</p>
             </div>
           </div>
-          <span class="about-photo-caption">Every dollar spent local stays local &mdash; that's the whole idea</span>
+          <button class="about-toggle" id="aboutToggle" aria-expanded="false">Read more</button>
         </div>
-        <div class="about-copy" id="about-copy">
-          <p>Sioux Falls Go helps locals discover trusted businesses, local favorites, special offers, and giveaways&mdash;all while supporting the businesses that make our community great.</p>
-          <p>We hand-pick trusted local businesses and introduce them to more people through business spotlights, local content, special offers, and giveaways. Because the best businesses in Sioux Falls aren&rsquo;t always the ones with the biggest advertising budgets.</p>
-          <div class="about-more">
-            <p>They&rsquo;re often the ones quietly doing great work, earning trust, supporting their customers, and making an impact in our community. They shouldn&rsquo;t have to compete with deep pockets just to keep doing what they do best.</p>
-            <p class="pull">When local businesses win, our community wins.</p>
-            <p>Our listings are free, but invitation-only. That means you&rsquo;re not seeing who paid the most to be here. You&rsquo;re discovering business owners who value quality, honesty, and community&mdash;and who are helping build our local economy.</p>
-            <p>Sioux Falls Go is building a stronger Sioux Falls, one local business at a time.</p>
-          </div>
-        </div>
-        <button class="about-toggle" id="aboutToggle" aria-expanded="false">Read more</button>
+        <div class="ab-store ab-tile"><img src="/images/businesses/la-luna-cafe.jpg" alt="A local Sioux Falls storefront welcoming customers" /></div>
+        <div class="ab-eats ab-tile"><img src="/images/businesses/shahi-india-grill.jpeg" alt="A spread of dishes from a local Sioux Falls restaurant" /></div>
+        <div class="ab-badge"><div class="shop-local-seal"><span class="badge-line1">Shop</span><span class="badge-line2">Local</span><small>Sioux Falls</small></div></div>
+        <div class="ab-stat"><div class="ab-stat-num">100%</div><p>Every dollar spent local stays local. That is the whole idea behind Sioux Falls Go.</p></div>
+        <a class="ab-cta" href="/get-featured/"><span class="ab-cta-h">Run a great local business?</span><span class="ab-cta-link">Get listed &rarr;</span></a>
       </div>
     </div>
   </section>
@@ -240,68 +237,87 @@ const schema = {
   :global(.filled-star) { fill: #F5B429; color: #F5B429; }
   .view-all { display: inline-block; margin-top: 1.8rem; font-weight: 700; color: var(--color-orange-dark); text-decoration: none; }
 
-  /* SECTION 1 — WHAT IS SIOUX FALLS GO (white, two-column with photo) */
-  .about { background: linear-gradient(180deg, #FBF3EA 0%, #fff 55%); padding-block: 5.5rem; }
-  .about-grid {
-    display: grid; max-width: 68rem; column-gap: 3.5rem; row-gap: 1.4rem;
-    grid-template-columns: 1.05fr 0.95fr;
-    grid-template-areas: "h2 photo" "copy photo" "toggle photo";
-    align-items: start;
+  /* SECTION 1 — WHAT IS SIOUX FALLS GO (light bento grid) */
+  .about { background: linear-gradient(180deg, #FBF3EA 0%, #fff 60%); padding-block: 5.5rem; }
+  .about-bento {
+    display: grid; max-width: 68rem; margin: 0 auto; gap: 1rem;
+    grid-template-columns: 1.25fr 1fr 0.9fr 0.9fr;
+    grid-template-areas:
+      "txt txt store eats"
+      "txt txt store badge"
+      "stat stat stat cta";
   }
-  .about-grid h2 { grid-area: h2; }
-  .about-photo-wrap { grid-area: photo; align-self: center; }
-  .about-copy { grid-area: copy; }
-  .about-toggle { grid-area: toggle; }
+  .about-bento > * { border-radius: 18px; }
 
-  @media (max-width: 60rem) {
-    .about-grid {
-      grid-template-columns: 1fr;
-      grid-template-areas: "h2" "photo" "copy" "toggle";
-      row-gap: 1.6rem;
-    }
+  .ab-txt { grid-area: txt; background: #fff; border: 1px solid var(--color-line); padding: 2.2rem; }
+  .ab-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.8125rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-orange);
   }
-
-  .about h2 { font-size: 2.1rem; max-width: 14ch; margin-bottom: 0; color: var(--color-navy); }
-  .about-copy p { font-size: 1.0625rem; line-height: 1.72; color: var(--color-navy-light); max-width: 60ch; margin: 0 0 1.1rem; }
+  .ab-eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--color-orange); border-radius: 2px; }
+  .ab-txt h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+    line-height: 1.05; letter-spacing: -0.02em; color: var(--color-navy); margin: 0.9rem 0; max-width: 14ch;
+  }
+  .about-copy p { font-size: 1.0625rem; line-height: 1.7; color: var(--color-navy-light); margin: 0 0 1rem; }
   .about-copy .pull {
-    font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; line-height: 1.4; color: var(--color-navy);
-    border-left: 3px solid var(--color-orange); padding-left: 1.2rem; margin: 1.6rem 0; max-width: 38ch;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; line-height: 1.4; color: var(--color-navy);
+    border-left: 3px solid var(--color-orange); padding-left: 1.1rem; margin: 1.4rem 0;
   }
-  .about-toggle { display: none; }
+  .about-more { display: none; }
+  .about-copy.is-expanded .about-more { display: block; }
+  .about-toggle {
+    margin-top: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; color: #fff;
+    background: var(--color-orange); border: none; border-radius: var(--radius-pill);
+    padding: 0.8rem 1.5rem; cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .about-toggle:hover { background: var(--color-orange-dark); transform: translateY(-2px); }
 
-  .shop-local-collage { position: relative; }
-  .collage-photo {
-    width: 88%; object-fit: cover; border-radius: 1rem; display: block;
-    box-shadow: 0 20px 40px rgba(13,23,48,0.18); border: 5px solid #fff;
+  .ab-tile { position: relative; overflow: hidden; min-height: 150px; }
+  .ab-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ab-store { grid-area: store; min-height: 240px; }
+  .ab-eats { grid-area: eats; }
+
+  .ab-badge { grid-area: badge; background: var(--color-navy); display: flex; align-items: center; justify-content: center; padding: 1.2rem; }
+  .shop-local-seal {
+    width: 7rem; height: 7rem; border-radius: 50%; background: var(--color-orange); color: #fff;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    box-shadow: 0 12px 30px rgba(240,126,35,0.45); transform: rotate(-6deg);
   }
-  .collage-photo--top { aspect-ratio: 5/4; position: relative; z-index: 1; }
-  .collage-photo--bottom { aspect-ratio: 5/4; margin: -3rem 0 0 auto; position: relative; z-index: 2; }
-  .shop-local-badge {
-    position: absolute; top: -1.2rem; left: -1.2rem; z-index: 3;
-    width: 6.5rem; height: 6.5rem; border-radius: 50%; background: var(--color-orange);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    color: #fff; box-shadow: 0 12px 26px rgba(240,126,35,0.4); transform: rotate(-8deg);
-  }
-  .badge-line1, .badge-line2 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; line-height: 1.15; }
-  .about-photo-caption {
-    display: block; font-size: 0.8125rem; color: var(--color-navy-light); text-align: center;
-    margin-top: 2.2rem; font-style: italic;
-  }
+  .badge-line1, .badge-line2 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; line-height: 1.05; }
+  .shop-local-seal small { font-family: var(--font-display); font-weight: 600; font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.9; margin-top: 0.25rem; }
+
+  .ab-stat { grid-area: stat; background: #FBEAD6; border: 1px solid var(--color-line); display: flex; align-items: center; gap: 1.4rem; padding: 1.6rem 2rem; }
+  .ab-stat-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1; color: var(--color-orange); }
+  .ab-stat p { margin: 0; color: var(--color-navy-light); font-size: 0.98rem; line-height: 1.5; }
+
+  .ab-cta { grid-area: cta; background: var(--color-navy); color: #fff; display: flex; flex-direction: column; justify-content: center; gap: 0.6rem; padding: 1.4rem 1.6rem; text-decoration: none; transition: transform 0.15s; }
+  .ab-cta:hover { transform: translateY(-2px); }
+  .ab-cta-h { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: #fff; line-height: 1.25; }
+  .ab-cta-link { font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; color: var(--color-gold); display: inline-flex; align-items: center; gap: 0.4rem; }
+
   @media (max-width: 60rem) {
-    .collage-photo { width: 78%; }
-    .collage-photo--bottom { margin-top: -2.2rem; }
-    .shop-local-badge { width: 5.5rem; height: 5.5rem; }
-    .badge-line1, .badge-line2 { font-size: 1rem; }
-  }
-
-  @media (max-width: 45rem) {
-    .about { padding-block: 3rem; }
-    .about-more { display: none; }
-    .about-copy.is-expanded .about-more { display: block; }
-    .about-toggle {
-      display: inline-block; margin-top: 0.2rem; background: none; border: none;
-      font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; color: var(--color-orange-dark); cursor: pointer; padding: 0.4rem 0;
+    .about-bento {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "txt txt"
+        "store eats"
+        "badge badge"
+        "stat stat"
+        "cta cta";
     }
+    .ab-store { min-height: 200px; }
+  }
+  @media (max-width: 45rem) {
+    .about { padding-block: 3.2rem; }
+    .about-bento {
+      grid-template-columns: 1fr;
+      grid-template-areas: "txt" "store" "eats" "badge" "stat" "cta";
+    }
+    .ab-txt { padding: 1.6rem; }
+    .ab-tile { min-height: 180px; }
   }
 
   /* SECTION 5 — GET FEATURED (separate section, muted photo treatment, not a solid orange wash) */
