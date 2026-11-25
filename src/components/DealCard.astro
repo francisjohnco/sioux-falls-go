@@ -10,6 +10,7 @@ interface Props {
   title: string;
   description?: string;
   expiresAt?: Date;
+  startsAt?: Date; // a deal that has not started yet reads "Starts Nov 27"
   isMailerExclusive?: boolean;
   href?: string;
 }
@@ -23,13 +24,17 @@ const {
   title,
   description,
   expiresAt,
+  startsAt,
   isMailerExclusive = false,
   href,
 } = Astro.props;
 
 const link = href ?? `/businesses/${businessSlug}`;
 const isUrgent = Boolean(expiresAt);
-const expiryLabel = expiresAt
+const fmtDay = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' });
+const expiryLabel = startsAt
+  ? `Starts ${fmtDay(startsAt)}${expiresAt ? `, ends ${fmtDay(expiresAt)}` : ''}`
+  : expiresAt
   ? `Ends ${expiresAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', timeZone: 'UTC' })}`
   : 'No expiration';
 ---

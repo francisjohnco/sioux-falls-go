@@ -62,7 +62,12 @@ const activeDeals = businessDeals.filter(
     (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= todayCentral())
 );
 const mailerDeal = activeDeals.find((d) => d.data.mailerCampaign) ?? null;
-const regularDeals = activeDeals.filter((d) => !d.data.mailerCampaign);
+// Regular specials also show before they start (a Black Friday deal posted a
+// week early reads "Starts Nov 27"), so customers can plan for them.
+const notStarted = (d: (typeof businessDeals)[number]) => !!d.data.activatesAt && d.data.activatesAt.toISOString().slice(0, 10) > todayCentral();
+const regularDeals = businessDeals
+  .filter((d) => !d.data.mailerCampaign && (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= todayCentral()))
+  .sort((a, b) => Number(notStarted(a)) - Number(notStarted(b)));
 
 // "Verified" = we've confirmed this business's info recently — distinct from partnership tier
 const isVerified = !!business.data.verifiedAt;
@@ -294,6 +299,7 @@ const schema = {
                   title={deal.data.title}
                   description={deal.data.description}
                   expiresAt={deal.data.expiresAt}
+                  startsAt={notStarted(deal) ? deal.data.activatesAt : undefined}
                   href={`/local-deals/${deal.id}/`}
                 />
               ))}
