@@ -5,14 +5,14 @@ interface Occurrence { date: string; endDate?: string; time?: string }
 interface AdminEvent {
   id: string; title: string; description: string; category: string;
   occurrences: Occurrence[]; location: string; photo: string;
-  sourceName: string; sourceUrl: string; note?: string;
+  sourceName: string; sourceUrl: string; note?: string; businesses?: string[];
   nextLabel: string; isPast: boolean; remaining: number;
 }
-interface Props { events: AdminEvent[] }
-const { events } = Astro.props;
+interface Props { events: AdminEvent[]; businesses?: { slug: string; name: string }[] }
+const { events, businesses = [] } = Astro.props;
 const upcoming = events.filter((e) => !e.isPast);
 const past = events.filter((e) => e.isPast);
-const photos = ['downtown-1', 'downtown-2', 'falls-park-1', 'falls-park-2', 'falls-park-aerial', 'falls-park-editorial', 'falls-park-golden', 'levitt-concert-center', 'mckennan-park'];
+const photos = ['downtown-1', 'downtown-2', 'falls-park-1', 'falls-park-2', 'falls-park-aerial', 'falls-park-editorial', 'falls-park-golden', 'levitt-concert-center'];
 const categories = [['family', 'Family'], ['downtown', 'Downtown'], ['music', 'Live music'], ['sports', 'Sports'], ['market', 'Market']];
 const catLabel = Object.fromEntries(categories);
 ---
@@ -85,6 +85,11 @@ const catLabel = Object.fromEntries(categories);
           <label>Source link <input type="url" id="ev-src-url" placeholder="https://" /></label>
         </div>
         <label>Extra note (optional) <input type="text" id="ev-note" placeholder="Tickets, or check the page for the start time" /></label>
+        <label>Hosted by a listed business (optional)
+          <input type="text" id="ev-biz" list="ev-biz-list" placeholder="Start typing a business name" />
+        </label>
+        <p class="ev-help">The event also shows on that business's listing, under an Events tab. Add more than one by separating names with a comma.</p>
+        <datalist id="ev-biz-list">{businesses.map((b) => <option value={b.name} data-slug={b.slug} />)}</datalist>
         <p class="ev-status" id="ev-status" hidden></p>
       </div>
       <div class="ev-modal-foot">
@@ -155,6 +160,9 @@ const catLabel = Object.fromEntries(categories);
   const $ = (id: string) => document.getElementById(id) as any;
   const backdrop = $('ev-backdrop');
   const status = $('ev-status');
+  const bizOptions = [...document.querySelectorAll<HTMLOptionElement>('#ev-biz-list option')];
+  const bizBySlug = new Map(bizOptions.map((o) => [o.dataset.slug!, o.value]));
+  const bizByName = new Map(bizOptions.map((o) => [o.value.toLowerCase(), o.dataset.slug!]));
   let editingId: string | null = null;
   let acceptingSuggestion: string | null = null;
 
@@ -189,6 +197,7 @@ const catLabel = Object.fromEntries(categories);
     $('ev-src-name').value = ev?.sourceName ?? '';
     $('ev-src-url').value = ev?.sourceUrl ?? '';
     $('ev-note').value = ev?.note ?? '';
+    $('ev-biz').value = (ev?.businesses ?? []).map((slug: string) => bizBySlug.get(slug) ?? slug).join(', ');
     $('ev-delete').hidden = !editingId;
     status.hidden = true;
     backdrop.classList.add('is-open');
@@ -217,7 +226,10 @@ const catLabel = Object.fromEntries(categories);
       title: $('ev-title').value, description: $('ev-desc').value, category: $('ev-cat').value, occurrences,
       location: $('ev-loc').value, photo: $('ev-photo').value, sourceName: $('ev-src-name').value,
       sourceUrl: $('ev-src-url').value, note: $('ev-note').value,
+      businesses: $('ev-biz').value.split(',').map((n: string) => n.trim()).filter(Boolean).map((n: string) => bizByName.get(n.toLowerCase()) ?? n),
     };
+    const unknown = event.businesses.filter((b: string) => !bizBySlug.has(b));
+    if (unknown.length) return say(`Not a listed business: ${unknown.join(', ')}. Pick from the list.`, true);
     $('ev-save').disabled = true;
     try {
       await post('/api/manage-event', { action: 'save', ...(editingId ? { id: editingId } : {}), event });

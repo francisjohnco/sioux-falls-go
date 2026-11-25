@@ -15,6 +15,8 @@ export interface UpcomingEvent {
   sourceName: string;
   sourceUrl: string;
   remaining: number; // how many dates are left, counting this one
+  time?: string; // the next date's time phrase, e.g. "Open 4 to 8 PM"
+  businesses: string[]; // listed businesses hosting or taking part
 }
 
 const atNoon = (key: string) => new Date(`${key}T12:00:00Z`);
@@ -64,6 +66,8 @@ export async function getUpcomingEvents(): Promise<UpcomingEvent[]> {
       sourceName: e.data.sourceName,
       sourceUrl: e.data.sourceUrl,
       remaining,
+      time: next.time,
+      businesses: (e.data.businesses || []).map((b) => b.id),
     });
   }
 

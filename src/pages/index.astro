@@ -42,6 +42,21 @@ const spotlightWithCat = await Promise.all(
   }))
 );
 
+// Hero wall: real photos of real listed businesses (their own photos, not stock).
+const ownPhoto = (src?: string) => !!src && !/images\.(unsplash|pexels)\.com/.test(src);
+const wallBusinesses = businesses
+  .filter((b) => ownPhoto(b.data.heroImage) && !/logo/i.test(b.data.heroImage!) && !/mckennan|\/images\/scenic\//i.test(`${b.id} ${b.data.heroImage}`))
+  .sort((a, b) => a.data.name.localeCompare(b.data.name))
+  .map((b) => ({ name: b.data.name, img: b.data.heroImage! }));
+const wallRows = [0, 1, 2].map((r) => {
+  const row = wallBusinesses.filter((_, i) => i % 3 === r);
+  return [...row, ...row]; // doubled so the drift loops without a gap
+});
+// Live "open right now" card: every listing with real hours.
+const openNowData = businesses
+  .filter((b) => b.data.hoursSchedule)
+  .map((b) => ({ name: b.data.name, slug: b.id, img: ownPhoto(b.data.heroImage) ? b.data.heroImage : (b.data.heroImage || ''), hours: b.data.hoursSchedule }));
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
@@ -57,25 +72,37 @@ const schema = {
 >
   <SiteHeader slot="header" />
 
-  <section class="hero">
-    <div class="hero-photo"></div>
-    <div class="hero-flow hero-flow--water" aria-hidden="true"><span></span></div>
-    <div class="hero-flow hero-flow--drops" aria-hidden="true"><span></span></div>
-    <div class="hero-gradient"></div>
-    <div class="hero-gradient-bottom"></div>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wall" aria-hidden="true">
+      {wallRows.map((row, r) => (
+        <div class={`wall-row wall-row--${r}`}>
+          {row.map((w) => (
+            <div class="wall-tile"><img src={w.img} alt="" loading={r === 0 ? 'eager' : 'lazy'} decoding="async" /><span>{w.name}</span></div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="wall-veil"></div>
     <div class="container hero-inner">
-      <span class="hero-eyebrow-text">Locals&rsquo; Favorite Places</span>
-      <h1>Explore and Experience Sioux Falls Like a Local</h1>
-      <p class="hero-sub">Discover hidden gems, support local businesses, and find more reasons to love Sioux Falls. A hand-picked guide to the places locals know and love.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="/businesses">Explore Sioux Falls</a>
-        <a class="btn-secondary" href="/get-featured">Get Featured</a>
+      <div class="hero-copy">
+        <p class="hero-brand">Sioux Falls Go</p>
+        <h1 id="hero-title">The places that make ordinary days better.</h1>
+        <p class="hero-sub">Local favorites, real offers, and the businesses that quietly hold this city together. Invited in, never paid to rank.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="/businesses">Discover them</a>
+          <a class="btn-secondary" href="/get-featured">Get featured</a>
+        </div>
       </div>
+      <aside class="now-card" id="now-card" aria-live="polite">
+        <div class="now-head">
+          <p><strong id="now-day">Sioux Falls today</strong><span id="now-sky">Local weather</span></p>
+          <p class="now-temp"><span id="now-temp">&nbsp;</span><small id="now-time"></small></p>
+        </div>
+        <p class="now-count" id="now-count">Checking who is open</p>
+        <div id="now-list"></div>
+      </aside>
     </div>
-    <div class="scroll-cue">
-      Explore Sioux Falls
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
+    <script type="application/json" id="open-now-data" set:html={JSON.stringify(openNowData)}></script>
   </section>
 
   {showBlackFriday && (
@@ -175,105 +202,56 @@ const schema = {
   .section h2 { font-size: 1.9rem; margin-top: 0.3rem; }
   .eyebrow { display: block; }
 
-  /* HERO — exact port of the approved editorial hero mockup */
-  .hero { position: relative; min-height: 40rem; display: flex; align-items: center; overflow: hidden; }
-  .hero-photo {
-    position: absolute; inset: 0;
-    background: url('/images/scenic/falls-park-aerial.jpg') center 38%/cover;
-  }
-  /* Moving water, done the way real cinemagraphs do it: the photo stays
-     perfectly still and only the water moves. Two masks are cut from this
-     exact photo. The water mask covers every bright, neutral area in the band
-     where the river is, minus small patches like white shirts and lamp globes,
-     and gets a slow, soft shimmer. The drops mask covers only the places where
-     water actually falls, and gets fast streaks pouring downward. The masks sit
-     on still wrappers while the textures slide inside them, so the motion never
-     leaks onto rocks, trees, or people. Transforms only, so it stays smooth on
-     phones. */
-  .hero-flow {
-    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-    -webkit-mask-size: cover; mask-size: cover;
-    -webkit-mask-position: center 38%; mask-position: center 38%;
-    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  }
-  .hero-flow--water {
-    -webkit-mask-image: url('/images/scenic/falls-park-aerial-water-mask.png');
-    mask-image: url('/images/scenic/falls-park-aerial-water-mask.png');
-  }
-  .hero-flow--drops {
-    -webkit-mask-image: url('/images/scenic/falls-park-aerial-drops-mask.png');
-    mask-image: url('/images/scenic/falls-park-aerial-drops-mask.png');
-  }
-  .hero-flow span { position: absolute; left: 0; right: 0; bottom: 0; will-change: transform; }
-  .hero-flow--water span {
-    top: -384px;
-    background: url('/images/scenic/water-shimmer.webp') repeat;
-    background-size: 384px 384px;
-    opacity: 0.3;
-    animation: heroFlowSlow 9s linear infinite;
-  }
-  .hero-flow--drops span {
-    top: -512px;
-    background: url('/images/scenic/water-streaks.webp') repeat;
-    background-size: 256px 512px;
-    opacity: 0.6;
-    animation: heroFlowFast 2.6s linear infinite;
-  }
-  @keyframes heroFlowFast { to { transform: translateY(512px); } }
-  @keyframes heroFlowSlow { to { transform: translateY(384px); } }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-flow { display: none; }
-  }
-  /* Directional gradient — dark blue behind the text, progressively clearer toward the photo.
-     Uses the brand navy so the tint reads intentional, with strong opacity for contrast. */
-  .hero-gradient {
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg,
-      rgba(8,14,28,0.97) 0%,
-      rgba(10,17,33,0.92) 32%,
-      rgba(13,21,40,0.75) 58%,
-      rgba(15,24,44,0.38) 80%,
-      rgba(15,24,44,0.12) 100%);
-  }
-  .hero-gradient-bottom {
-    position: absolute; inset: 0;
-    background: linear-gradient(0deg, rgba(6,11,22,0.65) 0%, transparent 30%);
-  }
-  .hero-inner { position: relative; z-index: 3; width: 100%; }
-  .hero-eyebrow-text { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.75); margin-bottom: 1.375rem; text-transform: uppercase; }
-  .hero h1 { font-family: var(--font-display); font-weight: 700; font-size: 3.25rem; line-height: 1.12; color: #fff; margin: 0 0 1.5rem; letter-spacing: -0.01em; max-width: 16ch; }
-  .hero-sub { font-size: 1.0625rem; line-height: 1.6; color: rgba(255,255,255,0.82); max-width: 30rem; margin: 0 0 2.5rem; font-weight: 400; }
-  .hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-block; background: #fff; color: #101826; font-weight: 600; font-size: 0.906rem;
-    padding: 0.9375rem 2rem; border-radius: 4px; text-decoration: none; letter-spacing: 0.01em;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-  .btn-secondary {
-    display: inline-block; background: transparent; color: #fff; font-weight: 600; font-size: 0.906rem;
-    padding: 0.875rem 1.875rem; border-radius: 4px; text-decoration: none; letter-spacing: 0.01em;
-    border: 1.5px solid rgba(255,255,255,0.55); transition: border-color 0.18s ease, background 0.18s ease;
-  }
-  .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
-  .scroll-cue {
-    position: absolute; left: 4rem; bottom: 2rem; z-index: 3;
-    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.5);
-    text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem;
-  }
-  .scroll-cue svg { animation: heroNudge 2s ease-in-out infinite; }
-  @keyframes heroNudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-  @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+  /* HERO: a slowly drifting wall of real listed businesses behind the
+     headline, with a live card for the weather and who is open right now. */
+  .hero { position: relative; min-height: 41rem; display: flex; align-items: center; overflow: hidden; background: #0E1626; color: #fff; }
+  .wall { position: absolute; inset: -3rem -12%; display: grid; grid-template-rows: repeat(3, 1fr); gap: 0.75rem; transform: rotate(-4deg); }
+  .wall-row { display: flex; gap: 0.75rem; width: max-content; animation: wallDrift 140s linear infinite; }
+  .wall-row--1 { animation-direction: reverse; animation-duration: 170s; margin-left: -11rem; }
+  .wall-row--2 { animation-duration: 155s; }
+  @keyframes wallDrift { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .wall-row { animation: none; } }
+  .wall-tile { position: relative; flex: 0 0 18.5rem; height: 100%; min-height: 12rem; border-radius: 0.9rem; overflow: hidden; background: #1B2A4A; }
+  .wall-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .wall-tile span { position: absolute; left: 0.6rem; bottom: 0.6rem; font-size: 0.75rem; font-weight: 600; background: rgba(14,22,38,0.72); padding: 0.25rem 0.6rem; border-radius: 999px; }
+  .wall-veil { position: absolute; inset: 0; background: radial-gradient(ellipse at 28% 55%, rgba(14,22,38,0.94) 0%, rgba(14,22,38,0.8) 45%, rgba(14,22,38,0.35) 100%); }
+  .hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 3.5rem; align-items: center; padding-top: 5rem; padding-bottom: 5rem; }
+  .hero-brand { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: #FF9A4D; margin: 0 0 1rem; letter-spacing: -0.01em; }
+  .hero h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 5.2vw, 4.9rem); line-height: 1.02; letter-spacing: -0.035em; color: #fff; margin: 0 0 1.4rem; max-width: 14ch; }
+  .hero-sub { font-size: 1.15rem; line-height: 1.6; color: rgba(255,255,255,0.84); max-width: 31rem; margin: 0 0 2rem; }
+  .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary { display: inline-block; font-weight: 600; font-size: 0.95rem; padding: 0.95rem 1.6rem; border-radius: 999px; text-decoration: none; }
+  .btn-primary { background: var(--color-orange); color: #fff; }
+  .btn-primary:hover { background: #E06F15; }
+  .btn-secondary { color: #fff; border: 1.5px solid rgba(255,255,255,0.5); }
+  .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+  .btn-primary:focus-visible, .btn-secondary:focus-visible { outline: 3px solid #FF9A4D; outline-offset: 3px; }
 
-  @media (max-width: 780px) {
-    .hero { min-height: 35rem; align-items: flex-end; }
-    .hero-gradient { background: linear-gradient(0deg, rgba(6,11,22,0.97) 0%, rgba(8,14,28,0.8) 45%, rgba(10,17,33,0.42) 75%, rgba(10,17,33,0.1) 100%); }
-    .hero-inner { padding-bottom: 3.5rem; }
-    .hero h1 { font-size: 2rem; }
-    .hero-sub { font-size: 0.9375rem; max-width: 100%; margin-bottom: 2rem; }
-    .hero-actions { flex-direction: column; align-items: stretch; }
+  .now-card { background: #fff; color: var(--color-navy); border-radius: 1.25rem; padding: 1.4rem 1.5rem 0.9rem; box-shadow: 0 24px 50px rgba(0,0,0,0.35); }
+  .now-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.9rem; }
+  .now-head p { margin: 0; }
+  .now-head strong { display: block; font-family: var(--font-display); font-size: 1.3rem; }
+  .now-head span { color: var(--color-navy-light); font-size: 0.9rem; }
+  .now-temp { text-align: right; }
+  .now-temp span { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2.7rem; line-height: 1; letter-spacing: -0.04em; color: var(--color-navy); }
+  .now-temp small { font-size: 0.78rem; color: var(--color-navy-light); }
+  .now-count { margin: 0; padding: 0.8rem 0; border-top: 1px solid var(--color-line); font-weight: 600; font-size: 0.95rem; }
+  .now-count b { color: #13865E; }
+  :global(.now-biz) { display: grid; grid-template-columns: 3.1rem 1fr; gap: 0.75rem; align-items: center; padding: 0.6rem 0; border-top: 1px solid #EEF1F5; text-decoration: none; color: var(--color-navy); }
+  :global(.now-biz img) { width: 3.1rem; height: 3.1rem; border-radius: 0.6rem; object-fit: cover; background: #E8EDF4; }
+  :global(.now-biz strong) { display: block; font-size: 0.95rem; }
+  :global(.now-biz span) { font-size: 0.82rem; font-weight: 600; color: #13865E; }
+  :global(.now-biz span.is-later) { color: var(--color-navy-light); }
+  :global(.now-biz:hover strong) { color: var(--color-orange-dark); }
+
+  @media (max-width: 860px) {
+    .hero { min-height: 0; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2.2rem; padding-top: 3.2rem; padding-bottom: 3rem; }
+    .wall-tile { flex-basis: 12rem; }
+    .hero h1 { font-size: 2.55rem; }
+    .hero-sub { font-size: 1rem; }
+    .hero-actions { flex-direction: column; }
     .btn-primary, .btn-secondary { text-align: center; }
-    .scroll-cue { display: none; }
   }
 
   /* SPOTLIGHT */
@@ -394,6 +372,54 @@ const schema = {
 </style>
 
 <script>
+  // Live card: Sioux Falls weather and which listed businesses are open now,
+  // both read on the visitor's visit, always in Sioux Falls time.
+  (() => {
+    const tz = 'America/Chicago';
+    const now = new Date();
+    const part = (o: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat('en-US', { timeZone: tz, ...o }).format(now);
+    const hour = Number(part({ hour: 'numeric', hourCycle: 'h23' }));
+    const dayName = part({ weekday: 'long' });
+    const slot = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
+    const set = (id: string, v: string) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+    set('now-day', `${dayName} ${slot}`);
+    set('now-time', part({ hour: 'numeric', minute: '2-digit' }));
+
+    fetch('/api/weather').then((r) => (r.ok ? r.json() : null)).then((w) => {
+      if (!w || typeof w.tempF !== 'number') { set('now-sky', 'In Sioux Falls'); return; }
+      set('now-temp', `${w.tempF}°`);
+      set('now-sky', w.sky ? `${w.sky} in Sioux Falls` : 'In Sioux Falls');
+    }).catch(() => set('now-sky', 'In Sioux Falls'));
+
+    const data: { name: string; slug: string; img: string; hours: Record<string, string> }[] = JSON.parse(document.getElementById('open-now-data')?.textContent || '[]');
+    const keys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    const dayIdx = keys.indexOf(part({ weekday: 'short' }).toLowerCase().slice(0, 3));
+    const mins = hour * 60 + Number(part({ minute: '2-digit' }));
+    const toMin = (t: string) => { const m = t.trim().match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i); if (!m) return null; let h = Number(m[1]) % 12; if (/pm/i.test(m[3])) h += 12; return h * 60 + Number(m[2]); };
+    const span = (str?: string) => { if (!str || /closed/i.test(str)) return null; const [a, b] = str.split(/\s*[-\u2013]\s*/); const o = toMin(a || ''), c = toMin(b || ''); return o == null || c == null ? null : { o, c, close: (b || '').trim(), open: (a || '').trim() }; };
+    const open: { b: typeof data[number]; label: string; until: number }[] = [];
+    const later: { b: typeof data[number]; label: string; at: number }[] = [];
+    for (const b of data) {
+      const t = span(b.hours?.[keys[dayIdx]]);
+      if (t && mins >= t.o && mins < t.c) open.push({ b, label: `Open until ${t.close}`, until: t.c });
+      else if (t && mins < t.o) later.push({ b, label: `Opens at ${t.open}`, at: t.o });
+    }
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c] as string));
+    const row = (b: typeof data[number], label: string, isLater = false) => `<a class="now-biz" href="/businesses/${b.slug}/"><img src="${esc(b.img || '')}" alt="" loading="lazy" onerror="this.removeAttribute('src')"><p><strong>${esc(b.name)}</strong><span class="${isLater ? 'is-later' : ''}">${esc(label)}</span></p></a>`;
+    const count = document.getElementById('now-count')!;
+    const list = document.getElementById('now-list')!;
+    if (open.length) {
+      count.innerHTML = `<b>${open.length} local favorite${open.length === 1 ? '' : 's'}</b> ${open.length === 1 ? 'is' : 'are'} open right now`;
+      list.innerHTML = open.sort((x, y) => y.until - x.until).slice(0, 3).map((x) => row(x.b, x.label)).join('');
+    } else if (later.length) {
+      count.innerHTML = 'Opening soon';
+      list.innerHTML = later.sort((x, y) => x.at - y.at).slice(0, 3).map((x) => row(x.b, x.label, true)).join('');
+    } else {
+      count.innerHTML = 'Most places are closed for the night';
+      list.innerHTML = '<a class="now-biz" href="/businesses"><img alt=""><p><strong>Browse every local favorite</strong><span class="is-later">Plan for tomorrow</span></p></a>';
+    }
+  })();
+
   const aboutToggle = document.getElementById('aboutToggle');
   const aboutCopy = document.getElementById('about-copy');
   aboutToggle?.addEventListener('click', () => {

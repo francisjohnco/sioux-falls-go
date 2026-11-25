@@ -251,6 +251,9 @@ const events = defineCollection({
     sourceName: z.string(),
     sourceUrl: z.string().url(),
     note: z.string().optional(), // one short extra sentence, e.g. tickets or "check the page for the start time"
+    // Listed businesses hosting or taking part. The event then shows on their
+    // listing's Events tab.
+    businesses: z.array(reference('businesses')).default([]),
   }),
 });
 

@@ -2,6 +2,7 @@
 import { weaveStory } from '../../lib/story';
 import { googleProfileUrl, linkFirstMention } from '../../lib/google-profile';
 import { todayCentral as todayCentral } from '../../lib/dates';
+import { getUpcomingEvents } from '../../lib/events';
 import { getCollection, getEntry, render } from 'astro:content';
 import { getLiveArticles } from '../../lib/articles';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -68,6 +69,22 @@ const notStarted = (d: (typeof businessDeals)[number]) => !!d.data.activatesAt &
 const regularDeals = businessDeals
   .filter((d) => !d.data.mailerCampaign && (!d.data.expiresAt || d.data.expiresAt.toISOString().slice(0, 10) >= todayCentral()))
   .sort((a, b) => Number(notStarted(a)) - Number(notStarted(b)));
+
+// Events this business hosts or takes part in. The tab only appears when
+// there is at least one coming up.
+const businessEvents = (await getUpcomingEvents()).filter((e) => e.businesses.includes(business.id));
+const evMonth = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+const evDay = (d: Date) => d.toLocaleDateString('en-US', { day: '2-digit', timeZone: 'UTC' });
+// A one-file calendar entry (all-day) the visitor's phone or computer can open.
+function icsFor(e: (typeof businessEvents)[number]): string {
+  const d = (x: Date) => x.toISOString().slice(0, 10).replace(/-/g, '');
+  const endExclusive = new Date((e.endDate ?? e.date).getTime() + 86400000);
+  const esc = (t: string) => t.replace(/[\\,;]/g, (c) => `\\${c}`).replace(/\n/g, ' ');
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Sioux Falls Go//Events//EN', 'BEGIN:VEVENT',
+    `UID:${e.id}-${d(e.date)}@siouxfallsgo.com`, `DTSTAMP:${d(new Date())}T000000Z`, `DTSTART;VALUE=DATE:${d(e.date)}`, `DTEND;VALUE=DATE:${d(endExclusive)}`,
+    `SUMMARY:${esc(e.title)}`, `LOCATION:${esc(e.location)}`, `DESCRIPTION:${esc(e.description)}`, 'END:VEVENT', 'END:VCALENDAR'];
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(lines.join('\r\n'))}`;
+}
 
 // "Verified" = we've confirmed this business's info recently — distinct from partnership tier
 const isVerified = !!business.data.verifiedAt;
@@ -226,6 +243,7 @@ const schema = {
       <button class="tab is-active" data-tab="story" role="tab">Story</button>
       <button class="tab" data-tab="photos" role="tab">Photos</button>
       <button class="tab" data-tab="specials" role="tab">Specials</button>
+      {businessEvents.length > 0 && <button class="tab" data-tab="events" role="tab">Events <span class="tab-count">{businessEvents.length}</span></button>}
       {mailerDeal && <button class="tab tab--postcard" data-tab="postcard" role="tab"><Icon name="mail" size={13} /> Postcard Offer</button>}
     </div>
 
@@ -308,6 +326,23 @@ const schema = {
             <p class="empty-note">No active specials right now.</p>
           )}
         </div>
+
+        {businessEvents.length > 0 && (
+          <div class="tab-panel" data-panel="events">
+            <h2 class="biz-events-h">Upcoming at {business.data.name}</h2>
+            {businessEvents.map((e) => (
+              <div class="biz-event">
+                <p class="biz-event-cal">{evMonth(e.date)}<b>{evDay(e.date)}</b></p>
+                <div>
+                  <strong>{e.title}</strong>
+                  <span>{e.description}</span>
+                  <span class="biz-event-where">{e.location}</span>
+                </div>
+                <a class="biz-event-btn" href={icsFor(e)} download={`${e.id}.ics`}>Add to calendar</a>
+              </div>
+            ))}
+          </div>
+        )}
 
         {mailerDeal && (
           <div class="tab-panel" data-panel="postcard">
@@ -551,6 +586,21 @@ const schema = {
 </BaseLayout>
 
 <style>
+  .tab-count { display: inline-block; background: var(--color-orange); color: #fff; font-size: 0.7rem; font-weight: 700; border-radius: 999px; padding: 0.05rem 0.45rem; margin-left: 0.3rem; vertical-align: 1px; }
+  .biz-events-h { font-family: var(--font-display); font-size: 1.25rem; margin: 0 0 0.9rem; color: var(--color-navy); }
+  .biz-event { display: grid; grid-template-columns: 4.6rem 1fr auto; gap: 1.1rem; align-items: center; background: #fff; border: 1px solid var(--color-line); border-radius: 0.9rem; padding: 1rem 1.1rem; margin-bottom: 0.75rem; }
+  .biz-event-cal { margin: 0; text-align: center; border-radius: 0.6rem; background: #FDEBDD; color: #B4530B; padding: 0.45rem 0; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+  .biz-event-cal b { display: block; font-family: var(--font-display); font-size: 1.7rem; line-height: 1; color: var(--color-navy); margin-top: 0.1rem; }
+  .biz-event strong { display: block; font-size: 1.05rem; color: var(--color-navy); margin-bottom: 0.2rem; }
+  .biz-event span { display: block; font-size: 0.9rem; color: var(--color-navy-light); line-height: 1.45; }
+  .biz-event-where { margin-top: 0.2rem; font-weight: 600; }
+  .biz-event-btn { font-weight: 600; font-size: 0.875rem; color: #fff; background: var(--color-navy); padding: 0.6rem 1rem; border-radius: 999px; text-decoration: none; white-space: nowrap; }
+  .biz-event-btn:hover { background: var(--color-orange-dark); }
+  @media (max-width: 40rem) {
+    .biz-event { grid-template-columns: 3.8rem 1fr; }
+    .biz-event-btn { grid-column: 1 / -1; text-align: center; }
+  }
+
   .page { padding-block: var(--space-4) var(--space-6); }
   .breadcrumbs { font-size: 0.8125rem; color: var(--color-navy-light); margin-bottom: var(--space-2); }
   .breadcrumbs a { color: var(--color-navy-light); }

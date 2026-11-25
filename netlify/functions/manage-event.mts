@@ -47,6 +47,8 @@ function cleanEvent(ev: any) {
     sourceUrl: ev.sourceUrl.trim(),
   };
   if (ev.note && String(ev.note).trim()) out.note = String(ev.note).trim();
+  const biz = Array.isArray(ev.businesses) ? [...new Set(ev.businesses.map(String).filter((b: string) => /^[a-z0-9-]+$/.test(b)))].slice(0, 10) : [];
+  if (biz.length) out.businesses = biz;
   return out;
 }
 
