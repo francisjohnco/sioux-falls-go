@@ -58,5 +58,12 @@
       "a": "Sometimes, if the ground can be dug and set. Ask how they handle frozen soil and whether posts will be set properly before snow."
     }
   ],
-  "contentUpdatedAt": "2026-11-25"
+  "contentUpdatedAt": "2026-11-25",
+  "heroImage": "https://images.pexels.com/photos/6510941/pexels-photo-6510941.jpeg",
+  "heroImageAlt": "A fenced suburban backyard with wooden privacy fencing surrounding a yard, with neighborhood homes visible beyond.",
+  "heroImageCredit": {
+    "photographer": "Curtis Adams",
+    "profileUrl": "https://www.pexels.com/@curtis-adams-1694007",
+    "source": "Pexels"
+  }
 }

@@ -58,5 +58,12 @@
       "a": "Yes. The City reports hard water, which leaves scale on faucets, sinks and dishwashers. Choose finishes that wipe clean and ask a plumber about a softener."
     }
   ],
-  "contentUpdatedAt": "2026-11-25"
+  "contentUpdatedAt": "2026-11-25",
+  "heroImage": "https://images.pexels.com/photos/5502254/pexels-photo-5502254.jpeg",
+  "heroImageAlt": "Remodeled kitchen with white cabinets, marble countertops, subway tile backsplash, and stainless steel appliances.",
+  "heroImageCredit": {
+    "photographer": "Curtis Adams",
+    "profileUrl": "https://www.pexels.com/@curtis-adams-1694007",
+    "source": "Pexels"
+  }
 }

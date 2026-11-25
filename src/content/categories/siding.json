@@ -58,5 +58,12 @@
       "a": "Often it makes sense to inspect both after the same storm and file one claim if both are damaged. Ask your insurer how they handle a claim that covers more than one part of the house."
     }
   ],
-  "contentUpdatedAt": "2026-11-25"
+  "contentUpdatedAt": "2026-11-25",
+  "heroImage": "https://images.pexels.com/photos/40701233/pexels-photo-40701233.jpeg",
+  "heroImageAlt": "Gray vinyl-sided colonial-style home with bay window and brick foundation under a bright blue sky.",
+  "heroImageCredit": {
+    "photographer": "Josh (PleaseLinkToOurWebsite)",
+    "profileUrl": "https://www.pexels.com/@josh-pleaselinktoourwebsite-2165081770",
+    "source": "Pexels"
+  }
 }
