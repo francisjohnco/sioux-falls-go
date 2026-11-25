@@ -33,6 +33,13 @@ const season = month === 12 || month <= 2 ? 'winter' : month <= 5 ? 'spring' : m
 const catSlugs = new Set(categories.map((c) => c.data.slug));
 const heroChips = SEASON[season].filter(([slug]) => catSlugs.has(slug));
 
+// Proof band numbers, straight from the listings.
+const rated = businesses.filter((b) => typeof b.data.googleRating === 'number');
+const avgRating = rated.length ? (rated.reduce((t, b) => t + b.data.googleRating!, 0) / rated.length).toFixed(2) : '';
+const totalReviews = businesses.reduce((t, b) => t + (b.data.googleReviewCount || 0), 0);
+const reviewDigits = totalReviews.toLocaleString('en-US');
+const tapeItems = [avgRating && `${avgRating} average rating`, `${businesses.length} local businesses`, `${listedCategoryCount} categories`, '$0 paid to rank'].filter(Boolean) as string[];
+
 const giveBack = businesses.filter((b) => b.data.partnershipTier === 'community-listing' || b.data.partnershipTier === 'community-champion');
 
 const newlyVerified = businesses
@@ -134,12 +141,25 @@ const schema = {
     </div>
   </section>
 
-  <div class="container page">
-    <div class="hero-trust-row">
-      <span><Icon name="check" size={13} /> 4.8+ rating required</span>
-      <span><Icon name="check" size={13} /> Real local businesses only</span>
-      <span><Icon name="check" size={13} /> No pay-to-rank listings</span>
+  <!-- PROOF BAND: typed promise, rolling review count, scrolling facts -->
+  <section class="proof" id="proof" aria-label={`Invite only. Highly rated pros. ${reviewDigits} Google reviews. ${tapeItems.join('. ')}.`}>
+    <div class="container proof-in" aria-hidden="true">
+      <p class="proof-brand">Invite only</p>
+      <p class="proof-type" data-text="Highly rated pros"></p>
+      <p class="proof-lead">Behind every listing on Sioux Falls Go</p>
+      <div class="proof-odo">
+        {[...reviewDigits].map((c) => c === ',' ? <span class="proof-cm">,</span> : (
+          <span class="proof-dg"><span class="proof-col" data-to={c}>{Array.from({ length: 10 }, (_, k) => <i>{k}</i>)}</span></span>
+        ))}
+      </div>
+      <p class="proof-cap">Google reviews from your neighbors</p>
     </div>
+    <div class="proof-tape" aria-hidden="true"><div class="proof-track">
+      {[...tapeItems, ...tapeItems].map((t) => <span>{t}</span>)}
+    </div></div>
+  </section>
+
+  <div class="container page">
 
     {giveBack.length > 0 && (
       <section aria-labelledby="giveback-heading" class="giveback-section">
@@ -352,6 +372,27 @@ const schema = {
   .page { padding-block: var(--space-4) var(--space-6); }
   .page .eyebrow, section .eyebrow { display: inline-flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem; }
 
+  /* PROOF BAND */
+  .proof { background: #0B1222; color: #fff; text-align: center; overflow: hidden; }
+  .proof-in { padding-block: clamp(2.6rem, 5vw, 4.4rem) clamp(2rem, 4vw, 3.2rem); }
+  .proof-brand { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: #FF9A4D; margin: 0 0 0.6rem; }
+  .proof-type { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.4rem, 6vw, 5.2rem); line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 1.6rem; min-height: 1.1em; }
+  .proof-type::after { content: ''; display: inline-block; width: 0.07em; height: 0.85em; margin-left: 0.06em; background: var(--color-orange); vertical-align: -0.08em; animation: proofBlink 1s steps(1) infinite; }
+  @keyframes proofBlink { 50% { opacity: 0; } }
+  .proof-lead { color: rgba(255,255,255,0.72); margin: 0 0 0.4rem; }
+  .proof-odo { display: inline-flex; gap: 0.5rem; margin: 0.6rem 0 0.8rem; }
+  .proof-dg { width: clamp(3rem, 6vw, 5.1rem); height: clamp(4.4rem, 8.4vw, 7.2rem); overflow: hidden; border-radius: 0.75rem; background: linear-gradient(180deg, #1E2C4C 50%, #16223D 50%); }
+  .proof-col { display: flex; flex-direction: column; transition: transform 2s cubic-bezier(.15,.85,.25,1); }
+  .proof-col i { font: 700 clamp(2.6rem, 5.4vw, 4.75rem)/1 var(--font-display); font-style: normal; height: clamp(4.4rem, 8.4vw, 7.2rem); display: flex; align-items: center; justify-content: center; }
+  .proof-cm { font: 700 clamp(2.6rem, 5.4vw, 4.75rem) var(--font-display); color: rgba(255,255,255,0.6); align-self: flex-end; }
+  .proof-cap { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.25rem, 2.4vw, 1.9rem); letter-spacing: -0.02em; margin: 0; }
+  .proof-tape { background: var(--color-orange); overflow: hidden; }
+  .proof-track { display: flex; width: max-content; animation: proofTape 28s linear infinite; }
+  .proof-track span { font-family: var(--font-display); font-weight: 700; font-size: 1.3rem; padding: 1.05rem 1.4rem; white-space: nowrap; }
+  .proof-track span::after { content: '\2726'; margin-left: 2.8rem; opacity: 0.6; font-size: 0.9rem; }
+  @keyframes proofTape { to { transform: translateX(-50%); } }
+  @media (max-width: 40rem) { .proof-track span { font-size: 1.1rem; } }
+  @media (prefers-reduced-motion: reduce) { .proof-track, .proof-type::after { animation: none; } .proof-col { transition: none; } }
   .hero-trust-row { display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center; padding: var(--space-2); background: var(--color-river-light); border-radius: var(--radius); margin-bottom: var(--space-4); font-size: 0.8125rem; font-weight: 600; }
   .hero-trust-row span { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--color-navy); }
 
@@ -477,6 +518,23 @@ const schema = {
 </style>
 
 <script>
+  // Proof band: type the promise, then roll the review count, once it is on screen.
+  (() => {
+    const band = document.getElementById('proof');
+    if (!band) return;
+    const type = band.querySelector<HTMLElement>('.proof-type')!;
+    const text = type.dataset.text || '';
+    const roll = () => band.querySelectorAll<HTMLElement>('.proof-col').forEach((c, i) => { c.style.transitionDelay = `${i * 140}ms`; c.style.transform = `translateY(-${Number(c.dataset.to) * 10}%)`; });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { type.textContent = text; roll(); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      let i = 0;
+      const id = setInterval(() => { type.textContent = text.slice(0, ++i); if (i >= text.length) { clearInterval(id); setTimeout(roll, 250); } }, 75);
+    }, { threshold: 0.4 });
+    io.observe(band);
+  })();
+
   // Local Legend VIP signup — real MailerLite subscription, not a static form
   const legendForm = document.getElementById('legend-form') as HTMLFormElement;
   const legendStatus = document.getElementById('legend-form-status');
