@@ -164,6 +164,9 @@ const PHOTO_SUBJECTS: Record<string, { show: string; query: string }> = {
   'window-replacement': { show: 'residential windows as the clear subject (a window being installed, or a home where the windows are the focus)', query: 'new windows house interior' },
 };
 const subjectEntry = (category?: string) => (category ? PHOTO_SUBJECTS[category.toLowerCase().trim().replace(/\s+/g, '-')] : undefined);
+export function photoQueryFor(category?: string): string | undefined {
+  return subjectEntry(category)?.query;
+}
 export function photoSubjectFor(category?: string): string | undefined {
   return subjectEntry(category)?.show;
 }

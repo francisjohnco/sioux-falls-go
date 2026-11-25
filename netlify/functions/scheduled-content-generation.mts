@@ -1,6 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { runDraftGeneration, heroForDraft } from './_shared/draft-generator.mts';
-import { photoSubjectFor } from './_shared/hero-photo.mts';
+import { photoSubjectFor, photoQueryFor } from './_shared/hero-photo.mts';
 import { buildArticleFile, commitNewFile, cleanDraft, validateDraft, isNearDuplicate } from './_shared/article-file.mts';
 import { chicagoToday, planNextSlot, planClusterSlot, PUBLISH_WEEKDAYS } from './_shared/schedule.mts';
 
@@ -114,7 +114,7 @@ export default async () => {
     if (res.status >= 500) { await engine.set('last-failure', new Date().toISOString()); break; }
     if (res.status === 202) { allSlugs.add(topic.slug); continue; } // no photo yet: move on, retry next run
     const date = res.headers.get('x-published');
-    if (date) articleIndex.push({ slug: topic.slug, title: topic.title, cluster: queue.cluster, category: queue.category, publishedAt: date, live: date <= today, description: topic.brief || '' });
+    if (date) articleIndex.push({ slug: topic.slug, title: topic.title, cluster: queue.cluster, category: queue.category, publishedAt: date, live: date <= today, description: topic.brief || '', heroImage: res.headers.get('x-hero') || undefined });
     else pending.push({ slug: topic.slug, cluster: queue.cluster });
     allSlugs.add(topic.slug);
     if (!(topic.publishDate && topic.publishDate <= today)) break;
@@ -176,6 +176,12 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   if (photoSubjectFor(categorySlug) || photoSubjectFor(categoryName)) {
     lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()), queries: next.photoQueries });
     if (!lockedPhoto.heroImage) {
+      // Second try: the category's plain, reliable search on its own, so the
+      // picker sees a full set of on-subject photos.
+      const plain = photoQueryFor(categorySlug);
+      if (plain) lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()), queries: [plain, `${plain} home`] });
+    }
+    if (!lockedPhoto.heroImage) {
       console.warn(`No fitting photo yet for "${next.title}", will try again next run.`);
       return new Response(`Waiting for a fitting photo for "${next.title}"`, { status: 202 });
     }
@@ -207,7 +213,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
     const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${publishDate}`);
     if (res.ok) {
       console.log(`Auto-scheduled "${draft.title}" for ${publishDate}`);
-      return new Response(`Scheduled "${draft.title}" for ${publishDate}`, { status: 200, headers: { 'x-published': publishDate } });
+      return new Response(`Scheduled "${draft.title}" for ${publishDate}`, { status: 200, headers: { 'x-published': publishDate, ...(withImage.heroImage ? { 'x-hero': withImage.heroImage } : {}) } });
     }
     console.error('Auto-publish commit failed, sending to review instead:', res.status, res.detail);
   } else if (autoPublish) {

@@ -16,12 +16,6 @@ updatedAt: 2026-11-11
 seo:
   title: "Hard Water in Sioux Falls: What It Does to Your Plumbing"
   description: "Sioux Falls water runs 10 to 15 grains per gallon. Learn what that hardness does to pipes, water heaters, and fixtures, and what to ask a plumber."
-heroImage: "https://images.pexels.com/photos/29226620/pexels-photo-29226620.jpeg"
-heroImageAlt: "A gloved plumber tightens a pipe fitting on a radiator using a wrench and pliers."
-heroImageCredit:
-  photographer: "Sergei Starostin"
-  profileUrl: "https://www.pexels.com/@sejio402"
-  source: "Pexels"
 ---
 
 Sioux Falls water is genuinely hard. According to the City of Sioux Falls 2020 finished water quality report, homes served by the City's own treatment plant see total hardness around 15 grains per gallon, while homes receiving Lewis and Clark water run closer to 10 grains per gallon. Which source feeds your home can vary by neighborhood and even by street. That hardness is not a health concern, but it is a plumbing concern, and understanding it can save you from repairs that sneak up quietly over years.

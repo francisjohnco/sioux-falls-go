@@ -44,6 +44,21 @@ export function fallbackFor(category: string): string {
   return DEFAULT_FALLBACK;
 }
 
+// A photo from another guide in the same category: always on topic, so a
+// guide still waiting for its own photo never shows an unrelated scenic shot.
+const ARTICLE_FILES = import.meta.glob('../content/articles/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const CATEGORY_PHOTOS = new Map<string, { img: string; alt: string; slug: string }[]>();
+for (const [path, raw] of Object.entries(ARTICLE_FILES)) {
+  const fm = raw.split('\n---', 2)[0];
+  const cat = fm.match(/^category:\s*"?([^"\n]+)"?/m)?.[1]?.trim();
+  const img = fm.match(/^heroImage:\s*"?([^"\n]+)"?/m)?.[1]?.trim();
+  const alt = fm.match(/^heroImageAlt:\s*"?([^"\n]+)"?/m)?.[1]?.trim() || '';
+  if (!cat || !img || !/^https:\/\/images\.(unsplash|pexels)\.com\//.test(img)) continue;
+  const slug = path.split('/').pop()!.replace(/\.md$/, '');
+  if (!CATEGORY_PHOTOS.has(cat)) CATEGORY_PHOTOS.set(cat, []);
+  CATEGORY_PHOTOS.get(cat)!.push({ img, alt, slug });
+}
+
 const isUnsplash = (u: string) => /^https:\/\/images\.unsplash\.com\//.test(u);
 const isPexels = (u: string) => /^https:\/\/images\.pexels\.com\//.test(u);
 
@@ -86,6 +101,15 @@ export function articleHero(article: { data: any }): Hero {
   if (img && img.startsWith('/')) {
     const l = local(img);
     if (l) return { ...l, alt, credit, isFallback: false };
+  }
+  const sibling = (CATEGORY_PHOTOS.get(category) || []).find((p) => p.slug !== (article as { id?: string }).id && p.img !== img);
+  if (sibling) {
+    const u = sibling.img;
+    return {
+      src: cdnUrl(u, 960), srcset: [480, 960, 1600].map((w) => `${cdnUrl(u, w)} ${w}w`).join(', '),
+      card: cdnUrl(u, 480), large: cdnUrl(u, 1600), og: cdnUrl(u, 1200, 630),
+      width: 1600, height: 900, alt: sibling.alt || alt, isFallback: true,
+    };
   }
   const fbSrc = M[fallbackFor(category)] ? fallbackFor(category) : DEFAULT_FALLBACK;
   return { ...local(fbSrc)!, alt: FALLBACK_ALT[fbSrc] || 'Sioux Falls, South Dakota', isFallback: true };

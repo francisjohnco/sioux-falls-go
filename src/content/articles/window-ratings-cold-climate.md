@@ -70,7 +70,7 @@ Every NFRC-rated window ships with a label that lists U-factor, SHGC, visible tr
 - Ask whether the quoted price is for a full-frame replacement or an insert (pocket) replacement. The install method affects both performance and long-term durability.
 - Ask what insulation material goes in the gap around the frame and how it is sealed at the interior and exterior.
 
-A local window guide at [siouxfallswindowguide.com/the-math](https://siouxfallswindowguide.com/the-math/) walks through the actual math behind these ratings for homeowners who want to go deeper on how the numbers interact.
+This local guide to [the math behind window ratings](https://siouxfallswindowguide.com/the-math/) walks through the actual math behind these ratings for homeowners who want to go deeper on how the numbers interact.
 
 For more on how quotes can look similar on the surface while hiding real differences in materials and installation, [Why Window Quotes Differ and How to Compare Them](/guides/comparing-window-quotes) covers the full picture.
 
