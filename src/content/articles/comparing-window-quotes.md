@@ -46,7 +46,7 @@ Look for the NFRC label ratings on each quote. For the Northern climate zone und
 
 Ask each contractor to show you the NFRC label or specification sheet for the exact window they are quoting. If one quote lists a U-factor of 0.28 and another lists 0.20, those are not equivalent windows regardless of similar price. For a deeper look at what these numbers mean and how to compare two quotes side by side, [Window Ratings for a Sioux Falls Winter, U-Factor and SHGC Explained](/guides/window-ratings-cold-climate) walks through the label in plain language.
 
-Frame material also drives price. Vinyl, fiberglass, and wood windows sit at different price points and behave differently through Sioux Falls temperature swings. A local window guide at [siouxfallswindowguide.com/manufacturers](https://siouxfallswindowguide.com/manufacturers/) compiles manufacturer information that can help you cross-check what you are being quoted.
+Frame material also drives price. Vinyl, fiberglass, and wood windows sit at different price points and behave differently through Sioux Falls temperature swings. This local guide to [comparing window manufacturers](https://siouxfallswindowguide.com/manufacturers/) compiles manufacturer information that can help you cross-check what you are being quoted.
 
 ## Installation Method and Insulation
 
