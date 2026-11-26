@@ -34,7 +34,7 @@ Seamless gutters are formed from a single coil of metal using a portable roll-fo
 
 That difference sounds simple, but it has real consequences for how each system holds up over time.
 
-With sectional gutters, every connector is a potential leak point. Sioux Falls gets roughly 38 inches of snow in a typical winter, and the weight of that snow, plus repeated freezing and thawing, works at every seam. Sealant that was fine in fall can crack or shrink by March.
+With sectional gutters, every connector is a potential leak point. Sioux Falls winters bring plenty of snow, and the weight of that snow, plus repeated freezing and thawing, works at every seam. Sealant that was fine in fall can crack or shrink by March.
 
 Seamless gutters eliminate most of those seams. Fewer joints means fewer places for the freeze-thaw cycle to open up a gap.
 

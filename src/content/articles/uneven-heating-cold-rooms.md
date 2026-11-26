@@ -42,7 +42,7 @@ If you have had any remodeling done, ducts are even more likely to have been dis
 
 ## What Insulation and Windows Actually Do to a Cold Room
 
-A room can get plenty of airflow from the furnace and still be cold if heat is escaping faster than it arrives. In Sioux Falls, the frost line sits at 42 inches, which means the soil stays frozen well into the season. Basement and crawlspace rooms lose heat to the ground if the perimeter insulation is thin or missing.
+A room can get plenty of airflow from the furnace and still be cold if heat is escaping faster than it arrives. In Sioux Falls the ground freezes deep, which means the soil stays frozen well into the season. Basement and crawlspace rooms lose heat to the ground if the perimeter insulation is thin or missing.
 
 Exterior walls that feel noticeably cold to the touch, especially on the north side of the house, often have inadequate insulation or gaps where air infiltrates around outlets, pipes, and window frames.
 

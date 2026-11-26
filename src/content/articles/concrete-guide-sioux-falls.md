@@ -28,7 +28,7 @@ Concrete in Sioux Falls takes a beating that homeowners in milder climates never
 
 ## Why Sioux Falls Is Hard on Concrete
 
-The climate here is genuinely punishing for concrete. Sioux Falls averages around 38 inches of snow per year, and temperatures swing well below zero before climbing back above freezing, sometimes multiple times in a single week.
+The climate here is genuinely punishing for concrete. Sioux Falls gets plenty of snow every winter, and temperatures swing well below zero before climbing back above freezing, sometimes multiple times in a single week.
 
 That freeze-thaw cycle is the main enemy. Water seeps into small pores and cracks, freezes, expands, and breaks the surface from the inside. Scaling, spalling, and widening cracks are the visible result.
 

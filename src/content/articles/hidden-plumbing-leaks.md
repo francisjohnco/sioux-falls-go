@@ -42,7 +42,7 @@ The signs of a hidden water leak are easy to dismiss one at a time. Together, th
 
 None of these guarantees a leak on its own. But Sioux Falls homeowners who have been through this often describe the same pattern: they noticed something small, ignored it for a few weeks, then found a much bigger problem later.
 
-The musty smell is worth taking seriously. In a climate that gets roughly 38 inches of snow per year and sees hard freeze-thaw cycles, moisture that gets into a wall cavity during winter can stay trapped there long after the temperature warms back up. Mold can establish itself faster than most people expect.
+The musty smell is worth taking seriously. In a climate that gets plenty of snow every winter and sees hard freeze-thaw cycles, moisture that gets into a wall cavity during winter can stay trapped there long after the temperature warms back up. Mold can establish itself faster than most people expect.
 
 ## The Meter Test: A Step You Can Do Right Now
 

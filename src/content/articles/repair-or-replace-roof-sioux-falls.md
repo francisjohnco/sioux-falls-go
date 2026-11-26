@@ -34,7 +34,7 @@ Manufacturers often rate standard three-tab shingles at 20 to 25 years and archi
 
 South Dakota roofs take a harder beating than the warranty assumes:
 
-- Roughly 38 inches of snow per year on average in Sioux Falls
+- Plenty of snow every Sioux Falls winter
 - Freeze-thaw cycles that can run deep into spring, stressing shingles and flashing repeatedly
 - Hail seasons that can hit the same roof multiple times over a decade
 - Summer heat that accelerates granule loss

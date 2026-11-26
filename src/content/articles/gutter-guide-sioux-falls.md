@@ -38,7 +38,7 @@ The other thing local gutters fight is splash-back. When rain hits bare ground n
 
 ## Overflow Problems in Sioux Falls Summers
 
-Sioux Falls gets roughly 25 to 27 inches of annual rainfall, and a good chunk of it falls in intense summer storms. A gutter system sized for a steady drizzle can be completely overwhelmed in a heavy downpour.
+A good share of Sioux Falls rain falls in intense summer storms. A gutter system sized for a steady drizzle can be completely overwhelmed in a heavy downpour.
 
 Homeowners around Sioux Falls commonly describe the same situation: gutters that seem fine most of the year, then pour waterfalls over the front edge every time a real storm rolls through. The usual causes are clogs, gutters pitched too flat to drain quickly, or a system that was simply undersized for the roof.
 

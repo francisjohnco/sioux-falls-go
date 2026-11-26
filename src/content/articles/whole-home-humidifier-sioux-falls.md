@@ -30,7 +30,7 @@ Sioux Falls winters are genuinely dry, not just "a little low." When outdoor tem
 
 Cold air holds very little moisture. When that air gets pulled into your furnace and heated to 70 degrees, its relative humidity drops sharply because you are spreading a small amount of moisture across a much larger volume of warm air.
 
-Sioux Falls sits in a humid continental climate, but "humid" describes the summer. Winters here average around 38 inches of snow per year, and the air during cold stretches is about as dry as a desert indoors once your furnace is working hard.
+Sioux Falls sits in a humid continental climate, but "humid" describes the summer. Winters here bring plenty of snow, and the air during cold stretches is about as dry as a desert indoors once your furnace is working hard.
 
 The longer your furnace runs, the drier your house gets. A well-sealed, well-insulated home actually holds heat better but also traps that dry air with fewer natural air exchanges.
 

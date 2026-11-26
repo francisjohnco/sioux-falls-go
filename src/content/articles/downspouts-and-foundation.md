@@ -56,7 +56,7 @@ One mistake Sioux Falls homeowners make heading into winter: leaving a corrugate
 
 When the yard doesn't give you enough room for a surface extension, or when you want a cleaner look, an underground drainage line is worth considering. These are pipes buried below grade that carry water from the downspout to a point farther out in the yard, usually ending in a pop-up emitter that opens under water pressure and closes when dry.
 
-This is a bigger project than clipping on a surface extension. The pipe needs to be buried deep enough to avoid being cut by routine yard work, and in Sioux Falls the frost line sits at 42 inches according to local building code, so any line you want to stay thawed and functional year-round needs to account for that depth. A line that isn't properly sloped or is poorly jointed can back up and trap water right where you were trying to avoid it.
+This is a bigger project than clipping on a surface extension. The pipe needs to be buried deep enough to avoid being cut by routine yard work, and in a Sioux Falls winter the ground freezes deep, so any line you want to stay thawed and functional year-round needs to account for that depth. A line that isn't properly sloped or is poorly jointed can back up and trap water right where you were trying to avoid it.
 
 Ask any contractor doing this work:
 

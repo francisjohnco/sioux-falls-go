@@ -24,7 +24,7 @@ heroImageCredit:
   source: "Pexels"
 ---
 
-Sioux Falls winters are not gentle. With average snowfall around 38 inches a year and temperatures that routinely drop below zero, frozen pipes are one of the most common calls local plumbers get from December through February. The good news is that if you catch a frozen pipe before it splits, you can often handle it yourself without calling anyone. For a broader look at how South Dakota winters affect your whole plumbing system, see [Plumbing and South Dakota Winter: What Every Sioux Falls Homeowner Should Know](/guides/plumbing-south-dakota-winters-sioux-falls-homeowners), and the [Plumbing in a Sioux Falls Home, the Homeowner's Guide](/guides/plumbing-guide-sioux-falls) covers the full picture of what local homes face year-round.
+Sioux Falls winters are not gentle. With heavy snow and temperatures that routinely drop below zero, frozen pipes are one of the most common calls local plumbers get from December through February. The good news is that if you catch a frozen pipe before it splits, you can often handle it yourself without calling anyone. For a broader look at how South Dakota winters affect your whole plumbing system, see [Plumbing and South Dakota Winter: What Every Sioux Falls Homeowner Should Know](/guides/plumbing-south-dakota-winters-sioux-falls-homeowners), and the [Plumbing in a Sioux Falls Home, the Homeowner's Guide](/guides/plumbing-guide-sioux-falls) covers the full picture of what local homes face year-round.
 
 The order of these steps matters. Do not skip ahead.
 

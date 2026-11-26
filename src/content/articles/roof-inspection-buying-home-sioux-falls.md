@@ -101,7 +101,7 @@ One thing worth knowing: if you are buying in a neighborhood with older housing 
 
 ## What to Watch for If the Roof Is Older or Previously Repaired
 
-Sioux Falls gets roughly 38 inches of snow per year on average, plus spring thaw cycles and summer hail. A roof that has been through ten or fifteen years of that is a different animal than a newer one.
+Sioux Falls gets plenty of snow every winter, plus spring thaw cycles and summer hail. A roof that has been through ten or fifteen years of that is a different animal than a newer one.
 
 Signs that should prompt extra scrutiny:
 

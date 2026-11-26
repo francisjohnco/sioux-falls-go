@@ -40,7 +40,7 @@ Understanding what these materials are made of explains most of their difference
 
 ## Performance in a Sioux Falls Winter and Spring
 
-This is where the comparison gets local fast. Sioux Falls averages around 38 inches of snow per year, and the freeze-thaw cycle between January and April puts real stress on exterior materials.
+This is where the comparison gets local fast. Sioux Falls winters bring plenty of snow, and the freeze-thaw cycle between January and April puts real stress on exterior materials.
 
 Vinyl becomes brittle in deep cold. A hard impact, like a piece of ice falling from a roofline, can crack a panel that would have dented or dinged in warmer weather. Panels also expand and contract significantly between seasons, which is why proper installation with the right nail slot clearance matters enormously here. Ask any contractor you interview whether they adjust fastening technique for cold-climate installs.
 

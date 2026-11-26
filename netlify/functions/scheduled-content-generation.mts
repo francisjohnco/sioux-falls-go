@@ -92,7 +92,8 @@ export default async () => {
   const started = Date.now();
   let last: Response | null = null;
   let unfinished = 0;
-  for (let run = 0; run < 4 && Date.now() - started < 9 * 60 * 1000; run++) {
+  const photoMisses: Record<string, number> = (await engine.get('photo-misses', { type: 'json' }).catch(() => null)) || {};
+  for (let run = 0; run < 8 && Date.now() - started < 9 * 60 * 1000; run++) {
     const due: { queue: any; topic: any; ahead: number }[] = [];
     unfinished = 0;
     for (const queue of queues) {
@@ -107,12 +108,12 @@ export default async () => {
       if (backfill || ahead < (queue.bufferTarget || 3)) due.push({ queue, topic, ahead: backfill ? -1 : ahead });
     }
     if (!due.length) break;
-    due.sort((a, b) => a.ahead - b.ahead);
+    due.sort((a, b) => a.ahead - b.ahead || (photoMisses[a.topic.slug] || 0) - (photoMisses[b.topic.slug] || 0));
     const { queue, topic } = due[0];
-    const res = await runQueuedTopic(topic, queue, articleIndex);
+    const res = await runQueuedTopic(topic, queue, articleIndex, photoMisses[topic.slug] || 0);
     last = res;
     if (res.status >= 500) { await engine.set('last-failure', new Date().toISOString()); break; }
-    if (res.status === 202) { allSlugs.add(topic.slug); continue; } // no photo yet: move on, retry next run
+    if (res.status === 202) { photoMisses[topic.slug] = (photoMisses[topic.slug] || 0) + 1; await engine.setJSON('photo-misses', photoMisses); allSlugs.add(topic.slug); continue; } // no photo yet: move on, retry next run
     const date = res.headers.get('x-published');
     if (date) articleIndex.push({ slug: topic.slug, title: topic.title, cluster: queue.cluster, category: queue.category, publishedAt: date, live: date <= today, description: topic.brief || '', heroImage: res.headers.get('x-hero') || undefined });
     else pending.push({ slug: topic.slug, cluster: queue.cluster });
@@ -138,7 +139,7 @@ function knownSlugs(articleIndex: any[], queue: any): Set<string> {
   return s;
 }
 
-async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
+async function runQueuedTopic(next: any, queue: any, articleIndex: any[], misses = 0) {
   const categorySlug = next.category || queue.category;
   const categoryName = next.categoryName || queue.categoryName || categorySlug;
   const relatedBusinesses = next.relatedBusinesses || queue.relatedBusinesses || [];
@@ -181,7 +182,14 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
       const plain = photoQueryFor(categorySlug);
       if (plain) lockedPhoto = await heroForDraft({ title: next.title, seoDescription: next.brief, category: categorySlug, exclude: usedPhotos(articleIndex, await loadPending()), queries: [plain, `${plain} home`] });
     }
-    if (!lockedPhoto.heroImage) {
+    // After three misses, publish without its own photo only if the category
+    // already has one: the page then borrows that on-topic photo, and the
+    // hourly photo finder keeps looking for its own.
+    const categoryHasPhoto = articleIndex.some((a) => a.category === categorySlug && typeof a.heroImage === 'string' && a.heroImage.startsWith('https://'));
+    if (!lockedPhoto.heroImage && misses >= 3 && categoryHasPhoto) {
+      console.warn(`Publishing "${next.title}" with its category's photo for now; the photo finder will keep looking.`);
+      lockedPhoto = {};
+    } else if (!lockedPhoto.heroImage) {
       console.warn(`No fitting photo yet for "${next.title}", will try again next run.`);
       return new Response(`Waiting for a fitting photo for "${next.title}"`, { status: 202 });
     }
@@ -196,7 +204,7 @@ async function runQueuedTopic(next: any, queue: any, articleIndex: any[]) {
   }
 
   draft = cleanDraft(draft);
-  const withImage = { ...draft, ...(lockedPhoto || await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: categoryName, exclude: usedPhotos(articleIndex, await loadPending()) })) };
+  const withImage = { ...draft, ...(lockedPhoto ?? await heroForDraft({ title: draft.title, seoDescription: draft.seoDescription, category: categoryName, exclude: usedPhotos(articleIndex, await loadPending()) })) };
 
   const autoPublish = (await getStore('admin-settings').get('auto-publish')) === 'on';
   const problems = validateDraft(withImage, knownSlugs(articleIndex, queue));

@@ -39,7 +39,7 @@ Here is the basic cycle:
 - The eaves stay cold (they hang over unheated space), so the water refreezes
 - The ice ridge grows, water backs up behind it, and that pooled water can work under shingles and into your home
 
-Sioux Falls sits in a humid continental climate with roughly 38 inches of snow per year and persistent freeze-thaw swings throughout January, February, and March. A warm afternoon followed by a hard overnight freeze is exactly the pattern that builds ice dams fast.
+Sioux Falls sits in a humid continental climate with plenty of snow every winter and persistent freeze-thaw swings throughout January, February, and March. A warm afternoon followed by a hard overnight freeze is exactly the pattern that builds ice dams fast.
 
 The underlying cause is almost always heat loss from the living space below. Poor attic insulation lets heat rise through the ceiling. Poor attic ventilation lets that heat sit and warm the roof deck instead of escaping. The fix is rarely just the roof itself.
 

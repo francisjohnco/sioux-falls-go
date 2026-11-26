@@ -32,7 +32,7 @@ The water here is hard. According to the City of Sioux Falls 2020 finished water
 
 That hardness matters because mineral scale builds up inside pipes, water heaters, and fixtures over time. A water heater that might last 12 years in a soft-water city can underperform faster here if sediment is left unmanaged.
 
-Then there is the winter. Sioux Falls averages roughly 38 inches of snow per year, and temperatures can drop far enough to freeze pipes inside exterior walls, in crawl spaces, or in garages. The freeze-thaw cycle also works on the expansive clay soil under older neighborhoods like McKennan Park and All Saints, which can shift and stress underground lines over decades.
+Then there is the winter. Sioux Falls gets plenty of snow every winter, and temperatures can drop far enough to freeze pipes inside exterior walls, in crawl spaces, or in garages. The freeze-thaw cycle also works on the expansive clay soil under older neighborhoods like McKennan Park and All Saints, which can shift and stress underground lines over decades.
 
 Understanding those two forces, hard water and hard winters, explains most of the plumbing problems Sioux Falls homeowners actually face.
 

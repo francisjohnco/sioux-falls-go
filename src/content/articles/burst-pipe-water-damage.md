@@ -26,7 +26,7 @@ heroImageCredit:
 
 A pipe bursting inside a wall is one of the more disorienting things that can happen in a home. You might hear a pop, notice a wet spot on drywall, or find your floor soaking wet before you even know where the water is coming from.
 
-Sioux Falls winters make this more common than many homeowners expect. The city averages around 38 inches of snow per year, and freeze-thaw swings can push water in exterior walls or unheated spaces past the point pipes can handle. If this is your situation right now, the [Water Damage in Your Sioux Falls Home, What to Do](/guides/water-damage-guide-sioux-falls) guide has the full picture. This article focuses specifically on burst pipe water damage inside walls, from the first minutes through drying, opening walls, and preventing mold.
+Sioux Falls winters make this more common than many homeowners expect. The city gets plenty of snow every winter, and freeze-thaw swings can push water in exterior walls or unheated spaces past the point pipes can handle. If this is your situation right now, the [Water Damage in Your Sioux Falls Home, What to Do](/guides/water-damage-guide-sioux-falls) guide has the full picture. This article focuses specifically on burst pipe water damage inside walls, from the first minutes through drying, opening walls, and preventing mold.
 
 ## Shut Off the Water First, Then Breathe
 

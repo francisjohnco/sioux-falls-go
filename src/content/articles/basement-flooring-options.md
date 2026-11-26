@@ -37,7 +37,7 @@ The Big Sioux Aquifer sits under much of the region, and Sioux Falls city water 
 
 Efflorescence is not just cosmetic. It is a signal that water vapor is moving through your slab. Install a floor over active vapor drive and you are trapping moisture between the concrete and the flooring, which leads to mold, adhesive failure, or buckling.
 
-Sioux Falls also sees roughly 38 inches of snow per year on average, and freeze-thaw cycles hit the soil around your foundation repeatedly each winter. That movement creates micro-cracks in older slabs, and even new construction settles. Any floor you choose needs to tolerate minor flex and seasonal temperature shifts.
+Sioux Falls also sees plenty of snow every winter, and freeze-thaw cycles hit the soil around your foundation repeatedly each winter. That movement creates micro-cracks in older slabs, and even new construction settles. Any floor you choose needs to tolerate minor flex and seasonal temperature shifts.
 
 ## Test the Slab Before You Do Anything Else
 

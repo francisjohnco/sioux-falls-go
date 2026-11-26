@@ -62,7 +62,7 @@ The key question is whether you are spending money on a problem or on a solution
 
 ## Choosing a Material That Fits Sioux Falls Weather
 
-South Dakota's climate is not gentle on the outside of a house. Sioux Falls averages around 38 inches of snow per year, with freeze-thaw cycles that stress any material repeatedly through winter and spring. Summers bring heat, UV exposure, and those hailstorms.
+South Dakota's climate is not gentle on the outside of a house. Sioux Falls gets plenty of snow every winter, with freeze-thaw cycles that stress any material repeatedly through winter and spring. Summers bring heat, UV exposure, and those hailstorms.
 
 The three materials most commonly used for siding replacement here are vinyl, fiber cement, and engineered wood, and each handles the local climate differently.
 

@@ -87,7 +87,7 @@ Also check every bolt and nut on the track brackets and door hinges. Vibration l
 
 ## Check the Bottom Seal, Threshold, and Weatherstripping
 
-Sioux Falls gets roughly 38 inches of snow in an average winter, and blowing prairie wind pushes that snow into every gap it can find. A good bottom seal and tight weatherstripping keep cold air, drifted snow, and water out of the garage.
+Sioux Falls gets plenty of snow every winter, and blowing prairie wind pushes that snow into every gap it can find. A good bottom seal and tight weatherstripping keep cold air, drifted snow, and water out of the garage.
 
 Run your hand along the bottom seal when the door is closed. The rubber or vinyl should contact the floor evenly across the full width. If you can see daylight anywhere, or if the seal is cracked and brittle, replace it before the freeze-thaw cycles start in earnest. A cracked seal also lets in water, which refreezes at the threshold and can freeze your door to the floor overnight.
 

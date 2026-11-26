@@ -28,7 +28,7 @@ Sioux Falls roofs take a beating that most of the country never sees. Hailstorms
 
 ## How Sioux Falls Weather Wears Your Roof Down
 
-The climate here is genuinely hard on roofing materials. Sioux Falls sits in a humid continental zone with roughly 38 inches of snow a year, and the temperature swings between seasons are extreme enough to work every nail, seam, and shingle edge over time.
+The climate here is genuinely hard on roofing materials. Sioux Falls sits in a humid continental zone with plenty of snow every winter, and the temperature swings between seasons are extreme enough to work every nail, seam, and shingle edge over time.
 
 Hail is the most expensive threat. Storms track across the southeast corner of South Dakota regularly from late spring through early fall, and even hail that does not punch through a shingle can knock loose the protective granules that slow UV degradation. Once granules are gone, the mat underneath ages fast.
 

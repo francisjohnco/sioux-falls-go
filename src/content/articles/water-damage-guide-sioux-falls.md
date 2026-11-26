@@ -122,7 +122,7 @@ For a full guide to evaluating restoration companies, including questions to ask
 
 Not every water loss starts with a dramatic flood. Some of the most expensive damage in Sioux Falls homes starts quietly.
 
-Sioux Falls sits above the Big Sioux Aquifer and the city's water is notably hard, running between roughly 12 to 15 grains per gallon. That mineral load builds up inside supply lines, water heaters, and appliance hoses over time, accelerating wear. Combined with the freeze-thaw cycles that come with a humid continental climate and around 38 inches of snow per year, pipes in exterior walls and unheated crawl spaces are under real seasonal stress.
+Sioux Falls sits above the Big Sioux Aquifer and the city's water is notably hard, running between roughly 12 to 15 grains per gallon. That mineral load builds up inside supply lines, water heaters, and appliance hoses over time, accelerating wear. Combined with the freeze-thaw cycles that come with a humid continental climate and plenty of snow every winter, pipes in exterior walls and unheated crawl spaces are under real seasonal stress.
 
 Common sources worth knowing:
 

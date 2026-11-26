@@ -32,7 +32,7 @@ Modern cold-climate heat pumps are genuinely different. Some are rated to extrac
 
 ## What Sioux Falls Winters Actually Demand
 
-Sioux Falls has a humid continental climate. Average January lows run well below zero in cold snaps, and the city sees roughly 38 inches of snow per year. A heating system here needs to perform when it matters most, not just on a mild February afternoon.
+Sioux Falls has a humid continental climate. Average January lows run well below zero in cold snaps, and the city sees plenty of snow every winter. A heating system here needs to perform when it matters most, not just on a mild February afternoon.
 
 The design temperature for load calculations in this region is significantly below zero. If a heat pump's rated capacity drops sharply at that temperature, you will feel it.
 

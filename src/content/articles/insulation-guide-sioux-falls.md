@@ -24,7 +24,7 @@ heroImageCredit:
   source: "Pexels"
 ---
 
-Sioux Falls winters are not gentle. With a humid continental climate, freeze-thaw cycles that run from October through March, and roughly 38 inches of snow in an average year, a poorly insulated home does not just feel cold, it costs real money every month. This guide walks you through where your home is losing heat, what to fix first, and how to make smart decisions at every step, whether you are in a 1940s bungalow in McKennan Park, a postwar ranch in All Saints, or a newer build on the south side.
+Sioux Falls winters are not gentle. With a humid continental climate, freeze-thaw cycles that run from October through March, and plenty of snow, a poorly insulated home does not just feel cold, it costs real money every month. This guide walks you through where your home is losing heat, what to fix first, and how to make smart decisions at every step, whether you are in a 1940s bungalow in McKennan Park, a postwar ranch in All Saints, or a newer build on the south side.
 
 ## Where Sioux Falls Homes Lose Heat
 

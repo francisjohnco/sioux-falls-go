@@ -42,7 +42,7 @@ For more on what warning signs mean and when to treat them as urgent, see [Elect
 
 Older neighborhoods in Sioux Falls, including parts of McKennan Park and All Saints, often have homes built when electric loads were a fraction of what they are today. Those homes may have been updated over the years, but the panel sometimes wasn't.
 
-Sioux Falls winters also push electrical systems harder than the national average. With roughly 38 inches of snowfall per year and temperatures that regularly drop well below zero, heating systems run long and hard. A heat pump that might be a modest load in a milder climate is working overtime here from November through March.
+Sioux Falls winters also push electrical systems harder than the national average. With plenty of snow every winter and temperatures that regularly drop well below zero, heating systems run long and hard. A heat pump that might be a modest load in a milder climate is working overtime here from November through March.
 
 That continuous demand adds up. If your panel is already stretched, a cold snap is exactly when you will notice it.
 

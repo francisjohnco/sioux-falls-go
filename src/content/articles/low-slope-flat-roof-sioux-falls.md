@@ -32,7 +32,7 @@ One of the most common complaints from local homeowners is getting the run-aroun
 
 A low-slope roof is generally anything with less than a 3-in-12 pitch, meaning it rises less than 3 inches for every 12 inches of horizontal run. A true flat roof has almost no pitch at all, just enough to drain.
 
-That matters here because Sioux Falls averages around 38 inches of snow per year, and a low-slope roof cannot shed that snow the way a steep pitch can. Snow sits. When temperatures swing above and below freezing repeatedly through a South Dakota winter, that snow melts and refreezes in cycles that push water under seams and around drains.
+That matters here because Sioux Falls gets plenty of snow every winter, and a low-slope roof cannot shed that snow the way a steep pitch can. Snow sits. When temperatures swing above and below freezing repeatedly through a South Dakota winter, that snow melts and refreezes in cycles that push water under seams and around drains.
 
 Ponding water is the defining problem on low-slope roofs. If water pools and sits for more than 48 hours after a rain or melt event, it accelerates the breakdown of almost every membrane material. A well-designed low-slope roof should drain completely. If yours does not, that is worth addressing before any repair or replacement.
 
