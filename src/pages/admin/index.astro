@@ -15,6 +15,7 @@ import SponsorManager from '../../components/admin/SponsorManager.astro';
 import { categoryHero } from '../../lib/hero';
 import SchedulePanel from '../../components/admin/SchedulePanel.astro';
 import EventsPanel from '../../components/admin/EventsPanel.astro';
+import OutreachPanel from '../../components/admin/OutreachPanel.astro';
 import { isLive, publishDay } from '../../lib/articles';
 import { todayCentral, dateKey } from '../../lib/dates';
 import nodePath from 'node:path';
@@ -26,6 +27,22 @@ const businessesWithCategory = await Promise.all(
   businesses.map(async (b) => ({ business: b, category: await getEntry(b.data.category) }))
 );
 businessesWithCategory.sort((a, b) => a.business.data.name.localeCompare(b.business.data.name));
+
+// Outreach tab: every business not yet verified.
+const outreachItems = businessesWithCategory
+  .filter(({ business }) => !business.data.verifiedAt)
+  .map(({ business: b, category }) => ({
+    slug: b.id,
+    name: b.data.name,
+    category: b.data.category.id,
+    categoryName: category?.data.name || b.data.category.id,
+    phone: b.data.phone,
+    website: b.data.website,
+    rating: b.data.googleRating,
+    reviews: b.data.googleReviewCount,
+    google: b.data.googleBusinessUrl,
+  }));
+const verifiedTotal = businesses.length - outreachItems.length;
 
 let newsletterConfig = { frequency: 'weekly', lastGeneratedAt: null as string | null };
 try {
@@ -281,6 +298,9 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
         </button>
         <button class="nav-item" data-tab="directory">
           <span class="nav-icon"><Icon name="folder" size={18} /></span> Directory
+        </button>
+        <button class="nav-item" data-tab="outreach">
+          <span class="nav-icon"><Icon name="megaphone" size={18} /></span> Outreach
         </button>
         <button class="nav-item" data-tab="stays">
           <span class="nav-icon"><Icon name="key" size={18} /></span> Stays
@@ -992,6 +1012,8 @@ const newsletterOverdue = newsletterConfig.lastGeneratedAt
       </div>
 
       <!-- ── STAYS ── -->
+      <OutreachPanel items={outreachItems} verifiedCount={verifiedTotal} total={businesses.length} />
+
       <section class="tab-panel" id="panel-stays">
         <div class="panel-header-row">
           <div>

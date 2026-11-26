@@ -1,0 +1,122 @@
+---
+// Private owner questions page. Reached only through the link sent from the
+// Outreach tab (/verify/?c=<code>). Answering is how a business gets Verified.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<BaseLayout title="Verify Your Listing" description="Confirm your Sioux Falls Go listing." canonicalPath="/verify" noindex>
+  <SiteHeader slot="header" />
+  <main class="vq">
+    <div class="vq-card" id="vq-loading"><p>Loading your questions…</p></div>
+
+    <div class="vq-card" id="vq-error" hidden><h1>That link didn't work</h1><p id="vq-error-text"></p></div>
+
+    <div class="vq-card" id="vq-done" hidden>
+      <span class="vq-badge">Thank you</span>
+      <h1>We have your answers</h1>
+      <p>Francis will review them and mark <b class="vq-name"></b> Verified on Sioux Falls Go, usually within a day. We'll use your answers to write your profile, and nothing goes live without a final check.</p>
+    </div>
+
+    <form class="vq-card" id="vq-form" hidden novalidate>
+      <span class="vq-badge">Verify your listing</span>
+      <h1 class="vq-name"></h1>
+      <p class="vq-lede">You're listed on Sioux Falls Go because of your excellent Google reviews. Nobody can pay to be listed here. Answer the two required questions and confirm your contact details to get your Verified badge. The rest are optional, but each one makes your profile stronger.</p>
+      <p class="vq-again" id="vq-again" hidden>You've already answered. You can update anything below and send it again.</p>
+
+      <fieldset class="vq-contact">
+        <legend>Your contact details</legend>
+        <label>Business phone customers should call <input id="vq-phone" type="tel" autocomplete="tel" /></label>
+        <label>Website <input id="vq-website" type="url" placeholder="Optional" /></label>
+        <label>Best email to reach you <input id="vq-email" type="email" autocomplete="email" placeholder="Not shown publicly" /></label>
+      </fieldset>
+
+      <div id="vq-questions"></div>
+
+      <p class="vq-err" id="vq-form-err" hidden></p>
+      <button class="vq-btn" type="submit" id="vq-submit">Send my answers</button>
+      <p class="vq-fine">Questions? Just reply to the message this link came in.</p>
+    </form>
+  </main>
+  <SiteFooter slot="footer" />
+</BaseLayout>
+
+<style is:global>
+  .vq { max-width: 44rem; margin: 0 auto; padding: 2rem 1.1rem 4rem; }
+  .vq-card { background: #fff; border: 1px solid var(--color-line); border-radius: 1.3rem; padding: 1.6rem 1.3rem; box-shadow: 0 18px 40px -26px rgba(27,42,74,0.4); }
+  .vq-badge { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-success); background: #EAF6EF; border-radius: 999px; padding: 0.3rem 0.7rem; }
+  .vq h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); margin: 0.6rem 0 0.5rem; color: var(--color-navy); }
+  .vq-lede { color: #566076; line-height: 1.6; margin: 0 0 1.2rem; }
+  .vq-again { background: #FFF6E6; border-radius: 0.7rem; padding: 0.6rem 0.8rem; font-size: 0.9rem; color: #7A5B00; }
+  .vq fieldset { border: 0; padding: 0; margin: 0 0 1.4rem; }
+  .vq legend { font-family: var(--font-display); font-weight: 700; color: var(--color-navy); margin-bottom: 0.6rem; }
+  .vq label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--color-navy); margin-bottom: 0.8rem; }
+  .vq input, .vq textarea { display: block; width: 100%; margin-top: 0.3rem; font: inherit; font-weight: 400; font-size: 1rem; border: 1.5px solid var(--color-line); border-radius: 0.7rem; padding: 0.65rem 0.75rem; color: var(--color-ink); }
+  .vq textarea { min-height: 6rem; resize: vertical; }
+  .vq input:focus, .vq textarea:focus { outline: 2px solid var(--color-orange); outline-offset: 1px; border-color: transparent; }
+  .vq-q { padding: 1rem 0; border-top: 1px solid var(--color-line); }
+  .vq-q .vq-sec { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-orange); }
+  .vq-q strong { display: block; margin: 0.2rem 0; color: var(--color-navy); line-height: 1.4; }
+  .vq-q em { display: block; font-style: normal; font-weight: 400; font-size: 0.85rem; color: #6B7385; }
+  .vq-req { color: #C23B3A; font-size: 0.75rem; font-weight: 700; margin-left: 0.3rem; }
+  .vq-q.is-missing textarea { border-color: #C23B3A; }
+  .vq-err { color: #A33130; font-weight: 600; }
+  .vq-btn { width: 100%; font: inherit; font-weight: 700; font-size: 1.05rem; color: #fff; background: var(--color-orange); border: 0; border-radius: 0.9rem; padding: 0.95rem; cursor: pointer; margin-top: 0.6rem; }
+  .vq-btn:disabled { opacity: 0.6; }
+  .vq-fine { text-align: center; font-size: 0.85rem; color: #6B7385; margin: 0.9rem 0 0; }
+</style>
+
+<script>
+  const code = new URLSearchParams(location.search).get('c') || '';
+  const $ = (id: string) => document.getElementById(id)!;
+  const show = (id: string) => ['vq-loading', 'vq-error', 'vq-done', 'vq-form'].forEach((x) => ($(x).hidden = x !== id));
+  const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  let bizName = '';
+
+  async function init() {
+    if (!code) { $('vq-error-text').textContent = 'This page only works from the link we sent you.'; show('vq-error'); return; }
+    try {
+      const res = await fetch(`/api/owner-questions?c=${encodeURIComponent(code)}`);
+      const d = await res.json();
+      if (!res.ok) throw new Error(d.error || 'Something went wrong.');
+      bizName = d.name;
+      document.querySelectorAll('.vq-name').forEach((el) => (el.textContent = d.name));
+      ($('vq-phone') as HTMLInputElement).value = d.phone || '';
+      ($('vq-website') as HTMLInputElement).value = d.website || '';
+      ($('vq-email') as HTMLInputElement).value = d.email || '';
+      $('vq-again').hidden = !d.answered;
+      $('vq-questions').innerHTML = d.questions.map((q: any) => `
+        <label class="vq-q" data-id="${q.id}">
+          <span class="vq-sec">${esc(q.section)}</span>
+          <strong>${esc(q.question)}${q.required ? '<span class="vq-req">Required</span>' : ''}</strong>
+          <em>${esc(q.hint)}</em>
+          <textarea data-q="${q.id}" ${q.required ? 'required' : ''}>${esc(d.answers?.[q.id] || '')}</textarea>
+        </label>`).join('');
+      show('vq-form');
+    } catch (e: any) { $('vq-error-text').textContent = e.message; show('vq-error'); }
+  }
+
+  $('vq-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const answers: Record<string, string> = {};
+    document.querySelectorAll<HTMLTextAreaElement>('#vq-questions textarea').forEach((t) => (answers[t.dataset.q!] = t.value));
+    document.querySelectorAll('.vq-q').forEach((q) => q.classList.remove('is-missing'));
+    const btn = $('vq-submit') as HTMLButtonElement; btn.disabled = true; btn.textContent = 'Sending…';
+    const err = $('vq-form-err'); err.hidden = true;
+    try {
+      const res = await fetch('/api/owner-questions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        c: code, name: bizName, answers,
+        contact: { phone: ($('vq-phone') as HTMLInputElement).value, website: ($('vq-website') as HTMLInputElement).value, email: ($('vq-email') as HTMLInputElement).value },
+      }) });
+      const d = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        (d.missing || []).forEach((id: string) => document.querySelector(`.vq-q[data-id="${id}"]`)?.classList.add('is-missing'));
+        throw new Error(d.error || 'Could not send. Please try again.');
+      }
+      show('vq-done'); window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e: any) { err.textContent = e.message; err.hidden = false; }
+    finally { btn.disabled = false; btn.textContent = 'Send my answers'; }
+  });
+
+  init();
+</script>

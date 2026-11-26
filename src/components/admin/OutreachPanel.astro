@@ -1,0 +1,577 @@
+---
+// Outreach tab: works through unverified businesses, warmest first.
+// Each card opens with a real number from Google Search Console (how often
+// the business's category page and profile were seen), gives ready-to-send
+// text, call, email and voicemail scripts for each of four touches, and logs
+// the outcome so the next follow-up date sets itself.
+export type OutreachItem = {
+  slug: string;
+  name: string;
+  category: string; // category slug, which is also its page path
+  categoryName: string;
+  phone?: string;
+  website?: string;
+  rating?: number;
+  reviews?: number;
+  google?: string;
+};
+import { INTERVIEW_QUESTIONS } from '../../lib/interview-questions';
+interface Props { items: OutreachItem[]; verifiedCount: number; total: number }
+const { items, verifiedCount, total } = Astro.props;
+---
+<section class="tab-panel" id="panel-outreach">
+  <div class="panel-header-row">
+    <div>
+      <h1>Outreach</h1>
+      <p class="panel-sub">Unverified businesses, warmest first. Open their stats, reach out, log how it went.</p>
+    </div>
+  </div>
+
+  <div class="or-prog">
+    <div class="or-prog-n"><b id="or-verified">{verifiedCount}</b> <span>of {total} verified</span></div>
+    <div class="or-bar" aria-hidden="true"><i class="v"></i><i class="a"></i><i class="t"></i><i class="c"></i></div>
+    <div class="or-legend">
+      <span style="--c:#2E9E5B">Verified <b data-count="verified">{verifiedCount}</b></span>
+      <span style="--c:#7FD1A1">Answers in <b data-count="answered">0</b></span>
+      <span style="--c:#F5B429">Talking <b data-count="talking">0</b></span>
+      <span style="--c:#F07E23">Contacted <b data-count="contacted">0</b></span>
+      <span style="--c:#7D879B">Not yet <b data-count="new">{items.length}</b></span>
+      <span style="--c:#C23B3A">Said no <b data-count="no">0</b></span>
+    </div>
+    <p class="or-gsc-note" id="or-gsc-note" hidden></p>
+  </div>
+
+  <div class="or-cols">
+    <div>
+      <div class="or-listhead">
+        <h2>Today's list</h2>
+        <select id="or-sort" aria-label="Sort">
+          <option value="searched">Most searched first</option>
+          <option value="rating">Best reviewed first</option>
+          <option value="name">A to Z</option>
+        </select>
+      </div>
+      <div class="or-chips" role="group" aria-label="Filter">
+        <button type="button" class="or-chip is-on" data-filter="today">Today <b data-chip="today"></b></button>
+        <button type="button" class="or-chip" data-filter="answered">Answers in <b data-chip="answered"></b></button>
+        <button type="button" class="or-chip" data-filter="due">Follow up due <b data-chip="due"></b></button>
+        <button type="button" class="or-chip" data-filter="new">Not contacted <b data-chip="new"></b></button>
+        <button type="button" class="or-chip" data-filter="talking">Talking <b data-chip="talking"></b></button>
+        <button type="button" class="or-chip" data-filter="waiting">Waiting <b data-chip="waiting"></b></button>
+        <button type="button" class="or-chip" data-filter="no">Said no <b data-chip="no"></b></button>
+        <button type="button" class="or-chip" data-filter="all">All <b data-chip="all"></b></button>
+      </div>
+      <input type="search" id="or-search" class="or-search" placeholder="Find a business or category" aria-label="Find a business" />
+      <div id="or-list" class="or-list"><p class="or-empty">Loading…</p></div>
+    </div>
+
+    <div class="or-sheet" id="or-sheet" hidden>
+      <div class="or-sheet-h">
+        <div><h3 id="or-sheet-title"></h3><span id="or-sheet-touch" class="or-muted"></span></div>
+        <button type="button" class="or-x" id="or-close" aria-label="Close">×</button>
+      </div>
+      <div class="or-review" id="or-review" hidden>
+        <p class="or-review-h">The owner answered the questions</p>
+        <div id="or-answers" class="or-answers"></div>
+        <button type="button" class="or-btn or-btn-g" id="or-verify">Looks good, mark Verified</button>
+      </div>
+      <div class="or-linkrow"><span class="or-muted">Owner questions link</span> <code id="or-link">…</code></div>
+      <div class="or-contact">
+        <label>Phone <input type="tel" id="or-phone" placeholder="Add from their Google profile" /></label>
+        <label>Email <input type="email" id="or-email" placeholder="Optional" /></label>
+        <button type="button" class="or-btn" id="or-save-contact">Save</button>
+      </div>
+      <div class="or-tabs" role="tablist">
+        <button type="button" class="or-tab is-on" data-ch="text">Text</button>
+        <button type="button" class="or-tab" data-ch="call">Call script</button>
+        <button type="button" class="or-tab" data-ch="email">Email</button>
+        <button type="button" class="or-tab" data-ch="vm">Voicemail</button>
+      </div>
+      <div class="or-touches" role="group" aria-label="Which touch">
+        <span class="or-muted">Touch</span>
+        <button type="button" class="or-t is-on" data-t="1">1</button><button type="button" class="or-t" data-t="2">2</button><button type="button" class="or-t" data-t="3">3</button><button type="button" class="or-t" data-t="4">4</button>
+      </div>
+      <p class="or-subject" id="or-subject" hidden></p>
+      <div class="or-msg" id="or-msg"></div>
+      <div class="or-actions">
+        <button type="button" class="or-btn" id="or-copy">Copy</button>
+        <a class="or-btn or-btn-p" id="or-send" href="#">Open in Messages</a>
+        <button type="button" class="or-btn or-btn-p" id="or-send-email" hidden>Send email</button>
+      </div>
+      <p class="or-mailnote or-muted" id="or-mailnote" hidden>Sending from the admin isn't set up yet, so this opens your mail app. See the setup steps Claude sent you.</p>
+      <p class="or-lbl">How did it go?</p>
+      <div class="or-outcomes">
+        <button type="button" data-out="noanswer">No answer</button>
+        <button type="button" data-out="voicemail">Left voicemail</button>
+        <button type="button" data-out="sent">Sent message</button>
+        <button type="button" data-out="callback">Call back later</button>
+        <button type="button" data-out="interested">Interested</button>
+        <button type="button" data-out="no" class="r">Not interested</button>
+      </div>
+      <label class="or-note">Notes <textarea id="or-note" rows="2" placeholder="Owner's name, best time to call, anything worth remembering"></textarea></label>
+      <ul class="or-log" id="or-log"></ul>
+      <p class="or-status" id="or-status" hidden></p>
+    </div>
+  </div>
+
+  <script type="application/json" id="or-data" set:html={JSON.stringify(items)}></script>
+  <script type="application/json" id="or-qs" set:html={JSON.stringify(INTERVIEW_QUESTIONS.map((q) => ({ id: q.id, question: q.question })))}></script>
+</section>
+
+<style is:global>
+  .or-prog { background: var(--color-navy); color: #fff; border-radius: 1.1rem; padding: 1rem 1.15rem; margin-bottom: 1.2rem; }
+  .or-prog-n b { font-family: var(--font-display); font-size: 1.7rem; }
+  .or-prog-n span { color: #AFC0DA; font-size: 0.9rem; }
+  .or-bar { height: 0.5rem; background: rgba(255,255,255,0.15); border-radius: 9px; margin: 0.6rem 0 0.7rem; overflow: hidden; display: flex; }
+  .or-bar i { display: block; height: 100%; width: 0; transition: width 0.4s ease; }
+  .or-bar .v { background: #2E9E5B; } .or-bar .a { background: #7FD1A1; } .or-bar .t { background: #F5B429; } .or-bar .c { background: #F07E23; }
+  .or-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; font-size: 0.75rem; color: #C9D3E3; }
+  .or-legend span::before { content: ''; display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--c); margin-right: 0.35rem; }
+  .or-legend b { color: #fff; }
+  .or-gsc-note { margin: 0.6rem 0 0; font-size: 0.78rem; color: #FFD9B5; }
+
+  .or-listhead { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+  .or-listhead h2 { font-size: 1.15rem; margin: 0; }
+  .or-listhead select { font: inherit; font-size: 0.82rem; border: 1px solid var(--color-line); border-radius: 0.6rem; padding: 0.35rem 0.5rem; background: #fff; color: var(--color-navy); }
+  .or-chips { display: flex; gap: 0.45rem; overflow-x: auto; padding: 0.7rem 0; scrollbar-width: none; }
+  .or-chip { flex: none; font: inherit; font-size: 0.8rem; font-weight: 600; background: #fff; border: 1px solid var(--color-line); border-radius: 999px; padding: 0.4rem 0.75rem; color: var(--color-navy); cursor: pointer; }
+  .or-chip b { color: var(--color-orange); margin-left: 0.2rem; }
+  .or-chip.is-on { background: var(--color-navy); border-color: var(--color-navy); color: #fff; }
+  .or-search { width: 100%; font: inherit; font-size: 0.9rem; border: 1px solid var(--color-line); border-radius: 0.7rem; padding: 0.55rem 0.8rem; margin-bottom: 0.8rem; }
+
+  .or-card { background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 0.9rem 1rem; margin-bottom: 0.7rem; }
+  .or-card.is-open { border-color: var(--color-orange); box-shadow: 0 0 0 2px rgba(240,126,35,0.18); }
+  .or-row1 { display: flex; justify-content: space-between; gap: 0.6rem; }
+  .or-cat { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-river); }
+  .or-card h4 { font-family: var(--font-display); font-size: 1.02rem; margin: 0.15rem 0; color: var(--color-navy); }
+  .or-muted { font-size: 0.78rem; color: #6B7385; }
+  .or-stage { flex: none; align-self: flex-start; font-size: 0.68rem; font-weight: 700; border-radius: 999px; padding: 0.25rem 0.55rem; background: #FFF1E4; color: #C25E0C; white-space: nowrap; }
+  .or-stage.due { background: #FDF6DC; color: #8A6A00; }
+  .or-stage.talking { background: #FFF6D6; color: #7A5B00; }
+  .or-stage.no { background: #FBE6E6; color: #A33130; }
+  .or-stage.verified { background: #EAF6EF; color: #1F7A45; }
+  .or-stage.waiting { background: #EEF1F5; color: #55617A; }
+  .or-hook { margin: 0.65rem 0; background: #EEF5FB; border-radius: 0.7rem; padding: 0.6rem 0.7rem; font-size: 0.82rem; line-height: 1.45; color: #2B3F5C; }
+  .or-warn { margin: 0.65rem 0; background: #FFF6F0; border: 1px dashed #F3B98A; border-radius: 0.7rem; padding: 0.55rem 0.7rem; font-size: 0.8rem; color: #9A4A0B; }
+  .or-acts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.45rem; }
+  .or-act { font: inherit; font-size: 0.75rem; font-weight: 600; background: var(--color-surface); border: 0; border-radius: 0.7rem; padding: 0.6rem 0; text-align: center; color: var(--color-navy); text-decoration: none; cursor: pointer; }
+  .or-act.p { background: var(--color-orange); color: #fff; }
+  .or-act.off { opacity: 0.45; pointer-events: none; }
+  .or-foot { display: flex; justify-content: space-between; margin-top: 0.65rem; padding-top: 0.55rem; border-top: 1px solid var(--color-line); font-size: 0.75rem; color: #6B7385; }
+  .or-foot b { color: var(--color-navy); }
+  .or-empty { color: #6B7385; font-size: 0.9rem; padding: 1rem 0; }
+  .or-more { display: block; width: 100%; font: inherit; font-weight: 600; font-size: 0.85rem; background: #fff; border: 1px solid var(--color-line); border-radius: 0.8rem; padding: 0.7rem; color: var(--color-orange); cursor: pointer; }
+
+  .or-sheet { background: #fff; border: 1px solid var(--color-line); border-radius: 1.1rem; overflow: hidden; }
+  .or-sheet[hidden] { display: none; }
+  .or-sheet-h { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.9rem 1rem; border-bottom: 1px solid var(--color-line); }
+  .or-sheet-h h3 { font-size: 1rem; margin: 0; color: var(--color-navy); }
+  .or-x { font-size: 1.5rem; line-height: 1; background: none; border: 0; color: #6B7385; cursor: pointer; }
+  .or-contact { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.5rem; align-items: end; padding: 0.8rem 1rem 0; }
+  .or-contact label, .or-note { font-size: 0.7rem; font-weight: 700; color: #6B7385; text-transform: uppercase; letter-spacing: 0.06em; }
+  .or-contact input, .or-note textarea { display: block; width: 100%; margin-top: 0.2rem; font: inherit; font-size: 0.85rem; text-transform: none; letter-spacing: 0; border: 1px solid var(--color-line); border-radius: 0.55rem; padding: 0.45rem 0.55rem; color: var(--color-ink); }
+  .or-tabs { display: flex; gap: 0.35rem; padding: 0.8rem 1rem 0; flex-wrap: wrap; }
+  .or-tab { font: inherit; font-size: 0.78rem; font-weight: 700; border: 0; border-radius: 0.55rem; padding: 0.4rem 0.7rem; background: var(--color-surface); color: #6B7385; cursor: pointer; }
+  .or-tab.is-on { background: var(--color-navy); color: #fff; }
+  .or-touches { display: flex; align-items: center; gap: 0.3rem; padding: 0.6rem 1rem 0; }
+  .or-t { font: inherit; font-size: 0.78rem; font-weight: 700; width: 1.9rem; height: 1.9rem; border-radius: 50%; border: 1px solid var(--color-line); background: #fff; color: var(--color-navy); cursor: pointer; }
+  .or-t.is-on { background: var(--color-orange); border-color: var(--color-orange); color: #fff; }
+  .or-subject { margin: 0.7rem 1rem 0; font-size: 0.82rem; color: var(--color-navy); }
+  .or-msg { margin: 0.7rem 1rem; background: #E9F2FF; border-radius: 1rem 1rem 1rem 0.3rem; padding: 0.8rem 0.9rem; font-size: 0.88rem; line-height: 1.55; color: #1D2A40; white-space: pre-wrap; }
+  .or-actions { display: flex; gap: 0.5rem; padding: 0 1rem; }
+  .or-btn { flex: 1; font: inherit; font-weight: 700; font-size: 0.85rem; text-align: center; border: 0; border-radius: 0.7rem; padding: 0.65rem; background: var(--color-surface); color: var(--color-navy); text-decoration: none; cursor: pointer; }
+  .or-btn-p { background: var(--color-orange); color: #fff; }
+  .or-btn.off { opacity: 0.45; pointer-events: none; }
+  .or-lbl { margin: 1rem 1rem 0.4rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8A93A3; }
+  .or-outcomes { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem; }
+  .or-outcomes button { font: inherit; font-size: 0.8rem; font-weight: 600; background: #fff; border: 1px solid var(--color-line); border-radius: 999px; padding: 0.4rem 0.7rem; color: var(--color-navy); cursor: pointer; }
+  .or-outcomes button.g { background: #EAF6EF; border-color: #BFE3CC; color: #1F7A45; }
+  .or-outcomes button.r { color: #A33130; }
+  .or-outcomes button:disabled { opacity: 0.5; }
+  .or-note { display: block; margin: 0.9rem 1rem 0; }
+  .or-log { list-style: none; margin: 0.7rem 1rem 0; padding: 0; font-size: 0.78rem; color: #6B7385; }
+  .or-log li { padding: 0.3rem 0; border-top: 1px dashed var(--color-line); }
+  .or-status { margin: 0.6rem 1rem 0; font-size: 0.82rem; font-weight: 600; color: var(--color-success); }
+  .or-status.err { color: #A33130; }
+  .or-sheet > :last-child { margin-bottom: 1rem; }
+  .or-stage.answered { background: #EAF6EF; color: #1F7A45; }
+  .or-review { margin: 0.8rem 1rem 0; background: #F3FAF6; border: 1px solid #BFE3CC; border-radius: 0.9rem; padding: 0.8rem; }
+  .or-review-h { margin: 0 0 0.5rem; font-weight: 700; color: #1F7A45; font-size: 0.9rem; }
+  .or-answers { max-height: 16rem; overflow-y: auto; font-size: 0.82rem; line-height: 1.45; color: var(--color-ink); margin-bottom: 0.7rem; }
+  .or-answers p { margin: 0 0 0.55rem; }
+  .or-answers b { display: block; color: var(--color-navy); font-size: 0.75rem; }
+  .or-btn-g { width: 100%; background: var(--color-success); color: #fff; }
+  .or-linkrow { margin: 0.8rem 1rem 0; font-size: 0.8rem; display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+  .or-linkrow code { background: var(--color-surface); border-radius: 0.4rem; padding: 0.15rem 0.4rem; font-size: 0.78rem; }
+  .or-mailnote { margin: 0.5rem 1rem 0; }
+
+  @media (min-width: 900px) {
+    .or-cols { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+    .or-sheet { position: sticky; top: 1rem; }
+  }
+  @media (max-width: 899px) {
+    .or-sheet { position: fixed; inset: auto 0 0 0; max-height: 88vh; overflow-y: auto; z-index: 300; border-radius: 1.2rem 1.2rem 0 0; box-shadow: 0 -20px 50px rgba(13,23,48,0.35); }
+    .or-contact { grid-template-columns: 1fr 1fr; }
+    .or-contact .or-btn { grid-column: 1 / -1; }
+  }
+</style>
+
+<script>
+  type Item = { slug: string; name: string; category: string; categoryName: string; phone?: string; website?: string; rating?: number; reviews?: number; google?: string };
+  type Rec = { stage?: string; touches?: number; nextAt?: string; email?: string; note?: string; code?: string; answeredAt?: string; contact?: { phone?: string; website?: string; email?: string }; log?: { at: string; what: string }[] };
+  type Stat = { clicks: number; impressions: number };
+
+  const root = document.getElementById('panel-outreach');
+  const dataEl = document.getElementById('or-data');
+  if (root && dataEl) {
+    const items: Item[] = JSON.parse(dataEl.textContent || '[]');
+    let records: Record<string, Rec> = {};
+    let pages: Record<string, Stat> = {};
+    let filter = 'today';
+    let sort = 'searched';
+    let query = '';
+    let openSlug = '';
+    let channel = 'text';
+    let touch = 1;
+    let limit = 25;
+    let loaded = false;
+    let emailOn = false;
+    const verifiedBase = Number(document.getElementById('or-verified')?.textContent || 0);
+    const totalAll = verifiedBase + items.length;
+
+    const $ = (id: string) => document.getElementById(id)!;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+    const today = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago' }).format(new Date());
+    const addDays = (n: number) => { const d = new Date(`${today()}T12:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+    const nice = (k: string) => new Date(`${k}T12:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    const short = (n: string) => n.replace(/,?\s+(LLC|Inc\.?|Co\.?)$/i, '').trim();
+    const linkFor = (it: Item) => { const c = records[it.slug]?.code; return c ? `siouxfallsgo.com/verify/?c=${c}` : '[link loading]'; };
+
+    const statFor = (it: Item) => {
+      const cat = pages[`/${it.category}/`] || { clicks: 0, impressions: 0 };
+      const own = pages[`/businesses/${it.slug}/`] || { clicks: 0, impressions: 0 };
+      return { cat, own, score: cat.impressions + own.impressions * 3 };
+    };
+
+    const stageOf = (it: Item) => {
+      const r = records[it.slug] || {};
+      if (r.stage === 'verified') return 'verified';
+      if (r.stage === 'no') return 'no';
+      if (r.stage === 'answered') return 'answered';
+      if (!r.stage && !(r.touches || 0)) return 'new';
+      if (r.nextAt && r.nextAt <= today()) return 'due';
+      return r.stage === 'talking' ? 'talking' : 'waiting';
+    };
+    const stageLabel: Record<string, string> = { answered: 'Answers in', new: 'Not contacted', due: 'Follow up due', talking: 'Talking', waiting: 'Waiting', no: 'Said no', verified: 'Verified' };
+
+    function hookText(it: Item) {
+      const s = statFor(it);
+      if (s.own.impressions > 0) return `Their own profile was shown on Google <b>${s.own.impressions} times</b> in the last 4 weeks${s.own.clicks ? `, and <b>${s.own.clicks} ${s.own.clicks === 1 ? 'person' : 'people'}</b> clicked through` : ''}.`;
+      if (s.cat.impressions > 0) return `The Sioux Falls ${esc(it.categoryName)} page they're listed on was shown on Google <b>${s.cat.impressions} times</b> in the last 4 weeks${s.cat.clicks ? `, and <b>${s.cat.clicks} ${s.cat.clicks === 1 ? 'person' : 'people'}</b> clicked through` : ''}.`;
+      if (it.rating) return `Listed for their <b>${it.rating.toFixed(1)}-star</b> Google rating${it.reviews ? ` from ${it.reviews} reviews` : ''}. Lead with that.`;
+      return '';
+    }
+
+    // Plain-language stat line for the scripts, matching hookText.
+    function statLine(it: Item) {
+      const s = statFor(it);
+      if (s.own.impressions > 0) return `your profile was shown on Google ${s.own.impressions} times in the last 4 weeks`;
+      if (s.cat.impressions > 0) return `that page was shown on Google ${s.cat.impressions} times in the last 4 weeks`;
+      return '';
+    }
+
+    function script(it: Item) {
+      const n = short(it.name);
+      const cat = it.categoryName.toLowerCase();
+      const why = it.rating ? `because of your ${it.rating.toFixed(1)}-star Google rating` : 'because of your reviews';
+      const stat = statLine(it);
+      const url = linkFor(it);
+      const T: Record<string, Record<number, { subject?: string; body: string }>> = {
+        text: {
+          1: { body: `Hi, this is Francis with Sioux Falls Go. ${n} is already on our ${cat} page ${why}${stat ? `, and ${stat}` : ''}. To get your Verified badge, could you answer a few quick questions about the business? Only two are required: ${url}` },
+          2: { body: `Hi, Francis again from Sioux Falls Go. Just following up on ${n}'s listing. Once you answer the owner questions it gets the Verified badge, which tells people we checked with you personally. Here's the link again: ${url}` },
+          3: { body: `Hi, it's Francis with Sioux Falls Go. Quick one: is ${it.phone || 'this'} still the best number for ${n}? I want to make sure customers who find you on our site reach the right place.` },
+          4: { body: `Last note from me, I promise. ${n} will stay on our ${cat} page either way. If you'd like the Verified badge, the questions are here whenever you have a few minutes: ${url} Thanks for the great work you do in Sioux Falls.` },
+        },
+        email: {
+          1: { subject: `${n} on Sioux Falls Go`, body: `Hi,\n\nI'm Francis with Sioux Falls Go, a local directory where we only list businesses with excellent reviews. Nobody can pay to get in.\n\n${n} is already on our ${cat} page ${why}${stat ? `, and ${stat}` : ''}.\n\nTo get your Verified badge, please answer a few questions about the business here. Only two are required, and your answers help us write your profile:\nhttps://${url}\n\nThanks,\nFrancis\nSioux Falls Go` },
+          2: { subject: `Re: ${n} on Sioux Falls Go`, body: `Hi,\n\nFollowing up on my note about ${n}'s listing. Verified businesses get a badge on their profile showing we've confirmed their details with the owner, which helps people choose with confidence.\n\nThe owner questions are here: https://${url}\n\nThanks,\nFrancis` },
+          3: { subject: `Quick question about ${n}`, body: `Hi,\n\nIs ${it.phone || 'the number on your Google profile'} still the best number for ${n}? I want to make sure customers who find you through Sioux Falls Go reach you.\n\nThanks,\nFrancis` },
+          4: { subject: `Closing the loop on ${n}`, body: `Hi,\n\nLast note from me. ${n} will stay on our ${cat} page either way. If you'd like the Verified badge, the questions are here whenever you have a few minutes:\nhttps://${url}\n\nThanks for the work you do in Sioux Falls,\nFrancis` },
+        },
+      };
+      const call = `OPENER\n"Hi, is this the owner of ${n}? This is Francis with Sioux Falls Go. I'll be quick."\n\nWHY YOU'RE CALLING\n"You're already listed on our ${cat} page ${why}. We only list businesses with excellent reviews, and nobody can pay to get in.${stat ? ` ${stat.charAt(0).toUpperCase() + stat.slice(1)}.` : ''}"\n\nTHE SMALL ASK\n"To get the Verified badge, we have a few short questions for the owner. Only two are required, and your answers help us write your profile. Can I text you the link right now?"\n\nCLOSE\n"Great. Is this the best number to text? You'll get it in a minute."\n(Then tap Text, send touch 1, and log "Sent message".)\n\nIF THEY ASK "IS THIS PAID?"\n"No. Being listed and verified is free. There's an optional upgrade later for businesses that want more, but that's not why I'm calling."\n\nIF THEY'RE BUSY\n"No problem. When's a better time, later today or tomorrow morning?"`;
+      const vm = `"Hi, this is Francis with Sioux Falls Go. ${n} is already listed on our ${cat} page ${why}, and I'm sending a short set of owner questions so you can get your Verified badge. Watch for a text or email from us. You can reach me at [your number]. Again, Francis with Sioux Falls Go. Thanks!"`;
+      if (channel === 'call') return { body: call };
+      if (channel === 'vm') return { body: vm };
+      return T[channel][touch];
+    }
+
+    function counts() {
+      const c: Record<string, number> = { answered: 0, new: 0, due: 0, talking: 0, waiting: 0, no: 0, verified: 0 };
+      items.forEach((it) => c[stageOf(it)]++);
+      return c;
+    }
+
+    function listFor(f: string) {
+      const q = query.toLowerCase();
+      let out = items.filter((it) => !q || `${it.name} ${it.categoryName}`.toLowerCase().includes(q));
+      const st = (it: Item) => stageOf(it);
+      if (f === 'today') {
+        const answered = out.filter((it) => st(it) === 'answered');
+        const due = out.filter((it) => st(it) === 'due');
+        const fresh = out.filter((it) => st(it) === 'new').sort(cmp).slice(0, 10);
+        return [...answered.sort(cmp), ...due.sort(cmp), ...fresh];
+      }
+      if (f !== 'all') out = out.filter((it) => st(it) === f);
+      return out.sort(cmp);
+    }
+    function cmp(a: Item, b: Item) {
+      if (sort === 'name') return a.name.localeCompare(b.name);
+      if (sort === 'rating') return ((b.rating || 0) * Math.log10((b.reviews || 0) + 10)) - ((a.rating || 0) * Math.log10((a.reviews || 0) + 10));
+      return statFor(b).score - statFor(a).score || (b.reviews || 0) - (a.reviews || 0);
+    }
+
+    function render() {
+      const c = counts();
+      const verified = verifiedBase + c.verified;
+      $('or-verified').textContent = String(verified);
+      const pct = (n: number) => `${(n / Math.max(1, totalAll)) * 100}%`;
+      (root!.querySelector('.or-bar .v') as HTMLElement).style.width = pct(verified);
+      (root!.querySelector('.or-bar .a') as HTMLElement).style.width = pct(c.answered);
+      (root!.querySelector('.or-bar .t') as HTMLElement).style.width = pct(c.talking);
+      (root!.querySelector('.or-bar .c') as HTMLElement).style.width = pct(c.waiting + c.due);
+      const set = (k: string, v: number) => { const el = root!.querySelector(`[data-count="${k}"]`); if (el) el.textContent = String(v); };
+      set('verified', verified); set('answered', c.answered); set('talking', c.talking); set('contacted', c.waiting + c.due); set('new', c.new); set('no', c.no);
+      ['today', 'answered', 'due', 'new', 'talking', 'waiting', 'no', 'all'].forEach((f) => {
+        const el = root!.querySelector(`[data-chip="${f}"]`);
+        if (el) el.textContent = String(listFor(f).length);
+      });
+
+      const list = listFor(filter);
+      const box = $('or-list');
+      if (!list.length) { box.innerHTML = `<p class="or-empty">${filter === 'today' ? 'Nothing due today. Nice work.' : 'No businesses here.'}</p>`; return; }
+      box.innerHTML = list.slice(0, limit).map((it) => {
+        const r = records[it.slug] || {};
+        const st = stageOf(it);
+        const hook = hookText(it);
+        const tel = it.phone ? `tel:${it.phone.replace(/[^\d+]/g, '')}` : '';
+        const g = it.google || `https://www.google.com/search?q=${encodeURIComponent(`${it.name} Sioux Falls`)}`;
+        const next = r.nextAt ? (r.nextAt <= today() ? 'today' : nice(r.nextAt)) : (st === 'new' ? 'today' : 'not set');
+        const last = r.log?.length ? ` · ${esc(r.log[r.log.length - 1].what.toLowerCase())} ${nice(r.log[r.log.length - 1].at.slice(0, 10))}` : '';
+        return `<article class="or-card${openSlug === it.slug ? ' is-open' : ''}" data-slug="${it.slug}">
+          <div class="or-row1"><div><span class="or-cat">${esc(it.categoryName)}</span><h4>${esc(it.name)}</h4>
+            <div class="or-muted">${it.rating ? `★ ${it.rating.toFixed(1)}` : ''}${it.reviews ? ` · ${it.reviews} reviews` : ''}${it.phone ? ` · ${esc(it.phone)}` : ''}</div></div>
+            <span class="or-stage ${st}">${stageLabel[st]}</span></div>
+          ${it.phone ? '' : `<div class="or-warn">No phone on file. Open their Google profile, then add it in the script panel.</div>`}
+          ${hook ? `<div class="or-hook"><b>Your opener:</b> ${hook}</div>` : ''}
+          <div class="or-acts">
+            ${it.phone ? `<a class="or-act p" href="${tel}" data-act="call">Call</a>` : `<a class="or-act" href="${g}" target="_blank" rel="noopener">Google</a>`}
+            <button type="button" class="or-act" data-act="text">Text</button>
+            <button type="button" class="or-act" data-act="email">Email</button>
+            <a class="or-act" href="/businesses/${it.slug}/" target="_blank" rel="noopener">Listing</a>
+          </div>
+          <div class="or-foot"><span>Touches: <b>${r.touches || 0} of 4</b>${last}</span><span>Next: <b>${next}</b></span></div>
+        </article>`;
+      }).join('') + (list.length > limit ? `<button type="button" class="or-more" id="or-more">Show ${Math.min(25, list.length - limit)} more of ${list.length - limit}</button>` : '');
+    }
+
+    function renderSheet() {
+      const it = items.find((x) => x.slug === openSlug);
+      const sheet = $('or-sheet');
+      if (!it) { sheet.hidden = true; return; }
+      sheet.hidden = false;
+      const r = records[it.slug] || {};
+      $('or-sheet-title').textContent = it.name;
+      $('or-sheet-touch').textContent = `Touch ${touch} of 4 · ${stageLabel[stageOf(it)]}`;
+      ($('or-phone') as HTMLInputElement).value = it.phone || '';
+      ($('or-email') as HTMLInputElement).value = r.email || '';
+      ($('or-note') as HTMLTextAreaElement).value = r.note || '';
+      root!.querySelectorAll('.or-tab').forEach((b) => b.classList.toggle('is-on', (b as HTMLElement).dataset.ch === channel));
+      root!.querySelectorAll('.or-t').forEach((b) => b.classList.toggle('is-on', Number((b as HTMLElement).dataset.t) === touch));
+      (root!.querySelector('.or-touches') as HTMLElement).style.display = channel === 'text' || channel === 'email' ? 'flex' : 'none';
+      const m = script(it);
+      $('or-msg').textContent = m.body;
+      const subj = $('or-subject');
+      subj.hidden = !m.subject; subj.innerHTML = m.subject ? `<b>Subject</b> ${esc(m.subject)}` : '';
+      const send = $('or-send') as HTMLAnchorElement;
+      const digits = (it.phone || '').replace(/[^\d+]/g, '');
+      send.classList.remove('off');
+      if (channel === 'text') { send.textContent = 'Open in Messages'; send.href = digits ? `sms:${digits}?&body=${encodeURIComponent(m.body)}` : '#'; if (!digits) send.classList.add('off'); }
+      else if (channel === 'email') { send.textContent = 'Open in Mail'; send.href = `mailto:${encodeURIComponent(r.email || '')}?subject=${encodeURIComponent(m.subject || '')}&body=${encodeURIComponent(m.body)}`; }
+      else { send.textContent = digits ? `Call ${it.phone}` : 'No phone yet'; send.href = digits ? `tel:${digits}` : '#'; if (!digits) send.classList.add('off'); }
+      const isEmail = channel === 'email';
+      $('or-send-email').hidden = !(isEmail && emailOn);
+      send.hidden = isEmail && emailOn;
+      $('or-mailnote').hidden = !(isEmail && !emailOn);
+      $('or-link').textContent = r.code ? `siouxfallsgo.com/verify/?c=${r.code}` : 'making link…';
+      const answered = r.stage === 'answered';
+      $('or-review').hidden = !answered;
+      if (answered) loadAnswers(it);
+      $('or-log').innerHTML = (r.log || []).slice().reverse().slice(0, 8).map((l) => `<li>${nice(l.at.slice(0, 10))} · ${esc(l.what)}</li>`).join('');
+    }
+
+    let answersFor = '';
+    async function loadAnswers(it: Item) {
+      if (answersFor === it.slug) return;
+      answersFor = it.slug;
+      const box = $('or-answers'); box.innerHTML = '<p>Loading answers…</p>';
+      try {
+        const res = await fetch(`/api/profile-interview?slug=${encodeURIComponent(it.slug)}`);
+        const d = await res.json();
+        const r = records[it.slug] || {};
+        const c = r.contact || {};
+        const qs = JSON.parse(($('or-qs') as HTMLElement).textContent || '[]') as { id: string; question: string }[];
+        const rows = qs.filter((q) => d.answers?.[q.id]).map((q) => `<p><b>${esc(q.question)}</b>${esc(d.answers[q.id])}</p>`).join('');
+        box.innerHTML = `<p><b>Contact they confirmed</b>${esc([c.phone, c.website, c.email].filter(Boolean).join(' · ') || 'None given')}</p>${rows || '<p>No answers found.</p>'}`;
+      } catch { box.innerHTML = '<p>Could not load the answers. Open Directory → Profile interview to see them.</p>'; }
+    }
+
+    function status(msg: string, err = false) {
+      const el = $('or-status'); el.hidden = !msg; el.textContent = msg; el.classList.toggle('err', err);
+    }
+
+    async function save(slug: string, patch: Record<string, unknown>) {
+      const res = await fetch('/api/outreach', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, patch }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Could not save');
+      records[slug] = data.record;
+    }
+
+    function open(slug: string, ch?: string) {
+      openSlug = slug;
+      const r = records[slug] || {};
+      touch = Math.min(4, (r.touches || 0) + 1);
+      if (ch) channel = ch;
+      status('');
+      answersFor = '';
+      render(); renderSheet();
+      if (!r.code) save(slug, { ensureCode: true }).then(() => { if (openSlug === slug) renderSheet(); }).catch((e) => status(e.message, true));
+      if (window.matchMedia('(min-width: 900px)').matches) $('or-sheet').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    const OUT: Record<string, { label: string; stage?: string; days?: number; touch?: boolean }> = {
+      noanswer: { label: 'Called, no answer', stage: 'contacted', days: 2, touch: true },
+      voicemail: { label: 'Left voicemail', stage: 'contacted', days: 3, touch: true },
+      sent: { label: 'Sent message', stage: 'contacted', days: 3, touch: true },
+      callback: { label: 'Asked to call back', stage: 'talking', days: 1, touch: true },
+      interested: { label: 'Interested', stage: 'talking', days: 2, touch: true },
+      no: { label: 'Not interested', stage: 'no', days: 90, touch: true },
+    };
+
+    root.addEventListener('click', async (e) => {
+      const t = e.target as HTMLElement;
+      const card = t.closest('.or-card') as HTMLElement | null;
+      const act = t.closest('[data-act]') as HTMLElement | null;
+      if (card && act) {
+        const slug = card.dataset.slug!;
+        if (act.dataset.act === 'call') { open(slug, 'call'); return; } // the tel: link still dials
+        e.preventDefault(); open(slug, act.dataset.act); return;
+      }
+      if (card && !t.closest('a')) { open(card.dataset.slug!); return; }
+      if (t.id === 'or-more') { limit += 25; render(); return; }
+      const chip = t.closest('.or-chip') as HTMLElement | null;
+      if (chip) { filter = chip.dataset.filter!; limit = 25; root!.querySelectorAll('.or-chip').forEach((c) => c.classList.toggle('is-on', c === chip)); render(); return; }
+      const tab = t.closest('.or-tab') as HTMLElement | null;
+      if (tab) { channel = tab.dataset.ch!; renderSheet(); return; }
+      const tb = t.closest('.or-t') as HTMLElement | null;
+      if (tb) { touch = Number(tb.dataset.t); renderSheet(); return; }
+      if (t.id === 'or-close') { openSlug = ''; $('or-sheet').hidden = true; render(); return; }
+      if (t.id === 'or-copy') {
+        const it = items.find((x) => x.slug === openSlug); if (!it) return;
+        const m = script(it);
+        await navigator.clipboard.writeText(m.subject ? `${m.subject}\n\n${m.body}` : m.body).catch(() => {});
+        status('Copied.'); return;
+      }
+      const ob = t.closest('[data-out]') as HTMLButtonElement | null;
+      if (ob && openSlug) {
+        const o = OUT[ob.dataset.out!]; const slug = openSlug; const r = records[slug] || {};
+        root!.querySelectorAll('[data-out]').forEach((b) => ((b as HTMLButtonElement).disabled = true));
+        try {
+          await save(slug, { stage: o.stage, touches: o.touch ? (r.touches || 0) + 1 : r.touches, nextAt: o.days ? addDays(o.days) : '', logEntry: o.label });
+          status(`Saved. Next follow-up ${o.days ? nice(addDays(o.days)) : 'none'}.`);
+          touch = Math.min(4, (records[slug].touches || 0) + 1);
+          render(); renderSheet();
+        } catch (err: any) { status(err.message, true); }
+        finally { root!.querySelectorAll('[data-out]').forEach((b) => ((b as HTMLButtonElement).disabled = false)); }
+        return;
+      }
+      if (t.id === 'or-send-email' && openSlug) {
+        const slug = openSlug; const it = items.find((x) => x.slug === slug)!;
+        const to = ($('or-email') as HTMLInputElement).value.trim();
+        const m = script(it);
+        if (!records[slug]?.code) { status('The owner link is still being made. Try again in a second.', true); return; }
+        const btn = t as HTMLButtonElement; btn.disabled = true; btn.textContent = 'Sending…';
+        try {
+          const res = await fetch('/api/outreach-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, to, subject: m.subject, body: m.body }) });
+          const d = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(d.error || 'Could not send');
+          records[slug] = d.record;
+          touch = Math.min(4, (d.record.touches || 0) + 1);
+          status(`Email sent to ${to}. Next follow-up ${nice(d.record.nextAt)}.`);
+          render(); renderSheet();
+        } catch (err: any) { status(err.message, true); }
+        finally { btn.disabled = false; btn.textContent = 'Send email'; }
+        return;
+      }
+      if (t.id === 'or-verify' && openSlug) {
+        const slug = openSlug; const it = items.find((x) => x.slug === slug)!;
+        const c = records[slug]?.contact || {};
+        if (!confirm(`Mark ${it.name} Verified on the live site?`)) return;
+        const updates: Record<string, string> = { verifiedAt: today() };
+        if (c.phone && c.phone !== it.phone) updates.phone = c.phone;
+        if (c.website && /\./.test(c.website)) updates.website = c.website;
+        try {
+          const res = await fetch('/api/update-business', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, updates }) });
+          if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.error || 'Could not mark Verified'); }
+          await save(slug, { stage: 'verified', nextAt: '', logEntry: 'Verified from owner answers' });
+          status('Verified. The badge goes live on the next deploy. Write their profile from these answers in Directory → Profile interview.');
+          render(); renderSheet();
+        } catch (err: any) { status(err.message, true); }
+        return;
+      }
+      if (t.id === 'or-save-contact' && openSlug) {
+        const slug = openSlug; const it = items.find((x) => x.slug === slug)!;
+        const phone = ($('or-phone') as HTMLInputElement).value.trim();
+        const email = ($('or-email') as HTMLInputElement).value.trim();
+        try {
+          if (phone !== (it.phone || '')) {
+            const res = await fetch('/api/update-business', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, updates: { phone } }) });
+            if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.error || 'Could not save the phone'); }
+            it.phone = phone || undefined;
+          }
+          await save(slug, { email });
+          status('Saved. A new phone number also updates the public listing on the next deploy.');
+          render(); renderSheet();
+        } catch (err: any) { status(err.message, true); }
+      }
+    });
+
+    ($('or-note') as HTMLTextAreaElement).addEventListener('change', async (e) => {
+      if (!openSlug) return;
+      try { await save(openSlug, { note: (e.target as HTMLTextAreaElement).value }); status('Note saved.'); } catch (err: any) { status(err.message, true); }
+    });
+    ($('or-sort') as HTMLSelectElement).addEventListener('change', (e) => { sort = (e.target as HTMLSelectElement).value; render(); });
+    ($('or-search') as HTMLInputElement).addEventListener('input', (e) => { query = (e.target as HTMLInputElement).value; limit = 25; render(); });
+
+    async function load() {
+      if (loaded) return; loaded = true;
+      try {
+        const res = await fetch('/api/outreach');
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Could not load outreach');
+        records = data.records || {};
+        fetch('/api/outreach-email').then((r) => r.json()).then((d) => { emailOn = !!d.configured; renderSheet(); }).catch(() => {});
+        pages = data.gsc?.pages || {};
+        if (!data.gsc?.ok) { const n = $('or-gsc-note'); n.hidden = false; n.textContent = `Google numbers unavailable (${data.gsc?.note || 'unknown'}). Cards fall back to star ratings.`; }
+      } catch (err: any) {
+        const n = $('or-gsc-note'); n.hidden = false; n.textContent = `${err.message}. Showing the list without saved progress.`;
+      }
+      render();
+    }
+    // Load when the tab is first opened (or right away if the page opened on it).
+    document.querySelectorAll('[data-tab="outreach"]').forEach((b) => b.addEventListener('click', load));
+    if (root.classList.contains('is-active') || new URLSearchParams(location.search).get('tab') === 'outreach') load();
+    render();
+  }
+</script>
