@@ -69,7 +69,7 @@ General labor covers demolition, installation, and trim work. But the trades are
 
 That permit reality has a budget consequence: if your design moves the sink even a few feet, or if you are adding an island with a sink, you are adding licensed plumbing work, a plumbing permit, and possibly new drain and supply runs. That is not a reason to avoid the move, but it is a reason to know about it before you fall in love with a layout.
 
-For a broader look at what Sioux Falls homeowners are navigating in kitchen projects right now, the renovation guide at [siouxfallsrevamp.com/category/kitchen/](https://siouxfallsrevamp.com/category/kitchen/) covers local project considerations worth reading alongside your contractor conversations.
+For a broader look at what Sioux Falls homeowners are navigating in kitchen projects right now, this local guide to [kitchen remodeling projects in Sioux Falls](https://siouxfallsrevamp.com/category/kitchen/) covers local project considerations worth reading alongside your contractor conversations.
 
 ## The Permit Line Item Most Homeowners Skip
 
