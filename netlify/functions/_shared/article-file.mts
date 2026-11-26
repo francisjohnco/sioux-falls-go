@@ -22,12 +22,23 @@ export interface Draft {
   heroImageCredit?: { photographer: string; profileUrl: string; source?: string };
 }
 
+// Search descriptions over the limit get trimmed at a sentence or word
+// boundary instead of holding the whole article for review.
+function fitDescription(d: string): string {
+  const t = (d || '').trim();
+  if (t.length <= 170) return t;
+  const cut = t.slice(0, 170);
+  const sentence = cut.lastIndexOf('. ');
+  if (sentence > 90) return cut.slice(0, sentence + 1);
+  return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:]$/, '') + '.';
+}
+
 export function cleanDraft<T extends Draft>(draft: T): T {
   return {
     ...draft,
     title: cleanDashes(draft.title),
     seoTitle: cleanDashes(draft.seoTitle || draft.title),
-    seoDescription: cleanDashes(draft.seoDescription),
+    seoDescription: fitDescription(cleanDashes(draft.seoDescription)),
     bodyMarkdown: cleanDashes(draft.bodyMarkdown),
     embeddedFaqs: (draft.embeddedFaqs || []).map((f) => ({ question: cleanDashes(f.question), answer: cleanDashes(f.answer) })),
   };

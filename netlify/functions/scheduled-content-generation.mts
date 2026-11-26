@@ -92,6 +92,21 @@ export default async () => {
   const started = Date.now();
   let last: Response | null = null;
   let unfinished = 0;
+  // Backfill drafts held only for a fixable reason (search description too
+  // long) are cleaned and published on their planned date instead of waiting.
+  const store = getStore('pending-drafts');
+  for (const p of pending) {
+    if (!p?.slug || !/^Held for review: SEO description length \d+$/.test(p.reviewNote || '')) continue;
+    const q = queues.find((x) => (x.topics || []).some((t: any) => t.slug === p.slug) || x.pillar?.slug === p.slug);
+    const t = q && ((q.topics || []).find((x: any) => x.slug === p.slug) || (q.pillar?.slug === p.slug ? q.pillar : null));
+    if (!t?.publishDate || t.publishDate > today) continue;
+    const draft = cleanDraft(p.draft);
+    if (validateDraft(draft, knownSlugs(articleIndex, q)).length) continue;
+    const file = buildArticleFile({ draft, categorySlug: p.categorySlug, contentType: p.contentType, relatedBusinesses: p.relatedBusinesses || [], publishDate: t.publishDate, slug: p.slug, cluster: p.cluster, clusterRole: p.clusterRole });
+    const res = await commitNewFile(file.path, file.content, `Content Engine: schedule "${draft.title}" for ${t.publishDate}`);
+    if (res.ok) { await store.delete(p.id); console.log(`Published held draft "${draft.title}" for ${t.publishDate}`); }
+  }
+
   const photoMisses: Record<string, number> = (await engine.get('photo-misses', { type: 'json' }).catch(() => null)) || {};
   for (let run = 0; run < 8 && Date.now() - started < 9 * 60 * 1000; run++) {
     const due: { queue: any; topic: any; ahead: number }[] = [];
