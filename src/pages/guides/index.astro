@@ -64,17 +64,32 @@ const loopToday = todayCentral();
 const weekEnd = isoDay(new Date(Date.parse(`${loopToday}T12:00:00Z`) + 7 * 86400000));
 const weekAgo = isoDay(new Date(Date.parse(`${loopToday}T12:00:00Z`) - 7 * 86400000));
 const bf = currentBlackFriday(loopToday);
-const bfLive = (await getCollection('deals')).filter((d) => d.data.promotion === 'black-friday' && (!d.data.expiresAt || dateKey(d.data.expiresAt) >= loopToday));
+const allDeals = await getCollection('deals');
+const bfLive = allDeals.filter((d) => d.data.promotion === 'black-friday' && (!d.data.expiresAt || dateKey(d.data.expiresAt) >= loopToday));
+const liveDeals = allDeals.filter((d) => (!d.data.expiresAt || dateKey(d.data.expiresAt) >= loopToday) && (!d.data.activatesAt || dateKey(d.data.activatesAt) <= loopToday)).length;
 const showBf = loopToday >= isoDay(new Date(bf.blackFriday.getTime() - 10 * 86400000)) && loopToday <= isoDay(bf.cyberMonday) && bfLive.length > 0;
 const weekEvents = (await getUpcomingEvents()).filter((e) => dateKey(e.date) <= weekEnd);
-type WeekRow = { day: Date; title: string; detail: string; href: string; tag?: string };
+type WeekRow = { day: Date; title: string; detail: string; href: string; tag?: string; photo?: string };
 const weekRows: WeekRow[] = [
   ...(showBf ? [{ day: loopToday > isoDay(bf.blackFriday) ? new Date(`${loopToday}T12:00:00Z`) : bf.blackFriday, title: 'Local Black Friday deals', detail: `${bfLive.length} Sioux Falls business${bfLive.length === 1 ? '' : 'es'}`, href: '/local-deals/black-friday/', tag: 'Black Friday' }] : []),
-  ...weekEvents.map((e) => ({ day: e.date, title: e.title, detail: e.location, href: '/events' })),
-].sort((a, b) => a.day.getTime() - b.day.getTime()).slice(0, 3);
+  ...weekEvents.map((e) => ({ day: e.date, title: e.title, detail: e.location, href: '/events', photo: e.photo })),
+].sort((a, b) => a.day.getTime() - b.day.getTime()).slice(0, 6);
 const newThisWeek = allArticles.filter((a) => dateKey(a.data.publishedAt) > weekAgo).length;
 const dow = (d: Date) => d.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'UTC' });
 const dom = (d: Date) => d.toLocaleDateString('en-US', { day: 'numeric', timeZone: 'UTC' });
+
+// Desktop day picker: today plus the next five days. Days with something on
+// get a dot, and clicking one narrows the week list to that day.
+const pickerDays = Array.from({ length: 6 }, (_, i) => new Date(Date.parse(`${loopToday}T12:00:00Z`) + i * 86400000));
+const busyDays = new Set(weekRows.map((r) => isoDay(r.day)));
+const whenLabel = (d: Date) => {
+  const k = isoDay(d);
+  if (k === loopToday) return 'Today';
+  if (k === isoDay(pickerDays[1])) return 'Tomorrow';
+  return d.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' });
+};
+// "Fresh this week" tiles on desktop: the newest guides after the featured one.
+const freshTiles = await withCategory(allSorted.slice(1, 5));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -91,34 +106,69 @@ const schema = {
   <SiteHeader slot="header" />
 
   <section class="loop-hero">
-    <div class="loop-hero-photo"></div>
-    <div class="loop-hero-overlay"></div>
-    <div class="container loop-hero-grid">
-      <div class="loop-hero-content">
-        <p class="loop-today" id="loop-today">This week in Sioux Falls</p>
-        <h1>Stay in The Loop</h1>
+    {/* Phone only: a clear photo of the falls, no dark wash over it */}
+    <div class="loop-photo">
+      <p class="loop-photo-cap"><span class="loop-dot"></span>Falls Park<span class="loop-wx-cap" hidden></span></p>
+    </div>
+    <div class="container loop-board">
+      <div class="loop-intro">
+        <p class="loop-today"><span id="loop-today">{new Date(`${loopToday}T12:00:00Z`).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' })}</span><span class="loop-wx" id="loop-wx" hidden></span></p>
+        <h1><span class="loop-h1-stay">Stay in </span><mark>The Loop</mark></h1>
         <p class="loop-lede">What's happening in Sioux Falls this week, and the local guides worth your time. Written for people who live here.</p>
         <div class="loop-search-wrap">
           <Icon name="search" size={18} class="loop-search-icon" />
-          <input type="search" id="loop-search-input" class="loop-search-input" placeholder="Search every article and guide..." aria-label="Search articles and guides" />
+          <input type="search" id="loop-search-input" class="loop-search-input" placeholder="Search every article and guide" aria-label="Search articles and guides" />
+        </div>
+        <div class="loop-days" role="group" aria-label="Pick a day">
+          {pickerDays.map((d, i) => (
+            <button type="button" class:list={['loop-day', { 'is-on': i === 0 }]} data-day={isoDay(d)} aria-pressed={i === 0 ? 'true' : 'false'}>
+              {dow(d)}<b>{dom(d)}</b>{busyDays.has(isoDay(d)) && <i aria-hidden="true"></i>}
+            </button>
+          ))}
         </div>
       </div>
+
       {weekRows.length > 0 && (
-        <aside class="loop-week">
-          <h2>This week in Sioux Falls</h2>
-          {weekRows.map((r) => (
-            <a class="loop-week-row" href={r.href}>
-              <span class="loop-week-day">{dow(r.day)}<b>{dom(r.day)}</b></span>
-              <span>{r.tag && <em>{r.tag}</em>}<strong>{r.title}</strong><small>{r.detail}</small></span>
-            </a>
-          ))}
-        </aside>
+        <div class="loop-week">
+          <div class="loop-week-head"><h2>This week</h2><a href="/events">All events →</a></div>
+          <div class="loop-week-list">
+            {weekRows.map((r) => (
+              <a class:list={['loop-ev', { 'is-deal': r.tag }]} href={r.href} data-day={isoDay(r.day)}>
+                <span class="loop-ev-media" style={r.photo ? `background-image:url(${r.photo})` : undefined}>
+                  {!r.photo && <span class="loop-ev-badge">{r.tag}</span>}
+                  <span class="loop-ev-date">{dow(r.day)}<b>{dom(r.day)}</b></span>
+                  {r.tag && r.photo && <span class="loop-ev-tag">{r.tag}</span>}
+                </span>
+                <span class="loop-ev-text">
+                  <strong>{r.title}</strong>
+                  <small><span class="loop-ev-when">{whenLabel(r.day)} · </span>{r.detail}</small>
+                </span>
+              </a>
+            ))}
+            <p class="loop-ev-none" hidden>Nothing on the calendar that day yet.</p>
+          </div>
+          <a class="loop-week-more" href="/events">See the whole week →</a>
+        </div>
       )}
+
+      {/* Phone: quick numbers. Desktop: the newest guides as tiles. */}
+      <div class="loop-stats">
+        <p><b>{newThisWeek}</b>new guide{newThisWeek === 1 ? '' : 's'} this week</p>
+        <p><b>{weekEvents.length}</b>event{weekEvents.length === 1 ? '' : 's'} this week</p>
+        {liveDeals > 0 ? <p><b>{liveDeals}</b>local deal{liveDeals === 1 ? '' : 's'} live</p> : <p><b>{allArticles.length}</b>local guides in all</p>}
+      </div>
     </div>
-    <div class="container loop-strip">
-      <p><b>{newThisWeek}</b> new guide{newThisWeek === 1 ? '' : 's'} this week</p>
-      <a href={`/guides/${allSorted[0].id}`}><b>Newest</b> {allSorted[0].data.title}</a>
-      <p><b>{allArticles.length}</b> local guides in all</p>
+
+    <div class="container loop-fresh">
+      <h2>Fresh this week <small>● {newThisWeek} new guide{newThisWeek === 1 ? '' : 's'}</small></h2>
+      <div class="loop-fresh-grid">
+        {freshTiles.map(({ article, category }) => (
+          <a class="loop-fresh-tile" href={`/guides/${article.id}`}>
+            <img src={articleHero(article).card} alt="" width="480" height="270" loading="lazy" decoding="async" />
+            <span><em>{category?.data.name}</em>{article.data.title}</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -276,43 +326,99 @@ const schema = {
 </BaseLayout>
 
 <style>
-  .loop-hero { position: relative; overflow: hidden; color: #fff; }
-  .loop-hero-photo { position: absolute; inset: -2%; width: 104%; height: 104%; background: url('/images/scenic/falls-park-2.jpg') center/cover; filter: saturate(0.8); animation: loop-kb 26s ease-in-out infinite alternate; }
-  @keyframes loop-kb { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
-  @media (prefers-reduced-motion: reduce) { .loop-hero-photo { animation: none; } }
-  .loop-hero-overlay { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(13,23,48,0.92) 0%, rgba(13,23,48,0.72) 55%, rgba(13,23,48,0.4) 100%); }
-  .loop-hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3.5rem; align-items: center; padding-block: 3.6rem 2.6rem; }
-  .loop-today { font-size: 0.95rem; color: rgba(255,255,255,0.78); margin: 0 0 0.7rem; }
-  .loop-today b { color: #fff; font-weight: 600; }
-  .loop-hero-content h1 { font-family: var(--font-display); font-size: clamp(2.3rem, 4.6vw, 4.1rem); line-height: 1.02; letter-spacing: -0.035em; margin: 0 0 1rem; color: #fff; }
-  .loop-lede { font-size: 1.1rem; line-height: 1.55; color: rgba(255,255,255,0.86); margin: 0 0 1.6rem; max-width: 32rem; }
-  .loop-week { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 1.1rem; overflow: hidden; }
-  .loop-week h2 { font-family: var(--font-display); font-size: 1.1rem; color: #fff; margin: 0; padding: 1.1rem 1.4rem 0.8rem; }
-  .loop-week-row { display: grid; grid-template-columns: 3.6rem 1fr; gap: 0.9rem; align-items: center; padding: 0.85rem 1.4rem; border-top: 1px solid rgba(255,255,255,0.14); color: #fff; text-decoration: none; }
-  .loop-week-row:hover { background: rgba(255,255,255,0.06); }
-  .loop-week-day { text-align: center; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.72); text-transform: uppercase; }
-  .loop-week-day b { display: block; font-family: var(--font-display); font-size: 1.5rem; line-height: 1; color: #fff; }
-  .loop-week-row em { display: inline-block; font-style: normal; font-size: 0.72rem; font-weight: 700; background: var(--color-orange); border-radius: 999px; padding: 0.1rem 0.55rem; margin-bottom: 0.25rem; }
-  .loop-week-row strong { display: block; font-size: 1rem; }
-  .loop-week-row small { font-size: 0.85rem; color: rgba(255,255,255,0.72); }
-  .loop-strip { position: relative; z-index: 2; display: flex; }
-  .loop-strip::before { content: ''; position: absolute; top: 0; left: var(--space-3, 1.5rem); right: var(--space-3, 1.5rem); border-top: 1px solid rgba(255,255,255,0.18); }
-  .loop-strip > * { flex: 1; margin: 0; padding: 1rem 0; color: rgba(255,255,255,0.85); font-size: 0.95rem; text-decoration: none; }
-  .loop-strip > * + * { padding-left: 1.6rem; border-left: 1px solid rgba(255,255,255,0.18); }
-  .loop-strip b { color: #fff; font-family: var(--font-display); font-size: 1.15rem; margin-right: 0.35rem; }
-  .loop-strip a:hover { color: #fff; text-decoration: underline; }
-  @media (max-width: 860px) {
-    .loop-hero-grid { grid-template-columns: 1fr; gap: 2rem; padding-block: 2.6rem 2rem; }
-    .loop-hero-content h1 { font-size: 2.4rem; }
-    .loop-strip { flex-direction: column; }
-    .loop-strip > * + * { padding-left: 0; border-left: 0; border-top: 1px solid rgba(255,255,255,0.18); }
+  /* ── The Loop hero ──
+     Phone: clear photo of the falls, a white card with the title and search,
+     then this week's events as swipeable photo cards and three quick numbers.
+     Desktop (900px+): light board with "The Loop" headline, day picker, the
+     week list on the right, and the newest guides as tiles underneath. */
+  .loop-hero { position: relative; background: #fff; }
+  .loop-photo { position: relative; height: 19rem; background: url('/images/scenic/falls-park-golden.jpg') center 60%/cover; }
+  .loop-photo-cap { position: absolute; top: 0.9rem; left: 1rem; margin: 0; display: inline-flex; align-items: center; gap: 0.45rem; background: rgba(0,0,0,0.38); color: #fff; font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.7rem; border-radius: 999px; }
+  .loop-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--color-gold); }
+  .loop-board { position: relative; z-index: 2; }
+  .loop-intro { background: #fff; border-radius: 1.4rem; padding: 1.4rem 1.25rem; margin: -1.7rem -0.35rem 0; box-shadow: 0 18px 40px -20px rgba(27,42,74,0.45); }
+  .loop-today { margin: 0 0 0.5rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-river); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+  .loop-wx { display: none; }
+  .loop-intro h1 { font-family: var(--font-display); font-size: 2.5rem; line-height: 1.02; letter-spacing: -0.035em; color: var(--color-navy); margin: 0 0 0.7rem; }
+  .loop-intro h1 mark { background: none; color: inherit; }
+  .loop-lede { font-size: 1rem; line-height: 1.55; color: #566076; margin: 0 0 1rem; max-width: 32rem; }
+  .loop-days { display: none; }
+
+  .loop-week { margin-top: 1.7rem; }
+  .loop-week-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .loop-week-head h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-navy); margin: 0; }
+  .loop-week-head a { font-size: 0.85rem; font-weight: 600; color: var(--color-orange); text-decoration: none; }
+  .loop-week-list { display: flex; gap: 0.75rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0.9rem 1.25rem 1.2rem; margin: 0 -1.25rem; scrollbar-width: none; }
+  .loop-week-list::-webkit-scrollbar { display: none; }
+  .loop-ev { flex: 0 0 14.5rem; scroll-snap-align: start; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--color-line); border-radius: 1.1rem; overflow: hidden; text-decoration: none; color: inherit; }
+  .loop-ev[hidden] { display: none; }
+  .loop-ev-media { position: relative; height: 7.5rem; background: var(--color-orange) center/cover; display: block; }
+  .loop-ev-badge { position: absolute; inset: auto 0.9rem 0.8rem; display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; line-height: 1; color: #fff; text-transform: uppercase; letter-spacing: -0.01em; }
+  .loop-ev-date { position: absolute; top: 0.6rem; left: 0.6rem; background: #fff; border-radius: 0.75rem; padding: 0.35rem 0.6rem; text-align: center; font-size: 0.62rem; font-weight: 700; color: #6B7385; letter-spacing: 0.06em; text-transform: uppercase; }
+  .loop-ev-date b { display: block; font-family: var(--font-display); font-size: 1.25rem; color: var(--color-navy); line-height: 1; }
+  .loop-ev-tag { position: absolute; top: 0.6rem; right: 0.6rem; background: var(--color-orange); color: #fff; font-size: 0.62rem; font-weight: 700; border-radius: 999px; padding: 0.25rem 0.55rem; }
+  .loop-ev-text { padding: 0.75rem 0.9rem 0.9rem; display: block; }
+  .loop-ev-text strong { display: block; font-family: var(--font-display); font-size: 0.95rem; line-height: 1.25; color: var(--color-navy); }
+  .loop-ev-text small { display: block; margin-top: 0.25rem; font-size: 0.8rem; color: #6B7385; }
+  .loop-ev-when { display: none; font-weight: 600; color: var(--color-river); }
+  .loop-ev-none { margin: 0; padding: 1rem 1.1rem; color: #6B7385; font-size: 0.9rem; }
+  .loop-week-more { display: none; }
+
+  .loop-stats { display: flex; gap: 0.6rem; padding-bottom: 0.4rem; }
+  .loop-stats p { flex: 1; margin: 0; background: var(--color-surface); border-radius: 0.9rem; padding: 0.75rem 0.4rem; text-align: center; font-size: 0.75rem; line-height: 1.3; color: #6B7385; }
+  .loop-stats b { display: block; font-family: var(--font-display); font-size: 1.35rem; color: var(--color-navy); }
+  .loop-fresh { display: none; }
+
+  @media (min-width: 900px) {
+    .loop-hero { background: linear-gradient(180deg, #EEF4F9 0, #fff 26rem); }
+    .loop-photo, .loop-stats, .loop-h1-stay { display: none; }
+    .loop-board { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 2.5rem; align-items: start; padding-top: 1.6rem; }
+    .loop-intro { background: none; box-shadow: none; padding: 0; margin: 0; border-radius: 0; }
+    .loop-today { text-transform: none; letter-spacing: 0; font-size: 0.85rem; color: var(--color-navy); font-weight: 600; }
+    .loop-wx:not([hidden]) { display: inline-flex; align-items: center; background: #fff; border: 1px solid var(--color-line); border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.75rem; font-weight: 600; color: var(--color-river); }
+    .loop-intro h1 { font-size: clamp(3rem, 4.4vw, 3.6rem); margin: 0.6rem 0 0.7rem; }
+    .loop-intro h1 mark { background: linear-gradient(transparent 62%, rgba(245,180,41,0.55) 62%); }
+    .loop-lede { font-size: 1.05rem; }
+    .loop-days { display: flex; gap: 0.5rem; margin-top: 1.1rem; }
+    .loop-day { position: relative; width: 3.6rem; background: #fff; border: 1px solid var(--color-line); border-radius: 1rem; padding: 0.55rem 0 0.7rem; font: inherit; font-size: 0.68rem; font-weight: 700; color: #8A93A3; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; }
+    .loop-day b { display: block; font-family: var(--font-display); font-size: 1.3rem; color: var(--color-navy); line-height: 1.15; }
+    .loop-day i { position: absolute; bottom: 0.3rem; left: 50%; width: 0.3rem; height: 0.3rem; margin-left: -0.15rem; border-radius: 50%; background: var(--color-orange); }
+    .loop-day.is-on { background: var(--color-navy); border-color: var(--color-navy); color: #AFC0DA; }
+    .loop-day.is-on b { color: #fff; }
+    .loop-day:hover:not(.is-on) { border-color: var(--color-navy); }
+
+    .loop-week { margin-top: 0; background: #fff; border: 1px solid var(--color-line); border-radius: 1.25rem; overflow: hidden; }
+    .loop-week-head { display: none; }
+    .loop-week-list { display: block; overflow: visible; padding: 0; margin: 0; }
+    .loop-ev { flex-direction: row; align-items: center; gap: 0.9rem; border: 0; border-top: 1px solid var(--color-line); border-radius: 0; padding: 0.85rem 0.9rem; }
+    .loop-ev:first-child { border-top: 0; }
+    .loop-ev:hover { background: var(--color-surface); }
+    .loop-ev.is-deal { background: #FFF4EA; }
+    .loop-ev-media { flex: none; width: 4rem; height: 4rem; border-radius: 0.75rem; }
+    .loop-ev-badge { inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; line-height: 1.05; text-align: center; padding: 0 0.3rem; }
+    .loop-ev-date, .loop-ev-tag { display: none; }
+    .loop-ev-text { padding: 0; }
+    .loop-ev-text strong { font-size: 1rem; }
+    .loop-ev-when { display: inline; }
+    .loop-week-list:not(.is-filtered) .loop-ev:nth-child(n+4) { display: none; }
+    .loop-week-more { display: block; text-align: center; padding: 0.8rem; font-size: 0.9rem; font-weight: 600; color: var(--color-orange); border-top: 1px solid var(--color-line); text-decoration: none; }
+
+    .loop-fresh { display: block; padding-block: 1.8rem 0.6rem; }
+    .loop-fresh h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-navy); margin: 0 0 0.8rem; }
+    .loop-fresh h2 small { font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; color: var(--color-success); margin-left: 0.4rem; }
+    .loop-fresh-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+    .loop-fresh-tile { border-radius: 1rem; overflow: hidden; background: var(--color-surface); text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .loop-fresh-tile:hover { transform: translateY(-3px); box-shadow: 0 14px 28px -16px rgba(13,23,48,0.35); }
+    .loop-fresh-tile img { display: block; width: 100%; height: 7.5rem; object-fit: cover; }
+    .loop-fresh-tile span { display: block; padding: 0.6rem 0.8rem 0.85rem; font-family: var(--font-display); font-weight: 600; font-size: 0.9rem; line-height: 1.25; color: var(--color-navy); }
+    .loop-fresh-tile em { display: block; font-style: normal; font-family: var(--font-body); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-orange); margin-bottom: 0.2rem; }
   }
 
   .loop-search-wrap { position: relative; max-width: 30rem; }
   .loop-search-wrap :global(.loop-search-icon) { position: absolute; z-index: 1; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-navy-light); pointer-events: none; }
   .loop-search-input {
-    width: 100%; padding: 0.9rem 1.1rem 0.9rem 2.7rem; border-radius: var(--radius-pill);
-    border: none; font-size: 1rem; font-family: inherit; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    width: 100%; padding: 0.85rem 1.1rem 0.85rem 2.7rem; border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-line); background: #fff; font-size: 1rem; font-family: inherit;
   }
   .loop-search-input:focus { outline: 2px solid var(--color-orange, #e07a3f); outline-offset: 1px; }
 
@@ -422,11 +528,41 @@ const schema = {
   (() => {
     const el = document.getElementById('loop-today');
     if (!el) return;
-    const day = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
-    el.innerHTML = `<b>${day}.</b>`;
+    el.textContent = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'long', month: 'long', day: 'numeric' }).format(new Date());
     fetch('/api/weather').then((r) => (r.ok ? r.json() : null)).then((w) => {
-      if (w && typeof w.tempF === 'number') el.innerHTML = `<b>${day}.</b> ${w.tempF}°${w.sky ? ` and ${w.sky.toLowerCase()}` : ''}.`;
+      if (!w || typeof w.tempF !== 'number') return;
+      const wx = `${w.tempF}°${w.sky ? ` and ${w.sky.toLowerCase()}` : ''}`;
+      const pill = document.getElementById('loop-wx');
+      if (pill) { pill.textContent = wx; pill.hidden = false; }
+      const cap = document.querySelector('.loop-wx-cap') as HTMLElement | null;
+      if (cap) { cap.textContent = ` · ${wx}`; cap.hidden = false; }
     }).catch(() => {});
+  })();
+
+  // Desktop day picker: tap a day to see just that day's events; tap the
+  // highlighted day again to go back to the whole week.
+  (() => {
+    const list = document.querySelector('.loop-week-list');
+    const none = document.querySelector('.loop-ev-none') as HTMLElement | null;
+    const days = Array.from(document.querySelectorAll<HTMLButtonElement>('.loop-day'));
+    if (!list || !days.length) return;
+    days.forEach((btn) => btn.addEventListener('click', () => {
+      const already = btn.classList.contains('is-on') && list.classList.contains('is-filtered');
+      days.forEach((d) => { d.classList.remove('is-on'); d.setAttribute('aria-pressed', 'false'); });
+      const rows = Array.from(list.querySelectorAll<HTMLElement>('.loop-ev'));
+      if (already) {
+        list.classList.remove('is-filtered');
+        rows.forEach((r) => (r.hidden = false));
+        days[0].classList.add('is-on');
+        if (none) none.hidden = true;
+        return;
+      }
+      btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true');
+      list.classList.add('is-filtered');
+      let shown = 0;
+      rows.forEach((r) => { const on = r.dataset.day === btn.dataset.day; r.hidden = !on; if (on) shown++; });
+      if (none) none.hidden = shown > 0;
+    }));
   })();
 
   // The Loop search — filters the full article set independent of the
