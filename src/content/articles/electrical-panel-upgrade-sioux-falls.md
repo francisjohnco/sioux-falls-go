@@ -16,6 +16,12 @@ updatedAt: 2026-11-16
 seo:
   title: "Electrical Panel Upgrade in Sioux Falls: Signs You Need One"
   description: "Running out of capacity for a heat pump, EV charger, or basement? Learn the real signs your Sioux Falls panel is maxed out and what to do next."
+heroImage: "https://images.pexels.com/photos/30144993/pexels-photo-30144993.jpeg"
+heroImageAlt: "Four gray electrical meter boxes mounted on a clean white brick exterior wall."
+heroImageCredit:
+  photographer: "Anh-Bao Tran-Le"
+  profileUrl: "https://www.pexels.com/@anh-bao-tran-le-1619456008"
+  source: "Pexels"
 ---
 
 Your electrical panel is easy to ignore until something stops working. For a lot of Sioux Falls homeowners, the first hint of a problem is a tripped breaker that won't reset, a contractor who says the panel "won't support" a new heat pump, or a home inspector flagging an outdated box before a sale. If any of that sounds familiar, this article will walk you through what to look for, what it means, and what to ask an electrician before anything is quoted or scheduled. For a broader look at how home electrical work is handled in Sioux Falls, start with [Home Electrical Work in Sioux Falls, What Homeowners Should Know](/guides/home-electrical-guide-sioux-falls).

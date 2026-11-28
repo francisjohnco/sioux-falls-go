@@ -16,6 +16,12 @@ updatedAt: 2026-11-12
 seo:
   title: "Cold Rooms and Uneven Heat in Sioux Falls Homes"
   description: "One room always cold? Learn the real causes of uneven heating in Sioux Falls homes, what to check yourself, and what to ask your HVAC tech before buying anything."
+heroImage: "https://images.pexels.com/photos/34016409/pexels-photo-34016409.png"
+heroImageAlt: "Warm sunlight falls across a beige armchair and candle on a wooden side table in a cozy home interior."
+heroImageCredit:
+  photographer: "Sami Raad"
+  profileUrl: "https://www.pexels.com/@sami-raad-849408941"
+  source: "Pexels"
 ---
 
 If one bedroom feels like a walk-in cooler while the living room is perfectly comfortable, the problem is almost never a broken furnace. Uneven heating in a house has a handful of common causes, and most of them have nothing to do with the equipment itself. This article walks through what actually causes cold rooms, what you can check on your own, and what a good HVAC technician should look at before anyone suggests replacing equipment. For a broader look at heating and cooling in Sioux Falls, start with the [Heating and Cooling in Sioux Falls, the Homeowner's Guide](/guides/hvac-guide-sioux-falls).
