@@ -16,6 +16,12 @@ updatedAt: 2026-10-08
 seo:
   title: "New Furnace and AC Cost in Sioux Falls 2025 Guide"
   description: "No Sioux Falls average exists without a quote, but these are the real factors that move the price up or down. Know what to ask before you sign."
+heroImage: "https://images.pexels.com/photos/41253546/pexels-photo-41253546.jpeg"
+heroImageAlt: "Two white HVAC condenser units mounted on brackets along the side of a residential home."
+heroImageCredit:
+  photographer: "Erik Mclean"
+  profileUrl: "https://www.pexels.com/@introspectivedsgn"
+  source: "Pexels"
 ---
 
 Replacing a furnace or central AC is one of the bigger purchases a homeowner makes, and the final number on the invoice can surprise you if you don't know what's inside it. Prices vary widely depending on equipment, your home's existing ductwork and electrical setup, and even the time of year you schedule the work. The [Heating and Cooling in Sioux Falls, the Homeowner's Guide](/guides/hvac-guide-sioux-falls) covers the full picture of how these systems work together. This article focuses on the cost side: what drives the price, what to look for in a bid, and what questions to ask before you sign anything.
